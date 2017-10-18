@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 public class OwnerCarsFragment extends Fragment {
 
-    private static Fragment createInstance() {
+    private static Fragment newInstance() {
         return new OwnerCarsFragment();
     }
 

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Cardee</string>
+
+    <string name="menu_item_inbox_title">Inbox</string>
+    <string name="menu_item_cars_title">My Cars</string>
+    <string name="menu_item_bookings_title">Bookings</string>
+    <string name="menu_item_more_title">More</string>
 </resources>
