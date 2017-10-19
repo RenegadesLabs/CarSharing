@@ -12,12 +12,27 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".owner_home.view.OwnerHomeActivity">
+
+        <activity android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".auth.preview.PreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PreviewTheme"/>
+
+        <activity android:name=".auth.login.LoginActivity"/>
+
+        <activity android:name=".auth.register.view.RegisterActivity"/>
+
+        <activity android:name=".owner_home.view.OwnerHomeActivity">
+
         </activity>
     </application>
 

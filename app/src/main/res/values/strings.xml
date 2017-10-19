@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Cardee</string>
 
+    <string name="signup">Sign Up</string>
+    <string name="signup_starter">Hello! Sign up to get started.</string>
+    <string name="signup_almost">Almost done!</string>
+    <string name="signup_add_photo">Add a photo of yourself!</string>
+    <string name="signup_your_photo">Your photo</string>
+    <string name="signup_name">What is your name?</string>
+    <string name="signup_as">Login as</string>
+    <string name="car_renter">Car Renter</string>
+    <string name="car_owner">Car Owner</string>
+    <string name="login">Log In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
     <string name="menu_item_inbox_title">Inbox</string>
     <string name="menu_item_cars_title">My Cars</string>
     <string name="menu_item_bookings_title">Bookings</string>
