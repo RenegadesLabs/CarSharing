@@ -1,7 +1,7 @@
-package android.cardee.com.cardee.auth.preview;
+package com.cardee.auth.preview;
 
 import android.cardee.com.cardee.R;
-import android.cardee.com.cardee.auth.register.RegisterActivity;
+import com.cardee.auth.register.view.RegisterActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

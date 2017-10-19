@@ -29,7 +29,11 @@
 
         <activity android:name=".auth.login.LoginActivity"/>
 
-        <activity android:name=".auth.register.RegisterActivity"/>
+        <activity android:name=".auth.register.view.RegisterActivity"/>
+
+        <activity android:name=".owner_home.view.OwnerHomeActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
-package android.cardee.com.cardee.splash;
+package com.cardee.splash;
 
-import android.cardee.com.cardee.auth.preview.PreviewActivity;
-import android.cardee.com.cardee.R;
+import com.cardee.R;
+import com.cardee.auth.preview.PreviewActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

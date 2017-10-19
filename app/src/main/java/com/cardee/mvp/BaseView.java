@@ -1,4 +1,4 @@
-package android.cardee.com.cardee.mvp;
+package com.cardee.mvp;
 
 import android.support.annotation.StringRes;
 

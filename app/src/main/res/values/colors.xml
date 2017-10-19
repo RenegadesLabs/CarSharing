@@ -4,6 +4,10 @@
     <color name="black">#000000</color>
     <color name="light_blue">#569be7</color>
 
+    <color name="white_opacity60">#60FFFFFF</color>
+
+    <color name="red_error">#FF5040</color>
+
     <color name="main_enabled">#569be7</color>
     <color name="main_disabled">#d8d8d8</color>
     <color name="divider">#e2e2e2</color>

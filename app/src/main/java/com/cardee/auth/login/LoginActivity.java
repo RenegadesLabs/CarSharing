@@ -1,4 +1,4 @@
-package android.cardee.com.cardee.auth.login;
+package com.cardee.auth.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
