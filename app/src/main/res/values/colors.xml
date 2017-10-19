@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="blue">#3683e1</color>
+    <color name="black">#000000</color>
+    <color name="light_blue">#569be7</color>
+
+    <color name="main_enabled">#569be7</color>
+    <color name="main_disabled">#d8d8d8</color>
+    <color name="divider">#e2e2e2</color>
+    <color name="bg_main">#ffffff</color>
+    <color name="bg_widget">#ffffff</color>
+    <color name="bg_widget_pressed">#d6d6d6</color>
+
+    <color name="text_disabled">#bababa</color>
+
     <color name="colorPrimary">#419CED</color>
     <color name="colorPrimaryDark">#1283E8</color>
     <color name="colorAccent">#FFFFFF</color>

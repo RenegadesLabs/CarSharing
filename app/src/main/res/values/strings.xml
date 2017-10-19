@@ -3,4 +3,8 @@
 
     <string name="signup">Sign Up</string>
     <string name="login">Log In</string>
+    <string name="menu_item_inbox_title">Inbox</string>
+    <string name="menu_item_cars_title">My Cars</string>
+    <string name="menu_item_bookings_title">Bookings</string>
+    <string name="menu_item_more_title">More</string>
 </resources>
