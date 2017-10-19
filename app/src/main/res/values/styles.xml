@@ -7,12 +7,4 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="navigation_bar">
-        <item name="android:background">@color/bg_widget</item>
-        <item name="itemBackground">@drawable/nav_bg_item</item>
-        <item name="itemIconTint">@color/nav_item_text_color</item>
-        <item name="itemTextColor">@color/nav_item_text_color</item>
-        <!--Define padding-->
-    </style>
 </resources>

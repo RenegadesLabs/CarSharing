@@ -30,6 +30,8 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
+//    Advanced bottom navigation
+    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
     testCompile 'junit:junit:4.12'
 
