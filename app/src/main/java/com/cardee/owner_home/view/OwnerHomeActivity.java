@@ -1,8 +1,8 @@
-package android.cardee.com.cardee.owner_home.view;
+package com.cardee.owner_home.view;
 
-import android.cardee.com.cardee.R;
-import android.cardee.com.cardee.owner_home.view.helper.BottomNavigationHelper;
-import android.cardee.com.cardee.owner_home.view.listener.ViewModeChangeListener;
+import com.cardee.R;
+import com.cardee.owner_home.view.helper.BottomNavigationHelper;
+import com.cardee.owner_home.view.listener.ViewModeChangeListener;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;

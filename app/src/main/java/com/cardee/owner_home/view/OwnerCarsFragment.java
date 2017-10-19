@@ -1,4 +1,4 @@
-package android.cardee.com.cardee.owner_home.view;
+package com.cardee.owner_home.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

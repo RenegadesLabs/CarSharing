@@ -1,6 +1,6 @@
-package android.cardee.com.cardee.owner_home.view.helper;
+package com.cardee.owner_home.view.helper;
 
-import android.cardee.com.cardee.R;
+import com.cardee.R;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
