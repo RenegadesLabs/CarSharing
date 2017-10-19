@@ -1,6 +1,6 @@
 package com.cardee.auth.preview;
 
-import android.cardee.com.cardee.R;
+import com.cardee.R;
 import com.cardee.auth.register.view.RegisterActivity;
 import android.content.Intent;
 import android.os.Bundle;

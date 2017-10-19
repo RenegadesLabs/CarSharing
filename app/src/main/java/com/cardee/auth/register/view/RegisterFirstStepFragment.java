@@ -44,13 +44,13 @@ public class RegisterFirstStepFragment extends Fragment {
     }
 
     @OnClick(R.id.b_registerGoToLogin)
-    private void onGoToLoginClicked() {
+    public void onGoToLoginClicked() {
         if (mViewListener != null)
             mViewListener.onLogin();
     }
 
     @OnClick(R.id.b_registerSignup)
-    private void onSignUpClicked() {
+    public void onSignUpClicked() {
         if (mViewListener != null)
             mViewListener.onSignUp();
     }
