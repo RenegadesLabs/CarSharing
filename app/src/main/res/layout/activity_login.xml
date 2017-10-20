@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -29,18 +28,19 @@
         android:layout_marginTop="30dp"
         android:text="@string/app_name"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_xlarge"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/b_loginGoToRegister" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/et_emailRegister"
+        android:id="@+id/et_loginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/CardeeEditTextStyle"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
         android:layout_marginTop="30dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -50,28 +50,45 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         />
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/et_passwordRegister"
+    <android.support.design.widget.TextInputLayout
+        android:theme="@style/CardeeTextInputStyle"
+        android:id="@+id/et_loginPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/CardeeEditTextStyle"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_emailRegister"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/et_loginEmail"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccent"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <!--<android.support.v7.widget.AppCompatEditText-->
+        <!--android:id="@+id/et_loginPassword"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/CardeeEditTextStyle"-->
+        <!--android:hint="@string/password"-->
+        <!--android:inputType="textPassword"-->
+        <!--app:errorEnabled="true"-->
+        <!--/>-->
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/b_registerSignup"
+        android:id="@+id/b_loginLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_white_bg"
         android:text="@string/login"
@@ -80,20 +97,20 @@
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_passwordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/et_loginPassword" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/b_registerSignup"
-        app:layout_constraintBottom_toTopOf="@+id/tv_registerTermsOfService">
+        app:layout_constraintTop_toBottomOf="@+id/tv_loginForgotPassword">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/facebook"
@@ -120,18 +137,18 @@
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/tv_registerTermsOfService"
-        android:layout_width="0dp"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_loginForgotPassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginTop="@dimen/small_margin"
+        android:padding="@dimen/small_margin"
         android:gravity="center_horizontal"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_regular"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/login_forgot"
+        android:textColor="@color/colorLemon"
+        android:textSize="@dimen/text_small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b_loginLogin" />
 
 </android.support.constraint.ConstraintLayout>

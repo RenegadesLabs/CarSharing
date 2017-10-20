@@ -10,6 +10,9 @@
     <string name="signup_as">Login as</string>
     <string name="car_renter">Car Renter</string>
     <string name="car_owner">Car Owner</string>
+
+    <string name="login_forgot">Forgot your password?</string>
+
     <string name="login">Log In</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
