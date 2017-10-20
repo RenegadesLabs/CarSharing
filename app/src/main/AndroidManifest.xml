@@ -27,9 +27,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/PreviewTheme"/>
 
-        <activity android:name=".auth.login.LoginActivity"/>
+        <activity android:name=".auth.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".auth.register.view.RegisterActivity"/>
+        <activity android:name=".auth.register.view.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
         <activity android:name=".owner_home.view.OwnerHomeActivity">
 

@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary">
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/b_registerGoToLogin"
+        android:id="@+id/b_loginGoToRegister"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:layout_margin="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/login"
+        android:text="@string/signup"
         android:textAllCaps="false"
         android:textColor="@color/colorLemon"
         android:textSize="@dimen/text_large"
@@ -27,12 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/signup_starter"
+        android:text="@string/app_name"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b_registerGoToLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/b_loginGoToRegister" />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/et_emailRegister"
@@ -74,7 +74,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_white_bg"
-        android:text="@string/signup"
+        android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_large"
