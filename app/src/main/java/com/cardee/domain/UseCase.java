@@ -1,8 +1,8 @@
 package com.cardee.domain;
 
-public interface UseCase<T> {
+public interface UseCase<V extends UseCase.RequestValues, R extends UseCase.ResponseValues> {
 
-    void execute();
+    void execute(V values, Callback<R> callback);
 
     interface RequestValues {
 
