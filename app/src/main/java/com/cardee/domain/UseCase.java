@@ -8,9 +8,7 @@ public interface UseCase<V extends UseCase.RequestValues, R extends UseCase.Resp
 
     }
 
-    interface ResponseValues<C> {
-
-        C getContent();
+    interface ResponseValues {
 
     }
 

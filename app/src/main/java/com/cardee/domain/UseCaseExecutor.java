@@ -18,7 +18,7 @@ public class UseCaseExecutor {
     }
 
     public <V extends UseCase.RequestValues, R extends UseCase.ResponseValues> void execute(
-            final UseCase useCase, final V values, UseCase.Callback<R> callback) {
+            final UseCase<V, R> useCase, final V values, UseCase.Callback<R> callback) {
         final UIThreadCallback<R> uiCallback = new UIThreadCallback<>(mResponseHandler, callback);
         mThreadPool.execute(new Runnable() {
             @Override

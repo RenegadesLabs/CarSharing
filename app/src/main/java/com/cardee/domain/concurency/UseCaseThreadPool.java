@@ -1,6 +1,6 @@
 package com.cardee.domain.concurency;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +17,7 @@ public final class UseCaseThreadPool {
      */
     public UseCaseThreadPool() {
         mExecutor = new ThreadPoolExecutor(POOL_SIZE, MAX_POOL_SIZE, TIMEOUT, TimeUnit.SECONDS,
-                new ArrayBlockingQueue<Runnable>(POOL_SIZE));
+                new LinkedBlockingQueue<Runnable>());
     }
 
     public void execute(Runnable task) {
