@@ -53,8 +53,6 @@
         android:id="@+id/fl_takePhoto"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_circle_white_opacity60"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +79,16 @@
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
     </FrameLayout>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_registerUserPhoto"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_addPhoto"/>
 
     <TextView
         android:id="@+id/tv_whatIsYourName"
@@ -113,6 +121,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapWords"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
             android:maxLines="1"/>
 
     </android.support.design.widget.TextInputLayout>

@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cardee">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +31,8 @@
 
         <activity android:name=".auth.preview.PreviewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/PreviewTheme"/>
+            android:theme="@style/PreviewTheme">
+        </activity>
 
         <activity android:name=".auth.login.LoginActivity"
             android:screenOrientation="portrait"

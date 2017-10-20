@@ -21,6 +21,6 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     public void onSignUpClicked(View view) {
-        new Intent(this, RegisterActivity.class);
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

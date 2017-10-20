@@ -18,6 +18,8 @@ import butterknife.Unbinder;
 
 public class RegisterFirstStepFragment extends Fragment {
 
+    public final static String TAG = "RegisterFirstStepFragment";
+
     @BindView(R.id.et_emailRegister)
     AppCompatEditText regEmailEdit;
 
