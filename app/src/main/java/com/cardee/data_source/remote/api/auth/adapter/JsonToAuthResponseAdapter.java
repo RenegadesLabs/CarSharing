@@ -1,8 +1,8 @@
-package com.cardee.data_source.remote.api.model.adapter;
+package com.cardee.data_source.remote.api.auth.adapter;
 
 import android.util.Log;
 
-import com.cardee.data_source.remote.api.model.response.BaseAuthResponse;
+import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;

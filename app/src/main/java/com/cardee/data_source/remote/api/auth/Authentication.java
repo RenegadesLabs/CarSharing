@@ -1,12 +1,12 @@
-package com.cardee.data_source.remote.api;
+package com.cardee.data_source.remote.api.auth;
 
 
-import com.cardee.data_source.remote.api.model.request.LoginRequest;
-import com.cardee.data_source.remote.api.model.request.PushRequest;
-import com.cardee.data_source.remote.api.model.request.SignUpRequest;
-import com.cardee.data_source.remote.api.model.request.SocialLoginRequest;
-import com.cardee.data_source.remote.api.model.request.VerifyPasswordRequest;
-import com.cardee.data_source.remote.api.model.response.BaseAuthResponse;
+import com.cardee.data_source.remote.api.auth.request.LoginRequest;
+import com.cardee.data_source.remote.api.auth.request.PushRequest;
+import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
+import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
+import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;

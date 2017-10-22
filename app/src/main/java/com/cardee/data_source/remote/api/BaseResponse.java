@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.model.response;
+package com.cardee.data_source.remote.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

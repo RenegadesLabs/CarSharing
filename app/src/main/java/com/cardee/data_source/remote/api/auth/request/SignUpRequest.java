@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.model.request;
+package com.cardee.data_source.remote.api.auth.request;
 
 
 import com.google.gson.annotations.Expose;
