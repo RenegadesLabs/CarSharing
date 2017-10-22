@@ -12,9 +12,6 @@ public final class UseCaseThreadPool {
 
     private final ThreadPoolExecutor mExecutor;
 
-    /**
-     * Check ArrayBlockingQueue capacity
-     */
     public UseCaseThreadPool() {
         mExecutor = new ThreadPoolExecutor(POOL_SIZE, MAX_POOL_SIZE, TIMEOUT, TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>());
