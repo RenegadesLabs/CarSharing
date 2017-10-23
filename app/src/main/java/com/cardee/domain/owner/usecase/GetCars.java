@@ -10,6 +10,7 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
     }
 
     public static class RequestValues implements UseCase.RequestValues {
+
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {

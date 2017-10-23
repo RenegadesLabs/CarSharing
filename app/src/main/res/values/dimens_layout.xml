@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="full_width_card_horizontal_margin">-3dp</dimen>
+    <dimen name="full_width_card_vertical_margin">4dp</dimen>
+
+    <dimen name="list_item_car_title_layout_height">48dp</dimen>
+    <dimen name="list_item_button">48dp</dimen>
+</resources>
