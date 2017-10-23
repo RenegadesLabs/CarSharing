@@ -1,5 +1,6 @@
 package com.cardee.auth.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,12 +34,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private LoginPresenter mPresenter;
 
+    private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mPresenter = new LoginPresenter(this);
+        initProgress();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -71,9 +75,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         }
     }
 
+    private void initProgress() {
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage(getResources().getString(R.string.login_process));
+        mProgress.setCancelable(false);
+    }
+
     @Override
     public void showProgress(boolean show) {
-
+        if (show) {
+            mProgress.show();
+        } else {
+            mProgress.dismiss();
+        }
     }
 
     @Override
