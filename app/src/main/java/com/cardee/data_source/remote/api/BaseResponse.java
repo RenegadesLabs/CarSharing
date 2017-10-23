@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class BaseResponse {
 
+    public static final int ERROR_CODE_UNAUTHORIZED = 422;
+    public static final int ERROR_CODE_INTERNAL_SERVER_ERROR = 500;
+
     @Expose
     @SerializedName("code")
     private Integer code;
@@ -15,7 +18,7 @@ public class BaseResponse {
     @SerializedName("success")
     private Boolean success;
 
-    public BaseResponse(){
+    public BaseResponse() {
 
     }
 
