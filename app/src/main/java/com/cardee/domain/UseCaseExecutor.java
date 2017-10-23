@@ -28,7 +28,7 @@ public class UseCaseExecutor {
         });
     }
 
-    public static UseCaseExecutor getInstrnce() {
+    public static UseCaseExecutor getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new UseCaseExecutor(new UseCaseThreadPool(),
                     new UseCaseResponseHandler());

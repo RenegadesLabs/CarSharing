@@ -9,17 +9,17 @@ import java.util.Map;
 public class ErrorResponseBody {
     @Expose
     @SerializedName("errors")
-    private Map<String, String[]> errors;
+    private Map<String, String> errors;
 
     public ErrorResponseBody(){
 
     }
 
-    public Map<String, String[]> getErrors() {
+    public Map<String, String> getErrors() {
         return errors;
     }
 
-    public void setErrors(Map<String, String[]> errors) {
+    public void setErrors(Map<String, String> errors) {
         this.errors = errors;
     }
 }

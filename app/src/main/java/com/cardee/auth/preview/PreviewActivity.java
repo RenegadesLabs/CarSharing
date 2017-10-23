@@ -1,6 +1,7 @@
 package com.cardee.auth.preview;
 
 import com.cardee.R;
+import com.cardee.auth.login.LoginActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +18,10 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     public void onLogInClicked(View view) {
-
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     public void onSignUpClicked(View view) {
-        new Intent(this, RegisterActivity.class);
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

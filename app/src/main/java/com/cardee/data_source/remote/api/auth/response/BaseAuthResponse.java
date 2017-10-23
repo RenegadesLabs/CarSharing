@@ -19,8 +19,16 @@ public class BaseAuthResponse extends BaseResponse {
     @JsonAdapter(JsonToAuthResponseAdapter.class)
     private BaseAuthResponseBody body;
 
-    public static class BaseAuthResponseBody extends ErrorResponseBody {
+    public static class BaseAuthResponseBody extends AuthErrorResponseBody {
         private String token;
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getToken() {
+            return token;
+        }
     }
 
     public BaseAuthResponseBody getBody() {
