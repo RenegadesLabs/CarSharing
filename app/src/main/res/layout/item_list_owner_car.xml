@@ -16,16 +16,19 @@
         <ImageView
             android:id="@+id/car_primary_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@android:color/holo_red_dark"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_car_title_layout_height"
+            android:background="@color/bg_transparent_black"
             app:layout_constraintBottom_toBottomOf="@id/car_primary_image">
 
             <TextView
@@ -44,44 +47,67 @@
         <TextView
             android:id="@+id/car_hourly_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/list_item_control_text"
+            android:gravity="center_vertical"
+            android:text="Hourly"
+            app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
+            app:layout_constraintTop_toBottomOf="@id/car_primary_image"/>
 
         <Switch
             android:id="@+id/car_hourly_toggle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            app:layout_constraintBottom_toBottomOf="@id/car_hourly_title"
+            app:layout_constraintStart_toEndOf="@id/car_hourly_title"
+            app:layout_constraintTop_toTopOf="@id/car_hourly_title" />
 
         <TextView
             android:id="@+id/car_hourly_selector"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:background="@drawable/bg_rounded_border"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
             app:layout_constraintEnd_toStartOf="@+id/car_daily_selector"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/car_hourly_title"/>
 
         <TextView
             android:id="@+id/car_daily_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/list_item_control_text"
+            android:gravity="center_vertical"
+            android:text="Daily"
+            app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
+            app:layout_constraintTop_toBottomOf="@id/car_primary_image"/>
 
         <Switch
             android:id="@+id/car_daily_toggle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            app:layout_constraintBottom_toBottomOf="@id/car_daily_title"
+            app:layout_constraintStart_toEndOf="@id/car_daily_title"
+            app:layout_constraintTop_toTopOf="@id/car_daily_title" />
 
         <TextView
             android:id="@+id/car_daily_selector"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:background="@drawable/bg_rounded_border"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/car_hourly_selector" />
+            app:layout_constraintStart_toEndOf="@+id/car_hourly_selector"
+            app:layout_constraintTop_toBottomOf="@id/car_daily_title"/>
 
         <FrameLayout
             android:id="@+id/car_location_selector"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:background="@drawable/bg_rounded_border"
+            android:layout_margin="@dimen/widget_margin_mid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

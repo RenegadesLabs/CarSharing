@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cardee.R;
+
 public class OwnerCarsFragment extends Fragment {
 
     private static Fragment newInstance() {
         return new OwnerCarsFragment();
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,6 +25,7 @@ public class OwnerCarsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_owner_cars, container, false);
+        return rootView;
     }
 }

@@ -3,6 +3,12 @@
     <dimen name="full_width_card_horizontal_margin">-3dp</dimen>
     <dimen name="full_width_card_vertical_margin">4dp</dimen>
 
-    <dimen name="list_item_car_title_layout_height">48dp</dimen>
-    <dimen name="list_item_button">48dp</dimen>
+    <dimen name="list_item_car_title_layout_height">32dp</dimen>
+    <dimen name="list_item_control_text">32dp</dimen>
+    <dimen name="list_item_button">44dp</dimen>
+
+    <dimen name="button_vertical_padding">8dp</dimen>
+    <dimen name="button_horizontal_padding">24dp</dimen>
+
+    <dimen name="widget_margin_mid">24dp</dimen>
 </resources>
