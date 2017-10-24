@@ -12,6 +12,8 @@ import io.reactivex.observers.DisposableObserver;
 
 public class UserRepository implements UserDataSource {
 
+    public final static String WRONG_CREDENTIALS = "HTTP 422 UNPROCESSABLE ENTITY";
+
     private static UserRepository INSTANCE;
     private Authentication api;
 
@@ -41,7 +43,7 @@ public class UserRepository implements UserDataSource {
 
                             @Override
                             public void onError(Throwable e) {
-                                callback.onError();
+                                callback.onError(e.getMessage());
                             }
 
                             @Override

@@ -8,6 +8,6 @@ public interface UserDataSource {
 
         void onSuccess(boolean success);
 
-        void onError();
+        void onError(String message);
     }
 }

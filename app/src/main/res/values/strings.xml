@@ -20,6 +20,7 @@
 
     <string name="email_pass_empty_error">You must fill this field</string>
     <string name="auth_error">Authentication error!</string>
+    <string name="auth_wrong_cred">Wrong credentials!</string>
 
     <string name="menu_item_inbox_title">Inbox</string>
     <string name="menu_item_cars_title">My Cars</string>

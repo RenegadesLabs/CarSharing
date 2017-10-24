@@ -1,6 +1,7 @@
 package com.cardee.auth.login;
 
 import com.cardee.R;
+import com.cardee.data_source.UserRepository;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.Login;
@@ -31,9 +32,13 @@ public class LoginPresenter {
             }
 
             @Override
-            public void onError() {
+            public void onError(Login.ResponseValues message) {
                 mView.showProgress(false);
-                mView.showMessage(R.string.auth_error);
+                if (message.getErrorMessage().equals(UserRepository.WRONG_CREDENTIALS)) {
+                    mView.showMessage(R.string.auth_wrong_cred);
+                } else {
+                    mView.showMessage(R.string.auth_error);
+                }
             }
         });
     }

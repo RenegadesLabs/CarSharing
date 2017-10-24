@@ -31,6 +31,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
         mFinalStepFragment = new RegisterFinalStepFragment();
         mFinalStepFragment.setViewListener(this);
+
+        mFragmentManager.beginTransaction()
+                .replace(R.id.container, mFirstStepFragment)
+                .commit();
     }
 
     @Override
@@ -50,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void onLogin() {
-        new Intent(this, LoginActivity.class);
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
