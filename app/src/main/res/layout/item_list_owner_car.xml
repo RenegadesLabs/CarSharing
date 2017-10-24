@@ -3,58 +3,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/full_width_card_vertical_margin"
     android:layout_marginEnd="@dimen/full_width_card_horizontal_margin"
     android:layout_marginStart="@dimen/full_width_card_horizontal_margin"
-    android:layout_marginTop="@dimen/full_width_card_vertical_margin"
+    android:layout_marginTop="@dimen/list_divider_margin"
     app:cardCornerRadius="0dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/car_primary_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/holo_red_dark"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <FrameLayout
+            android:id="@+id/faded_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_car_title_layout_height"
             android:background="@color/bg_transparent_black"
-            app:layout_constraintBottom_toBottomOf="@id/car_primary_image">
+            app:layout_constraintBottom_toBottomOf="@id/car_primary_image" />
 
-            <TextView
-                android:id="@+id/car_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical" />
+        <TextView
+            android:id="@+id/car_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_picture_overlaid"
+            android:textSize="@dimen/list_item_text_general"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+            app:layout_constraintStart_toStartOf="@id/faded_line"
+            app:layout_constraintTop_toTopOf="@+id/faded_line" />
 
-            <TextView
-                android:id="@+id/car_licence_plate_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical" />
-        </FrameLayout>
+        <TextView
+            android:id="@+id/car_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_picture_overlaid"
+            android:textSize="@dimen/list_item_text_general"
+            android:layout_marginStart="@dimen/widget_margin_x_small"
+            android:text="2016"
+            app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+            app:layout_constraintStart_toEndOf="@id/car_title"
+            app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+        <TextView
+            android:id="@+id/car_licence_plate_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_picture_overlaid"
+            android:textSize="@dimen/list_item_text_general"
+            android:text="SLE8938Y"
+            android:layout_marginEnd="@dimen/widget_margin_small"
+            app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+            app:layout_constraintEnd_toEndOf="@id/faded_line"
+            app:layout_constraintTop_toTopOf="@+id/faded_line" />
 
         <TextView
             android:id="@+id/car_hourly_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
+            android:textSize="@dimen/list_item_control_title"
             android:text="Hourly"
             app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
-            app:layout_constraintTop_toBottomOf="@id/car_primary_image"/>
+            app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <Switch
             android:id="@+id/car_hourly_toggle"
+            style="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
@@ -64,26 +90,28 @@
 
         <TextView
             android:id="@+id/car_hourly_selector"
+            style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
-            android:background="@drawable/bg_rounded_border"
-            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:layout_marginEnd="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_mid"
             app:layout_constraintEnd_toStartOf="@+id/car_daily_selector"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/car_hourly_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/car_hourly_title" />
 
         <TextView
             android:id="@+id/car_daily_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
+            android:textSize="@dimen/list_item_control_title"
             android:text="Daily"
             app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
-            app:layout_constraintTop_toBottomOf="@id/car_primary_image"/>
+            app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <Switch
             android:id="@+id/car_daily_toggle"
+            style="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
@@ -93,27 +121,25 @@
 
         <TextView
             android:id="@+id/car_daily_selector"
+            style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
-            android:background="@drawable/bg_rounded_border"
-            android:layout_marginTop="@dimen/widget_margin_mid"
             android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/car_hourly_selector"
-            app:layout_constraintTop_toBottomOf="@id/car_daily_title"/>
+            app:layout_constraintTop_toBottomOf="@id/car_daily_title" />
 
-        <FrameLayout
+        <TextView
             android:id="@+id/car_location_selector"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
-            android:background="@drawable/bg_rounded_border"
             android:layout_margin="@dimen/widget_margin_mid"
+            android:background="@drawable/bg_rounded_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/car_hourly_selector">
-
-        </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/car_hourly_selector" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

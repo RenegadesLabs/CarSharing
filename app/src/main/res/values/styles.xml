@@ -25,4 +25,14 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
+    <style name="SelectorButton">
+        <item name="android:background">@drawable/bg_rounded_border</item>
+        <item name="android:textSize">@dimen/list_item_selector_value</item>
+        <item name="android:textColor">@color/toggling_text_color</item>
+    </style>
+
+    <style name="Switch" parent="AppTheme">
+        <item name="colorAccent">@color/main_enabled</item>
+    </style>
+
 </resources>
