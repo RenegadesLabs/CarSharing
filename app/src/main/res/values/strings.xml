@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Cardee</string>
 
+    <!--Facebook SDK-->
+    <string name="facebook_app_id">1969210599978942</string>
+    <string name="fb_login_protocol_scheme">fb1969210599978942</string>
+
     <string name="signup">Sign Up</string>
     <string name="signup_starter">Hello! Sign up to get started.</string>
     <string name="signup_almost">Almost done!</string>
@@ -21,6 +25,9 @@
     <string name="email_pass_empty_error">You must fill this field</string>
     <string name="auth_error">Authentication error!</string>
     <string name="auth_wrong_cred">Wrong credentials!</string>
+
+    <string name="auth_facebook">Log in with Facebook</string>
+    <string name="auth_google">Log in with Google+</string>
 
     <string name="menu_item_inbox_title">Inbox</string>
     <string name="menu_item_cars_title">My Cars</string>

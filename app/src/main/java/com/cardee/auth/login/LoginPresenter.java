@@ -2,9 +2,11 @@ package com.cardee.auth.login;
 
 import com.cardee.R;
 import com.cardee.data_source.UserRepository;
+import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.Login;
+import com.cardee.domain.owner.usecase.SocialLogin;
 
 public class LoginPresenter {
 
@@ -39,6 +41,27 @@ public class LoginPresenter {
                 } else {
                     mView.showMessage(R.string.auth_error);
                 }
+            }
+        });
+    }
+
+    public void loginSocial(SocialLoginRequest.Provider provider, String token) {
+        if (mView != null)
+            mView.showProgress(true);
+
+        mExecutor.execute(new SocialLogin(), new SocialLogin.RequestValues(provider, token), new UseCase.Callback<SocialLogin.ResponseValues>() {
+            @Override
+            public void onSuccess(SocialLogin.ResponseValues response) {
+                if (response.isSuccess()) {
+                    mView.showProgress(false);
+                    mView.onLoginSuccess();
+                }
+            }
+
+            @Override
+            public void onError(SocialLogin.ResponseValues message) {
+                mView.showProgress(false);
+                mView.showMessage(R.string.auth_error);
             }
         });
     }
