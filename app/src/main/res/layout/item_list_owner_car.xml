@@ -80,7 +80,7 @@
 
         <Switch
             android:id="@+id/car_hourly_toggle"
-            style="@style/Switch"
+            android:theme="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
@@ -111,7 +111,7 @@
 
         <Switch
             android:id="@+id/car_daily_toggle"
-            style="@style/Switch"
+            android:theme="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
