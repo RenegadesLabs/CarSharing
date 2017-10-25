@@ -9,10 +9,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.auth.login.LoginActivity;
 import com.cardee.auth.register.RegisterContract;
+import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterContract.RegisterView {
 
@@ -23,11 +30,16 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     private RegisterFinalStepFragment mFinalStepFragment;
     private FragmentManager mFragmentManager;
 
+    private CallbackManager mFacebookCM;
+
+    private LoginButton mButtonFacebook;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initFragments();
+        initFacebookButton();
     }
 
     private void initFragments() {
@@ -68,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @Override
     public void onSignUp() {
         mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFinalStepFragment)
+                .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
                 .commit();
     }
 
@@ -80,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @Override
     public void onBackToFirstStep() {
         mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFirstStepFragment)
+                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
                 .commit();
     }
 
@@ -114,6 +126,27 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                 }
                 break;
         }
+    }
+
+    private void initFacebookButton() {
+        mFacebookCM = CallbackManager.Factory.create();
+        mButtonFacebook = new LoginButton(this);
+        mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // TODO: 10/25/17 Register trough Facebook
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(RegisterActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                showMessage(error.getMessage());
+            }
+        });
     }
 
     private void pickImageIntent() {

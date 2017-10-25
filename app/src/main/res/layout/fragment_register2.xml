@@ -85,7 +85,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_addPhoto"/>
@@ -118,6 +117,7 @@
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/tiet_registerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapWords"

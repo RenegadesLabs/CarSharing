@@ -3,6 +3,7 @@ package com.cardee.auth.register.view;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cardee.R;
 import com.cardee.auth.register.RegisterContract;
 import com.cardee.util.glide.CircleTransform;
@@ -34,7 +36,26 @@ public class RegisterFinalStepFragment extends Fragment {
     AppCompatImageView regUserPhoto;
 
     @BindView(R.id.fl_takePhoto)
-    FrameLayout takePhotoView;
+    FrameLayout regTakePhotoView;
+
+    @BindView(R.id.tiet_registerName)
+    TextInputEditText regUserName;
+
+    private final static String REG_USER_PIC = "reg_user_pic";
+
+    private final static String REG_USER_NAME = "reg_user_name";
+
+    private byte[] mPictureByteArray = null;
+
+    private String mNameText = null;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
 
 
     @Nullable
@@ -57,7 +78,7 @@ public class RegisterFinalStepFragment extends Fragment {
             mViewListener.onBackToFirstStep();
     }
 
-    @OnClick(R.id.fl_takePhoto)
+    @OnClick(R.id.iv_registerUserPhoto)
     public void onTakePhotoClicked() {
         if (mViewListener != null)
             mViewListener.onTakePhoto();
@@ -82,13 +103,47 @@ public class RegisterFinalStepFragment extends Fragment {
     }
 
     public void setUserPhoto(Bitmap bmp) {
-        takePhotoView.setVisibility(View.INVISIBLE);
-        regUserPhoto.setVisibility(View.VISIBLE);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        Glide.with(getActivity())
-                .load(stream.toByteArray())
+        mPictureByteArray = stream.toByteArray();
+        setImage(mPictureByteArray);
+    }
+
+    private void setImage(byte[] pictureByteArray) {
+        Glide.with((RegisterActivity) getActivity())
+                .load(pictureByteArray)
+                .placeholder(R.drawable.placeholder_user_img)
                 .transform(new CircleTransform(getActivity()))
                 .into(regUserPhoto);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mPictureByteArray = savedInstanceState.getByteArray(REG_USER_PIC);
+            if (mPictureByteArray != null) {
+                setImage(mPictureByteArray);
+            }
+
+            mNameText = savedInstanceState.getString(REG_USER_NAME);
+            if (mNameText != null && !mNameText.isEmpty()) {
+                regUserName.setText(mNameText);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mPictureByteArray != null) {
+            outState.putByteArray(REG_USER_PIC, mPictureByteArray);
+        }
+
+        mNameText = regUserName.getText().toString();
+        if (!mNameText.isEmpty()) {
+            outState.putString(REG_USER_NAME, mNameText);
+        }
     }
 }
