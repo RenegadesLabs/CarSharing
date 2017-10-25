@@ -149,8 +149,8 @@
 
         <ImageView
             android:id="@+id/car_location_selector_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintBottom_toBottomOf="@id/car_location_selector"
             app:layout_constraintEnd_toEndOf="@id/car_location_selector"
