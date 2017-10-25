@@ -19,8 +19,8 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 startActivity(new Intent(SplashActivity.this, PreviewActivity.class));
                 finish();
+                // TODO: 10/18/17 Loading car animation
             }
         }, 3000);
-        // TODO: 10/18/17 Loading car animation
     }
 }

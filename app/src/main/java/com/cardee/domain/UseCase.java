@@ -15,6 +15,6 @@ public interface UseCase<V extends UseCase.RequestValues, R extends UseCase.Resp
     interface Callback<R> {
         void onSuccess(R response);
 
-        void onError();
+        void onError(R message);
     }
 }

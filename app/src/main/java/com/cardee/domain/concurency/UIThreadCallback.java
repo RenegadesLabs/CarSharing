@@ -20,7 +20,7 @@ public class UIThreadCallback<V extends UseCase.ResponseValues> implements UseCa
     }
 
     @Override
-    public void onError() {
-        mResponseHandler.onError(mCallback);
+    public void onError(V message) {
+        mResponseHandler.onError(message, mCallback);
     }
 }

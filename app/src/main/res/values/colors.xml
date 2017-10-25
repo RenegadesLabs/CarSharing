@@ -24,4 +24,7 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
+
+    <color name="button_facebook">#3B579D</color>
+    <color name="button_google">#D95232</color>
 </resources>

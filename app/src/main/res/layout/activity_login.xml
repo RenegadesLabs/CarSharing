@@ -42,6 +42,7 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:layout_marginTop="30dp"
+        android:textColor="@color/colorAccent"
         android:hint="@string/email"
         android:textColor="@color/colorAccent"
         android:inputType="textEmailAddress"
@@ -53,7 +54,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:theme="@style/CardeeTextInputStyle"
-        android:id="@+id/et_loginPassword"
+        android:id="@+id/l_loginPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,8 +68,10 @@
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_loginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
             android:inputType="textPassword"
             android:textColor="@color/colorAccent"
             android:hint="@string/password" />
@@ -99,7 +102,7 @@
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_loginPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/l_loginPassword" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -114,27 +117,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_loginForgotPassword">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/facebook"
+        <com.cardee.custom.CardeeButton
+            android:id="@+id/b_loginFacebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/button_white_bg"
-            android:text="facebook"
+            android:paddingStart="@dimen/medium_margin"
+            android:paddingEnd="@dimen/medium_margin"
+            android:background="@drawable/button_facebook_bg"
+            android:text="@string/auth_facebook"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            app:drawableStartCompat="@drawable/ic_facebook"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/appCompatButton"
+        <com.cardee.custom.CardeeButton
+            android:id="@+id/b_loginGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_white_bg"
-            android:text="google"
+            android:background="@drawable/button_google_bg"
+            android:text="@string/auth_google"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            android:paddingStart="20dp"
+            android:paddingEnd="@dimen/medium_margin"
+            app:drawableStartCompat="@drawable/ic_googleplus"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp" />
     </LinearLayout>
 
