@@ -97,28 +97,34 @@
         app:layout_constraintTop_toBottomOf="@+id/b_registerSignup"
         app:layout_constraintBottom_toTopOf="@+id/tv_registerTermsOfService">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/facebook"
+        <com.cardee.custom.CardeeButton
+            android:id="@+id/b_registerFacebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_white_bg"
-            android:text="facebook"
+            android:paddingStart="@dimen/medium_margin"
+            android:paddingEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@drawable/button_facebook_bg"
+            android:text="@string/auth_facebook"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            app:drawableStartCompat="@drawable/ic_facebook"
             android:textSize="16sp" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/appCompatButton"
+        <com.cardee.custom.CardeeButton
+            android:id="@+id/b_registerGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_white_bg"
-            android:text="google"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/button_google_bg"
+            android:text="@string/auth_google"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_googleplus"/>
     </LinearLayout>
 
 
@@ -131,7 +137,7 @@
         android:layout_marginStart="32dp"
         android:gravity="center_horizontal"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_regular"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

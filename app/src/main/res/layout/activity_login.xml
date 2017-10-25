@@ -44,7 +44,6 @@
         android:layout_marginTop="30dp"
         android:textColor="@color/colorAccent"
         android:hint="@string/email"
-        android:textColor="@color/colorAccent"
         android:inputType="textEmailAddress"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +72,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
             android:inputType="textPassword"
-            android:textColor="@color/colorAccent"
             android:hint="@string/password" />
 
     </android.support.design.widget.TextInputLayout>

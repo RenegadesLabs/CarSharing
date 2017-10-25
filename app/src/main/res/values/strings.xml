@@ -5,16 +5,22 @@
     <string name="facebook_app_id">1969210599978942</string>
     <string name="fb_login_protocol_scheme">fb1969210599978942</string>
 
+    <!--Sign UP-->
     <string name="signup">Sign Up</string>
     <string name="signup_starter">Hello! Sign up to get started.</string>
     <string name="signup_almost">Almost done!</string>
     <string name="signup_add_photo">Add a photo of yourself!</string>
     <string name="signup_your_photo">Your photo</string>
     <string name="signup_name">What is your name?</string>
+    <string name="signup_terms">By signing up, you agree to Cardee\'s <u>Terms of Service</u> and <u>Privacy Policy</u></string>
     <string name="signup_as">Login as</string>
+    <string name="signup_terms_by">By signing up, you agree to Cardee\'s </string>
+    <string name="signup_terms_terms">Terms of Service</string>
+    <string name="signup_terms_privacy">Privacy Policy</string>
     <string name="car_renter">Car Renter</string>
     <string name="car_owner">Car Owner</string>
 
+    <!--Login-->
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
@@ -29,6 +35,7 @@
     <string name="auth_facebook">Log in with Facebook</string>
     <string name="auth_google">Log in with Google+</string>
 
+    <!--Bottom menu-->
     <string name="menu_item_inbox_title">Inbox</string>
     <string name="menu_item_cars_title">My Cars</string>
     <string name="menu_item_bookings_title">Bookings</string>

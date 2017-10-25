@@ -25,5 +25,7 @@ public interface RegisterContract {
         void onSignUpAsOwner();
 
         void onBackToFirstStep();
+
+        void onTermsOfService();
     }
 }
