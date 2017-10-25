@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void onFacebook() {
-
+        mButtonFacebook.performClick();
     }
 
     @Override

@@ -5,6 +5,9 @@
     <string name="facebook_app_id">1969210599978942</string>
     <string name="fb_login_protocol_scheme">fb1969210599978942</string>
 
+    <!--Google Web Server ID-->
+    <string name="google_web_server_id">223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com</string>
+
     <!--Sign UP-->
     <string name="signup">Sign Up</string>
     <string name="signup_starter">Hello! Sign up to get started.</string>
