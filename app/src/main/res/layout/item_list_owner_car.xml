@@ -35,12 +35,12 @@
             android:id="@+id/car_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_small"
             android:textColor="@color/text_picture_overlaid"
             android:textSize="@dimen/list_item_text_general"
             android:textStyle="bold"
-            android:layout_marginStart="@dimen/widget_margin_small"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/faded_line"
             app:layout_constraintTop_toTopOf="@+id/faded_line" />
 
@@ -48,10 +48,10 @@
             android:id="@+id/car_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_picture_overlaid"
-            android:textSize="@dimen/list_item_text_general"
             android:layout_marginStart="@dimen/widget_margin_x_small"
             android:text="2016"
+            android:textColor="@color/text_picture_overlaid"
+            android:textSize="@dimen/list_item_text_general"
             app:layout_constraintBottom_toBottomOf="@+id/faded_line"
             app:layout_constraintStart_toEndOf="@id/car_title"
             app:layout_constraintTop_toTopOf="@+id/faded_line" />
@@ -60,10 +60,10 @@
             android:id="@+id/car_licence_plate_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_small"
+            android:text="SLE8938Y"
             android:textColor="@color/text_picture_overlaid"
             android:textSize="@dimen/list_item_text_general"
-            android:text="SLE8938Y"
-            android:layout_marginEnd="@dimen/widget_margin_small"
             app:layout_constraintBottom_toBottomOf="@+id/faded_line"
             app:layout_constraintEnd_toEndOf="@id/faded_line"
             app:layout_constraintTop_toTopOf="@+id/faded_line" />
@@ -73,28 +73,30 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/list_item_control_title"
             android:text="Hourly"
+            android:textSize="@dimen/list_item_control_title"
             app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <Switch
             android:id="@+id/car_hourly_toggle"
-            android:theme="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
+            android:theme="@style/Switch"
             app:layout_constraintBottom_toBottomOf="@id/car_hourly_title"
             app:layout_constraintStart_toEndOf="@id/car_hourly_title"
             app:layout_constraintTop_toTopOf="@id/car_hourly_title" />
 
-        <TextView
+        <Button
             android:id="@+id/car_hourly_selector"
             style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:layout_marginEnd="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_mid"
+            android:clickable="true"
+            android:text="Currently not available"
             app:layout_constraintEnd_toStartOf="@+id/car_daily_selector"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/car_hourly_title" />
@@ -104,42 +106,57 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/list_item_control_title"
             android:text="Daily"
+            android:textSize="@dimen/list_item_control_title"
             app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <Switch
             android:id="@+id/car_daily_toggle"
-            android:theme="@style/Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/widget_margin_mid"
+            android:theme="@style/Switch"
             app:layout_constraintBottom_toBottomOf="@id/car_daily_title"
             app:layout_constraintStart_toEndOf="@id/car_daily_title"
             app:layout_constraintTop_toTopOf="@id/car_daily_title" />
 
-        <TextView
+        <Button
             android:id="@+id/car_daily_selector"
             style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:layout_marginStart="@dimen/widget_margin_small"
+            android:clickable="true"
+            android:text="6 available days"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/car_hourly_selector"
             app:layout_constraintTop_toBottomOf="@id/car_daily_title" />
 
-        <TextView
+        <Button
             android:id="@+id/car_location_selector"
+            style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/list_item_button"
             android:layout_margin="@dimen/widget_margin_mid"
-            android:background="@drawable/bg_rounded_border"
+            android:clickable="true"
+            android:text="454 Hougang Ave 10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/car_hourly_selector" />
+
+        <ImageView
+            android:id="@+id/car_location_selector_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintBottom_toBottomOf="@id/car_location_selector"
+            app:layout_constraintEnd_toEndOf="@id/car_location_selector"
+            app:layout_constraintStart_toStartOf="@id/car_location_selector"
+            app:layout_constraintTop_toTopOf="@id/car_location_selector"
+            app:srcCompat="@drawable/ic_temp_location" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
