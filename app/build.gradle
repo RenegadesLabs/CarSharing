@@ -66,6 +66,9 @@ dependencies {
     //Google Auth
     compile 'com.google.android.gms:play-services-auth:11.4.2'
 
+    //OkHttp
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cardee.R;
@@ -29,6 +29,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +49,8 @@ import butterknife.OnClick;
 public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implements LoginView {
 
     private final static int RC_SIGN_IN = 9001;
+
+    public final static String TAG = LoginActivity.class.getCanonicalName();
 
     @BindView(R.id.et_loginEmail)
     AppCompatEditText loginEmailEdit;
@@ -107,8 +120,37 @@ public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implem
             if (result.isSuccess()) {
                 GoogleSignInAccount acc = result.getSignInAccount();
                 if (acc != null) {
-                    mPresenter.loginSocial(SocialLoginRequest.Provider.GOOGLE,
-                            result.getSignInAccount().getIdToken());
+
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormEncodingBuilder()
+                            .add("grant_type", "authorization_code")
+                            .add("client_id", getString(R.string.google_client_id))
+                            .add("redirect_uri","")
+                            .add("code", acc.getServerAuthCode())
+                            .build();
+                    final Request request = new Request.Builder()
+                            .url("https://www.googleapis.com/oauth2/v4/token")
+                            .post(requestBody)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(final Request request, final IOException e) {
+                            Log.e(TAG, e.toString());
+                        }
+
+                        @Override
+                        public void onResponse(Response response) throws IOException {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.body().string());
+                                final String message = jsonObject.toString(5);
+                                Log.i(TAG, message);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+//                    mPresenter.loginSocial(SocialLoginRequest.Provider.GOOGLE,
+//                            result.getSignInAccount().getIdToken());
                 }
             }
         }
@@ -139,8 +181,8 @@ public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implem
 
     private void initGoogleApi() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
-                .requestIdToken(getString(R.string.google_web_server_id))
+                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
+                .requestServerAuthCode(getString(R.string.google_client_id))
                 .build();
 
         mGoogleClient = new GoogleApiClient.Builder(this)

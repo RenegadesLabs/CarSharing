@@ -20,6 +20,8 @@ public class SocialLogin implements UseCase<SocialLogin.RequestValues, SocialLog
 
         SocialLoginRequest.Provider provider = values.getProvider();
         String token = values.getToken();
+        /*"ya29.GlvwBDMSXnqNLg2IDIE5ZWdsmygKvFwqSQBbjWdC2wmBqJTiOfKFyzVIFDd9WGZ6fGtU585EcCttee_vodGeaaY_swQ-uMwt4iwIoGxVU5zPxuB-1YxBV92yMhrg"*/
+
 
         if (provider == null || token == null) {
             callback.onError(null);
