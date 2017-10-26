@@ -11,12 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_home.OwnerCarListContract;
+import com.cardee.owner_home.presenter.OwnerCarsPresenter;
 import com.cardee.owner_home.view.adapter.CarListAdapter;
 
-public class OwnerCarsFragment extends Fragment {
+import java.util.List;
+
+public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.View {
 
     private CarListAdapter mAdapter;
     private RecyclerView mCarsListView;
+
+    private OwnerCarsPresenter mPresenter;
 
     public static Fragment newInstance() {
         return new OwnerCarsFragment();
@@ -26,6 +33,7 @@ public class OwnerCarsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new CarListAdapter(getActivity());
+        mPresenter = new OwnerCarsPresenter(this);
     }
 
     @Nullable
@@ -37,9 +45,45 @@ public class OwnerCarsFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.destroy();
+    }
+
     private void initCarList(RecyclerView listView) {
         listView.setAdapter(mAdapter);
         listView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         listView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @Override
+    public void setItems(List<Car> items) {
+
+    }
+
+    @Override
+    public void updateItem(Car item) {
+
+    }
+
+    @Override
+    public void removeItem(Car item) {
+
+    }
+
+    @Override
+    public void openItem(Car item) {
+
     }
 }

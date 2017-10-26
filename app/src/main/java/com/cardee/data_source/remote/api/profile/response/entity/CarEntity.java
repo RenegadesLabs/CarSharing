@@ -3,7 +3,7 @@ package com.cardee.data_source.remote.api.profile.response.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CarObject {
+public class CarEntity {
 
     @Expose
     @SerializedName("car_availability_hourly_cnt")
@@ -33,7 +33,7 @@ public class CarObject {
     @SerializedName("car_details")
     private Details carDetails;
 
-    public CarObject() {
+    public CarEntity() {
 
     }
 

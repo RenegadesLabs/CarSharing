@@ -10,7 +10,7 @@ public class LoginPresenter {
 
     public LoginPresenter() {
         mLoginUseCase = new Login();
-        mExecutor = UseCaseExecutor.getInstrnce();
+        mExecutor = UseCaseExecutor.getInstance();
     }
 
 

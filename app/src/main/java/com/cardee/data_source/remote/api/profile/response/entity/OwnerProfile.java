@@ -43,7 +43,7 @@ public class OwnerProfile extends ErrorResponseBody {
     private String socialNetwork;
     @Expose
     @SerializedName("cars")
-    private CarObject[] cars;
+    private CarEntity[] cars;
     @Expose
     @SerializedName("settings")
     private NotificationSettings[] settings;
@@ -148,11 +148,11 @@ public class OwnerProfile extends ErrorResponseBody {
         this.socialNetwork = socialNetwork;
     }
 
-    public CarObject[] getCars() {
+    public CarEntity[] getCars() {
         return cars;
     }
 
-    public void setCars(CarObject[] cars) {
+    public void setCars(CarEntity[] cars) {
         this.cars = cars;
     }
 

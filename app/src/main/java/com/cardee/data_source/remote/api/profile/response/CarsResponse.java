@@ -2,7 +2,7 @@ package com.cardee.data_source.remote.api.profile.response;
 
 
 import com.cardee.data_source.remote.api.BaseResponse;
-import com.cardee.data_source.remote.api.profile.response.entity.CarObject;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,17 +13,17 @@ public class CarsResponse extends BaseResponse {
      */
     @Expose
     @SerializedName("data")
-    private CarObject[] cars;
+    private CarEntity[] cars;
 
     public CarsResponse() {
 
     }
 
-    public CarObject[] getCars() {
+    public CarEntity[] getCars() {
         return cars;
     }
 
-    public void setCars(CarObject[] cars) {
+    public void setCars(CarEntity[] cars) {
         this.cars = cars;
     }
 }
