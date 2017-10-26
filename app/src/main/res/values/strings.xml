@@ -8,6 +8,11 @@
     <!--Google Web Server ID-->
     <string name="google_client_id">223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com</string>
 
+    <!--Preview-->
+    <string name="app_tagline">Rent cars from nearby fellow peers</string>
+    <string name="pickup_cars">Pickup cars around you</string>
+    <string name="pickup_desc">Conveniently pickup cars as close as \nyour nearest carpark!</string>
+
     <!--Sign UP-->
     <string name="signup">Sign Up</string>
     <string name="signup_starter">Hello! Sign up to get started.</string>
