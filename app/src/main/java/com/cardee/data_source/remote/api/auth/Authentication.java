@@ -17,11 +17,11 @@ import retrofit2.http.POST;
 
 public interface Authentication {
 
-    @POST("/auth/login")
+    @POST("auth/login")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> login(@Body LoginRequest request);
 
-    @POST("/auth/login_social")
+    @POST("auth/login_social")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> loginSocial(@Body SocialLoginRequest request);
 

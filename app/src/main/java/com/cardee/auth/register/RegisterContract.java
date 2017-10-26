@@ -14,10 +14,18 @@ public interface RegisterContract {
 
         void onSignUp();
 
+        void onTakePhoto();
+
         void onFacebook();
 
         void onGoogle();
 
+        void onSignUpAsRenter();
+
+        void onSignUpAsOwner();
+
         void onBackToFirstStep();
+
+        void onTermsOfService();
     }
 }

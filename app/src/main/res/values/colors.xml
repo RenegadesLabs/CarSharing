@@ -16,10 +16,15 @@
     <color name="bg_widget_pressed">#d6d6d6</color>
 
     <color name="text_disabled">#bababa</color>
+    
+    <color name="turquoise_text">#19B9AD</color>
 
     <color name="colorPrimary">#419CED</color>
     <color name="colorPrimaryDark">#1283E8</color>
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
+
+    <color name="button_facebook">#3B579D</color>
+    <color name="button_google">#D95232</color>
 </resources>

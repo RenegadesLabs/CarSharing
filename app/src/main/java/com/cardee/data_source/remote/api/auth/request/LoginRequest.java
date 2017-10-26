@@ -11,7 +11,7 @@ public class LoginRequest {
     @SerializedName("password")
     private String password;
 
-    public LoginRequest(){
+    public LoginRequest() {
 
     }
 
