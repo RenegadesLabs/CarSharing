@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="full_width_card_horizontal_margin">-3dp</dimen>
+
+    <dimen name="list_item_car_title_layout_height">36dp</dimen>
+    <dimen name="list_item_control_text">48dp</dimen>
+    <dimen name="list_item_button">44dp</dimen>
+
+    <dimen name="button_vertical_padding">8dp</dimen>
+    <dimen name="button_horizontal_padding">24dp</dimen>
+
+    <dimen name="widget_margin_mid">18dp</dimen>
+    <dimen name="widget_margin_small">12dp</dimen>
+    <dimen name="widget_margin_x_small">8dp</dimen>
+    <dimen name="list_divider_margin">12dp</dimen>
+    <dimen name="list_bottom_padding">8dp</dimen>
+</resources>

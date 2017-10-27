@@ -1,5 +1,7 @@
 package com.cardee.domain;
 
+import com.cardee.data_source.Error;
+
 public interface UseCase<V extends UseCase.RequestValues, R extends UseCase.ResponseValues> {
 
     void execute(V values, Callback<R> callback);
@@ -15,6 +17,6 @@ public interface UseCase<V extends UseCase.RequestValues, R extends UseCase.Resp
     interface Callback<R> {
         void onSuccess(R response);
 
-        void onError(R message);
+        void onError(Error error);
     }
 }

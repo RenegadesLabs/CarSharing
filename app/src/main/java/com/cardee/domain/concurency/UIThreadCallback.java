@@ -2,6 +2,7 @@ package com.cardee.domain.concurency;
 
 import android.support.annotation.NonNull;
 
+import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 
 public class UIThreadCallback<V extends UseCase.ResponseValues> implements UseCase.Callback<V> {
@@ -20,7 +21,7 @@ public class UIThreadCallback<V extends UseCase.ResponseValues> implements UseCa
     }
 
     @Override
-    public void onError(V message) {
-        mResponseHandler.onError(message, mCallback);
+    public void onError(Error error) {
+        mResponseHandler.onError(mCallback);
     }
 }

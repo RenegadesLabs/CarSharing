@@ -7,11 +7,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
 public class ErrorResponseBody {
+
+    public static final String ERROR_FIELD_TYPE = "type";
+    public static final String ERROR_FIELD_DESCRIPTION = "description";
+    public static final String ERROR_FIELD_DETAILS = "details";
+
     @Expose
     @SerializedName("errors")
     private Map<String, String> errors;
 
-    public ErrorResponseBody(){
+    public ErrorResponseBody() {
 
     }
 
