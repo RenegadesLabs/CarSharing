@@ -21,7 +21,7 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
         String password = values.getPassword();
 
         if (login == null || password == null) {
-            callback.onError();
+            callback.onError(null);
             return;
         }
         mRepository.login(login, password, new UserDataSource.Callback() {
@@ -31,8 +31,8 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
             }
 
             @Override
-            public void onError() {
-                callback.onError();
+            public void onError(String message) {
+                callback.onError(new ResponseValues(message));
             }
         });
     }
@@ -56,14 +56,23 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {
-        private final Boolean mSuccess;
+        private Boolean mSuccess;
+        private String mErrorMsg;
 
         public ResponseValues(Boolean success) {
             mSuccess = success;
         }
 
+        ResponseValues(String errorMessage) {
+            mErrorMsg = errorMessage;
+        }
+
         public boolean isSuccess() {
             return mSuccess != null && mSuccess;
+        }
+
+        public String getErrorMessage() {
+            return mErrorMsg != null ? mErrorMsg : "";
         }
     }
 }

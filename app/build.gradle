@@ -16,14 +16,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
     }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.google.com' }
 }
 
 dependencies {
@@ -41,6 +46,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    //Glide
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+
     testCompile 'junit:junit:4.12'
 
     //Rx related dependencies
@@ -50,7 +58,18 @@ dependencies {
     //Retrofit related dependencies
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
+    //Facebook SDK
+    compile 'com.facebook.android:facebook-login:4.27.0'
+
+    //Google Auth
+    compile 'com.google.android.gms:play-services-auth:11.4.2'
+
+    //OkHttp
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
+
 }
+
+apply plugin: 'com.google.gms.google-services'

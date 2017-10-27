@@ -22,11 +22,11 @@ public final class UseCaseResponseHandler {
         });
     }
 
-    <R extends UseCase.ResponseValues> void onError(final UseCase.Callback<R> callback) {
+    <R extends UseCase.ResponseValues> void onError(final R message, final UseCase.Callback<R> callback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                callback.onError();
+                callback.onError(message);
             }
         });
     }

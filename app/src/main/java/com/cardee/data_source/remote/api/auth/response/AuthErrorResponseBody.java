@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
+
 public class AuthErrorResponseBody {
 
     public static final String ERROR_FIELD_AUTHENTICATION = "authentication";
@@ -29,4 +30,5 @@ public class AuthErrorResponseBody {
     public void setErrors(Map<String, String[]> errors) {
         this.errors = errors;
     }
+
 }

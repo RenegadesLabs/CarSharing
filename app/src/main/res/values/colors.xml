@@ -20,6 +20,7 @@
     <color name="bg_transparent_black">#80000000</color>
 
     <color name="text_disabled">#bababa</color>
+    <color name="turquoise_text">#19B9AD</color>
     <color name="text_enabled">#474849</color>
     <color name="text_picture_overlaid">#ffffff</color>
 
@@ -28,4 +29,7 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
+
+    <color name="button_facebook">#3B579D</color>
+    <color name="button_google">#D95232</color>
 </resources>
