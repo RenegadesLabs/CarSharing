@@ -13,22 +13,22 @@ import retrofit2.http.PUT;
 
 public interface Profile {
 
-    @GET("/profiles/owner")
+    @GET("profiles/owner")
     @Headers("Content-Type: application/json")
-    Call<OwnerProfileResponse> loadOwnerProfile();
+    Observable<OwnerProfileResponse> loadOwnerProfile();
 
-    @GET("/profiles/owner/cars")
+    @GET("profiles/owner/cars")
     @Headers("Content-Type: application/json")
-    Call<CarsResponse> loadOwnersCarList();
+    Observable<CarsResponse> loadOwnersCarList();
 
     //TODO: implement
     void uploadProfilePhoto();
 
-    @PUT("/profiles/owner/note")
+    @PUT("profiles/owner/note")
     @Headers("Content-Type: application/json")
-    Call<NoDataResponse> updateOwnerNote();
+    Observable<NoDataResponse> updateOwnerNote();
 
-    @PUT("/profiles/settings")
+    @PUT("profiles/settings")
     @Headers("Content-Type: application/json")
-    Call<NoDataResponse> updateNotificationSettings();
+    Observable<NoDataResponse> updateNotificationSettings();
 }

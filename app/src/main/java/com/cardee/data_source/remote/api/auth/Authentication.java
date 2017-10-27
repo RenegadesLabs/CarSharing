@@ -25,19 +25,19 @@ public interface Authentication {
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> loginSocial(@Body SocialLoginRequest request);
 
-    @POST("/auth/signup")
+    @POST("auth/signup")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> signUp(@Body SignUpRequest request);
 
-    @POST("/auth/verify_password")
+    @POST("auth/verify_password")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> verifyPassword(@Body VerifyPasswordRequest request);
 
-    @GET("/auth/logout")
+    @GET("auth/logout")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> logout(@Header("Authentication") String authenticationToken);
 
-    @POST("/auth/push")
+    @POST("auth/push")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> push(@Body PushRequest request);
 }
