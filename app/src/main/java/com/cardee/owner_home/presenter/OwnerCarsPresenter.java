@@ -11,9 +11,10 @@ import com.cardee.owner_home.OwnerCarListContract;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.functions.Consumer;
 
-public class OwnerCarsPresenter extends Subscriber<OwnerCarListContract.CarEvent> {
+public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEvent> {
+
 
     private OwnerCarListContract.View mView;
 
@@ -54,19 +55,8 @@ public class OwnerCarsPresenter extends Subscriber<OwnerCarListContract.CarEvent
         mView = null;
     }
 
-
     @Override
-    public void onCompleted() {
-
-    }
-
-    @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onNext(OwnerCarListContract.CarEvent carEvent) {
+    public void accept(OwnerCarListContract.CarEvent carEvent) throws Exception {
 
     }
 }
