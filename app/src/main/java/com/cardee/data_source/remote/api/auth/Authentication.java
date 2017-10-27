@@ -1,6 +1,7 @@
 package com.cardee.data_source.remote.api.auth;
 
 
+import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
@@ -24,6 +25,10 @@ public interface Authentication {
     @POST("auth/login_social")
     @Headers("Content-Type: application/json")
     Observable<BaseAuthResponse> loginSocial(@Body SocialLoginRequest request);
+
+    @POST("auth/validate")
+    @Headers("Content-Type: application/json")
+    Observable<BaseAuthResponse> checkUniqueLogin(@Body CheckUniqueLoginRequest request);
 
     @POST("auth/signup")
     @Headers("Content-Type: application/json")

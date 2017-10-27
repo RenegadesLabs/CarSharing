@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
@@ -23,12 +25,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -46,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implements LoginView {
+public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implements LoginView {
 
     private final static int RC_SIGN_IN = 9001;
 
@@ -79,7 +78,6 @@ public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implem
         mPresenter = new LoginPresenter(this);
         initProgress();
         initFacebookApi();
-        initGoogleApi();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -180,20 +178,12 @@ public class LoginActivity extends /*AppCompatActivity*/ FragmentActivity implem
     }
 
     private void initGoogleApi() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
-                .requestServerAuthCode(getString(R.string.google_client_id))
-                .build();
-
-        mGoogleClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(LoginActivity.this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        showMessage(connectionResult.getErrorMessage());
-                    }
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        mGoogleClient = CardeeApp.initLoginGoogleApi(this, new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                showMessage(connectionResult.getErrorMessage());
+            }
+        });
     }
 
     private boolean isFieldsNotEmpty() {

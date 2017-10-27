@@ -1,50 +1,45 @@
 package com.cardee.domain.owner.usecase;
 
-
 import android.support.annotation.NonNull;
 
-import com.cardee.data_source.Error;
 import com.cardee.data_source.UserDataSource;
 import com.cardee.data_source.UserRepository;
 import com.cardee.domain.UseCase;
 
-public class Login implements UseCase<Login.RequestValues, Login.ResponseValues> {
+import java.io.File;
+
+public class Register implements UseCase<Register.RequestValues, Register.ResponseValues> {
 
     private UserDataSource mRepository;
 
-    public Login() {
+    public Register() {
         mRepository = UserRepository.getInstance();
     }
 
     @Override
-    public void execute(Login.RequestValues values, final Callback<Login.ResponseValues> callback) {
-        String login = values.getLogin();
-        String password = values.getPassword();
+    public void execute(RequestValues values, Callback<ResponseValues> callback) {
 
-        if (login == null || password == null) {
-            callback.onError(null);
+        if (values.getLogin() == null || values.getPassword() == null
+                || values.getImage() == null || values.getUserName() == null) {
             return;
         }
-        mRepository.login(login, password, new UserDataSource.Callback() {
-            @Override
-            public void onSuccess(boolean success) {
-                callback.onSuccess(new ResponseValues(success));
-            }
 
-            @Override
-            public void onError(Error error) {
-                callback.onError(error);
-            }
-        });
+
+
     }
+
 
     public static class RequestValues implements UseCase.RequestValues {
         private final String mLogin;
         private final String mPassword;
+        private final File mImage;
+        private final String mUserName;
 
-        public RequestValues(@NonNull String login, @NonNull String password) {
+        public RequestValues(@NonNull String login, @NonNull String password, @NonNull File image, @NonNull String userName) {
             mLogin = login;
             mPassword = password;
+            mImage = image;
+            mUserName = userName;
         }
 
         public String getLogin() {
@@ -53,6 +48,14 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
 
         public String getPassword() {
             return mPassword;
+        }
+
+        public File getImage() {
+            return mImage;
+        }
+
+        public String getUserName() {
+            return mUserName;
         }
     }
 

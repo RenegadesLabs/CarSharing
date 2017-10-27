@@ -37,7 +37,7 @@ public class RegisterFirstStepFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
-    private RegisterContract.RegisterView mViewListener;
+    private RegisterView mViewListener;
 
     @Nullable
     @Override
@@ -51,7 +51,7 @@ public class RegisterFirstStepFragment extends Fragment {
         return v;
     }
 
-    public void setViewListener(RegisterContract.RegisterView listener) {
+    public void setViewListener(RegisterView listener) {
         mViewListener = listener;
     }
 
@@ -63,8 +63,8 @@ public class RegisterFirstStepFragment extends Fragment {
 
     @OnClick(R.id.b_registerSignup)
     public void onSignUpClicked() {
-        if (mViewListener != null)
-            mViewListener.onSignUp();
+        if (mViewListener != null && isFieldsNotEmpty())
+            mViewListener.onSignUp(regEmailEdit.getText().toString(), regPassEdit.getText().toString());
     }
 
     @OnClick(R.id.b_registerFacebook)
@@ -119,6 +119,19 @@ public class RegisterFirstStepFragment extends Fragment {
         regTermsOfServiceTV.setText(userTermsOfServiceText);
         regTermsOfServiceTV.setMovementMethod(LinkMovementMethod.getInstance());
         regTermsOfServiceTV.setHighlightColor(Color.TRANSPARENT);
+    }
+
+    private boolean isFieldsNotEmpty() {
+        String err = getResources().getString(R.string.email_pass_empty_error);
+        if (regEmailEdit.getText().toString().equals("")) {
+            regEmailEdit.setError(err);
+            return false;
+        } else if (regPassEdit.getText().toString().equals("")) {
+            regPassEdit.setError(err);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

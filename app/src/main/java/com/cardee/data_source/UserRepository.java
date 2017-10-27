@@ -3,9 +3,11 @@ package com.cardee.data_source;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.remote.api.auth.Authentication;
+import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
+import com.cardee.domain.owner.usecase.Register;
 import com.cardee.domain.owner.usecase.SocialLogin;
 
 import io.reactivex.Observable;
@@ -86,5 +88,35 @@ public class UserRepository implements UserDataSource {
 
             }
         });
+    }
+
+    @Override
+    public void checkUniqueLogin(String login, String password, String name, final Callback callback) {
+        CheckUniqueLoginRequest req = new CheckUniqueLoginRequest();
+        req.setLogin(login);
+        req.setPassword(password);
+        req.setName(name);
+        Observable<BaseAuthResponse> ob = api.checkUniqueLogin(req);
+        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+            @Override
+            public void onNext(BaseAuthResponse baseAuthResponse) {
+                callback.onSuccess(baseAuthResponse.getSuccess());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void register(Register.RequestValues registerValues, Callback callback) {
+
     }
 }

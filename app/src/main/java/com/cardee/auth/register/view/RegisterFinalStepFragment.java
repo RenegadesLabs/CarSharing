@@ -28,7 +28,7 @@ public class RegisterFinalStepFragment extends Fragment {
 
     public final static String TAG = "RegisterFinalStepFragment";
 
-    private RegisterContract.RegisterView mViewListener;
+    private RegisterView mViewListener;
 
     private Unbinder mUnbinder;
 
@@ -68,7 +68,7 @@ public class RegisterFinalStepFragment extends Fragment {
         return v;
     }
 
-    public void setViewListener(RegisterContract.RegisterView listener) {
+    public void setViewListener(RegisterView listener) {
         mViewListener = listener;
     }
 

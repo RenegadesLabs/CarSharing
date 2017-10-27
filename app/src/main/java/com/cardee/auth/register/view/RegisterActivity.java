@@ -1,5 +1,6 @@
 package com.cardee.auth.register.view;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,10 +22,12 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterContract.RegisterView {
+public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
     private final int PICK_IMAGE = 1;
     private final int CROP_IMAGE = 2;
+
+    private RegisterPresenter mPresenter;
 
     private RegisterFirstStepFragment mFirstStepFragment;
     private RegisterFinalStepFragment mFinalStepFragment;
@@ -34,15 +37,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     private LoginButton mButtonFacebook;
 
+    private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initFragments();
         initFacebookButton();
+        initProgress();
     }
 
     private void initFragments() {
+        mPresenter = new RegisterPresenter(this);
+
         mFragmentManager = getSupportFragmentManager();
 
         mFirstStepFragment = new RegisterFirstStepFragment();
@@ -58,12 +66,16 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void showProgress(boolean show) {
-
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
     }
 
     @Override
     public void showMessage(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -78,10 +90,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     }
 
     @Override
-    public void onSignUp() {
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
-                .commit();
+    public void onSignUp(String login, String password) {
+        mPresenter.checkUniqueLogin(login, password, "__");
     }
 
     @Override
@@ -126,6 +136,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                 }
                 break;
         }
+    }
+
+    private void initProgress() {
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage(getResources().getString(R.string.loading));
+        mProgress.setCancelable(false);
     }
 
     private void initFacebookButton() {
@@ -193,6 +209,18 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void onSignUpAsOwner() {
+
+    }
+
+    @Override
+    public void onValidationSuccess() {
+        mFragmentManager.beginTransaction()
+                .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onRegistrationSuccess() {
 
     }
 }

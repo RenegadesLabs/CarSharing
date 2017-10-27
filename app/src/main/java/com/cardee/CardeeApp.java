@@ -1,9 +1,19 @@
 package com.cardee;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 
+import com.cardee.auth.login.LoginActivity;
 import com.cardee.data_source.remote.api.client.HttpClientProvider;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
 
 import retrofit2.Retrofit;
 
@@ -26,5 +36,19 @@ public class CardeeApp extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+    }
+
+    public static GoogleApiClient initLoginGoogleApi(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
+                .requestServerAuthCode(activity.getString(R.string.google_client_id))
+                .build();
+
+        return new GoogleApiClient.Builder(activity)
+                .enableAutoManage(activity, listener)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
     }
 }
