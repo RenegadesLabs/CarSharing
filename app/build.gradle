@@ -59,16 +59,14 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
 
     //Facebook SDK
     compile 'com.facebook.android:facebook-login:4.27.0'
 
     //Google Auth
     compile 'com.google.android.gms:play-services-auth:11.4.2'
-
-    //OkHttp
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

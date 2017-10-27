@@ -20,7 +20,7 @@ public class UserRepository implements UserDataSource {
     private Authentication api;
 
     private UserRepository() {
-        api = CardeeApp.getBaseApi().create(Authentication.class);
+        api = CardeeApp.retrofit.create(Authentication.class);
     }
 
     public static UserRepository getInstance() {
@@ -45,7 +45,11 @@ public class UserRepository implements UserDataSource {
 
             @Override
             public void onError(Throwable e) {
-                callback.onError(e.getMessage());
+                if (WRONG_CREDENTIALS.equals(e.getMessage())) {
+                    callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
+                    return;
+                }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 
             @Override
@@ -70,7 +74,11 @@ public class UserRepository implements UserDataSource {
 
             @Override
             public void onError(Throwable e) {
-                callback.onError(e.getMessage());
+                if (WRONG_CREDENTIALS.equals(e.getMessage())) {
+                    callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
+                    return;
+                }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 
             @Override

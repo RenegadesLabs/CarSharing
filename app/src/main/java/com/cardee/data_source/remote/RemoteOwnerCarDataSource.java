@@ -11,6 +11,11 @@ import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 
 import java.io.IOException;
 
+import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import retrofit2.Response;
 
 public class RemoteOwnerCarDataSource implements OwnerCarDataSource {
@@ -33,17 +38,23 @@ public class RemoteOwnerCarDataSource implements OwnerCarDataSource {
     }
 
     @Override
-    public void obtainCars(Callback callback) {
-        try {
-            Response<CarsResponse> response = mApi.loadOwnersCarList().execute();
-            if (response.isSuccessful()) {
-                callback.onSuccess(response.body().getCars());
-                return;
+    public void obtainCars(final Callback callback) {
+        mApi.loadOwnersCarList().subscribe(new Consumer<CarsResponse>() {
+            @Override
+            public void accept(CarsResponse carsResponse) throws Exception {
+                if (carsResponse.isSuccessful()) {
+                    callback.onSuccess(carsResponse.getCars());
+                    return;
+                }
+                handleErrorResponse(callback, carsResponse);
             }
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
-        }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
     }
 
     private void handleErrorResponse(Callback callback, BaseResponse response) {

@@ -12,6 +12,6 @@ public interface UserDataSource {
 
         void onSuccess(boolean success);
 
-        void onError(String message);
+        void onError(Error error);
     }
 }
