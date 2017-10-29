@@ -32,8 +32,12 @@ public class AccountManager {
     public void handleResponseHeaders(Response response) {
         String headerValue = response.header(AUTH_HEADER_NAME);
         if (headerValue != null) {
-            mPrefs.edit().putString(AUTH_TOKEN, headerValue).apply();
+            saveToken(headerValue);
         }
+    }
+
+    public void saveToken(String token) {
+        mPrefs.edit().putString(AUTH_TOKEN, token).apply();
     }
 
     public void onLogout() {

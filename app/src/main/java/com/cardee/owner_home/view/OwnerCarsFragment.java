@@ -82,6 +82,7 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
     @Override
     public void setItems(List<Car> items) {
         Log.e("SET_ITEMS", String.valueOf(items));
+        mAdapter.insert(items);
     }
 
     @Override

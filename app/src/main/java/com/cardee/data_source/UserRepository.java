@@ -6,6 +6,7 @@ import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.owner.usecase.SocialLogin;
 
 import io.reactivex.Observable;
@@ -40,6 +41,9 @@ public class UserRepository implements UserDataSource {
         ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
             @Override
             public void onNext(BaseAuthResponse baseAuthResponse) {
+                if (baseAuthResponse.getSuccess()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
 

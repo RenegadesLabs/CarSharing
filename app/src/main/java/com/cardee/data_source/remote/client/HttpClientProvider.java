@@ -27,7 +27,6 @@ public class HttpClientProvider {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
-                .addInterceptor(new AuthHeaderResponseInterceptor(accountManager))
                 .addInterceptor(new HttpLoggingInterceptor())
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build();

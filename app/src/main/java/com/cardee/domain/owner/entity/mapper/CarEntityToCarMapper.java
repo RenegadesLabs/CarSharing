@@ -28,7 +28,7 @@ public class CarEntityToCarMapper {
                     imageEntity.getThumbnail(),
                     imageEntity.isPrimary());
             if (imageEntity.isPrimary()) {
-                primaryImageLink = imageEntity.getLink();
+                primaryImageLink = imageEntity.getThumbnail();
             }
         }
         return new Car(carDetails.getCarId(), carDetails.getMake(), carDetails.getTitle(),

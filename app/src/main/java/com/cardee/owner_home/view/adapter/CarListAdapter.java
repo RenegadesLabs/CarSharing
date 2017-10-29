@@ -40,6 +40,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
     public CarListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCarViewItems = new ArrayList<>();
+        mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
     }
 
