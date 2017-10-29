@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
-            android:text="Hourly"
+            android:text="@string/car_list_item_hourly_label"
             android:textSize="@dimen/list_item_control_title"
             app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
-            android:text="Daily"
+            android:text="@string/car_list_item_daily_label"
             android:textSize="@dimen/list_item_control_title"
             app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />

@@ -1,6 +1,8 @@
 package com.cardee.domain.owner.entity;
 
 
+import android.support.annotation.NonNull;
+
 public class Car {
 
     private final Integer mCarId;
@@ -26,7 +28,7 @@ public class Car {
     private final String[] mCarAvailabilityDailyDates;
     private final Image[] mImages;
 
-    public Car(Integer carId,
+    public Car(@NonNull Integer carId,
                String carMake,
                String carTitle,
                String carModel,
@@ -296,5 +298,30 @@ public class Car {
 
     public Image[] getImages() {
         return mImages;
+    }
+
+    public boolean isAvailableHourly() {
+        return mCarAvailableOrderHours != null && mCarAvailableOrderHours;
+    }
+
+    public boolean isAvailableDaily() {
+        return mCarAvailableOrderDays != null && mCarAvailableOrderDays;
+    }
+
+    @Override
+    public int hashCode() {
+        return mCarId == null ? 0 : mCarId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!obj.getClass().getName().equals(getClass().getName())) {
+            return false;
+        }
+        Car suspect = (Car) obj;
+        return suspect.mCarId != null && mCarId != null && mCarId.equals(suspect.mCarId);
     }
 }

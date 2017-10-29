@@ -28,7 +28,7 @@ public interface OwnerCarListContract {
     }
 
     enum Action {
-        OPEN, HOURLY_SWITCHED, DAILY_SWITCHED, UPDATED
+        OPEN, HOURLY_SWITCHED, DAILY_SWITCHED, LOCATION_CLICKED, HOURLY_CLICKED, DAILY_CLICKED, UPDATED
     }
 
     class CarEvent {
