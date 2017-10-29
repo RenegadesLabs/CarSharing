@@ -3,7 +3,7 @@ package com.cardee;
 import android.app.Application;
 import android.content.Context;
 
-import com.cardee.data_source.remote.api.client.HttpClientProvider;
+import com.cardee.data_source.remote.client.HttpClientProvider;
 
 import retrofit2.Retrofit;
 

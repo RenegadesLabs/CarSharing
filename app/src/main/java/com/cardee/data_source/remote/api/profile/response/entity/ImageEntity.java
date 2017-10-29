@@ -4,7 +4,7 @@ package com.cardee.data_source.remote.api.profile.response.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+public class ImageEntity {
 
     @Expose
     @SerializedName("image_id")
@@ -19,7 +19,7 @@ public class Image {
     @SerializedName("is_primary")
     private Boolean primary;
 
-    public Image() {
+    public ImageEntity() {
 
     }
 

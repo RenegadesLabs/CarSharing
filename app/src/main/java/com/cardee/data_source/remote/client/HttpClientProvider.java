@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.client;
+package com.cardee.data_source.remote.client;
 
 import android.content.Context;
 

@@ -2,12 +2,13 @@ package com.cardee.owner_home;
 
 
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.mvp.BaseView;
 
 import java.util.List;
 
 public interface OwnerCarListContract {
 
-    interface View {
+    interface View extends BaseView {
 
         void setItems(List<Car> cars);
 
@@ -16,6 +17,10 @@ public interface OwnerCarListContract {
         void removeItem(Car car);
 
         void openItem(Car car);
+
+        void onUnauthorized();
+
+        void onConnectionLost();
     }
 
     interface Presenter {
