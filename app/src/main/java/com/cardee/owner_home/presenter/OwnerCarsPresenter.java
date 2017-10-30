@@ -80,6 +80,19 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
 
     @Override
     public void accept(OwnerCarListContract.CarEvent carEvent) throws Exception {
-
+        switch (carEvent.getAction()) {
+            case DAILY_CLICKED:
+                mView.openDailyPicker(carEvent.getCar());
+                break;
+            case HOURLY_CLICKED:
+                mView.openHourlyPicker(carEvent.getCar());
+                break;
+            case LOCATION_CLICKED:
+                mView.openLocationPicker(carEvent.getCar());
+                break;
+            case OPEN:
+                mView.openItem(carEvent.getCar());
+                break;
+        }
     }
 }

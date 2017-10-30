@@ -1,7 +1,10 @@
 package com.cardee.owner_home.view;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_home.OwnerCarListContract;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
+import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.ViewModeChangeListener;
 
 import android.os.Bundle;
@@ -15,12 +18,14 @@ import android.util.Log;
 import android.view.Menu;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
 
 import retrofit2.http.PUT;
 
 public class OwnerHomeActivity extends AppCompatActivity
-        implements ViewModeChangeListener, AHBottomNavigation.OnTabSelectedListener {
+        implements ViewModeChangeListener, AHBottomNavigation.OnTabSelectedListener,
+        CarListItemEventListener {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
 
@@ -38,8 +43,9 @@ public class OwnerHomeActivity extends AppCompatActivity
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
-        bottomMenu.disableItemAtPosition(0);
-        bottomMenu.disableItemAtPosition(2);
+        bottomMenu.setCurrentItem(1);
+        bottomMenu.disableItemAtPosition(0); //Just for demo
+        bottomMenu.disableItemAtPosition(2); //Just for demo
 
     }
 
@@ -99,5 +105,27 @@ public class OwnerHomeActivity extends AppCompatActivity
         super.onAttachFragment(fragment);
         Log.e(TAG, fragment.toString());
         mHasFragment = true;
+    }
+
+    @Override
+    public void onCarItemClick(Car car) {
+
+    }
+
+    @Override
+    public void onHourlyPickerClick(Car car) {
+        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment.getInstance(AvailabilityMenuFragment.Mode.HOURLY);
+        menuFragment.show(getSupportFragmentManager(), menuFragment.getTag());
+    }
+
+    @Override
+    public void onDailyPickerClick(Car car) {
+        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment.getInstance(AvailabilityMenuFragment.Mode.DAILY);
+        menuFragment.show(getSupportFragmentManager(), menuFragment.getTag());
+    }
+
+    @Override
+    public void onLocationPickerClick(Car car) {
+
     }
 }

@@ -146,8 +146,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mHourlySwitch.setChecked(model.isAvailableHourly());
             mDailySwitch.setChecked(model.isAvailableDaily());
 
-            mHourlyView.setEnabled(model.isAvailableHourly());
-            mDailyView.setEnabled(model.isAvailableDaily());
+//            mHourlyView.setEnabled(model.isAvailableHourly());
+//            mDailyView.setEnabled(model.isAvailableDaily());
 
             if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
                 mLoadingIndicator.setVisibility(View.VISIBLE);

@@ -32,4 +32,6 @@
 
     <color name="button_facebook">#3B579D</color>
     <color name="button_google">#D95232</color>
+
+    <color name="modal_menu_title">#ffffff</color>
 </resources>

@@ -1,5 +1,7 @@
 package com.cardee.owner_home.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -18,6 +20,7 @@ import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_home.OwnerCarListContract;
 import com.cardee.owner_home.presenter.OwnerCarsPresenter;
 import com.cardee.owner_home.view.adapter.CarListAdapter;
+import com.cardee.owner_home.view.listener.CarListItemEventListener;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
     private RecyclerView mCarsListView;
 
     private OwnerCarsPresenter mPresenter;
-
+    private CarListItemEventListener mEventListener;
     private Toast mCurrentToast;
 
     public static Fragment newInstance() {
@@ -35,10 +38,23 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mEventListener = (CarListItemEventListener) context;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mEventListener = (CarListItemEventListener) activity;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new CarListAdapter(getActivity());
         mPresenter = new OwnerCarsPresenter(this);
+        mAdapter.subscribe(mPresenter);
     }
 
     @Nullable
@@ -81,23 +97,45 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
 
     @Override
     public void setItems(List<Car> items) {
-        Log.e("SET_ITEMS", String.valueOf(items));
         mAdapter.insert(items);
     }
 
     @Override
-    public void updateItem(Car item) {
+    public void updateItem(Car car) {
 
     }
 
     @Override
-    public void removeItem(Car item) {
+    public void removeItem(Car car) {
 
     }
 
     @Override
-    public void openItem(Car item) {
+    public void openItem(Car car) {
+        if (mEventListener != null) {
+            mEventListener.onCarItemClick(car);
+        }
+    }
 
+    @Override
+    public void openDailyPicker(Car car) {
+        if (mEventListener != null) {
+            mEventListener.onDailyPickerClick(car);
+        }
+    }
+
+    @Override
+    public void openHourlyPicker(Car car) {
+        if (mEventListener != null) {
+            mEventListener.onHourlyPickerClick(car);
+        }
+    }
+
+    @Override
+    public void openLocationPicker(Car car) {
+        if (mEventListener != null) {
+            mEventListener.onLocationPickerClick(car);
+        }
     }
 
     @Override

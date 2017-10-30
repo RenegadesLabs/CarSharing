@@ -50,4 +50,19 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="ModalMenuItem">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/widget_padding_mid</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_mid</item>
+        <item name="android:textSize">@dimen/list_item_text_general</item>
+        <item name="android:textColor">@color/text_enabled</item>
+    </style>
+
+    <style name="ModalMenuTitle" parent="ModalMenuItem">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/list_item_selector_value</item>
+        <item name="android:textColor">@color/modal_menu_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

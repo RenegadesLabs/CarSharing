@@ -18,6 +18,12 @@ public interface OwnerCarListContract {
 
         void openItem(Car car);
 
+        void openDailyPicker(Car car);
+
+        void openHourlyPicker(Car car);
+
+        void openLocationPicker(Car car);
+
         void onUnauthorized();
 
         void onConnectionLost();
