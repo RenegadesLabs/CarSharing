@@ -46,4 +46,8 @@
         <item name="colorAccent">@color/main_enabled</item>
     </style>
 
+    <style name="LoadingIndicator" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

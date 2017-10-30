@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_home.OwnerCarListContract;
@@ -108,15 +112,16 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
 
     public static class CarListItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTitleView;
-        private ImageView mPrimaryImage;
-        private TextView mYearView;
-        private TextView mLicenceNumberView;
-        private Switch mHourlySwitch;
-        private Switch mDailySwitch;
-        private TextView mHourlyView;
-        private TextView mDailyView;
-        private TextView mLocationView;
+        private final TextView mTitleView;
+        private final ImageView mPrimaryImage;
+        private final TextView mYearView;
+        private final TextView mLicenceNumberView;
+        private final Switch mHourlySwitch;
+        private final Switch mDailySwitch;
+        private final TextView mHourlyView;
+        private final TextView mDailyView;
+        private final TextView mLocationView;
+        private final ProgressBar mLoadingIndicator;
 
         public CarListItemViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +135,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mHourlyView = itemView.findViewById(R.id.car_hourly_selector);
             mDailyView = itemView.findViewById(R.id.car_daily_selector);
             mLocationView = itemView.findViewById(R.id.car_location_selector);
+            mLoadingIndicator = itemView.findViewById(R.id.car_primary_image_loading_indicator);
         }
 
         private void bind(Car model, RequestManager imageRequestManager) {
@@ -143,7 +149,26 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mHourlyView.setEnabled(model.isAvailableHourly());
             mDailyView.setEnabled(model.isAvailableDaily());
 
-            imageRequestManager.load(model.getPrimaryImageLink()).into(mPrimaryImage);
+            if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
+                mLoadingIndicator.setVisibility(View.VISIBLE);
+            }
+            imageRequestManager
+                    .load(model.getPrimaryImageLink())
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            mLoadingIndicator.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            mLoadingIndicator.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .error(R.drawable.img_car_placeholder)
+                    .into(mPrimaryImage);
         }
     }
 

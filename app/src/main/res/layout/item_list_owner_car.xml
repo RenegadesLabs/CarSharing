@@ -24,6 +24,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
+        <ProgressBar
+            android:id="@+id/car_primary_image_loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:theme="@style/LoadingIndicator"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintBottom_toBottomOf="@id/car_primary_image"
+            app:layout_constraintEnd_toEndOf="@id/car_primary_image"
+            app:layout_constraintStart_toStartOf="@id/car_primary_image"
+            app:layout_constraintTop_toTopOf="@id/car_primary_image" />
+
         <FrameLayout
             android:id="@+id/faded_line"
             android:layout_width="match_parent"
@@ -151,9 +163,9 @@
             android:id="@+id/car_location_selector_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintBottom_toBottomOf="@id/car_location_selector"
             app:layout_constraintEnd_toEndOf="@id/car_location_selector"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="@id/car_location_selector"
             app:layout_constraintTop_toTopOf="@id/car_location_selector"
             app:srcCompat="@drawable/ic_temp_location" />

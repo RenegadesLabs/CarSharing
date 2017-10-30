@@ -38,6 +38,9 @@ public class OwnerHomeActivity extends AppCompatActivity
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
+        bottomMenu.disableItemAtPosition(0);
+        bottomMenu.disableItemAtPosition(2);
+
     }
 
     @Override

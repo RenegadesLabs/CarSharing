@@ -14,4 +14,6 @@
     <dimen name="widget_margin_x_small">8dp</dimen>
     <dimen name="list_divider_margin">12dp</dimen>
     <dimen name="list_bottom_padding">8dp</dimen>
+
+    <dimen name="image_loading_indicator_side">32dp</dimen>
 </resources>
