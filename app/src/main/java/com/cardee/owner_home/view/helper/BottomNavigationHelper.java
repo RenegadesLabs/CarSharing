@@ -26,6 +26,7 @@ public class BottomNavigationHelper {
         navView.addItem(item3);
         navView.addItem(item4);
 
+        navView.setBehaviorTranslationEnabled(false);
         navView.setDefaultBackgroundResource(R.color.bg_widget);
         navView.setAccentColor(ContextCompat.getColor(navView.getContext(), R.color.main_enabled));
         navView.setInactiveColor(ContextCompat.getColor(navView.getContext(), R.color.text_disabled));

@@ -1,7 +1,8 @@
-package com.cardee.domain.owner.usecase;
+package com.cardee.domain.user.usecase;
 
 import android.support.annotation.NonNull;
 
+import com.cardee.data_source.Error;
 import com.cardee.data_source.UserDataSource;
 import com.cardee.data_source.UserRepository;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
@@ -34,8 +35,8 @@ public class SocialLogin implements UseCase<SocialLogin.RequestValues, SocialLog
             }
 
             @Override
-            public void onError(String message) {
-                callback.onError(null);
+            public void onError(Error error) {
+                callback.onError(error);
             }
         });
 

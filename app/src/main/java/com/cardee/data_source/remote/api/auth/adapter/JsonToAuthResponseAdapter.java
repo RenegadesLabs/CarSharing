@@ -1,7 +1,5 @@
 package com.cardee.data_source.remote.api.auth.adapter;
 
-import android.util.Log;
-
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -21,11 +19,10 @@ public class JsonToAuthResponseAdapter extends TypeAdapter<BaseAuthResponse.Base
 
     @Override
     public BaseAuthResponse.BaseAuthResponseBody read(JsonReader in) throws IOException {
-        Log.e("TEMP_ADAPTER_STRING", in.toString());
         String bodyStr = in.nextString();
         BaseAuthResponse.BaseAuthResponseBody body = new BaseAuthResponse.BaseAuthResponseBody();
         if (bodyStr.startsWith("Token ")) {
-            body.setToken(in.toString().split(" ")[1]);
+            body.setToken(bodyStr);
         } else {
             Gson gson = new Gson();
             Map<String, String[]> errors =

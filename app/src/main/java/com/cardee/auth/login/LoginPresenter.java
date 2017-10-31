@@ -1,12 +1,12 @@
 package com.cardee.auth.login;
 
 import com.cardee.R;
-import com.cardee.data_source.UserRepository;
+import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.owner.usecase.Login;
-import com.cardee.domain.owner.usecase.SocialLogin;
+import com.cardee.domain.user.usecase.Login;
+import com.cardee.domain.user.usecase.SocialLogin;
 
 public class LoginPresenter {
 
@@ -34,9 +34,9 @@ public class LoginPresenter {
             }
 
             @Override
-            public void onError(Login.ResponseValues message) {
+            public void onError(Error error) {
                 mView.showProgress(false);
-                if (message.getErrorMessage().equals(UserRepository.WRONG_CREDENTIALS)) {
+                if (error.getErrorType() == Error.Type.WRONG_CREDENTIALS) {
                     mView.showMessage(R.string.auth_wrong_cred);
                 } else {
                     mView.showMessage(R.string.auth_error);
@@ -59,7 +59,7 @@ public class LoginPresenter {
             }
 
             @Override
-            public void onError(SocialLogin.ResponseValues message) {
+            public void onError(Error error) {
                 mView.showProgress(false);
                 mView.showMessage(R.string.auth_error);
             }

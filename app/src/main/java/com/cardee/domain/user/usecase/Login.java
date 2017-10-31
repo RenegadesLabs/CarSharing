@@ -1,8 +1,9 @@
-package com.cardee.domain.owner.usecase;
+package com.cardee.domain.user.usecase;
 
 
 import android.support.annotation.NonNull;
 
+import com.cardee.data_source.Error;
 import com.cardee.data_source.UserDataSource;
 import com.cardee.data_source.UserRepository;
 import com.cardee.domain.UseCase;
@@ -31,8 +32,8 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
             }
 
             @Override
-            public void onError(String message) {
-                callback.onError(new ResponseValues(message));
+            public void onError(Error error) {
+                callback.onError(error);
             }
         });
     }

@@ -6,7 +6,7 @@ import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
-import com.cardee.domain.owner.usecase.SocialLogin;
+import com.cardee.data_source.remote.service.AccountManager;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
@@ -20,7 +20,7 @@ public class UserRepository implements UserDataSource {
     private Authentication api;
 
     private UserRepository() {
-        api = CardeeApp.getBaseApi().create(Authentication.class);
+        api = CardeeApp.retrofit.create(Authentication.class);
     }
 
     public static UserRepository getInstance() {
@@ -40,12 +40,19 @@ public class UserRepository implements UserDataSource {
         ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
             @Override
             public void onNext(BaseAuthResponse baseAuthResponse) {
+                if (baseAuthResponse.getSuccess()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
 
             @Override
             public void onError(Throwable e) {
-                callback.onError(e.getMessage());
+                if (WRONG_CREDENTIALS.equals(e.getMessage())) {
+                    callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
+                    return;
+                }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 
             @Override
@@ -70,7 +77,11 @@ public class UserRepository implements UserDataSource {
 
             @Override
             public void onError(Throwable e) {
-                callback.onError(e.getMessage());
+                if (WRONG_CREDENTIALS.equals(e.getMessage())) {
+                    callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
+                    return;
+                }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 
             @Override
