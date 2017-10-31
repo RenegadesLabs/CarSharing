@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
+import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.cardee.auth.login.LoginActivity;
 import com.cardee.data_source.remote.api.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;

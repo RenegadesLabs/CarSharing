@@ -22,7 +22,7 @@ public class JsonToAuthResponseAdapter extends TypeAdapter<BaseAuthResponse.Base
         String bodyStr = in.nextString();
         BaseAuthResponse.BaseAuthResponseBody body = new BaseAuthResponse.BaseAuthResponseBody();
         if (bodyStr.startsWith("Token ")) {
-            body.setToken(in.toString().split(" ")[1]);
+            body.setToken(bodyStr);
         } else {
             Gson gson = new Gson();
             Map<String, String[]> errors =

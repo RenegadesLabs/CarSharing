@@ -2,12 +2,13 @@ package com.cardee.owner_home;
 
 
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.mvp.BaseView;
 
 import java.util.List;
 
 public interface OwnerCarListContract {
 
-    interface View {
+    interface View extends BaseView {
 
         void setItems(List<Car> cars);
 
@@ -16,6 +17,16 @@ public interface OwnerCarListContract {
         void removeItem(Car car);
 
         void openItem(Car car);
+
+        void openDailyPicker(Car car);
+
+        void openHourlyPicker(Car car);
+
+        void openLocationPicker(Car car);
+
+        void onUnauthorized();
+
+        void onConnectionLost();
     }
 
     interface Presenter {
@@ -23,7 +34,7 @@ public interface OwnerCarListContract {
     }
 
     enum Action {
-        OPEN, HOURLY_SWITCHED, DAILY_SWITCHED, UPDATED
+        OPEN, HOURLY_SWITCHED, DAILY_SWITCHED, LOCATION_CLICKED, HOURLY_CLICKED, DAILY_CLICKED, UPDATED
     }
 
     class CarEvent {

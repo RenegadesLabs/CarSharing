@@ -15,7 +15,6 @@ import io.reactivex.functions.Consumer;
 
 public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEvent> {
 
-
     private OwnerCarListContract.View mView;
 
     private final GetCars mGetCars;
@@ -23,6 +22,8 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
     private final SwitchHourly mSwitchHourly;
 
     private final UseCaseExecutor mExecutor;
+
+    private boolean firstStart = true;
 
     public OwnerCarsPresenter(OwnerCarListContract.View view) {
         mView = view;
@@ -33,22 +34,44 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
         mSwitchHourly = new SwitchHourly();
     }
 
-    public void loadItems(boolean forceRefresh) {
-        GetCars.RequestValues requestValues = new GetCars.RequestValues(forceRefresh);
+    public void loadItems() {
+        if (firstStart) {
+            mView.showProgress(true);
+        }
+        GetCars.RequestValues requestValues = new GetCars.RequestValues(firstStart);
         mExecutor.execute(mGetCars, requestValues, new UseCase.Callback<GetCars.ResponseValues>() {
             @Override
             public void onSuccess(GetCars.ResponseValues response) {
                 List<Car> cars = response.getCars();
                 if (mView != null) {
+                    mView.showProgress(false);
                     mView.setItems(cars);
+                    firstStart = false;
                 }
             }
 
             @Override
             public void onError(Error error) {
-
+                if (mView != null) {
+                    mView.showProgress(false);
+                    handleError(error);
+                }
             }
         });
+    }
+
+    private void handleError(Error error) {
+        if (error.isAuthError()) {
+            mView.onUnauthorized();
+        } else if (error.isConnectionError()) {
+            mView.onConnectionLost();
+        } else {
+            mView.showMessage(error.getMessage());
+        }
+    }
+
+    public void refresh() {
+        firstStart = true;
     }
 
     public void destroy() {
@@ -57,6 +80,19 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
 
     @Override
     public void accept(OwnerCarListContract.CarEvent carEvent) throws Exception {
-
+        switch (carEvent.getAction()) {
+            case DAILY_CLICKED:
+                mView.openDailyPicker(carEvent.getCar());
+                break;
+            case HOURLY_CLICKED:
+                mView.openHourlyPicker(carEvent.getCar());
+                break;
+            case LOCATION_CLICKED:
+                mView.openLocationPicker(carEvent.getCar());
+                break;
+            case OPEN:
+                mView.openItem(carEvent.getCar());
+                break;
+        }
     }
 }

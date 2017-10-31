@@ -14,4 +14,11 @@
     <dimen name="widget_margin_x_small">8dp</dimen>
     <dimen name="list_divider_margin">12dp</dimen>
     <dimen name="list_bottom_padding">8dp</dimen>
+    <dimen name="widget_padding_small">12dp</dimen>
+    <dimen name="widget_padding_mid">18dp</dimen>
+
+    <dimen name="image_loading_indicator_side">32dp</dimen>
+
+    <dimen name="modal_menu_title_height">32dp</dimen>
+    <dimen name="modal_menu_item_height">56dp</dimen>
 </resources>

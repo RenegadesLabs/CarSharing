@@ -149,7 +149,7 @@ public class CarEntity {
         private String engineCapacity;
         @Expose
         @SerializedName("images")
-        private Image[] images;
+        private ImageEntity[] images;
 
         public Details() {
 
@@ -251,11 +251,11 @@ public class CarEntity {
             this.engineCapacity = engineCapacity;
         }
 
-        public Image[] getImages() {
+        public ImageEntity[] getImages() {
             return images;
         }
 
-        public void setImages(Image[] images) {
+        public void setImages(ImageEntity[] images) {
             this.images = images;
         }
     }

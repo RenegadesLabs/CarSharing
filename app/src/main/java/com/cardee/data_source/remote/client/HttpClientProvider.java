@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.client;
+package com.cardee.data_source.remote.client;
 
 import android.content.Context;
 
@@ -27,7 +27,6 @@ public class HttpClientProvider {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
-                .addInterceptor(new AuthHeaderResponseInterceptor(accountManager))
                 .addInterceptor(new HttpLoggingInterceptor())
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build();
