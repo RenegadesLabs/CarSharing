@@ -4,6 +4,6 @@
     <solid android:color="@color/bg_pressed_dim" />
     <stroke
         android:width="0.5dp"
-        android:color="@color/divider" />
+        android:color="#05000000" />
     <corners android:radius="3dp" />
 </shape>

@@ -38,9 +38,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".owner_home.view.OwnerHomeActivity">
-
-        </activity>
+        <activity android:name=".owner_home.view.OwnerHomeActivity" />
+        <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>

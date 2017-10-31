@@ -18,10 +18,13 @@
     <color name="bg_pressed_dim">#05000000</color>
     <color name="bg_pressed_ripple">#15000000</color>
     <color name="bg_transparent_black">#80000000</color>
+    <color name="bg_button_regular">#55b6ad</color>
+    <color name="bg_button_regular_dim">#49968f</color>
 
     <color name="text_disabled">#bababa</color>
     <color name="turquoise_text">#19B9AD</color>
     <color name="text_enabled">#474849</color>
+    <color name="text_button_regular">#ffffff</color>
     <color name="text_picture_overlaid">#ffffff</color>
 
     <color name="colorPrimary">#419CED</color>

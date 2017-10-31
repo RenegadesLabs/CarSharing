@@ -4,12 +4,14 @@
 
     <dimen name="list_item_car_title_layout_height">36dp</dimen>
     <dimen name="list_item_control_text">48dp</dimen>
-    <dimen name="list_item_button">44dp</dimen>
+
+    <dimen name="button_regular_height">44dp</dimen>
 
     <dimen name="button_vertical_padding">8dp</dimen>
     <dimen name="button_horizontal_padding">24dp</dimen>
 
     <dimen name="widget_margin_mid">18dp</dimen>
+    <dimen name="widget_margin_regular">16dp</dimen>
     <dimen name="widget_margin_small">12dp</dimen>
     <dimen name="widget_margin_x_small">8dp</dimen>
     <dimen name="list_divider_margin">12dp</dimen>
@@ -21,4 +23,6 @@
 
     <dimen name="modal_menu_title_height">32dp</dimen>
     <dimen name="modal_menu_item_height">56dp</dimen>
+
+    <dimen name="toolbar_height">48dp</dimen>
 </resources>
