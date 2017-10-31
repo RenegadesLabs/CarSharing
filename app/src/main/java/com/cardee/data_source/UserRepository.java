@@ -7,7 +7,6 @@ import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.cardee.domain.owner.usecase.SocialLogin;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;

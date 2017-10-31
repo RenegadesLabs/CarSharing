@@ -1,4 +1,4 @@
-package com.cardee.domain.owner.usecase;
+package com.cardee.domain.user.usecase;
 
 
 import android.support.annotation.NonNull;
