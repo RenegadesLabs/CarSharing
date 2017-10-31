@@ -70,7 +70,6 @@ public class OwnerCarDetailsActivity extends AppCompatActivity {
         mTabs.getTabAt(1).select();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);

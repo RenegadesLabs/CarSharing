@@ -25,4 +25,6 @@
     <dimen name="modal_menu_item_height">56dp</dimen>
 
     <dimen name="toolbar_height">48dp</dimen>
+
+    <dimen name="details_item_height">112dp</dimen>
 </resources>

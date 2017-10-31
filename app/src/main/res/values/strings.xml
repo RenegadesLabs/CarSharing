@@ -64,4 +64,6 @@
     <string name="title_my_bookings">My Bookings</string>
     <string name="toolbar_action_add_car">Add car</string>
     <string name="toolbar_action_more">More</string>
+
+    <string name="title_edit">edit</string>
 </resources>

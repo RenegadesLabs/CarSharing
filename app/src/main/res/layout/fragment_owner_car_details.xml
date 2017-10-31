@@ -1,8 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light"
-    android:orientation="vertical">
+    android:scrollbars="none">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/car_image_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+            <FrameLayout
+                android:id="@+id/faded_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_car_title_layout_height"
+                android:background="@color/bg_transparent_black"
+                app:layout_constraintBottom_toBottomOf="@id/car_image_pager" />
+
+            <TextView
+                android:id="@+id/car_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_small"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/faded_line"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_x_small"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintStart_toEndOf="@id/car_title"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_page_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_small"
+                android:text="1 of 4"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintEnd_toEndOf="@id/faded_line"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_images_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/widget_padding_mid"
+                android:text="@string/title_edit"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintEnd_toEndOf="@id/car_image_pager"
+                app:layout_constraintTop_toTopOf="@+id/car_image_pager" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_info_block"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/details_item_height"
+            android:background="@drawable/bg_underlined_large">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_location_block"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/details_item_height"
+            android:background="@drawable/bg_underlined_large">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_description_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_main">
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>
