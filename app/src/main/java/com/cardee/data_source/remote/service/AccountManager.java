@@ -50,4 +50,8 @@ public class AccountManager {
         }
         return INSTANCE;
     }
+
+    public boolean isLoggedIn() {
+        return !mPrefs.getString(AUTH_TOKEN, "").equals("");
+    }
 }

@@ -14,10 +14,6 @@ public class CheckUniqueLoginRequest {
     @SerializedName("password")
     private String mPassword;
 
-    @Expose
-    @SerializedName("name")
-    private String mName;
-
     public String getLogin() {
         return mLogin;
     }
@@ -32,13 +28,5 @@ public class CheckUniqueLoginRequest {
 
     public void setPassword(String password) {
         this.mPassword = password;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
     }
 }

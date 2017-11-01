@@ -3,6 +3,9 @@ package com.cardee.auth.preview;
 import com.cardee.R;
 import com.cardee.auth.login.LoginActivity;
 import com.cardee.auth.register.view.RegisterActivity;
+import com.cardee.data_source.remote.service.AccountManager;
+import com.cardee.owner_home.view.OwnerHomeActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +22,7 @@ public class PreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
         ButterKnife.bind(this);
+        checkLogged();
     }
 
     @OnClick(R.id.b_previewLogin)
@@ -29,5 +33,12 @@ public class PreviewActivity extends AppCompatActivity {
     @OnClick(R.id.b_previewSignUp)
     public void onSignUpClicked(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    private void checkLogged() {
+        if (AccountManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, OwnerHomeActivity.class));
+            finish();
+        }
     }
 }

@@ -21,6 +21,9 @@ public class JsonToAuthResponseAdapter extends TypeAdapter<BaseAuthResponse.Base
     public BaseAuthResponse.BaseAuthResponseBody read(JsonReader in) throws IOException {
         String bodyStr = in.nextString();
         BaseAuthResponse.BaseAuthResponseBody body = new BaseAuthResponse.BaseAuthResponseBody();
+        if (bodyStr.equals(""))
+            return body;
+
         if (bodyStr.startsWith("Token ")) {
             body.setToken(bodyStr);
         } else {

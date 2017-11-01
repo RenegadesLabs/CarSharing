@@ -3,6 +3,8 @@ package com.cardee.auth.register.view;
 
 import com.cardee.mvp.BaseView;
 
+import java.io.File;
+
 public interface RegisterView extends BaseView {
     void onLogin();
 
@@ -18,11 +20,11 @@ public interface RegisterView extends BaseView {
 
     void onBackToFirstStep();
 
-    void onSignUpAsOwner();
+    void onSignUpAsOwner(String name, File picture);
 
-    void onSignUpAsRenter();
+    void onSignUpAsRenter(String name, File picture);
 
-    void onValidationSuccess();
+    void onValidationSuccess(String login, String password);
 
     void onRegistrationSuccess();
 }

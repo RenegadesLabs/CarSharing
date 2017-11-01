@@ -19,13 +19,12 @@ public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues,
     public void execute(RequestValues values, final Callback<ResponseValues> callback) {
         String login = values.getLogin();
         String password = values.getPassword();
-        String name = values.getName();
 
-        if (login == null || password == null || name == null) {
+        if (login == null || password == null) {
             return;
         }
 
-        mRepository.checkUniqueLogin(login, password, name, new UserDataSource.Callback() {
+        mRepository.checkUniqueLogin(login, password, new UserDataSource.Callback() {
             @Override
             public void onSuccess(boolean success) {
                 callback.onSuccess(new ResponseValues(success));
@@ -42,12 +41,10 @@ public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues,
     public static class RequestValues implements UseCase.RequestValues {
         private final String mLogin;
         private final String mPassword;
-        private final String mName;
 
-        public RequestValues(@NonNull String login, @NonNull String password, @NonNull String name) {
+        public RequestValues(@NonNull String login, @NonNull String password) {
             mLogin = login;
             mPassword = password;
-            mName = name;
         }
 
         public String getLogin() {
@@ -56,10 +53,6 @@ public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues,
 
         public String getPassword() {
             return mPassword;
-        }
-
-        public String getName() {
-            return mName;
         }
     }
 
