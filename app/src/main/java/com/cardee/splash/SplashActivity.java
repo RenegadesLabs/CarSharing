@@ -2,6 +2,9 @@ package com.cardee.splash;
 
 import com.cardee.R;
 import com.cardee.auth.preview.PreviewActivity;
+import com.cardee.data_source.remote.service.AccountManager;
+import com.cardee.owner_home.view.OwnerHomeActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +20,13 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //TODO: implement Logged state handling
+                if (AccountManager.getInstance(SplashActivity.this).isLogedIn()) {
+                    startActivity(new Intent(SplashActivity.this, OwnerHomeActivity.class)); //temporary
+                    finish();
+                    return;
+                }
+
                 startActivity(new Intent(SplashActivity.this, PreviewActivity.class));
                 finish();
                 // TODO: 10/18/17 Loading car animation

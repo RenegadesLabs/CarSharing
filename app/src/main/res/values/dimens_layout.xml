@@ -10,14 +10,22 @@
     <dimen name="button_vertical_padding">8dp</dimen>
     <dimen name="button_horizontal_padding">24dp</dimen>
 
+    <dimen name="widget_margin_xx_large">36dp</dimen>
+    <dimen name="widget_margin_large">24dp</dimen>
     <dimen name="widget_margin_mid">18dp</dimen>
     <dimen name="widget_margin_regular">16dp</dimen>
     <dimen name="widget_margin_small">12dp</dimen>
     <dimen name="widget_margin_x_small">8dp</dimen>
+
     <dimen name="list_divider_margin">12dp</dimen>
     <dimen name="list_bottom_padding">8dp</dimen>
+
+    <dimen name="widget_padding_xx_small">4dp</dimen>
+    <dimen name="widget_padding_x_small">8dp</dimen>
     <dimen name="widget_padding_small">12dp</dimen>
     <dimen name="widget_padding_mid">18dp</dimen>
+    <dimen name="widget_padding_large">24dp</dimen>
+    <dimen name="widget_padding_x_large">28dp</dimen>
 
     <dimen name="image_loading_indicator_side">32dp</dimen>
 
@@ -26,5 +34,9 @@
 
     <dimen name="toolbar_height">48dp</dimen>
 
-    <dimen name="details_item_height">112dp</dimen>
+    <dimen name="details_item_height">98dp</dimen>
+
+    <dimen name="item_icon_side_large">32dp</dimen>
+
+    <dimen name="scroll_bottom_padding">56dp</dimen>
 </resources>

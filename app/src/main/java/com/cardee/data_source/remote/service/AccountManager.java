@@ -40,6 +40,12 @@ public class AccountManager {
         mPrefs.edit().putString(AUTH_TOKEN, token).apply();
     }
 
+    //TODO: delete after user logged state handling implemented
+    public boolean isLogedIn() {
+        String string = mPrefs.getString(AUTH_TOKEN, null);
+        return string != null;
+    }
+
     public void onLogout() {
         mPrefs.edit().remove(AUTH_TOKEN).apply();
     }

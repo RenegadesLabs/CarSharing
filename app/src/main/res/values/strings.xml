@@ -66,4 +66,6 @@
     <string name="toolbar_action_more">More</string>
 
     <string name="title_edit">edit</string>
+    <string name="car_details_location_title">Location</string>
+    <string name="car_details_description_title">Description</string>
 </resources>

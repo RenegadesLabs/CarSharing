@@ -5,6 +5,8 @@
     <dimen name="text_large">16sp</dimen>
     <dimen name="text_xlarge">18sp</dimen>
 
+    <dimen name="padding_x_small">6dp</dimen>
+
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="large_margin">32dp</dimen>
