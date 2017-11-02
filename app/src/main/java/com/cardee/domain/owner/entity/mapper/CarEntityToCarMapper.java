@@ -1,8 +1,9 @@
 package com.cardee.domain.owner.entity.mapper;
 
 
+import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
 import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
-import com.cardee.data_source.remote.api.profile.response.entity.ImageEntity;
+import com.cardee.data_source.remote.api.common.entity.ImageEntity;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.Image;
 
@@ -16,7 +17,7 @@ public class CarEntityToCarMapper {
     }
 
     public Car transform(CarEntity carEntity) {
-        CarEntity.Details carDetails = carEntity.getCarDetails();
+        BaseCarEntity carDetails = carEntity.getCarDetails();
         ImageEntity[] imageEntities = carDetails.getImages();
         Image[] images = new Image[imageEntities.length];
         String primaryImageLink = null;

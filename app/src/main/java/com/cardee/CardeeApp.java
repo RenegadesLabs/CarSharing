@@ -2,6 +2,7 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 
 import com.cardee.data_source.remote.api.auth.adapter.exception.RxErrorHandlingCallAdapterFactory;
@@ -11,6 +12,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.google.firebase.crash.FirebaseCrash;
+
+import java.util.Locale;
 
 import retrofit2.Retrofit;
 
@@ -34,6 +38,14 @@ public class CardeeApp extends Application {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 //                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .build();
+//        changeLocale();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                FirebaseCrash.report(throwable);
+            }
+        });
     }
 
     public static GoogleApiClient initLoginGoogleApi(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {
@@ -47,6 +59,11 @@ public class CardeeApp extends Application {
                 .enableAutoManage(activity, listener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
     }
+
+//    private void changeLocale(){
+//        Configuration configuration = new Configuration();
+//        configuration.setLocale(new Locale("ms-MY"));
+//        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+//    }
 }

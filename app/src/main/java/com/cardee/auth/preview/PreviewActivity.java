@@ -24,6 +24,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 //        ButterKnife.bind(this);
         checkLogged();
         initButtons();
+
+        String str = null;
+        System.out.println(str.length());
     }
 
     private void initButtons() {
@@ -31,12 +34,12 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.b_previewSignUp).setOnClickListener(this);
     }
 
-//    @OnClick(R.id.b_previewLogin)
+    //    @OnClick(R.id.b_previewLogin)
     public void onLogInClicked(View view) {
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-//    @OnClick(R.id.b_previewSignUp)
+    //    @OnClick(R.id.b_previewSignUp)
     public void onSignUpClicked(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }

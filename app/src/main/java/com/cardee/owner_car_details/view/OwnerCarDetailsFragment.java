@@ -80,4 +80,24 @@ public class OwnerCarDetailsFragment extends Fragment
     public void setCar(Car car) {
 
     }
+
+    @Override
+    public void moveToImages(Bundle args) {
+
+    }
+
+    @Override
+    public void moveToSpecs(Bundle args) {
+
+    }
+
+    @Override
+    public void moveToLocation(Bundle args) {
+
+    }
+
+    @Override
+    public void moveToDescription(Bundle args) {
+
+    }
 }
