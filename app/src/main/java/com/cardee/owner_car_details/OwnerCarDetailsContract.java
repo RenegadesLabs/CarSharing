@@ -1,6 +1,7 @@
 package com.cardee.owner_car_details;
 
 
+import com.cardee.domain.owner.entity.Car;
 import com.cardee.mvp.BaseView;
 
 public interface OwnerCarDetailsContract {
@@ -9,6 +10,8 @@ public interface OwnerCarDetailsContract {
     String CAR_NUMBER = "car_number";
 
     interface View extends BaseView {
+
+        void setCar(Car car);
 
     }
 

@@ -64,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/widget_margin_small"
-                android:text="1 of 4"
                 android:textColor="@color/text_picture_overlaid"
                 android:textSize="@dimen/list_item_text_general"
                 app:layout_constraintBottom_toBottomOf="@+id/faded_line"
@@ -76,13 +75,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/widget_margin_small"
-                android:paddingEnd="@dimen/widget_padding_mid"
-                android:paddingStart="@dimen/widget_padding_mid"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
                 android:textColor="@color/text_picture_overlaid"
-                android:textSize="@dimen/list_item_text_general"
-                app:layout_constraintEnd_toEndOf="@id/car_image_pager"
-                app:layout_constraintTop_toTopOf="@+id/car_image_pager" />
+                android:textSize="@dimen/text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
