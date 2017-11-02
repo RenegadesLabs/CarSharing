@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class BaseResponse {
 
     public static final int CODE_SUCCESS = 200;
-
+    public static final int ERROR_CODE_VALIDATION = 400;
     public static final int ERROR_CODE_UNAUTHORIZED = 422;
     public static final int ERROR_CODE_INTERNAL_SERVER_ERROR = 500;
 

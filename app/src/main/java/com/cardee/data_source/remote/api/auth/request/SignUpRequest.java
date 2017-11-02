@@ -4,6 +4,10 @@ package com.cardee.data_source.remote.api.auth.request;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import okhttp3.MultipartBody;
+import retrofit2.http.Multipart;
+import retrofit2.http.Part;
+
 public class SignUpRequest {
 
     @Expose
@@ -19,7 +23,12 @@ public class SignUpRequest {
     @SerializedName("name")
     private String name;
 
-    public SignUpRequest(){
+//
+//    @Expose
+//    @SerializedName("picture")
+//    private String picture;
+
+    public SignUpRequest() {
 
     }
 
@@ -46,6 +55,14 @@ public class SignUpRequest {
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
     }
+//
+//    public String getPicture() {
+//        return picture;
+//    }
+//
+//    public void setPicture(String picture) {
+//        this.picture = picture;
+//    }
 
     public String getName() {
         return name;
