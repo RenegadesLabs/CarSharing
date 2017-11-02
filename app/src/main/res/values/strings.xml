@@ -1,3 +1,63 @@
 <resources>
     <string name="app_name">Cardee</string>
+
+    <!--Facebook SDK-->
+    <string name="facebook_app_id">1969210599978942</string>
+    <string name="fb_login_protocol_scheme">fb1969210599978942</string>
+
+    <!--Google Web Server ID-->
+    <string name="google_client_id">223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com</string>
+
+    <!--Preview-->
+    <string name="app_tagline">Rent cars from nearby fellow peers</string>
+    <string name="pickup_cars">Pickup cars around you</string>
+    <string name="pickup_desc">Conveniently pickup cars as close as \nyour nearest carpark!</string>
+
+    <!--Sign UP-->
+    <string name="signup">Sign Up</string>
+    <string name="signup_starter">Hello! Sign up to get started.</string>
+    <string name="signup_almost">Almost done!</string>
+    <string name="signup_add_photo">Add a photo of yourself!</string>
+    <string name="signup_your_photo">Your photo</string>
+    <string name="signup_name">What is your name?</string>
+    <string name="signup_as">Login as</string>
+    <string name="signup_terms_by">By signing up, you agree to Cardee\'s </string>
+    <string name="signup_terms_terms">Terms of Service</string>
+    <string name="signup_terms_privacy">Privacy Policy</string>
+    <string name="signup_validation_password">Password length must be between 3 and 36.</string>
+    <string name="signup_registration_success">You\'re registered successfully!</string>
+    <string name="car_renter">Car Renter</string>
+    <string name="car_owner">Car Owner</string>
+
+    <!--Login-->
+    <string name="login_forgot">Forgot your password?</string>
+    <string name="login">Log In</string>
+    <string name="login_process">Logging in…</string>
+
+    <!--Loading-->
+    <string name="loading">Loading…</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+    <string name="email_pass_empty_error">You must fill this field</string>
+    <string name="auth_error">Authentication error!</string>
+    <string name="auth_wrong_cred">Wrong credentials!</string>
+
+    <string name="auth_facebook">Log in with Facebook</string>
+    <string name="auth_google">Log in with Google+</string>
+
+    <!--Bottom menu-->
+    <string name="menu_item_inbox_title">Inbox</string>
+    <string name="menu_item_cars_title">My Cars</string>
+    <string name="menu_item_bookings_title">Bookings</string>
+    <string name="menu_item_more_title">More</string>
+
+    <string name="car_list_item_hourly_label">Hourly</string>
+    <string name="car_list_item_daily_label">Daily</string>
+
+    <string name="car_availability_title">Set availability by</string>
+    <string name="car_availability_one_time">One-Time</string>
+    <string name="car_availability_calendar">Calendar</string>
+    <string name="car_availability_days_of_week">Days Of Week</string>
 </resources>

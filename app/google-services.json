@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "223677953401",
+    "firebase_url": "https://cardee-165814.firebaseio.com",
+    "project_id": "cardee-165814",
+    "storage_bucket": "cardee-165814.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223677953401:android:71dd15bef4fcb0b1",
+        "android_client_info": {
+          "package_name": "com.cardee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223677953401-5fhrjhb54uvqf1sapv5pospgm60ukjta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cardee",
+            "certificate_hash": "a210064a43a5458bc8741070549f9358879b7ac8"
+          }
+        },
+        {
+          "client_id": "223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsZSHc9hN8yl2H1aV3rvF6pMKPeBv8y2M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223677953401-llipbv8puv1md6darcu2dm77qrup1g11.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.cardee.mobile"
+              }
+            },
+            {
+              "client_id": "223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

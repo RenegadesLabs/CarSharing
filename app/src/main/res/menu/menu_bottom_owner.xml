@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_owner_inbox"
+        android:icon="@drawable/ic_temp_inbox"
+        android:title="@string/menu_item_inbox_title" />
+    <item
+        android:id="@+id/menu_owner_cars"
+        android:icon="@drawable/ic_temp_cars"
+        android:title="@string/menu_item_cars_title" />
+    <item
+        android:id="@+id/menu_owner_bookings"
+        android:icon="@drawable/ic_temp_bookings"
+        android:title="@string/menu_item_bookings_title" />
+    <item
+        android:id="@+id/menu_owner_more"
+        android:icon="@drawable/ic_temp_more_h"
+        android:title="@string/menu_item_more_title" />
+</menu>

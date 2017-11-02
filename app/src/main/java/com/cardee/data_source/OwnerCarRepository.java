@@ -1,0 +1,101 @@
+package com.cardee.data_source;
+
+
+import com.cardee.data_source.cache.LocalOwnerCarDataSource;
+import com.cardee.data_source.remote.RemoteOwnerCarDataSource;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class OwnerCarRepository implements OwnerCarDataSource {
+
+    private static OwnerCarRepository INSTANCE;
+
+    private boolean mDirtyCache = true;
+
+    private final OwnerCarDataSource mLocalDataSource;
+    private final OwnerCarDataSource mRemoteDataSource;
+    private final Map<Integer, CarEntity> mCachedCars;
+
+    private OwnerCarRepository() {
+        mLocalDataSource = LocalOwnerCarDataSource.getInstance();
+        mRemoteDataSource = RemoteOwnerCarDataSource.getInstance();
+        mCachedCars = new LinkedHashMap<>();
+    }
+
+    public static OwnerCarRepository getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new OwnerCarRepository();
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    public void obtainCars(final Callback callback) {
+        if (notDirtyCache()) {
+            Collection<CarEntity> values = mCachedCars.values();
+            CarEntity[] cars = new CarEntity[values.size()];
+            int index = 0;
+            for (CarEntity carEntity : values) {
+                cars[index] = carEntity;
+                index++;
+            }
+            callback.onSuccess(cars);
+            return;
+        }
+
+        mRemoteDataSource.obtainCars(new Callback() {
+            @Override
+            public void onSuccess(CarEntity[] carEntities) {
+                callback.onSuccess(carEntities);
+                refreshCache(carEntities);
+            }
+
+            @Override
+            public void onError(Error error) {
+                if (error.isConnectionError()) {
+                    mDirtyCache = true;
+                    obtainCarsLocally(callback, error);
+                    return;
+                }
+                callback.onError(error);
+            }
+        });
+    }
+
+    private void obtainCarsLocally(final Callback callback, final Error defaultError) {
+        mLocalDataSource.obtainCars(new Callback() {
+            @Override
+            public void onSuccess(CarEntity[] carEntities) {
+                if (carEntities.length == 0) {
+                    callback.onError(defaultError);
+                    return;
+                }
+                callback.onSuccess(carEntities);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(defaultError);
+            }
+        });
+    }
+
+    public void refreshCars() {
+        mDirtyCache = true;
+    }
+
+    private boolean notDirtyCache() {
+        return mCachedCars != null && !mCachedCars.isEmpty() && !mDirtyCache;
+    }
+
+    private void refreshCache(CarEntity[] cars) {
+        mCachedCars.clear();
+        for (CarEntity carEntity : cars) {
+            mCachedCars.put(carEntity.getCarDetails().getCarId(), carEntity);
+        }
+        mDirtyCache = false;
+    }
+}

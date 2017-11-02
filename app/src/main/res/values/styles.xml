@@ -1,11 +1,68 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="PreviewTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="CardeeEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/white_opacity60</item>
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/white_opacity60</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="CardeeTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">@color/white_opacity60</item>
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/white_opacity60</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="SelectorButton">
+        <item name="android:background">@drawable/bg_button_white</item>
+        <item name="android:textSize">@dimen/list_item_selector_value</item>
+        <item name="android:textColor">@color/toggling_text_color</item>
+        <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Switch" parent="AppTheme">
+        <item name="colorAccent">@color/main_enabled</item>
+    </style>
+
+    <style name="LoadingIndicator" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="ModalMenuItem">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/widget_padding_mid</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_mid</item>
+        <item name="android:textSize">@dimen/list_item_text_general</item>
+        <item name="android:textColor">@color/text_enabled</item>
+    </style>
+
+    <style name="ModalMenuTitle" parent="ModalMenuItem">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/list_item_selector_value</item>
+        <item name="android:textColor">@color/modal_menu_title</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
