@@ -4,6 +4,7 @@ import com.cardee.data_source.remote.api.ErrorResponseBody;
 import com.cardee.data_source.remote.api.cars.response.entity.OrderDailyDetailsEntity;
 import com.cardee.data_source.remote.api.cars.response.entity.CarDetailsEntity;
 import com.cardee.data_source.remote.api.cars.response.entity.OrderHourlyDetailsEntity;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -133,5 +134,10 @@ public class CarResponseBody extends ErrorResponseBody {
 
     public void setOrderHourlyDetails(OrderHourlyDetailsEntity orderHourlyDetails) {
         this.orderHourlyDetails = orderHourlyDetails;
+    }
+
+    public static CarResponseBody from(CarEntity carEntity) {
+        //TODO implement
+        return null;
     }
 }

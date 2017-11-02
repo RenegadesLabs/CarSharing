@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.CarDetails;
+import com.cardee.domain.owner.entity.DetailedCar;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
@@ -100,7 +100,7 @@ public class OwnerCarDetailViewHolder {
         });
     }
 
-    public void bind(CarDetails details) {
+    public void bind(DetailedCar details) {
 
     }
 

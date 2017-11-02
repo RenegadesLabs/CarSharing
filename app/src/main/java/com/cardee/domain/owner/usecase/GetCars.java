@@ -1,7 +1,7 @@
 package com.cardee.domain.owner.usecase;
 
-import com.cardee.data_source.OwnerCarDataSource;
-import com.cardee.data_source.OwnerCarRepository;
+import com.cardee.data_source.OwnerCarsDataSource;
+import com.cardee.data_source.OwnerCarsRepository;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.cardee.domain.UseCase;
@@ -13,11 +13,11 @@ import java.util.List;
 public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseValues> {
 
     private final CarEntityToCarMapper mMapper;
-    private final OwnerCarRepository mRepository;
+    private final OwnerCarsRepository mRepository;
 
     public GetCars() {
         mMapper = new CarEntityToCarMapper();
-        mRepository = OwnerCarRepository.getInstance();
+        mRepository = OwnerCarsRepository.getInstance();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
         if (forceRefresh) {
             mRepository.refreshCars();
         }
-        mRepository.obtainCars(new OwnerCarDataSource.Callback() {
+        mRepository.obtainCars(new OwnerCarsDataSource.Callback() {
             @Override
             public void onSuccess(CarEntity[] carEntities) {
                 List<Car> cars = mMapper.transform(carEntities);
