@@ -231,7 +231,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onRegistrationSuccess() {
-        startActivity(new Intent(this, OwnerHomeActivity.class));
+        Intent intent = new Intent(this, OwnerHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }

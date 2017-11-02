@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -161,14 +162,97 @@ public class UserRepository implements UserDataSource {
     }
 
     @Override
-    public void register(Register.RequestValues registerValues, final Callback callback) {
+    public void register(final Register.RequestValues registerValues, final Callback callback) {
 
         SignUpRequest req = new SignUpRequest();
         req.setLogin(registerValues.getLogin());
         req.setPassword(registerValues.getPassword());
         req.setPasswordConfirm(registerValues.getPassword());
         req.setName(registerValues.getUserName());
-        api.signUp(req).enqueue(new retrofit2.Callback<ResponseBody>() {
+        api.signUp(req).enqueue(new retrofit2.Callback<BaseAuthResponse>() {
+            @Override
+            public void onResponse(Call<BaseAuthResponse> call, Response<BaseAuthResponse> response) {
+                if (response.isSuccessful()) {
+                    String token = response.body().getBody().getToken();
+                    AccountManager.getInstance(CardeeApp.context).saveToken(token);
+                    if (registerValues.getImage() != null) {
+                        setProfilePicture(registerValues.getImage(), callback);
+                    } else {
+                        callback.onSuccess(response.isSuccessful());
+                    }
+                } else {
+                    try {
+                        handleErrors(response.code(), new JSONObject(response.errorBody().string()), callback);
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseAuthResponse> call, Throwable t) {
+                callback.onError(new Error(Error.Type.OTHER, t.getMessage()));
+            }
+        });
+
+    }
+
+    private void handleErrors(int code, JSONObject errorBodyObj, Callback callback) {
+        switch (code) {
+            case BaseResponse.ERROR_CODE_VALIDATION:
+
+                String loginError = "";
+                try {
+                    JSONArray loginErrorObj = errorBodyObj.getJSONObject("data")
+                            .getJSONObject("errors")
+                            .getJSONArray("login");
+                    loginError = (Error.Message.LOGIN_DO_EXIST.equals(loginErrorObj.getString(0))
+                            ? Error.Message.LOGIN_DO_EXIST : Error.Message.LOGIN_NOT_VALID);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String passError = "";
+                try {
+                    JSONArray passErrorObj = errorBodyObj.getJSONObject("data")
+                            .getJSONObject("errors")
+                            .getJSONArray("password");
+                    passError = (Error.Message.PASSWORD_LENGTH.equals(passErrorObj.getString(0))
+                            ? Error.Message.PASSWORD_LENGTH : Error.Message.PASSWORD_DO_EXIST);
+
+                    passError = !loginError.equals("") ? "\n" + passError : passError;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                callback.onError(new Error(Error.Type.AUTHORIZATION, loginError + passError));
+                break;
+            case BaseResponse.ERROR_CODE_UNAUTHORIZED:
+                String authError = "";
+                try {
+                    authError = errorBodyObj.getJSONObject("data")
+                            .getJSONObject("errors")
+                            .getJSONArray("authentication")
+                            .getString(0);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.onError(new Error(Error.Type.AUTHORIZATION,
+                        !authError.equals("") ? authError : "Authentication problem."));
+                break;
+
+            case BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR:
+                callback.onError(new Error(Error.Type.SERVER, "Internal server error."));
+                break;
+            default:
+                callback.onError(new Error(Error.Type.OTHER, "Something went wrong."));
+        }
+    }
+
+    private void setProfilePicture(File picture, final Callback callback) {
+        MultipartBody.Part picPart = MultipartBody.Part.createFormData("picture", picture.getName(), RequestBody.
+                create(MediaType.parse("application/octet-stream"), picture));
+        api.setProfilePicture(picPart).enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -187,37 +271,5 @@ public class UserRepository implements UserDataSource {
                 callback.onError(new Error(Error.Type.OTHER, t.getMessage()));
             }
         });
-
-    }
-
-    private void handleErrors(int code, JSONObject errorBodyObj, Callback callback) {
-        switch (code) {
-            case BaseResponse.ERROR_CODE_VALIDATION:
-
-                String loginError = "";
-                try {
-                    JSONArray loginErrorObj = errorBodyObj.getJSONObject("data")
-                            .getJSONObject("errors").getJSONArray("login");
-                    loginError = (Error.Message.LOGIN_DO_EXIST.equals(loginErrorObj.getString(0))
-                            ? Error.Message.LOGIN_DO_EXIST : Error.Message.LOGIN_NOT_VALID);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                String passError = "";
-                try {
-                    JSONArray passErrorObj = errorBodyObj.getJSONObject("data")
-                            .getJSONObject("errors").getJSONArray("password");
-                    passError = (Error.Message.PASSWORD_LENGTH.equals(passErrorObj.getString(0))
-                            ? Error.Message.PASSWORD_LENGTH : Error.Message.PASSWORD_DO_EXIST);
-
-                    passError = !loginError.equals("") ? "\n" + passError : passError;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                callback.onError(new Error(Error.Type.AUTHORIZATION, loginError + passError));
-                break;
-        }
     }
 }

@@ -137,7 +137,7 @@ public class RegisterFinalStepFragment extends Fragment {
 
     public void setUserPhoto(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         mPictureByteArray = stream.toByteArray();
         setImage(mPictureByteArray);
     }
@@ -185,18 +185,21 @@ public class RegisterFinalStepFragment extends Fragment {
     }
 
     private File convertByteArrayToBase64() {
-        FileOutputStream fos;
-        File f = null;
-        try {
-            f = new File(getActivity().getCacheDir(), "picture");
-            fos = new FileOutputStream(f);
-            fos.write(mPictureByteArray);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mPictureByteArray != null) {
+            FileOutputStream fos;
+            File f = null;
+            try {
+                f = new File(getActivity().getCacheDir(), "picture");
+                fos = new FileOutputStream(f);
+                fos.write(mPictureByteArray);
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return f;
         }
-        return f;
+        return null;
 //        return Base64.encodeToString(mPictureByteArray, Base64.DEFAULT);
     }
 }

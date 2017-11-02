@@ -20,6 +20,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 public interface Authentication {
@@ -38,7 +39,11 @@ public interface Authentication {
 
     @POST("auth/signup")
     @Headers("Content-Type: application/json")
-    /*Observable*/Call<ResponseBody> signUp(@Body SignUpRequest request);
+    /*Observable*/Call<BaseAuthResponse> signUp(@Body SignUpRequest request);
+
+    @Multipart
+    @PUT("profiles/picture")
+    Call<ResponseBody> setProfilePicture(@Part MultipartBody.Part picture);
 
     @POST("auth/verify_password")
     @Headers("Content-Type: application/json")

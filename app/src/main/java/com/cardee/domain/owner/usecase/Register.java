@@ -21,7 +21,7 @@ public class Register implements UseCase<Register.RequestValues, Register.Respon
     public void execute(RequestValues values, final Callback<ResponseValues> callback) {
 
         if (values.getLogin() == null || values.getPassword() == null
-                || values.getImage() == null || values.getUserName() == null) {
+                || values.getUserName() == null) {
             return;
         }
 
