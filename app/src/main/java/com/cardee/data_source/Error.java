@@ -11,6 +11,19 @@ public class Error {
         AUTHORIZATION, WRONG_CREDENTIALS, SERVER, OTHER, LOST_CONNECTION
     }
 
+    public static class Message {
+
+        public final static String WRONG_CREDENTIALS = "HTTP 422 UNPROCESSABLE ENTITY";
+
+        public final static String LOGIN_NOT_VALID = "Not a valid login";
+
+        public final static String LOGIN_DO_EXIST = "Login do exist, please choose another one.";
+
+        public final static String PASSWORD_LENGTH = "Length must be between 3 and 36.";
+
+        public final static String PASSWORD_DO_EXIST = "Password do exist.";
+    }
+
     public Error(@NonNull Type type, @NonNull String message) {
         mType = type;
         mMessage = message;

@@ -1,5 +1,6 @@
 package com.cardee.auth.register.view;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,16 +16,22 @@ import com.cardee.R;
 import com.cardee.auth.login.LoginActivity;
 import com.cardee.auth.register.RegisterContract;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.owner_home.view.OwnerHomeActivity;
+import com.cardee.util.display.DisplayUtils;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterContract.RegisterView {
+import java.io.File;
+
+public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
     private final int PICK_IMAGE = 1;
     private final int CROP_IMAGE = 2;
+
+    private RegisterPresenter mPresenter;
 
     private RegisterFirstStepFragment mFirstStepFragment;
     private RegisterFinalStepFragment mFinalStepFragment;
@@ -34,15 +41,22 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     private LoginButton mButtonFacebook;
 
+    private ProgressDialog mProgress;
+
+    private String mLogin, mPass, mName;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initFragments();
         initFacebookButton();
+        initProgress();
     }
 
     private void initFragments() {
+        mPresenter = new RegisterPresenter(this);
+
         mFragmentManager = getSupportFragmentManager();
 
         mFirstStepFragment = new RegisterFirstStepFragment();
@@ -56,76 +70,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                 .commit();
     }
 
-    @Override
-    public void showProgress(boolean show) {
-
-    }
-
-    @Override
-    public void showMessage(String message) {
-
-    }
-
-    @Override
-    public void showMessage(int messageId) {
-
-    }
-
-    @Override
-    public void onLogin() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
-
-    @Override
-    public void onSignUp() {
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
-                .commit();
-    }
-
-    @Override
-    public void onTakePhoto() {
-        pickImageIntent();
-    }
-
-    @Override
-    public void onBackToFirstStep() {
-        mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
-                .commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Fragment finalF = mFragmentManager.findFragmentByTag(RegisterFinalStepFragment.TAG);
-        if (finalF != null && finalF.isVisible()) {
-            onBackToFirstStep();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case PICK_IMAGE:
-                if (resultCode == RESULT_OK && data.getData() != null) {
-                    cropImageIntent(data.getData());
-                }
-                break;
-            case CROP_IMAGE:
-                if (data.getExtras() != null) {
-                    Bundle extras = data.getExtras();
-                    Bitmap bitmap = extras.getParcelable("data");
-                    if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
-                        mFinalStepFragment.setUserPhoto(bitmap);
-                    }
-                }
-                break;
-        }
+    private void initProgress() {
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage(getResources().getString(R.string.loading));
+        mProgress.setCancelable(false);
     }
 
     private void initFacebookButton() {
@@ -172,6 +120,81 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     }
 
     @Override
+    public void onBackPressed() {
+        Fragment finalF = mFragmentManager.findFragmentByTag(RegisterFinalStepFragment.TAG);
+        if (finalF != null && finalF.isVisible()) {
+            onBackToFirstStep();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case PICK_IMAGE:
+                if (resultCode == RESULT_OK && data.getData() != null) {
+                    cropImageIntent(data.getData());
+                }
+                break;
+            case CROP_IMAGE:
+                if (data.getExtras() != null) {
+                    Bundle extras = data.getExtras();
+                    Bitmap bitmap = extras.getParcelable("data");
+                    if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
+                        mFinalStepFragment.setUserPhoto(bitmap);
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onSignUp(String login, String password) {
+        mPresenter.checkUniqueLogin(login, password);
+    }
+
+    @Override
+    public void onTakePhoto() {
+        pickImageIntent();
+    }
+
+    @Override
+    public void onBackToFirstStep() {
+        mFragmentManager.beginTransaction()
+                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
+                .commit();
+    }
+
+
+    @Override
     public void onTermsOfService() {
 
     }
@@ -187,12 +210,30 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     }
 
     @Override
-    public void onSignUpAsRenter() {
-
+    public void onSignUpAsRenter(String name, File picture) {
+        mPresenter.signUp(mLogin, mPass, name, picture);
     }
 
     @Override
-    public void onSignUpAsOwner() {
+    public void onSignUpAsOwner(String name, File picture) {
+        mPresenter.signUp(mLogin, mPass, name, picture);
+    }
 
+    @Override
+    public void onValidationSuccess(String login, String password) {
+        mLogin = login;
+        mPass = password;
+        DisplayUtils.hideSoftKeyboard(this);
+        mFragmentManager.beginTransaction()
+                .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onRegistrationSuccess() {
+        Intent intent = new Intent(this, OwnerHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

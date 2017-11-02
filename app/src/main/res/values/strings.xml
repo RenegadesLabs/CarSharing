@@ -24,6 +24,8 @@
     <string name="signup_terms_by">By signing up, you agree to Cardee\'s </string>
     <string name="signup_terms_terms">Terms of Service</string>
     <string name="signup_terms_privacy">Privacy Policy</string>
+    <string name="signup_validation_password">Password length must be between 3 and 36.</string>
+    <string name="signup_registration_success">You\'re registered successfully!</string>
     <string name="car_renter">Car Renter</string>
     <string name="car_owner">Car Owner</string>
 
@@ -31,6 +33,9 @@
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
+
+    <!--Loading-->
+    <string name="loading">Loading…</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>

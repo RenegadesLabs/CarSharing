@@ -1,5 +1,4 @@
-package com.cardee.domain.user.usecase;
-
+package com.cardee.domain.owner.usecase;
 
 import android.support.annotation.NonNull;
 
@@ -8,24 +7,24 @@ import com.cardee.data_source.UserDataSource;
 import com.cardee.data_source.UserRepository;
 import com.cardee.domain.UseCase;
 
-public class Login implements UseCase<Login.RequestValues, Login.ResponseValues> {
+public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues, CheckUniqueLogin.ResponseValues> {
 
     private UserDataSource mRepository;
 
-    public Login() {
+    public CheckUniqueLogin() {
         mRepository = UserRepository.getInstance();
     }
 
     @Override
-    public void execute(Login.RequestValues values, final Callback<Login.ResponseValues> callback) {
+    public void execute(RequestValues values, final Callback<ResponseValues> callback) {
         String login = values.getLogin();
         String password = values.getPassword();
 
         if (login == null || password == null) {
-            callback.onError(null);
             return;
         }
-        mRepository.login(login, password, new UserDataSource.Callback() {
+
+        mRepository.checkUniqueLogin(login, password, new UserDataSource.Callback() {
             @Override
             public void onSuccess(boolean success) {
                 callback.onSuccess(new ResponseValues(success));
@@ -33,10 +32,11 @@ public class Login implements UseCase<Login.RequestValues, Login.ResponseValues>
 
             @Override
             public void onError(Error error) {
-                callback.onError(error);
+                callback.onError(new Error(error.getErrorType(), error.getMessage()));
             }
         });
     }
+
 
     public static class RequestValues implements UseCase.RequestValues {
         private final String mLogin;
