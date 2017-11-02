@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:paddingBottom="@dimen/scroll_bottom_padding"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/car_image_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+            <FrameLayout
+                android:id="@+id/faded_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_car_title_layout_height"
+                android:background="@color/bg_transparent_black"
+                app:layout_constraintBottom_toBottomOf="@id/car_image_pager" />
+
+            <TextView
+                android:id="@+id/car_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_small"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@id/faded_line"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_x_small"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintStart_toEndOf="@id/car_title"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_page_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_small"
+                android:text="1 of 4"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintBottom_toBottomOf="@+id/faded_line"
+                app:layout_constraintEnd_toEndOf="@id/faded_line"
+                app:layout_constraintTop_toTopOf="@+id/faded_line" />
+
+            <TextView
+                android:id="@+id/car_images_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_margin_small"
+                android:paddingEnd="@dimen/widget_padding_mid"
+                android:paddingStart="@dimen/widget_padding_mid"
+                android:text="@string/title_edit"
+                android:textColor="@color/text_picture_overlaid"
+                android:textSize="@dimen/list_item_text_general"
+                app:layout_constraintEnd_toEndOf="@id/car_image_pager"
+                app:layout_constraintTop_toTopOf="@+id/car_image_pager" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/car_info_block"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/details_item_height"
+            android:background="@drawable/bg_underlined_large">
+
+            <ImageView
+                android:id="@+id/car_info_icon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:background="@drawable/bg_round_icon_blue"
+                android:padding="@dimen/padding_x_small"
+                app:layout_constraintBottom_toBottomOf="@+id/car_details_model"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/car_details_model"
+                app:srcCompat="@drawable/ic_temp_cars_white" />
+
+            <TextView
+                android:id="@+id/car_details_model"
+                style="@style/TextTitleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:layout_marginTop="@dimen/widget_margin_regular"
+                android:text="Mazda 3"
+                app:layout_constraintBottom_toTopOf="@+id/car_details_value"
+                app:layout_constraintStart_toEndOf="@id/car_info_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/car_details_value"
+                style="@style/TextInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_margin_regular"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:text="Sedan 5-seater - 1.6L Auto"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/car_details_model"
+                app:layout_constraintTop_toBottomOf="@+id/car_details_model" />
+
+            <TextView
+                android:id="@+id/car_info_edit"
+                style="@style/TextClickable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:padding="@dimen/widget_padding_xx_small"
+                android:text="@string/title_edit"
+                app:layout_constraintBottom_toBottomOf="@id/car_details_model"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/car_details_model" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/car_location_block"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/details_item_height"
+            android:background="@drawable/bg_underlined_large">
+
+            <ImageView
+                android:id="@+id/car_location_icon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:background="@drawable/bg_round_icon_light_blue"
+                android:padding="@dimen/padding_x_small"
+                app:layout_constraintBottom_toBottomOf="@+id/car_location_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/car_location_title"
+                app:srcCompat="@drawable/ic_temp_location_white" />
+
+            <TextView
+                android:id="@+id/car_location_title"
+                style="@style/TextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:layout_marginTop="@dimen/widget_margin_regular"
+                android:text="@string/car_details_location_title"
+                app:layout_constraintBottom_toTopOf="@+id/car_location_value"
+                app:layout_constraintStart_toEndOf="@id/car_location_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/car_location_value"
+                style="@style/TextInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_margin_regular"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:text="3 Rivervale Link, The Rivervale"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/car_location_title"
+                app:layout_constraintTop_toBottomOf="@+id/car_location_title" />
+
+            <TextView
+                android:id="@+id/car_location_edit"
+                style="@style/TextClickable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:padding="@dimen/widget_padding_xx_small"
+                android:text="@string/title_edit"
+                app:layout_constraintBottom_toBottomOf="@id/car_location_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/car_location_title" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/widget_margin_regular">
+
+            <ImageView
+                android:id="@+id/car_description_icon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:background="@drawable/bg_round_icon_green"
+                android:padding="@dimen/padding_x_small"
+                app:layout_constraintBottom_toBottomOf="@+id/car_description_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/car_description_title"
+                app:srcCompat="@drawable/ic_temp_description_white" />
+
+            <TextView
+                android:id="@+id/car_description_title"
+                style="@style/TextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/widget_margin_large"
+                android:layout_marginTop="@dimen/widget_margin_large"
+                android:text="@string/car_details_description_title"
+                app:layout_constraintStart_toEndOf="@id/car_description_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/car_description_value"
+                style="@style/TextInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:layout_marginTop="@dimen/widget_margin_small"
+                android:lineSpacingExtra="4dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas ex eget odio finibus convallis. Donec bibendum sed mauris ac aliquam. Sed vel purus quis nisl eleifend semper. Fusce ullamcorper feugiat erat, id condimentum arcu accumsan vitae. Aliquam erat volutpat. Praesent ac vulputate nisi. Cras et augue convallis, malesuada erat at, sagittis nisi. Nunc sit amet lorem justo. Integer imperdiet purus et dolor finibus, vitae condimentum lorem fringilla. Sed et ullamcorper libero. Pellentesque euismod velit magna, at aliquet est pulvinar sit amet. Ut convallis justo eget dui lacinia porttitor quis a ipsum. Nulla sodales justo quis urna scelerisque ultricies. Quisque volutpat nunc magna, a convallis nunc ultricies vel."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/car_description_title"
+                app:layout_constraintTop_toBottomOf="@+id/car_description_title" />
+
+            <TextView
+                android:id="@+id/car_description_edit"
+                style="@style/TextClickable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_large"
+                android:padding="@dimen/widget_padding_xx_small"
+                android:text="@string/title_edit"
+                app:layout_constraintBottom_toBottomOf="@id/car_description_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/car_description_title" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

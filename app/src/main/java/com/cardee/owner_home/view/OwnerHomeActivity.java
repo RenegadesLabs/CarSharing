@@ -2,11 +2,12 @@ package com.cardee.owner_home.view;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
-import com.cardee.owner_home.OwnerCarListContract;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
-import com.cardee.owner_home.view.listener.ViewModeChangeListener;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,20 +17,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
 
-import retrofit2.http.PUT;
-
 public class OwnerHomeActivity extends AppCompatActivity
-        implements ViewModeChangeListener, AHBottomNavigation.OnTabSelectedListener,
+        implements AHBottomNavigation.OnTabSelectedListener,
         CarListItemEventListener {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
 
     private boolean mHasFragment;
+    private TextView mTitle;
+    private View mAddCarAction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class OwnerHomeActivity extends AppCompatActivity
         if (getSupportActionBar() == null) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(null);
+            mTitle = toolbar.findViewById(R.id.toolbar_title);
+            mAddCarAction = toolbar.findViewById(R.id.toolbar_action);
         }
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
@@ -46,7 +52,6 @@ public class OwnerHomeActivity extends AppCompatActivity
         bottomMenu.setCurrentItem(1);
         bottomMenu.disableItemAtPosition(0); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
-
     }
 
     @Override
@@ -55,13 +60,22 @@ public class OwnerHomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onViewModeChange(OptionMenuMode mode) {
-
-    }
-
-    @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
         if (!wasSelected) {
+            switch (position) {
+                case 0:
+                case 3:
+                    getSupportActionBar().hide();
+                    break;
+                case 1:
+                    getSupportActionBar().show();
+                    mTitle.setText(R.string.title_my_cars);
+                    break;
+                case 2:
+                    getSupportActionBar().show();
+                    mTitle.setText(R.string.title_my_bookings);
+                    break;
+            }
             showFragmentOnPosition(position);
         }
         return true;
@@ -109,7 +123,12 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     public void onCarItemClick(Car car) {
-
+        Intent intent = new Intent(this, OwnerCarDetailsActivity.class);
+        Bundle args = new Bundle();
+        args.putInt(OwnerCarDetailsContract.CAR_ID, car.getCarId() == null ? -1 : car.getCarId());
+        args.putString(OwnerCarDetailsContract.CAR_NUMBER, car.getLicenceNumber());
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     @Override

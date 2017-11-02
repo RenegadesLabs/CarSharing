@@ -55,4 +55,17 @@
     <string name="car_availability_one_time">One-Time</string>
     <string name="car_availability_calendar">Calendar</string>
     <string name="car_availability_days_of_week">Days Of Week</string>
+
+    <string name="car_details_tab_rental">Rental</string>
+    <string name="car_details_tab_car">Car</string>
+    <string name="car_details_tab_reviews">Reviews</string>
+
+    <string name="title_my_cars">My Cars</string>
+    <string name="title_my_bookings">My Bookings</string>
+    <string name="toolbar_action_add_car">Add car</string>
+    <string name="toolbar_action_more">More</string>
+
+    <string name="title_edit">edit</string>
+    <string name="car_details_location_title">Location</string>
+    <string name="car_details_description_title">Description</string>
 </resources>

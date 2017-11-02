@@ -3,6 +3,8 @@ package com.cardee.auth.preview;
 import com.cardee.R;
 import com.cardee.auth.login.LoginActivity;
 import com.cardee.auth.register.view.RegisterActivity;
+import com.cardee.data_source.remote.service.AccountManager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
