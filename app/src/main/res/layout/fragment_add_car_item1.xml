@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginTop="@dimen/xlarge_margin"
+        android:text="@string/car_add_vehicle_what"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_vehiclePersonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:background="@drawable/bg_item_vehicle_type"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <TextView
+            android:id="@+id/tv_vehiclePersonal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:text="@string/car_add_vehicle_personal"
+            android:textColor="@color/add_car_item_vehicle_inactive"
+            android:textSize="@dimen/text_large" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_vehiclePersonal"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/medium_margin"
+            app:srcCompat="@drawable/ic_car_inactive" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/personalExplTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xlarge_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/car_add_vehicle_personal_expl"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_vehiclePersonal" />
+
+    <FrameLayout
+        android:id="@+id/fl_vehiclePrivate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:background="@drawable/bg_item_vehicle_type"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@+id/personalExplTxt">
+
+        <TextView
+            android:id="@+id/tv_vehiclePrivate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/car_add_vehicle_private"
+            android:textColor="@color/add_car_item_vehicle_inactive"
+            android:textSize="@dimen/text_large" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_vehiclePrivate"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/small_margin"
+            app:srcCompat="@drawable/ic_private_hire_inactive" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/privateExplTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xlarge_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/car_add_vehicle_private_expl"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_vehiclePrivate" />
+
+    <FrameLayout
+        android:id="@+id/fl_vehicleCommercial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:background="@drawable/bg_item_vehicle_type"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@+id/privateExplTxt">
+
+        <TextView
+            android:id="@+id/tv_vehicleCommercial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/car_add_vehicle_commercial"
+            android:textColor="@color/add_car_item_vehicle_inactive"
+            android:textSize="@dimen/text_large" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_vehicleCommercial"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/medium_margin"
+            app:srcCompat="@drawable/ic_truck_inactive" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/commercialExplTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xlarge_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/car_add_vehicle_commercial_expl"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_vehicleCommercial" />
+
+    <com.cardee.custom.CardeeButton
+        android:id="@+id/b_vehicleNext"
+        style="@style/RoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:text="@string/car_add_next"
+        app:drawableEndCompat="@drawable/ic_arrow_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

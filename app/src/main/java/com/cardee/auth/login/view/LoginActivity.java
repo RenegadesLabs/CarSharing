@@ -1,4 +1,4 @@
-package com.cardee.auth.login;
+package com.cardee.auth.login.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.cardee.CardeeApp;
 import com.cardee.R;
+import com.cardee.auth.login.presenter.LoginPresenter;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;

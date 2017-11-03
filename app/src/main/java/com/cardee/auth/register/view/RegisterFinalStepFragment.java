@@ -71,7 +71,6 @@ public class RegisterFinalStepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register2, container, false);
-
         mUnbinder = ButterKnife.bind(this, v);
         setButtonsActivated(false);
         return v;

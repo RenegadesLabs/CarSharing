@@ -2,6 +2,7 @@ package com.cardee.owner_home.view;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ import com.cardee.owner_home.view.service.FragmentFactory;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
-        CarListItemEventListener {
+        CarListItemEventListener, View.OnClickListener {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class OwnerHomeActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             mTitle = toolbar.findViewById(R.id.toolbar_title);
             mAddCarAction = toolbar.findViewById(R.id.toolbar_action);
+            mAddCarAction.setOnClickListener(this);
         }
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
@@ -146,5 +149,14 @@ public class OwnerHomeActivity extends AppCompatActivity
     @Override
     public void onLocationPickerClick(Car car) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_action:
+                startActivity(new Intent(this, CarAddActivity.class));
+                break;
+        }
     }
 }

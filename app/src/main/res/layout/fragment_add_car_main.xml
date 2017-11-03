@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/add_item1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                app:srcCompat="@drawable/ic_check_circle" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/div1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/add_item1" />
+
+
+    <FrameLayout
+        android:id="@+id/add_item2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_item1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item2"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/add_item2" />
+
+    <FrameLayout
+        android:id="@+id/add_item3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_item2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item3"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/add_item3" />
+
+    <FrameLayout
+        android:id="@+id/add_item4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_item3">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item4"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/add_item4" />
+
+    <FrameLayout
+        android:id="@+id/add_item5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_item4">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item5"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/add_item5" />
+
+    <FrameLayout
+        android:id="@+id/add_item6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/bg_item_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_item5">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_item6"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_large" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_addCarItem6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/car_add_add"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        style="@style/RegularButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:background="@drawable/bg_button_regular"
+        android:text="@string/car_add_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

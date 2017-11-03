@@ -1,6 +1,7 @@
-package com.cardee.auth.login;
+package com.cardee.auth.login.presenter;
 
 import com.cardee.R;
+import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.domain.UseCase;

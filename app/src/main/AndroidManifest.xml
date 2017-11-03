@@ -30,7 +30,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/PreviewTheme"/>
 
-        <activity android:name=".auth.login.LoginActivity"
+        <activity android:name=".auth.login.view.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
 
@@ -58,6 +58,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".owner_car_add.view.CarAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
     </application>
 

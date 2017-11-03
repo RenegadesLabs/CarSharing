@@ -1,8 +1,8 @@
-package com.cardee.auth.register.view;
+package com.cardee.auth.register.presenter;
 
-import android.graphics.Bitmap;
 
 import com.cardee.R;
+import com.cardee.auth.register.view.RegisterView;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
