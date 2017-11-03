@@ -32,7 +32,7 @@ public class CarResponseToCarMapper {
         return new Car(carDetails.getCarId(), carDetails.getMake(), carDetails.getTitle(),
                 carDetails.getModel(), carDetails.getVehicleTypeId(), carDetails.getVehicleType(),
                 carDetails.getManufactureYear(), carDetails.getLicencePlateNumber(), carDetails.getBodyType(),
-                carDetails.getEngineCapacity(), carDetails.getBodyType(), carDetails.getSeatingCapacity(),
+                carDetails.getEngineCapacity(), carDetails.getCarTransmission(), carDetails.getSeatingCapacity(),
                 primaryImageLink, carResponse.getCarAvailabilityHourlyCount(), carResponse.getCarAvailabilityDailyCount(),
                 carResponse.getCarAvailabilityTimeBegin(), carResponse.getCarAvailabilityTimeEnd(),
                 carResponse.getCarAvailableOrderHours(), carResponse.getCarAvailableOrderDays(),

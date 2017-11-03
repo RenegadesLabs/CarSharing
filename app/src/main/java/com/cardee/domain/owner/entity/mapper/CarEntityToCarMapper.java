@@ -35,7 +35,7 @@ public class CarEntityToCarMapper {
         return new Car(carDetails.getCarId(), carDetails.getMake(), carDetails.getTitle(),
                 carDetails.getModel(), carDetails.getVehicleTypeId(), carDetails.getVehicleType(),
                 carDetails.getManufactureYear(), carDetails.getLicencePlateNumber(), carDetails.getBodyType(),
-                carDetails.getEngineCapacity(), carDetails.getBodyType(), carDetails.getSeatingCapacity(),
+                carDetails.getEngineCapacity(), carDetails.getCarTransmission(), carDetails.getSeatingCapacity(),
                 primaryImageLink, carEntity.getCarAvailabilityHourlyCount(), carEntity.getCarAvailabilityDailyCount(),
                 carEntity.getCarAvailabilityTimeBegin(), carEntity.getCarAvailabilityTimeEnd(),
                 carEntity.getCarAvailableOrderHours(), carEntity.getCarAvailableOrderDays(),

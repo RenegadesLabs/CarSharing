@@ -177,4 +177,23 @@ public class CarDetailsEntity extends BaseCarEntity {
     public void setDeliveryRates(DeliveryRatesEntity deliveryRates) {
         this.deliveryRates = deliveryRates;
     }
+
+    public static CarDetailsEntity from(BaseCarEntity carEntity) {
+        CarDetailsEntity detailsEntity = new CarDetailsEntity();
+        detailsEntity.setCarId(carEntity.getCarId());
+        detailsEntity.setMake(carEntity.getMake());
+        detailsEntity.setTitle(carEntity.getTitle());
+        detailsEntity.setModel(carEntity.getModel());
+        detailsEntity.setManufactureYear(carEntity.getManufactureYear());
+        detailsEntity.setBodyType(carEntity.getBodyType());
+        detailsEntity.setSeatingCapacity(carEntity.getSeatingCapacity());
+        detailsEntity.setEngineCapacity(carEntity.getEngineCapacity());
+        detailsEntity.setCarTransmission(carEntity.getCarTransmission());
+        detailsEntity.setVehicleType(carEntity.getVehicleType());
+        detailsEntity.setVehicleTypeId(carEntity.getVehicleTypeId());
+        detailsEntity.setLicencePlateNumber(carEntity.getLicencePlateNumber());
+        detailsEntity.setImages(carEntity.getImages());
+        detailsEntity.setDescription(carEntity.getDescription());
+        return detailsEntity;
+    }
 }
