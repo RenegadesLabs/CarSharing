@@ -17,7 +17,7 @@ public class RemoteOwnerCarsDataSource implements OwnerCarsDataSource {
 
     private static RemoteOwnerCarsDataSource INSTANCE;
 
-    private Profile mApi;
+    private final Profile mApi;
 
     private RemoteOwnerCarsDataSource() {
         mApi = CardeeApp.retrofit.create(Profile.class);
