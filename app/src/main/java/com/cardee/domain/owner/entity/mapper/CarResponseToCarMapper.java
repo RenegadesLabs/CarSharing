@@ -1,23 +1,20 @@
 package com.cardee.domain.owner.entity.mapper;
 
 
-import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
-import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
+import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
+import com.cardee.data_source.remote.api.cars.response.entity.CarDetailsEntity;
 import com.cardee.data_source.remote.api.common.entity.ImageEntity;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.Image;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CarResponseToCarMapper {
 
-public class CarEntityToCarMapper {
-
-    public CarEntityToCarMapper() {
+    public CarResponseToCarMapper() {
 
     }
 
-    public Car transform(CarEntity carEntity) {
-        BaseCarEntity carDetails = carEntity.getCarDetails();
+    public Car transform(CarResponseBody carResponse) {
+        CarDetailsEntity carDetails = carResponse.getCarDetails();
         ImageEntity[] imageEntities = carDetails.getImages();
         Image[] images = new Image[imageEntities.length];
         String primaryImageLink = null;
@@ -36,21 +33,11 @@ public class CarEntityToCarMapper {
                 carDetails.getModel(), carDetails.getVehicleTypeId(), carDetails.getVehicleType(),
                 carDetails.getManufactureYear(), carDetails.getLicencePlateNumber(), carDetails.getBodyType(),
                 carDetails.getEngineCapacity(), carDetails.getBodyType(), carDetails.getSeatingCapacity(),
-                primaryImageLink, carEntity.getCarAvailabilityHourlyCount(), carEntity.getCarAvailabilityDailyCount(),
-                carEntity.getCarAvailabilityTimeBegin(), carEntity.getCarAvailabilityTimeEnd(),
-                carEntity.getCarAvailableOrderHours(), carEntity.getCarAvailableOrderDays(),
-                carEntity.getCarAvailabilityHourlyDates(), carEntity.getCarAvailabilityDailyDates(),
-                carDetails.getDescription(), images, null, null, null, null);
-    }
-
-    public List<Car> transform(CarEntity[] carEntities) {
-        if (carEntities != null) {
-            List<Car> cars = new ArrayList<>(carEntities.length);
-            for (CarEntity carEntity : carEntities) {
-                cars.add(transform(carEntity));
-            }
-            return cars;
-        }
-        return null;
+                primaryImageLink, carResponse.getCarAvailabilityHourlyCount(), carResponse.getCarAvailabilityDailyCount(),
+                carResponse.getCarAvailabilityTimeBegin(), carResponse.getCarAvailabilityTimeEnd(),
+                carResponse.getCarAvailableOrderHours(), carResponse.getCarAvailableOrderDays(),
+                carResponse.getCarAvailabilityHourlyDates(), carResponse.getCarAvailabilityDailyDates(),
+                carResponse.getCarDetails().getDescription(), images, carDetails.getLongitude(),
+                carDetails.getLatitude(), carDetails.getAddress(), carDetails.getTown());
     }
 }

@@ -23,6 +23,10 @@ public interface OwnerCarDetailsContract {
         void moveToLocation(Bundle args);
 
         void moveToDescription(Bundle args);
+
+        void onUnauthorized();
+
+        void onConnectionLost();
     }
 
     interface Presenter {

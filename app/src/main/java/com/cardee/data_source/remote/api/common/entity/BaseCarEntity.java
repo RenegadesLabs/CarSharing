@@ -1,6 +1,5 @@
 package com.cardee.data_source.remote.api.common.entity;
 
-import com.cardee.data_source.remote.api.ErrorResponseBody;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -43,8 +42,13 @@ public class BaseCarEntity {
     @SerializedName("car_engine_capacity")
     private String engineCapacity;
     @Expose
+    @SerializedName("description")
+    private String description;
+    @Expose
     @SerializedName("images")
     private ImageEntity[] images;
+
+
 
     public BaseCarEntity() {
 
@@ -144,6 +148,14 @@ public class BaseCarEntity {
 
     public void setEngineCapacity(String engineCapacity) {
         this.engineCapacity = engineCapacity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ImageEntity[] getImages() {

@@ -24,9 +24,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 //        ButterKnife.bind(this);
         checkLogged();
         initButtons();
-
-        String str = null;
-        System.out.println(str.length());
     }
 
     private void initButtons() {

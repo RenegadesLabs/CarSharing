@@ -2,22 +2,16 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 
-import com.cardee.data_source.remote.api.auth.adapter.exception.RxErrorHandlingCallAdapterFactory;
 import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
-import com.google.firebase.crash.FirebaseCrash;
-
-import java.util.Locale;
 
 import retrofit2.Retrofit;
-
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -40,12 +34,12 @@ public class CardeeApp extends Application {
                 .build();
 //        changeLocale();
 
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-                FirebaseCrash.report(throwable);
-            }
-        });
+//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread thread, Throwable throwable) {
+//                FirebaseCrash.report(throwable);
+//            }
+//        });
     }
 
     public static GoogleApiClient initLoginGoogleApi(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {

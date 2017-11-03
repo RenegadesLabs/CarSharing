@@ -21,9 +21,6 @@ public class CarDetailsEntity extends BaseCarEntity {
     @SerializedName("town")
     private String town;
     @Expose
-    @SerializedName("description")
-    private String description;
-    @Expose
     @SerializedName("req_min_age")
     private Integer requiredMinAge;
     @Expose
@@ -91,14 +88,6 @@ public class CarDetailsEntity extends BaseCarEntity {
 
     public void setTown(String town) {
         this.town = town;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getRequiredMinAge() {

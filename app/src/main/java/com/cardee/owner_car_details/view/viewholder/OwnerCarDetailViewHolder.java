@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.DetailedCar;
+import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
@@ -23,7 +23,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
-public class OwnerCarDetailViewHolder {
+public class OwnerCarDetailViewHolder implements ViewPager.OnPageChangeListener {
 
     private final View mRootView;
 
@@ -33,7 +33,7 @@ public class OwnerCarDetailViewHolder {
     private final TextView mImagePageIndicator;
     private final TextView mCarModelTitle;
     private final TextView mCarShortSpecs;
-    private final TextView mCarLocatoin;
+    private final TextView mCarLocation;
     private final TextView mCarDescription;
 
     private final View mBtnImageEdit;
@@ -54,7 +54,7 @@ public class OwnerCarDetailViewHolder {
         mImagePageIndicator = rootView.findViewById(R.id.car_page_indicator);
         mCarModelTitle = rootView.findViewById(R.id.car_details_model);
         mCarShortSpecs = rootView.findViewById(R.id.car_details_value);
-        mCarLocatoin = rootView.findViewById(R.id.car_location_value);
+        mCarLocation = rootView.findViewById(R.id.car_location_value);
         mCarDescription = rootView.findViewById(R.id.car_description_value);
 
         mBtnImageEdit = rootView.findViewById(R.id.car_images_edit);
@@ -63,6 +63,8 @@ public class OwnerCarDetailViewHolder {
         mBtnDescriptionEdit = rootView.findViewById(R.id.car_description_edit);
 
         mImageAdapter = new ImagePagerAdapter();
+        mImagePager.setAdapter(mImageAdapter);
+        mImagePager.addOnPageChangeListener(this);
         createEventObservable();
         mGlideRequestManager = Glide.with(rootView.getContext());
     }
@@ -100,12 +102,48 @@ public class OwnerCarDetailViewHolder {
         });
     }
 
-    public void bind(DetailedCar details) {
+    public void bind(Car car) {
+        mImageAdapter.setItems(car.getImages());
+        mCarModel.setText(car.getCarTitle());
+        mCarYear.setText(car.getManufactureYear());
+        initImagePagerIndicator(car.getImages().length);
+        mCarModelTitle.setText(car.getCarTitle());
+        mCarShortSpecs.setText(getSpecsString(car));
+        mCarLocation.setText(getLocationString(car));
+        mCarDescription.setText(car.getDescription());
+    }
 
+    private void initImagePagerIndicator(int count) {
+        if (count < 2) {
+            mImagePageIndicator.setVisibility(View.GONE);
+            return;
+        } else {
+            mImagePageIndicator.setVisibility(View.VISIBLE);
+        }
+        setImagePage(0);
+    }
+
+    private void setImagePage(int page) {
+        mImagePageIndicator.setText(page + " of " + mImagePager.getChildCount());
     }
 
     public void subscribe(Consumer<OwnerCarDetailsContract.CarDetailEvent> consumer) {
         mObservable.subscribe(consumer);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        setImagePage(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     private class ImagePagerAdapter extends PagerAdapter {
@@ -114,7 +152,7 @@ public class OwnerCarDetailViewHolder {
         private int mDefaultImageId = R.drawable.img_car_placeholder;
 
         private Image[] mImages;
-        boolean mEmpty;
+        boolean mEmpty = true;
 
         private SparseArray<ImageView> mViews;
 
@@ -173,5 +211,32 @@ public class OwnerCarDetailViewHolder {
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
+    }
+
+    private String getSpecsString(Car car) {
+        StringBuilder builder = new StringBuilder();
+        boolean hasPrefix = false;
+        if (car.getBodyType() != null) {
+            builder.append(car.getBodyType()).append(" ");
+            hasPrefix = true;
+        }
+        if (car.getSeatingCapacity() != null) {
+            builder.append(car.getSeatingCapacity()).append("-seater ");
+            hasPrefix = true;
+        }
+        if (hasPrefix) {
+            builder.append("\u2022 ");
+        }
+        if (car.getEngineCapacity() != null) {
+            builder.append(car.getEngineCapacity()).append("L ");
+        }
+        if (car.getTransmissionType() != null) {
+            builder.append(car.getTransmissionType());
+        }
+        return builder.toString();
+    }
+
+    private String getLocationString(Car car) {
+        return car.getAddress();
     }
 }

@@ -6,17 +6,17 @@ import com.cardee.data_source.OwnerCarDataSource;
 import com.cardee.data_source.OwnerCarRepository;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
 import com.cardee.domain.UseCase;
-import com.cardee.domain.owner.entity.DetailedCar;
-import com.cardee.domain.owner.entity.mapper.CarResponseToDetailedCarMapper;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.domain.owner.entity.mapper.CarResponseToCarMapper;
 
 public class GetCar implements UseCase<GetCar.RequestValues, GetCar.ResponseValues> {
 
     private final OwnerCarRepository mRepository;
-    private final CarResponseToDetailedCarMapper mMapper;
+    private final CarResponseToCarMapper mMapper;
 
     public GetCar() {
         mRepository = OwnerCarRepository.getInstance();
-        mMapper = new CarResponseToDetailedCarMapper();
+        mMapper = new CarResponseToCarMapper();
     }
 
 
@@ -42,7 +42,7 @@ public class GetCar implements UseCase<GetCar.RequestValues, GetCar.ResponseValu
         });
     }
 
-    public class RequestValues implements UseCase.RequestValues {
+    public static class RequestValues implements UseCase.RequestValues {
         private final int mId;
 
         public RequestValues(int id) {
@@ -54,14 +54,14 @@ public class GetCar implements UseCase<GetCar.RequestValues, GetCar.ResponseValu
         }
     }
 
-    public class ResponseValues implements UseCase.ResponseValues {
-        private final DetailedCar mCar;
+    public static class ResponseValues implements UseCase.ResponseValues {
+        private final Car mCar;
 
-        public ResponseValues(DetailedCar car) {
+        public ResponseValues(Car car) {
             mCar = car;
         }
 
-        public DetailedCar getCar() {
+        public Car getCar() {
             return mCar;
         }
 

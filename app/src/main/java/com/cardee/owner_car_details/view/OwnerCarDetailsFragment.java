@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
@@ -22,6 +23,8 @@ public class OwnerCarDetailsFragment extends Fragment
 
     private OwnerCarDetailViewHolder mHolder;
     private OwnerCarDetailsPresenter mPresenter;
+
+    private Toast mCurrentToast;
 
     public static Fragment newInstance(Integer carId) {
         OwnerCarDetailsFragment fragment = new OwnerCarDetailsFragment();
@@ -47,12 +50,14 @@ public class OwnerCarDetailsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_owner_car_details, container, false);
         mHolder = new OwnerCarDetailViewHolder(rootView);
+        mHolder.subscribe(mPresenter);
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        mPresenter.get();
     }
 
     @Override
@@ -62,12 +67,16 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void showMessage(String message) {
-
+        if (mCurrentToast != null) {
+            mCurrentToast.cancel();
+        }
+        mCurrentToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        mCurrentToast.show();
     }
 
     @Override
     public void showMessage(@StringRes int messageId) {
-
+        showMessage(getString(messageId));
     }
 
     @Override
@@ -78,26 +87,36 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void setCar(Car car) {
-
+        mHolder.bind(car);
     }
 
     @Override
     public void moveToImages(Bundle args) {
-
+        showMessage("Move to images");
     }
 
     @Override
     public void moveToSpecs(Bundle args) {
-
+        showMessage("Move to specs");
     }
 
     @Override
     public void moveToLocation(Bundle args) {
-
+        showMessage("Move to location");
     }
 
     @Override
     public void moveToDescription(Bundle args) {
+        showMessage("Move to description");
+    }
+
+    @Override
+    public void onUnauthorized() {
+
+    }
+
+    @Override
+    public void onConnectionLost() {
 
     }
 }
