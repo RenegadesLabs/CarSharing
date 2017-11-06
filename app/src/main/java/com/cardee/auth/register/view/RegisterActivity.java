@@ -13,9 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.auth.login.LoginActivity;
-import com.cardee.auth.register.RegisterContract;
-import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.auth.login.view.LoginActivity;
+import com.cardee.auth.register.presenter.RegisterPresenter;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.display.DisplayUtils;
 import com.facebook.CallbackManager;

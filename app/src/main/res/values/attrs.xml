@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="CardeeButton">
         <attr name="drawableStartCompat" format="reference"/>
+        <attr name="drawableEndCompat" format="reference"/>
     </declare-styleable>
 </resources>

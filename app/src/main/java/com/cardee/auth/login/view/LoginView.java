@@ -1,4 +1,4 @@
-package com.cardee.auth.login;
+package com.cardee.auth.login.view;
 
 import com.cardee.mvp.BaseView;
 

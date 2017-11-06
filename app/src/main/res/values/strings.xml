@@ -73,4 +73,44 @@
     <string name="title_edit">edit</string>
     <string name="car_details_location_title">Location</string>
     <string name="car_details_description_title">Description</string>
+
+    <!--Add Car-->
+    <string name="car_add_title">Add Car</string>
+    <string name="car_add_submit">Submit</string>
+    <string name="car_add_item1">1. Vehicle Type</string>
+    <string name="car_add_item2">2. Car Info</string>
+    <string name="car_add_item3">3. Car Image</string>
+    <string name="car_add_item4">4. Car Location</string>
+    <string name="car_add_item5">5. Contact Info</string>
+    <string name="car_add_item6">6. Payment Account</string>
+    <string name="car_add_add">Add</string>
+    <string name="car_add_next">Next</string>
+    <string name="car_add_save">Save</string>
+
+    <!--Car Add Item Vehicle Type-->
+    <string name="car_add_vehicle_title">Vehicle Type</string>
+    <string name="car_add_vehicle_what">What type of vehicle are you listing?</string>
+    <string name="car_add_vehicle_personal">Personal Car</string>
+    <string name="car_add_vehicle_personal_expl">Passenger car for personal use</string>
+    <string name="car_add_vehicle_private">Private-Hire Vehicle</string>
+    <string name="car_add_vehicle_private_expl">Private-hire cars registered for Grab / Uber use.
+        \n(Also can be rented out for personal use)</string>
+    <string name="car_add_vehicle_commercial">Commercial Vehicle</string>
+    <string name="car_add_vehicle_commercial_expl">Pickup, lorry, van, minibus etc.</string>
+
+    <!--Car Add Item Car Info-->
+    <string name="car_add_info_title">Car Info</string>
+
+    <!--Car Add Item Car Image-->
+    <string name="car_add_image_title">Car Image</string>
+
+    <!--Car Add Item Car Location-->
+    <string name="car_add_location_title">Car Location</string>
+
+    <!--Car Add Item Contact Info-->
+    <string name="car_add_contact_title">Contact Info</string>
+
+    <!--Car Add Item Payment-->
+    <string name="car_add_payment_title">Payment Account</string>
+
 </resources>
