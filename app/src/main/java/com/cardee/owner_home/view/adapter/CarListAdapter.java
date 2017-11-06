@@ -167,7 +167,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                             return false;
                         }
                     })
-                    .error(R.drawable.img_car_placeholder)
+                    .error(R.drawable.img_no_car)
                     .into(mPrimaryImage);
         }
     }

@@ -20,12 +20,6 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO: implement Logged state handling
-                if (AccountManager.getInstance(SplashActivity.this).isLogedIn()) {
-                    startActivity(new Intent(SplashActivity.this, OwnerHomeActivity.class)); //temporary
-                    finish();
-                    return;
-                }
                 startActivity(new Intent(SplashActivity.this, PreviewActivity.class));
                 finish();
                 // TODO: 10/18/17 Loading car animation

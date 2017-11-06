@@ -9,6 +9,8 @@ import com.cardee.owner_home.view.listener.CarListItemEventListener;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -33,6 +36,9 @@ public class OwnerHomeActivity extends AppCompatActivity
     private boolean mHasFragment;
     private TextView mTitle;
     private View mAddCarAction;
+    private ProgressBar mProgress;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class OwnerHomeActivity extends AppCompatActivity
             mTitle = toolbar.findViewById(R.id.toolbar_title);
             mAddCarAction = toolbar.findViewById(R.id.toolbar_action);
         }
+        mProgress = (ProgressBar) findViewById(R.id.home_progress);
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
@@ -146,5 +153,21 @@ public class OwnerHomeActivity extends AppCompatActivity
     @Override
     public void onLocationPickerClick(Car car) {
 
+    }
+
+    @Override
+    public void onStartLoading() {
+        mProgress.setVisibility(View.VISIBLE);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.setVisibility(View.GONE);
+            }
+        }, 5000); //hide progress bar if there is no response for 5 seconds
+    }
+
+    @Override
+    public void onStopLoading() {
+        mProgress.setVisibility(View.GONE);
     }
 }

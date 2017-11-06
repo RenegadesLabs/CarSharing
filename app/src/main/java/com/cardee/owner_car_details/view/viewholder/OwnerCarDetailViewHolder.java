@@ -157,7 +157,7 @@ public class OwnerCarDetailViewHolder implements ViewPager.OnPageChangeListener 
     private class ImagePagerAdapter extends PagerAdapter {
 
         @DrawableRes
-        private int mDefaultImageId = R.drawable.img_car_placeholder;
+        private int mDefaultImageId = R.drawable.img_no_car;
         private LayoutInflater mInflater;
         private Image[] mImages;
         boolean mEmpty = true;
