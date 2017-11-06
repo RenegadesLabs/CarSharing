@@ -21,12 +21,18 @@
         <item name="android:textColorSecondary">@color/bg_main</item>
     </style>
 
-    <style name="CardeeEditTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="CardeeLoginEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/white_opacity60</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/white_opacity60</item>
         <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="CardeeEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
     <style name="CardeeTextInputStyle" parent="Widget.Design.TextInputLayout">

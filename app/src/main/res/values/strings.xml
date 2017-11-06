@@ -100,6 +100,27 @@
 
     <!--Car Add Item Car Info-->
     <string name="car_add_info_title">Car Info</string>
+    <string name="car_add_info_make">Car Make</string>
+    <string name="car_add_info_make_hint">E.g. Toyota, Honda, BMW etc.</string>
+    <string name="car_add_info_model">Car Model</string>
+    <string name="car_add_info_model_hint">E.g. Altis, Camry, Prius etc.</string>
+    <string name="car_add_info_year">Year of Manufacture</string>
+    <string name="car_add_info_please_select">Please select</string>
+    <string name="car_add_info_car_title">Car Title</string>
+    <string name="car_add_info_car_title_hint">E.g. Toyota Camry, BMW 3 Hybrid etc.</string>
+    <string name="car_add_info_car_title_desc">How you would like your car title to be displayed?
+        \nKeep it short! (Do not include year of manufacture)</string>
+    <string name="car_add_info_license">License Plate Number</string>
+    <string name="car_add_info_license_hint">E.g. SJX8938Y</string>
+    <string name="car_add_info_seat_capacity">Seating Capacity</string>
+    <string name="car_add_info_eng_capacity">Engine Capacity</string>
+    <string name="car_add_info_eng_capacity_litre">litre</string>
+    <string name="car_add_info_transmission">Transmission</string>
+    <string name="car_add_info_body">Body Type(s)</string>
+    <string name="car_add_info_body_desc">Select body type(s) that best describe your car</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
 
     <!--Car Add Item Car Image-->
     <string name="car_add_image_title">Car Image</string>

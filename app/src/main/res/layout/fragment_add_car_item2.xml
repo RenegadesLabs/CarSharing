@@ -1,6 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/large_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_info_make"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoMake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_make_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_model"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_model_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_year"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_car_title"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoCarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_car_title_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_info_car_title_desc"
+                android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_license"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoLicense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_license_hint"
+                android:inputType="textCapCharacters"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_seat_capacity"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoSeating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_eng_capacity"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_addCarInfoEngine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/car_add_info_please_select"
+                    android:gravity="center_horizontal"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_regular"
+                    android:theme="@style/CardeeEditTextStyle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_add_info_eng_capacity_litre"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_transmission"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoTransmission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/car_add_info_body"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_addCarInfoBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_add_info_body_desc"
+                android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                android:textSize="@dimen/text_small"
+                android:layout_marginBottom="58dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.cardee.custom.CardeeButton
+        android:id="@+id/b_carInfoNext"
+        style="@style/RoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:text="@string/car_add_next"
+        android:layout_gravity="bottom|end"
+        app:drawableEndCompat="@drawable/ic_arrow_next" />
+</FrameLayout>
