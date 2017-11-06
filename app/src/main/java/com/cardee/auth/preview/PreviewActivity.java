@@ -4,10 +4,7 @@ import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.service.AccountManager;
-<<<<<<<<< Temporary merge branch 1
-=========
 import com.cardee.owner_home.view.OwnerHomeActivity;
->>>>>>>>> Temporary merge branch 2
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -29,6 +29,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.PublishSubject;
 
 public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListItemViewHolder> {
 
@@ -39,13 +40,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
 
     private SparseArray<CarListItemViewHolder> mHolders;
 
-    private Consumer<OwnerCarListContract.CarEvent> mConsumer;
+    private final PublishSubject<OwnerCarListContract.CarEvent> mEventObservable;
 
     public CarListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCarViewItems = new ArrayList<>();
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
+        mEventObservable = PublishSubject.create();
     }
 
     @Override
@@ -57,52 +59,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
     @Override
     public void onBindViewHolder(final CarListItemViewHolder holder, int position) {
         final Car car = mCarViewItems.get(position);
-        holder.bind(car, mGlideRequestManager);
+        holder.bind(car, mGlideRequestManager, mEventObservable);
         mHolders.put(car.getCarId(), holder);
-        if (mConsumer == null) {
-            return;
-        }
-        Observable.create(new ObservableOnSubscribe<OwnerCarListContract.CarEvent>() {
-            @Override
-            public void subscribe(@NonNull final ObservableEmitter<OwnerCarListContract.CarEvent> emitter) throws Exception {
-                holder.mDailySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.DAILY_SWITCHED));
-                    }
-                });
-                holder.mHourlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.HOURLY_SWITCHED));
-                    }
-                });
-                holder.mPrimaryImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.OPEN));
-                    }
-                });
-                holder.mLocationView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.LOCATION_CLICKED));
-                    }
-                });
-                holder.mDailyView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.DAILY_CLICKED));
-                    }
-                });
-                holder.mHourlyView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarListContract.CarEvent(car, OwnerCarListContract.Action.HOURLY_CLICKED));
-                    }
-                });
-            }
-        }).subscribe(mConsumer);
     }
 
     @Override
@@ -138,16 +96,10 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mLoadingIndicator = itemView.findViewById(R.id.car_primary_image_loading_indicator);
         }
 
-        private void bind(Car model, RequestManager imageRequestManager) {
+        private void bind(final Car model, RequestManager imageRequestManager, final PublishSubject<OwnerCarListContract.CarEvent> observable) {
             mTitleView.setText(model.getCarTitle());
             mYearView.setText(model.getManufactureYear());
             mLicenceNumberView.setText(model.getLicenceNumber());
-
-            mHourlySwitch.setChecked(model.isAvailableHourly());
-            mDailySwitch.setChecked(model.isAvailableDaily());
-
-//            mHourlyView.setEnabled(model.isAvailableHourly());
-//            mDailyView.setEnabled(model.isAvailableDaily());
 
             if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
                 mLoadingIndicator.setVisibility(View.VISIBLE);
@@ -169,6 +121,48 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                     })
                     .error(R.drawable.img_no_car)
                     .into(mPrimaryImage);
+
+            mHourlySwitch.setOnCheckedChangeListener(null);
+            mHourlySwitch.setChecked(model.isAvailableHourly());
+            mHourlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_SWITCHED));
+                }
+            });
+
+            mDailySwitch.setOnCheckedChangeListener(null);
+            mDailySwitch.setChecked(model.isAvailableDaily());
+            mDailySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_SWITCHED));
+                }
+            });
+            mPrimaryImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.OPEN));
+                }
+            });
+            mLocationView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.LOCATION_CLICKED));
+                }
+            });
+            mDailyView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_CLICKED));
+                }
+            });
+            mHourlyView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED));
+                }
+            });
         }
     }
 
@@ -208,7 +202,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
     }
 
     public void subscribe(Consumer<OwnerCarListContract.CarEvent> consumer) {
-        mConsumer = consumer;
+        mEventObservable.subscribe(consumer);
         if (!mCarViewItems.isEmpty()) {
             notifyDataSetChanged();
         }
