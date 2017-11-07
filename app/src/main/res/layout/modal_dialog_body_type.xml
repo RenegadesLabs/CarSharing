@@ -13,63 +13,72 @@
         android:background="@android:color/transparent"
         android:text="@string/car_add_info_body"
         app:layout_constraintBottom_toTopOf="@+id/body_sedan"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatCheckedTextView
         android:id="@+id/body_sedan"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_top"
-        android:text="@string/car_availability_one_time"
-        app:layout_constraintBottom_toTopOf="@+id/availability_calendar"
+        android:text="@string/car_add_info_body_sedan"
         app:layout_constraintTop_toBottomOf="@+id/body_type_menu_title" />
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="@dimen/widget_margin_x_small"
-        app:layout_constraintBottom_toBottomOf="@id/body_sedan"
-        app:layout_constraintEnd_toEndOf="@id/body_sedan"
-        app:layout_constraintTop_toTopOf="@id/body_sedan"
-        app:srcCompat="@drawable/ic_arrow_right" />
-
-    <TextView
-        android:id="@+id/availability_calendar"
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/body_hatchback"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="@string/car_availability_calendar"
-        app:layout_constraintBottom_toTopOf="@+id/availability_days_of_week"
-        app:layout_constraintTop_toBottomOf="@+id/availability_one_time" />
+        android:text="@string/car_add_info_body_hatchback"
+        app:layout_constraintTop_toBottomOf="@+id/body_sedan" />
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="@dimen/widget_margin_x_small"
-        app:layout_constraintBottom_toBottomOf="@id/availability_calendar"
-        app:layout_constraintEnd_toEndOf="@id/availability_calendar"
-        app:layout_constraintTop_toTopOf="@id/availability_calendar"
-        app:srcCompat="@drawable/ic_arrow_right" />
 
-    <TextView
-        android:id="@+id/availability_days_of_week"
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/body_suv"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
-        android:background="@drawable/bg_modal_menu_bottom"
-        android:text="@string/car_availability_days_of_week"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/availability_calendar" />
+        android:background="@drawable/bg_modal_menu_mid"
+        android:text="@string/car_add_info_body_suv"
+        app:layout_constraintTop_toBottomOf="@+id/body_hatchback" />
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="@dimen/widget_margin_x_small"
-        app:layout_constraintBottom_toBottomOf="@id/availability_days_of_week"
-        app:layout_constraintEnd_toEndOf="@id/availability_days_of_week"
-        app:layout_constraintTop_toTopOf="@id/availability_days_of_week"
-        app:srcCompat="@drawable/ic_arrow_right" />
+    <android.support.v7.widget.AppCompatCheckedTextView
+        android:id="@+id/body_sports"
+        style="@style/ModalMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_item_height"
+        android:background="@drawable/bg_modal_menu_mid"
+        android:text="@string/car_add_info_body_sports"
+        app:layout_constraintTop_toBottomOf="@+id/body_suv" />
+
+    <TextView
+        android:id="@+id/body_convertible"
+        style="@style/ModalMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_item_height"
+        android:background="@drawable/bg_modal_menu_mid"
+        android:textColor="@color/add_car_item_vehicle_inactive"
+        android:text="@string/car_add_info_body_convertible"
+        app:layout_constraintTop_toBottomOf="@+id/body_sports" />
+
+    <FrameLayout
+        android:padding="@dimen/medium_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/body_convertible">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/body_done"
+            android:background="@drawable/button_blue_bg"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:text="@string/done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

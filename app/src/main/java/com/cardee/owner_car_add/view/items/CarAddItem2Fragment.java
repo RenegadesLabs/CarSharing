@@ -2,6 +2,7 @@ package com.cardee.owner_car_add.view.items;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.owner_car_add.view.CarAddActivity;
+import com.cardee.owner_home.view.modal.BodyMenuFragment;
 import com.cardee.owner_home.view.modal.PickerMenuFragment;
 
 import butterknife.BindView;
@@ -47,6 +49,8 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     @BindView(R.id.et_addCarInfoBody)
     public AppCompatEditText addCarInfoBodyET;
 
+
+    private AppCompatCheckedTextView mLastSelectedBodyType;
 
     @Nullable
     @Override
@@ -112,7 +116,20 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
 
     @OnClick(R.id.et_addCarInfoBody)
     public void onBodyTypeClicked() {
+        BodyMenuFragment menu = BodyMenuFragment.getInstance(mLastSelectedBodyType);
+        menu.setListeners(new BodyMenuFragment.MenuListeners() {
+            @Override
+            public void onDoneClicked(AppCompatCheckedTextView selected, CharSequence value) {
+                addCarInfoBodyET.setText(value);
+                mLastSelectedBodyType = selected;
+            }
 
+            @Override
+            public void onConvertibleClicked() {
+
+            }
+        });
+        menu.show(getFragmentManager(), menu.getTag());
     }
 
     @OnClick(R.id.b_carInfoNext)

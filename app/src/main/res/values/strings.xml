@@ -118,6 +118,11 @@
     <string name="car_add_info_transmission">Transmission</string>
     <string name="car_add_info_body">Body Type(s)</string>
     <string name="car_add_info_body_desc">Select body type(s) that best describe your car</string>
+    <string name="car_add_info_body_sedan">Sedan</string>
+    <string name="car_add_info_body_hatchback">Hatchback</string>
+    <string name="car_add_info_body_suv">SUV / MPV</string>
+    <string name="car_add_info_body_sports">Sports / Coupe</string>
+    <string name="car_add_info_body_convertible">+ Convertible</string>
 
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
