@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cardee.R;
+
 public class CarLocationFragment extends Fragment {
+
+    private static final String TAG = CarLocationFragment.class.getSimpleName();
 
     private static final String CAR_LAT = "_car_lat";
     private static final String CAR_LNG = "_car_lng";
@@ -46,12 +50,14 @@ public class CarLocationFragment extends Fragment {
     }
 
     public void getCurrentLocationAsync() {
-        Log.e(getClass().getSimpleName(), "Getting current");
+        Log.e(TAG, "Getting current");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_car_location, container, false);
+
+        return rootView;
     }
 }
