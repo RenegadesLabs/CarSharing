@@ -4,4 +4,11 @@
         <attr name="drawableStartCompat" format="reference"/>
         <attr name="drawableEndCompat" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="CarProgressBar">
+        <attr name="LineColor" format="color" />
+        <attr name="IconHeight" format="dimension" />
+        <attr name="LineWidth" format="dimension" />
+        <attr name="Icon" format="reference" />
+    </declare-styleable>
 </resources>

@@ -102,7 +102,7 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void moveToLocation(Bundle args) {
-        showMessage("Move to location");
+
     }
 
     @Override

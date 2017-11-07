@@ -95,7 +95,7 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
                 break;
             case HOURLY_SWITCHED:
             case DAILY_SWITCHED:
-                mView.showMessage("Coming soon");
+                mView.showMessage("Coming soon"); //PLUG
                 break;
         }
     }

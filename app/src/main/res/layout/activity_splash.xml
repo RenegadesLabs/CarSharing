@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:padding="40dp"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_logo"/>
+        android:layout_centerInParent="true"
+        android:padding="40dp"
+        android:src="@drawable/splash_logo" />
+
+    <com.cardee.custom.CarProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        app:Icon="@drawable/ic_car"
+        app:IconHeight="28dp"
+        app:LineColor="@color/text_button_regular"
+        app:LineWidth="0.5dp" />
 </RelativeLayout>
