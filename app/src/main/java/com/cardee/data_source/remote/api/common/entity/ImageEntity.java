@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.profile.response.entity;
+package com.cardee.data_source.remote.api.common.entity;
 
 
 import com.google.gson.annotations.Expose;

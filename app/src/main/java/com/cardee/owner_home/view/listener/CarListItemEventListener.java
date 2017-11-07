@@ -11,4 +11,8 @@ public interface CarListItemEventListener {
     void onDailyPickerClick(Car car);
 
     void onLocationPickerClick(Car car);
+
+    void onStartLoading();
+
+    void onStopLoading();
 }

@@ -15,10 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
-public class OwnerCarDetailsActivity extends AppCompatActivity {
+public class OwnerCarDetailsActivity extends AppCompatActivity
+        implements TabLayout.OnTabSelectedListener {
 
     private static final String TAG = OwnerCarDetailsActivity.class.getSimpleName();
 
@@ -27,6 +29,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity {
     private ViewPager mPager;
     private TextView mTitle;
     private View mMoreAction;
+    private View mBtnRequests;
 
     private int[] mTabTitleIds = {
             R.string.car_details_tab_rental,
@@ -58,6 +61,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity {
             mTitle = toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
             mMoreAction = toolbar.findViewById(R.id.toolbar_action);
+            mBtnRequests = findViewById(R.id.button_requests);
         }
         initPages(tabTitles);
     }
@@ -68,12 +72,37 @@ public class OwnerCarDetailsActivity extends AppCompatActivity {
         mPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabTitles));
         mTabs.setupWithViewPager(mPager);
         mTabs.getTabAt(1).select();
+        mTabs.addOnTabSelectedListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        switch (tab.getPosition()) {
+            case 2:
+                mBtnRequests.setVisibility(View.GONE);
+                break;
+            default:
+                if (mBtnRequests.getVisibility() != View.VISIBLE) {
+                    mBtnRequests.setVisibility(View.VISIBLE);
+                }
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 

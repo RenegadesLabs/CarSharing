@@ -150,7 +150,11 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
 
     @Override
     public void showProgress(boolean show) {
-
+        if (show) {
+            mEventListener.onStartLoading();
+        } else {
+            mEventListener.onStopLoading();
+        }
     }
 
     @Override

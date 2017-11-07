@@ -93,6 +93,10 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
             case OPEN:
                 mView.openItem(carEvent.getCar());
                 break;
+            case HOURLY_SWITCHED:
+            case DAILY_SWITCHED:
+                mView.showMessage("Coming soon"); //PLUG
+                break;
         }
     }
 }
