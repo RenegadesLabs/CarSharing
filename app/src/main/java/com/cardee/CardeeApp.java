@@ -3,6 +3,7 @@ package com.cardee;
 import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;
@@ -23,6 +24,7 @@ public class CardeeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
 
         retrofit = new Retrofit.Builder()
