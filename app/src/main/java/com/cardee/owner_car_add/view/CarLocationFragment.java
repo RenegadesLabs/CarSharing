@@ -63,7 +63,7 @@ public class CarLocationFragment extends Fragment
     private DetailsChangedListener parentListener;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
-        public void pushOnSuccess() {
+        public void push(Bundle args) {
             showCurrentLocationIfPermitted();
         }
     };

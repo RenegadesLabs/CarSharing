@@ -119,7 +119,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
                     return;
                 }
             }
-            childBinder.pushOnSuccess();
+            childBinder.push(null);
         }
     }
 

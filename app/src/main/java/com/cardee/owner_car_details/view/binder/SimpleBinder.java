@@ -1,7 +1,9 @@
 package com.cardee.owner_car_details.view.binder;
 
 
+import android.os.Bundle;
+
 public interface SimpleBinder {
 
-    void pushOnSuccess();
+    void push(Bundle args);
 }
