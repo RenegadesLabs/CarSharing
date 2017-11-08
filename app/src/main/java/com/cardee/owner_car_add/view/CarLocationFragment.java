@@ -3,9 +3,13 @@ package com.cardee.owner_car_add.view;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,8 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cardee.R;
+import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -47,6 +53,7 @@ public class CarLocationFragment extends Fragment
     private Double currentLng;
     private LatLng defaultLocation = new LatLng(1.323174, 103.890894);
 
+    private TextView carLocationAddress;
     private MapView mapView;
     private FloatingActionButton btnMyLocation;
     private GoogleApiClient apiClient;
@@ -60,6 +67,8 @@ public class CarLocationFragment extends Fragment
             showCurrentLocationIfPermitted();
         }
     };
+    private AddressResultReceiver addressReceiver;
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     public static Fragment newInstance(double lat, double lng) {
         Bundle args = new Bundle();
@@ -107,6 +116,7 @@ public class CarLocationFragment extends Fragment
             currentLat = args.getDouble(CAR_LAT);
             currentLng = args.getDouble(CAR_LNG);
         }
+        addressReceiver = new AddressResultReceiver(handler);
     }
 
     @Nullable
@@ -114,6 +124,7 @@ public class CarLocationFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_car_location, container, false);
         parentListener.showProgress(true);
+        carLocationAddress = rootView.findViewById(R.id.car_location_address);
         btnMyLocation = rootView.findViewById(R.id.btn_my_location);
         btnMyLocation.setOnClickListener(this);
         mapView = rootView.findViewById(R.id.map);
@@ -128,12 +139,16 @@ public class CarLocationFragment extends Fragment
         parentListener.showProgress(false);
         if (currentLat == null || currentLng == null) {
             moveMapToLocation(defaultLocation);
+            fetchLocationAddress(defaultLocation);
         } else {
-            moveMapToLocation(new LatLng(currentLat, currentLng));
+            LatLng location = new LatLng(currentLat, currentLng);
+            moveMapToLocation(location);
+            fetchLocationAddress(location);
         }
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                fetchLocationAddress(latLng);
                 moveMapToLocation(latLng);
             }
         });
@@ -150,7 +165,9 @@ public class CarLocationFragment extends Fragment
         }
         if (apiClient.isConnected()) {
             Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-            moveMapToLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            fetchLocationAddress(latLng);
+            moveMapToLocation(latLng);
         }
     }
 
@@ -170,6 +187,13 @@ public class CarLocationFragment extends Fragment
                 .build();
         CameraUpdate focus = CameraUpdateFactory.newCameraPosition(position);
         map.animateCamera(focus);
+    }
+
+    private void fetchLocationAddress(LatLng location) {
+        Intent fetchLocationIntent = new Intent(getActivity(), FetchAddressService.class);
+        fetchLocationIntent.putExtra(FetchAddressService.LOCATION, location);
+        fetchLocationIntent.putExtra(FetchAddressService.RECEIVER, addressReceiver);
+        getActivity().startService(fetchLocationIntent);
     }
 
     @Override
@@ -226,6 +250,21 @@ public class CarLocationFragment extends Fragment
             case R.id.btn_my_location:
                 showCurrentLocationIfPermitted();
                 break;
+        }
+    }
+
+    private class AddressResultReceiver extends ResultReceiver {
+
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            String address = resultData.getString(FetchAddressService.ADDRESS, "");
+            if (resultCode == FetchAddressService.CODE_SUCCESS) {
+                carLocationAddress.setText(address);
+            }
         }
     }
 }

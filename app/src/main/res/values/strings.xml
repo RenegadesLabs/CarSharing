@@ -92,6 +92,8 @@
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>
 
+    <string name="car_location_address">Where is your car parked?</string>
+
     <!--Car Add Item Vehicle Type-->
     <string name="car_add_vehicle_title">Vehicle Type</string>
     <string name="car_add_vehicle_what">What type of vehicle are you listing?</string>

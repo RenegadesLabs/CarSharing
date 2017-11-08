@@ -129,6 +129,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextSubtitle" parent="TextInfo">
+        <item name="android:textColor">@color/text_subtitle</item>
+    </style>
+
     <style name="TextClickable" parent="TextInfo">
         <item name="android:textColor">@color/blue</item>
     </style>
