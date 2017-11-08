@@ -145,6 +145,8 @@ public class RegisterFinalStepFragment extends Fragment {
         Glide.with((RegisterActivity) getActivity())
                 .load(pictureByteArray)
                 .placeholder(R.drawable.placeholder_user_img)
+                .override(300, 300)
+                .centerCrop()
                 .transform(new CircleTransform(getActivity()))
                 .into(regUserPhoto);
 

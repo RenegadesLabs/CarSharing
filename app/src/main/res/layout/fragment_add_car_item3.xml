@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/car_image_desc"
+        android:padding="@dimen/medium_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_large"
+        android:textColor="@android:color/black"
+        android:text="@string/car_add_image_desc"/>
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/rv_addCarImage"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginStart="@dimen/medium_margin"-->
+        <!--android:layout_marginEnd="@dimen/medium_margin"-->
+        <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/car_image_desc">-->
+
+    <!--</android.support.v7.widget.RecyclerView>-->
+
+    <ImageView
+        android:id="@+id/iv_addCarImage"
+        android:layout_width="150dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:src="@drawable/img_car_sample"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/car_image_desc" />
+
+    <FrameLayout
+        android:id="@+id/fl_addCarUploadImage"
+        android:layout_width="150dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:background="@drawable/bg_dash_rect"
+        android:layout_marginStart="@dimen/small_margin"
+        app:layout_constraintStart_toEndOf="@+id/iv_addCarImage"
+        app:layout_constraintTop_toBottomOf="@+id/car_image_desc">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/upload"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:padding="@dimen/medium_margin"
+        android:text="@string/car_add_image_why"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        app:layout_constraintTop_toBottomOf="@+id/iv_addCarImage"/>
+
+
+    <com.cardee.custom.CardeeButton
+        android:id="@+id/b_vehicleNext"
+        style="@style/RoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:text="@string/car_add_next"
+        app:drawableEndCompat="@drawable/ic_arrow_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

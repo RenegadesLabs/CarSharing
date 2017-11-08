@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +28,8 @@
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,10 +60,10 @@
                 android:id="@+id/et_addCarInfoYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/car_add_info_please_select"
-                android:inputType="none"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 android:theme="@style/CardeeEditTextStyle" />
@@ -79,9 +81,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_car_title_hint"
                 android:inputType="textCapWords"
+                android:maxEms="20"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,7 +109,8 @@
                 android:inputType="textCapCharacters"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,10 +123,10 @@
                 android:id="@+id/et_addCarInfoSeating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/car_add_info_please_select"
-                android:inputType="none"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 android:theme="@style/CardeeEditTextStyle" />
@@ -142,14 +147,15 @@
                     android:id="@+id/et_addCarInfoEngine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/car_add_info_please_select"
-                    android:gravity="center_horizontal"
-                    android:inputType="none"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/car_add_info_please_select"
+                    android:inputType="none"
                     android:maxLines="1"
                     android:textSize="@dimen/text_regular"
-                    android:theme="@style/CardeeEditTextStyle" />
+                    android:theme="@style/CardeeEditTextStyle"
+                    app:errorEnabled="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -169,13 +175,14 @@
                 android:id="@+id/et_addCarInfoTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/car_add_info_please_select"
-                android:inputType="none"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,21 +195,22 @@
                 android:id="@+id/et_addCarInfoBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/car_add_info_please_select"
-                android:inputType="none"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/car_add_info_please_select"
+                android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="58dp"
                 android:text="@string/car_add_info_body_desc"
                 android:textColor="@color/add_car_item_vehicle_secondary_txt"
-                android:textSize="@dimen/text_small"
-                android:layout_marginBottom="58dp"/>
+                android:textSize="@dimen/text_small" />
         </LinearLayout>
     </ScrollView>
 
@@ -211,9 +219,9 @@
         style="@style/RoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/medium_margin"
         android:layout_marginEnd="@dimen/medium_margin"
         android:text="@string/car_add_next"
-        android:layout_gravity="bottom|end"
         app:drawableEndCompat="@drawable/ic_arrow_next" />
 </FrameLayout>

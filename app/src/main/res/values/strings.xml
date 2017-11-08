@@ -129,11 +129,16 @@
     <string name="car_add_info_body_sports">Sports / Coupe</string>
     <string name="car_add_info_body_convertible">+ Convertible</string>
 
+    <string name="error_empty_field">Field must be filled!</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
 
     <!--Car Add Item Car Image-->
     <string name="car_add_image_title">Car Image</string>
+    <string name="car_add_image_desc">Upload an image of the front of your vehicle with the license plate number displayed clearly.</string>
+    <string name="car_add_image_why">This is for verification purpose only. You can add car images for listing later.</string>
+
+    <string name="upload">Upload</string>
 
     <!--Car Add Item Car Location-->
     <string name="car_add_location_title">Car Location</string>
