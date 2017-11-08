@@ -10,10 +10,10 @@ public class CarDetailsEntity extends BaseCarEntity {
 
     @Expose
     @SerializedName("longitude")
-    private Float longitude;
+    private Double longitude;
     @Expose
     @SerializedName("latitude")
-    private Float latitude;
+    private Double latitude;
     @Expose
     @SerializedName("address")
     private String address;
@@ -58,19 +58,19 @@ public class CarDetailsEntity extends BaseCarEntity {
 
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public Float getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 

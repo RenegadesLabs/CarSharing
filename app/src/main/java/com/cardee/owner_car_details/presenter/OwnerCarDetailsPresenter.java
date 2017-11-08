@@ -1,6 +1,7 @@
 package com.cardee.owner_car_details.presenter;
 
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -9,6 +10,7 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetCar;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.CarDetailsEditContract;
 
 import io.reactivex.functions.Consumer;
 
@@ -72,6 +74,8 @@ public class OwnerCarDetailsPresenter
 
     @Override
     public void accept(OwnerCarDetailsContract.CarDetailEvent event) throws Exception {
+        Bundle args = new Bundle();
+        args.putInt(CarDetailsEditContract.CAR_ID, mCarId);
         switch (event.getAction()) {
             case EDIT_IMAGES:
                 mView.moveToImages(null);
@@ -80,7 +84,8 @@ public class OwnerCarDetailsPresenter
                 mView.moveToSpecs(null);
                 break;
             case EDIT_LOCATION:
-                mView.moveToLocation(null);
+                args.putSerializable(CarDetailsEditContract.VIEW_MODE, CarDetailsEditContract.Mode.LOCATION);
+                mView.moveToLocation(args);
                 break;
             case EDIT_DESCRIPTION:
                 mView.moveToDescription(null);
