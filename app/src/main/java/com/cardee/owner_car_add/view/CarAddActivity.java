@@ -33,8 +33,16 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     private CarAddMainFragment mCarAddMainFragment;
 
+    private CarAddItem1Fragment mCarAddItem1Fragment;
+
+    private CarAddItem2Fragment mCarAddItem2Fragment;
+
     private CarAddActionListener mLister;
 
+
+    public interface CarInfoPassCallback {
+        void onPassData(Bundle b);
+    }
 
 
     public interface CarAddActionListener {
@@ -59,6 +67,17 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
         mCarAddMainFragment = new CarAddMainFragment();
         mCarAddMainFragment.setViewListener(this);
+
+        mCarAddItem1Fragment = new CarAddItem1Fragment();
+        mCarAddItem1Fragment.setViewListener(this);
+        mCarAddItem1Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
+        mCarAddItem1Fragment.setArguments(new Bundle());
+
+        mCarAddItem2Fragment = new CarAddItem2Fragment();
+        mCarAddItem2Fragment.setViewListener(this);
+        mCarAddItem2Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
+        mCarAddItem2Fragment.setArguments(new Bundle());
+
     }
 
 
@@ -126,14 +145,12 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     @Override
     public void onItem1() {
-        CarAddItem1Fragment f = new CarAddItem1Fragment();
-        f.setArguments(new Bundle());
-        replaceFragment(f, R.string.car_add_vehicle_title);
+        replaceFragment(mCarAddItem1Fragment, R.string.car_add_vehicle_title);
     }
 
     @Override
     public void onItem2() {
-        replaceFragment(new CarAddItem2Fragment(), R.string.car_add_info_title);
+        replaceFragment(mCarAddItem2Fragment, R.string.car_add_info_title);
     }
 
     @Override

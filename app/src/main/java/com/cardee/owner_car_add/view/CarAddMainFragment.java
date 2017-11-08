@@ -19,7 +19,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
-public class CarAddMainFragment extends Fragment {
+public class CarAddMainFragment extends Fragment implements CarAddActivity.CarInfoPassCallback {
 
     private Unbinder mUnbinder;
 
@@ -81,22 +81,7 @@ public class CarAddMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_main, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            switch (args.getInt(CarAddItemFragment.FRAGMENT_NUMBER)) {
-                case 0:
-                    mValueItem1 = args.getString(CarAddItemFragment.FRAGMENT_VALUE);
-                    addCarItem1TV.setText(mValueItem1);
-                    addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
-                    isFilled1 = true;
-                    break;
-            }
-        } else {
-            initViewState();
-        }
-
+        initViewState();
         return v;
     }
 
@@ -107,6 +92,16 @@ public class CarAddMainFragment extends Fragment {
             addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
         }
 
+        if (mValueItem2 != null && !mValueItem2.equals("")
+                && isFilled2) {
+            addCarItem2TV.setText(mValueItem2);
+            addCarItem2IV.setImageResource(R.drawable.ic_check_circle);
+        }
+
+    }
+
+    public CarAddActivity.CarInfoPassCallback getListener() {
+        return this;
     }
 
     public void setViewListener(CarAddView viewListener) {
@@ -154,5 +149,24 @@ public class CarAddMainFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onPassData(Bundle b) {
+        switch (b.getInt(CarAddItemFragment.FRAGMENT_NUMBER)) {
+            case 0:
+                mValueItem1 = b.getString(CarAddItemFragment.FRAGMENT_VALUE);
+//                addCarItem1TV.setText(mValueItem1);
+//                addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
+                isFilled1 = true;
+                break;
+            case 1:
+                mValueItem2 = "Edit";
+//                addCarItem2TV.setText(mValueItem2);
+//                addCarItem2IV.setImageResource(R.drawable.ic_check_circle);
+                isFilled2 = true;
+                break;
+
+        }
     }
 }

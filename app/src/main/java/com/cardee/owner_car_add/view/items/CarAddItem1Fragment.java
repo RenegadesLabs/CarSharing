@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.owner_car_add.view.CarAddActivity;
+import com.cardee.owner_car_add.view.CarAddView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,10 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
     public TextView vehicleCommercialTV;
 
     private String mValue;
+
+    private CarAddView mView;
+
+    private CarAddActivity.CarInfoPassCallback mPassDataCallback;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +79,10 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
 
     @OnClick(R.id.b_vehicleNext)
     public void onNextClicked() {
-
+        if (mView == null)
+            return;
+        saveArguments(new Bundle(), true);
+        mView.onItem2();
     }
 
     @OnFocusChange(R.id.fl_vehiclePersonal)
@@ -121,10 +129,27 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
 
     @Override
     public void onSaveClicked() {
-        Bundle b = new Bundle();
+        saveArguments(new Bundle(), false);
+        getActivity().onBackPressed();
+    }
+
+    @Override
+    void saveArguments(Bundle b, boolean onNext) {
         b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 0);
         b.putString(CarAddItemFragment.FRAGMENT_VALUE, mValue);
-        getArguments().putAll(b);
-        getActivity().onBackPressed();
+//        getArguments().putAll(b);
+        if (mPassDataCallback == null)
+            return;
+        mPassDataCallback.onPassData(b);
+    }
+
+    @Override
+    public void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback) {
+        mPassDataCallback = callback;
+    }
+
+    @Override
+    public void setViewListener(CarAddView listener) {
+        mView = listener;
     }
 }

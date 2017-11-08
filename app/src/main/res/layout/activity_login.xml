@@ -39,7 +39,7 @@
         android:id="@+id/et_loginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/CardeeEditTextStyle"
+        android:theme="@style/CardeeLoginEditTextStyle"
         android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="30dp"

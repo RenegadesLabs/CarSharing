@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import java.io.File;
+import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
@@ -135,7 +137,19 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         switch (requestCode) {
             case PICK_IMAGE:
                 if (resultCode == RESULT_OK && data.getData() != null) {
-                    cropImageIntent(data.getData());
+//                    cropImageIntent(data.getData());
+                    if (data.getExtras() != null) {
+                        Bundle extras = data.getExtras();
+//                        Bitmap bitmap = extras.getParcelable("data");
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                            if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
+                                mFinalStepFragment.setUserPhoto(bitmap);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 break;
             case CROP_IMAGE:
