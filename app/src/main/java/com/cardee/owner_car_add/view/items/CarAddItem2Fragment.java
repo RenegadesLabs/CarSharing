@@ -134,7 +134,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     }
 
     @OnTextChanged(R.id.et_addCarInfoTransmission)
-    public void onTransmissionInputhanged(CharSequence text) {
+    public void onTransmissionInputChanged(CharSequence text) {
         if (addCarInfoTransmissionET.getError() == null)
             return;
         addCarInfoTransmissionET.setError(null);
@@ -219,17 +219,13 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
 
     @OnClick(R.id.b_carInfoNext)
     public void onNextClicked() {
-        if (mView == null)
-            return;
-        saveArguments(new Bundle());
-        mView.onItem3();
+        saveArguments(new Bundle(), true);
     }
 
 
     @Override
     public void onSaveClicked() {
-        saveArguments(new Bundle());
-        getActivity().onBackPressed();
+        saveArguments(new Bundle(), false);
     }
 
     @Override
@@ -247,7 +243,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     }
 
     @Override
-    void saveArguments(Bundle b) {
+    void saveArguments(Bundle b, boolean onNext) {
 
         String make = getFieldContent(addCarInfoMakeET);
         String model = getFieldContent(addCarInfoModelET);
@@ -281,6 +277,14 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
         if (mPassDataCallback == null)
             return;
         mPassDataCallback.onPassData(b);
+
+        if (onNext) {
+            if (mView == null)
+                return;
+            mView.onItem3();
+            return;
+        }
+        getActivity().onBackPressed();
     }
 
     @Override

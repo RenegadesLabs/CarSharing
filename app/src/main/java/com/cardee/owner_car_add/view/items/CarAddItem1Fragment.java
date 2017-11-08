@@ -81,7 +81,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
     public void onNextClicked() {
         if (mView == null)
             return;
-        saveArguments(new Bundle());
+        saveArguments(new Bundle(), true);
         mView.onItem2();
     }
 
@@ -129,12 +129,12 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
 
     @Override
     public void onSaveClicked() {
-        saveArguments(new Bundle());
+        saveArguments(new Bundle(), false);
         getActivity().onBackPressed();
     }
 
     @Override
-    void saveArguments(Bundle b) {
+    void saveArguments(Bundle b, boolean onNext) {
         b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 0);
         b.putString(CarAddItemFragment.FRAGMENT_VALUE, mValue);
 //        getArguments().putAll(b);

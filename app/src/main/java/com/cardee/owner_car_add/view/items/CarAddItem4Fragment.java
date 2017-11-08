@@ -22,7 +22,7 @@ public class CarAddItem4Fragment extends CarAddItemFragment {
     }
 
     @Override
-    void saveArguments(Bundle b) {
+    void saveArguments(Bundle b, boolean onNext) {
 
     }
 

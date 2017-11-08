@@ -12,7 +12,7 @@ public abstract class CarAddItemFragment extends Fragment {
     public final static String FRAGMENT_NUMBER = "fragment_number";
     public final static String FRAGMENT_VALUE = "fragment_value";
 
-    abstract void saveArguments(Bundle b);
+    abstract void saveArguments(Bundle b, boolean onNext);
 
     public abstract void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback);
 
