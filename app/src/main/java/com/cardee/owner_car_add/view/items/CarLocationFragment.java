@@ -1,4 +1,4 @@
-package com.cardee.owner_car_add.view;
+package com.cardee.owner_car_add.view.items;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -201,6 +202,7 @@ public class CarLocationFragment extends Fragment
     public void onStart() {
         super.onStart();
         parentListener.onBind(binder);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.LOCATION);
     }
 
     @Override

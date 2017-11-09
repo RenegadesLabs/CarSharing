@@ -1,5 +1,6 @@
 package com.cardee.owner_car_add.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -100,6 +101,15 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
         super.onBackPressed();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     @Override
     public void onClick(View view) {
@@ -108,33 +118,50 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     @OnClick(R.id.add_item1)
     public void onItem1Clicked() {
-
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.TYPE);
+        openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_item2)
     public void onItem2Clicked() {
-
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.INFO);
+        openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_item3)
     public void onItem3Clicked() {
-
-
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.IMAGE);
+        openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_item4)
     public void onItem4Clicked() {
-
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
+        openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_item5)
     public void onItem5Clicked() {
-
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.CONTACT);
+        openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_item6)
     public void onItem6Clicked() {
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.PAYMENT);
+        openNewCarEditActivity(args);
+    }
 
+    private void openNewCarEditActivity(Bundle args) {
+        Intent intent = new Intent(this, NewCarFormsActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     @Override

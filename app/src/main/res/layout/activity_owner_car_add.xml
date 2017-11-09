@@ -337,12 +337,13 @@
                 android:textSize="@dimen/text_large" />
         </FrameLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <TextView
             style="@style/RegularButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_regular_height"
             android:layout_margin="@dimen/medium_margin"
             android:background="@drawable/bg_button_regular"
+            android:clickable="true"
             android:text="@string/car_add_submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

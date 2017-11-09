@@ -15,8 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            app:navigationIcon="@drawable/ic_close"
-            app:titleTextColor="@color/bg_main">
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -40,15 +40,27 @@
         android:layout_below="@id/toolbar_layout" />
 
     <com.cardee.custom.CardeeButton
-        android:id="@+id/b_vehicleNext"
+        android:id="@+id/btn_to_next"
         style="@style/RoundedButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_regular_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/medium_margin"
         android:layout_marginEnd="@dimen/medium_margin"
         android:text="@string/car_add_next"
         app:drawableEndCompat="@drawable/ic_arrow_next" />
+
+    <TextView
+        android:id="@+id/btn_all_done"
+        style="@style/RegularButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/widget_margin_small"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:visibility="gone"
+        android:text="@string/car_add_all_done" />
 
 </RelativeLayout>

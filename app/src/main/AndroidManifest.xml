@@ -14,9 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <activity
             android:name=".splash.SplashActivity"
@@ -47,6 +45,7 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
+        <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

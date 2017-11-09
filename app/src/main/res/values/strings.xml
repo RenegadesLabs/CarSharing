@@ -91,6 +91,7 @@
     <string name="car_add_add">Add</string>
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>
+    <string name="car_add_all_done">All done!</string>
 
     <string name="car_location_address">Where is your car parked?</string>
 

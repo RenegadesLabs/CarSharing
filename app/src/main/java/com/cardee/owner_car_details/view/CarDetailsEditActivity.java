@@ -17,7 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.CarLocationFragment;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.items.CarLocationFragment;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -48,12 +49,11 @@ public class CarDetailsEditActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             mTitleView = toolbar.findViewById(R.id.toolbar_title);
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
-            mProgress = (ProgressBar) findViewById(R.id.details_progress);
         }
+        mProgress = (ProgressBar) findViewById(R.id.details_progress);
         Serializable extra = getIntent().getSerializableExtra(CarDetailsEditContract.VIEW_MODE);
         if (extra != null) {
             CarDetailsEditContract.Mode mode = (CarDetailsEditContract.Mode) extra;
-            mTitleView.setText(mode.getTitleId());
             setContentOfMode(mode);
             return;
         }
@@ -89,6 +89,11 @@ public class CarDetailsEditActivity extends AppCompatActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onModeDisplayed(NewCarFormsContract.Mode mode) {
+        mTitleView.setText(mode.getTitleId());
     }
 
     @Override
