@@ -42,7 +42,7 @@ public class RegisterFirstStepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_register1, container, false);
+        View v = inflater.inflate(R.layout.fragment_register_first, container, false);
 
         mUnbinder = ButterKnife.bind(this, v);
         setTermsOfServiceText();

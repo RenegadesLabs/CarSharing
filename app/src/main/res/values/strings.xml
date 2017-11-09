@@ -145,6 +145,13 @@
 
     <!--Car Add Item Contact Info-->
     <string name="car_add_contact_title">Contact Info</string>
+    <string name="cad_add_contact_name_title">Your name</string>
+    <string name="cad_add_contact_name">Name</string>
+    <string name="cad_add_contact_mobile">Your mobile number</string>
+    <string name="cad_add_contact_country">Country</string>
+    <string name="cad_add_contact_number">Mobile number</string>
+    <string name="cad_add_contact_email_title">Your email</string>
+    <string name="cad_add_contact_email">Email</string>
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>

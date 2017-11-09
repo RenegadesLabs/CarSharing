@@ -2,7 +2,6 @@ package com.cardee.owner_car_add.view.items;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,7 @@ import com.cardee.R;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
 
-
-public class CarAddItem5Fragment extends CarAddItemFragment {
+public class CarAddLocationFragment extends CarAddBaseFragment {
 
     @Nullable
     @Override

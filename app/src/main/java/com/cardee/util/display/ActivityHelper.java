@@ -1,12 +1,15 @@
 package com.cardee.util.display;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class DisplayUtils {
+public class ActivityHelper {
+
+    public final static int PICK_IMAGE = 1;
 
     public static void hideSoftKeyboard(Activity activity) {
         if (activity.getCurrentFocus() == null)
@@ -28,5 +31,11 @@ public class DisplayUtils {
 
         view.requestFocus();
         imm.showSoftInput(view, 0);
+    }
+
+    public static void pickImageIntent(Activity activity, int requestCode) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        activity.startActivityForResult(photoPickerIntent, requestCode);
     }
 }

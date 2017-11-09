@@ -20,7 +20,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddActivity.CarAddActionListener {
+public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddActivity.CarAddActionListener {
 
     private Unbinder mUnbinder;
 
@@ -78,7 +78,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_item2, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_car_info, container, false);
         mUnbinder = ButterKnife.bind(this, v);
         ((CarAddActivity) getActivity()).setActionListener(this);
         return v;
@@ -263,7 +263,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
             return;
         }
 
-        b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 1);
+        b.putInt(CarAddBaseFragment.FRAGMENT_NUMBER, 1);
         b.putString(CAR_INFO_MAKE, make);
         b.putString(CAR_INFO_MODEL, model);
         b.putString(CAR_INFO_YEAR, year);
@@ -281,7 +281,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
         if (onNext) {
             if (mView == null)
                 return;
-            mView.onItem3();
+            mView.onCarImage();
             return;
         }
         getActivity().onBackPressed();

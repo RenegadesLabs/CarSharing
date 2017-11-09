@@ -17,7 +17,7 @@ import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.presenter.RegisterPresenter;
 import com.cardee.owner_home.view.OwnerHomeActivity;
-import com.cardee.util.display.DisplayUtils;
+import com.cardee.util.display.ActivityHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
-    private final int PICK_IMAGE = 1;
+//    private final int PICK_IMAGE = 1;
     private final int CROP_IMAGE = 2;
 
     private RegisterPresenter mPresenter;
@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     private void pickImageIntent() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, PICK_IMAGE);
+        startActivityForResult(photoPickerIntent, ActivityHelper.PICK_IMAGE);
     }
 
     private void cropImageIntent(Uri imgUri) {
@@ -135,11 +135,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case PICK_IMAGE:
+            case ActivityHelper.PICK_IMAGE:
                 if (resultCode == RESULT_OK && data.getData() != null) {
 //                    cropImageIntent(data.getData());
                     if (data.getExtras() != null) {
-                        Bundle extras = data.getExtras();
+//                        Bundle extras = data.getExtras();
 //                        Bitmap bitmap = extras.getParcelable("data");
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onTakePhoto() {
-        pickImageIntent();
+        ActivityHelper.pickImageIntent(this, ActivityHelper.PICK_IMAGE);
     }
 
     @Override
@@ -236,7 +236,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     public void onValidationSuccess(String login, String password) {
         mLogin = login;
         mPass = password;
-        DisplayUtils.hideSoftKeyboard(this);
+        ActivityHelper.hideSoftKeyboard(this);
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
                 .commit();

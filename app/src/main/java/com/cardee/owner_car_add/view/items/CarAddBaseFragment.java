@@ -7,7 +7,7 @@ import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
 
-public abstract class CarAddItemFragment extends Fragment {
+public abstract class CarAddBaseFragment extends Fragment {
 
     public final static String FRAGMENT_NUMBER = "fragment_number";
     public final static String FRAGMENT_VALUE = "fragment_value";

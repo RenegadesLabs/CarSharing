@@ -11,7 +11,7 @@ import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
 
 
-public class CarAddItem6Fragment extends CarAddItemFragment {
+public class CarAddPaymentAccountFragment extends CarAddBaseFragment {
 
     @Nullable
     @Override

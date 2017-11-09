@@ -3,17 +3,19 @@ package com.cardee.owner_car_add.view;
 import com.cardee.mvp.BaseView;
 
 public interface CarAddView extends BaseView {
-    void onItem1();
+    void onVehicleType();
 
-    void onItem2();
+    void onCarInfo();
 
-    void onItem3();
+    void onCarImage();
 
-    void onItem4();
+    void onCarLocation();
 
-    void onItem5();
+    void onContactInfo();
 
-    void onItem6();
+    void onPaymentAccount();
+
+    void onUploadPicture();
 
     void onSubmit();
 }

@@ -3,7 +3,6 @@ package com.cardee.owner_car_add.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddItemFragment;
+import com.cardee.owner_car_add.view.items.CarAddBaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,38 +110,38 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
     @OnClick(R.id.add_item1)
     public void onItem1Clicked() {
         if (mView != null)
-            mView.onItem1();
+            mView.onVehicleType();
     }
 
     @OnClick(R.id.add_item2)
     public void onItem2Clicked() {
         if (mView != null)
-            mView.onItem2();
+            mView.onCarInfo();
     }
 
     @OnClick(R.id.add_item3)
     public void onItem3Clicked() {
         if (mView != null)
-            mView.onItem3();
+            mView.onCarImage();
 
     }
 
     @OnClick(R.id.add_item4)
     public void onItem4Clicked() {
         if (mView != null)
-            mView.onItem4();
+            mView.onCarLocation();
     }
 
     @OnClick(R.id.add_item5)
     public void onItem5Clicked() {
         if (mView != null)
-            mView.onItem5();
+            mView.onContactInfo();
     }
 
     @OnClick(R.id.add_item6)
     public void onItem6Clicked() {
         if (mView != null)
-            mView.onItem6();
+            mView.onPaymentAccount();
     }
 
     @Override
@@ -153,9 +152,9 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
 
     @Override
     public void onPassData(Bundle b) {
-        switch (b.getInt(CarAddItemFragment.FRAGMENT_NUMBER)) {
+        switch (b.getInt(CarAddBaseFragment.FRAGMENT_NUMBER)) {
             case 0:
-                mValueItem1 = b.getString(CarAddItemFragment.FRAGMENT_VALUE);
+                mValueItem1 = b.getString(CarAddBaseFragment.FRAGMENT_VALUE);
 //                addCarItem1TV.setText(mValueItem1);
 //                addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
                 isFilled1 = true;

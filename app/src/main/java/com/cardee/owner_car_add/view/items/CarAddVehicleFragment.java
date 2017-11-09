@@ -18,7 +18,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddActivity.CarAddActionListener {
+public class CarAddVehicleFragment extends CarAddBaseFragment implements CarAddActivity.CarAddActionListener {
 
     private Unbinder mUnbinder;
 
@@ -55,7 +55,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_item1, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_car_vehicle_type, container, false);
 
         mUnbinder = ButterKnife.bind(this, v);
         ((CarAddActivity) getActivity()).setActionListener(this);
@@ -82,7 +82,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
         if (mView == null)
             return;
         saveArguments(new Bundle(), true);
-        mView.onItem2();
+        mView.onCarInfo();
     }
 
     @OnFocusChange(R.id.fl_vehiclePersonal)
@@ -135,8 +135,8 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
 
     @Override
     void saveArguments(Bundle b, boolean onNext) {
-        b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 0);
-        b.putString(CarAddItemFragment.FRAGMENT_VALUE, mValue);
+        b.putInt(CarAddBaseFragment.FRAGMENT_NUMBER, 0);
+        b.putString(CarAddBaseFragment.FRAGMENT_VALUE, mValue);
 //        getArguments().putAll(b);
         if (mPassDataCallback == null)
             return;

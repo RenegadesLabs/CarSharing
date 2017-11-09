@@ -1,11 +1,13 @@
 package com.cardee.owner_car_add.view;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,15 +15,16 @@ import android.widget.TextView;
 
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddItem1Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem2Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem3Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem4Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem5Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem6Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItemFragment;
+import com.cardee.owner_car_add.view.items.CarAddCarInfoFragment;
+import com.cardee.owner_car_add.view.items.CarAddVehicleFragment;
+import com.cardee.owner_car_add.view.items.CarAddImageFragment;
+import com.cardee.owner_car_add.view.items.CarAddLocationFragment;
+import com.cardee.owner_car_add.view.items.CarAddContactInfoFragment;
+import com.cardee.owner_car_add.view.items.CarAddPaymentAccountFragment;
+import com.cardee.owner_car_add.view.items.CarAddBaseFragment;
+import com.cardee.util.display.ActivityHelper;
 
-import butterknife.ButterKnife;
+import java.io.IOException;
 
 public class CarAddActivity extends AppCompatActivity implements CarAddView, View.OnClickListener {
 
@@ -33,9 +36,11 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     private CarAddMainFragment mCarAddMainFragment;
 
-    private CarAddItem1Fragment mCarAddItem1Fragment;
+    private CarAddVehicleFragment mCarAddVehicleFragment;
 
-    private CarAddItem2Fragment mCarAddItem2Fragment;
+    private CarAddCarInfoFragment mCarAddCarInfoFragment;
+
+    private CarAddImageFragment mCarAddImageFragment;
 
     private CarAddActionListener mLister;
 
@@ -68,15 +73,19 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
         mCarAddMainFragment = new CarAddMainFragment();
         mCarAddMainFragment.setViewListener(this);
 
-        mCarAddItem1Fragment = new CarAddItem1Fragment();
-        mCarAddItem1Fragment.setViewListener(this);
-        mCarAddItem1Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
-        mCarAddItem1Fragment.setArguments(new Bundle());
+        mCarAddVehicleFragment = new CarAddVehicleFragment();
+        mCarAddVehicleFragment.setViewListener(this);
+        mCarAddVehicleFragment.setPassDataCallback(mCarAddMainFragment.getListener());
+        mCarAddVehicleFragment.setArguments(new Bundle());
 
-        mCarAddItem2Fragment = new CarAddItem2Fragment();
-        mCarAddItem2Fragment.setViewListener(this);
-        mCarAddItem2Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
-        mCarAddItem2Fragment.setArguments(new Bundle());
+        mCarAddCarInfoFragment = new CarAddCarInfoFragment();
+        mCarAddCarInfoFragment.setViewListener(this);
+        mCarAddCarInfoFragment.setPassDataCallback(mCarAddMainFragment.getListener());
+        mCarAddCarInfoFragment.setArguments(new Bundle());
+
+        mCarAddImageFragment = new CarAddImageFragment();
+        mCarAddImageFragment.setViewListener(this);
+        mCarAddImageFragment.setPassDataCallback(mCarAddMainFragment.getListener());;
 
     }
 
@@ -100,7 +109,7 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
                 .replace(R.id.fragment_container, fragment)
                 .commit();
         mTitle.setText(resIdTitle);
-        if (fragment instanceof CarAddItemFragment) {
+        if (fragment instanceof CarAddBaseFragment) {
             mActionSave.setVisibility(View.VISIBLE);
         } else {
             mActionSave.setVisibility(View.GONE);
@@ -120,12 +129,36 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
     @Override
     public void onBackPressed() {
         Fragment f = mFragmentManager.findFragmentById(R.id.fragment_container);
-        if (f instanceof CarAddItemFragment) {
+        if (f instanceof CarAddBaseFragment) {
             mCarAddMainFragment.setArguments(f.getArguments());
             replaceFragment(mCarAddMainFragment, R.string.car_add_title);
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ActivityHelper.PICK_IMAGE:
+                if (resultCode == RESULT_OK && data.getData() != null) {
+//                    cropImageIntent(data.getData());
+                    if (data.getExtras() != null) {
+//                        Bundle extras = data.getExtras();
+//                        Bitmap bitmap = extras.getParcelable("data");
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                            if (mCarAddImageFragment != null && mCarAddImageFragment.isVisible()) {
+                                mCarAddImageFragment.setUserPhoto(bitmap);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     @Override
@@ -144,33 +177,38 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
     }
 
     @Override
-    public void onItem1() {
-        replaceFragment(mCarAddItem1Fragment, R.string.car_add_vehicle_title);
+    public void onVehicleType() {
+        replaceFragment(mCarAddVehicleFragment, R.string.car_add_vehicle_title);
     }
 
     @Override
-    public void onItem2() {
-        replaceFragment(mCarAddItem2Fragment, R.string.car_add_info_title);
+    public void onCarInfo() {
+        replaceFragment(mCarAddCarInfoFragment, R.string.car_add_info_title);
     }
 
     @Override
-    public void onItem3() {
-        replaceFragment(new CarAddItem3Fragment(), R.string.car_add_image_title);
+    public void onCarImage() {
+        replaceFragment(new CarAddImageFragment(), R.string.car_add_image_title);
     }
 
     @Override
-    public void onItem4() {
-        replaceFragment(new CarAddItem4Fragment(), R.string.car_add_location_title);
+    public void onCarLocation() {
+        replaceFragment(new CarAddLocationFragment(), R.string.car_add_location_title);
     }
 
     @Override
-    public void onItem5() {
-        replaceFragment(new CarAddItem5Fragment(), R.string.car_add_contact_title);
+    public void onContactInfo() {
+        replaceFragment(new CarAddContactInfoFragment(), R.string.car_add_contact_title);
     }
 
     @Override
-    public void onItem6() {
-        replaceFragment(new CarAddItem6Fragment(), R.string.car_add_payment_title);
+    public void onPaymentAccount() {
+        replaceFragment(new CarAddPaymentAccountFragment(), R.string.car_add_payment_title);
+    }
+
+    @Override
+    public void onUploadPicture() {
+        ActivityHelper.pickImageIntent(this, ActivityHelper.PICK_IMAGE);
     }
 
     @Override
