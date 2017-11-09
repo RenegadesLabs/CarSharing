@@ -245,11 +245,6 @@ public class CarInfoFragment extends CarAddItemFragment {
         menu.show(getFragmentManager(), menu.getTag());
     }
 
-    @OnClick(R.id.b_carInfoNext)
-    public void onNextClicked() {
-        saveArguments(new Bundle(), true);
-    }
-
 
     //    @Override
     public void onSaveClicked() {

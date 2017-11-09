@@ -105,14 +105,6 @@ public class CarTypeFragment extends CarAddItemFragment {
         view.requestFocus();
     }
 
-    @OnClick(R.id.b_vehicleNext)
-    public void onNextClicked() {
-        if (mView == null)
-            return;
-        saveArguments(new Bundle(), true);
-//        mView.onItem2();
-    }
-
     @OnFocusChange(R.id.fl_vehiclePersonal)
     public void onPersonalFocused(boolean isFocused) {
         if (isFocused) {
