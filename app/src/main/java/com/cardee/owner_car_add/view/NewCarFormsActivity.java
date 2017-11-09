@@ -110,15 +110,18 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     private void showFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!isInRootMode) {
+            transaction.setCustomAnimations(
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left,
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right);
             transaction.addToBackStack(null);
         } else {
             isInRootMode = false;
         }
-        transaction.commit();
+        transaction.replace(R.id.fragment_container, fragment).commit();
     }
 
     private NewCarFormsContract.Mode getNextToMode(NewCarFormsContract.Mode mode) {
