@@ -2,10 +2,8 @@ package com.cardee.owner_car_add.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,97 +11,76 @@ import android.widget.TextView;
 
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddItem1Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem2Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem3Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem4Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem5Fragment;
-import com.cardee.owner_car_add.view.items.CarAddItem6Fragment;
 import com.cardee.owner_car_add.view.items.CarAddItemFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class CarAddActivity extends AppCompatActivity implements CarAddView, View.OnClickListener {
 
-    private TextView mTitle;
+    private Unbinder unbinder;
 
     private View mActionSave;
 
-    private FragmentManager mFragmentManager;
+    @BindView(R.id.tv_addCarItem1)
+    public TextView addCarItem1TV;
 
-    private CarAddMainFragment mCarAddMainFragment;
+    @BindView(R.id.tv_addCarItem2)
+    public TextView addCarItem2TV;
 
-    private CarAddItem1Fragment mCarAddItem1Fragment;
+    @BindView(R.id.tv_addCarItem3)
+    public TextView addCarItem3TV;
 
-    private CarAddItem2Fragment mCarAddItem2Fragment;
+    @BindView(R.id.tv_addCarItem4)
+    public TextView addCarItem4TV;
 
-    private CarAddActionListener mLister;
+    @BindView(R.id.tv_addCarItem5)
+    public TextView addCarItem5TV;
 
+    @BindView(R.id.tv_addCarItem6)
+    public TextView addCarItem6TV;
+
+    @BindView(R.id.iv_addCarItem1)
+    public AppCompatImageView addCarItem1IV;
+
+    @BindView(R.id.iv_addCarItem2)
+    public AppCompatImageView addCarItem2IV;
+
+    @BindView(R.id.iv_addCarItem3)
+    public AppCompatImageView addCarItem3IV;
+
+    @BindView(R.id.iv_addCarItem4)
+    public AppCompatImageView addCarItem4IV;
+
+    @BindView(R.id.iv_addCarItem5)
+    public AppCompatImageView addCarItem5IV;
+
+    @BindView(R.id.iv_addCarItem6)
+    public AppCompatImageView addCarItem6IV;
 
     public interface CarInfoPassCallback {
         void onPassData(Bundle b);
-    }
-
-
-    public interface CarAddActionListener {
-        void onSaveClicked();
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_add);
+        unbinder = ButterKnife.bind(this);
         initToolbar();
-        initFragments();
-
-        mFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container, mCarAddMainFragment)
-                .commit();
     }
-
-    private void initFragments() {
-        mFragmentManager = getSupportFragmentManager();
-
-        mCarAddMainFragment = new CarAddMainFragment();
-        mCarAddMainFragment.setViewListener(this);
-
-        mCarAddItem1Fragment = new CarAddItem1Fragment();
-        mCarAddItem1Fragment.setViewListener(this);
-        mCarAddItem1Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
-        mCarAddItem1Fragment.setArguments(new Bundle());
-
-        mCarAddItem2Fragment = new CarAddItem2Fragment();
-        mCarAddItem2Fragment.setViewListener(this);
-        mCarAddItem2Fragment.setPassDataCallback(mCarAddMainFragment.getListener());
-        mCarAddItem2Fragment.setArguments(new Bundle());
-
-    }
-
 
     private void initToolbar() {
         if (getSupportActionBar() == null) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
-            mTitle = toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(R.string.car_add_title);
             mActionSave = toolbar.findViewById(R.id.toolbar_action);
             mActionSave.setOnClickListener(this);
             mActionSave.setVisibility(View.GONE);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private void replaceFragment(Fragment fragment, int resIdTitle) {
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-        mTitle.setText(resIdTitle);
-        if (fragment instanceof CarAddItemFragment) {
-            mActionSave.setVisibility(View.VISIBLE);
-        } else {
-            mActionSave.setVisibility(View.GONE);
         }
     }
 
@@ -119,13 +96,56 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     @Override
     public void onBackPressed() {
-        Fragment f = mFragmentManager.findFragmentById(R.id.fragment_container);
-        if (f instanceof CarAddItemFragment) {
-            mCarAddMainFragment.setArguments(f.getArguments());
-            replaceFragment(mCarAddMainFragment, R.string.car_add_title);
-            return;
-        }
+
         super.onBackPressed();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @OnClick(R.id.add_item1)
+    public void onItem1Clicked() {
+
+    }
+
+    @OnClick(R.id.add_item2)
+    public void onItem2Clicked() {
+
+    }
+
+    @OnClick(R.id.add_item3)
+    public void onItem3Clicked() {
+
+
+    }
+
+    @OnClick(R.id.add_item4)
+    public void onItem4Clicked() {
+
+    }
+
+    @OnClick(R.id.add_item5)
+    public void onItem5Clicked() {
+
+    }
+
+    @OnClick(R.id.add_item6)
+    public void onItem6Clicked() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onSubmit() {
+
     }
 
     @Override
@@ -141,54 +161,5 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
     @Override
     public void showMessage(int messageId) {
 
-    }
-
-    @Override
-    public void onItem1() {
-        replaceFragment(mCarAddItem1Fragment, R.string.car_add_vehicle_title);
-    }
-
-    @Override
-    public void onItem2() {
-        replaceFragment(mCarAddItem2Fragment, R.string.car_add_info_title);
-    }
-
-    @Override
-    public void onItem3() {
-        replaceFragment(new CarAddItem3Fragment(), R.string.car_add_image_title);
-    }
-
-    @Override
-    public void onItem4() {
-        replaceFragment(new CarAddItem4Fragment(), R.string.car_add_location_title);
-    }
-
-    @Override
-    public void onItem5() {
-        replaceFragment(new CarAddItem5Fragment(), R.string.car_add_contact_title);
-    }
-
-    @Override
-    public void onItem6() {
-        replaceFragment(new CarAddItem6Fragment(), R.string.car_add_payment_title);
-    }
-
-    @Override
-    public void onSubmit() {
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.toolbar_action:
-                if (mLister != null)
-                    mLister.onSaveClicked();
-                break;
-        }
-    }
-
-    public void setActionListener(CarAddActionListener listener) {
-        mLister = listener;
     }
 }

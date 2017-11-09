@@ -20,7 +20,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddActivity.CarAddActionListener {
+public class CarAddItem2Fragment extends CarAddItemFragment {
 
     private Unbinder mUnbinder;
 
@@ -80,7 +80,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_item2, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        ((CarAddActivity) getActivity()).setActionListener(this);
+//        ((CarAddActivity) getActivity()).setActionListener(this);
         return v;
     }
 
@@ -223,7 +223,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
     }
 
 
-    @Override
+//    @Override
     public void onSaveClicked() {
         saveArguments(new Bundle(), false);
     }
@@ -281,7 +281,7 @@ public class CarAddItem2Fragment extends CarAddItemFragment implements CarAddAct
         if (onNext) {
             if (mView == null)
                 return;
-            mView.onItem3();
+//            mView.onItem3();
             return;
         }
         getActivity().onBackPressed();

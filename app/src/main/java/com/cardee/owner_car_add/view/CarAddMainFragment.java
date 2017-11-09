@@ -110,39 +110,33 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
 
     @OnClick(R.id.add_item1)
     public void onItem1Clicked() {
-        if (mView != null)
-            mView.onItem1();
+
     }
 
     @OnClick(R.id.add_item2)
     public void onItem2Clicked() {
-        if (mView != null)
-            mView.onItem2();
+
     }
 
     @OnClick(R.id.add_item3)
     public void onItem3Clicked() {
-        if (mView != null)
-            mView.onItem3();
+
 
     }
 
     @OnClick(R.id.add_item4)
     public void onItem4Clicked() {
-        if (mView != null)
-            mView.onItem4();
+
     }
 
     @OnClick(R.id.add_item5)
     public void onItem5Clicked() {
-        if (mView != null)
-            mView.onItem5();
+
     }
 
     @OnClick(R.id.add_item6)
     public void onItem6Clicked() {
-        if (mView != null)
-            mView.onItem6();
+
     }
 
     @Override

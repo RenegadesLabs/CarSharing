@@ -41,7 +41,6 @@ public class CarDetailsEditActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details_edit);
-
         if (getSupportActionBar() == null) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -51,7 +50,6 @@ public class CarDetailsEditActivity extends AppCompatActivity
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
             mProgress = (ProgressBar) findViewById(R.id.details_progress);
         }
-
         Serializable extra = getIntent().getSerializableExtra(CarDetailsEditContract.VIEW_MODE);
         if (extra != null) {
             CarDetailsEditContract.Mode mode = (CarDetailsEditContract.Mode) extra;

@@ -179,7 +179,8 @@ public class CarLocationFragment extends Fragment
         if (currentLocationMarker != null) {
             currentLocationMarker.remove();
         }
-        MarkerOptions markerOptions = new MarkerOptions().position(location);
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(location);
         currentLocationMarker = map.addMarker(markerOptions);
         CameraPosition position = new CameraPosition.Builder()
                 .target(location)

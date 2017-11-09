@@ -18,7 +18,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddActivity.CarAddActionListener {
+public class CarAddItem1Fragment extends CarAddItemFragment {
 
     private Unbinder mUnbinder;
 
@@ -58,7 +58,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
         View v = inflater.inflate(R.layout.fragment_add_car_item1, container, false);
 
         mUnbinder = ButterKnife.bind(this, v);
-        ((CarAddActivity) getActivity()).setActionListener(this);
+//        ((CarAddActivity) getActivity()).setActionListener(this);
         return v;
     }
 
@@ -82,7 +82,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
         if (mView == null)
             return;
         saveArguments(new Bundle(), true);
-        mView.onItem2();
+//        mView.onItem2();
     }
 
     @OnFocusChange(R.id.fl_vehiclePersonal)
@@ -127,7 +127,7 @@ public class CarAddItem1Fragment extends CarAddItemFragment implements CarAddAct
         mUnbinder.unbind();
     }
 
-    @Override
+//    @Override
     public void onSaveClicked() {
         saveArguments(new Bundle(), false);
         getActivity().onBackPressed();
