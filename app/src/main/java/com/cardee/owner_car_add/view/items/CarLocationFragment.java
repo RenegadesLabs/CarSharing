@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,7 @@ public class CarLocationFragment extends Fragment
     private GoogleApiClient apiClient;
     private GoogleMap map;
     private Marker currentLocationMarker;
+    private Address currentAddress;
 
     private DetailsChangedListener parentListener;
     private SimpleBinder binder = new SimpleBinder() {
@@ -263,9 +265,17 @@ public class CarLocationFragment extends Fragment
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-            String address = resultData.getString(FetchAddressService.ADDRESS, "");
             if (resultCode == FetchAddressService.CODE_SUCCESS) {
-                carLocationAddress.setText(address);
+                Address address = resultData.getParcelable(FetchAddressService.ADDRESS);
+                currentAddress = address;
+                StringBuilder addressBuilder = new StringBuilder();
+                for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                    addressBuilder.append(address.getAddressLine(i));
+                    if (i != address.getMaxAddressLineIndex()) {
+                        addressBuilder.append(" ");
+                    }
+                }
+                carLocationAddress.setText(addressBuilder.toString());
             }
         }
     }

@@ -114,6 +114,11 @@ public class CarAddActivity extends AppCompatActivity
     }
 
     @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public void setTypeCompleted(boolean completed) {
         setCompletedIconIfNeed(typeCompletedIconView, completed);
     }

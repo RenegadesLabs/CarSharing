@@ -52,21 +52,15 @@ public class FetchAddressService extends IntentService {
             sendResponseToReceiver(CODE_NOT_FOUND, null);
         } else {
             Address address = addresses.get(0);
-            StringBuilder addressBuilder = new StringBuilder();
-            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-                addressBuilder.append(address.getAddressLine(i));
-                if (i != address.getMaxAddressLineIndex()) {
-                    addressBuilder.append(" ");
-                }
-            }
-            sendResponseToReceiver(CODE_SUCCESS, addressBuilder.toString());
+
+            sendResponseToReceiver(CODE_SUCCESS, address);
         }
     }
 
-    private void sendResponseToReceiver(int code, String address) {
+    private void sendResponseToReceiver(int code, Address address) {
         if (addressReceiver != null) {
             Bundle args = new Bundle();
-            args.putString(ADDRESS, address);
+            args.putParcelable(ADDRESS, address);
             addressReceiver.send(code, args);
         }
     }

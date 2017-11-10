@@ -4,22 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.NewCar;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
-public class CarContactsFragment extends CarAddItemFragment {
+public class CarContactsFragment extends Fragment implements NewCarFormsContract.View {
 
     private DetailsChangedListener parentListener;
 
-    public static Fragment newInstance(){
+    public static Fragment newInstance() {
         Fragment fragment = new CarContactsFragment();
         return fragment;
     }
@@ -49,23 +51,33 @@ public class CarContactsFragment extends CarAddItemFragment {
     }
 
     @Override
-    void saveArguments(Bundle b, boolean onNext) {
-
-    }
-
-    @Override
-    public void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback) {
-
-    }
-
-    @Override
-    public void setViewListener(CarAddView listener) {
-
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.CONTACT);
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int messageId) {
+
+    }
+
+    @Override
+    public void setCarData(NewCar carData) {
+
+    }
+
+    @Override
+    public void onFinish() {
+        parentListener.onFinish(NewCarFormsContract.Mode.CONTACT);
     }
 }

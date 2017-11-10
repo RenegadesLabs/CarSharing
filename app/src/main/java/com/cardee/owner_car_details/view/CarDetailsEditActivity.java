@@ -111,6 +111,11 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
+    public void onFinish(NewCarFormsContract.Mode mode) {
+        
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (childBinder == null) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatEditText;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.NewCar;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
@@ -25,7 +27,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarInfoFragment extends CarAddItemFragment {
+public class CarInfoFragment extends Fragment implements NewCarFormsContract.View{
 
     private Unbinder mUnbinder;
 
@@ -265,7 +267,6 @@ public class CarInfoFragment extends CarAddItemFragment {
         return editText.getText().toString();
     }
 
-    @Override
     void saveArguments(Bundle b, boolean onNext) {
 
         String make = getFieldContent(addCarInfoMakeET);
@@ -311,18 +312,33 @@ public class CarInfoFragment extends CarAddItemFragment {
     }
 
     @Override
-    public void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback) {
-        mPassDataCallback = callback;
-    }
-
-    @Override
-    public void setViewListener(CarAddView listener) {
-        mView = listener;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.INFO);
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int messageId) {
+
+    }
+
+    @Override
+    public void setCarData(NewCar carData) {
+
+    }
+
+    @Override
+    public void onFinish() {
+        parentListener.onFinish(NewCarFormsContract.Mode.INFO);
     }
 }

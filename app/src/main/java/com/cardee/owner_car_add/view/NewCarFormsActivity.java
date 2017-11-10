@@ -239,4 +239,9 @@ public class NewCarFormsActivity extends AppCompatActivity
     public void setCarData(NewCar carData) {
 
     }
+
+    @Override
+    public void onFinish() {
+
+    }
 }
