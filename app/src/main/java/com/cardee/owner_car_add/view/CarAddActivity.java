@@ -8,58 +8,64 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddItemFragment;
+import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CarAddActivity extends AppCompatActivity implements CarAddView, View.OnClickListener {
+public class CarAddActivity extends AppCompatActivity
+        implements CarAddView, View.OnClickListener, CarAddContract.View {
 
     private Unbinder unbinder;
 
     private View mActionSave;
 
     @BindView(R.id.tv_addCarItem1)
-    public TextView addCarItem1TV;
+    public TextView typeValueView;
 
     @BindView(R.id.tv_addCarItem2)
-    public TextView addCarItem2TV;
+    public TextView infoValueView;
 
     @BindView(R.id.tv_addCarItem3)
-    public TextView addCarItem3TV;
+    public TextView imageValueView;
 
     @BindView(R.id.tv_addCarItem4)
-    public TextView addCarItem4TV;
+    public TextView locationValueView;
 
     @BindView(R.id.tv_addCarItem5)
-    public TextView addCarItem5TV;
+    public TextView contactsValueView;
 
     @BindView(R.id.tv_addCarItem6)
-    public TextView addCarItem6TV;
+    public TextView paymentValueView;
 
     @BindView(R.id.iv_addCarItem1)
-    public AppCompatImageView addCarItem1IV;
+    public AppCompatImageView typeCompletedIconView;
 
     @BindView(R.id.iv_addCarItem2)
-    public AppCompatImageView addCarItem2IV;
+    public AppCompatImageView infoCompletedIconView;
 
     @BindView(R.id.iv_addCarItem3)
-    public AppCompatImageView addCarItem3IV;
+    public AppCompatImageView imageCompletedIconView;
 
     @BindView(R.id.iv_addCarItem4)
-    public AppCompatImageView addCarItem4IV;
+    public AppCompatImageView locationCompletedIconView;
 
     @BindView(R.id.iv_addCarItem5)
-    public AppCompatImageView addCarItem5IV;
+    public AppCompatImageView contactsCompletedIconView;
 
     @BindView(R.id.iv_addCarItem6)
-    public AppCompatImageView addCarItem6IV;
+    public AppCompatImageView paymentCompletedIconView;
+
+    private NewCarPresenter presenter;
+    private Toast currentToast;
 
     public interface CarInfoPassCallback {
         void onPassData(Bundle b);
@@ -70,6 +76,7 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_add);
         unbinder = ButterKnife.bind(this);
+        presenter = new NewCarPresenter(this);
         initToolbar();
     }
 
@@ -96,14 +103,50 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
     }
 
     @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
+    protected void onStart() {
+        super.onStart();
+        presenter.init();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void setCarData(NewCar carData) {
+        //No need to implement in current view
+    }
+
+    @Override
+    public void setTypeCompleted(boolean completed) {
+        setCompletedIconIfNeed(typeCompletedIconView, completed);
+    }
+
+    @Override
+    public void setInfoCompleted(boolean completed) {
+        setCompletedIconIfNeed(infoCompletedIconView, completed);
+    }
+
+    @Override
+    public void setImageCompleted(boolean completed) {
+        setCompletedIconIfNeed(imageCompletedIconView, completed);
+    }
+
+    @Override
+    public void setLocationCompleted(boolean completed) {
+        setCompletedIconIfNeed(locationCompletedIconView, completed);
+    }
+
+    @Override
+    public void setContactsCompleted(boolean completed) {
+        setCompletedIconIfNeed(contactsCompletedIconView, completed);
+    }
+
+    @Override
+    public void setPaymentCompleted(boolean completed) {
+        setCompletedIconIfNeed(paymentCompletedIconView, completed);
+    }
+
+    private void setCompletedIconIfNeed(ImageView view, boolean completed) {
+        if (completed) {
+            view.setImageResource(R.drawable.ic_check_circle);
+        }
     }
 
     @Override
@@ -168,6 +211,8 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        presenter.onDestroy();
+        presenter = null;
     }
 
     @Override
@@ -182,11 +227,15 @@ public class CarAddActivity extends AppCompatActivity implements CarAddView, Vie
 
     @Override
     public void showMessage(String message) {
-
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        currentToast.show();
     }
 
     @Override
     public void showMessage(int messageId) {
-
+        showMessage(getString(messageId));
     }
 }

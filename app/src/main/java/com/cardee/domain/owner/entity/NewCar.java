@@ -8,7 +8,7 @@ public class NewCar {
     private final Integer insuranceMinAge; //Optional
     private final Integer insuranceMinYearsDrivingExperience; //Optional
     private final String insuranceExpiredDate; //Optional
-    private final String made;
+    private final String make;
     private final String model;
     private final Integer manufactureYear;
     private final String title;
@@ -33,7 +33,7 @@ public class NewCar {
                    Integer insuranceMinAge,
                    Integer insuranceMinYearsDrivingExperience,
                    String insuranceExpiredDate,
-                   String made,
+                   String make,
                    String model,
                    Integer manufactureYear,
                    String title,
@@ -57,7 +57,7 @@ public class NewCar {
         this.insuranceMinAge = insuranceMinAge;
         this.insuranceMinYearsDrivingExperience = insuranceMinYearsDrivingExperience;
         this.insuranceExpiredDate = insuranceExpiredDate;
-        this.made = made;
+        this.make = make;
         this.model = model;
         this.manufactureYear = manufactureYear;
         this.title = title;
@@ -84,7 +84,7 @@ public class NewCar {
         private Integer insuranceMinAge; //Optional
         private Integer insuranceMinYearsDrivingExperience; //Optional
         private String insuranceExpiredDate; //Optional
-        private String made;
+        private String make;
         private String model;
         private Integer manufactureYear;
         private String title;
@@ -141,8 +141,8 @@ public class NewCar {
             return this;
         }
 
-        public Builder setMade(String made) {
-            this.made = made;
+        public Builder setMake(String make) {
+            this.make = make;
             return this;
         }
 
@@ -238,7 +238,7 @@ public class NewCar {
                     this.insuranceMinAge,
                     this.insuranceMinYearsDrivingExperience,
                     this.insuranceExpiredDate,
-                    this.made,
+                    this.make,
                     this.model,
                     this.manufactureYear,
                     this.title,
@@ -283,8 +283,8 @@ public class NewCar {
         return insuranceExpiredDate;
     }
 
-    public String getMade() {
-        return made;
+    public String getMake() {
+        return make;
     }
 
     public String getModel() {

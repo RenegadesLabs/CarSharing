@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.NewCar;
 import com.cardee.owner_car_add.view.items.CarContactsFragment;
 import com.cardee.owner_car_add.view.items.CarImageFragment;
 import com.cardee.owner_car_add.view.items.CarInfoFragment;
@@ -221,5 +222,10 @@ public class NewCarFormsActivity extends AppCompatActivity
     @Override
     public void showMessage(@StringRes int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    public void setCarData(NewCar carData) {
+
     }
 }
