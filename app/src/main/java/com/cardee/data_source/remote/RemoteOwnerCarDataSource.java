@@ -37,13 +37,13 @@ public class RemoteOwnerCarDataSource implements OwnerCarDataSource {
                 callback.onSuccess(response.body().getCarBody());
                 return;
             }
-            handleErrorResponse(callback, response.body());
+            handleErrorResponse(response.body(), callback);
         } catch (IOException e) {
             callback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
         }
     }
 
-    private void handleErrorResponse(OwnerCarDataSource.Callback callback, BaseResponse response) {
+    private void handleErrorResponse(BaseResponse response, OwnerCarDataSource.Callback callback) {
         if (response == null) {
             callback.onError(new Error(Error.Type.OTHER, "null"));
             return;

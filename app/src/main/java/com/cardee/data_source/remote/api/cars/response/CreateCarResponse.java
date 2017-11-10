@@ -8,17 +8,17 @@ public class CreateCarResponse extends BaseResponse {
 
     @Expose
     @SerializedName("data")
-    private CarResponseBody responseBody;
+    private CreateCarResponseBody responseBody;
 
     public CreateCarResponse() {
 
     }
 
-    public CarResponseBody getResponseBody() {
+    public CreateCarResponseBody getResponseBody() {
         return responseBody;
     }
 
-    public void setResponseBody(CarResponseBody responseBody) {
+    public void setResponseBody(CreateCarResponseBody responseBody) {
         this.responseBody = responseBody;
     }
 }
