@@ -37,7 +37,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
 
     @Override
     public void obtainSavedCarData(CacheCallback callback) {
-
+        //No implementation need in remote data source
     }
 
     @Override

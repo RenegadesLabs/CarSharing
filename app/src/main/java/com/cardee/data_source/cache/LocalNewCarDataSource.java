@@ -55,6 +55,9 @@ public class LocalNewCarDataSource implements NewCarDataSource {
         File cacheFile = getCacheFile(true);
         if (cacheFile != null) {
             boolean successful = serializeDataToFile(carData, cacheFile);
+            if (callback == null) {
+                return;
+            }
             if (successful) {
                 callback.onSuccess(null);
                 return;
