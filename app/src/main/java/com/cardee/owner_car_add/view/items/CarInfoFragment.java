@@ -1,7 +1,10 @@
 package com.cardee.owner_car_add.view.items;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.view.ViewGroup;
 import com.cardee.R;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.CarAddView;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import com.cardee.owner_home.view.modal.BodyMenuFragment;
 import com.cardee.owner_home.view.modal.PickerMenuFragment;
 
@@ -20,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddActivity.CarAddActionListener {
+public class CarInfoFragment extends CarAddBaseFragment {
 
     private Unbinder mUnbinder;
 
@@ -75,12 +80,34 @@ public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddA
 
     private CarAddActivity.CarInfoPassCallback mPassDataCallback;
 
+    private DetailsChangedListener parentListener;
+
+    public static Fragment newInstance() {
+        Fragment fragment = new CarInfoFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DetailsChangedListener) {
+            parentListener = (DetailsChangedListener) context;
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof DetailsChangedListener) {
+            parentListener = (DetailsChangedListener) activity;
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_info, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        ((CarAddActivity) getActivity()).setActionListener(this);
         return v;
     }
 
@@ -217,13 +244,8 @@ public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddA
         menu.show(getFragmentManager(), menu.getTag());
     }
 
-    @OnClick(R.id.b_carInfoNext)
-    public void onNextClicked() {
-        saveArguments(new Bundle(), true);
-    }
 
-
-    @Override
+    //    @Override
     public void onSaveClicked() {
         saveArguments(new Bundle(), false);
     }
@@ -281,7 +303,7 @@ public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddA
         if (onNext) {
             if (mView == null)
                 return;
-            mView.onCarImage();
+//            mView.onItem3();
             return;
         }
         getActivity().onBackPressed();
@@ -295,5 +317,11 @@ public class CarAddCarInfoFragment extends CarAddBaseFragment implements CarAddA
     @Override
     public void setViewListener(CarAddView listener) {
         mView = listener;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.INFO);
     }
 }

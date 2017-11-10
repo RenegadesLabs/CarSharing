@@ -1,6 +1,7 @@
 package com.cardee.owner_car_details.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -102,7 +103,9 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void moveToLocation(Bundle args) {
-
+        Intent intent = new Intent(getActivity(), CarDetailsEditActivity.class);
+        intent.putExtras(args);
+        getActivity().startActivity(intent);
     }
 
     @Override

@@ -214,14 +214,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.cardee.custom.CardeeButton
-        android:id="@+id/b_carInfoNext"
-        style="@style/RoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:text="@string/car_add_next"
-        app:drawableEndCompat="@drawable/ic_arrow_next" />
 </FrameLayout>

@@ -28,8 +28,8 @@ public class Car {
     private final String[] mCarAvailabilityDailyDates;
     private final String mDescription;
     private final Image[] mImages;
-    private final Float mLongitude;
-    private final Float mLatitude;
+    private final Double mLongitude;
+    private final Double mLatitude;
     private final String mAddress;
     private final String mTown;
 
@@ -56,8 +56,8 @@ public class Car {
                String[] carAvailabilityDailyDates,
                String description,
                Image[] images,
-               Float longitude,
-               Float latitude,
+               Double longitude,
+               Double latitude,
                String address,
                String town) {
         mCarId = carId;
@@ -114,8 +114,8 @@ public class Car {
         private String[] mBuilderCarAvailabilityDailyDates;
         private String mBuilderDescription;
         private Image[] mBuilderImages;
-        private Float mBuilderLongitude;
-        private Float mBuilderLatitude;
+        private Double mBuilderLongitude;
+        private Double mBuilderLatitude;
         private String mBuilderAddress;
         private String mBuilderTown;
 
@@ -219,12 +219,12 @@ public class Car {
             return this;
         }
 
-        public Builder setLongitude(Float longitude) {
+        public Builder setLongitude(Double longitude) {
             mBuilderLongitude = longitude;
             return this;
         }
 
-        public Builder setLatitude(Float latitude) {
+        public Builder setLatitude(Double latitude) {
             mBuilderLatitude = latitude;
             return this;
         }
@@ -351,11 +351,11 @@ public class Car {
         return mCarAvailabilityDailyDates;
     }
 
-    public Float getLatitude() {
+    public Double getLatitude() {
         return mLatitude;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return mLongitude;
     }
 

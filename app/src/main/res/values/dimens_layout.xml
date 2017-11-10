@@ -23,6 +23,7 @@
     <dimen name="widget_padding_xx_small">4dp</dimen>
     <dimen name="widget_padding_x_small">8dp</dimen>
     <dimen name="widget_padding_small">12dp</dimen>
+    <dimen name="widget_padding_regular">16dp</dimen>
     <dimen name="widget_padding_mid">18dp</dimen>
     <dimen name="widget_padding_large">24dp</dimen>
     <dimen name="widget_padding_x_large">28dp</dimen>
