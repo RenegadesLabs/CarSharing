@@ -221,7 +221,6 @@ public class CarLocationFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
-        parentListener.onBind(null);
         apiClient.disconnect();
     }
 

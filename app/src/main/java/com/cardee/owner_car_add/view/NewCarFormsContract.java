@@ -10,6 +10,11 @@ import com.cardee.mvp.BaseView;
 public interface NewCarFormsContract {
 
     String VIEW_MODE = "_view_mode";
+    String ACTION = "_child_action";
+
+    enum Action {
+        PUSH, UPDATE
+    }
 
     enum Mode {
         TYPE(R.string.car_add_vehicle_title),
@@ -34,6 +39,8 @@ public interface NewCarFormsContract {
     interface View extends BaseView {
 
         void setCarData(NewCar carData);
+
+        void onFinish();
 
     }
 

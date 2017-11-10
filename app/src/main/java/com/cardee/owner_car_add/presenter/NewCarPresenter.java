@@ -67,6 +67,10 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
         });
     }
 
+    public void onSaved() {
+
+    }
+
     @Override
     public void onDestroy() {
         view = null;

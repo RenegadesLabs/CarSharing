@@ -103,7 +103,7 @@ public class NewCar {
         private String contactPhone;
         private String contactEmail;
 
-        private Builder() {
+        public Builder() {
 
         }
 
@@ -353,5 +353,33 @@ public class NewCar {
 
     public String getContactEmail() {
         return contactEmail;
+    }
+
+    public Builder newBuilder() {
+        return new Builder()
+                .setVehicleType(this.vehicleType)
+                .setMake(this.make)
+                .setModel(this.model)
+                .setManufactureYear(this.manufactureYear)
+                .setTitle(this.getTitle())
+                .setLicencePlateNumber(this.licencePlateNumber)
+                .setSeatingCapacity(this.seatingCapacity)
+                .setEngineCapacity(this.engineCapacity)
+                .setTransmissionId(this.transmissionId)
+                .setBodyType(this.bodyType)
+                .setImage(this.image)
+                .setInsuranceComprehensive(this.insuranceComprehensive)
+                .setInsuranceUnnamedDriver(this.insuranceUnnamedDriver)
+                .setInsuranceMinAge(this.insuranceMinAge)
+                .setInsuranceMinYearsDrivingExperience(this.insuranceMinYearsDrivingExperience)
+                .setInsuranceExpiredDate(this.insuranceExpiredDate)
+                .setLongitude(this.longitude)
+                .setLatitude(this.latitude)
+                .setAddress(this.address)
+                .setTown(this.town)
+                .setHideExactLocation(this.hideExactLocation)
+                .setContactName(this.contactName)
+                .setContactPhone(this.contactPhone)
+                .setContactEmail(this.contactEmail);
     }
 }

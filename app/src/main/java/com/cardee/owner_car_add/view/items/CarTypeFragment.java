@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.CarAddView;
+import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.owner_car_add.presenter.CarTypePresenter;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
 import butterknife.BindView;
@@ -23,7 +26,9 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-public class CarTypeFragment extends CarAddItemFragment {
+public class CarTypeFragment extends Fragment implements NewCarFormsContract.View {
+
+    private static final String TAG = CarTypeFragment.class.getSimpleName();
 
     private Unbinder mUnbinder;
 
@@ -45,12 +50,22 @@ public class CarTypeFragment extends CarAddItemFragment {
     @BindView(R.id.tv_vehicleCommercial)
     public TextView vehicleCommercialTV;
 
-    private String mValue;
+    private String value;
 
-    private CarAddView mView;
     private DetailsChangedListener parentListener;
-
-    private CarAddActivity.CarInfoPassCallback mPassDataCallback;
+    private CarTypePresenter presenter;
+    private SimpleBinder binder = new SimpleBinder() {
+        @Override
+        public void push(Bundle args) {
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
+            if (action != null && action == NewCarFormsContract.Action.PUSH) {
+                onSave();
+                return;
+            }
+            Log.e(TAG, "Unsupported action: " + action);
+        }
+    };
 
     public static Fragment newInstance() {
         Fragment fragment = new CarTypeFragment();
@@ -77,17 +92,15 @@ public class CarTypeFragment extends CarAddItemFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
+        presenter = new CarTypePresenter(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_item1, container, false);
-
-        mUnbinder = ButterKnife.bind(this, v);
-//        ((CarAddActivity) getActivity()).setActionListener(this);
-        return v;
+        View rootView = inflater.inflate(R.layout.fragment_add_car_item1, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @OnClick(R.id.fl_vehiclePersonal)
@@ -108,7 +121,7 @@ public class CarTypeFragment extends CarAddItemFragment {
     @OnFocusChange(R.id.fl_vehiclePersonal)
     public void onPersonalFocused(boolean isFocused) {
         if (isFocused) {
-            mValue = getString(R.string.car_add_vehicle_personal);
+            value = getString(R.string.car_add_vehicle_personal);
             vehiclePersonalIV.setImageResource(R.drawable.ic_car_active);
             vehiclePersonalTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -120,7 +133,7 @@ public class CarTypeFragment extends CarAddItemFragment {
     @OnFocusChange(R.id.fl_vehiclePrivate)
     public void onPrivateFocused(boolean isFocused) {
         if (isFocused) {
-            mValue = getString(R.string.car_add_vehicle_private);
+            value = getString(R.string.car_add_vehicle_private);
             vehiclePrivateIV.setImageResource(R.drawable.ic_private_hire_active);
             vehiclePrivateTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -132,7 +145,7 @@ public class CarTypeFragment extends CarAddItemFragment {
     @OnFocusChange(R.id.fl_vehicleCommercial)
     public void onCommercialFocused(boolean isFocused) {
         if (isFocused) {
-            mValue = getString(R.string.car_add_vehicle_commercial);
+            value = getString(R.string.car_add_vehicle_commercial);
             vehicleCommercialIV.setImageResource(R.drawable.ic_truck_active);
             vehicleCommercialTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -147,35 +160,48 @@ public class CarTypeFragment extends CarAddItemFragment {
         mUnbinder.unbind();
     }
 
-    //    @Override
-    public void onSaveClicked() {
-        saveArguments(new Bundle(), false);
-        getActivity().onBackPressed();
-    }
-
-    @Override
-    void saveArguments(Bundle b, boolean onNext) {
-        b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 0);
-        b.putString(CarAddItemFragment.FRAGMENT_VALUE, mValue);
-//        getArguments().putAll(b);
-        if (mPassDataCallback == null)
-            return;
-        mPassDataCallback.onPassData(b);
-    }
-
-    @Override
-    public void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback) {
-        mPassDataCallback = callback;
-    }
-
-    @Override
-    public void setViewListener(CarAddView listener) {
-        mView = listener;
-    }
-
     @Override
     public void onStart() {
         super.onStart();
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.TYPE);
+        parentListener.onBind(binder);
+        presenter.init();
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int messageId) {
+
+    }
+
+    public void onSave() {
+
+    }
+
+    @Override
+    public void onFinish() {
+        parentListener.onFinish(NewCarFormsContract.Mode.TYPE);
+    }
+
+    @Override
+    public void setCarData(NewCar carData) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        parentListener = null;
+        presenter.onDestroy();
+        presenter = null;
     }
 }

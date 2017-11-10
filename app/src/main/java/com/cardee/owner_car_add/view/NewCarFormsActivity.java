@@ -146,9 +146,9 @@ public class NewCarFormsActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_to_next:
-                NewCarFormsContract.Mode nextMode = getNextToMode(currentMode);
-                if (nextMode != null) {
-                    setContentOfMode(nextMode);
+                if (childBinder != null) {
+                    Bundle args = new Bundle();
+                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.PUSH);
                 }
                 break;
             case R.id.btn_all_done:
@@ -187,6 +187,17 @@ public class NewCarFormsActivity extends AppCompatActivity
             return;
         }
         ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onFinish(NewCarFormsContract.Mode mode) {
+        if (currentMode != mode) {
+            throw new IllegalArgumentException("Mode mismatch: " + currentMode + " vs " + mode);
+        }
+        NewCarFormsContract.Mode nextMode = getNextToMode(mode);
+        if (nextMode != null) {
+            setContentOfMode(nextMode);
+        }
     }
 
     @Override
