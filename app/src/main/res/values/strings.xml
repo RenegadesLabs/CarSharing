@@ -64,6 +64,9 @@
     <string name="car_details_tab_rental">Rental</string>
     <string name="car_details_tab_car">Car</string>
     <string name="car_details_tab_reviews">Reviews</string>
+    
+    <string name="car_details_more_listing">View listing</string>
+    <string name="car_details_more_delete">Delete car</string>
 
     <string name="title_my_cars">My Cars</string>
     <string name="title_my_bookings">My Bookings</string>
@@ -82,12 +85,12 @@
     <!--Add Car-->
     <string name="car_add_title">Add Car</string>
     <string name="car_add_submit">Submit</string>
-    <string name="car_add_item1">1. Vehicle Type</string>
-    <string name="car_add_item2">2. Car Info</string>
-    <string name="car_add_item3">3. Car Image</string>
-    <string name="car_add_item4">4. Car Location</string>
-    <string name="car_add_item5">5. Contact Info</string>
-    <string name="car_add_item6">6. Payment Account</string>
+    <string name="car_add_vehicle">1. Vehicle Type</string>
+    <string name="car_add_info">2. Car Info</string>
+    <string name="car_add_image">3. Car Image</string>
+    <string name="car_add_location">4. Car Location</string>
+    <string name="car_add_contact">5. Contact Info</string>
+    <string name="car_add_payment">6. Payment Account</string>
     <string name="car_add_add">Add</string>
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>

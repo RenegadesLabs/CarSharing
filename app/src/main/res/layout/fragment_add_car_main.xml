@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item1"
+                android:text="@string/car_add_vehicle"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item2"
+                android:text="@string/car_add_info"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item3"
+                android:text="@string/car_add_image"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 
@@ -182,7 +182,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item4"
+                android:text="@string/car_add_location"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 
@@ -234,7 +234,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item5"
+                android:text="@string/car_add_contact"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 
@@ -286,7 +286,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/car_add_item6"
+                android:text="@string/car_add_payment"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large" />
 

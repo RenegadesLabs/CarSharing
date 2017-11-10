@@ -18,9 +18,10 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_home.view.modal.DetailsMoreMenuFragment;
 
 public class OwnerCarDetailsActivity extends AppCompatActivity
-        implements TabLayout.OnTabSelectedListener {
+        implements TabLayout.OnTabSelectedListener, View.OnClickListener {
 
     private static final String TAG = OwnerCarDetailsActivity.class.getSimpleName();
 
@@ -61,6 +62,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
             mTitle = toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
             mMoreAction = toolbar.findViewById(R.id.toolbar_action);
+            mMoreAction.setOnClickListener(this);
             mBtnRequests = findViewById(R.id.button_requests);
         }
         initPages(tabTitles);
@@ -101,6 +103,16 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_action:
+                DetailsMoreMenuFragment menu = new DetailsMoreMenuFragment();
+                menu.show(getSupportFragmentManager(), menu.getTag());
+                break;
+        }
     }
 
 
