@@ -43,7 +43,7 @@ public class NewCarRepository implements NewCarDataSource {
         localDataSource.obtainSavedCarData(new CacheCallback() {
             @Override
             public void onSuccess(NewCarData carData) {
-                updateLocalCache(carData);
+                updateCache(carData);
                 callback.onSuccess(carData);
             }
 
@@ -58,14 +58,14 @@ public class NewCarRepository implements NewCarDataSource {
     public void saveCarData(NewCarData carData, boolean forcePush, final Callback callback) {
         if (!forcePush) {
             localDataSource.saveCarData(carData, false, callback);
-            updateLocalCache(carData);
+            updateCache(carData);
             return;
         }
         remoteDataSource.saveCarData(carData, true, new Callback() {
             @Override
             public void onSuccess(Integer newCarId) {
                 localDataSource.saveCarData(null, true, null);
-                clearLocalCache();
+                clearCache();
                 callback.onSuccess(newCarId);
 
             }
@@ -77,12 +77,12 @@ public class NewCarRepository implements NewCarDataSource {
         });
     }
 
-    private void updateLocalCache(NewCarData carData) {
+    private void updateCache(NewCarData carData) {
         cache.put(CACHE_KEY, carData);
         dirtyCache = false;
     }
 
-    private void clearLocalCache() {
+    private void clearCache() {
         cache.evictAll();
         dirtyCache = true;
     }

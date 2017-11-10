@@ -28,7 +28,7 @@ public class NewCarData {
 
     @Expose
     @SerializedName("car_make")
-    private String made;
+    private String make;
     @Expose
     @SerializedName("car_model")
     private String model;
@@ -136,12 +136,12 @@ public class NewCarData {
         this.insuranceExpiredDate = insuranceExpiredDate;
     }
 
-    public String getMade() {
-        return made;
+    public String getMake() {
+        return make;
     }
 
-    public void setMade(String made) {
-        this.made = made;
+    public void setMake(String make) {
+        this.make = make;
     }
 
     public String getModel() {
