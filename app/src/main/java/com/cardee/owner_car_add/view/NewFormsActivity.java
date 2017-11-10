@@ -1,7 +1,10 @@
 package com.cardee.owner_car_add.view;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -24,15 +27,19 @@ import com.cardee.owner_car_add.view.items.CarInfoFragment;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
 import com.cardee.owner_car_add.view.items.CarPaymentFragment;
 import com.cardee.owner_car_add.view.items.CarTypeFragment;
+import com.cardee.owner_car_add.view.items.UploadImageListener;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
+import com.cardee.util.display.ActivityHelper;
 
+import java.io.IOException;
 import java.io.Serializable;
 
-public class NewCarFormsActivity extends AppCompatActivity
+public class NewFormsActivity extends AppCompatActivity
         implements NewCarFormsContract.View,
         DetailsChangedListener,
-        View.OnClickListener {
+        View.OnClickListener,
+        UploadImageListener {
 
     private static final String TAG = NewCarFormsContract.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 101;
@@ -47,6 +54,8 @@ public class NewCarFormsActivity extends AppCompatActivity
 
     private SimpleBinder childBinder;
     private NewCarFormsContract.Mode currentMode;
+
+    private CarImageFragment mCarImageFragment;
 
     private boolean isInRootMode = true;
 
@@ -95,7 +104,8 @@ public class NewCarFormsActivity extends AppCompatActivity
                 showFragment(CarInfoFragment.newInstance());
                 break;
             case IMAGE:
-                showFragment(CarImageFragment.newInstance());
+                mCarImageFragment = (CarImageFragment) CarImageFragment.newInstance();
+                showFragment(mCarImageFragment);
                 break;
             case LOCATION:
                 showFragment(CarLocationFragment.newInstance());
@@ -205,6 +215,27 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ActivityHelper.PICK_IMAGE:
+                    if (data == null)
+                        return;
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                        if (mCarImageFragment != null && mCarImageFragment.isVisible()) {
+                            mCarImageFragment.setUserPhoto(bitmap);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void showProgress(boolean show) {
 
     }
@@ -221,5 +252,10 @@ public class NewCarFormsActivity extends AppCompatActivity
     @Override
     public void showMessage(@StringRes int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    public void onImageUpload() {
+        ActivityHelper.pickImageIntent(this, ActivityHelper.PICK_IMAGE);
     }
 }

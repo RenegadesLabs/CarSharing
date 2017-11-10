@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/add_item1"
+        android:id="@+id/add_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -55,11 +55,11 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/add_item1" />
+        app:layout_constraintTop_toBottomOf="@id/add_type" />
 
 
     <FrameLayout
-        android:id="@+id/add_item2"
+        android:id="@+id/add_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/large_margin"
@@ -68,7 +68,7 @@
         android:background="@drawable/bg_item_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item1">
+        app:layout_constraintTop_toBottomOf="@+id/add_type">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -107,10 +107,10 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/add_item2" />
+        app:layout_constraintTop_toBottomOf="@id/add_info" />
 
     <FrameLayout
-        android:id="@+id/add_item3"
+        android:id="@+id/add_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/large_margin"
@@ -119,7 +119,7 @@
         android:background="@drawable/bg_item_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item2">
+        app:layout_constraintTop_toBottomOf="@+id/add_info">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -159,10 +159,10 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/add_item3" />
+        app:layout_constraintTop_toBottomOf="@id/add_image" />
 
     <FrameLayout
-        android:id="@+id/add_item4"
+        android:id="@+id/add_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/large_margin"
@@ -171,7 +171,7 @@
         android:background="@drawable/bg_item_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item3">
+        app:layout_constraintTop_toBottomOf="@+id/add_image">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -211,10 +211,10 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/add_item4" />
+        app:layout_constraintTop_toBottomOf="@id/add_location" />
 
     <FrameLayout
-        android:id="@+id/add_item5"
+        android:id="@+id/add_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/large_margin"
@@ -223,7 +223,7 @@
         android:background="@drawable/bg_item_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item4">
+        app:layout_constraintTop_toBottomOf="@+id/add_location">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -263,10 +263,10 @@
         android:layout_marginEnd="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/add_item5" />
+        app:layout_constraintTop_toBottomOf="@id/add_contact" />
 
     <FrameLayout
-        android:id="@+id/add_item6"
+        android:id="@+id/add_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/large_margin"
@@ -275,7 +275,7 @@
         android:background="@drawable/bg_item_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item5">
+        app:layout_constraintTop_toBottomOf="@+id/add_contact">
 
         <LinearLayout
             android:layout_width="wrap_content"

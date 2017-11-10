@@ -3,7 +3,6 @@ package com.cardee.owner_car_add.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,33 +107,33 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
         mView = viewListener;
     }
 
-    @OnClick(R.id.add_item1)
+    @OnClick(R.id.add_type)
     public void onItem1Clicked() {
 
     }
 
-    @OnClick(R.id.add_item2)
+    @OnClick(R.id.add_info)
     public void onItem2Clicked() {
 
     }
 
-    @OnClick(R.id.add_item3)
+    @OnClick(R.id.add_image)
     public void onItem3Clicked() {
 
 
     }
 
-    @OnClick(R.id.add_item4)
+    @OnClick(R.id.add_location)
     public void onItem4Clicked() {
 
     }
 
-    @OnClick(R.id.add_item5)
+    @OnClick(R.id.add_contact)
     public void onItem5Clicked() {
 
     }
 
-    @OnClick(R.id.add_item6)
+    @OnClick(R.id.add_payment)
     public void onItem6Clicked() {
 
     }

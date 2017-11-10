@@ -29,6 +29,8 @@ public class CarImageFragment extends CarAddBaseFragment {
 
     private DetailsChangedListener parentListener;
 
+    private UploadImageListener mUploadListener;
+
     private Unbinder mUnbinder;
 
     @BindView(R.id.iv_addCarImage)
@@ -45,6 +47,9 @@ public class CarImageFragment extends CarAddBaseFragment {
         if (context instanceof DetailsChangedListener) {
             parentListener = (DetailsChangedListener) context;
         }
+        if (context instanceof UploadImageListener) {
+            mUploadListener = (UploadImageListener) context;
+        }
     }
 
     @Override
@@ -52,6 +57,9 @@ public class CarImageFragment extends CarAddBaseFragment {
         super.onAttach(activity);
         if (activity instanceof DetailsChangedListener) {
             parentListener = (DetailsChangedListener) activity;
+        }
+        if (activity instanceof UploadImageListener) {
+            mUploadListener = (UploadImageListener) activity;
         }
     }
 
@@ -65,7 +73,7 @@ public class CarImageFragment extends CarAddBaseFragment {
 
     @OnClick(R.id.fl_addCarUploadImage)
     public void onUploadClicked() {
-
+        mUploadListener.onImageUpload();
     }
 
     public void setUserPhoto(Bitmap bmp) {

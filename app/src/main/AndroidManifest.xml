@@ -45,7 +45,7 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
-        <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
+        <activity android:name=".owner_car_add.view.NewFormsActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
