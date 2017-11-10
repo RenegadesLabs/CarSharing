@@ -60,7 +60,6 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
             } else {
                 callback.onError(new Error(Error.Type.INVALID_REQUEST, "Request body is not valid"));
             }
-
         }
     }
 
