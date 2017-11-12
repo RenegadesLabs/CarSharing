@@ -1,7 +1,7 @@
 package com.cardee.owner_car_add.presenter;
 
 
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.validator.NewCarDataValidator;
 import com.cardee.owner_car_add.view.CarAddContract;
 
@@ -15,7 +15,7 @@ public class CarAddPresenter extends NewCarPresenter {
     }
 
     @Override
-    public void onCarDataResponse(NewCar carData) {
+    public void onCarDataResponse(CarData carData) {
         if (view == null || carData == null) {
             return;
         }

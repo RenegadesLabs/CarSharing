@@ -2,7 +2,7 @@ package com.cardee.owner_car_add.validator;
 
 import android.support.annotation.NonNull;
 
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 
 public class NewCarDataValidator {
 
@@ -10,11 +10,11 @@ public class NewCarDataValidator {
 
     }
 
-    public boolean isTypeValid(@NonNull NewCar carData) {
+    public boolean isTypeValid(@NonNull CarData carData) {
         return carData.getVehicleType() != null;
     }
 
-    public boolean isInfoValid(@NonNull NewCar carData) {
+    public boolean isInfoValid(@NonNull CarData carData) {
         return carData.getMake() != null &&
                 carData.getModel() != null &&
                 carData.getManufactureYear() != null &&
@@ -26,11 +26,11 @@ public class NewCarDataValidator {
                 carData.getBodyType() != null;
     }
 
-    public boolean isImageValid(@NonNull NewCar carData) {
+    public boolean isImageValid(@NonNull CarData carData) {
         return carData.getImage() != null;
     }
 
-    public boolean isLocationValid(@NonNull NewCar carData) {
+    public boolean isLocationValid(@NonNull CarData carData) {
         return carData.getLatitude() != null &&
                 carData.getLongitude() != null &&
                 carData.getTown() != null &&
@@ -38,18 +38,18 @@ public class NewCarDataValidator {
                 carData.getHideExactLocation() != null;
     }
 
-    public boolean isContactsValid(@NonNull NewCar carData) {
+    public boolean isContactsValid(@NonNull CarData carData) {
         return carData.getContactName() != null &&
                 carData.getContactPhone() != null &&
                 carData.getContactEmail() != null;
     }
 
-    public boolean isPaymentValid(@NonNull NewCar carData) {
+    public boolean isPaymentValid(@NonNull CarData carData) {
 
         return false;
     }
 
-    public boolean isCarDataValid(@NonNull NewCar carData) {
+    public boolean isCarDataValid(@NonNull CarData carData) {
         return isTypeValid(carData) &&
                 isInfoValid(carData) &&
                 isImageValid(carData) &&

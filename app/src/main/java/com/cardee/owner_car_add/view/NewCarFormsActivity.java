@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.view.items.CarContactsFragment;
 import com.cardee.owner_car_add.view.items.CarImageFragment;
 import com.cardee.owner_car_add.view.items.CarInfoFragment;
@@ -99,7 +99,7 @@ public class NewCarFormsActivity extends AppCompatActivity
                 showFragment(CarImageFragment.newInstance());
                 break;
             case LOCATION:
-                showFragment(CarLocationFragment.newInstance());
+                showFragment(CarLocationFragment.newInstance(null));
                 break;
             case CONTACT:
                 showFragment(CarContactsFragment.newInstance());
@@ -236,7 +236,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
-    public void setCarData(NewCar carData) {
+    public void setCarData(CarData carData) {
 
     }
 

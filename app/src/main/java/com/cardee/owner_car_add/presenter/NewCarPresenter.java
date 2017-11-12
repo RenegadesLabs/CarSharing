@@ -5,7 +5,7 @@ import android.util.Log;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.usecase.GetSavedCar;
 import com.cardee.domain.owner.usecase.SaveCar;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
@@ -45,13 +45,13 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
     }
 
     @Override
-    public void onCarDataResponse(NewCar carData) {
+    public void onCarDataResponse(CarData carData) {
         if (carData != null && view != null) {
             view.setCarData(carData);
         }
     }
 
-    public void saveCar(NewCar carData, boolean completed) {
+    public void saveCar(CarData carData, boolean completed) {
         SaveCar.RequestValues values = new SaveCar.RequestValues(carData, completed);
         executor.execute(saveCarTask, values, new UseCase.Callback<SaveCar.ResponseValues>() {
             @Override

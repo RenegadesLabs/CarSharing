@@ -10,7 +10,6 @@ import com.cardee.mvp.BaseView;
 public interface CarDetailsEditContract {
 
     String VIEW_MODE = "_view_mode";
-
     String CAR_ID = "_owner_car_id";
     String CAR_LAT = "_owner_car_lat";
     String CAR_LNG = "_owner_car_lng";

@@ -1,6 +1,6 @@
 package com.cardee.domain.owner.entity;
 
-public class NewCar {
+public class CarData {
 
     private final Integer vehicleType;
     private final Boolean insuranceComprehensive; //Optional
@@ -27,30 +27,30 @@ public class NewCar {
     private final String contactPhone;
     private final String contactEmail;
 
-    private NewCar(Integer vehicleType,
-                   Boolean insuranceComprehensive,
-                   Boolean insuranceUnnamedDriver,
-                   Integer insuranceMinAge,
-                   Integer insuranceMinYearsDrivingExperience,
-                   String insuranceExpiredDate,
-                   String make,
-                   String model,
-                   Integer manufactureYear,
-                   String title,
-                   String licencePlateNumber,
-                   String seatingCapacity,
-                   String engineCapacity,
-                   Integer transmissionId,
-                   Integer bodyType,
-                   String image,
-                   Double latitude,
-                   Double longitude,
-                   String town,
-                   String address,
-                   Boolean hideExactLocation,
-                   String contactName,
-                   String contactPhone,
-                   String contactEmail) {
+    private CarData(Integer vehicleType,
+                    Boolean insuranceComprehensive,
+                    Boolean insuranceUnnamedDriver,
+                    Integer insuranceMinAge,
+                    Integer insuranceMinYearsDrivingExperience,
+                    String insuranceExpiredDate,
+                    String make,
+                    String model,
+                    Integer manufactureYear,
+                    String title,
+                    String licencePlateNumber,
+                    String seatingCapacity,
+                    String engineCapacity,
+                    Integer transmissionId,
+                    Integer bodyType,
+                    String image,
+                    Double latitude,
+                    Double longitude,
+                    String town,
+                    String address,
+                    Boolean hideExactLocation,
+                    String contactName,
+                    String contactPhone,
+                    String contactEmail) {
         this.vehicleType = vehicleType;
         this.insuranceComprehensive = insuranceComprehensive;
         this.insuranceUnnamedDriver = insuranceUnnamedDriver;
@@ -107,7 +107,7 @@ public class NewCar {
 
         }
 
-        private Builder(NewCar carData) {
+        private Builder(CarData carData) {
 
         }
 
@@ -231,8 +231,8 @@ public class NewCar {
             return this;
         }
 
-        public NewCar build() {
-            return new NewCar(this.vehicleType,
+        public CarData build() {
+            return new CarData(this.vehicleType,
                     this.insuranceComprehensive,
                     this.insuranceUnnamedDriver,
                     this.insuranceMinAge,

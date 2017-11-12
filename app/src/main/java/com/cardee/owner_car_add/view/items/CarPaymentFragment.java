@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.NewCar;
-import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.CarAddView;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -73,7 +71,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     }
 
     @Override
-    public void setCarData(NewCar carData) {
+    public void setCarData(CarData carData) {
 
     }
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
@@ -109,7 +109,7 @@ public class CarAddActivity extends AppCompatActivity
     }
 
     @Override
-    public void setCarData(NewCar carData) {
+    public void setCarData(CarData carData) {
         //No need to implement in current view
     }
 

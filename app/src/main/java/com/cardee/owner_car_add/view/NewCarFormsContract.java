@@ -3,7 +3,7 @@ package com.cardee.owner_car_add.view;
 import android.support.annotation.StringRes;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
 
@@ -38,7 +38,7 @@ public interface NewCarFormsContract {
 
     interface View extends BaseView {
 
-        void setCarData(NewCar carData);
+        void setCarData(CarData carData);
 
         void onFinish();
 
@@ -46,7 +46,7 @@ public interface NewCarFormsContract {
 
     interface Presenter extends BasePresenter {
 
-        void onCarDataResponse(NewCar carData);
+        void onCarDataResponse(CarData carData);
 
     }
 }

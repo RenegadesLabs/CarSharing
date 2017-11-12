@@ -51,23 +51,24 @@ public class CarDetailsEditActivity extends AppCompatActivity
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
         }
         mProgress = (ProgressBar) findViewById(R.id.details_progress);
+        int carId = getIntent().getIntExtra(CarDetailsEditContract.CAR_ID, -1);
         Serializable extra = getIntent().getSerializableExtra(CarDetailsEditContract.VIEW_MODE);
         if (extra != null) {
             CarDetailsEditContract.Mode mode = (CarDetailsEditContract.Mode) extra;
-            setContentOfMode(mode);
+            setContentOfMode(mode, carId == -1 ? null : carId);
             return;
         }
         Toast.makeText(this, "Mode is null", Toast.LENGTH_SHORT).show(); //PLUG
     }
 
-    private void setContentOfMode(CarDetailsEditContract.Mode mode) {
+    private void setContentOfMode(CarDetailsEditContract.Mode mode, Integer carId) {
         Bundle args = getIntent().getExtras();
         if (args == null) {
             return;
         }
         switch (mode) {
             case LOCATION:
-                showFragment(CarLocationFragment.newInstance());
+                showFragment(CarLocationFragment.newInstance(carId)); //add valid car ID
                 break;
             default:
                 Toast.makeText(this, "Mode is not supported yet", Toast.LENGTH_SHORT).show(); //PLUG
@@ -112,7 +113,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
 
     @Override
     public void onFinish(NewCarFormsContract.Mode mode) {
-        
+
     }
 
     @Override

@@ -33,7 +33,7 @@ public class RemoteOwnerCarDataSource implements OwnerCarDataSource {
     public void obtainCar(int id, Callback callback) {
         try {
             Response<CarResponse> response = mApi.getCar(id).execute();
-            if (response.isSuccessful() && response.body() != null) {
+            if (response.isSuccessful() && response.body() != null && response.body().getCarBody() != null) {
                 callback.onSuccess(response.body().getCarBody());
                 return;
             }

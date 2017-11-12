@@ -5,7 +5,7 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.NewCarDataSource;
 import com.cardee.data_source.NewCarRepository;
 import com.cardee.domain.UseCase;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.entity.mapper.NewCarDataMapper;
 
 public class SaveCar implements UseCase<SaveCar.RequestValues, SaveCar.ResponseValues> {
@@ -21,7 +21,7 @@ public class SaveCar implements UseCase<SaveCar.RequestValues, SaveCar.ResponseV
     @Override
     public void execute(SaveCar.RequestValues values, final Callback<SaveCar.ResponseValues> callback) {
         boolean readyToSubmit = values.isAllDone();
-        NewCar carData = values.getCarData();
+        CarData carData = values.getCarData();
         repository.saveCarData(mapper.transform(carData), readyToSubmit,
                 new NewCarDataSource.Callback() {
                     @Override
@@ -38,9 +38,9 @@ public class SaveCar implements UseCase<SaveCar.RequestValues, SaveCar.ResponseV
 
     public static class RequestValues implements UseCase.RequestValues {
         private final boolean allDone;
-        private final NewCar carData;
+        private final CarData carData;
 
-        public RequestValues(NewCar carData, boolean allDone) {
+        public RequestValues(CarData carData, boolean allDone) {
             this.carData = carData;
             this.allDone = allDone;
         }
@@ -49,7 +49,7 @@ public class SaveCar implements UseCase<SaveCar.RequestValues, SaveCar.ResponseV
             return allDone;
         }
 
-        public NewCar getCarData() {
+        public CarData getCarData() {
             return carData;
         }
     }

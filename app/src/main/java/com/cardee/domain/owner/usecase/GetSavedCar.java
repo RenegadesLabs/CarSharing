@@ -5,7 +5,7 @@ import com.cardee.data_source.NewCarDataSource;
 import com.cardee.data_source.NewCarRepository;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.domain.UseCase;
-import com.cardee.domain.owner.entity.NewCar;
+import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.entity.mapper.NewCarDataMapper;
 
 public class GetSavedCar implements UseCase<GetSavedCar.RequestValues, GetSavedCar.ResponseValues> {
@@ -39,13 +39,13 @@ public class GetSavedCar implements UseCase<GetSavedCar.RequestValues, GetSavedC
 
     public static class ResponseValues implements UseCase.ResponseValues {
 
-        private final NewCar carData;
+        private final CarData carData;
 
-        public ResponseValues(NewCar carData) {
+        public ResponseValues(CarData carData) {
             this.carData = carData;
         }
 
-        public NewCar getCarData() {
+        public CarData getCarData() {
             return carData;
         }
     }

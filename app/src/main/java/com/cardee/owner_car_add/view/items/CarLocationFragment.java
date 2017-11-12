@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
+import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.presenter.CarLocationPresenter;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
@@ -42,18 +45,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CarLocationFragment extends Fragment
         implements OnMapReadyCallback,
+        NewCarFormsContract.View,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
     private static final String TAG = CarLocationFragment.class.getSimpleName();
-
-    private static final String CAR_LAT = "_car_lat";
-    private static final String CAR_LNG = "_car_lng";
-
-    private Double currentLat;
-    private Double currentLng;
-    private LatLng defaultLocation = new LatLng(1.323174, 103.890894);
+    private static final String CAR_ID = "_car_id";
 
     private TextView carLocationAddress;
     private MapView mapView;
@@ -63,28 +61,31 @@ public class CarLocationFragment extends Fragment
     private Marker currentLocationMarker;
     private Address currentAddress;
 
+    private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            showCurrentLocationIfPermitted();
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
+            switch (action) {
+                case PUSH:
+                    presenter.saveLocation(currentAddress);
+                    break;
+                case UPDATE:
+                    showCurrentLocationIfPermitted();
+                    break;
+            }
         }
     };
     private AddressResultReceiver addressReceiver;
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    public static Fragment newInstance(double lat, double lng) {
+    public static Fragment newInstance(Integer carId) {
         Bundle args = new Bundle();
-        args.putDouble(CAR_LAT, lat);
-        args.putDouble(CAR_LNG, lng);
-        return newInstance(args);
-    }
-
-    public static Fragment newInstance() {
-        return newInstance(null);
-    }
-
-    private static Fragment newInstance(Bundle args) {
+        if (carId != null) {
+            args.putInt(CAR_ID, carId);
+        }
         CarLocationFragment fragment = new CarLocationFragment();
         fragment.setArguments(args);
         return fragment;
@@ -109,16 +110,14 @@ public class CarLocationFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
         apiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        if (args != null) {
-            currentLat = args.getDouble(CAR_LAT);
-            currentLng = args.getDouble(CAR_LNG);
-        }
+        Bundle args = getArguments();
+        Integer carId = args.containsKey(CAR_ID) ? args.getInt(CAR_ID) : null;
+        presenter = new CarLocationPresenter(this, carId);
         addressReceiver = new AddressResultReceiver(handler);
     }
 
@@ -140,14 +139,7 @@ public class CarLocationFragment extends Fragment
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
         parentListener.showProgress(false);
-        if (currentLat == null || currentLng == null) {
-            moveMapToLocation(defaultLocation);
-            fetchLocationAddress(defaultLocation);
-        } else {
-            LatLng location = new LatLng(currentLat, currentLng);
-            moveMapToLocation(location);
-            fetchLocationAddress(location);
-        }
+        presenter.init();
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -254,6 +246,35 @@ public class CarLocationFragment extends Fragment
             case R.id.btn_my_location:
                 showCurrentLocationIfPermitted();
                 break;
+        }
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        parentListener.showProgress(show);
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(@StringRes int messageId) {
+
+    }
+
+    @Override
+    public void setCarData(CarData carData) {
+        LatLng location = new LatLng(carData.getLatitude(), carData.getLongitude());
+        moveMapToLocation(location);
+        fetchLocationAddress(location);
+    }
+
+    @Override
+    public void onFinish() {
+        if (parentListener != null) {
+            parentListener.onFinish(NewCarFormsContract.Mode.LOCATION);
         }
     }
 
