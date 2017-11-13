@@ -10,7 +10,9 @@ import com.cardee.mvp.BaseView;
 
 import java.io.File;
 
-public interface NewCarFormsContract {
+public interface NewCarContract {
+
+    int CAR_CREATED = 102;
 
     String VIEW_MODE = "_view_mode";
     String ACTION = "_child_action";

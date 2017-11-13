@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -51,17 +51,17 @@ public class CarDetailsEditActivity extends AppCompatActivity
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
         }
         mProgress = (ProgressBar) findViewById(R.id.details_progress);
-        int carId = getIntent().getIntExtra(NewCarFormsContract.CAR_ID, -1);
-        Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
+        int carId = getIntent().getIntExtra(NewCarContract.CAR_ID, -1);
+        Serializable extra = getIntent().getSerializableExtra(NewCarContract.VIEW_MODE);
         if (extra != null) {
-            NewCarFormsContract.Mode mode = (NewCarFormsContract.Mode) extra;
+            NewCarContract.Mode mode = (NewCarContract.Mode) extra;
             setContentOfMode(mode, carId == -1 ? null : carId);
             return;
         }
         Toast.makeText(this, "Mode is null", Toast.LENGTH_SHORT).show(); //PLUG
     }
 
-    private void setContentOfMode(NewCarFormsContract.Mode mode, Integer carId) {
+    private void setContentOfMode(NewCarContract.Mode mode, Integer carId) {
         Bundle args = getIntent().getExtras();
         if (args == null) {
             return;
@@ -93,7 +93,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onModeDisplayed(NewCarFormsContract.Mode mode) {
+    public void onModeDisplayed(NewCarContract.Mode mode) {
         mTitleView.setText(mode.getTitleId());
     }
 
@@ -112,7 +112,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
+    public void onFinish(NewCarContract.Mode mode, NewCarContract.Action action) {
 
     }
 

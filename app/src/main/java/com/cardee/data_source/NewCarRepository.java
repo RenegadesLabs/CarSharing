@@ -70,6 +70,7 @@ public class NewCarRepository implements NewCarDataSource {
             public void onSuccess(Integer newCarId) {
                 localDataSource.saveCarData(null, true, null);
                 clearCache();
+                OwnerCarsRepository.getInstance().refreshCars();
                 callback.onSuccess(newCarId);
             }
 

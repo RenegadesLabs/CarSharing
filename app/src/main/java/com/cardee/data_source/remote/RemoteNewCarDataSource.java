@@ -13,10 +13,16 @@ import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
 import com.cardee.data_source.remote.validator.NewCarValidator;
 
+import java.io.File;
 import java.io.IOException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class RemoteNewCarDataSource implements NewCarDataSource {
 
@@ -50,7 +56,8 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
                 try {
                     Response<CreateCarResponse> response = request.execute();
                     if (response.isSuccessful() && response.body() != null) {
-                        callback.onSuccess(response.body().getResponseBody().getCarId());
+                        Integer carId = response.body().getResponseBody().getCarId();
+                        uploadCarImage(carData.getImage(), carId, callback);
                         return;
                     }
                     handleErrorResponse(response.body(), callback);
@@ -62,6 +69,27 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
                 callback.onError(new Error(Error.Type.INVALID_REQUEST, "Request body is not valid"));
             }
         }
+    }
+
+    private void uploadCarImage(String path, Integer carId, Callback callback) {
+        if (path == null || carId == null) {
+            callback.onSuccess(carId);
+            return;
+        }
+        File imageFile = new File(path);
+        if (imageFile.exists()) {
+            MultipartBody.Part part = MultipartBody.Part.createFormData("picture",
+                    imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
+            try {
+                Response<BaseResponse> response = api.uploadImage(carId, part).execute();
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Image was not uploaded");
+                }
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+        callback.onSuccess(carId);
     }
 
     @Override

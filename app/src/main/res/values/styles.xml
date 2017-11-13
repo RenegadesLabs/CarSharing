@@ -97,6 +97,10 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="Dialog" parent="AlertDialog.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="ModalMenuItem">
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">@dimen/widget_padding_mid</item>

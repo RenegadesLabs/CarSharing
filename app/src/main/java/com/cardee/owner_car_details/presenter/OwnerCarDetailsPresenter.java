@@ -9,9 +9,8 @@ import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetCar;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
-import com.cardee.owner_car_details.view.CarDetailsEditContract;
 
 import io.reactivex.functions.Consumer;
 
@@ -76,7 +75,7 @@ public class OwnerCarDetailsPresenter
     @Override
     public void accept(OwnerCarDetailsContract.CarDetailEvent event) throws Exception {
         Bundle args = new Bundle();
-        args.putInt(NewCarFormsContract.CAR_ID, mCarId);
+        args.putInt(NewCarContract.CAR_ID, mCarId);
         switch (event.getAction()) {
             case EDIT_IMAGES:
                 mView.moveToImages(null);
@@ -85,7 +84,7 @@ public class OwnerCarDetailsPresenter
                 mView.moveToSpecs(null);
                 break;
             case EDIT_LOCATION:
-                args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
+                args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.LOCATION);
                 mView.moveToLocation(args);
                 break;
             case EDIT_DESCRIPTION:

@@ -7,15 +7,15 @@ import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.SaveCarImage;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 
 public class CarImagePresenter extends NewCarPresenter {
 
     private final SaveCarImage saveImgCase;
     private final UseCaseExecutor executor;
-    private NewCarFormsContract.View view;
+    private NewCarContract.View view;
 
-    public CarImagePresenter(NewCarFormsContract.View view) {
+    public CarImagePresenter(NewCarContract.View view) {
         super(view);
         this.view = view;
         saveImgCase = new SaveCarImage();
