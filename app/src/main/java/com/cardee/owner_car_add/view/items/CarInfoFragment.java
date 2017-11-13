@@ -49,8 +49,6 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     @BindView(R.id.et_addCarInfoBody)
     public AppCompatEditText bodyTypeInput;
 
-    private AppCompatCheckedTextView mLastSelectedBodyType;
-
     private NewCarFormsContract.Action pendingAction;
     private DetailsChangedListener parentListener;
     private CarInfoPresenter presenter;

@@ -71,7 +71,6 @@ public class NewCarRepository implements NewCarDataSource {
                 localDataSource.saveCarData(null, true, null);
                 clearCache();
                 callback.onSuccess(newCarId);
-
             }
 
             @Override
@@ -82,9 +81,20 @@ public class NewCarRepository implements NewCarDataSource {
     }
 
     @Override
-    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+    public void saveCarImage(Uri imgUri, boolean forcePush, final ImageCacheCallback callback) {
         if (!forcePush) {
-            localDataSource.saveCarImage(imgUri, false, callback);
+            localDataSource.saveCarImage(imgUri, false, new ImageCacheCallback() {
+                @Override
+                public void onSuccess() {
+                    clearCache();
+                    callback.onSuccess();
+                }
+
+                @Override
+                public void onError(Error error) {
+                    callback.onError(error);
+                }
+            });
         }
 
     }

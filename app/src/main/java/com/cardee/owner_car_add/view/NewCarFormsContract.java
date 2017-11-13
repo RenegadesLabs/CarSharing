@@ -15,6 +15,7 @@ public interface NewCarFormsContract {
     String VIEW_MODE = "_view_mode";
     String ACTION = "_child_action";
     String CAR_ID = "_car_id";
+    String URI = "_data_uri";
 
     enum Transmission {
         AUTO(1, "Automatic"), MANUAL(2, "Manual");

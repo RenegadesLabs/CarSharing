@@ -56,8 +56,6 @@ public class NewCarFormsActivity extends AppCompatActivity
     private SimpleBinder childBinder;
     private NewCarFormsContract.Mode currentMode;
 
-    private CarImageFragment mCarImageFragment;
-
     private boolean isInRootMode = true;
 
     @Override
@@ -106,8 +104,7 @@ public class NewCarFormsActivity extends AppCompatActivity
                 showFragment(CarInfoFragment.newInstance());
                 break;
             case IMAGE:
-                mCarImageFragment = (CarImageFragment) CarImageFragment.newInstance();
-                showFragment(mCarImageFragment);
+                showFragment(CarImageFragment.newInstance());
                 break;
             case LOCATION:
                 showFragment(CarLocationFragment.newInstance(null));
@@ -248,10 +245,12 @@ public class NewCarFormsActivity extends AppCompatActivity
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case ActivityHelper.PICK_IMAGE:
-                    if (data == null)
+                    if (data != null && childBinder != null) {
+                        Bundle args = new Bundle();
+                        args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
+                        args.putParcelable(NewCarFormsContract.URI, data.getData());
+                        childBinder.push(args);
                         return;
-                    if (mCarImageFragment != null && mCarImageFragment.isVisible()) {
-                        mCarImageFragment.setUserPhoto(data.getData());
                     }
                     break;
             }

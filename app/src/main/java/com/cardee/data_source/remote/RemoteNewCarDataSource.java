@@ -65,7 +65,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
     }
 
     @Override
-    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+    public void saveCarImage(Uri imgUri, boolean forcePush, ImageCacheCallback callback) {
 
     }
 
