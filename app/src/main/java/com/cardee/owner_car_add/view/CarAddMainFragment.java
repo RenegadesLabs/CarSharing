@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
-public class CarAddMainFragment extends Fragment implements CarAddActivity.CarInfoPassCallback {
+public class CarAddMainFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
@@ -95,11 +95,6 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
             addCarItem2TV.setText(mValueItem2);
             addCarItem2IV.setImageResource(R.drawable.ic_check_circle);
         }
-
-    }
-
-    public CarAddActivity.CarInfoPassCallback getListener() {
-        return this;
     }
 
     public void setViewListener(CarAddView viewListener) {
@@ -142,7 +137,4 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
         super.onDestroyView();
         mUnbinder.unbind();
     }
-
-    @Override
-    public void onPassData(Bundle b) {}
 }

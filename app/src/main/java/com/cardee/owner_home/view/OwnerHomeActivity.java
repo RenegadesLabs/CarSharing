@@ -20,7 +20,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_car_add.view.CarAddActivity;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
@@ -152,7 +154,10 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     public void onLocationPickerClick(Car car) {
-
+        Intent intent = new Intent(this, CarDetailsEditActivity.class);
+        intent.putExtra(NewCarFormsContract.CAR_ID, car.getCarId());
+        intent.putExtra(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
+        startActivity(intent);
     }
 
     @Override
