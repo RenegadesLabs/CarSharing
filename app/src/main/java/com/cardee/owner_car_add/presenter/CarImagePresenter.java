@@ -50,7 +50,7 @@ public class CarImagePresenter implements NewCarFormsContract.Presenter {
         });
     }
 
-    public File getCarImageFromCache() {
+    private File getCarImageFromCache() {
         File f = new File(context.getCacheDir(), CAR_PIC_FILE);
         return f.exists() ? f : null;
     }
