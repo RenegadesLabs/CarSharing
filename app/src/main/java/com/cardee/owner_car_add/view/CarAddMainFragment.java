@@ -3,7 +3,6 @@ package com.cardee.owner_car_add.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddItemFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,33 +106,33 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
         mView = viewListener;
     }
 
-    @OnClick(R.id.add_item1)
+    @OnClick(R.id.add_type)
     public void onItem1Clicked() {
 
     }
 
-    @OnClick(R.id.add_item2)
+    @OnClick(R.id.add_info)
     public void onItem2Clicked() {
 
     }
 
-    @OnClick(R.id.add_item3)
+    @OnClick(R.id.add_image)
     public void onItem3Clicked() {
 
 
     }
 
-    @OnClick(R.id.add_item4)
+    @OnClick(R.id.add_location)
     public void onItem4Clicked() {
 
     }
 
-    @OnClick(R.id.add_item5)
+    @OnClick(R.id.add_contact)
     public void onItem5Clicked() {
 
     }
 
-    @OnClick(R.id.add_item6)
+    @OnClick(R.id.add_payment)
     public void onItem6Clicked() {
 
     }
@@ -146,21 +144,5 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
     }
 
     @Override
-    public void onPassData(Bundle b) {
-        switch (b.getInt(CarAddItemFragment.FRAGMENT_NUMBER)) {
-            case 0:
-                mValueItem1 = b.getString(CarAddItemFragment.FRAGMENT_VALUE);
-//                addCarItem1TV.setText(mValueItem1);
-//                addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
-                isFilled1 = true;
-                break;
-            case 1:
-                mValueItem2 = "Edit";
-//                addCarItem2TV.setText(mValueItem2);
-//                addCarItem2IV.setImageResource(R.drawable.ic_check_circle);
-                isFilled2 = true;
-                break;
-
-        }
-    }
+    public void onPassData(Bundle b) {}
 }

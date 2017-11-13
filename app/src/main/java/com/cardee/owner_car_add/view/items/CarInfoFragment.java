@@ -108,9 +108,8 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_item2, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_car_info, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-//        ((CarAddActivity) getActivity()).setActionListener(this);
         return v;
     }
 
@@ -248,11 +247,6 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     }
 
 
-    //    @Override
-    public void onSaveClicked() {
-        saveArguments(new Bundle(), false);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -267,49 +261,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         return editText.getText().toString();
     }
 
-    void saveArguments(Bundle b, boolean onNext) {
 
-        String make = getFieldContent(addCarInfoMakeET);
-        String model = getFieldContent(addCarInfoModelET);
-        String year = getFieldContent(addCarInfoYearET);
-        String title = getFieldContent(addCarInfoTitleET);
-        String license = getFieldContent(addCarInfoLicenseET);
-        String seats = getFieldContent(addCarInfoSeatsET);
-        String engine = getFieldContent(addCarInfoEngineET);
-        String transmission = getFieldContent(addCarInfoTransmissionET);
-        String body = getFieldContent(addCarInfoBodyET);
-
-        if (make == null || model == null
-                || year == null || title == null
-                || license == null || seats == null
-                || engine == null || transmission == null
-                || body == null) {
-            return;
-        }
-
-        b.putInt(CarAddItemFragment.FRAGMENT_NUMBER, 1);
-        b.putString(CAR_INFO_MAKE, make);
-        b.putString(CAR_INFO_MODEL, model);
-        b.putString(CAR_INFO_YEAR, year);
-        b.putString(CAR_INFO_TITLE, title);
-        b.putString(CAR_INFO_LICENSE_NUMBER, license);
-        b.putString(CAR_INFO_SEATS, seats);
-        b.putString(CAR_INFO_ENGINE, engine);
-        b.putString(CAR_INFO_TRANSMISSION, transmission);
-        b.putString(CAR_INFO_BODY, body);
-//        getArguments().putAll(b);
-        if (mPassDataCallback == null)
-            return;
-        mPassDataCallback.onPassData(b);
-
-        if (onNext) {
-            if (mView == null)
-                return;
-//            mView.onItem3();
-            return;
-        }
-        getActivity().onBackPressed();
-    }
 
     @Override
     public void onStart() {

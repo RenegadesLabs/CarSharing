@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <!--<TextView-->
+        <!--android:id="@+id/more_menu_title"-->
+        <!--style="@style/ModalMenuTitle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/modal_menu_title_height"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:text="@string/car_availability_title"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/more_view_listing"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <TextView
+        android:id="@+id/more_view_listing"
+        style="@style/ModalMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_item_height"
+        android:gravity="center"
+        android:background="@drawable/bg_modal_menu_top"
+        android:text="@string/car_details_more_listing"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintBottom_toTopOf="@+id/availability_days_of_week"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ImageView-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_marginEnd="@dimen/widget_margin_x_small"-->
+        <!--app:layout_constraintBottom_toBottomOf="@id/more_view_listing"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/more_view_listing"-->
+        <!--app:layout_constraintTop_toTopOf="@id/more_view_listing"-->
+        <!--app:srcCompat="@drawable/ic_arrow_right" />-->
+
+
+    <TextView
+        android:id="@+id/more_delete"
+        style="@style/ModalMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_item_height"
+        android:gravity="center"
+        android:background="@drawable/bg_modal_menu_bottom"
+        android:textSize="@dimen/text_large"
+        android:textColor="@color/red_error"
+        android:text="@string/car_details_more_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/more_view_listing" />
+
+    <!--<ImageView-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_marginEnd="@dimen/widget_margin_x_small"-->
+        <!--app:layout_constraintBottom_toBottomOf="@id/availability_days_of_week"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/availability_days_of_week"-->
+        <!--app:layout_constraintTop_toTopOf="@id/availability_days_of_week"-->
+        <!--app:srcCompat="@drawable/ic_arrow_right" />-->
+
+</android.support.constraint.ConstraintLayout>

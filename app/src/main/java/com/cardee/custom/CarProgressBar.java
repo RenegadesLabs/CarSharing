@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -76,7 +77,8 @@ public class CarProgressBar extends View {
         int lineColor = typedArray.getColor(R.styleable.CarProgressBar_LineColor, Color.WHITE);
         typedArray.recycle();
 
-        mIcon = getBitmapFromVectorDrawable(iconId, context);
+//        mIcon = getBitmapFromVectorDrawable(iconId, context);
+        mIcon = getBitmapFromDrawable(iconId, context);
         mIconPaint = new Paint();
         mIconPaint.setAntiAlias(true);
 
@@ -102,6 +104,10 @@ public class CarProgressBar extends View {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    private Bitmap getBitmapFromDrawable(@DrawableRes int drawableId, Context context) {
+        return BitmapFactory.decodeResource(context.getResources(), drawableId);
     }
 
     @Override
