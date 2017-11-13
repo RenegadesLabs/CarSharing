@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarTypePresenter;
+import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -103,9 +104,9 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_car_item1, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+        View v = inflater.inflate(R.layout.fragment_add_car_vehicle_type, container, false);
+        mUnbinder = ButterKnife.bind(this, v);
+        return v;
     }
 
     @OnClick(R.id.fl_vehiclePersonal)

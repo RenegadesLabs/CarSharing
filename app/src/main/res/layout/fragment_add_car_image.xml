@@ -41,9 +41,11 @@
         android:layout_height="94dp"
         android:layout_marginTop="@dimen/medium_margin"
         android:background="@drawable/bg_dash_rect"
+        android:clickable="true"
         android:layout_marginStart="@dimen/small_margin"
         app:layout_constraintStart_toEndOf="@+id/iv_addCarImage"
-        app:layout_constraintTop_toBottomOf="@+id/car_image_desc">
+        app:layout_constraintTop_toBottomOf="@+id/car_image_desc"
+        android:focusable="true">
 
         <TextView
             android:layout_width="wrap_content"

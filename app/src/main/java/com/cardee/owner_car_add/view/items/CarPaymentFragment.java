@@ -15,8 +15,12 @@ import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CarPaymentFragment extends Fragment implements NewCarFormsContract.View {
+
+    private Unbinder mUnbinder;
 
     private DetailsChangedListener parentListener;
     private NewCarFormsContract.Action pendingAction;
@@ -45,8 +49,8 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_item, container, false);
-
+        View v = inflater.inflate(R.layout.fragment_add_car_payment, container, false);
+        mUnbinder = ButterKnife.bind(this, v);
         return v;
     }
 
@@ -79,5 +83,11 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     @Override
     public void onFinish() {
         parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT, pendingAction);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }
