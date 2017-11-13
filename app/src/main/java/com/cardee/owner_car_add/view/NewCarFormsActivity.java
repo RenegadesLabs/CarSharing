@@ -36,7 +36,7 @@ import com.cardee.util.display.ActivityHelper;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class NewFormsActivity extends AppCompatActivity
+public class NewCarFormsActivity extends AppCompatActivity
         implements NewCarFormsContract.View,
         DetailsChangedListener,
         View.OnClickListener,

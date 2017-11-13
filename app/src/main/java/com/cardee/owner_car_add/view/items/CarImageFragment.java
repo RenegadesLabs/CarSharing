@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.presenter.CarImagePresenter;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -34,7 +35,7 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     private Unbinder mUnbinder;
 
-    private CarPresenterImpl mPresenter;
+    private CarImagePresenter mPresenter;
 
     @BindView(R.id.iv_addCarImage)
     public ImageView addCarImage;
@@ -71,7 +72,7 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_image, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        mPresenter = new CarPresenterImpl(getActivity());
+        mPresenter = new CarImagePresenter(this, getActivity());
         return v;
     }
 

@@ -49,10 +49,6 @@ public interface NewCarFormsContract {
 
     interface Presenter extends BasePresenter {
 
-        void saveCarImageToCache(Bitmap bitmap);
-
-        File getCarImageFromCache();
-
         void onCarDataResponse(CarData carData);
     }
 }
