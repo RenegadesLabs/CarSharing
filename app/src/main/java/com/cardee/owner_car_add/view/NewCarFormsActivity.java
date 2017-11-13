@@ -71,6 +71,7 @@ public class NewCarFormsActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             titleView = toolbar.findViewById(R.id.toolbar_title);
             btnSave = toolbar.findViewById(R.id.toolbar_action);
+            btnSave.setOnClickListener(this);
         }
         btnToNext = findViewById(R.id.btn_to_next);
         btnAllDone = findViewById(R.id.btn_all_done);
@@ -158,10 +159,18 @@ public class NewCarFormsActivity extends AppCompatActivity
             case R.id.btn_to_next:
                 if (childBinder != null) {
                     Bundle args = new Bundle();
-                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.PUSH);
+                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.FINISH);
+                    childBinder.push(args);
                 }
                 break;
             case R.id.btn_all_done:
+                break;
+            case R.id.toolbar_action:
+                if (childBinder != null) {
+                    Bundle args = new Bundle();
+                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.SAVE);
+                    childBinder.push(args);
+                }
                 break;
         }
     }
@@ -200,13 +209,20 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarFormsContract.Mode mode) {
-        if (currentMode != mode) {
+    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
+        if (currentMode != mode || action == null) {
             throw new IllegalArgumentException("Mode mismatch: " + currentMode + " vs " + mode);
         }
-        NewCarFormsContract.Mode nextMode = getNextToMode(mode);
-        if (nextMode != null) {
-            setContentOfMode(nextMode);
+        switch (action) {
+            case SAVE:
+                finish();
+                break;
+            case FINISH:
+                NewCarFormsContract.Mode nextMode = getNextToMode(mode);
+                if (nextMode != null) {
+                    setContentOfMode(nextMode);
+                }
+                break;
         }
     }
 
@@ -268,7 +284,7 @@ public class NewCarFormsActivity extends AppCompatActivity
 
     @Override
     public void onFinish() {
-
+        finish();
     }
 
     @Override

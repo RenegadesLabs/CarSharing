@@ -60,6 +60,7 @@
             android:digits="+1234567890"
             android:hint="@string/cad_add_contact_country"
             android:inputType="phone"
+            android:text="+65"
             android:maxLength="4"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_regular" />

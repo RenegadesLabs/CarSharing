@@ -29,7 +29,7 @@ public class CarTypePresenter extends NewCarPresenter {
             builder = carData.newBuilder();
         }
         builder.setVehicleType(type);
-        super.saveCar(carData, false);
+        super.saveCar(builder.build(), false);
     }
 
     @Override

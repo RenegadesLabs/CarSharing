@@ -20,7 +20,7 @@ public class BodyMenuFragment extends BottomSheetDialogFragment implements View.
     AppCompatCheckedTextView mSelected;
 
     public interface MenuListeners {
-        void onDoneClicked(AppCompatCheckedTextView selected, CharSequence value);
+        void onDoneClicked(AppCompatCheckedTextView selected, CharSequence value, Integer id);
         void onConvertibleClicked();
     }
 
@@ -105,7 +105,7 @@ public class BodyMenuFragment extends BottomSheetDialogFragment implements View.
                     return;
                 }
                 dismiss();
-                mListener.onDoneClicked(getSelected(), getSelectedValue());
+                mListener.onDoneClicked(getSelected(), getSelectedValue(), 1); //TODO: implement valid BodyType ID
             }
         });
 

@@ -31,6 +31,7 @@ import butterknife.Unbinder;
 public class CarImageFragment extends Fragment implements NewCarFormsContract.View {
 
     private DetailsChangedListener parentListener;
+    private NewCarFormsContract.Action pendingAction;
 
     private UploadImageListener mUploadListener;
 
@@ -127,6 +128,6 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.IMAGE);
+        parentListener.onFinish(NewCarFormsContract.Mode.IMAGE, pendingAction);
     }
 }

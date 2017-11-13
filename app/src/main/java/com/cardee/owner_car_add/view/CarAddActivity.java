@@ -9,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.presenter.CarAddPresenter;
 import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
@@ -22,7 +24,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class CarAddActivity extends AppCompatActivity
-        implements CarAddView, View.OnClickListener, CarAddContract.View {
+        implements View.OnClickListener, CarAddContract.View {
 
     private Unbinder unbinder;
 
@@ -64,19 +66,17 @@ public class CarAddActivity extends AppCompatActivity
     @BindView(R.id.iv_addCarItem6)
     public AppCompatImageView paymentCompletedIconView;
 
-    private NewCarPresenter presenter;
+    private CarAddPresenter presenter;
     private Toast currentToast;
-
-    public interface CarInfoPassCallback {
-        void onPassData(Bundle b);
-    }
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_add);
         unbinder = ButterKnife.bind(this);
-        presenter = new NewCarPresenter(this);
+        presenter = new CarAddPresenter(this);
+        progressBar = (ProgressBar) findViewById(R.id.add_car_progress);
         initToolbar();
     }
 
@@ -121,31 +121,37 @@ public class CarAddActivity extends AppCompatActivity
     @Override
     public void setTypeCompleted(boolean completed) {
         setCompletedIconIfNeed(typeCompletedIconView, completed);
+        typeValueView.setText(completed ? "Edit" : "Add");
     }
 
     @Override
     public void setInfoCompleted(boolean completed) {
         setCompletedIconIfNeed(infoCompletedIconView, completed);
+        infoValueView.setText(completed ? "Edit" : "Add");
     }
 
     @Override
     public void setImageCompleted(boolean completed) {
         setCompletedIconIfNeed(imageCompletedIconView, completed);
+        imageValueView.setText(completed ? "Edit" : "Add");
     }
 
     @Override
     public void setLocationCompleted(boolean completed) {
         setCompletedIconIfNeed(locationCompletedIconView, completed);
+        locationValueView.setText(completed ? "Edit" : "Add");
     }
 
     @Override
     public void setContactsCompleted(boolean completed) {
         setCompletedIconIfNeed(contactsCompletedIconView, completed);
+        contactsValueView.setText(completed ? "Edit" : "Add");
     }
 
     @Override
     public void setPaymentCompleted(boolean completed) {
         setCompletedIconIfNeed(paymentCompletedIconView, completed);
+        paymentValueView.setText(completed ? "Edit" : "Add");
     }
 
     private void setCompletedIconIfNeed(ImageView view, boolean completed) {
@@ -206,6 +212,11 @@ public class CarAddActivity extends AppCompatActivity
         openNewCarEditActivity(args);
     }
 
+    @OnClick(R.id.btn_submit)
+    public void onSubmitClicked() {
+        presenter.createCar();
+    }
+
     private void openNewCarEditActivity(Bundle args) {
         Intent intent = new Intent(this, NewCarFormsActivity.class);
         intent.putExtras(args);
@@ -221,13 +232,8 @@ public class CarAddActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSubmit() {
-
-    }
-
-    @Override
     public void showProgress(boolean show) {
-
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override

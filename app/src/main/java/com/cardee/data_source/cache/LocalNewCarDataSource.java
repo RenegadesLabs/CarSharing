@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -141,8 +142,10 @@ public class LocalNewCarDataSource implements NewCarDataSource {
         Gson gson = new Gson();
         String json = gson.toJson(data);
         try {
-            FileWriter writer = new FileWriter(file, false);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
             writer.write(json);
+            writer.flush();
+            writer.close();
             return true;
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
@@ -166,7 +169,7 @@ public class LocalNewCarDataSource implements NewCarDataSource {
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
-        return null;
+        return new NewCarData();
     }
 
     private void clearCache() {

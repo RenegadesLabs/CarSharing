@@ -51,17 +51,17 @@ public class CarDetailsEditActivity extends AppCompatActivity
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
         }
         mProgress = (ProgressBar) findViewById(R.id.details_progress);
-        int carId = getIntent().getIntExtra(CarDetailsEditContract.CAR_ID, -1);
-        Serializable extra = getIntent().getSerializableExtra(CarDetailsEditContract.VIEW_MODE);
+        int carId = getIntent().getIntExtra(NewCarFormsContract.CAR_ID, -1);
+        Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
         if (extra != null) {
-            CarDetailsEditContract.Mode mode = (CarDetailsEditContract.Mode) extra;
+            NewCarFormsContract.Mode mode = (NewCarFormsContract.Mode) extra;
             setContentOfMode(mode, carId == -1 ? null : carId);
             return;
         }
         Toast.makeText(this, "Mode is null", Toast.LENGTH_SHORT).show(); //PLUG
     }
 
-    private void setContentOfMode(CarDetailsEditContract.Mode mode, Integer carId) {
+    private void setContentOfMode(NewCarFormsContract.Mode mode, Integer carId) {
         Bundle args = getIntent().getExtras();
         if (args == null) {
             return;
@@ -112,7 +112,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarFormsContract.Mode mode) {
+    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
 
     }
 

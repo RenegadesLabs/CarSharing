@@ -11,7 +11,7 @@ public interface DetailsChangedListener {
 
     void onNeedPermission(String... permissions);
 
-    void onFinish(NewCarFormsContract.Mode mode);
+    void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action);
 
     void showProgress(boolean show);
 

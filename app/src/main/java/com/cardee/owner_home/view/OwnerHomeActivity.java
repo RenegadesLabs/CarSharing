@@ -1,13 +1,5 @@
 package com.cardee.owner_home.view;
 
-import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
-import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_details.OwnerCarDetailsContract;
-import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
-import com.cardee.owner_home.view.helper.BottomNavigationHelper;
-import com.cardee.owner_home.view.listener.CarListItemEventListener;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,12 +12,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.cardee.R;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_car_add.view.CarAddActivity;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.CarDetailsEditActivity;
+import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
+import com.cardee.owner_home.view.helper.BottomNavigationHelper;
+import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
 
@@ -46,7 +46,6 @@ public class OwnerHomeActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_home);
-
         if (getSupportActionBar() == null) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -155,7 +154,10 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     public void onLocationPickerClick(Car car) {
-
+        Intent intent = new Intent(this, CarDetailsEditActivity.class);
+        intent.putExtra(NewCarFormsContract.CAR_ID, car.getCarId());
+        intent.putExtra(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
+        startActivity(intent);
     }
 
     @Override

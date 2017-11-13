@@ -14,11 +14,10 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.CarAddView;
+import com.cardee.owner_car_add.presenter.CarInfoPresenter;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
-import com.cardee.owner_home.view.modal.BodyMenuFragment;
 import com.cardee.owner_home.view.modal.PickerMenuFragment;
 
 import butterknife.BindView;
@@ -27,62 +26,53 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarInfoFragment extends Fragment implements NewCarFormsContract.View{
+public class CarInfoFragment extends Fragment implements NewCarFormsContract.View {
 
     private Unbinder mUnbinder;
 
-    public final static String CAR_INFO_MAKE = "car_make";
-
-    public final static String CAR_INFO_MODEL = "car_model";
-
-    public final static String CAR_INFO_YEAR = "car_year";
-
-    public final static String CAR_INFO_TITLE = "car_title";
-
-    public final static String CAR_INFO_LICENSE_NUMBER = "car_license_number";
-
-    public final static String CAR_INFO_SEATS = "car_seats";
-
-    public final static String CAR_INFO_ENGINE = "car_engine";
-
-    public final static String CAR_INFO_TRANSMISSION = "car_transmission";
-
-    public final static String CAR_INFO_BODY = "car_body";
-
     @BindView(R.id.et_addCarInfoMake)
-    public AppCompatEditText addCarInfoMakeET;
-
+    public AppCompatEditText makeInput;
     @BindView(R.id.et_addCarInfoModel)
-    public AppCompatEditText addCarInfoModelET;
-
+    public AppCompatEditText modelInput;
     @BindView(R.id.et_addCarInfoYear)
-    public AppCompatEditText addCarInfoYearET;
-
+    public AppCompatEditText yearInput;
     @BindView(R.id.et_addCarInfoCarTitle)
-    public AppCompatEditText addCarInfoTitleET;
-
+    public AppCompatEditText titleInput;
     @BindView(R.id.et_addCarInfoLicense)
-    public AppCompatEditText addCarInfoLicenseET;
-
+    public AppCompatEditText licenceNumberInput;
     @BindView(R.id.et_addCarInfoSeating)
-    public AppCompatEditText addCarInfoSeatsET;
-
+    public AppCompatEditText seatingCapacityInput;
     @BindView(R.id.et_addCarInfoEngine)
-    public AppCompatEditText addCarInfoEngineET;
-
+    public AppCompatEditText engineCapacityInput;
     @BindView(R.id.et_addCarInfoTransmission)
-    public AppCompatEditText addCarInfoTransmissionET;
-
+    public AppCompatEditText transmissionInput;
     @BindView(R.id.et_addCarInfoBody)
-    public AppCompatEditText addCarInfoBodyET;
+    public AppCompatEditText bodyTypeInput;
 
     private AppCompatCheckedTextView mLastSelectedBodyType;
 
-    private CarAddView mView;
-
-    private CarAddActivity.CarInfoPassCallback mPassDataCallback;
-
+    private NewCarFormsContract.Action pendingAction;
     private DetailsChangedListener parentListener;
+    private CarInfoPresenter presenter;
+    private SimpleBinder binder = new SimpleBinder() {
+        @Override
+        public void push(Bundle args) {
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
+            if (action == null) {
+                return;
+            }
+            pendingAction = action;
+            switch (action) {
+                case SAVE:
+                    onSave(false);
+                    break;
+                case FINISH:
+                    onSave(true);
+                    break;
+            }
+        }
+    };
 
     public static Fragment newInstance() {
         Fragment fragment = new CarInfoFragment();
@@ -108,144 +98,140 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_car_info, container, false);
-        mUnbinder = ButterKnife.bind(this, v);
-        return v;
+        View rootView = inflater.inflate(R.layout.fragment_add_car_info, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        presenter = new CarInfoPresenter(this);
+        presenter.init();
+        return rootView;
     }
 
     @OnTextChanged(R.id.et_addCarInfoModel)
     public void onModelInputChanged(CharSequence text) {
-        if (addCarInfoModelET.getError() == null)
-            return;
-        addCarInfoModelET.setError(null);
+        if (modelInput.getError() != null) {
+            modelInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoMake)
     public void onMakeInputChanged(CharSequence text) {
-        if (addCarInfoMakeET.getError() == null)
-            return;
-        addCarInfoMakeET.setError(null);
+        if (makeInput.getError() != null) {
+            makeInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoYear)
     public void onYearInputChanged(CharSequence text) {
-        if (addCarInfoYearET.getError() == null)
-            return;
-        addCarInfoYearET.setError(null);
+        if (yearInput.getError() != null) {
+            yearInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoCarTitle)
     public void onTitleInputChanged(CharSequence text) {
-        if (addCarInfoTitleET.getError() == null)
-            return;
-        addCarInfoTitleET.setError(null);
+        if (titleInput.getError() != null) {
+            titleInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoLicense)
     public void onLicenseChanged(CharSequence text) {
-        if (addCarInfoLicenseET.getError() == null)
-            return;
-        addCarInfoLicenseET.setError(null);
+        if (licenceNumberInput.getError() != null) {
+            licenceNumberInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoSeating)
     public void onSeatsInputChanged(CharSequence text) {
-        if (addCarInfoSeatsET.getError() == null)
-            return;
-        addCarInfoSeatsET.setError(null);
+        if (seatingCapacityInput.getError() != null) {
+            seatingCapacityInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoEngine)
     public void onEngineInputChanged(CharSequence text) {
-        if (addCarInfoEngineET.getError() == null)
-            return;
-        addCarInfoEngineET.setError(null);
+        if (engineCapacityInput.getError() != null) {
+            engineCapacityInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoTransmission)
     public void onTransmissionInputChanged(CharSequence text) {
-        if (addCarInfoTransmissionET.getError() == null)
-            return;
-        addCarInfoTransmissionET.setError(null);
+        if (transmissionInput.getError() != null) {
+            transmissionInput.setError(null);
+        }
     }
 
     @OnTextChanged(R.id.et_addCarInfoBody)
     public void onBodyInputChanged(CharSequence text) {
-        if (addCarInfoBodyET.getError() == null)
-            return;
-        addCarInfoBodyET.setError(null);
+        if (bodyTypeInput.getError() != null) {
+            bodyTypeInput.setError(null);
+        }
     }
 
     @OnClick(R.id.et_addCarInfoYear)
     public void onYearOfManufactureClicked() {
-        PickerMenuFragment menu = PickerMenuFragment.getInstance(addCarInfoYearET.getText().toString(),
+        PickerMenuFragment menu = PickerMenuFragment.getInstance(yearInput.getText().toString(),
                 PickerMenuFragment.Mode.YEAR_OF_MANUFACTURE);
         menu.show(getFragmentManager(), menu.getTag());
         menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value) {
-                addCarInfoYearET.setText(value);
+                yearInput.setText(value);
             }
         });
     }
 
     @OnClick(R.id.et_addCarInfoSeating)
     public void onSeatingCapacityClicked() {
-        PickerMenuFragment menu = PickerMenuFragment.getInstance(addCarInfoSeatsET.getText().toString(),
+        PickerMenuFragment menu = PickerMenuFragment.getInstance(seatingCapacityInput.getText().toString(),
                 PickerMenuFragment.Mode.SEATING_CAPACITY);
         menu.show(getFragmentManager(), menu.getTag());
         menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value) {
-                addCarInfoSeatsET.setText(value);
+                seatingCapacityInput.setText(value);
             }
         });
     }
 
     @OnClick(R.id.et_addCarInfoEngine)
     public void onEngineCapacityClicked() {
-        PickerMenuFragment menu = PickerMenuFragment.getInstance(addCarInfoEngineET.getText().toString(),
+        PickerMenuFragment menu = PickerMenuFragment.getInstance(engineCapacityInput.getText().toString(),
                 PickerMenuFragment.Mode.ENGINE_CAPACITY);
         menu.show(getFragmentManager(), menu.getTag());
         menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value) {
-                addCarInfoEngineET.setText(value);
+                engineCapacityInput.setText(value);
             }
         });
     }
 
     @OnClick(R.id.et_addCarInfoTransmission)
     public void onTransmissionClicked() {
-        PickerMenuFragment menu = PickerMenuFragment.getInstance(addCarInfoTransmissionET.getText().toString(),
+        PickerMenuFragment menu = PickerMenuFragment.getInstance(transmissionInput.getText().toString(),
                 PickerMenuFragment.Mode.TRANSMISSION);
         menu.show(getFragmentManager(), menu.getTag());
         menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value) {
-                addCarInfoTransmissionET.setText(value);
+                transmissionInput.setText(value);
             }
         });
     }
 
     @OnClick(R.id.et_addCarInfoBody)
     public void onBodyTypeClicked() {
-        BodyMenuFragment menu = BodyMenuFragment.getInstance(mLastSelectedBodyType);
-        menu.setListeners(new BodyMenuFragment.MenuListeners() {
+        PickerMenuFragment menu = PickerMenuFragment.getInstance(transmissionInput.getText().toString(),
+                PickerMenuFragment.Mode.BODY_TYPE);
+        menu.show(getFragmentManager(), menu.getTag());
+        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
-            public void onDoneClicked(AppCompatCheckedTextView selected, CharSequence value) {
-                addCarInfoBodyET.setText(value);
-                mLastSelectedBodyType = selected;
-            }
-
-            @Override
-            public void onConvertibleClicked() {
-
+            public void onDoneClicked(String value) {
+                bodyTypeInput.setText(value);
             }
         });
-        menu.show(getFragmentManager(), menu.getTag());
     }
-
 
     @Override
     public void onDestroyView() {
@@ -253,25 +239,76 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         mUnbinder.unbind();
     }
 
-    private String getFieldContent(AppCompatEditText editText) {
+    private boolean isFieldValid(AppCompatEditText editText) {
         if (editText.getText().toString().equals("")) {
             editText.setError(getString(R.string.error_empty_field));
+            return false;
+        }
+        return false;
+    }
+
+    private String getFieldContent(AppCompatEditText editText) {
+        if (editText.getText().toString().equals("")) {
             return null;
         }
         return editText.getText().toString();
     }
 
 
+    private void onSave(boolean validate) {
+        if (validate) {
+            if (isValid()) {
+                saveInputs();
+            }
+        } else {
+            saveInputs();
+        }
+    }
+
+    private boolean isValid() {
+        return isFieldValid(makeInput) &&
+                isFieldValid(modelInput) &&
+                isFieldValid(yearInput) &&
+                isFieldValid(titleInput) &&
+                isFieldValid(licenceNumberInput) &&
+                isFieldValid(seatingCapacityInput) &&
+                isFieldValid(engineCapacityInput) &&
+                isFieldValid(transmissionInput) &&
+                isFieldValid(bodyTypeInput);
+    }
+
+    private void saveInputs() {
+        String transmissionName = getFieldContent(transmissionInput);
+        String bodyTypeName = getFieldContent(bodyTypeInput);
+        presenter.saveInputs(
+                getFieldContent(makeInput),
+                getFieldContent(modelInput),
+                getFieldContent(yearInput),
+                getFieldContent(titleInput),
+                getFieldContent(licenceNumberInput),
+                getFieldContent(seatingCapacityInput),
+                getFieldContent(engineCapacityInput),
+                NewCarFormsContract.Transmission.getIdByName(transmissionName),
+                NewCarFormsContract.BodyType.getIdByName(bodyTypeName));
+    }
 
     @Override
     public void onStart() {
         super.onStart();
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.INFO);
+        parentListener.onBind(binder);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+        presenter = null;
     }
 
     @Override
     public void showProgress(boolean show) {
-
+        parentListener.showProgress(show);
     }
 
     @Override
@@ -286,11 +323,28 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
 
     @Override
     public void setCarData(CarData carData) {
-
+        makeInput.setText(carData.getMake());
+        modelInput.setText(carData.getModel());
+        String year = carData.getManufactureYear() == null ? null : String.valueOf(carData.getManufactureYear());
+        yearInput.setText(year);
+        titleInput.setText(carData.getTitle());
+        licenceNumberInput.setText(carData.getLicencePlateNumber());
+        seatingCapacityInput.setText(carData.getSeatingCapacity());
+        engineCapacityInput.setText(carData.getEngineCapacity());
+        String transmissionName = null;
+        if (carData.getTransmissionId() != null) {
+            transmissionName = NewCarFormsContract.Transmission.getNameById(carData.getTransmissionId());
+        }
+        transmissionInput.setText(transmissionName);
+        String bodyTypeName = null;
+        if (carData.getBodyType() != null) {
+            bodyTypeName = NewCarFormsContract.BodyType.getNameById(carData.getBodyType());
+        }
+        bodyTypeInput.setText(bodyTypeName);
     }
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.INFO);
+        parentListener.onFinish(NewCarFormsContract.Mode.INFO, pendingAction);
     }
 }

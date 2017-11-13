@@ -23,6 +23,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     private Unbinder mUnbinder;
 
     private DetailsChangedListener parentListener;
+    private NewCarFormsContract.Action pendingAction;
 
     public static Fragment newInstance() {
         Fragment fragment = new CarPaymentFragment();
@@ -81,7 +82,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT);
+        parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT, pendingAction);
     }
 
     @Override
