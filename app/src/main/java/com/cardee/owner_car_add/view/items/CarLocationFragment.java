@@ -74,6 +74,7 @@ public class CarLocationFragment extends Fragment
             pendingAction = action;
             switch (action) {
                 case SAVE:
+                case FINISH:
                     presenter.saveLocation(currentAddress);
                     break;
                 case UPDATE:

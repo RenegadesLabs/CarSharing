@@ -107,4 +107,11 @@ public class CarLocationPresenter extends NewCarPresenter {
         }
         view.setCarData(carData);
     }
+
+    @Override
+    public void onSaved() {
+        if (view != null) {
+            view.onFinish();
+        }
+    }
 }
