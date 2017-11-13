@@ -96,12 +96,10 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:layout_marginStart="@dimen/widget_margin_large"
-                android:background="@drawable/bg_round_icon_blue"
-                android:padding="@dimen/padding_x_small"
                 app:layout_constraintBottom_toBottomOf="@+id/car_details_model"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/car_details_model"
-                app:srcCompat="@drawable/ic_temp_cars_white" />
+                app:srcCompat="@drawable/ic_car_circle" />
 
             <TextView
                 android:id="@+id/car_details_model"
@@ -154,12 +152,10 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:layout_marginStart="@dimen/widget_margin_large"
-                android:background="@drawable/bg_round_icon_light_blue"
-                android:padding="@dimen/padding_x_small"
                 app:layout_constraintBottom_toBottomOf="@+id/car_location_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/car_location_title"
-                app:srcCompat="@drawable/ic_temp_location_white" />
+                app:srcCompat="@drawable/ic_location_circle" />
 
             <TextView
                 android:id="@+id/car_location_title"
@@ -210,12 +206,10 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:layout_marginStart="@dimen/widget_margin_large"
-                android:background="@drawable/bg_round_icon_green"
-                android:padding="@dimen/padding_x_small"
                 app:layout_constraintBottom_toBottomOf="@+id/car_description_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/car_description_title"
-                app:srcCompat="@drawable/ic_temp_description_white" />
+                app:srcCompat="@drawable/ic_description" />
 
             <TextView
                 android:id="@+id/car_description_title"

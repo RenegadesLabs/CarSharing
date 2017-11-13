@@ -25,7 +25,9 @@ import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import java.io.Serializable;
 
 public class CarDetailsEditActivity extends AppCompatActivity
-        implements CarDetailsEditContract.View, DetailsChangedListener {
+        implements CarDetailsEditContract.View,
+        DetailsChangedListener,
+        View.OnClickListener {
 
     private static final String TAG = CarDetailsEditActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 101;
@@ -49,6 +51,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             mTitleView = toolbar.findViewById(R.id.toolbar_title);
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
+            mBtnSave.setOnClickListener(this);
         }
         mProgress = (ProgressBar) findViewById(R.id.details_progress);
         int carId = getIntent().getIntExtra(NewCarContract.CAR_ID, -1);
@@ -113,7 +116,11 @@ public class CarDetailsEditActivity extends AppCompatActivity
 
     @Override
     public void onFinish(NewCarContract.Mode mode, NewCarContract.Action action) {
-
+        switch (action) {
+            case SAVE:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -149,5 +156,18 @@ public class CarDetailsEditActivity extends AppCompatActivity
     @Override
     public void showMessage(@StringRes int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_action:
+                if (childBinder != null) {
+                    Bundle args = new Bundle();
+                    args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.SAVE);
+                    childBinder.push(args);
+                }
+                break;
+        }
     }
 }

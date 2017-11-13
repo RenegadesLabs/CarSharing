@@ -57,4 +57,13 @@ public class OwnerCarRepository implements OwnerCarDataSource {
             }
         });
     }
+
+    void refresh(Integer id) {
+        if (id == null) {
+            return;
+        }
+        if (mCache.get(id) != null) {
+            mCache.remove(id);
+        }
+    }
 }

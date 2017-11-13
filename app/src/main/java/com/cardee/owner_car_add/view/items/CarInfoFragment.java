@@ -241,7 +241,7 @@ public class CarInfoFragment extends Fragment implements NewCarContract.View {
             editText.setError(getString(R.string.error_empty_field));
             return false;
         }
-        return false;
+        return true;
     }
 
     private String getFieldContent(AppCompatEditText editText) {

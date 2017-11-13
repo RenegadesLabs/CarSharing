@@ -150,8 +150,8 @@ public class NewCarFormsActivity extends AppCompatActivity
                 return NewCarContract.Mode.LOCATION;
             case LOCATION:
                 return NewCarContract.Mode.CONTACT;
-            case CONTACT:
-                return NewCarContract.Mode.PAYMENT;
+//            case CONTACT:
+//                return NewCarContract.Mode.PAYMENT;
             default:
                 return null;
         }
@@ -168,7 +168,6 @@ public class NewCarFormsActivity extends AppCompatActivity
                 }
                 break;
             case R.id.btn_all_done:
-                break;
             case R.id.toolbar_action:
                 if (childBinder != null) {
                     Bundle args = new Bundle();
@@ -195,7 +194,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     private boolean isLastStep(NewCarContract.Mode mode) {
-        return mode == NewCarContract.Mode.PAYMENT;
+        return mode == NewCarContract.Mode.CONTACT;
     }
 
     @Override

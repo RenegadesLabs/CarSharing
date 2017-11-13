@@ -27,4 +27,13 @@ public interface Cars {
     @Multipart
     @PUT("cars/{id}/images")
     Call<BaseResponse> uploadImage(@Path("id") Integer carId, @Part MultipartBody.Part picture);
+
+    @PUT("cars/{id}/location")
+    Call<BaseResponse> updateLocation(@Path("id") Integer carId, @Body NewCarData requestBody);
+
+    @PUT("cars/{id}/information")
+    Call<BaseResponse> updateInfo(@Path("id") Integer carId, @Body NewCarData requestBody);
+
+    @PUT("cars/{id}/description")
+    Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body NewCarData requestBody);
 }
