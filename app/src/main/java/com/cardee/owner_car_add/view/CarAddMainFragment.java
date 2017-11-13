@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.items.CarAddBaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -145,21 +144,5 @@ public class CarAddMainFragment extends Fragment implements CarAddActivity.CarIn
     }
 
     @Override
-    public void onPassData(Bundle b) {
-        switch (b.getInt(CarAddBaseFragment.FRAGMENT_NUMBER)) {
-            case 0:
-                mValueItem1 = b.getString(CarAddBaseFragment.FRAGMENT_VALUE);
-//                addCarItem1TV.setText(mValueItem1);
-//                addCarItem1IV.setImageResource(R.drawable.ic_check_circle);
-                isFilled1 = true;
-                break;
-            case 1:
-                mValueItem2 = "Edit";
-//                addCarItem2TV.setText(mValueItem2);
-//                addCarItem2IV.setImageResource(R.drawable.ic_check_circle);
-                isFilled2 = true;
-                break;
-
-        }
-    }
+    public void onPassData(Bundle b) {}
 }

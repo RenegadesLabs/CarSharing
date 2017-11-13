@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.CarAddView;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -23,7 +22,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-public class CarTypeFragment extends CarAddBaseFragment {
+public class CarTypeFragment extends Fragment {
 
     private Unbinder mUnbinder;
 
@@ -142,31 +141,6 @@ public class CarTypeFragment extends CarAddBaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
-    }
-
-    //    @Override
-    public void onSaveClicked() {
-        saveArguments(new Bundle(), false);
-        getActivity().onBackPressed();
-    }
-
-    @Override
-    void saveArguments(Bundle b, boolean onNext) {
-        b.putInt(CarAddBaseFragment.FRAGMENT_NUMBER, 0);
-        b.putString(CarAddBaseFragment.FRAGMENT_VALUE, mValue);
-//        getArguments().putAll(b);
-        if (mPassDataCallback == null)
-            return;
-        mPassDataCallback.onPassData(b);
-    }
-
-    @Override
-    public void setPassDataCallback(CarAddActivity.CarInfoPassCallback callback) {
-        mPassDataCallback = callback;
-    }
-
-    @Override
-    public void setViewListener(CarAddView listener) {
     }
 
     @Override

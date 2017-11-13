@@ -1,10 +1,13 @@
 package com.cardee.owner_car_add.view;
 
+import android.graphics.Bitmap;
 import android.support.annotation.StringRes;
 
 import com.cardee.R;
 import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
+
+import java.io.File;
 
 public interface NewCarFormsContract {
 
@@ -36,5 +39,8 @@ public interface NewCarFormsContract {
 
     interface Presenter extends BasePresenter {
 
+        void saveCarImageToCache(Bitmap bitmap);
+
+        File getCarImageFromCache();
     }
 }
