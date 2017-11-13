@@ -33,7 +33,12 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
             "6.6", "6.7", "6.8", "6.9", "7.0", "7.1", "7.2",
             "7.3", "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.0"};
 
-    private final static String[] TRANSMISSION = {"Automatic", "Manual"};
+    public final static String[] TRANSMISSION = {"Automatic", "Manual"};
+
+    public final static String[] BODY_TYPES = {
+            "Sedan", "Liftback", "SUV", "Hatchback",
+            "Wagon", "Coupe", "Convertible",
+            "Minivan", "Pickup", "Van", "Limousin"};
 
     private static String[] mValues;
 
@@ -53,32 +58,24 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         mListener = listener;
     }
 
-    private Mode mMode;
-
     public static PickerMenuFragment getInstance(String selected, Mode mode) {
         PickerMenuFragment fragment = new PickerMenuFragment();
-
         mSelectedValue = selected;
-
         switch (mode) {
             case YEAR_OF_MANUFACTURE:
                 mValues = YEARS;
                 break;
-
             case SEATING_CAPACITY:
                 mValues = SEATS;
                 break;
-
             case ENGINE_CAPACITY:
                 mValues = ENGINES;
                 break;
-
             case TRANSMISSION:
                 mValues = TRANSMISSION;
                 break;
-
             case BODY_TYPE:
-
+                mValues = BODY_TYPES;
                 break;
         }
         return fragment;

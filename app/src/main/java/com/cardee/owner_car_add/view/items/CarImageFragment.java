@@ -18,6 +18,7 @@ import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 public class CarImageFragment extends Fragment implements NewCarFormsContract.View {
 
     private DetailsChangedListener parentListener;
+    private NewCarFormsContract.Action pendingAction;
 
     public static Fragment newInstance() {
         Fragment fragment = new CarImageFragment();
@@ -76,6 +77,6 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.IMAGE);
+        parentListener.onFinish(NewCarFormsContract.Mode.IMAGE, pendingAction);
     }
 }

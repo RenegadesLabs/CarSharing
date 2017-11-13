@@ -55,7 +55,6 @@ public class CarLocationFragment extends Fragment
 
     private TextView carLocationAddress;
     private MapView mapView;
-    private FloatingActionButton btnMyLocation;
     private GoogleApiClient apiClient;
     private GoogleMap map;
     private Marker currentLocationMarker;
@@ -63,13 +62,18 @@ public class CarLocationFragment extends Fragment
 
     private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
+    private NewCarFormsContract.Action pendingAction;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
             NewCarFormsContract.Action action = (NewCarFormsContract.Action)
                     args.getSerializable(NewCarFormsContract.ACTION);
+            if (action == null) {
+                return;
+            }
+            pendingAction = action;
             switch (action) {
-                case PUSH:
+                case SAVE:
                     presenter.saveLocation(currentAddress);
                     break;
                 case UPDATE:
@@ -127,7 +131,7 @@ public class CarLocationFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_car_location, container, false);
         parentListener.showProgress(true);
         carLocationAddress = rootView.findViewById(R.id.car_location_address);
-        btnMyLocation = rootView.findViewById(R.id.btn_my_location);
+        FloatingActionButton btnMyLocation = rootView.findViewById(R.id.btn_my_location);
         btnMyLocation.setOnClickListener(this);
         mapView = rootView.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -274,7 +278,7 @@ public class CarLocationFragment extends Fragment
     @Override
     public void onFinish() {
         if (parentListener != null) {
-            parentListener.onFinish(NewCarFormsContract.Mode.LOCATION);
+            parentListener.onFinish(NewCarFormsContract.Mode.LOCATION, pendingAction);
         }
     }
 

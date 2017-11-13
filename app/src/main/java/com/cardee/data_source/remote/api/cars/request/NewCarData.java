@@ -54,9 +54,7 @@ public class NewCarData {
     @SerializedName("car_body_type_id")
     private Integer bodyType;
 
-    @Expose
-    @SerializedName("car_image")
-    private String image; //Base64
+    private String image;
 
     @Expose
     @SerializedName("longitude")

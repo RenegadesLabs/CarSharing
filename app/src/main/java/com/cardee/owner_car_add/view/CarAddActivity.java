@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.presenter.CarAddPresenter;
 import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
@@ -64,7 +65,7 @@ public class CarAddActivity extends AppCompatActivity
     @BindView(R.id.iv_addCarItem6)
     public AppCompatImageView paymentCompletedIconView;
 
-    private NewCarPresenter presenter;
+    private CarAddPresenter presenter;
     private Toast currentToast;
 
     public interface CarInfoPassCallback {
@@ -76,7 +77,7 @@ public class CarAddActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_add);
         unbinder = ButterKnife.bind(this);
-        presenter = new NewCarPresenter(this);
+        presenter = new CarAddPresenter(this);
         initToolbar();
     }
 

@@ -97,6 +97,9 @@ public class CarLocationPresenter extends NewCarPresenter {
 
     @Override
     public void onCarDataResponse(CarData carData) {
+        if (view == null) {
+            return;
+        }
         this.carData = carData;
         if (carData.getLatitude() == null || carData.getLongitude() == null) {
             setDefaultLocation();

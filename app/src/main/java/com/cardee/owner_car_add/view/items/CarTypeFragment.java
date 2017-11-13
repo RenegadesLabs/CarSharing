@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,23 +33,24 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
 
     @BindView(R.id.iv_vehiclePersonal)
     public AppCompatImageView vehiclePersonalIV;
-
     @BindView(R.id.tv_vehiclePersonal)
     public TextView vehiclePersonalTV;
-
     @BindView(R.id.iv_vehiclePrivate)
     public AppCompatImageView vehiclePrivateIV;
-
     @BindView(R.id.tv_vehiclePrivate)
     public TextView vehiclePrivateTV;
-
     @BindView(R.id.iv_vehicleCommercial)
     public AppCompatImageView vehicleCommercialIV;
-
     @BindView(R.id.tv_vehicleCommercial)
     public TextView vehicleCommercialTV;
-
-    private String value;
+    @BindView(R.id.fl_vehiclePersonal)
+    public View personalBlock;
+    @BindView(R.id.fl_vehiclePrivate)
+    public View privateBlock;
+    @BindView(R.id.fl_vehicleCommercial)
+    public View commercialBlock;
+    private NewCarFormsContract.Action pendingAction;
+    private Integer value;
 
     private DetailsChangedListener parentListener;
     private CarTypePresenter presenter;
@@ -59,11 +59,16 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
         public void push(Bundle args) {
             NewCarFormsContract.Action action = (NewCarFormsContract.Action)
                     args.getSerializable(NewCarFormsContract.ACTION);
-            if (action != null && action == NewCarFormsContract.Action.PUSH) {
-                onSave();
+            if (action == null) {
                 return;
             }
-            Log.e(TAG, "Unsupported action: " + action);
+            pendingAction = action;
+            switch (action) {
+                case SAVE:
+                case FINISH:
+                    onSave();
+                    break;
+            }
         }
     };
 
@@ -121,7 +126,7 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     @OnFocusChange(R.id.fl_vehiclePersonal)
     public void onPersonalFocused(boolean isFocused) {
         if (isFocused) {
-            value = getString(R.string.car_add_vehicle_personal);
+            value = 1;
             vehiclePersonalIV.setImageResource(R.drawable.ic_car_active);
             vehiclePersonalTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -133,7 +138,7 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     @OnFocusChange(R.id.fl_vehiclePrivate)
     public void onPrivateFocused(boolean isFocused) {
         if (isFocused) {
-            value = getString(R.string.car_add_vehicle_private);
+            value = 2;
             vehiclePrivateIV.setImageResource(R.drawable.ic_private_hire_active);
             vehiclePrivateTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -145,7 +150,7 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     @OnFocusChange(R.id.fl_vehicleCommercial)
     public void onCommercialFocused(boolean isFocused) {
         if (isFocused) {
-            value = getString(R.string.car_add_vehicle_commercial);
+            value = 3;
             vehicleCommercialIV.setImageResource(R.drawable.ic_truck_active);
             vehicleCommercialTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
@@ -184,17 +189,29 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     }
 
     public void onSave() {
-
+        presenter.saveVehicleType(value);
     }
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.TYPE);
+        parentListener.onFinish(NewCarFormsContract.Mode.TYPE, pendingAction);
     }
 
     @Override
     public void setCarData(CarData carData) {
-
+        if (carData != null && carData.getVehicleType() != null) {
+            switch (carData.getVehicleType()) {
+                case 1:
+                    personalBlock.requestFocus();
+                    break;
+                case 2:
+                    privateBlock.requestFocus();
+                    break;
+                case 3:
+                    commercialBlock.requestFocus();
+                    break;
+            }
+        }
     }
 
     @Override

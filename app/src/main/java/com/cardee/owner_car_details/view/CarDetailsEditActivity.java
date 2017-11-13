@@ -112,7 +112,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarFormsContract.Mode mode) {
+    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
 
     }
 

@@ -1,5 +1,7 @@
 package com.cardee.data_source;
 
+import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.cardee.data_source.cache.LocalNewCarDataSource;
@@ -7,6 +9,7 @@ import com.cardee.data_source.remote.RemoteNewCarDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 
 public class NewCarRepository implements NewCarDataSource {
+    private static final String TAG = NewCarRepository.class.getSimpleName();
 
     private static NewCarRepository INSTANCE;
 
@@ -78,6 +81,10 @@ public class NewCarRepository implements NewCarDataSource {
     }
 
     private void updateCache(NewCarData carData) {
+        if (carData == null) {
+            Log.e(TAG, "null value cannot be cached");
+            return;
+        }
         cache.put(CACHE_KEY, carData);
         dirtyCache = false;
     }

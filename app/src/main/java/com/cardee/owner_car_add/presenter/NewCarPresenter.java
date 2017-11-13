@@ -57,6 +57,7 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
             @Override
             public void onSuccess(SaveCar.ResponseValues response) {
                 Log.d(TAG, "Car saved with ID=" + response.getNewCarId() + "(null ID means that car saved locally)");
+                onSaved();
             }
 
             @Override

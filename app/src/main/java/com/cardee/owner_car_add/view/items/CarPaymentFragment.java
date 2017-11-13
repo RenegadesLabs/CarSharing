@@ -19,6 +19,7 @@ import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 public class CarPaymentFragment extends Fragment implements NewCarFormsContract.View {
 
     private DetailsChangedListener parentListener;
+    private NewCarFormsContract.Action pendingAction;
 
     public static Fragment newInstance() {
         Fragment fragment = new CarPaymentFragment();
@@ -77,6 +78,6 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT);
+        parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT, pendingAction);
     }
 }
