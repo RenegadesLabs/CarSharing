@@ -234,13 +234,8 @@ public class NewCarFormsActivity extends AppCompatActivity
                 case ActivityHelper.PICK_IMAGE:
                     if (data == null)
                         return;
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                        if (mCarImageFragment != null && mCarImageFragment.isVisible()) {
-                            mCarImageFragment.setUserPhoto(bitmap);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (mCarImageFragment != null && mCarImageFragment.isVisible()) {
+                        mCarImageFragment.setUserPhoto(data.getData());
                     }
                     break;
             }

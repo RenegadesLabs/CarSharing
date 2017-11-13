@@ -3,6 +3,7 @@ package com.cardee.owner_car_add.view.items;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -73,6 +74,10 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
         View v = inflater.inflate(R.layout.fragment_add_car_image, container, false);
         mUnbinder = ButterKnife.bind(this, v);
         mPresenter = new CarImagePresenter(this, getActivity());
+        Glide.with(getActivity())
+                .load(mPresenter.getImageFileInByteArray())
+                .placeholder(R.drawable.img_car_sample)
+                .into(addCarImage);
         return v;
     }
 
@@ -81,13 +86,10 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
         mUploadListener.onImageUpload();
     }
 
-    public void setUserPhoto(Bitmap bmp) {
-        mPresenter.saveCarImageToCache(bmp);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+    public void setUserPhoto(Uri uri) {
         Glide.with(getActivity())
-                .load(stream.toByteArray())
-                .placeholder(R.drawable.placeholder_user_img)
+                .load(mPresenter.saveCarImageToCache(uri).getImageFileInByteArray())
+                .placeholder(R.drawable.img_car_sample)
                 .into(addCarImage);
     }
 
@@ -95,18 +97,6 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     public void onStart() {
         super.onStart();
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
-
-        if (mPresenter == null)
-            return;
-
-        File picFile = mPresenter.getCarImageFromCache();
-        if (picFile == null)
-            return;
-
-        Glide.with(getActivity())
-                .load(picFile)
-                .placeholder(R.drawable.placeholder_user_img)
-                .into(addCarImage);
     }
 
     @Override
@@ -132,7 +122,6 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     @Override
     public void setCarData(CarData carData) {
-
     }
 
     @Override
