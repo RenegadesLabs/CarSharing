@@ -1,6 +1,7 @@
 package com.cardee.data_source.remote;
 
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.cardee.CardeeApp;
@@ -61,6 +62,11 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
                 callback.onError(new Error(Error.Type.INVALID_REQUEST, "Request body is not valid"));
             }
         }
+    }
+
+    @Override
+    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+
     }
 
     private void handleErrorResponse(BaseResponse response, Callback callback) {

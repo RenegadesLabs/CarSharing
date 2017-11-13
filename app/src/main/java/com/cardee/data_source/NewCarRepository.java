@@ -1,5 +1,6 @@
 package com.cardee.data_source;
 
+import android.net.Uri;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.util.LruCache;
@@ -78,6 +79,14 @@ public class NewCarRepository implements NewCarDataSource {
                 callback.onError(error);
             }
         });
+    }
+
+    @Override
+    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+        if (!forcePush) {
+            localDataSource.saveCarImage(imgUri, false, callback);
+        }
+
     }
 
     private void updateCache(NewCarData carData) {

@@ -1,6 +1,8 @@
 package com.cardee.data_source;
 
 
+import android.net.Uri;
+
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 
 public interface NewCarDataSource {
@@ -8,6 +10,8 @@ public interface NewCarDataSource {
     void obtainSavedCarData(CacheCallback callback);
 
     void saveCarData(NewCarData carData, boolean forcePush, Callback callback);
+
+    void saveCarImage(Uri imgUri, boolean forcePush, Callback callback);
 
 
     interface Callback {

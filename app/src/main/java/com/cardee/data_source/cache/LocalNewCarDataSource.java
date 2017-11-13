@@ -1,5 +1,6 @@
 package com.cardee.data_source.cache;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.cardee.CardeeApp;
@@ -11,15 +12,21 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 
 public class LocalNewCarDataSource implements NewCarDataSource {
 
     private static final String TAG = LocalNewCarDataSource.class.getSimpleName();
     private static final String CACHE_FILE_NAME = "cached_new_car.json";
     private static final String PATH_DIVIDER = "/";
+
+    public final static String CAR_PIC_FILE = "car_picture";
 
     private static LocalNewCarDataSource INSTANCE;
 
@@ -67,6 +74,29 @@ public class LocalNewCarDataSource implements NewCarDataSource {
         }
     }
 
+    @Override
+    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+        if (forcePush) {
+            clearCache();
+            return;
+        }
+
+        File cacheFile = getCacheFile(true);
+        if (cacheFile != null) {
+            NewCarData carData = deserializeDataFromFile(cacheFile);
+            carData.setImage(saveImageToCache(imgUri));
+            boolean successful = serializeDataToFile(carData, cacheFile);
+            if (callback == null) {
+                return;
+            }
+            if (successful) {
+                callback.onSuccess(null);
+                return;
+            }
+            callback.onError(new Error(Error.Type.INTERNAL, null));
+        }
+    }
+
     private File getCacheFile(boolean forceCreate) {
         if (cacheDir != null && cacheDir.canWrite()) {
             String cacheFilePath = cacheDir.getAbsolutePath() + PATH_DIVIDER + CACHE_FILE_NAME;
@@ -85,6 +115,28 @@ public class LocalNewCarDataSource implements NewCarDataSource {
         }
         return null;
     }
+
+    private String saveImageToCache(Uri imgUri) {
+        String path;
+        byte[] imageData = new byte[1024];
+        File f = new File(cacheDir, CAR_PIC_FILE);
+        try {
+            InputStream in = CardeeApp.context.getContentResolver().openInputStream(imgUri);
+            OutputStream out = new FileOutputStream(f);
+            int bytesRead;
+            while ((bytesRead = in.read(imageData)) > 0) {
+                out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
+            }
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            path = f.getAbsolutePath();
+        }
+        return path;
+    }
+
 
     private boolean serializeDataToFile(NewCarData data, File file) {
         Gson gson = new Gson();
