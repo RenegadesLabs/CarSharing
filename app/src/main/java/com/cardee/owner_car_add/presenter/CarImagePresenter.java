@@ -2,54 +2,52 @@ package com.cardee.owner_car_add.presenter;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.util.Log;
 
+import com.cardee.data_source.Error;
+import com.cardee.domain.UseCase;
+import com.cardee.domain.UseCaseExecutor;
+import com.cardee.domain.owner.entity.CarData;
+import com.cardee.domain.owner.usecase.SaveCarImage;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
 
-public class CarImagePresenter extends NewCarPresenter implements NewCarFormsContract.Presenter {
+import static com.cardee.data_source.cache.LocalNewCarDataSource.CAR_PIC_FILE;
 
-    private final static String CAR_PIC_FILE = "car_picture";
+public class CarImagePresenter implements NewCarFormsContract.Presenter {
 
+    private final SaveCarImage saveImgCase;
+    private final UseCaseExecutor executor;
     private NewCarFormsContract.View view;
-
     private Context context;
 
 
     public CarImagePresenter(NewCarFormsContract.View view, Context context) {
-        super(view);
         this.view = view;
         this.context = context;
+        saveImgCase = new SaveCarImage();
+        executor = UseCaseExecutor.getInstance();
     }
 
 
-    public CarImagePresenter saveCarImageToCache(Uri imgUri) {
-        byte[] imageData = new byte[1024];
-        File f = new File(context.getCacheDir(), CAR_PIC_FILE);
-        try {
-            InputStream in = context.getContentResolver().openInputStream(imgUri);
-            OutputStream out = new FileOutputStream(f);
-            int bytesRead;
-            while ((bytesRead = in.read(imageData)) > 0) {
-                out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
+    public void saveCarImageToCache(Uri imgUri) {
+        executor.execute(saveImgCase, new SaveCarImage.RequestValues(imgUri), new UseCase.Callback<SaveCarImage.ResponseValues>() {
+            @Override
+            public void onSuccess(SaveCarImage.ResponseValues response) {
+
             }
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return this;
+
+            @Override
+            public void onError(Error error) {
+                if (view == null)
+                    return;
+                view.showMessage(error.getMessage());
+            }
+        });
     }
 
     public File getCarImageFromCache() {
@@ -70,4 +68,18 @@ public class CarImagePresenter extends NewCarPresenter implements NewCarFormsCon
         return bytes;
     }
 
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        view = null;
+    }
+
+    @Override
+    public void onCarDataResponse(CarData carData) {
+
+    }
 }

@@ -88,9 +88,10 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     public void setUserPhoto(Uri uri) {
         Glide.with(getActivity())
-                .load(mPresenter.saveCarImageToCache(uri).getImageFileInByteArray())
+                .load(uri)
                 .placeholder(R.drawable.img_car_sample)
                 .into(addCarImage);
+        mPresenter.saveCarImageToCache(uri);
     }
 
     @Override
