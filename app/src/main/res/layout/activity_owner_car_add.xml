@@ -338,6 +338,7 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/btn_submit"
             style="@style/RegularButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_regular_height"
@@ -348,6 +349,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/add_car_progress"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:theme="@style/LoadingIndicator"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -98,7 +98,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_car_item2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_car_info, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         presenter = new CarInfoPresenter(this);
         presenter.init();
