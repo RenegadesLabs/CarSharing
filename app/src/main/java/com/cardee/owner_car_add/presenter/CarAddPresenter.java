@@ -33,6 +33,7 @@ public class CarAddPresenter extends NewCarPresenter {
     public void createCar() {
         NewCarDataValidator validator = new NewCarDataValidator();
         if (carData != null && validator.isCarDataValid(carData)) {
+            view.showProgress(true);
             super.saveCar(carData, true);
         } else {
             view.showMessage("Sorry, you haven't finished all the steps");

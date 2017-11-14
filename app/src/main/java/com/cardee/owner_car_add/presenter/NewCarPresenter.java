@@ -39,7 +39,10 @@ public class NewCarPresenter implements NewCarContract.Presenter {
             @Override
             public void onError(Error error) {
                 Log.e(TAG, "Error: " + error.getErrorType() + " with message: " + error.getMessage());
-                //TODO implement
+                if (view != null) {
+                    view.showProgress(false);
+                    view.showMessage("Error: " + error.getErrorType() + " with message: " + error.getMessage());
+                }
             }
         });
     }
@@ -63,7 +66,10 @@ public class NewCarPresenter implements NewCarContract.Presenter {
             @Override
             public void onError(Error error) {
                 Log.e(TAG, "Error: " + error.getErrorType() + " with message: " + error.getMessage());
-                //TODO implement
+                if (view != null) {
+                    view.showProgress(false);
+                    view.showMessage("Error: " + error.getErrorType() + " with message: " + error.getMessage());
+                }
             }
         });
     }

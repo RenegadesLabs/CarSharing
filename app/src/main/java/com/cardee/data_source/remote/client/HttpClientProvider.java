@@ -24,10 +24,11 @@ public class HttpClientProvider {
 
     public OkHttpClient provide(Context context) {
         AccountManager accountManager = AccountManager.getInstance(context);
-
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
                 .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
-                .addInterceptor(new HttpLoggingInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build();
     }

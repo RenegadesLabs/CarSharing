@@ -94,7 +94,7 @@ public class NewCarFormsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if(childBinder!=null){
+        if (childBinder != null) {
             Bundle args = new Bundle();
             args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.SAVE);
             childBinder.push(args);
@@ -241,7 +241,9 @@ public class NewCarFormsActivity extends AppCompatActivity
                     return;
                 }
             }
-            childBinder.push(null);
+            Bundle args = new Bundle();
+            args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.UPDATE);
+            childBinder.push(args);
         }
     }
 

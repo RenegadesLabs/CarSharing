@@ -248,7 +248,7 @@ public class CarInfoFragment extends Fragment implements NewCarContract.View {
         if (editText.getText().toString().equals("")) {
             return null;
         }
-        return editText.getText().toString();
+        return editText.getText().toString().trim();
     }
 
 

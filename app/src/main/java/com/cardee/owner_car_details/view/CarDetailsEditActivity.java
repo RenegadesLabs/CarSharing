@@ -135,7 +135,9 @@ public class CarDetailsEditActivity extends AppCompatActivity
                     return;
                 }
             }
-            childBinder.push(null);
+            Bundle args = new Bundle();
+            args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.UPDATE);
+            childBinder.push(args);
         }
     }
 

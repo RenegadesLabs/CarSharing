@@ -4,6 +4,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponse;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
+import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -26,7 +27,10 @@ public interface Cars {
 
     @Multipart
     @PUT("cars/{id}/images")
-    Call<BaseResponse> uploadImage(@Path("id") Integer carId, @Part MultipartBody.Part picture);
+    Call<UploadImageResponse> uploadImage(@Path("id") Integer carId, @Part MultipartBody.Part picture);
+
+    @PUT("cars/{id}/images/{img_id}/primary")
+    Call<BaseResponse> makeImagePrimary(@Path("id") Integer carId, @Path("img_id") Integer imgId);
 
     @PUT("cars/{id}/location")
     Call<BaseResponse> updateLocation(@Path("id") Integer carId, @Body NewCarData requestBody);
