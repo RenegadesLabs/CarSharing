@@ -78,6 +78,7 @@
                 android:layout_marginEnd="@dimen/widget_margin_large"
                 android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
+                android:visibility="gone"
                 android:textColor="@color/text_picture_overlaid"
                 android:textSize="@dimen/text_regular"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +136,7 @@
                 android:layout_marginEnd="@dimen/widget_margin_large"
                 android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/car_details_model"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/car_details_model" />
@@ -230,7 +232,6 @@
                 android:layout_marginEnd="@dimen/widget_margin_large"
                 android:layout_marginTop="@dimen/widget_margin_small"
                 android:lineSpacingExtra="4dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas ex eget odio finibus convallis. Donec bibendum sed mauris ac aliquam. Sed vel purus quis nisl eleifend semper. Fusce ullamcorper feugiat erat, id condimentum arcu accumsan vitae. Aliquam erat volutpat. Praesent ac vulputate nisi. Cras et augue convallis, malesuada erat at, sagittis nisi. Nunc sit amet lorem justo. Integer imperdiet purus et dolor finibus, vitae condimentum lorem fringilla. Sed et ullamcorper libero. Pellentesque euismod velit magna, at aliquet est pulvinar sit amet. Ut convallis justo eget dui lacinia porttitor quis a ipsum. Nulla sodales justo quis urna scelerisque ultricies. Quisque volutpat nunc magna, a convallis nunc ultricies vel."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/car_description_title"
                 app:layout_constraintTop_toBottomOf="@+id/car_description_title" />
@@ -241,6 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/widget_margin_large"
+                android:visibility="gone"
                 android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
                 app:layout_constraintBottom_toBottomOf="@id/car_description_title"
