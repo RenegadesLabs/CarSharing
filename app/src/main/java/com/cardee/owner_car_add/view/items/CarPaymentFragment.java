@@ -12,18 +12,18 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CarPaymentFragment extends Fragment implements NewCarFormsContract.View {
+public class CarPaymentFragment extends Fragment implements NewCarContract.View {
 
     private Unbinder mUnbinder;
 
     private DetailsChangedListener parentListener;
-    private NewCarFormsContract.Action pendingAction;
+    private NewCarContract.Action pendingAction;
 
     public static Fragment newInstance() {
         Fragment fragment = new CarPaymentFragment();
@@ -57,7 +57,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     @Override
     public void onStart() {
         super.onStart();
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.PAYMENT);
+        parentListener.onModeDisplayed(NewCarContract.Mode.PAYMENT);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.PAYMENT, pendingAction);
+        parentListener.onFinish(NewCarContract.Mode.PAYMENT, pendingAction);
     }
 
     @Override

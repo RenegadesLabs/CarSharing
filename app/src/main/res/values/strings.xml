@@ -95,6 +95,10 @@
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>
     <string name="car_add_all_done">All done!</string>
+    <string name="car_added_title">Car added!</string>
+    <string name="car_added_message">Thank you. Your car is under review and we will respond to you in 24hrs.
+        Meanwhile you can start adding your car and rental information!</string>
+    <string name="car_added_ok">Ok</string>
 
     <string name="car_location_address">Where is your car parked?</string>
 

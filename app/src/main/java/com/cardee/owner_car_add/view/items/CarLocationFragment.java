@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
@@ -26,7 +28,7 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarLocationPresenter;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -38,6 +40,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -45,7 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CarLocationFragment extends Fragment
         implements OnMapReadyCallback,
-        NewCarFormsContract.View,
+        NewCarContract.View,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
@@ -62,12 +66,12 @@ public class CarLocationFragment extends Fragment
 
     private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
-    private NewCarFormsContract.Action pendingAction;
+    private NewCarContract.Action pendingAction;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
-                    args.getSerializable(NewCarFormsContract.ACTION);
+            NewCarContract.Action action = (NewCarContract.Action)
+                    args.getSerializable(NewCarContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -180,6 +184,7 @@ public class CarLocationFragment extends Fragment
             currentLocationMarker.remove();
         }
         MarkerOptions markerOptions = new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmap()))
                 .position(location);
         currentLocationMarker = map.addMarker(markerOptions);
         CameraPosition position = new CameraPosition.Builder()
@@ -188,6 +193,14 @@ public class CarLocationFragment extends Fragment
                 .build();
         CameraUpdate focus = CameraUpdateFactory.newCameraPosition(position);
         map.animateCamera(focus);
+    }
+
+    private Bitmap getMarkerBitmap() {
+        int height = 108;
+        int width = 108;
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_car_marker);
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        return Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
 
     private void fetchLocationAddress(LatLng location) {
@@ -201,7 +214,7 @@ public class CarLocationFragment extends Fragment
     public void onStart() {
         super.onStart();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.LOCATION);
+        parentListener.onModeDisplayed(NewCarContract.Mode.LOCATION);
     }
 
     @Override
@@ -279,7 +292,7 @@ public class CarLocationFragment extends Fragment
     @Override
     public void onFinish() {
         if (parentListener != null) {
-            parentListener.onFinish(NewCarFormsContract.Mode.LOCATION, pendingAction);
+            parentListener.onFinish(NewCarContract.Mode.LOCATION, pendingAction);
         }
     }
 

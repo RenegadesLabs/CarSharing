@@ -9,7 +9,7 @@ import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.usecase.GetCarData;
 import com.cardee.domain.owner.usecase.UpdateCarLocation;
 import com.cardee.owner_car_add.factory.CarDataFactory;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 
 public class CarLocationPresenter extends NewCarPresenter {
 
@@ -20,11 +20,11 @@ public class CarLocationPresenter extends NewCarPresenter {
     private final GetCarData getCarDataUsecase;
     private final UseCaseExecutor executor;
 
-    private NewCarFormsContract.View view;
+    private NewCarContract.View view;
     private CarData carData;
     private final Integer carId;
 
-    public CarLocationPresenter(NewCarFormsContract.View view, Integer carId) {
+    public CarLocationPresenter(NewCarContract.View view, Integer carId) {
         super(view);
         this.view = view;
         this.carId = carId;
@@ -85,7 +85,9 @@ public class CarLocationPresenter extends NewCarPresenter {
         executor.execute(updateUsecase, values, new UseCase.Callback<UpdateCarLocation.ResponseValues>() {
             @Override
             public void onSuccess(UpdateCarLocation.ResponseValues response) {
-                //TODO: implement
+                if (view != null) {
+                    view.onFinish();
+                }
             }
 
             @Override

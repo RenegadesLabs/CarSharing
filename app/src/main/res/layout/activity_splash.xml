@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
         app:Icon="@drawable/ic_car"
-        app:IconHeight="14dp"
+        app:IconHeight="16dp"
         app:LineColor="@color/text_button_regular"
         app:LineWidth="0.5dp" />
 </RelativeLayout>

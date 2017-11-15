@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarAddPresenter;
-import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -115,7 +114,8 @@ public class CarAddActivity extends AppCompatActivity
 
     @Override
     public void onFinish() {
-
+        setResult(NewCarContract.CAR_CREATED);
+        finish();
     }
 
     @Override
@@ -173,42 +173,42 @@ public class CarAddActivity extends AppCompatActivity
     @OnClick(R.id.add_type)
     public void onTypeClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.TYPE);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.TYPE);
         openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_info)
     public void onInfoClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.INFO);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.INFO);
         openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_image)
     public void onImageClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.IMAGE);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.IMAGE);
         openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_location)
     public void onLoactionClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.LOCATION);
         openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_contact)
     public void onContactClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.CONTACT);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.CONTACT);
         openNewCarEditActivity(args);
     }
 
     @OnClick(R.id.add_payment)
     public void onPaymentClicked() {
         Bundle args = new Bundle();
-        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.PAYMENT);
+        args.putSerializable(NewCarContract.VIEW_MODE, NewCarContract.Mode.PAYMENT);
         openNewCarEditActivity(args);
     }
 

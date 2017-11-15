@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.annotation.StringRes;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -21,7 +18,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarContactsPresenter;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -30,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class CarContactsFragment extends Fragment implements NewCarFormsContract.View {
+public class CarContactsFragment extends Fragment implements NewCarContract.View {
 
     private Unbinder mUnbinder;
     private Toast currentToast;
@@ -45,13 +42,13 @@ public class CarContactsFragment extends Fragment implements NewCarFormsContract
     public AppCompatEditText carOwnerName;
 
     private DetailsChangedListener parentListener;
-    private NewCarFormsContract.Action pendingAction;
+    private NewCarContract.Action pendingAction;
     private CarContactsPresenter presenter;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
-                    args.getSerializable(NewCarFormsContract.ACTION);
+            NewCarContract.Action action = (NewCarContract.Action)
+                    args.getSerializable(NewCarContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -108,7 +105,7 @@ public class CarContactsFragment extends Fragment implements NewCarFormsContract
         super.onStart();
         presenter.init();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.CONTACT);
+        parentListener.onModeDisplayed(NewCarContract.Mode.CONTACT);
     }
 
     @Override
@@ -168,7 +165,7 @@ public class CarContactsFragment extends Fragment implements NewCarFormsContract
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarFormsContract.Mode.CONTACT, pendingAction);
+        parentListener.onFinish(NewCarContract.Mode.CONTACT, pendingAction);
     }
 
     private TextWatcher textWatcherPhone = new TextWatcher() {

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.view.NewCarContract;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -25,7 +25,9 @@ import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import java.io.Serializable;
 
 public class CarDetailsEditActivity extends AppCompatActivity
-        implements CarDetailsEditContract.View, DetailsChangedListener {
+        implements CarDetailsEditContract.View,
+        DetailsChangedListener,
+        View.OnClickListener {
 
     private static final String TAG = CarDetailsEditActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 101;
@@ -49,19 +51,20 @@ public class CarDetailsEditActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             mTitleView = toolbar.findViewById(R.id.toolbar_title);
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
+            mBtnSave.setOnClickListener(this);
         }
         mProgress = (ProgressBar) findViewById(R.id.details_progress);
-        int carId = getIntent().getIntExtra(NewCarFormsContract.CAR_ID, -1);
-        Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
+        int carId = getIntent().getIntExtra(NewCarContract.CAR_ID, -1);
+        Serializable extra = getIntent().getSerializableExtra(NewCarContract.VIEW_MODE);
         if (extra != null) {
-            NewCarFormsContract.Mode mode = (NewCarFormsContract.Mode) extra;
+            NewCarContract.Mode mode = (NewCarContract.Mode) extra;
             setContentOfMode(mode, carId == -1 ? null : carId);
             return;
         }
         Toast.makeText(this, "Mode is null", Toast.LENGTH_SHORT).show(); //PLUG
     }
 
-    private void setContentOfMode(NewCarFormsContract.Mode mode, Integer carId) {
+    private void setContentOfMode(NewCarContract.Mode mode, Integer carId) {
         Bundle args = getIntent().getExtras();
         if (args == null) {
             return;
@@ -93,7 +96,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onModeDisplayed(NewCarFormsContract.Mode mode) {
+    public void onModeDisplayed(NewCarContract.Mode mode) {
         mTitleView.setText(mode.getTitleId());
     }
 
@@ -112,8 +115,12 @@ public class CarDetailsEditActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
-
+    public void onFinish(NewCarContract.Mode mode, NewCarContract.Action action) {
+        switch (action) {
+            case SAVE:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -128,7 +135,9 @@ public class CarDetailsEditActivity extends AppCompatActivity
                     return;
                 }
             }
-            childBinder.push(null);
+            Bundle args = new Bundle();
+            args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.UPDATE);
+            childBinder.push(args);
         }
     }
 
@@ -149,5 +158,18 @@ public class CarDetailsEditActivity extends AppCompatActivity
     @Override
     public void showMessage(@StringRes int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_action:
+                if (childBinder != null) {
+                    Bundle args = new Bundle();
+                    args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.SAVE);
+                    childBinder.push(args);
+                }
+                break;
+        }
     }
 }

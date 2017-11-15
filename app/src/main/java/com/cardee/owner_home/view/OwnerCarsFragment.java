@@ -70,12 +70,12 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.refresh();
-        mPresenter.loadItems();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        mPresenter.loadItems();
     }
 
     @Override
