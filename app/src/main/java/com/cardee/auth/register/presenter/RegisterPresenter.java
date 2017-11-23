@@ -8,6 +8,7 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.CheckUniqueLogin;
 import com.cardee.domain.owner.usecase.Register;
+import com.cardee.domain.user.usecase.SocialLogin;
 
 import java.io.File;
 
@@ -59,5 +60,26 @@ public class RegisterPresenter {
                         mView.showMessage(error.getMessage());
                     }
                 });
+    }
+
+    public void registerSocial(String provider, String token) {
+        if (mView != null)
+            mView.showProgress(true);
+
+        mExecutor.execute(new SocialLogin(), new SocialLogin.RequestValues(provider, token), new UseCase.Callback<SocialLogin.ResponseValues>() {
+            @Override
+            public void onSuccess(SocialLogin.ResponseValues response) {
+                if (response.isSuccess()) {
+                    mView.showProgress(false);
+                    mView.onRegistrationSuccess();
+                }
+            }
+
+            @Override
+            public void onError(Error error) {
+                mView.showProgress(false);
+                mView.showMessage(R.string.auth_error);
+            }
+        });
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.presenter.RegisterPresenter;
+import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.display.ActivityHelper;
 import com.facebook.CallbackManager;
@@ -83,7 +84,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // TODO: 10/25/17 Register trough Facebook
+                mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
+                        loginResult.getAccessToken().getToken());
+
             }
 
             @Override
@@ -133,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        mFacebookCM.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case ActivityHelper.PICK_IMAGE:
                 if (resultCode == RESULT_OK && data.getData() != null) {
