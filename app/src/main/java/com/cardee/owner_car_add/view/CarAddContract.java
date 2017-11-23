@@ -3,7 +3,7 @@ package com.cardee.owner_car_add.view;
 
 public interface CarAddContract {
 
-    interface View extends NewCarContract.View {
+    interface View extends NewCarFormsContract.View {
 
         void setTypeCompleted(boolean completed);
 

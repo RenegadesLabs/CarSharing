@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarInfoPresenter;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import com.cardee.owner_home.view.modal.PickerMenuFragment;
@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class CarInfoFragment extends Fragment implements NewCarContract.View {
+public class CarInfoFragment extends Fragment implements NewCarFormsContract.View {
 
     private Unbinder mUnbinder;
 
@@ -48,14 +48,14 @@ public class CarInfoFragment extends Fragment implements NewCarContract.View {
     @BindView(R.id.et_addCarInfoBody)
     public AppCompatEditText bodyTypeInput;
 
-    private NewCarContract.Action pendingAction;
+    private NewCarFormsContract.Action pendingAction;
     private DetailsChangedListener parentListener;
     private CarInfoPresenter presenter;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarContract.Action action = (NewCarContract.Action)
-                    args.getSerializable(NewCarContract.ACTION);
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -285,14 +285,14 @@ public class CarInfoFragment extends Fragment implements NewCarContract.View {
                 getFieldContent(licenceNumberInput),
                 getFieldContent(seatingCapacityInput),
                 getFieldContent(engineCapacityInput),
-                NewCarContract.Transmission.getIdByName(transmissionName),
-                NewCarContract.BodyType.getIdByName(bodyTypeName));
+                NewCarFormsContract.Transmission.getIdByName(transmissionName),
+                NewCarFormsContract.BodyType.getIdByName(bodyTypeName));
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        parentListener.onModeDisplayed(NewCarContract.Mode.INFO);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.INFO);
         parentListener.onBind(binder);
     }
 
@@ -330,18 +330,18 @@ public class CarInfoFragment extends Fragment implements NewCarContract.View {
         engineCapacityInput.setText(carData.getEngineCapacity());
         String transmissionName = null;
         if (carData.getTransmissionId() != null) {
-            transmissionName = NewCarContract.Transmission.getNameById(carData.getTransmissionId());
+            transmissionName = NewCarFormsContract.Transmission.getNameById(carData.getTransmissionId());
         }
         transmissionInput.setText(transmissionName);
         String bodyTypeName = null;
         if (carData.getBodyType() != null) {
-            bodyTypeName = NewCarContract.BodyType.getNameById(carData.getBodyType());
+            bodyTypeName = NewCarFormsContract.BodyType.getNameById(carData.getBodyType());
         }
         bodyTypeInput.setText(bodyTypeName);
     }
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarContract.Mode.INFO, pendingAction);
+        parentListener.onFinish(NewCarFormsContract.Mode.INFO, pendingAction);
     }
 }

@@ -8,6 +8,7 @@ import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
+import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -31,7 +32,7 @@ public interface Authentication {
 
     @POST("auth/login_social")
     @Headers("Content-Type: application/json")
-    Observable<BaseAuthResponse> loginSocial(@Body SocialLoginRequest request);
+    Observable<SocialAuthResponse> loginSocial(@Body SocialLoginRequest request);
 
     @POST("auth/validate")
     @Headers("Content-Type: application/json")

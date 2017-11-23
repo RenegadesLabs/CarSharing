@@ -7,7 +7,7 @@ public interface UserDataSource {
 
     void login(String login, String password, Callback callback);
 
-    void loginSocial(SocialLoginRequest.Provider provider, String token, Callback callback);
+    void loginSocial(String provider, String token, Callback callback);
 
     void checkUniqueLogin(String login, String password, Callback callback);
 

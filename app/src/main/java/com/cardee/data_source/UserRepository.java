@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
+import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 import com.cardee.domain.owner.usecase.Register;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.google.gson.Gson;
@@ -84,15 +85,18 @@ public class UserRepository implements UserDataSource {
     }
 
     @Override
-    public void loginSocial(SocialLoginRequest.Provider provider, String token, final Callback callback) {
+    public void loginSocial(String provider, String token, final Callback callback) {
 
         SocialLoginRequest req = new SocialLoginRequest();
         req.setProvider(provider);
         req.setToken(token);
-        Observable<BaseAuthResponse> ob = api.loginSocial(req);
-        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+        Observable<SocialAuthResponse> ob = api.loginSocial(req);
+        ob.subscribeWith(new DisposableObserver<SocialAuthResponse>() {
             @Override
-            public void onNext(BaseAuthResponse baseAuthResponse) {
+            public void onNext(SocialAuthResponse baseAuthResponse) {
+                if (baseAuthResponse.getSuccess()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
 

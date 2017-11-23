@@ -2,15 +2,15 @@ package com.cardee.owner_car_add.presenter;
 
 
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 
 public class CarTypePresenter extends NewCarPresenter {
 
-    private NewCarContract.View view;
+    private NewCarFormsContract.View view;
 
     private CarData carData;
 
-    public CarTypePresenter(NewCarContract.View view) {
+    public CarTypePresenter(NewCarFormsContract.View view) {
         super(view);
         this.view = view;
     }

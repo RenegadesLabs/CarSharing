@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarTypePresenter;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-public class CarTypeFragment extends Fragment implements NewCarContract.View {
+public class CarTypeFragment extends Fragment implements NewCarFormsContract.View {
 
     private static final String TAG = CarTypeFragment.class.getSimpleName();
 
@@ -49,7 +49,7 @@ public class CarTypeFragment extends Fragment implements NewCarContract.View {
     public View privateBlock;
     @BindView(R.id.fl_vehicleCommercial)
     public View commercialBlock;
-    private NewCarContract.Action pendingAction;
+    private NewCarFormsContract.Action pendingAction;
     private Integer value;
 
     private DetailsChangedListener parentListener;
@@ -57,8 +57,8 @@ public class CarTypeFragment extends Fragment implements NewCarContract.View {
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarContract.Action action = (NewCarContract.Action)
-                    args.getSerializable(NewCarContract.ACTION);
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -168,7 +168,7 @@ public class CarTypeFragment extends Fragment implements NewCarContract.View {
     @Override
     public void onStart() {
         super.onStart();
-        parentListener.onModeDisplayed(NewCarContract.Mode.TYPE);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.TYPE);
         parentListener.onBind(binder);
         presenter.init();
     }
@@ -194,7 +194,7 @@ public class CarTypeFragment extends Fragment implements NewCarContract.View {
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarContract.Mode.TYPE, pendingAction);
+        parentListener.onFinish(NewCarFormsContract.Mode.TYPE, pendingAction);
     }
 
     @Override

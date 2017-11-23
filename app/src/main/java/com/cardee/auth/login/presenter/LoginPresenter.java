@@ -46,7 +46,7 @@ public class LoginPresenter {
         });
     }
 
-    public void loginSocial(SocialLoginRequest.Provider provider, String token) {
+    public void loginSocial(String provider, String token) {
         if (mView != null)
             mView.showProgress(true);
 

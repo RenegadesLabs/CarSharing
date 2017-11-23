@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarLocationPresenter;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
@@ -40,7 +40,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -49,7 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CarLocationFragment extends Fragment
         implements OnMapReadyCallback,
-        NewCarContract.View,
+        NewCarFormsContract.View,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
@@ -66,12 +65,12 @@ public class CarLocationFragment extends Fragment
 
     private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
-    private NewCarContract.Action pendingAction;
+    private NewCarFormsContract.Action pendingAction;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarContract.Action action = (NewCarContract.Action)
-                    args.getSerializable(NewCarContract.ACTION);
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -214,7 +213,7 @@ public class CarLocationFragment extends Fragment
     public void onStart() {
         super.onStart();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarContract.Mode.LOCATION);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.LOCATION);
     }
 
     @Override
@@ -292,7 +291,7 @@ public class CarLocationFragment extends Fragment
     @Override
     public void onFinish() {
         if (parentListener != null) {
-            parentListener.onFinish(NewCarContract.Mode.LOCATION, pendingAction);
+            parentListener.onFinish(NewCarFormsContract.Mode.LOCATION, pendingAction);
         }
     }
 

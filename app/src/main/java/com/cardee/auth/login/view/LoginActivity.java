@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                mPresenter.loginSocial(SocialLoginRequest.Provider.FACEBOOK,
+                mPresenter.loginSocial(SocialLoginRequest.FACEBOOK,
                         loginResult.getAccessToken().getToken());
             }
 
