@@ -9,6 +9,8 @@ public interface UserDataSource {
 
     void loginSocial(String provider, String token, Callback callback);
 
+    void forgotPassword(String email, Callback callback);
+
     void checkUniqueLogin(String login, String password, Callback callback);
 
     void register(Register.RequestValues registerValues, Callback callback);

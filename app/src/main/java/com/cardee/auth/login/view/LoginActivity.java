@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.presenter.LoginPresenter;
+import com.cardee.auth.pass_recover.PassRecoverActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;
@@ -97,6 +98,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     @OnClick(R.id.tv_loginForgotPassword)
     public void onForgotPassClicked() {
+        startActivity(new Intent(this, PassRecoverActivity.class));
     }
 
     @OnClick(R.id.b_loginFacebook)

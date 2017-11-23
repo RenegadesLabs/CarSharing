@@ -66,19 +66,19 @@ public class RegisterFirstStepFragment extends Fragment {
             mViewListener.onSignUp(regEmailEdit.getText().toString(), regPassEdit.getText().toString());
     }
 
-    @OnClick(R.id.b_registerFacebook)
-    public void onFacebookSignInClicked() {
-        if (mViewListener != null) {
-            mViewListener.onFacebook();
-        }
-    }
-
-    @OnClick(R.id.b_registerGoogle)
-    public void onGoogleSignInClicked() {
-        if (mViewListener != null) {
-            mViewListener.onGoogle();
-        }
-    }
+//    @OnClick(R.id.b_registerFacebook)
+//    public void onFacebookSignInClicked() {
+//        if (mViewListener != null) {
+//            mViewListener.onFacebook();
+//        }
+//    }
+//
+//    @OnClick(R.id.b_registerGoogle)
+//    public void onGoogleSignInClicked() {
+//        if (mViewListener != null) {
+//            mViewListener.onGoogle();
+//        }
+//    }
 
     private void setTermsOfServiceText() {
         String text = getString(R.string.signup_terms_by) + "\n";

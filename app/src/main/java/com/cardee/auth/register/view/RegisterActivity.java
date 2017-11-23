@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     private CallbackManager mFacebookCM;
 
-    private LoginButton mButtonFacebook;
+//    private LoginButton mButtonFacebook;
 
     private ProgressDialog mProgress;
 
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initFragments();
-        initFacebookButton();
+//        initFacebookButton();
         initProgress();
     }
 
@@ -78,28 +78,28 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         mProgress.setCancelable(false);
     }
 
-    private void initFacebookButton() {
-        mFacebookCM = CallbackManager.Factory.create();
-        mButtonFacebook = new LoginButton(this);
-        mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
-                        loginResult.getAccessToken().getToken());
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(RegisterActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                showMessage(error.getMessage());
-            }
-        });
-    }
+//    private void initFacebookButton() {
+//        mFacebookCM = CallbackManager.Factory.create();
+//        mButtonFacebook = new LoginButton(this);
+//        mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
+//                        loginResult.getAccessToken().getToken());
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Toast.makeText(RegisterActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                showMessage(error.getMessage());
+//            }
+//        });
+//    }
 
     private void pickImageIntent() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -215,15 +215,15 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     }
 
-    @Override
-    public void onFacebook() {
-        mButtonFacebook.performClick();
-    }
-
-    @Override
-    public void onGoogle() {
-
-    }
+//    @Override
+//    public void onFacebook() {
+//        mButtonFacebook.performClick();
+//    }
+//
+//    @Override
+//    public void onGoogle() {
+//
+//    }
 
     @Override
     public void onSignUpAsRenter(String name, File picture) {

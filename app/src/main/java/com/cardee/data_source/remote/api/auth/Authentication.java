@@ -2,6 +2,7 @@ package com.cardee.data_source.remote.api.auth;
 
 
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
+import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
@@ -45,6 +46,10 @@ public interface Authentication {
     @Multipart
     @PUT("profiles/picture")
     Call<ResponseBody> setProfilePicture(@Part MultipartBody.Part picture);
+
+    @POST("auth/forgot_password")
+    @Headers("Content-Type: application/json")
+    Observable<BaseAuthResponse> forgotPassword(@Body ForgotPassRequest request);
 
     @POST("auth/verify_password")
     @Headers("Content-Type: application/json")

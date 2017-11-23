@@ -6,6 +6,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.adapter.exception.RetrofitException;
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
+import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
@@ -106,6 +107,29 @@ public class UserRepository implements UserDataSource {
                     callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
                     return;
                 }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void forgotPassword(String email, final Callback callback) {
+        ForgotPassRequest req = new ForgotPassRequest();
+        req.setEmail(email);
+        Observable<BaseAuthResponse> ob = api.forgotPassword(req);
+        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+            @Override
+            public void onNext(BaseAuthResponse baseAuthResponse) {
+                callback.onSuccess(baseAuthResponse.getSuccess());
+            }
+
+            @Override
+            public void onError(Throwable e) {
                 callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 
