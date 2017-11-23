@@ -1,7 +1,10 @@
 package com.cardee.auth.login.presenter;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
@@ -89,10 +92,10 @@ public class LoginPresenter {
             OkHttpClient client = new OkHttpClient();
             RequestBody requestBody = new FormEncodingBuilder()
                     .add("grant_type", "authorization_code")
-                    .add("client_id", /*getString(R.string.google_client_id)*/
-                            "1004367155398-7qnu4mogl9fcgrs725q6dbgrpm7sg94o.apps.googleusercontent.com")
-                    .add("redirect_uri","")
+                    .add("client_id", "223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com")
                     .add("code", code)
+                    .add("redirect_uri", "")
+                    .add("client_secret", "37ZieJoiEydLH1zdacuyvI2B")
                     .build();
             final Request request = new Request.Builder()
                     .url("https://www.googleapis.com/oauth2/v4/token")
@@ -105,11 +108,10 @@ public class LoginPresenter {
                 }
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(final Response response) throws IOException {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        final String message = jsonObject.toString(5);
-//                        loginSocial(SocialLoginRequest.GOOGLE, "");
+                        mView.onProceedGoogleLogin(jsonObject.getString("access_token"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

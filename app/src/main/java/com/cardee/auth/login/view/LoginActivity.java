@@ -198,4 +198,14 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onProceedGoogleLogin(final String accessToken) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.loginSocial(SocialLoginRequest.GOOGLE, accessToken);
+            }
+        });
+    }
 }
