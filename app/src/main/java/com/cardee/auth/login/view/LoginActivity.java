@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         mPresenter = new LoginPresenter(this);
         initProgress();
         initFacebookApi();
+        initGoogleApi();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -112,44 +113,10 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mFacebookCM.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                GoogleSignInAccount acc = result.getSignInAccount();
-                if (acc != null) {
-
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormEncodingBuilder()
-                            .add("grant_type", "authorization_code")
-                            .add("client_id", getString(R.string.google_client_id))
-                            .add("redirect_uri","")
-                            .add("code", acc.getServerAuthCode())
-                            .build();
-                    final Request request = new Request.Builder()
-                            .url("https://www.googleapis.com/oauth2/v4/token")
-                            .post(requestBody)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(final Request request, final IOException e) {
-                            Log.e(TAG, e.toString());
-                        }
-
-                        @Override
-                        public void onResponse(Response response) throws IOException {
-                            try {
-                                JSONObject jsonObject = new JSONObject(response.body().string());
-                                final String message = jsonObject.toString(5);
-                                Log.i(TAG, message);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-//                    mPresenter.loginSocial(SocialLoginRequest.Provider.GOOGLE,
-//                            result.getSignInAccount().getIdToken());
-                }
+                mPresenter.loginGoogle(result);
             }
         }
     }
