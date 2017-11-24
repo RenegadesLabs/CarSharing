@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.Arrays;
 
 public class LocalNewCarDataSource implements NewCarDataSource {
@@ -75,12 +76,7 @@ public class LocalNewCarDataSource implements NewCarDataSource {
     }
 
     @Override
-    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
-        if (forcePush) {
-            clearCache();
-            return;
-        }
-
+    public void saveCarImage(Uri imgUri, boolean forcePush, ImageCacheCallback callback) {
         File cacheFile = getCacheFile(true);
         if (cacheFile != null) {
             NewCarData carData = deserializeDataFromFile(cacheFile);
@@ -90,7 +86,7 @@ public class LocalNewCarDataSource implements NewCarDataSource {
                 return;
             }
             if (successful) {
-                callback.onSuccess(null);
+                callback.onSuccess();
                 return;
             }
             callback.onError(new Error(Error.Type.INTERNAL, null));

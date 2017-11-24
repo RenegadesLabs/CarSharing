@@ -57,10 +57,10 @@ public class NewCarData {
     private String image;
 
     @Expose
-    @SerializedName("longitude")
+    @SerializedName("latitude")
     private Double latitude;
     @Expose
-    @SerializedName("latitude")
+    @SerializedName("longitude")
     private Double longitude;
     @Expose
     @SerializedName("town")

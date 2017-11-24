@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarAddPresenter;
-import com.cardee.owner_car_add.presenter.NewCarPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -115,7 +114,8 @@ public class CarAddActivity extends AppCompatActivity
 
     @Override
     public void onFinish() {
-
+        setResult(NewCarFormsContract.CAR_CREATED);
+        finish();
     }
 
     @Override

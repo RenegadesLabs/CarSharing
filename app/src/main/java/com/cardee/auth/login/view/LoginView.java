@@ -6,4 +6,6 @@ public interface LoginView extends BaseView {
 
     void onLoginSuccess();
 
+    void onProceedGoogleLogin(String accessToken);
+
 }

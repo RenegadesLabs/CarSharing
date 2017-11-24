@@ -14,6 +14,8 @@ public interface RegisterView extends BaseView {
 
     void onGoogle();
 
+    void onProceedGoogleLogin(String accessToken);
+
     void onTermsOfService();
 
     void onTakePhoto();

@@ -108,13 +108,13 @@ public class RegisterFinalStepFragment extends Fragment {
     @OnClick(R.id.b_registerAsOwner)
     public void onRegisterAsOwnerClicked() {
         if (mViewListener != null)
-            mViewListener.onSignUpAsOwner(regUserName.getText().toString(), convertByteArrayToBase64());
+            mViewListener.onSignUpAsOwner(regUserName.getText().toString(), convertByteArrayToFile());
     }
 
     @OnClick(R.id.b_registerAsRenter)
     public void onRegisterAsRenterClicked() {
         if (mViewListener != null)
-            mViewListener.onSignUpAsRenter(regUserName.getText().toString(), convertByteArrayToBase64());
+            mViewListener.onSignUpAsRenter(regUserName.getText().toString(), convertByteArrayToFile());
     }
 
     @OnTextChanged(R.id.tiet_registerName)
@@ -184,7 +184,7 @@ public class RegisterFinalStepFragment extends Fragment {
         }
     }
 
-    private File convertByteArrayToBase64() {
+    private File convertByteArrayToFile() {
         if (mPictureByteArray != null) {
             FileOutputStream fos;
             File f = null;
@@ -200,6 +200,5 @@ public class RegisterFinalStepFragment extends Fragment {
             return f;
         }
         return null;
-//        return Base64.encodeToString(mPictureByteArray, Base64.DEFAULT);
     }
 }

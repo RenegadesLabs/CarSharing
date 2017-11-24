@@ -11,7 +11,6 @@ import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetCar;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
-import com.cardee.owner_car_details.view.CarDetailsEditContract;
 
 import io.reactivex.functions.Consumer;
 

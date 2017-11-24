@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,8 +47,6 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     public AppCompatEditText transmissionInput;
     @BindView(R.id.et_addCarInfoBody)
     public AppCompatEditText bodyTypeInput;
-
-    private AppCompatCheckedTextView mLastSelectedBodyType;
 
     private NewCarFormsContract.Action pendingAction;
     private DetailsChangedListener parentListener;
@@ -244,14 +241,14 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
             editText.setError(getString(R.string.error_empty_field));
             return false;
         }
-        return false;
+        return true;
     }
 
     private String getFieldContent(AppCompatEditText editText) {
         if (editText.getText().toString().equals("")) {
             return null;
         }
-        return editText.getText().toString();
+        return editText.getText().toString().trim();
     }
 
 

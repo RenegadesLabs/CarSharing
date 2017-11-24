@@ -6,10 +6,13 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.adapter.exception.RetrofitException;
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
+import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
+import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 import com.cardee.domain.owner.usecase.Register;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.google.gson.Gson;
@@ -84,15 +87,18 @@ public class UserRepository implements UserDataSource {
     }
 
     @Override
-    public void loginSocial(SocialLoginRequest.Provider provider, String token, final Callback callback) {
+    public void loginSocial(String provider, String token, final Callback callback) {
 
         SocialLoginRequest req = new SocialLoginRequest();
         req.setProvider(provider);
         req.setToken(token);
-        Observable<BaseAuthResponse> ob = api.loginSocial(req);
-        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+        Observable<SocialAuthResponse> ob = api.loginSocial(req);
+        ob.subscribeWith(new DisposableObserver<SocialAuthResponse>() {
             @Override
-            public void onNext(BaseAuthResponse baseAuthResponse) {
+            public void onNext(SocialAuthResponse baseAuthResponse) {
+                if (baseAuthResponse.getSuccess()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
 
@@ -102,6 +108,56 @@ public class UserRepository implements UserDataSource {
                     callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
                     return;
                 }
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void sendEmailToChangePassword(String email, final Callback callback) {
+        ForgotPassRequest req = new ForgotPassRequest();
+        req.setEmail(email);
+        Observable<BaseAuthResponse> ob = api.forgotPassword(req);
+        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+            @Override
+            public void onNext(BaseAuthResponse baseAuthResponse) {
+                callback.onSuccess(baseAuthResponse.getSuccess());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void changePassword(String key, String pass, String passConfirm, final Callback callback) {
+        VerifyPasswordRequest req = new VerifyPasswordRequest();
+        req.setPassword(pass);
+        req.setPasswordConfirm(passConfirm);
+        Observable<BaseAuthResponse> ob = api.verifyPassword(req, key);
+        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+            @Override
+            public void onNext(BaseAuthResponse baseAuthResponse) {
+                if (baseAuthResponse.getSuccess()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                }
+                callback.onSuccess(baseAuthResponse.getSuccess());
+            }
+
+            @Override
+            public void onError(Throwable e) {
                 callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
             }
 

@@ -85,7 +85,9 @@ public class CarLocationPresenter extends NewCarPresenter {
         executor.execute(updateUsecase, values, new UseCase.Callback<UpdateCarLocation.ResponseValues>() {
             @Override
             public void onSuccess(UpdateCarLocation.ResponseValues response) {
-                //TODO: implement
+                if (view != null) {
+                    view.onFinish();
+                }
             }
 
             @Override

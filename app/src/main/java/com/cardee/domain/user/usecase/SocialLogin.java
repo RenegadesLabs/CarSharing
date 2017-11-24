@@ -19,7 +19,7 @@ public class SocialLogin implements UseCase<SocialLogin.RequestValues, SocialLog
     @Override
     public void execute(SocialLogin.RequestValues values, final Callback<SocialLogin.ResponseValues> callback) {
 
-        SocialLoginRequest.Provider provider = values.getProvider();
+        String provider = values.getProvider();
         String token = values.getToken();
         /*"ya29.GlvwBDMSXnqNLg2IDIE5ZWdsmygKvFwqSQBbjWdC2wmBqJTiOfKFyzVIFDd9WGZ6fGtU585EcCttee_vodGeaaY_swQ-uMwt4iwIoGxVU5zPxuB-1YxBV92yMhrg"*/
 
@@ -44,9 +44,9 @@ public class SocialLogin implements UseCase<SocialLogin.RequestValues, SocialLog
 
     public static class RequestValues implements UseCase.RequestValues {
         private final String mToken;
-        private final SocialLoginRequest.Provider mProvider;
+        private final String mProvider;
 
-        public RequestValues(@NonNull SocialLoginRequest.Provider provider, @NonNull String token) {
+        public RequestValues(@NonNull String provider, @NonNull String token) {
             mToken = token;
             mProvider = provider;
         }
@@ -55,7 +55,7 @@ public class SocialLogin implements UseCase<SocialLogin.RequestValues, SocialLog
             return mToken;
         }
 
-        public SocialLoginRequest.Provider getProvider() {
+        public String getProvider() {
             return mProvider;
         }
     }

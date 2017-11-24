@@ -9,12 +9,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.presenter.LoginPresenter;
+import com.cardee.auth.pass_recover.send_email.SendEmailActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;
@@ -24,21 +24,9 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,6 +66,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         mPresenter = new LoginPresenter(this);
         initProgress();
         initFacebookApi();
+        initGoogleApi();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -96,6 +85,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     @OnClick(R.id.tv_loginForgotPassword)
     public void onForgotPassClicked() {
+        startActivity(new Intent(this, SendEmailActivity.class));
     }
 
     @OnClick(R.id.b_loginFacebook)
@@ -112,44 +102,10 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mFacebookCM.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                GoogleSignInAccount acc = result.getSignInAccount();
-                if (acc != null) {
-
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormEncodingBuilder()
-                            .add("grant_type", "authorization_code")
-                            .add("client_id", getString(R.string.google_client_id))
-                            .add("redirect_uri","")
-                            .add("code", acc.getServerAuthCode())
-                            .build();
-                    final Request request = new Request.Builder()
-                            .url("https://www.googleapis.com/oauth2/v4/token")
-                            .post(requestBody)
-                            .build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(final Request request, final IOException e) {
-                            Log.e(TAG, e.toString());
-                        }
-
-                        @Override
-                        public void onResponse(Response response) throws IOException {
-                            try {
-                                JSONObject jsonObject = new JSONObject(response.body().string());
-                                final String message = jsonObject.toString(5);
-                                Log.i(TAG, message);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-//                    mPresenter.loginSocial(SocialLoginRequest.Provider.GOOGLE,
-//                            result.getSignInAccount().getIdToken());
-                }
+                mPresenter.loginGoogle(result);
             }
         }
     }
@@ -160,7 +116,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                mPresenter.loginSocial(SocialLoginRequest.Provider.FACEBOOK,
+                mPresenter.loginSocial(SocialLoginRequest.FACEBOOK,
                         loginResult.getAccessToken().getToken());
             }
 
@@ -230,5 +186,15 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onProceedGoogleLogin(final String accessToken) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.loginSocial(SocialLoginRequest.GOOGLE, accessToken);
+            }
+        });
     }
 }

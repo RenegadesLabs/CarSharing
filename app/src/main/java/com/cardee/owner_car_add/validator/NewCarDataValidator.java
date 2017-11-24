@@ -54,7 +54,6 @@ public class NewCarDataValidator {
                 isInfoValid(carData) &&
                 isImageValid(carData) &&
                 isLocationValid(carData) &&
-                isContactsValid(carData) &&
-                isPaymentValid(carData);
+                isContactsValid(carData);
     }
 }

@@ -2,9 +2,7 @@ package com.cardee.owner_car_add.view;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -33,7 +31,6 @@ import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import com.cardee.util.display.ActivityHelper;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 public class NewCarFormsActivity extends AppCompatActivity
@@ -55,8 +52,6 @@ public class NewCarFormsActivity extends AppCompatActivity
 
     private SimpleBinder childBinder;
     private NewCarFormsContract.Mode currentMode;
-
-    private CarImageFragment mCarImageFragment;
 
     private boolean isInRootMode = true;
 
@@ -97,6 +92,16 @@ public class NewCarFormsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (childBinder != null) {
+            Bundle args = new Bundle();
+            args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.SAVE);
+            childBinder.push(args);
+        }
+        super.onBackPressed();
+    }
+
     private void setContentOfMode(NewCarFormsContract.Mode mode) {
         switch (mode) {
             case TYPE:
@@ -106,8 +111,7 @@ public class NewCarFormsActivity extends AppCompatActivity
                 showFragment(CarInfoFragment.newInstance());
                 break;
             case IMAGE:
-                mCarImageFragment = (CarImageFragment) CarImageFragment.newInstance();
-                showFragment(mCarImageFragment);
+                showFragment(CarImageFragment.newInstance());
                 break;
             case LOCATION:
                 showFragment(CarLocationFragment.newInstance(null));
@@ -146,8 +150,8 @@ public class NewCarFormsActivity extends AppCompatActivity
                 return NewCarFormsContract.Mode.LOCATION;
             case LOCATION:
                 return NewCarFormsContract.Mode.CONTACT;
-            case CONTACT:
-                return NewCarFormsContract.Mode.PAYMENT;
+//            case CONTACT:
+//                return NewCarFormsContract.Mode.PAYMENT;
             default:
                 return null;
         }
@@ -164,7 +168,6 @@ public class NewCarFormsActivity extends AppCompatActivity
                 }
                 break;
             case R.id.btn_all_done:
-                break;
             case R.id.toolbar_action:
                 if (childBinder != null) {
                     Bundle args = new Bundle();
@@ -191,7 +194,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     private boolean isLastStep(NewCarFormsContract.Mode mode) {
-        return mode == NewCarFormsContract.Mode.PAYMENT;
+        return mode == NewCarFormsContract.Mode.CONTACT;
     }
 
     @Override
@@ -238,7 +241,9 @@ public class NewCarFormsActivity extends AppCompatActivity
                     return;
                 }
             }
-            childBinder.push(null);
+            Bundle args = new Bundle();
+            args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
+            childBinder.push(args);
         }
     }
 
@@ -248,10 +253,12 @@ public class NewCarFormsActivity extends AppCompatActivity
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case ActivityHelper.PICK_IMAGE:
-                    if (data == null)
+                    if (data != null && childBinder != null) {
+                        Bundle args = new Bundle();
+                        args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
+                        args.putParcelable(NewCarFormsContract.URI, data.getData());
+                        childBinder.push(args);
                         return;
-                    if (mCarImageFragment != null && mCarImageFragment.isVisible()) {
-                        mCarImageFragment.setUserPhoto(data.getData());
                     }
                     break;
             }

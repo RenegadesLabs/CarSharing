@@ -1,6 +1,7 @@
 package com.cardee.data_source;
 
 import android.net.Uri;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.util.LruCache;
 
@@ -69,8 +70,8 @@ public class NewCarRepository implements NewCarDataSource {
             public void onSuccess(Integer newCarId) {
                 localDataSource.saveCarData(null, true, null);
                 clearCache();
+                OwnerCarsRepository.getInstance().refreshCars();
                 callback.onSuccess(newCarId);
-
             }
 
             @Override
@@ -81,9 +82,20 @@ public class NewCarRepository implements NewCarDataSource {
     }
 
     @Override
-    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+    public void saveCarImage(Uri imgUri, boolean forcePush, final ImageCacheCallback callback) {
         if (!forcePush) {
-            localDataSource.saveCarImage(imgUri, false, callback);
+            localDataSource.saveCarImage(imgUri, false, new ImageCacheCallback() {
+                @Override
+                public void onSuccess() {
+                    clearCache();
+                    callback.onSuccess();
+                }
+
+                @Override
+                public void onError(Error error) {
+                    callback.onError(error);
+                }
+            });
         }
 
     }

@@ -1,5 +1,6 @@
 package com.cardee.owner_home.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,6 +37,7 @@ public class OwnerHomeActivity extends AppCompatActivity
         CarListItemEventListener, View.OnClickListener {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
+    private static final int ADD_NEW_CAR_REQUEST_CODE = 101;
 
     private boolean mHasFragment;
     private TextView mTitle;
@@ -164,8 +168,32 @@ public class OwnerHomeActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                startActivity(new Intent(this, CarAddActivity.class));
+                startActivityForResult(new Intent(this, CarAddActivity.class), ADD_NEW_CAR_REQUEST_CODE);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ADD_NEW_CAR_REQUEST_CODE && resultCode == NewCarFormsContract.CAR_CREATED) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.car_added_title)
+                    .setMessage(R.string.car_added_message)
+                    .setPositiveButton(R.string.car_added_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create();
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setTextColor(ContextCompat.getColor(OwnerHomeActivity.this, R.color.blue));
+                }
+            });
+            alertDialog.show();
         }
     }
 
@@ -184,4 +212,5 @@ public class OwnerHomeActivity extends AppCompatActivity
     public void onStopLoading() {
         mProgress.setVisibility(View.GONE);
     }
+
 }

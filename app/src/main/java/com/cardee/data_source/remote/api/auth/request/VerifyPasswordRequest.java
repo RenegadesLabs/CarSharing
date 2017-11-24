@@ -12,7 +12,7 @@ public class VerifyPasswordRequest {
     @SerializedName("psd_confirm")
     private String passwordConfirm;
 
-    public VerifyPasswordRequest(){
+    public VerifyPasswordRequest() {
 
     }
 

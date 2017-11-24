@@ -1,6 +1,5 @@
 package com.cardee.owner_car_add.presenter;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.cardee.data_source.Error;
@@ -10,8 +9,6 @@ import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.usecase.GetSavedCar;
 import com.cardee.domain.owner.usecase.SaveCar;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
-
-import java.io.File;
 
 
 public class NewCarPresenter implements NewCarFormsContract.Presenter {
@@ -42,7 +39,10 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
             @Override
             public void onError(Error error) {
                 Log.e(TAG, "Error: " + error.getErrorType() + " with message: " + error.getMessage());
-                //TODO implement
+                if (view != null) {
+                    view.showProgress(false);
+                    view.showMessage("Error: " + error.getErrorType() + " with message: " + error.getMessage());
+                }
             }
         });
     }
@@ -66,7 +66,10 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
             @Override
             public void onError(Error error) {
                 Log.e(TAG, "Error: " + error.getErrorType() + " with message: " + error.getMessage());
-                //TODO implement
+                if (view != null) {
+                    view.showProgress(false);
+                    view.showMessage("Error: " + error.getErrorType() + " with message: " + error.getMessage());
+                }
             }
         });
     }

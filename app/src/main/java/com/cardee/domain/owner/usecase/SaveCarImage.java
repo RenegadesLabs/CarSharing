@@ -24,9 +24,9 @@ public class SaveCarImage implements UseCase<SaveCarImage.RequestValues, SaveCar
     @Override
     public void execute(RequestValues values, final Callback callback) {
         final Uri uri = values.getImgUri();
-        repository.saveCarImage(uri, false, new NewCarDataSource.Callback() {
+        repository.saveCarImage(uri, false, new NewCarDataSource.ImageCacheCallback() {
             @Override
-            public void onSuccess(Integer newCarId) {
+            public void onSuccess() {
                 callback.onSuccess(null);
             }
 

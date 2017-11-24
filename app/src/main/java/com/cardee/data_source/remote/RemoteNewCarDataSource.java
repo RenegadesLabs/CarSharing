@@ -11,12 +11,19 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
+import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 import com.cardee.data_source.remote.validator.NewCarValidator;
 
+import java.io.File;
 import java.io.IOException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class RemoteNewCarDataSource implements NewCarDataSource {
 
@@ -50,7 +57,8 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
                 try {
                     Response<CreateCarResponse> response = request.execute();
                     if (response.isSuccessful() && response.body() != null) {
-                        callback.onSuccess(response.body().getResponseBody().getCarId());
+                        Integer carId = response.body().getResponseBody().getCarId();
+                        uploadCarImage(carData.getImage(), carId, callback);
                         return;
                     }
                     handleErrorResponse(response.body(), callback);
@@ -64,8 +72,45 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
         }
     }
 
+    private void uploadCarImage(String path, Integer carId, Callback callback) {
+        if (path == null || carId == null) {
+            callback.onSuccess(carId);
+            return;
+        }
+        File imageFile = new File(path);
+        if (imageFile.exists()) {
+            MultipartBody.Part part = MultipartBody.Part.createFormData("car_image",
+                    imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
+            try {
+                Response<UploadImageResponse> response = api.uploadImage(carId, part).execute();
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "Image was not uploaded");
+                } else {
+                    if (response.body() != null) {
+                        makeImagePrimary(carId, response.body().getBody().getImageId(), callback);
+                        return;
+                    }
+                }
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+        callback.onSuccess(carId);
+    }
+
+    private void makeImagePrimary(Integer carId, Integer imageId, Callback callback) {
+        if (carId != null && imageId != null) {
+            try {
+                api.makeImagePrimary(carId, imageId).execute();
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+        callback.onSuccess(carId);
+    }
+
     @Override
-    public void saveCarImage(Uri imgUri, boolean forcePush, Callback callback) {
+    public void saveCarImage(Uri imgUri, boolean forcePush, ImageCacheCallback callback) {
 
     }
 
