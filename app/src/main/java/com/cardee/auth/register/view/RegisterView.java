@@ -10,9 +10,11 @@ public interface RegisterView extends BaseView {
 
     void onSignUp(String login, String password);
 
-//    void onFacebook();
-//
-//    void onGoogle();
+    void onFacebook();
+
+    void onGoogle();
+
+    void onProceedGoogleLogin(String accessToken);
 
     void onTermsOfService();
 

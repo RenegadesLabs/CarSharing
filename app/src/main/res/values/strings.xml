@@ -61,6 +61,8 @@
 
     <string name="auth_facebook">Log in with Facebook</string>
     <string name="auth_google">Log in with Google+</string>
+    <string name="auth_signup_facebook">Sign up with Facebook</string>
+    <string name="auth_signup_google">Sign up with Google+</string>
 
     <!--Bottom menu-->
     <string name="menu_item_inbox_title">Inbox</string>

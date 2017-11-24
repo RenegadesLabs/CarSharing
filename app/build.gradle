@@ -18,13 +18,13 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", /*'"http://labracode.itg5.com/api/dev/"'*/'"http://192.168.88.113:5550/api/dev/"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
         debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", /*'"http://labracode.itg5.com/api/dev/"'*/'"http://192.168.88.113:5550/api/dev/"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
     }
 }

@@ -53,7 +53,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements ChangeP
 
     @OnClick(R.id.b_changeBack)
     public void onBackClicked() {
-        onBackPressed();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @OnTextChanged(R.id.et_changePassConfirm)
