@@ -8,26 +8,26 @@ import com.cardee.domain.UseCase;
 import io.reactivex.annotations.NonNull;
 
 
-public class PassRecover implements UseCase<PassRecover.RequestValues, PassRecover.ResponseValues> {
+public class SendEmail implements UseCase<SendEmail.RequestValues, SendEmail.ResponseValues> {
 
     private UserDataSource mRepository;
 
-    public PassRecover() {
+    public SendEmail() {
         mRepository = UserRepository.getInstance();
     }
 
     @Override
-    public void execute(PassRecover.RequestValues values, final Callback callback) {
+    public void execute(SendEmail.RequestValues values, final Callback callback) {
 
         if (values.getEmail() == null) {
             callback.onError(null);
             return;
         }
 
-        mRepository.forgotPassword(values.getEmail(), new UserDataSource.Callback() {
+        mRepository.sendEmailToChangePassword(values.getEmail(), new UserDataSource.Callback() {
             @Override
             public void onSuccess(boolean success) {
-                callback.onSuccess(new PassRecover.ResponseValues(success));
+                callback.onSuccess(new SendEmail.ResponseValues(success));
             }
 
             @Override

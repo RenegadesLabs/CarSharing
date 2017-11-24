@@ -9,7 +9,9 @@ public interface UserDataSource {
 
     void loginSocial(String provider, String token, Callback callback);
 
-    void forgotPassword(String email, Callback callback);
+    void sendEmailToChangePassword(String email, Callback callback);
+
+    void changePassword(String key, String pass, String passConfirm, Callback callback);
 
     void checkUniqueLogin(String login, String password, Callback callback);
 

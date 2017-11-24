@@ -1,19 +1,19 @@
-package com.cardee.auth.pass_recover;
+package com.cardee.auth.pass_recover.send_email;
 
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.user.usecase.PassRecover;
+import com.cardee.domain.user.usecase.SendEmail;
 import com.cardee.mvp.BaseView;
 
-public class PassRecoverPresenter {
+public class SendEmailPresenter {
 
-    private final PassRecover mPassRecoverUseCase;
+    private final SendEmail mSendEmailUseCase;
     private UseCaseExecutor mExecutor;
     private BaseView mView;
 
-    public PassRecoverPresenter(BaseView view) {
-        mPassRecoverUseCase = new PassRecover();
+    public SendEmailPresenter(BaseView view) {
+        mSendEmailUseCase = new SendEmail();
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
     }
@@ -22,9 +22,9 @@ public class PassRecoverPresenter {
         if (mView != null)
             mView.showProgress(true);
 
-        mExecutor.execute(mPassRecoverUseCase, new PassRecover.RequestValues(email), new UseCase.Callback<PassRecover.ResponseValues>() {
+        mExecutor.execute(mSendEmailUseCase, new SendEmail.RequestValues(email), new UseCase.Callback<SendEmail.ResponseValues>() {
             @Override
-            public void onSuccess(PassRecover.ResponseValues response) {
+            public void onSuccess(SendEmail.ResponseValues response) {
                 mView.showProgress(false);
                 mView.showMessage("Reset password email sent!");
             }

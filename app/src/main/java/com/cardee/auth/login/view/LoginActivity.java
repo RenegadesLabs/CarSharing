@@ -9,13 +9,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.presenter.LoginPresenter;
-import com.cardee.auth.pass_recover.PassRecoverActivity;
+import com.cardee.auth.pass_recover.send_email.SendEmailActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;
@@ -25,21 +24,9 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +85,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     @OnClick(R.id.tv_loginForgotPassword)
     public void onForgotPassClicked() {
-        startActivity(new Intent(this, PassRecoverActivity.class));
+        startActivity(new Intent(this, SendEmailActivity.class));
     }
 
     @OnClick(R.id.b_loginFacebook)

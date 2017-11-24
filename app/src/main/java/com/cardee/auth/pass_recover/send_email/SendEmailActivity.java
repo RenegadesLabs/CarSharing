@@ -1,4 +1,4 @@
-package com.cardee.auth.pass_recover;
+package com.cardee.auth.pass_recover.send_email;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -15,30 +15,30 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PassRecoverActivity extends AppCompatActivity implements BaseView {
+public class SendEmailActivity extends AppCompatActivity implements BaseView {
 
-    @BindView(R.id.et_recoverEmail)
+    @BindView(R.id.et_sendEmail)
     public AppCompatEditText recoverEmailET;
 
     private ProgressDialog mProgress;
 
-    private PassRecoverPresenter mPresenter;
+    private SendEmailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recover_pass);
+        setContentView(R.layout.activity_pass_send_email);
         ButterKnife.bind(this);
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
-        mPresenter = new PassRecoverPresenter(this);
+        mPresenter = new SendEmailPresenter(this);
     }
 
-    @OnClick(R.id.b_recoverBack)
+    @OnClick(R.id.b_sendBack)
     public void onBackArrowPressed() {
         onBackPressed();
     }
 
-    @OnClick(R.id.b_recoverSendEmail)
+    @OnClick(R.id.b_sendEmail)
     public void onSendEmailClicked() {
         if (recoverEmailET.getText().toString().isEmpty())
             return;

@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary">
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/b_recoverBack"
+        android:id="@+id/b_sendBack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -24,7 +24,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/medium_margin"
-        android:text="@string/recover_title"
+        android:text="@string/send_email_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_large"
         android:textStyle="bold"
@@ -40,7 +40,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/xxlarge_margin"
         android:gravity="center_horizontal"
-        android:text="@string/recover_text"
+        android:text="@string/send_email_text"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_regular"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/title" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/et_recoverEmail"
+        android:id="@+id/et_sendEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/CardeeLoginEditTextStyle"
@@ -56,7 +56,7 @@
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="30dp"
         android:textColor="@color/colorAccent"
-        android:hint="@string/recover_email"
+        android:hint="@string/send_email_email"
         android:inputType="textEmailAddress"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,19 +65,19 @@
         />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/b_recoverSendEmail"
+        android:id="@+id/b_sendEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_white_bg"
-        android:text="@string/recover_send"
+        android:text="@string/send_email_send"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_recoverEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/et_sendEmail" />
 
 </android.support.constraint.ConstraintLayout>
