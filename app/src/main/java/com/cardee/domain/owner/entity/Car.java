@@ -26,7 +26,12 @@ public class Car {
     private final Boolean mCarAvailableOrderDays;
     private final String[] mCarAvailabilityHourlyDates;
     private final String[] mCarAvailabilityDailyDates;
+    private final String mDescription;
     private final Image[] mImages;
+    private final Double mLongitude;
+    private final Double mLatitude;
+    private final String mAddress;
+    private final String mTown;
 
     public Car(@NonNull Integer carId,
                String carMake,
@@ -49,7 +54,12 @@ public class Car {
                Boolean carAvailableOrderDays,
                String[] carAvailabilityHourlyDates,
                String[] carAvailabilityDailyDates,
-               Image[] images) {
+               String description,
+               Image[] images,
+               Double longitude,
+               Double latitude,
+               String address,
+               String town) {
         mCarId = carId;
         mCarMake = carMake;
         mCarTitle = carTitle;
@@ -71,7 +81,12 @@ public class Car {
         mCarAvailableOrderDays = carAvailableOrderDays;
         mCarAvailabilityHourlyDates = carAvailabilityHourlyDates;
         mCarAvailabilityDailyDates = carAvailabilityDailyDates;
+        mDescription = description;
         mImages = images;
+        mLongitude = longitude;
+        mLatitude = latitude;
+        mAddress = address;
+        mTown = town;
     }
 
     public static class Builder {
@@ -97,7 +112,12 @@ public class Car {
         private Boolean mBuilderCarAvailableOrderDays;
         private String[] mBuilderCarAvailabilityHourlyDates;
         private String[] mBuilderCarAvailabilityDailyDates;
+        private String mBuilderDescription;
         private Image[] mBuilderImages;
+        private Double mBuilderLongitude;
+        private Double mBuilderLatitude;
+        private String mBuilderAddress;
+        private String mBuilderTown;
 
         private Builder(Car car) {
             mBuilderCarId = car.getCarId();
@@ -121,7 +141,12 @@ public class Car {
             mBuilderCarAvailableOrderDays = car.getCarAvailableOrderDays();
             mBuilderCarAvailabilityHourlyDates = car.getCarAvailabilityHourlyDates();
             mBuilderCarAvailabilityDailyDates = car.getCarAvailabilityDailyDates();
+            mBuilderDescription = car.getDescription();
             mBuilderImages = car.getImages();
+            mBuilderLatitude = car.getLatitude();
+            mBuilderLongitude = car.getLongitude();
+            mBuilderAddress = car.getAddress();
+            mBuilderTown = car.getTown();
         }
 
         public Builder setCarMake(String carMake) {
@@ -174,8 +199,33 @@ public class Car {
             return this;
         }
 
+        public Builder setDescription(String description) {
+            mBuilderDescription = description;
+            return this;
+        }
+
         public Builder setSeatingCapacity(Integer seatingCapacity) {
             mBuilderSeatingCapacity = seatingCapacity;
+            return this;
+        }
+
+        public Builder setAddress(String address) {
+            mBuilderAddress = address;
+            return this;
+        }
+
+        public Builder setTown(String town) {
+            mBuilderTown = town;
+            return this;
+        }
+
+        public Builder setLongitude(Double longitude) {
+            mBuilderLongitude = longitude;
+            return this;
+        }
+
+        public Builder setLatitude(Double latitude) {
+            mBuilderLatitude = latitude;
             return this;
         }
 
@@ -204,7 +254,12 @@ public class Car {
                     mBuilderCarAvailableOrderDays,
                     mBuilderCarAvailabilityHourlyDates,
                     mBuilderCarAvailabilityDailyDates,
-                    mBuilderImages);
+                    mBuilderDescription,
+                    mBuilderImages,
+                    mBuilderLongitude,
+                    mBuilderLatitude,
+                    mBuilderAddress,
+                    mBuilderTown);
         }
     }
 
@@ -296,8 +351,28 @@ public class Car {
         return mCarAvailabilityDailyDates;
     }
 
+    public Double getLatitude() {
+        return mLatitude;
+    }
+
+    public Double getLongitude() {
+        return mLongitude;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public String getTown() {
+        return mTown;
+    }
+
     public Image[] getImages() {
         return mImages;
+    }
+
+    public String getDescription() {
+        return mDescription;
     }
 
     public boolean isAvailableHourly() {

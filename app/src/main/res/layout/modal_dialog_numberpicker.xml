@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/menu_title"
+        style="@style/ModalMenuTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_title_height"
+        android:background="@android:color/transparent"
+        android:text="@string/car_add_info_year"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_top_without_div"
+        app:layout_constraintTop_toBottomOf="@+id/menu_title">
+
+        <NumberPicker
+            android:id="@+id/np_dialogNumberPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        </NumberPicker>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_bottom"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/small_margin"
+        app:layout_constraintTop_toBottomOf="@+id/menu_content">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/b_dialogNumberPickerCancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:text="@string/cancel"
+            android:textColor="@color/colorPrimary" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/b_dialogNumberPickerDone"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_slide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <ProgressBar
+        android:id="@+id/image_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:theme="@style/LoadingIndicator" />
+</FrameLayout>

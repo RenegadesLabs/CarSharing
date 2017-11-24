@@ -3,8 +3,8 @@ package com.cardee;
 import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatDelegate;
 
-import com.cardee.data_source.remote.api.auth.adapter.exception.RxErrorHandlingCallAdapterFactory;
 import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -13,7 +13,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 
 import retrofit2.Retrofit;
-
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -25,6 +24,7 @@ public class CardeeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
 
         retrofit = new Retrofit.Builder()
@@ -34,6 +34,14 @@ public class CardeeApp extends Application {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 //                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .build();
+//        changeLocale();
+
+//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread thread, Throwable throwable) {
+//                FirebaseCrash.report(throwable);
+//            }
+//        });
     }
 
     public static GoogleApiClient initLoginGoogleApi(FragmentActivity activity, GoogleApiClient.OnConnectionFailedListener listener) {
@@ -47,6 +55,11 @@ public class CardeeApp extends Application {
                 .enableAutoManage(activity, listener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
     }
+
+//    private void changeLocale(){
+//        Configuration configuration = new Configuration();
+//        configuration.setLocale(new Locale("ms-MY"));
+//        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+//    }
 }

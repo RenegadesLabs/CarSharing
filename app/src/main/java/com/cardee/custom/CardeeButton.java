@@ -34,14 +34,20 @@ public class CardeeButton extends AppCompatButton {
                     R.styleable.CardeeButton);
 
             Drawable drawableStart = null;
+            Drawable drawableEnd = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 drawableStart = attributeArray.getDrawable(R.styleable.CardeeButton_drawableStartCompat);
+                drawableEnd = attributeArray.getDrawable(R.styleable.CardeeButton_drawableEndCompat);
             } else {
                 final int drawableLeftId = attributeArray.getResourceId(R.styleable.CardeeButton_drawableStartCompat, -1);
+                final int drawableRightId = attributeArray.getResourceId(R.styleable.CardeeButton_drawableEndCompat, -1);
                 if (drawableLeftId != -1)
                     drawableStart = AppCompatResources.getDrawable(context, drawableLeftId);
+
+                if (drawableRightId != -1)
+                    drawableEnd = AppCompatResources.getDrawable(context, drawableRightId);
             }
-            setCompoundDrawablesWithIntrinsicBounds(drawableStart, null, null, null);
+            setCompoundDrawablesWithIntrinsicBounds(drawableStart, null, drawableEnd, null);
             attributeArray.recycle();
         }
     }

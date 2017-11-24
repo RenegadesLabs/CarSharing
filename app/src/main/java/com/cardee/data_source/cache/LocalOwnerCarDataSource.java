@@ -1,5 +1,6 @@
 package com.cardee.data_source.cache;
 
+
 import com.cardee.data_source.OwnerCarDataSource;
 
 public class LocalOwnerCarDataSource implements OwnerCarDataSource {
@@ -18,7 +19,7 @@ public class LocalOwnerCarDataSource implements OwnerCarDataSource {
     }
 
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCar(int id, Callback callback) {
 
     }
 }

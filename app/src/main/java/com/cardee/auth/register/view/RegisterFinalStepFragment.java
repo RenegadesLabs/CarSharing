@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +69,7 @@ public class RegisterFinalStepFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_register2, container, false);
-
+        View v = inflater.inflate(R.layout.fragment_register_final, container, false);
         mUnbinder = ButterKnife.bind(this, v);
         setButtonsActivated(false);
         return v;
@@ -146,6 +144,8 @@ public class RegisterFinalStepFragment extends Fragment {
         Glide.with((RegisterActivity) getActivity())
                 .load(pictureByteArray)
                 .placeholder(R.drawable.placeholder_user_img)
+                .override(300, 300)
+                .centerCrop()
                 .transform(new CircleTransform(getActivity()))
                 .into(regUserPhoto);
 

@@ -60,4 +60,106 @@
     <string name="car_availability_one_time">One-Time</string>
     <string name="car_availability_calendar">Calendar</string>
     <string name="car_availability_days_of_week">Days Of Week</string>
+
+    <string name="car_details_tab_rental">Rental</string>
+    <string name="car_details_tab_car">Car</string>
+    <string name="car_details_tab_reviews">Reviews</string>
+    
+    <string name="car_details_more_listing">View listing</string>
+    <string name="car_details_more_delete">Delete car</string>
+
+    <string name="title_my_cars">My Cars</string>
+    <string name="title_my_bookings">My Bookings</string>
+    <string name="title_owner_car_images">Car Images</string>
+    <string name="title_owner_car_specs">Car Info</string>
+    <string name="title_owner_car_location">Car Location</string>
+    <string name="title_owner_car_description">Car Description</string>
+    <string name="toolbar_action_add_car">Add car</string>
+    <string name="toolbar_action_more">More</string>
+    <string name="toolbar_action_save">Save</string>
+
+    <string name="title_edit">edit</string>
+    <string name="car_details_location_title">Location</string>
+    <string name="car_details_description_title">Description</string>
+
+    <!--Add Car-->
+    <string name="car_add_title">Add Car</string>
+    <string name="car_add_submit">Submit</string>
+    <string name="car_add_vehicle">1. Vehicle Type</string>
+    <string name="car_add_info">2. Car Info</string>
+    <string name="car_add_image">3. Car Image</string>
+    <string name="car_add_location">4. Car Location</string>
+    <string name="car_add_contact">5. Contact Info</string>
+    <string name="car_add_payment">6. Payment Account</string>
+    <string name="car_add_add">Add</string>
+    <string name="car_add_next">Next</string>
+    <string name="car_add_save">Save</string>
+    <string name="car_add_all_done">All done!</string>
+
+    <string name="car_location_address">Where is your car parked?</string>
+
+    <!--Car Add Item Vehicle Type-->
+    <string name="car_add_vehicle_title">Vehicle Type</string>
+    <string name="car_add_vehicle_what">What type of vehicle are you listing?</string>
+    <string name="car_add_vehicle_personal">Personal Car</string>
+    <string name="car_add_vehicle_personal_expl">Passenger car for personal use</string>
+    <string name="car_add_vehicle_private">Private-Hire Vehicle</string>
+    <string name="car_add_vehicle_private_expl">Private-hire cars registered for Grab / Uber use.
+        \n(Also can be rented out for personal use)</string>
+    <string name="car_add_vehicle_commercial">Commercial Vehicle</string>
+    <string name="car_add_vehicle_commercial_expl">Pickup, lorry, van, minibus etc.</string>
+
+    <!--Car Add Item Car Info-->
+    <string name="car_add_info_title">Car Info</string>
+    <string name="car_add_info_make">Car Make</string>
+    <string name="car_add_info_make_hint">E.g. Toyota, Honda, BMW etc.</string>
+    <string name="car_add_info_model">Car Model</string>
+    <string name="car_add_info_model_hint">E.g. Altis, Camry, Prius etc.</string>
+    <string name="car_add_info_year">Year of Manufacture</string>
+    <string name="car_add_info_please_select">Please select</string>
+    <string name="car_add_info_car_title">Car Title</string>
+    <string name="car_add_info_car_title_hint">E.g. Toyota Camry, BMW 3 Hybrid etc.</string>
+    <string name="car_add_info_car_title_desc">How you would like your car title to be displayed?
+        \nKeep it short! (Do not include year of manufacture)</string>
+    <string name="car_add_info_license">License Plate Number</string>
+    <string name="car_add_info_license_hint">E.g. SJX8938Y</string>
+    <string name="car_add_info_seat_capacity">Seating Capacity</string>
+    <string name="car_add_info_eng_capacity">Engine Capacity</string>
+    <string name="car_add_info_eng_capacity_litre">litre</string>
+    <string name="car_add_info_transmission">Transmission</string>
+    <string name="car_add_info_body">Body Type(s)</string>
+    <string name="car_add_info_body_desc">Select body type(s) that best describe your car</string>
+    <string name="car_add_info_body_sedan">Sedan</string>
+    <string name="car_add_info_body_hatchback">Hatchback</string>
+    <string name="car_add_info_body_suv">SUV / MPV</string>
+    <string name="car_add_info_body_sports">Sports / Coupe</string>
+    <string name="car_add_info_body_convertible">+ Convertible</string>
+
+    <string name="error_empty_field">Field must be filled!</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+
+    <!--Car Add Item Car Image-->
+    <string name="car_add_image_title">Car Image</string>
+    <string name="car_add_image_desc">Upload an image of the front of your vehicle with the license plate number displayed clearly.</string>
+    <string name="car_add_image_why">This is for verification purpose only. You can add car images for listing later.</string>
+
+    <string name="upload">Upload</string>
+
+    <!--Car Add Item Car Location-->
+    <string name="car_add_location_title">Car Location</string>
+
+    <!--Car Add Item Contact Info-->
+    <string name="car_add_contact_title">Contact Info</string>
+    <string name="cad_add_contact_name_title">Your name</string>
+    <string name="cad_add_contact_name">Name</string>
+    <string name="cad_add_contact_mobile">Your mobile number</string>
+    <string name="cad_add_contact_country">Country</string>
+    <string name="cad_add_contact_number">Mobile number</string>
+    <string name="cad_add_contact_email_title">Your email</string>
+    <string name="cad_add_contact_email">Email</string>
+
+    <!--Car Add Item Payment-->
+    <string name="car_add_payment_title">Payment Account</string>
+
 </resources>

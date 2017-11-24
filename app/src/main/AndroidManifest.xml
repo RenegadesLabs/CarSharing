@@ -3,20 +3,21 @@
     package="com.cardee">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".CardeeApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".CardeeApp">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" />
 
-        </activity>
-
-        <activity android:name=".splash.SplashActivity"
+        <activity
+            android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -26,40 +27,57 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".auth.preview.PreviewActivity"
+        <activity
+            android:name=".auth.preview.PreviewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/PreviewTheme"/>
+            android:theme="@style/PreviewTheme" />
 
-        <activity android:name=".auth.login.LoginActivity"
+        <activity
+            android:name=".auth.login.view.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
-        <activity android:name=".auth.register.view.RegisterActivity"
+        <activity
+            android:name=".auth.register.view.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
-        <activity android:name=".owner_home.view.OwnerHomeActivity">
+        <activity android:name=".owner_home.view.OwnerHomeActivity" />
+        <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
+        <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
+        <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
-        </activity>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".owner_car_add.view.CarAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <service android:name=".owner_car_details.service.FetchAddressService" />
     </application>
 
 </manifest>

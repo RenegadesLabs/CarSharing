@@ -18,11 +18,22 @@
     <color name="bg_pressed_dim">#05000000</color>
     <color name="bg_pressed_ripple">#15000000</color>
     <color name="bg_transparent_black">#80000000</color>
+    <color name="bg_button_regular">#55b6ad</color>
+    <color name="bg_button_regular_dim">#49968f</color>
 
     <color name="text_disabled">#bababa</color>
     <color name="turquoise_text">#19B9AD</color>
     <color name="text_enabled">#474849</color>
+    <color name="text_regular">#38393b</color>
+    <color name="text_button_regular">#ffffff</color>
     <color name="text_picture_overlaid">#ffffff</color>
+    <color name="text_blue">@color/colorPrimaryDark</color>
+    <color name="text_subtitle">#838d99</color>
+
+    <color name="add_car_divider">#7A8794</color>
+
+    <color name="add_car_item_vehicle_inactive">#979797</color>
+    <color name="add_car_item_vehicle_secondary_txt">#7A8794</color>
 
     <color name="colorPrimary">#419CED</color>
     <color name="colorPrimaryDark">#1283E8</color>

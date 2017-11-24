@@ -17,15 +17,31 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="CardeeEditTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="CardeeToolbar" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/bg_main</item>
+    </style>
+
+    <style name="CardeeLoginEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/white_opacity60</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/white_opacity60</item>
         <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="CardeeEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
     <style name="CardeeTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="CardeeLoginTextInputStyle" parent="Widget.Design.TextInputLayout">
         <item name="android:textColorHint">@color/white_opacity60</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -33,13 +49,40 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
-    <style name="SelectorButton">
+    <style name="RoundedButton">
+        <item name="android:background">@drawable/bg_button_rounded</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+        <item name="android:textColor">@color/text_button_regular</item>
+        <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/widget_margin_small</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="RegularButton">
+        <item name="android:background">@drawable/bg_button_regular</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+        <item name="android:textColor">@color/text_button_regular</item>
+        <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="SelectorItem" parent="RegularButton">
         <item name="android:background">@drawable/bg_button_white</item>
         <item name="android:textSize">@dimen/list_item_selector_value</item>
         <item name="android:textColor">@color/toggling_text_color</item>
-        <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
-        <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="SelectorButton" parent="RegularButton">
+        <item name="android:background">@drawable/bg_button_white</item>
+        <item name="android:textSize">@dimen/list_item_selector_value</item>
+        <item name="android:textColor">@color/toggling_text_color</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="Switch" parent="AppTheme">
@@ -47,6 +90,10 @@
     </style>
 
     <style name="LoadingIndicator" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="Tabs" parent="AppTheme">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
@@ -65,4 +112,40 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ToolbarTitle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/bg_main</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ToolbarAction">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/bg_main</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+        <item name="android:layout_marginEnd">@dimen/widget_margin_regular</item>
+    </style>
+
+    <style name="TextInfo">
+        <item name="android:textSize">@dimen/text_regular</item>
+        <item name="android:textColor">@color/text_regular</item>
+    </style>
+
+    <style name="TextTitle" parent="TextInfo">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="TextTitleBold" parent="TextTitle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextSubtitle" parent="TextInfo">
+        <item name="android:textColor">@color/text_subtitle</item>
+    </style>
+
+    <style name="TextClickable" parent="TextInfo">
+        <item name="android:textColor">@color/blue</item>
+    </style>
 </resources>

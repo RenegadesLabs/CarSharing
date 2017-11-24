@@ -8,7 +8,13 @@ public class Error {
     private final String mMessage;
 
     public enum Type {
-        AUTHORIZATION, WRONG_CREDENTIALS, SERVER, OTHER, LOST_CONNECTION
+        AUTHORIZATION,
+        WRONG_CREDENTIALS,
+        SERVER,
+        OTHER,
+        LOST_CONNECTION,
+        INTERNAL,
+        INVALID_REQUEST
     }
 
     public static class Message {
