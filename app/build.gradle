@@ -22,7 +22,7 @@ android {
         }
         debug {
             debuggable true
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
