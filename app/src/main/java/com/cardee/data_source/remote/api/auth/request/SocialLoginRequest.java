@@ -6,13 +6,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class SocialLoginRequest {
 
+    public final static String FACEBOOK = "FACEBOOK";
+    public final static String GOOGLE = "GOOGLE";
+
     public enum Provider {
         FACEBOOK, GOOGLE
     }
 
     @Expose
     @SerializedName("social_provider")
-    private Provider provider;
+    private String provider;
     @Expose
     @SerializedName("token")
     private String token;
@@ -24,11 +27,11 @@ public class SocialLoginRequest {
 
     }
 
-    public Provider getProvider() {
+    public String getProvider() {
         return provider;
     }
 
-    public void setProvider(Provider provider) {
+    public void setProvider(String provider) {
         this.provider = provider;
     }
 

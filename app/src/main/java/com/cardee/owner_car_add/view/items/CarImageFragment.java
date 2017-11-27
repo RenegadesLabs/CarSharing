@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarImagePresenter;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -28,10 +28,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CarImageFragment extends Fragment implements NewCarContract.View {
+public class CarImageFragment extends Fragment implements NewCarFormsContract.View {
 
     private DetailsChangedListener parentListener;
-    private NewCarContract.Action pendingAction;
+    private NewCarFormsContract.Action pendingAction;
 
     private UploadImageListener mUploadListener;
 
@@ -43,8 +43,8 @@ public class CarImageFragment extends Fragment implements NewCarContract.View {
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarContract.Action action = (NewCarContract.Action)
-                    args.getSerializable(NewCarContract.ACTION);
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -55,8 +55,8 @@ public class CarImageFragment extends Fragment implements NewCarContract.View {
                     onFinish();
                     break;
                 case UPDATE:
-                    if (args.containsKey(NewCarContract.URI)) {
-                        Uri uri = args.getParcelable(NewCarContract.URI);
+                    if (args.containsKey(NewCarFormsContract.URI)) {
+                        Uri uri = args.getParcelable(NewCarFormsContract.URI);
                         setUserPhoto(uri);
                         presenter.saveCarImageToCache(uri);
                     }
@@ -97,7 +97,7 @@ public class CarImageFragment extends Fragment implements NewCarContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_image, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        presenter = new CarImagePresenter(this);
+        presenter = new CarImagePresenter(this, getActivity());
         return v;
     }
 
@@ -128,7 +128,7 @@ public class CarImageFragment extends Fragment implements NewCarContract.View {
         super.onStart();
         presenter.init();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarContract.Mode.IMAGE);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
     }
 
     @Override
@@ -165,6 +165,6 @@ public class CarImageFragment extends Fragment implements NewCarContract.View {
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarContract.Mode.IMAGE, pendingAction);
+        parentListener.onFinish(NewCarFormsContract.Mode.IMAGE, pendingAction);
     }
 }

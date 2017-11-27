@@ -23,7 +23,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
@@ -159,8 +159,8 @@ public class OwnerHomeActivity extends AppCompatActivity
     @Override
     public void onLocationPickerClick(Car car) {
         Intent intent = new Intent(this, CarDetailsEditActivity.class);
-        intent.putExtra(NewCarContract.CAR_ID, car.getCarId());
-        intent.putExtra(NewCarContract.VIEW_MODE, NewCarContract.Mode.LOCATION);
+        intent.putExtra(NewCarFormsContract.CAR_ID, car.getCarId());
+        intent.putExtra(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.LOCATION);
         startActivity(intent);
     }
 
@@ -175,7 +175,7 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_NEW_CAR_REQUEST_CODE && resultCode == NewCarContract.CAR_CREATED) {
+        if (requestCode == ADD_NEW_CAR_REQUEST_CODE && resultCode == NewCarFormsContract.CAR_CREATED) {
             final AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.car_added_title)
                     .setMessage(R.string.car_added_message)

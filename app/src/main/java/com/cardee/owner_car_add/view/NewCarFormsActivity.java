@@ -34,12 +34,12 @@ import com.cardee.util.display.ActivityHelper;
 import java.io.Serializable;
 
 public class NewCarFormsActivity extends AppCompatActivity
-        implements NewCarContract.View,
+        implements NewCarFormsContract.View,
         DetailsChangedListener,
         View.OnClickListener,
         UploadImageListener {
 
-    private static final String TAG = NewCarContract.class.getSimpleName();
+    private static final String TAG = NewCarFormsContract.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 101;
 
     private TextView titleView;
@@ -51,7 +51,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     private Toast currentToast;
 
     private SimpleBinder childBinder;
-    private NewCarContract.Mode currentMode;
+    private NewCarFormsContract.Mode currentMode;
 
     private boolean isInRootMode = true;
 
@@ -73,9 +73,9 @@ public class NewCarFormsActivity extends AppCompatActivity
         btnToNext.setOnClickListener(this);
         btnAllDone.setOnClickListener(this);
         progress = (ProgressBar) findViewById(R.id.new_car_progress);
-        Serializable extra = getIntent().getSerializableExtra(NewCarContract.VIEW_MODE);
+        Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
         if (extra != null) {
-            NewCarContract.Mode mode = (NewCarContract.Mode) extra;
+            NewCarFormsContract.Mode mode = (NewCarFormsContract.Mode) extra;
             setContentOfMode(mode);
             return;
         }
@@ -96,13 +96,13 @@ public class NewCarFormsActivity extends AppCompatActivity
     public void onBackPressed() {
         if (childBinder != null) {
             Bundle args = new Bundle();
-            args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.SAVE);
+            args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.SAVE);
             childBinder.push(args);
         }
         super.onBackPressed();
     }
 
-    private void setContentOfMode(NewCarContract.Mode mode) {
+    private void setContentOfMode(NewCarFormsContract.Mode mode) {
         switch (mode) {
             case TYPE:
                 showFragment(CarTypeFragment.newInstance());
@@ -140,18 +140,18 @@ public class NewCarFormsActivity extends AppCompatActivity
         transaction.replace(R.id.fragment_container, fragment).commit();
     }
 
-    private NewCarContract.Mode getNextToMode(NewCarContract.Mode mode) {
+    private NewCarFormsContract.Mode getNextToMode(NewCarFormsContract.Mode mode) {
         switch (mode) {
             case TYPE:
-                return NewCarContract.Mode.INFO;
+                return NewCarFormsContract.Mode.INFO;
             case INFO:
-                return NewCarContract.Mode.IMAGE;
+                return NewCarFormsContract.Mode.IMAGE;
             case IMAGE:
-                return NewCarContract.Mode.LOCATION;
+                return NewCarFormsContract.Mode.LOCATION;
             case LOCATION:
-                return NewCarContract.Mode.CONTACT;
+                return NewCarFormsContract.Mode.CONTACT;
 //            case CONTACT:
-//                return NewCarContract.Mode.PAYMENT;
+//                return NewCarFormsContract.Mode.PAYMENT;
             default:
                 return null;
         }
@@ -163,7 +163,7 @@ public class NewCarFormsActivity extends AppCompatActivity
             case R.id.btn_to_next:
                 if (childBinder != null) {
                     Bundle args = new Bundle();
-                    args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.FINISH);
+                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.FINISH);
                     childBinder.push(args);
                 }
                 break;
@@ -171,7 +171,7 @@ public class NewCarFormsActivity extends AppCompatActivity
             case R.id.toolbar_action:
                 if (childBinder != null) {
                     Bundle args = new Bundle();
-                    args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.SAVE);
+                    args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.SAVE);
                     childBinder.push(args);
                 }
                 break;
@@ -179,7 +179,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onModeDisplayed(NewCarContract.Mode mode) {
+    public void onModeDisplayed(NewCarFormsContract.Mode mode) {
         currentMode = mode;
         if (isLastStep(currentMode)) {
             btnAllDone.setVisibility(View.VISIBLE);
@@ -193,8 +193,8 @@ public class NewCarFormsActivity extends AppCompatActivity
         }
     }
 
-    private boolean isLastStep(NewCarContract.Mode mode) {
-        return mode == NewCarContract.Mode.CONTACT;
+    private boolean isLastStep(NewCarFormsContract.Mode mode) {
+        return mode == NewCarFormsContract.Mode.CONTACT;
     }
 
     @Override
@@ -212,7 +212,7 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(NewCarContract.Mode mode, NewCarContract.Action action) {
+    public void onFinish(NewCarFormsContract.Mode mode, NewCarFormsContract.Action action) {
         if (currentMode != mode || action == null) {
             throw new IllegalArgumentException("Mode mismatch: " + currentMode + " vs " + mode);
         }
@@ -221,7 +221,7 @@ public class NewCarFormsActivity extends AppCompatActivity
                 finish();
                 break;
             case FINISH:
-                NewCarContract.Mode nextMode = getNextToMode(mode);
+                NewCarFormsContract.Mode nextMode = getNextToMode(mode);
                 if (nextMode != null) {
                     setContentOfMode(nextMode);
                 }
@@ -242,7 +242,7 @@ public class NewCarFormsActivity extends AppCompatActivity
                 }
             }
             Bundle args = new Bundle();
-            args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.UPDATE);
+            args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
             childBinder.push(args);
         }
     }
@@ -255,8 +255,8 @@ public class NewCarFormsActivity extends AppCompatActivity
                 case ActivityHelper.PICK_IMAGE:
                     if (data != null && childBinder != null) {
                         Bundle args = new Bundle();
-                        args.putSerializable(NewCarContract.ACTION, NewCarContract.Action.UPDATE);
-                        args.putParcelable(NewCarContract.URI, data.getData());
+                        args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
+                        args.putParcelable(NewCarFormsContract.URI, data.getData());
                         childBinder.push(args);
                         return;
                     }

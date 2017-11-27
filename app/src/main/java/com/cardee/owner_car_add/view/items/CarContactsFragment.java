@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarContactsPresenter;
-import com.cardee.owner_car_add.view.NewCarContract;
+import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class CarContactsFragment extends Fragment implements NewCarContract.View {
+public class CarContactsFragment extends Fragment implements NewCarFormsContract.View {
 
     private Unbinder mUnbinder;
     private Toast currentToast;
@@ -42,13 +42,13 @@ public class CarContactsFragment extends Fragment implements NewCarContract.View
     public AppCompatEditText carOwnerName;
 
     private DetailsChangedListener parentListener;
-    private NewCarContract.Action pendingAction;
+    private NewCarFormsContract.Action pendingAction;
     private CarContactsPresenter presenter;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
-            NewCarContract.Action action = (NewCarContract.Action)
-                    args.getSerializable(NewCarContract.ACTION);
+            NewCarFormsContract.Action action = (NewCarFormsContract.Action)
+                    args.getSerializable(NewCarFormsContract.ACTION);
             if (action == null) {
                 return;
             }
@@ -105,7 +105,7 @@ public class CarContactsFragment extends Fragment implements NewCarContract.View
         super.onStart();
         presenter.init();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarContract.Mode.CONTACT);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.CONTACT);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class CarContactsFragment extends Fragment implements NewCarContract.View
 
     @Override
     public void onFinish() {
-        parentListener.onFinish(NewCarContract.Mode.CONTACT, pendingAction);
+        parentListener.onFinish(NewCarFormsContract.Mode.CONTACT, pendingAction);
     }
 
     private TextWatcher textWatcherPhone = new TextWatcher() {

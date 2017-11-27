@@ -10,7 +10,7 @@ import com.cardee.mvp.BaseView;
 
 import java.io.File;
 
-public interface NewCarContract {
+public interface NewCarFormsContract {
 
     int CAR_CREATED = 102;
 

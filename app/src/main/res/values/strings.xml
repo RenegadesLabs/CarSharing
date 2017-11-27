@@ -34,6 +34,21 @@
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
 
+    <!--Send Email Password Recover-->
+    <string name="send_email_title">Forgot Password</string>
+    <string name="send_email_text">Enter your email and we will send you a \nlink to reset your password.</string>
+    <string name="send_email_email">Your email address</string>
+    <string name="send_email_send">Send Email</string>
+
+    <!--Change Password-->
+    <string name="change_pass_title">Change Password</string>
+    <string name="change_pass_text">Enter a new password for your account</string>
+    <string name="change_pass_new_pass">New password</string>
+    <string name="change_pass_confirm_pass">Confirm new password</string>
+    <string name="change_pass_edit_error">This field must be filled, more than 3 characters!</string>
+    <string name="change_pass_edit_error_matching">Passwords is not matching!</string>
+    <string name="change_pass_success">Password changed successfully!</string>
+
     <!--Loading-->
     <string name="loading">Loading…</string>
 
@@ -46,6 +61,8 @@
 
     <string name="auth_facebook">Log in with Facebook</string>
     <string name="auth_google">Log in with Google+</string>
+    <string name="auth_signup_facebook">Sign up with Facebook</string>
+    <string name="auth_signup_google">Sign up with Google+</string>
 
     <!--Bottom menu-->
     <string name="menu_item_inbox_title">Inbox</string>
