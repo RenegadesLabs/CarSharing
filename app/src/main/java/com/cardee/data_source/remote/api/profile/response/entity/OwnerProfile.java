@@ -37,7 +37,7 @@ public class OwnerProfile extends ErrorResponseBody {
     private Object[] reviews;
     @Expose
     @SerializedName("rating")
-    private Integer rating;
+    private Float rating;
     @Expose
     @SerializedName("social_net")
     private String socialNetwork;
@@ -132,11 +132,11 @@ public class OwnerProfile extends ErrorResponseBody {
         this.reviews = reviews;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

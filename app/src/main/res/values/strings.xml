@@ -81,7 +81,7 @@
     <string name="car_details_tab_rental">Rental</string>
     <string name="car_details_tab_car">Car</string>
     <string name="car_details_tab_reviews">Reviews</string>
-    
+
     <string name="car_details_more_listing">View listing</string>
     <string name="car_details_more_delete">Delete car</string>
 
@@ -182,5 +182,16 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
+
+    <!--Owner Profile Info-->
+    <string name="owner_profile_info_title">Owner Profile</string>
+    <string name="owner_profile_info_acceptance">Acceptance</string>
+    <string name="owner_profile_info_response">Response Time</string>
+    <string name="owner_profile_info_bookings">Bookings</string>
+    <string name="owner_profile_info_edit">edit</string>
+    <string name="owner_profile_info_car">\u0020Car</string>
+    <string name="owner_profile_info_car_review">\u0020Car Review</string>
+
+
 
 </resources>

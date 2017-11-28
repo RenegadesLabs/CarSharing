@@ -31,6 +31,7 @@ import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
+import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
@@ -99,6 +100,10 @@ public class OwnerHomeActivity extends AppCompatActivity
         switch (position) {
             case 1:
                 fragmentClazz = OwnerCarsFragment.class;
+                break;
+            case 3: // just for debug
+                Intent intent = new Intent(this, OwnerProfileInfoActivity.class);
+                startActivity(intent);
                 break;
             default:
                 Log.e(TAG, "Position changed to: " + position);
