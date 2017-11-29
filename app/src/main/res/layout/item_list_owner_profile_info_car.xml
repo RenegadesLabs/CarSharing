@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="152dp"
-    android:layout_height="103dp">
+    android:layout_width="170dp"
+    android:layout_height="110dp"
+    android:paddingEnd="@dimen/widget_padding_x_small">
 
     <ImageView
         android:id="@+id/car_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/car_image_loading_indicator"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side_small"
+        android:layout_height="@dimen/image_loading_indicator_side_small"
+        android:theme="@style/LoadingIndicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -15,21 +28,41 @@
         android:id="@+id/car_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Mazda 3  •"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="4dp"
+        android:maxLines="2"
+        android:maxWidth="108dp"
+        android:textAppearance="@style/TextTitleBold"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="4dp"
+        android:text="@string/owner_profile_info_dot"
+        android:textAppearance="@style/TextTitleBold"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/car_text" />
 
     <TextView
         android:id="@+id/rate_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="4dp"
         android:text="4.2"
+        android:textAppearance="@style/TextTitleBold"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/car_text" />
+        app:layout_constraintStart_toEndOf="@id/circle" />
 
     <ImageView
         android:id="@+id/star_rate"

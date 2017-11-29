@@ -191,6 +191,7 @@
     <string name="owner_profile_info_edit">edit</string>
     <string name="owner_profile_info_car">\u0020Car</string>
     <string name="owner_profile_info_car_review">\u0020Car Review</string>
+    <string name="owner_profile_info_dot">\u2022</string>
 
 
 
