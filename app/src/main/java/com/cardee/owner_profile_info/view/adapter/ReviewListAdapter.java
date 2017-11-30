@@ -11,15 +11,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.R;
-import com.cardee.data_source.remote.api.reviews.response.entity.Review;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.domain.owner.entity.CarReview;
 import com.cardee.util.glide.CircleTransform;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import io.reactivex.subjects.PublishSubject;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ReviewListViewHolder> {
 
-    private final List<Review> mReviewsList;
+    private final List<CarReview> mReviewsList;
 
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
@@ -40,9 +48,8 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
 
     @Override
     public void onBindViewHolder(final ReviewListViewHolder holder, int position) {
-
-        holder.setImage(mReviewsList.get(position).getRenter().getProfilePhoto(), mGlideRequestManager, mContext);
-//        holder.setCarRate();
+        holder.setImage(mReviewsList.get(position).getRenterImageLink(), mGlideRequestManager, mContext);
+        holder.setTextFields(mReviewsList.get(position));
     }
 
     @Override
@@ -50,8 +57,8 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         return mReviewsList.size();
     }
 
-    public void insert(List<Review> reviews) {
-        for (Review review : reviews) {
+    public void insert(List<CarReview> reviews) {
+        for (CarReview review : reviews) {
             if (!mReviewsList.contains(review)) {
                 mReviewsList.add(review);
             }
@@ -85,13 +92,24 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
                     .into(mProfileImage);
         }
 
-        public void setTextFields(Review review) {
-            mProfileName.setText(review.getRenter().getName());
-            mReviewDate.setText(review.getReviewDate()); // TODO format date
-            mReviewText.setText(review.getReview());
+        public void setTextFields(CarReview review) {
+            mProfileName.setText(review.getRenterProfileName());
 
-            mCarTitle.setText(""); // TODO
-            mCarRate.setText(""); // TODO
+            try {
+                String rawDate = review.getReviewDate();
+                rawDate = rawDate.substring(0, 10);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = df.parse(rawDate);
+                df = new SimpleDateFormat("MMM d, yyyy");
+                mReviewDate.setText(df.format(date));
+            } catch (ParseException e) {
+            }
+
+            mReviewText.setText(review.getReviewText());
+            mCarTitle.setText(review.getCarTitle().trim());
+
+            float rate = review.getCarRate();
+            mCarRate.setText(String.format(Locale.getDefault(), "%.1f", rate));
         }
 
     }

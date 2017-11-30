@@ -152,4 +152,24 @@
     <style name="TextClickable" parent="TextInfo">
         <item name="android:textColor">@color/blue</item>
     </style>
+
+    <style name="AlertDialog" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/blue</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
+    <style name="NoteChangeTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">@color/text_enabled</item>
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+
 </resources>

@@ -2,8 +2,8 @@ package com.cardee.domain.owner.entity.mapper;
 
 
 import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
-import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.cardee.data_source.remote.api.common.entity.ImageEntity;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.Image;
 
@@ -40,7 +40,7 @@ public class CarEntityToCarMapper {
                 carEntity.getCarAvailabilityTimeBegin(), carEntity.getCarAvailabilityTimeEnd(),
                 carEntity.getCarAvailableOrderHours(), carEntity.getCarAvailableOrderDays(),
                 carEntity.getCarAvailabilityHourlyDates(), carEntity.getCarAvailabilityDailyDates(),
-                carDetails.getDescription(), images, null, null, null, null);
+                carDetails.getDescription(), images, null, null, null, null, carDetails.getCarRating());
     }
 
     public List<Car> transform(CarEntity[] carEntities) {

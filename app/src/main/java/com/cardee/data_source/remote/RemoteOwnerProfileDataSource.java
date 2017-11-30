@@ -8,6 +8,8 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerProfileDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
+import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
+import com.cardee.data_source.remote.api.profile.response.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 
 import io.reactivex.functions.Consumer;
@@ -30,7 +32,7 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
     }
 
     @Override
-    public void loadOwnerProfile(final Callback callback) {
+    public void loadOwnerProfile(final ProfileCallback callback) {
         mApi.loadOwnerProfile().subscribe(new Consumer<OwnerProfileResponse>() {
             @Override
             public void accept(OwnerProfileResponse ownerProfileResponse) throws Exception {
@@ -49,7 +51,27 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
         });
     }
 
-    private void handleErrorResponse(RemoteOwnerProfileDataSource.Callback callback, BaseResponse response) {
+    @Override
+    public void changeNote(OwnerNoteRequest noteRequest, final OnChangeNoteCallback callback) {
+        mApi.updateOwnerNote(noteRequest).subscribe(new Consumer<NoDataResponse>() {
+            @Override
+            public void accept(NoDataResponse noDataResponse) throws Exception {
+                if (noDataResponse.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(callback, noDataResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
+    }
+
+    private void handleErrorResponse(BaseCallback callback, BaseResponse response) {
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {
             callback.onError(new Error(Error.Type.SERVER, "Server error"));
         } else if (response.getResponseCode() == BaseResponse.ERROR_CODE_UNAUTHORIZED) {

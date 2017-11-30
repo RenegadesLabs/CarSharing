@@ -9,6 +9,9 @@ public class BaseCarEntity {
     @SerializedName("car_id")
     private Integer carId;
     @Expose
+    @SerializedName("rating")
+    private Float carRating;
+    @Expose
     @SerializedName("car_transmission")
     private String carTransmission;
     @Expose
@@ -47,7 +50,6 @@ public class BaseCarEntity {
     @Expose
     @SerializedName("images")
     private ImageEntity[] images;
-
 
 
     public BaseCarEntity() {
@@ -164,5 +166,13 @@ public class BaseCarEntity {
 
     public void setImages(ImageEntity[] images) {
         this.images = images;
+    }
+
+    public Float getCarRating() {
+        return carRating;
+    }
+
+    public void setCarRating(Float carRating) {
+        this.carRating = carRating;
     }
 }

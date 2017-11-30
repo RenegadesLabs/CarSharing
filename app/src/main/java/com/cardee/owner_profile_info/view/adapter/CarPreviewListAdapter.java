@@ -19,6 +19,7 @@ import com.cardee.domain.owner.entity.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
@@ -48,7 +49,7 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
         final Car car = mCarItems.get(position);
         holder.setImage(car.getPrimaryImageLink(), mGlideRequestManager);
         holder.setCarTitle(car.getCarTitle());
-//        holder.setCarRate();
+        holder.setCarRate(car.getRating());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +119,8 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
             mCarTitle.setText(text);
         }
 
-        public void setCarRate(String rate) {
-            mCarRate.setText(rate);
+        public void setCarRate(float rate) {
+            mCarRate.setText((String.format(Locale.getDefault(), "%.1f", rate)));
         }
     }
 

@@ -23,7 +23,7 @@ public class GetOwnerInfo implements UseCase<GetOwnerInfo.RequestValues, GetOwne
 
     @Override
     public void execute(RequestValues values, final Callback<ResponseValues> callback) {
-        mRepository.loadOwnerProfile(new OwnerProfileDataSource.Callback() {
+        mRepository.loadOwnerProfile(new OwnerProfileDataSource.ProfileCallback() {
             @Override
             public void onSuccess(OwnerProfile ownerProfile) {
                 CarEntity[] carEntities = ownerProfile.getCars();

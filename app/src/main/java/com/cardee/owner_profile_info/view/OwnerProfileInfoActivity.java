@@ -4,17 +4,19 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
-import com.cardee.data_source.remote.api.reviews.response.entity.Review;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.domain.owner.entity.CarReview;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_profile_info.presenter.OwnerProfileInfoPresenter;
@@ -47,6 +49,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @BindView(R.id.response_time)
     TextView mProfileResponse;
 
+    @BindView(R.id.response_minutes)
+    TextView mResponseMins;
+
     @BindView(R.id.bookings_count)
     TextView mProfileBookings;
 
@@ -54,6 +59,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     ImageView mProfilePhoto;
 
     @BindView(R.id.note_edit)
+    TextView mNoteEdit;
+
+    @BindView(R.id.note_text)
     TextView mNoteText;
 
     @BindView(R.id.cars_count)
@@ -77,18 +85,37 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         initPresenter();
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
         showProgress(true);
-        mPresenter.getOwnerInfo();
-        mCarsAdapter = new CarPreviewListAdapter(this);
-        mReviewAdapter = new ReviewListAdapter(this);
+        initAdapters();
         initCarList(mCarsListView);
         initReviewList(mReviewsListView);
+        initListners();
+
+        mPresenter.getOwnerInfo();
+    }
+
+    private void initListners() {
+        mNoteEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.changeNote(OwnerProfileInfoActivity.this);
+            }
+        });
+    }
+
+    private void initAdapters() {
+        mCarsAdapter = new CarPreviewListAdapter(this);
+        mReviewAdapter = new ReviewListAdapter(this);
         mCarsAdapter.subscribe(mPresenter);
     }
 
     private void initReviewList(RecyclerView mReviewsListView) {
-        mReviewsListView.setHasFixedSize(true);
         mReviewsListView.setAdapter(mReviewAdapter);
-        mReviewsListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviewsListView.setLayoutManager(layoutManager);
+        mReviewsListView.setNestedScrollingEnabled(false);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mReviewsListView.getContext(),
+                LinearLayoutManager.VERTICAL);
+        mReviewsListView.addItemDecoration(dividerItemDecoration);
     }
 
     private void initCarList(RecyclerView mCarsListView) {
@@ -174,7 +201,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     }
 
     @Override
-    public void setReviews(List<Review> reviews) {
+    public void setCarReviews(List<CarReview> reviews) {
         mReviewAdapter.insert(reviews);
     }
 
@@ -186,6 +213,11 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         args.putString(OwnerCarDetailsContract.CAR_NUMBER, car.getLicenceNumber());
         intent.putExtras(args);
         startActivity(intent);
+    }
+
+    @Override
+    public void setMinutes(String minutes) {
+        mResponseMins.setText(minutes);
     }
 
 }

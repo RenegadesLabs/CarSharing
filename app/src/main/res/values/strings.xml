@@ -192,7 +192,12 @@
     <string name="owner_profile_info_car">\u0020Car</string>
     <string name="owner_profile_info_car_review">\u0020Car Review</string>
     <string name="owner_profile_info_dot">\u2022</string>
-
+    <string name="owner_profile_info_percent">%</string>
+    <string name="owner_profile_info_minutes">min</string>
+    <string name="owner_profile_info_note_edit">Note</string>
+    <string name="owner_profile_info_note_change">Change</string>
+    <string name="owner_profile_info_note_change_title">Change note</string>
+    <string name="owner_profile_info_note_change_success">Note changed</string>
 
 
 </resources>
