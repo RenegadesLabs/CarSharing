@@ -1,13 +1,11 @@
-package com.cardee.owner_home.view.modal;
+package com.cardee.custom.modal;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.Toast;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close"
+            app:titleTextColor="@color/bg_main">
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/toolbar_action"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/toolbar_action_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/field_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/small_margin">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_additionalTerms"
+            style="@style/CardeeEditTextWithoutUnderlineStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:hint="@string/car_rental_terms_additional_example"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_regular" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

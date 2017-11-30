@@ -7,11 +7,13 @@
 
     <dimen name="padding_x_small">6dp</dimen>
 
+    <dimen name="xsmall_margin">4dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="large_margin">20dp</dimen>
     <dimen name="xlarge_margin">32dp</dimen>
     <dimen name="xxlarge_margin">48dp</dimen>
+    <dimen name="xxxlarge_margin">54dp</dimen>
 
     <dimen name="list_item_control_title">15sp</dimen>
     <dimen name="list_item_text_general">14sp</dimen>

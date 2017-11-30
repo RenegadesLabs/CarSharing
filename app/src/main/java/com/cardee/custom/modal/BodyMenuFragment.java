@@ -1,4 +1,4 @@
-package com.cardee.owner_home.view.modal;
+package com.cardee.custom.modal;
 
 import android.app.Dialog;
 import android.graphics.Color;
