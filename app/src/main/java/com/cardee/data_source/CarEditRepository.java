@@ -4,6 +4,11 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
+import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
 
 public class CarEditRepository implements CarEditDataSource {
 
@@ -51,5 +56,100 @@ public class CarEditRepository implements CarEditDataSource {
             return;
         }
         remoteDataSource.updateInfo(id, carData, callback);
+    }
+
+    @Override
+    public void updateRentalRequirements(Integer id, RentalTermsRequirementsEntity requirements, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateRentalRequirements(id, requirements, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateRentalRules(Integer id, CarRuleEntity rules, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateRentalRules(id, rules, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateRentalSecurityDeposit(Integer id, RentalTermsSecurityDepositEntity securityDeposit, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateRentalSecurityDeposit(id, securityDeposit, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateRentalInsuranceExcess(Integer id, RentalTermsInsuranceEntity insuranceExcess, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateRentalInsuranceExcess(id, insuranceExcess, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additional, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateRentalAdditionalTerms(id, additional, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
 }

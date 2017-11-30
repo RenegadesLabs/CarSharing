@@ -66,9 +66,13 @@
         <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsRequirementsActivity"/>
         <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsRulesActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsDepositActivity"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsInsuranceActivity"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsAdditional"/>
+        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsDepositActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsInsuranceActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsAdditional"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
         <meta-data

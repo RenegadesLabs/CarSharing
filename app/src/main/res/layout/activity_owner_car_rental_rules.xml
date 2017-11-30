@@ -288,7 +288,7 @@
                 android:layout_height="match_parent"
                 android:gravity="top"
                 android:hint="@string/car_rental_terms_rules_own"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:text=""
                 android:textSize="@dimen/text_regular" />
         </LinearLayout>

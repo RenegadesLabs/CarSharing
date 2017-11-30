@@ -105,6 +105,7 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

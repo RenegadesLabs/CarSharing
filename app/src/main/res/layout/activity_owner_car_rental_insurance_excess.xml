@@ -49,6 +49,7 @@
             style="@style/CardeeEditTextWithoutUnderlineStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textMultiLine|textCapSentences"
             android:gravity="top"
             android:hint="@string/car_rental_terms_insurance_excess_example"
             android:textColor="@android:color/black"

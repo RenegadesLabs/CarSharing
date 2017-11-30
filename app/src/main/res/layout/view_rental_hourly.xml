@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,6 +33,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_calendar_rental" />
+
                 <TextView
                     android:id="@+id/availability"
                     android:layout_width="wrap_content"
@@ -134,8 +136,8 @@
                     android:id="@+id/settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/medium_margin"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/car_rental_info_settings"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_large"
@@ -183,6 +185,7 @@
                     android:id="@+id/sw_rentalInstant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_instant"
                     app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
 
@@ -229,6 +232,7 @@
                     android:id="@+id/sw_rentalDelivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_curbside"
                     app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
 
@@ -276,6 +280,7 @@
                     android:id="@+id/sw_rentalCash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_cash"
                     app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
 
@@ -430,9 +435,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
+                    android:text="dfgfdgl;,"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_regular"
-                    android:text="dfgfdgl;,"
                     app:layout_constraintStart_toStartOf="@id/fuel"
                     app:layout_constraintTop_toBottomOf="@+id/fuel" />
             </android.support.constraint.ConstraintLayout>

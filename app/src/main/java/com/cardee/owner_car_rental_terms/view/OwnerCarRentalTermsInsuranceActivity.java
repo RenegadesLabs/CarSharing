@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class OwnerCarRentalTermsInsuranceActivity extends AppCompatActivity impl
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView title = toolbar.findViewById(R.id.toolbar_title);
-        title.setText(R.string.car_rental_terms_deposit);
+        title.setText(R.string.car_rental_terms_insurance);
         toolbar.findViewById(R.id.toolbar_action).setOnClickListener(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() == null) {
@@ -35,6 +36,17 @@ public class OwnerCarRentalTermsInsuranceActivity extends AppCompatActivity impl
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
+            android:inputType="textMultiLine|textCapSentences"
             android:hint="@string/car_rental_terms_additional_example"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_regular" />

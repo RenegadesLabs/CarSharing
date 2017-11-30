@@ -40,12 +40,12 @@ public class OwnerCarRentalTermsActivity extends AppCompatActivity {
 
     @OnClick(R.id.cl_termsInsuranceContainer)
     public void onInsuranceClicked() {
-
+        startActivity(new Intent(this, OwnerCarRentalTermsInsuranceActivity.class));
     }
 
     @OnClick(R.id.cl_termsAdditionalContainer)
     public void onAdditionalClicked() {
-
+        startActivity(new Intent(this, OwnerCarRentalTermsAdditional.class));
     }
 
     private void initToolbar() {
