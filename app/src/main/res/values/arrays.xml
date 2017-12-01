@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="more_tab_menu">
+        <item>@string/more_tab_account</item>
+        <item>@string/more_tab_settings</item>
+        <item>@string/more_tab_credit</item>
+        <item>@string/more_tab_chat</item>
+        <item>@string/more_tab_friends</item>
+        <item>@string/more_tab_cardee</item>
+        <item>@string/more_tab_switch</item>
+    </string-array>
+
+</resources>

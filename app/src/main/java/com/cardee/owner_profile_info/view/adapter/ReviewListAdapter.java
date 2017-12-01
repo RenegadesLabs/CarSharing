@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.CarReview;
 import com.cardee.util.glide.CircleTransform;
 
@@ -22,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import io.reactivex.subjects.PublishSubject;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ReviewListViewHolder> {
 
@@ -98,9 +95,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
             try {
                 String rawDate = review.getReviewDate();
                 rawDate = rawDate.substring(0, 10);
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date date = df.parse(rawDate);
-                df = new SimpleDateFormat("MMM d, yyyy");
+                df = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
                 mReviewDate.setText(df.format(date));
             } catch (ParseException e) {
             }
@@ -109,7 +106,11 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
             mCarTitle.setText(review.getCarTitle().trim());
 
             float rate = review.getCarRate();
-            mCarRate.setText(String.format(Locale.getDefault(), "%.1f", rate));
+            if (rate == (long) rate) {
+                mCarRate.setText((String.format(Locale.getDefault(), "%d", (long) rate)));
+            } else {
+                mCarRate.setText((String.format(Locale.getDefault(), "%.1f", rate)));
+            }
         }
 
     }

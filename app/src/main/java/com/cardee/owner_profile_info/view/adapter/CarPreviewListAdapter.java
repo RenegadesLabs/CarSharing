@@ -120,7 +120,11 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
         }
 
         public void setCarRate(float rate) {
-            mCarRate.setText((String.format(Locale.getDefault(), "%.1f", rate)));
+            if (rate == (long) rate) {
+                mCarRate.setText((String.format(Locale.getDefault(), "%d", (long) rate)));
+            } else {
+                mCarRate.setText((String.format(Locale.getDefault(), "%.1f", rate)));
+            }
         }
     }
 

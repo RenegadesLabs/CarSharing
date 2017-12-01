@@ -15,6 +15,9 @@ public class OwnerProfile extends ErrorResponseBody {
     @SerializedName("name")
     private String name;
     @Expose
+    @SerializedName("address")
+    private String address;
+    @Expose
     @SerializedName("acceptance")
     private String acceptance;
     @Expose
@@ -32,9 +35,9 @@ public class OwnerProfile extends ErrorResponseBody {
     @Expose
     @SerializedName("review_cnt")
     private Integer reviewCount;
-    @Expose
     @SerializedName("reviews")
-    private Object[] reviews;
+    @Expose
+    private OwnerReview[] reviews;
     @Expose
     @SerializedName("rating")
     private Float rating;
@@ -124,11 +127,11 @@ public class OwnerProfile extends ErrorResponseBody {
         this.reviewCount = reviewCount;
     }
 
-    public Object[] getReviews() {
+    public OwnerReview[] getReviews() {
         return reviews;
     }
 
-    public void setReviews(Object[] reviews) {
+    public void setReviews(OwnerReview[] reviews) {
         this.reviews = reviews;
     }
 
@@ -162,5 +165,13 @@ public class OwnerProfile extends ErrorResponseBody {
 
     public void setSettings(NotificationSettings[] settings) {
         this.settings = settings;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

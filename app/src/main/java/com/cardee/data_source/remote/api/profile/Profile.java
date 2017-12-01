@@ -27,6 +27,7 @@ public interface Profile {
     //TODO: implement
     void uploadProfilePhoto();
 
+
     @PUT("profiles/owner/note")
     @Headers("Content-Type: application/json")
     Observable<NoDataResponse> updateOwnerNote(@Body OwnerNoteRequest ownerNoteRequest);

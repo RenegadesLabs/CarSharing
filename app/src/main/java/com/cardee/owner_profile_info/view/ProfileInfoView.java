@@ -34,4 +34,6 @@ public interface ProfileInfoView extends BaseView {
     void openItem(Car car);
 
     void setMinutes(String minutes);
+
+    void setNoteTitle(String address);
 }

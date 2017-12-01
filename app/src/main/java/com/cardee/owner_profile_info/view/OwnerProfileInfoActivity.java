@@ -37,6 +37,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private CarPreviewListAdapter mCarsAdapter;
     private ReviewListAdapter mReviewAdapter;
 
+    @BindView(R.id.profile_info_container)
+    View mContainer;
+
     @BindView(R.id.profile_name)
     TextView mProfileNameText;
 
@@ -64,6 +67,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @BindView(R.id.note_text)
     TextView mNoteText;
 
+    @BindView(R.id.note_title)
+    TextView mNoteTitle;
+
     @BindView(R.id.cars_count)
     TextView mCarsCount;
 
@@ -84,7 +90,6 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
         initPresenter();
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
-        showProgress(true);
         initAdapters();
         initCarList(mCarsListView);
         initReviewList(mReviewsListView);
@@ -131,9 +136,11 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @Override
     public void showProgress(boolean show) {
         if (show) {
+            mContainer.setVisibility(View.GONE);
             mProgress.show();
             return;
         }
+        mContainer.setVisibility(View.VISIBLE);
         mProgress.dismiss();
     }
 
@@ -218,6 +225,11 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @Override
     public void setMinutes(String minutes) {
         mResponseMins.setText(minutes);
+    }
+
+    @Override
+    public void setNoteTitle(String address) {
+        mNoteTitle.setText(address);
     }
 
 }
