@@ -62,15 +62,15 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsActivity"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsRequirementsActivity"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsRulesActivity"
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsActivity"/>
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsRequirementsActivity"/>
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsRulesActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsDepositActivity"
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsDepositActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsInsuranceActivity"
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsInsuranceActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_terms.view.OwnerCarRentalTermsAdditional"
+        <activity android:name=".owner_car_rental_terms.view.RentalTermsAdditional"
             android:windowSoftInputMode="adjustPan|stateHidden"
             />
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />

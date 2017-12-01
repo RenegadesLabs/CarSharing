@@ -13,7 +13,7 @@ import com.cardee.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OwnerCarRentalTermsActivity extends AppCompatActivity {
+public class RentalTermsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,27 +25,27 @@ public class OwnerCarRentalTermsActivity extends AppCompatActivity {
 
     @OnClick(R.id.cl_termsRequirementsContainer)
     public void onRequirementsClicked() {
-        startActivity(new Intent(this, OwnerCarRentalTermsRequirementsActivity.class));
+        startActivity(new Intent(this, RentalTermsRequirementsActivity.class));
     }
 
     @OnClick(R.id.cl_termsRulesContainer)
     public void onRulesClicked() {
-        startActivity(new Intent(this, OwnerCarRentalTermsRulesActivity.class));
+        startActivity(new Intent(this, RentalTermsRulesActivity.class));
     }
 
     @OnClick(R.id.cl_termsDepositContainer)
     public void onDepositClicked() {
-        startActivity(new Intent(this, OwnerCarRentalTermsDepositActivity.class));
+        startActivity(new Intent(this, RentalTermsDepositActivity.class));
     }
 
     @OnClick(R.id.cl_termsInsuranceContainer)
     public void onInsuranceClicked() {
-        startActivity(new Intent(this, OwnerCarRentalTermsInsuranceActivity.class));
+        startActivity(new Intent(this, RentalTermsInsuranceActivity.class));
     }
 
     @OnClick(R.id.cl_termsAdditionalContainer)
     public void onAdditionalClicked() {
-        startActivity(new Intent(this, OwnerCarRentalTermsAdditional.class));
+        startActivity(new Intent(this, RentalTermsAdditional.class));
     }
 
     private void initToolbar() {

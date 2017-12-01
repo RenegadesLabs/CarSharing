@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.owner_car_rental_terms.view.OwnerCarRentalTermsActivity;
+import com.cardee.owner_car_rental_terms.view.RentalTermsActivity;
 
 public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabSelectedListener {
 
@@ -103,7 +103,7 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
             switch (view.getId()) {
                 case R.id.cl_rentalTermsContainer:
                     getActivity().startActivity(new Intent(getActivity(),
-                                    OwnerCarRentalTermsActivity.class));
+                                    RentalTermsActivity.class));
                     break;
             }
         }

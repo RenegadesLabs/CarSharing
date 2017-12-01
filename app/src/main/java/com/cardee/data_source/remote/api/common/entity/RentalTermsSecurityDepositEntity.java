@@ -12,19 +12,16 @@ public class RentalTermsSecurityDepositEntity {
     @SerializedName("security_deposit_description")
     private String mDescription;
 
+    public RentalTermsSecurityDepositEntity(Boolean isRequired, String description) {
+        this.isRequired = isRequired;
+        mDescription = description;
+    }
+
     public Boolean isRequired() {
         return isRequired;
     }
 
-    public void setRequired(Boolean isRequired) {
-        this.isRequired = isRequired;
-    }
-
     public String getDescription() {
         return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
     }
 }

@@ -1,5 +1,6 @@
 package com.cardee.owner_car_rental_terms.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,23 +10,36 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.data_source.util.DialogHelper;
+import com.cardee.owner_car_rental_terms.RentalTermsContract;
+import com.cardee.owner_car_rental_terms.presenter.RentalTermsDepositPresenter;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class OwnerCarRentalTermsDepositActivity extends AppCompatActivity implements View.OnClickListener {
+public class RentalTermsDepositActivity extends AppCompatActivity implements View.OnClickListener,
+        RentalTermsContract.View {
 
     @BindView(R.id.sw_depositRequire)
     public SwitchCompat depositRequireSW;
     @BindView(R.id.et_depositValue)
     public AppCompatEditText depositValueET;
 
+    private ProgressDialog mProgress;
+    private RentalTermsDepositPresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_rental_security_deposit);
+        ButterKnife.bind(this);
         initToolbar();
+        mProgress = DialogHelper
+                .getProgressDialog(this, getString(R.string.loading), false);
+        mPresenter = new RentalTermsDepositPresenter(this);
     }
 
     private void initToolbar() {
@@ -54,6 +68,36 @@ public class OwnerCarRentalTermsDepositActivity extends AppCompatActivity implem
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_action:
+                mPresenter.save(depositRequireSW.isChecked(),
+                        depositValueET.getText().toString());
+                break;
+        }
+    }
 
+    @Override
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess() {
+        onBackPressed();
+        finish();
     }
 }

@@ -46,19 +46,19 @@ public interface Cars {
     @PUT("cars/{id}/description")
     Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body NewCarData requestBody);
 
-    @PUT("/cars/{id}/rental/terms")
+    @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalRequirements(@Path("id") Integer carId, @Body RentalTermsRequirementsEntity requestBody);
 
-    @PUT("/cars/{id}/rental/rules")
+    @PUT("cars/{id}/rental/rules")
     Call<BaseResponse> updateRentalRules(@Path("id") Integer carId, @Body CarRuleEntity requestBody);
 
-    @PUT("/cars/{id}/rental/terms")
+    @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalSecurityDeposit(@Path("id") Integer carId, @Body RentalTermsSecurityDepositEntity requestBody);
 
-    @PUT("/cars/{id}/rental/terms")
+    @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalInsuranceExcess(@Path("id") Integer carId, @Body RentalTermsInsuranceEntity requestBody);
 
-    @PUT("/cars/{id}/rental/terms")
+    @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalAdditional(@Path("id") Integer carId, @Body RentalTermsAdditionalEntity requestBody);
 
 }

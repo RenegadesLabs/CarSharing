@@ -8,7 +8,7 @@ import com.cardee.domain.UseCase;
 
 public class UpdateRentalInsuranceExcess implements UseCase<UpdateRentalInsuranceExcess.RequestValues, UpdateRentalInsuranceExcess.ResponseValues> {
 
-    private CarEditRepository mRepository;
+    private final CarEditRepository mRepository;
 
     public UpdateRentalInsuranceExcess() {
         mRepository = CarEditRepository.getInstance();

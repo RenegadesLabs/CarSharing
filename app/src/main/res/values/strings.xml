@@ -49,6 +49,10 @@
     <string name="change_pass_edit_error_matching">Passwords is not matching!</string>
     <string name="change_pass_success">Password changed successfully!</string>
 
+    <string name="error_occurred">An error has occurred!</string>
+    <string name="saved_successfully">Saved successfully!</string>
+    <string name="nothing_to_save">Nothing to save</string>
+
     <!--Loading-->
     <string name="loading">Loading…</string>
 

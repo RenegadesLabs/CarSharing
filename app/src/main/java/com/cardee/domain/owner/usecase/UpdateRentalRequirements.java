@@ -8,7 +8,7 @@ import com.cardee.domain.UseCase;
 
 public class UpdateRentalRequirements implements UseCase<UpdateRentalRequirements.RequestValues, UpdateRentalRequirements.ResponseValues> {
 
-    private CarEditRepository mRepository;
+    private final CarEditRepository mRepository;
 
     public UpdateRentalRequirements() {
         mRepository = CarEditRepository.getInstance();

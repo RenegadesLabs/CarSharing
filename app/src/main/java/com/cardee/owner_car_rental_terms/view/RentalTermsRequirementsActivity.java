@@ -1,5 +1,6 @@
 package com.cardee.owner_car_rental_terms.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +13,16 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.custom.modal.DoublePickerMenuFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
+import com.cardee.data_source.util.DialogHelper;
+import com.cardee.owner_car_rental_terms.RentalTermsContract;
+import com.cardee.owner_car_rental_terms.presenter.RentalTermsRequirementsPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity implements View.OnClickListener {
+public class RentalTermsRequirementsActivity extends AppCompatActivity implements View.OnClickListener,
+        RentalTermsContract.View {
 
     @BindView(R.id.tv_requirementsAge)
     public TextView ageRangeTV;
@@ -27,6 +32,12 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
 
     private String[] mRange = new String[2];
 
+    private String mExperience;
+
+    private ProgressDialog mProgress;
+
+    private RentalTermsRequirementsPresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +45,9 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
         ButterKnife.bind(this);
         initToolbar();
         initViewsState();
+        mProgress = DialogHelper
+                .getProgressDialog(this, getString(R.string.loading), false);
+        mPresenter = new RentalTermsRequirementsPresenter(this);
     }
 
     @OnClick(R.id.cl_requirementsAgeContainer)
@@ -51,7 +65,7 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
 
             @Override
             public void onFail() {
-                Toast.makeText(OwnerCarRentalTermsRequirementsActivity.this,
+                Toast.makeText(RentalTermsRequirementsActivity.this,
                         R.string.car_rental_terms_requirements_age_range_fail, Toast.LENGTH_SHORT).show();
             }
         });
@@ -64,7 +78,8 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
         menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value) {
-                setDrivingExperienceText(value);
+                mExperience = value;
+                invalidateExperienceText();
             }
         });
     }
@@ -85,8 +100,9 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
     private void initViewsState() {
         mRange[0] = "18";
         mRange[1] = "98";
+        mExperience = "1";
         invalidateAgeRangeText();
-        setDrivingExperienceText("1");
+        invalidateExperienceText();
     }
 
     private void invalidateAgeRangeText() {
@@ -95,8 +111,8 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
         ageRangeTV.setText(range);
     }
 
-    private void setDrivingExperienceText(String exp) {
-        String experience = "at least " + exp + " years";
+    private void invalidateExperienceText() {
+        String experience = "at least " + mExperience + " years";
         drivingExpTV.setText(experience);
     }
 
@@ -115,8 +131,34 @@ public class OwnerCarRentalTermsRequirementsActivity extends AppCompatActivity i
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                // TODO: 11/29/17 On Save Clicked
+                mPresenter.save(Integer.parseInt(mRange[0]),
+                        Integer.parseInt(mRange[1]), Integer.parseInt(mExperience));
                 break;
         }
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess() {
+        onBackPressed();
+        finish();
     }
 }
