@@ -137,10 +137,12 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void setProfileImage(String profilePhotoLink) {
-        Glide.with(getActivity())
-                .load(profilePhotoLink)
-                .transform(new CircleTransform(getActivity()))
-                .into(mProfileImage);
+        if (getActivity() != null) {
+            Glide.with(getActivity())
+                    .load(profilePhotoLink)
+                    .transform(new CircleTransform(getActivity()))
+                    .into(mProfileImage);
+        }
     }
 
     @Override
@@ -152,12 +154,12 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void showProgress(boolean show) {
         if (show) {
+            mEventListener.onStartLoading();
             mContainer.setVisibility(View.GONE);
-            mProgress.show();
-            return;
+        } else {
+            mEventListener.onStopLoading();
+            mContainer.setVisibility(View.VISIBLE);
         }
-        mContainer.setVisibility(View.VISIBLE);
-        mProgress.dismiss();
     }
 
     @Override

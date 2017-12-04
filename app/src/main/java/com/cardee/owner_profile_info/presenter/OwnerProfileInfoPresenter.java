@@ -17,10 +17,12 @@ import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.CarReview;
 import com.cardee.domain.owner.entity.mapper.OwnerReviewToCarReviewMapper;
+import com.cardee.domain.owner.usecase.ChangeImage;
 import com.cardee.domain.owner.usecase.ChangeNote;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
 import com.cardee.owner_profile_info.view.ProfileInfoView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -34,12 +36,14 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
     private final GetOwnerInfo mGetInfoUseCase;
     private final ChangeNote mChangeNote;
+    private final ChangeImage mChangeImage;
     private UseCaseExecutor mExecutor;
     private ProfileInfoView mView;
 
     public OwnerProfileInfoPresenter(ProfileInfoView view) {
         mGetInfoUseCase = new GetOwnerInfo();
         mChangeNote = new ChangeNote();
+        mChangeImage = new ChangeImage();
         mExecutor = UseCaseExecutor.getInstance();
         mView = view;
     }
@@ -183,4 +187,25 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                     }
                 }).show();
     }
+
+    public void setProfilePicture(File photo) {
+        mView.showProgress(true);
+        mExecutor.execute(mChangeImage,
+                new ChangeImage.RequestValues(null, null, photo, null),
+                new UseCase.Callback<ChangeImage.ResponseValues>() {
+                    @Override
+                    public void onSuccess(ChangeImage.ResponseValues response) {
+                        mView.showProgress(false);
+                        mView.showMessage(R.string.owner_profile_info_photo_success);
+                        mView.onChangeImageSuccess();
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        mView.showProgress(false);
+                        mView.showMessage(error.getMessage());
+                    }
+                });
+    }
+
 }

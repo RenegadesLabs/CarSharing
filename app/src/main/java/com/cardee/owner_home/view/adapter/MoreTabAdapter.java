@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cardee.BuildConfig;
 import com.cardee.R;
 import com.cardee.owner_home.OwnerProfileContract;
 
@@ -23,6 +24,8 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
 
     private final List<String> mMenuItems;
     private final LayoutInflater mInflater;
+    private final String mCardee;
+    private final String mVersionString;
 
     private final PublishSubject<OwnerProfileContract.Action> mEventObservable;
 
@@ -30,6 +33,9 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuItems = Arrays.asList(context.getResources().getStringArray(R.array.more_tab_menu));
         mEventObservable = PublishSubject.create();
+        mCardee = context.getResources().getString(R.string.more_tab_cardee);
+        mVersionString = context.getResources().getString(R.string.more_tab_version);
+
     }
 
     @Override
@@ -43,6 +49,13 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
         String text = mMenuItems.get(position);
         holder.setText(text);
         holder.setOnClickListener(mEventObservable, position);
+
+        if (text.equals(mCardee)) {
+            String versionCode = BuildConfig.VERSION_NAME;
+            String version = mVersionString + " " + versionCode;
+            holder.setItemInfo(version);
+        }
+
         // TODO set icon and info;
     }
 

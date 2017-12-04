@@ -44,13 +44,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="20dp"
-                android:background="@color/bg_transparent_black"
+                android:id="@+id/profile_image_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button_half_circle"
+                android:gravity="center_horizontal"
                 android:text="@string/owner_profile_info_edit"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                app:layout_constraintEnd_toEndOf="@id/profile_image"
                 app:layout_constraintStart_toStartOf="@id/profile_image" />
 
             <TextView

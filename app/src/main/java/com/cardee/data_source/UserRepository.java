@@ -4,7 +4,6 @@ package com.cardee.data_source;
 import com.cardee.CardeeApp;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.auth.Authentication;
-import com.cardee.data_source.remote.api.auth.adapter.exception.RetrofitException;
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
@@ -13,9 +12,8 @@ import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
-import com.cardee.domain.owner.usecase.Register;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.google.gson.Gson;
+import com.cardee.domain.owner.usecase.Register;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,8 +21,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
@@ -33,7 +29,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 
@@ -232,7 +227,7 @@ public class UserRepository implements UserDataSource {
                     String token = response.body().getBody().getToken();
                     AccountManager.getInstance(CardeeApp.context).saveToken(token);
                     if (registerValues.getImage() != null) {
-                        setProfilePicture(registerValues.getImage(), callback);
+                        setProfilePicture(registerValues, callback);
                     } else {
                         callback.onSuccess(response.isSuccessful());
                     }
@@ -305,7 +300,9 @@ public class UserRepository implements UserDataSource {
         }
     }
 
-    private void setProfilePicture(File picture, final Callback callback) {
+    @Override
+    public void setProfilePicture(Register.RequestValues registerValues, final Callback callback) {
+        File picture = registerValues.getImage();
         MultipartBody.Part picPart = MultipartBody.Part.createFormData("picture", picture.getName(), RequestBody.
                 create(MediaType.parse("application/octet-stream"), picture));
         api.setProfilePicture(picPart).enqueue(new retrofit2.Callback<ResponseBody>() {

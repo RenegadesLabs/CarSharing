@@ -32,7 +32,6 @@ import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
-import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,

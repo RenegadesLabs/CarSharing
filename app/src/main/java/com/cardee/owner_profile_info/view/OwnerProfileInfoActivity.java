@@ -1,8 +1,14 @@
 package com.cardee.owner_profile_info.view;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,8 +28,13 @@ import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_profile_info.presenter.OwnerProfileInfoPresenter;
 import com.cardee.owner_profile_info.view.adapter.CarPreviewListAdapter;
 import com.cardee.owner_profile_info.view.adapter.ReviewListAdapter;
+import com.cardee.util.display.ActivityHelper;
 import com.cardee.util.glide.CircleTransform;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,11 +42,15 @@ import butterknife.ButterKnife;
 
 public class OwnerProfileInfoActivity extends AppCompatActivity implements ProfileInfoView {
 
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+
     public final static String TAG = OwnerProfileInfoActivity.class.getCanonicalName();
     private OwnerProfileInfoPresenter mPresenter;
     private ProgressDialog mProgress;
     private CarPreviewListAdapter mCarsAdapter;
     private ReviewListAdapter mReviewAdapter;
+
+    private byte[] mPictureByteArray;
 
     @BindView(R.id.profile_info_container)
     View mContainer;
@@ -60,6 +75,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
     @BindView(R.id.profile_image)
     ImageView mProfilePhoto;
+
+    @BindView(R.id.profile_image_edit)
+    TextView mProfilePhotoEdit;
 
     @BindView(R.id.note_edit)
     TextView mNoteEdit;
@@ -105,6 +123,21 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
                 mPresenter.changeNote(OwnerProfileInfoActivity.this);
             }
         });
+        mProfilePhotoEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verifyPermissionAndChangeImage();
+            }
+        });
+    }
+
+    private void verifyPermissionAndChangeImage() {
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+        } else {
+            ActivityHelper.pickImageIntent(OwnerProfileInfoActivity.this, ActivityHelper.PICK_IMAGE);
+        }
     }
 
     private void initAdapters() {
@@ -183,6 +216,15 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     public void setProfileImage(String photoLink) {
         Glide.with(this)
                 .load(photoLink)
+                .centerCrop()
+                .transform(new CircleTransform(this))
+                .into(mProfilePhoto);
+    }
+
+    public void setProfileImage(byte[] pictureByteArray) {
+        Glide.with(this)
+                .load(pictureByteArray)
+                .centerCrop()
                 .transform(new CircleTransform(this))
                 .into(mProfilePhoto);
     }
@@ -230,6 +272,63 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @Override
     public void setNoteTitle(String address) {
         mNoteTitle.setText(address);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ActivityHelper.pickImageIntent(OwnerProfileInfoActivity.this, ActivityHelper.PICK_IMAGE);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onChangeImageSuccess() {
+        if (mPictureByteArray != null) {
+            setProfileImage(mPictureByteArray);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ActivityHelper.PICK_IMAGE) {
+            if (resultCode == RESULT_OK && data.getData() != null) {
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] pictureByteArray = stream.toByteArray();
+                    mPictureByteArray = pictureByteArray;
+                    mPresenter.setProfilePicture(convertByteArrayToFile(pictureByteArray));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private File convertByteArrayToFile(byte[] byteArray) {
+        if (byteArray != null) {
+            FileOutputStream fos;
+            File f = null;
+            try {
+                f = new File(this.getCacheDir(), "picture");
+                fos = new FileOutputStream(f);
+                fos.write(byteArray);
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return f;
+        }
+        return null;
     }
 
 }

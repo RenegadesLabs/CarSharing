@@ -36,4 +36,6 @@ public interface ProfileInfoView extends BaseView {
     void setMinutes(String minutes);
 
     void setNoteTitle(String address);
+
+    void onChangeImageSuccess();
 }
