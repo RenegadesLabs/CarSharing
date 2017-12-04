@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class AvailabilityCalendarAdapter extends MultipleSelectionAdapter<String> {
+public class AvailabilityCalendarAdapter extends RangeSelectionAdapter<String> {
 
     private static final String TAG = AvailabilityCalendarAdapter.class.getSimpleName();
     private static final String DATE_PATTERN = "yyyy-MM-dd";
@@ -51,7 +51,7 @@ public class AvailabilityCalendarAdapter extends MultipleSelectionAdapter<String
 
     public void setDates(List<String> dates) {
         this.dates = dates;
-        setSelection(dates);
+        setRange(dates.get(0), dates.get(dates.size() - 1));
     }
 
     public void setListener(AvailabilityCalendarListener listener) {

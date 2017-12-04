@@ -92,6 +92,8 @@ public class SelectionManager implements OnViewClickListener<DayView> {
             if (!rangeStart.equals(rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
+                clearSelection();
+                adapter.notifyDataSetChanged();
                 selectSingleDayRange(day, view);
             }
         }
