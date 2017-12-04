@@ -153,22 +153,41 @@
         <item name="android:textColor">@color/blue</item>
     </style>
 
-    <style name="AlertDialog" parent="TextAppearance.AppCompat">
-        <!-- Hint color and label color in FALSE state -->
-        <item name="android:textColorHint">@color/blue</item>
-        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="colorControlNormal">@color/colorPrimary</item>
-        <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="colorControlHighlight">@color/colorPrimary</item>
-    </style>
-
     <style name="NoteChangeTextInputStyle" parent="Widget.Design.TextInputLayout">
         <item name="android:textColorHint">@color/text_enabled</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/blue</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextSettingsSection">
+        <item name="android:textColor">@color/add_car_item_vehicle_secondary_txt</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextSettingsInactive">
+        <item name="android:textColor">@color/text_account_settings</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+    </style>
+
+    <style name="TextSettingsRegular">
+        <item name="android:textColor">@color/text_owner_profile_name</item>
+        <item name="android:textSize">@dimen/text_regular</item>
+    </style>
+
+    <style name="TextClickableRed" parent="TextInfo">
+        <item name="android:textColor">@color/red_error</item>
+    </style>
+
+    <style name="ChangePassEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/text_account_settings</item>
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/text_account_settings</item>
+        <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
 
 

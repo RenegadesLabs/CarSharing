@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +51,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private ProgressDialog mProgress;
     private CarPreviewListAdapter mCarsAdapter;
     private ReviewListAdapter mReviewAdapter;
+    private Toast mCurrentToast;
 
     private byte[] mPictureByteArray;
 
@@ -108,12 +111,21 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
         initPresenter();
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
+        initToolBar();
         initAdapters();
         initCarList(mCarsListView);
         initReviewList(mReviewsListView);
         initListners();
 
         mPresenter.getOwnerInfo();
+    }
+
+    private void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+
     }
 
     private void initListners() {
@@ -179,12 +191,16 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (mCurrentToast != null) {
+            mCurrentToast.cancel();
+        }
+        mCurrentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mCurrentToast.show();
     }
 
     @Override
     public void showMessage(int messageId) {
-        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+        showMessage(getString(messageId));
     }
 
     @Override
@@ -329,6 +345,16 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
             return f;
         }
         return null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
     }
 
 }

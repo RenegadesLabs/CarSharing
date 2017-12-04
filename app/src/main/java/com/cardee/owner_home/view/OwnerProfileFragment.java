@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
+import com.cardee.owner_account_details.view.AccountDetailsActivity;
 import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
 import com.cardee.owner_home.view.adapter.MoreTabAdapter;
@@ -102,7 +103,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openAccount() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(getActivity(), AccountDetailsActivity.class);
+        startActivity(intent);
     }
 
     @Override

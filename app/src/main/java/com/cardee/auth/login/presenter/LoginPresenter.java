@@ -1,14 +1,11 @@
 package com.cardee.auth.login.presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.user.usecase.Login;
@@ -32,14 +29,22 @@ public class LoginPresenter {
     private final Login mLoginUseCase;
     private UseCaseExecutor mExecutor;
     private LoginView mView;
+    private SharedPreferences mSharedPref;
+    private String mPassLengthKey;
+    private String mSocialLoggedInKey;
+
 
     public LoginPresenter(LoginView view) {
         mLoginUseCase = new Login();
         mExecutor = UseCaseExecutor.getInstance();
         mView = view;
+        Context context = (Context) mView;
+        mPassLengthKey = context.getString(R.string.pass_length_key);
+        mSocialLoggedInKey = context.getString(R.string.social_logged_key);
+        mSharedPref = (context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE));
     }
 
-    public void login(String login, String password) {
+    public void login(String login, final String password) {
         if (mView != null)
             mView.showProgress(true);
 
@@ -49,6 +54,7 @@ public class LoginPresenter {
                 if (response.isSuccess()) {
                     mView.showProgress(false);
                     mView.onLoginSuccess();
+                    saveSharedPreferences(password);
                 }
             }
 
@@ -64,6 +70,18 @@ public class LoginPresenter {
         });
     }
 
+    private void saveSharedPreferences(String password) {
+        SharedPreferences.Editor editor = mSharedPref.edit();
+        if (password == null) {
+            editor.putInt(mPassLengthKey, 0);
+            editor.putBoolean(mSocialLoggedInKey, true);
+        } else {
+            editor.putInt(mPassLengthKey, password.length());
+            editor.putBoolean(mSocialLoggedInKey, false);
+        }
+        editor.apply();
+    }
+
     public void loginSocial(String provider, String token) {
         if (mView != null)
             mView.showProgress(true);
@@ -74,6 +92,7 @@ public class LoginPresenter {
                 if (response.isSuccess()) {
                     mView.showProgress(false);
                     mView.onLoginSuccess();
+                    saveSharedPreferences(null);
                 }
             }
 

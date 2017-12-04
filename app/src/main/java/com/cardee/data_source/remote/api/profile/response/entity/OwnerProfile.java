@@ -15,6 +15,12 @@ public class OwnerProfile extends ErrorResponseBody {
     @SerializedName("name")
     private String name;
     @Expose
+    @SerializedName("email")
+    private String email;
+    @Expose
+    @SerializedName("phone")
+    private String phone;
+    @Expose
     @SerializedName("address")
     private String address;
     @Expose
@@ -173,5 +179,21 @@ public class OwnerProfile extends ErrorResponseBody {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

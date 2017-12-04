@@ -33,6 +33,9 @@
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
+    <string name="preference_file_key">LOGIN_SHARED_PREFERENCES</string>
+    <string name="pass_length_key">PASSWORD_LENGTH</string>
+    <string name="social_logged_key">SOCIAL_LOGIN</string>
 
     <!--Send Email Password Recover-->
     <string name="send_email_title">Forgot Password</string>
@@ -211,6 +214,22 @@
     <string name="more_tab_cardee">Cardee</string>
     <string name="more_tab_switch">Switch To Renter</string>
     <string name="more_tab_version">version</string>
+
+    <!--Account details-->
+    <string name="account_details_account">Account</string>
+    <string name="account_details">Account details</string>
+    <string name="account_details_name">Name</string>
+    <string name="account_details_mobile_number">Mobile number</string>
+    <string name="account_details_verify_account">Verify Account</string>
+    <string name="account_details_log_out">Log Out</string>
+    <string name="account_details_payment_method">Payment Method</string>
+    <string name="account_details_add_card">Add Card</string>
+
+    <!--Owner change password-->
+    <string name="change_pass_current_pass">Current password</string>
+    <string name="change_pass_retype">Retype new password</string>
+    <string name="change_pass_save">Save Changes</string>
+    <string name="change_pass_cancel">Cancel</string>
 
 
 </resources>
