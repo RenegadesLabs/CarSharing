@@ -1,6 +1,7 @@
 package com.cardee.owner_home.view.modal;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.owner_car_details.view.AvailabilityCalendarActivity;
 
 public class AvailabilityMenuFragment extends BottomSheetDialogFragment
         implements View.OnClickListener {
@@ -76,7 +78,8 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
                 showMessage("Coming soon");
                 break;
             case R.id.availability_calendar:
-                showMessage("Coming soon");
+                Intent intent = new Intent(getActivity(), AvailabilityCalendarActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.availability_days_of_week:
                 showMessage("Coming soon");

@@ -92,6 +92,7 @@
     <string name="title_owner_car_location">Car Location</string>
     <string name="title_owner_car_description">Car Description</string>
     <string name="toolbar_action_add_car">Add car</string>
+    <string name="toolbar_action_options">Options</string>
     <string name="toolbar_action_more">More</string>
     <string name="toolbar_action_save">Save</string>
 
