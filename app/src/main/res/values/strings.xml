@@ -183,4 +183,29 @@
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
 
+    <!--Calendar-->
+    <string-array name="days_of_week">
+        <item>S</item>
+        <item>M</item>
+        <item>T</item>
+        <item>W</item>
+        <item>T</item>
+        <item>F</item>
+        <item>S</item>
+    </string-array>
+    <string-array name="month_titles">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
 </resources>
