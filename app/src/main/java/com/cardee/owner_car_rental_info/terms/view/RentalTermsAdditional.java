@@ -1,4 +1,4 @@
-package com.cardee.owner_car_rental_terms.view;
+package com.cardee.owner_car_rental_info.terms.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -13,37 +13,37 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_terms.RentalTermsContract;
-import com.cardee.owner_car_rental_terms.presenter.RentalTermsInsurancePresenter;
+import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsAdditionalPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RentalTermsInsuranceActivity extends AppCompatActivity implements View.OnClickListener,
+public class RentalTermsAdditional extends AppCompatActivity implements View.OnClickListener,
         RentalTermsContract.View {
 
-    @BindView(R.id.et_insuranceText)
-    public AppCompatEditText insuranceTextET;
+    @BindView(R.id.et_additionalTerms)
+    public AppCompatEditText additionalTermsET;
 
     private ProgressDialog mProgress;
-
-    private RentalTermsInsurancePresenter mPresenter;
+    private RentalTermsAdditionalPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_car_rental_insurance_excess);
-        initToolbar();
+        setContentView(R.layout.activity_owner_car_rental_additional);
         ButterKnife.bind(this);
-        mProgress = DialogHelper
-                .getProgressDialog(this, getString(R.string.loading), false);
-        mPresenter = new RentalTermsInsurancePresenter(this);
+        initToolbar();
+        mProgress = DialogHelper.getProgressDialog(this,
+                getString(R.string.loading), false);
+        mPresenter = new RentalTermsAdditionalPresenter(this);
+
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView title = toolbar.findViewById(R.id.toolbar_title);
-        title.setText(R.string.car_rental_terms_insurance);
+        title.setText(R.string.car_rental_terms_additional);
         toolbar.findViewById(R.id.toolbar_action).setOnClickListener(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() == null) {
@@ -68,11 +68,11 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                if (insuranceTextET.getText().toString().isEmpty()) {
+                if (additionalTermsET.getText().toString().isEmpty()) {
                     showMessage(R.string.nothing_to_save);
                     return;
                 }
-                mPresenter.save(insuranceTextET.getText().toString());
+                mPresenter.save(additionalTermsET.getText().toString());
                 break;
         }
     }

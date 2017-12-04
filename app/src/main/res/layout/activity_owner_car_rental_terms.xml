@@ -33,7 +33,7 @@
             android:id="@+id/cl_termsRequirementsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_white"
+            android:background="@drawable/bg_item_transparent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -71,7 +71,7 @@
             android:id="@+id/cl_termsRulesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_white"
+            android:background="@drawable/bg_item_transparent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -108,7 +108,7 @@
             android:id="@+id/cl_termsDepositContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_white"
+            android:background="@drawable/bg_item_transparent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -146,7 +146,7 @@
             android:id="@+id/cl_termsInsuranceContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_white"
+            android:background="@drawable/bg_item_transparent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -184,7 +184,7 @@
             android:id="@+id/cl_termsAdditionalContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_white"
+            android:background="@drawable/bg_item_transparent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">

@@ -247,4 +247,32 @@
     <!--Car Rental Terms Additional-->
     <string name="car_rental_terms_additional_example">Add any additional terms you would like to add here…</string>
 
+    <!--Car Rental Rates -->
+    <string name="car_rental_rates_daily">Daily rates</string>
+    <string name="car_rental_rates_per_day">per day</string>
+    <string name="car_rental_rates_per_hour">per hour</string>
+    <string name="car_rental_rates_weekdays">Weekdays</string>
+    <string name="car_rental_rates_weekends">Weekends and public holidays</string>
+    <string name="car_rental_rates_discount">Discount</string>
+    <string name="car_rental_rates_discount_3_days">3 days discount</string>
+    <string name="car_rental_rates_discount_weekly">Weekly discount</string>
+    <string name="car_rental_rates_minimum">Minimum</string>
+    <string name="car_rental_rates_minimum_duration">Minimum rental duration</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="car_rental_rates_hourly">Hourly rates</string>
+    <string name="car_rental_rates_peak_h">Peak hour</string>
+    <string name="car_rental_rates_peak_non_h">Non-peak hour</string>
+    <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
+    <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
+
+    <!--Car Rental Fuel Policy-->
+    <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
+    <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_cost">Cost per km</string>
+    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 12 to 14 km per litre</string>
+
 </resources>

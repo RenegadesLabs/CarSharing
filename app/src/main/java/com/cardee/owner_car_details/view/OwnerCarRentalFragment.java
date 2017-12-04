@@ -11,11 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.owner_car_rental_terms.view.RentalTermsActivity;
+import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
+import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabSelectedListener {
 
     private static final String CAR_ID = "car_id";
+
+    public final static String MODE = "key_rental_mode";
+
+    public final static int HOULY = 0;
+
+    public final static int DAILY = 1;
 
     private final int[] mTabTitleIds =
             {R.string.car_rental_info_hourly,
@@ -65,14 +72,18 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
 
     private class PagerAdapter extends android.support.v4.view.PagerAdapter implements View.OnClickListener {
 
+        private int mPosition;
+
         public PagerAdapter() {}
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            mPosition = position;
             ContentPagerEnum contentPagerEnum = ContentPagerEnum.values()[position];
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             ViewGroup layout = (ViewGroup) inflater.inflate(contentPagerEnum.getLayoutResId(), container, false);
             layout.findViewById(R.id.cl_rentalTermsContainer).setOnClickListener(this);
+            layout.findViewById(R.id.tv_rentalFuelEdit).setOnClickListener(this);
             container.addView(layout);
             return layout;
         }
@@ -104,6 +115,17 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
                 case R.id.cl_rentalTermsContainer:
                     getActivity().startActivity(new Intent(getActivity(),
                                     RentalTermsActivity.class));
+                    break;
+                case R.id.tv_rentalFuelEdit:
+                    Intent i = new Intent(getActivity(),
+                            RentalFuelPolicyActivity.class);
+                    if (mPosition == HOULY) {
+                        i.putExtra(MODE, mPosition);
+                        getActivity().startActivity(i);
+                        break;
+                    }
+                    i.putExtra(MODE, DAILY);
+                    getActivity().startActivity(i);
                     break;
             }
         }

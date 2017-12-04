@@ -1,4 +1,4 @@
-package com.cardee.owner_car_rental_terms.view;
+package com.cardee.owner_car_rental_info.terms.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_terms.RentalTermsContract;
-import com.cardee.owner_car_rental_terms.presenter.RentalTermsRulesPresenter;
+import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsRulesPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

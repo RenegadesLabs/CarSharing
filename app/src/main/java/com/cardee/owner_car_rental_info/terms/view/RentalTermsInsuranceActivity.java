@@ -1,11 +1,10 @@
-package com.cardee.owner_car_rental_terms.view;
+package com.cardee.owner_car_rental_info.terms.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,38 +13,37 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_terms.RentalTermsContract;
-import com.cardee.owner_car_rental_terms.presenter.RentalTermsDepositPresenter;
+import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsInsurancePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RentalTermsDepositActivity extends AppCompatActivity implements View.OnClickListener,
+public class RentalTermsInsuranceActivity extends AppCompatActivity implements View.OnClickListener,
         RentalTermsContract.View {
 
-    @BindView(R.id.sw_depositRequire)
-    public SwitchCompat depositRequireSW;
-    @BindView(R.id.et_depositValue)
-    public AppCompatEditText depositValueET;
+    @BindView(R.id.et_insuranceText)
+    public AppCompatEditText insuranceTextET;
 
     private ProgressDialog mProgress;
-    private RentalTermsDepositPresenter mPresenter;
+
+    private RentalTermsInsurancePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_car_rental_security_deposit);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_owner_car_rental_insurance_excess);
         initToolbar();
+        ButterKnife.bind(this);
         mProgress = DialogHelper
                 .getProgressDialog(this, getString(R.string.loading), false);
-        mPresenter = new RentalTermsDepositPresenter(this);
+        mPresenter = new RentalTermsInsurancePresenter(this);
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView title = toolbar.findViewById(R.id.toolbar_title);
-        title.setText(R.string.car_rental_terms_deposit);
+        title.setText(R.string.car_rental_terms_insurance);
         toolbar.findViewById(R.id.toolbar_action).setOnClickListener(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() == null) {
@@ -70,8 +68,11 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                mPresenter.save(depositRequireSW.isChecked(),
-                        depositValueET.getText().toString());
+                if (insuranceTextET.getText().toString().isEmpty()) {
+                    showMessage(R.string.nothing_to_save);
+                    return;
+                }
+                mPresenter.save(insuranceTextET.getText().toString());
                 break;
         }
     }

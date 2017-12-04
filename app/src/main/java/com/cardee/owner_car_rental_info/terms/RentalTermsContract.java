@@ -1,4 +1,4 @@
-package com.cardee.owner_car_rental_terms;
+package com.cardee.owner_car_rental_info.terms;
 
 import com.cardee.mvp.BaseView;
 

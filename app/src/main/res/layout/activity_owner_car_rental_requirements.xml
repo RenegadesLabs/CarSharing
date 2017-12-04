@@ -57,7 +57,7 @@
                 android:id="@+id/cl_requirementsAgeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_item_white">
+                android:background="@drawable/bg_item_transparent">
                 <TextView
                     android:id="@+id/age"
                     android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
                 android:id="@+id/cl_requirementsExpContainer"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_item_white">
+                android:background="@drawable/bg_item_transparent">
                 <TextView
                     android:id="@+id/experience"
                     android:layout_width="wrap_content"

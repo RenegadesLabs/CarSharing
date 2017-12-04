@@ -1,4 +1,4 @@
-package com.cardee.owner_car_rental_terms.view;
+package com.cardee.owner_car_rental_info.terms.view;
 
 import android.content.Intent;
 import android.os.Bundle;

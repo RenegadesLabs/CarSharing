@@ -1,4 +1,4 @@
-package com.cardee.owner_car_rental_terms.presenter;
+package com.cardee.owner_car_rental_info.terms.presenter;
 
 import com.cardee.R;
 import com.cardee.data_source.Error;
@@ -6,7 +6,7 @@ import com.cardee.data_source.OwnerCarRepository;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.UpdateAdditionalTerms;
-import com.cardee.owner_car_rental_terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
 
 public class RentalTermsAdditionalPresenter implements RentalTermsContract.Presenter {
 
