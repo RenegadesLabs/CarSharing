@@ -1,4 +1,4 @@
-package com.cardee.owner_car_details.view;
+package com.cardee.owner_car_details;
 
 
 import android.support.annotation.StringRes;

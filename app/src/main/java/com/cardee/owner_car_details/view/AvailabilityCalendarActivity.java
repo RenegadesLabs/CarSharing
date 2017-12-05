@@ -3,24 +3,39 @@ package com.cardee.owner_car_details.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.custom.calendar.view.CalendarView;
+import com.cardee.owner_car_details.AvailabilityContract;
+import com.cardee.owner_car_details.presenter.AvailabilityPresenter;
 import com.cardee.owner_car_details.view.adapter.AvailabilityCalendarAdapter;
+import com.cardee.owner_car_details.view.config.AvailabilityConfig;
 import com.cardee.owner_car_details.view.listener.AvailabilityCalendarListener;
+import com.cardee.owner_car_details.view.service.SaveAvailabilityTitleDelegate;
+
+import java.util.Date;
+import java.util.List;
 
 public class AvailabilityCalendarActivity extends AppCompatActivity
-        implements View.OnClickListener, AvailabilityCalendarListener {
+        implements View.OnClickListener, AvailabilityCalendarListener,
+        AvailabilityContract.View {
 
     private TextView titleView;
     private View actionView;
     private CalendarView calendarView;
     private TextView buttonSave;
     private AvailabilityCalendarAdapter adapter;
+    private View progress;
+    private AvailabilityPresenter presenter;
+    private SaveAvailabilityTitleDelegate titleDelegate;
+
+    private Toast currentToast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,16 +54,73 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
         actionView.setOnClickListener(this);
         calendarView = (CalendarView) findViewById(R.id.availability_calendar);
         adapter = new AvailabilityCalendarAdapter();
+        adapter.setListener(this);
         calendarView.setSelectionAdapter(adapter);
+        titleDelegate = new SaveAvailabilityTitleDelegate(this);
+        progress = findViewById(R.id.progress_layout);
+        initState();
+    }
+
+    private void initState() {
+        presenter = new AvailabilityPresenter(this, getIntent().getExtras(), AvailabilityConfig.getInstance(this));
+        presenter.init();
     }
 
     @Override
     public void onClick(View view) {
+        if (progress.getVisibility() == View.VISIBLE) {
+            return;
+        }
+        switch (view.getId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.toolbar_action:
+                break;
+            case R.id.btn_availability_save:
+                presenter.saveData(adapter.getSelected());
+                break;
+        }
+    }
+
+    @Override
+    public void onSelectedDatesChange(List<Date> dates) {
+        titleDelegate.onTitleChanged(titleView, dates == null ? 0 : dates.size());
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        progress.setVisibility(show ? View.VISIBLE : View.GONE);
+        calendarView.setAlpha(show ? .5f : 1f);
+    }
+
+    @Override
+    public void showMessage(@StringRes int messageId) {
+        showMessage(getString(messageId));
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        currentToast.show();
+    }
+
+    @Override
+    public void onDatesRetrieved(List<Date> dates) {
+        adapter.setDates(dates);
+        titleDelegate.onTitleChanged(titleView, dates == null ? 0 : dates.size());
+    }
+
+    @Override
+    public void onTimeBoundsRetrieved(String startTime, String endTime) {
 
     }
 
     @Override
-    public void onSelectedDatesChange(String[] dates) {
-
+    public void onSaved() {
+        finish();
     }
 }

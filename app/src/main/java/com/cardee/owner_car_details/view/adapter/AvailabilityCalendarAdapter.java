@@ -1,60 +1,55 @@
 package com.cardee.owner_car_details.view.adapter;
 
-import android.util.Log;
-
 import com.cardee.custom.calendar.model.Day;
 import com.cardee.custom.calendar.view.selection.MultipleSelectionAdapter;
 import com.cardee.custom.calendar.view.selection.RangeSelectionAdapter;
 import com.cardee.owner_car_details.view.listener.AvailabilityCalendarListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
-public class AvailabilityCalendarAdapter extends RangeSelectionAdapter<String> {
+public class AvailabilityCalendarAdapter extends MultipleSelectionAdapter<Date> {
 
-    private static final String TAG = AvailabilityCalendarAdapter.class.getSimpleName();
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
+    private List<Date> dates;
+    private List<Date> selected;
 
-    private List<String> dates;
-    private SimpleDateFormat dateFormat;
     private AvailabilityCalendarListener listener;
 
     public AvailabilityCalendarAdapter() {
-        dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+
     }
 
     @Override
     protected void onSelectionChanged(List<Day> dayz) {
         if (listener != null && dayz != null && !dayz.isEmpty()) {
-            String[] dates = new String[dayz.size()];
-            for (int i = 0; i < dates.length; i++) {
-                dates[i] = dateFormat.format(dayz.get(i).getCalendarTime());
+            List<Date> dates = new ArrayList<>();
+            for (Day day : dayz) {
+                dates.add(day.getCalendarTime());
             }
+            selected = dates;
             listener.onSelectedDatesChange(dates);
         }
     }
 
     @Override
-    protected Date onNext(String item) {
-        Date date = null;
-        try {
-            date = dateFormat.parse(item);
-        } catch (ParseException e) {
-            Log.e(TAG, e.getMessage());
-        }
-        return date;
+    protected Date onNext(Date item) {
+        return item;
     }
 
-    public void setDates(List<String> dates) {
+    public void setDates(List<Date> dates) {
         this.dates = dates;
-        setRange(dates.get(0), dates.get(dates.size() - 1));
+        if (dates != null && !dates.isEmpty()) {
+            setSelection(dates);
+        }
     }
 
     public void setListener(AvailabilityCalendarListener listener) {
         this.listener = listener;
+    }
+
+    public List<Date> getSelected() {
+        return selected;
     }
 }

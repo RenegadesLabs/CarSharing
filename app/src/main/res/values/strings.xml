@@ -208,5 +208,9 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-
+    <string-array name="btn_save_title_suffixes">
+        <item>No available days \u2022 Save</item>
+        <item>available day \u2022 Save</item>
+        <item>available days \u2022 Save</item>
+    </string-array>
 </resources>
