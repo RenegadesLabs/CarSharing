@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import com.cardee.owner_car_details.presenter.AvailabilityPresenter;
 import com.cardee.owner_car_details.view.adapter.AvailabilityCalendarAdapter;
 import com.cardee.owner_car_details.view.config.AvailabilityConfig;
 import com.cardee.owner_car_details.view.listener.AvailabilityCalendarListener;
-import com.cardee.owner_car_details.view.service.SaveAvailabilityTitleDelegate;
+import com.cardee.owner_car_details.view.service.SaveAvailabilityButtonTitleDelegate;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     private AvailabilityCalendarAdapter adapter;
     private View progress;
     private AvailabilityPresenter presenter;
-    private SaveAvailabilityTitleDelegate titleDelegate;
+    private SaveAvailabilityButtonTitleDelegate titleDelegate;
 
     private Toast currentToast;
 
@@ -56,13 +57,23 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
         adapter = new AvailabilityCalendarAdapter();
         adapter.setListener(this);
         calendarView.setSelectionAdapter(adapter);
-        titleDelegate = new SaveAvailabilityTitleDelegate(this);
+        titleDelegate = new SaveAvailabilityButtonTitleDelegate(this);
         progress = findViewById(R.id.progress_layout);
         initState();
     }
 
     private void initState() {
-        presenter = new AvailabilityPresenter(this, getIntent().getExtras(), AvailabilityConfig.getInstance(this));
+        Bundle args = getIntent().getExtras();
+        if (args.containsKey(AvailabilityContract.CALENDAR_MODE)) {
+            AvailabilityContract.Mode mode =
+                    (AvailabilityContract.Mode) args.getSerializable(AvailabilityContract.CALENDAR_MODE);
+            if (mode == AvailabilityContract.Mode.DAILY) {
+                titleView.setText(R.string.availability_calendar_daily);
+            } else if (mode == AvailabilityContract.Mode.HOURLY) {
+                titleView.setText(R.string.availability_calendar_hourly);
+            }
+        }
+        presenter = new AvailabilityPresenter(this, args, AvailabilityConfig.getInstance(this));
         presenter.init();
     }
 
@@ -72,9 +83,6 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
             return;
         }
         switch (view.getId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
             case R.id.toolbar_action:
                 break;
             case R.id.btn_availability_save:
@@ -84,8 +92,18 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onSelectedDatesChange(List<Date> dates) {
-        titleDelegate.onTitleChanged(titleView, dates == null ? 0 : dates.size());
+        titleDelegate.onTitleChanged(buttonSave, dates == null ? 0 : dates.size());
     }
 
     @Override
@@ -111,7 +129,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     @Override
     public void onDatesRetrieved(List<Date> dates) {
         adapter.setDates(dates);
-        titleDelegate.onTitleChanged(titleView, dates == null ? 0 : dates.size());
+        titleDelegate.onTitleChanged(buttonSave, dates == null ? 0 : dates.size());
     }
 
     @Override

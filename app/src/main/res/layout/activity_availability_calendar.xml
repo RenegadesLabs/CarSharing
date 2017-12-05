@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             app:theme="@style/CardeeToolbar"
+            app:navigationIcon="@drawable/ic_close"
             app:titleTextColor="@color/colorAccent">
 
             <TextView
@@ -73,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="gone"
-            android:clickable="false"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="@id/availability_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

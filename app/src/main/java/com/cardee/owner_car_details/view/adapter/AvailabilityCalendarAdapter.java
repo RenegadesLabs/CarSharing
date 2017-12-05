@@ -23,7 +23,7 @@ public class AvailabilityCalendarAdapter extends MultipleSelectionAdapter<Date> 
 
     @Override
     protected void onSelectionChanged(List<Day> dayz) {
-        if (listener != null && dayz != null && !dayz.isEmpty()) {
+        if (listener != null && dayz != null) {
             List<Date> dates = new ArrayList<>();
             for (Day day : dayz) {
                 dates.add(day.getCalendarTime());

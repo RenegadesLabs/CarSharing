@@ -78,11 +78,6 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
             case 2:

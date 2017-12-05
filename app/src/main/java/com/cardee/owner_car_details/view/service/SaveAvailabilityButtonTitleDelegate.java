@@ -5,11 +5,11 @@ import android.widget.TextView;
 
 import com.cardee.R;
 
-public class SaveAvailabilityTitleDelegate {
+public class SaveAvailabilityButtonTitleDelegate {
 
     private String[] suffixes;
 
-    public SaveAvailabilityTitleDelegate(Context context) {
+    public SaveAvailabilityButtonTitleDelegate(Context context) {
         suffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
     }
 
@@ -18,7 +18,8 @@ public class SaveAvailabilityTitleDelegate {
             throw new IllegalArgumentException("Invalid count value: " + count);
         }
         int index = count > 1 ? 2 : count;
-        String title = String.valueOf(count) + " " + suffixes[index];
+        String prefix = index == 0 ? "" : String.valueOf(count) + " ";
+        String title = prefix + suffixes[index];
         view.setText(title);
     }
 }

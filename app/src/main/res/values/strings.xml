@@ -213,4 +213,6 @@
         <item>available day \u2022 Save</item>
         <item>available days \u2022 Save</item>
     </string-array>
+    <string name="availability_calendar_daily">Calendar (Daily)</string>
+    <string name="availability_calendar_hourly">Calendar (Hourly)</string>
 </resources>
