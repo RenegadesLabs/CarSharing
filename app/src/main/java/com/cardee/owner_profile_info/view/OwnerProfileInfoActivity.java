@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -232,6 +233,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     public void setProfileImage(String photoLink) {
         Glide.with(this)
                 .load(photoLink)
+                .error(R.drawable.ic_photo_placeholder)
                 .centerCrop()
                 .transform(new CircleTransform(this))
                 .into(mProfilePhoto);

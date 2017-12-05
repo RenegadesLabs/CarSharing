@@ -1,6 +1,5 @@
 package com.cardee.owner_profile_info.view;
 
-import com.cardee.data_source.remote.api.reviews.response.entity.Review;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.CarReview;
 import com.cardee.mvp.BaseView;

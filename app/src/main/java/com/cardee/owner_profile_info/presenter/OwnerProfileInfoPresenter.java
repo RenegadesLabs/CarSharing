@@ -58,6 +58,7 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                     OwnerProfile profile = response.getOwnerProfile();
                     if (profile != null) {
                         mView.setProfileImage(profile.getProfilePhotoLink());
+
                         mView.setProfileName(profile.getName());
                         float rate = profile.getRating();
                         if (rate == (long) rate) {
@@ -86,7 +87,11 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
                         mView.setBookings(profile.getBookingsCount().toString());
 
-                        mView.setNote(profile.getNote());
+                        String note = profile.getNote();
+                        if (note == null || note.isEmpty()) {
+                            note = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_note);
+                        }
+                        mView.setNote(note);
 
                         String address = profile.getAddress();
                         if (address != null && !address.isEmpty()) {
@@ -102,7 +107,6 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                                 Log.d(TAG, e.getMessage());
                             }
                         }
-
 
                         int carsCount = profile.getCarCount();
                         StringBuilder builder = new StringBuilder(String.valueOf(carsCount));

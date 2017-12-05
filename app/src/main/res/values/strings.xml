@@ -203,6 +203,7 @@
     <string name="owner_profile_info_note_change_success">Note changed</string>
     <string name="owner_profile_info_default_city">Singapore</string>
     <string name="owner_profile_info_photo_success">Profile photo changed!</string>
+    <string name="owner_profile_info_default_note">Please leave a note about yourself</string>
 
     <!--More Tab-->
     <string name="more_tab_owner_profile">Owner Profile</string>
@@ -214,6 +215,10 @@
     <string name="more_tab_cardee">Cardee</string>
     <string name="more_tab_switch">Switch To Renter</string>
     <string name="more_tab_version">version</string>
+    <string name="invite_friends_body">
+        http://cardee.co - With Cardee, you can rent flexibly for days, weeks, or just a few hours!
+        Book spontaneously, pickup available cars around you and drive away in minutes!</string>
+    <string name="invite_friends_title">Share with:</string>
 
     <!--Account details-->
     <string name="account_details_account">Account</string>

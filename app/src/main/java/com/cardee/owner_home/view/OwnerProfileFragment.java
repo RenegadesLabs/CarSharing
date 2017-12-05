@@ -124,7 +124,11 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openInviteFriends() {
-        showMessage("Coming soon");
+        String shareBody = getActivity().getString(R.string.invite_friends_body);
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.invite_friends_title)));
     }
 
     @Override
