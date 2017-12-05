@@ -43,6 +43,9 @@ public class AccountDetailsPresenter {
                         mView.setName(profile.getName());
                         mView.setEmail(profile.getEmail());
                         mView.setPhone(profile.getPhone());
+                        if (profile.getSocialNetwork() != null) {
+                            mView.hidePassword();
+                        }
                     }
                 }
 

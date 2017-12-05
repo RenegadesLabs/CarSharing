@@ -13,4 +13,6 @@ public interface AccountDetailsView extends BaseView {
     void setPass(String password);
 
     void setPassChangeState(boolean b);
+
+    void hidePassword();
 }

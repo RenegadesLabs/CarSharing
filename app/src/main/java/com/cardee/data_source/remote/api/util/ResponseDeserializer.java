@@ -16,6 +16,7 @@ public class ResponseDeserializer implements JsonDeserializer<NoDataResponse> {
 
     @Override
     public NoDataResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+
         JsonElement dataElement = json.getAsJsonObject().get("data");
         if (dataElement.isJsonObject()) {
             Gson gson = new Gson();

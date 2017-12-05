@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.auth.preview.PreviewActivity;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_account_details.presenter.AccountDetailsPresenter;
 import com.cardee.owner_change_pass.view.ChangePassActivity;
@@ -123,7 +125,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @OnClick(R.id.log_out_card)
     public void logOutClicked() {
-        showMessage("Coming soon");
+        AccountManager.getInstance(this).onLogout();
+        Intent intent = new Intent(this, PreviewActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.add_card_card)
@@ -163,6 +169,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         } else {
             mPassCard.setOnClickListener(null);
         }
+    }
+
+    @Override
+    public void hidePassword() {
+        mPassCard.setVisibility(View.GONE);
     }
 
     @Override

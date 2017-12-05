@@ -36,6 +36,12 @@ public class OwnerProfile extends ErrorResponseBody {
     @SerializedName("note")
     private String note;
     @Expose
+    @SerializedName("social_net")
+    private String socialNetwork;
+    @Expose
+    @SerializedName("credit_balance")
+    private Float creditBalance;
+    @Expose
     @SerializedName("car_cnt")
     private Integer carCount;
     @Expose
@@ -47,9 +53,6 @@ public class OwnerProfile extends ErrorResponseBody {
     @Expose
     @SerializedName("rating")
     private Float rating;
-    @Expose
-    @SerializedName("social_net")
-    private String socialNetwork;
     @Expose
     @SerializedName("cars")
     private CarEntity[] cars;
@@ -195,5 +198,13 @@ public class OwnerProfile extends ErrorResponseBody {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Float getCreditBalance() {
+        return creditBalance;
+    }
+
+    public void setCreditBalance(Float creditBalance) {
+        this.creditBalance = creditBalance;
     }
 }

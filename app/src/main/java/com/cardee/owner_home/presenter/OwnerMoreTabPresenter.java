@@ -10,6 +10,9 @@ import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
 import com.cardee.owner_home.OwnerProfileContract;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import io.reactivex.functions.Consumer;
 
 public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Action> {
@@ -37,6 +40,10 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
                     if (profile != null) {
                         mView.setProfileImage(profile.getProfilePhotoLink());
                         mView.setProfileName(profile.getName());
+
+                        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+                        String creditString = formatter.format(profile.getCreditBalance());
+                        mView.setCreditBalance(creditString);
                     }
                 }
             }

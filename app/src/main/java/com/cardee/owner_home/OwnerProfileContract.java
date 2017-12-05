@@ -26,6 +26,8 @@ public interface OwnerProfileContract {
         void setProfileImage(String profilePhotoLink);
 
         void setProfileName(String name);
+
+        void setCreditBalance(String creditBalance);
     }
 
     enum Action {

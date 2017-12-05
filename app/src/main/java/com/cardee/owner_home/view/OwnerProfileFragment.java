@@ -152,6 +152,11 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         mProfileName.setText(name);
     }
 
+    @Override
+    public void setCreditBalance(String creditBalance) {
+        mAdapter.setCreditBalance(creditBalance);
+    }
+
 
     @Override
     public void showProgress(boolean show) {

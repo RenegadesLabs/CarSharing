@@ -25,7 +25,9 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
     private final List<String> mMenuItems;
     private final LayoutInflater mInflater;
     private final String mCardee;
+    private final String mCredit;
     private final String mVersionString;
+    private String mCreditBalance;
 
     private final PublishSubject<OwnerProfileContract.Action> mEventObservable;
 
@@ -34,6 +36,7 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
         mMenuItems = Arrays.asList(context.getResources().getStringArray(R.array.more_tab_menu));
         mEventObservable = PublishSubject.create();
         mCardee = context.getResources().getString(R.string.more_tab_cardee);
+        mCredit = context.getResources().getString(R.string.more_tab_credit);
         mVersionString = context.getResources().getString(R.string.more_tab_version);
 
     }
@@ -55,6 +58,9 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
             String version = mVersionString + " " + versionCode;
             holder.setItemInfo(version);
         }
+        if (text.equals(mCredit)) {
+            holder.setItemInfo(mCreditBalance);
+        }
 
         // TODO set icon and info;
     }
@@ -62,6 +68,11 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
     @Override
     public int getItemCount() {
         return mMenuItems.size();
+    }
+
+    public void setCreditBalance(String creditBalance) {
+        mCreditBalance = creditBalance;
+        notifyDataSetChanged();
     }
 
     public static class MoreTabItemViewHolder extends RecyclerView.ViewHolder {
