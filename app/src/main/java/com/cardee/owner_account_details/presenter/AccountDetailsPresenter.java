@@ -34,8 +34,6 @@ public class AccountDetailsPresenter {
     public void getOwnerInfo() {
         mView.showProgress(true);
 
-        readPassFromSharedPref();
-
         mExecutor.execute(mGetInfoUseCase, null, new UseCase.Callback<GetOwnerInfo.ResponseValues>() {
             @Override
             public void onSuccess(GetOwnerInfo.ResponseValues response) {
@@ -59,7 +57,7 @@ public class AccountDetailsPresenter {
         });
     }
 
-    private void readPassFromSharedPref() {
+    public void readPassFromSharedPref() {
         boolean socialLoggedIn = mSharedPref.getBoolean(mSocialLoggedInKey, false);
         int passLength = mSharedPref.getInt(mPassLengthKey, 0);
         if (socialLoggedIn) {

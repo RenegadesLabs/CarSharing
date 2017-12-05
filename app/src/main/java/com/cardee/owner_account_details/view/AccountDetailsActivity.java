@@ -77,6 +77,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         mPresenter.getOwnerInfo();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.readPassFromSharedPref();
+    }
+
     private void initPresenter() {
         mPresenter = new AccountDetailsPresenter(this);
     }

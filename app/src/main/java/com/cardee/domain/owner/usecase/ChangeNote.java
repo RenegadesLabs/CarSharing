@@ -15,7 +15,7 @@ public class ChangeNote implements UseCase<ChangeNote.RequestValues, ChangeNote.
 
     @Override
     public void execute(ChangeNote.RequestValues values, final Callback<ChangeNote.ResponseValues> callback) {
-        mRepository.changeNote(values.getNewNote(), new OwnerProfileDataSource.OnChangeNoteCallback() {
+        mRepository.changeNote(values.getNewNote(), new OwnerProfileDataSource.NoResponseCallback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess(new ResponseValues());

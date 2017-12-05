@@ -33,7 +33,7 @@
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
-    <string name="preference_file_key">LOGIN_SHARED_PREFERENCES</string>
+    <string name="preference_file_key">LOGIN_STORE</string>
     <string name="pass_length_key">PASSWORD_LENGTH</string>
     <string name="social_logged_key">SOCIAL_LOGIN</string>
 
@@ -49,7 +49,7 @@
     <string name="change_pass_new_pass">New password</string>
     <string name="change_pass_confirm_pass">Confirm new password</string>
     <string name="change_pass_edit_error">This field must be filled, more than 3 characters!</string>
-    <string name="change_pass_edit_error_matching">Passwords is not matching!</string>
+    <string name="change_pass_edit_error_matching">Passwords do not match!</string>
     <string name="change_pass_success">Password changed successfully!</string>
 
     <!--Loading-->
@@ -230,6 +230,6 @@
     <string name="change_pass_retype">Retype new password</string>
     <string name="change_pass_save">Save Changes</string>
     <string name="change_pass_cancel">Cancel</string>
-
+    <string name="change_pass_forgotten">Forgotten Password?</string>
 
 </resources>

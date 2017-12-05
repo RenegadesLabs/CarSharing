@@ -1,19 +1,22 @@
 package com.cardee.data_source;
 
 import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
+import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 
 public interface OwnerProfileDataSource {
 
     void loadOwnerProfile(ProfileCallback callback);
 
-    void changeNote(OwnerNoteRequest ownerNoteRequest, OnChangeNoteCallback callback);
+    void changeNote(OwnerNoteRequest ownerNoteRequest, NoResponseCallback callback);
+
+    void changePassword(PassChangeRequest request, NoResponseCallback callback);
 
     interface ProfileCallback extends BaseCallback {
         void onSuccess(OwnerProfile ownerProfile);
     }
 
-    interface OnChangeNoteCallback extends BaseCallback {
+    interface NoResponseCallback extends BaseCallback {
         void onSuccess();
     }
 
