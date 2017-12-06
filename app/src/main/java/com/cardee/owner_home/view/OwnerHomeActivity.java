@@ -31,7 +31,6 @@ import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
-import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.custom.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
 
