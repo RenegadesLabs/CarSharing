@@ -41,7 +41,7 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
                 Log.e(TAG, "Error: " + error.getErrorType() + " with message: " + error.getMessage());
                 if (view != null) {
                     view.showProgress(false);
-                    view.showMessage("Error: " + error.getErrorType() + " with message: " + error.getMessage());
+                    view.showMessage(error.getMessage());
                 }
             }
         });

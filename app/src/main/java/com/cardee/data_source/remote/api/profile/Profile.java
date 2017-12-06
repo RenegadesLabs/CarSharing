@@ -2,11 +2,10 @@ package com.cardee.data_source.remote.api.profile;
 
 
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
-import com.cardee.data_source.remote.api.profile.response.NoDataResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PUT;
