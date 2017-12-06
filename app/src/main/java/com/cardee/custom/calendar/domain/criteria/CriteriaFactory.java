@@ -7,11 +7,11 @@ import java.util.List;
 
 public class CriteriaFactory {
 
-    public static SelectionCriteria newRangeCriteria(@NonNull List<Date> dates) {
-        return new RangeCriteria(dates.get(0), dates.get(dates.size() - 1));
+    public static SelectionCriteria newRangeCriteria(@NonNull List<Date> dates, boolean includeCurrent) {
+        return new RangeCriteria(dates.get(0), dates.get(dates.size() - 1), includeCurrent);
     }
 
-    public static SelectionCriteria newMultiselectCriteria(@NonNull List<Date> dates) {
-        return new MultiselectCriteria(dates);
+    public static SelectionCriteria newMultiselectCriteria(@NonNull List<Date> dates, boolean includeCurrent) {
+        return new MultiselectCriteria(dates, includeCurrent);
     }
 }

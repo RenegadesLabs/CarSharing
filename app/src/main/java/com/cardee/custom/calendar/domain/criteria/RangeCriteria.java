@@ -2,6 +2,7 @@ package com.cardee.custom.calendar.domain.criteria;
 
 import com.cardee.custom.calendar.model.Day;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class RangeCriteria implements SelectionCriteria {
@@ -9,9 +10,24 @@ public class RangeCriteria implements SelectionCriteria {
     private final Day startDay;
     private final Day endDay;
 
-    RangeCriteria(Date startDate, Date endDate) {
-        this.startDay = Day.from(startDate);
-        this.endDay = Day.from(endDate);
+    RangeCriteria(Date start, Date end, boolean includeCurrent) {
+        Date currentDate = new Date();
+        Day currentDay = Day.from(currentDate);
+        Day temporaryStartDay = Day.from(start);
+        int compare = temporaryStartDay.compareTo(currentDay);
+        if (compare <= 0) {
+            if (includeCurrent) {
+                startDay = currentDay;
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currentDate);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                startDay = Day.from(calendar.getTime());
+            }
+        } else {
+            startDay = temporaryStartDay;
+        }
+        endDay = Day.from(end);
     }
 
     @Override

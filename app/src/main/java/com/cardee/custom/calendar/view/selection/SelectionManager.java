@@ -1,5 +1,7 @@
 package com.cardee.custom.calendar.view.selection;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.cardee.custom.calendar.domain.UseCase;
@@ -37,6 +39,9 @@ public class SelectionManager implements OnViewClickListener<DayView> {
     private Day rangeStart;
     private Day rangeEnd;
     private RangeBound lastBound = RangeBound.START;
+    private boolean includeCurrent = true;
+
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     public SelectionManager(MonthAdapter adapter) {
         selectedDayz = new ArrayList<>();
@@ -61,6 +66,9 @@ public class SelectionManager implements OnViewClickListener<DayView> {
     @Override
     public void onViewClick(DayView view) {
         Day day = view.getDay();
+        if (!day.isEnabled() || (day.isCurrent() && !includeCurrent)) {
+            return;
+        }
         if (selectionMode == CalendarView.MODE_MULTISELECT) {
             proceedMultiselectModeSelection(day, view);
         } else if (selectionMode == CalendarView.MODE_RANGE) {
@@ -193,9 +201,9 @@ public class SelectionManager implements OnViewClickListener<DayView> {
         }
         SelectionCriteria criteria;
         if (selectionMode == CalendarView.MODE_MULTISELECT) {
-            criteria = CriteriaFactory.newMultiselectCriteria(selection);
+            criteria = CriteriaFactory.newMultiselectCriteria(selection, includeCurrent);
         } else if (selectionMode == CalendarView.MODE_RANGE) {
-            criteria = CriteriaFactory.newRangeCriteria(selection);
+            criteria = CriteriaFactory.newRangeCriteria(selection, includeCurrent);
         } else {
             throw new IllegalArgumentException("Selection mode: " + selectionMode);
         }
@@ -230,5 +238,28 @@ public class SelectionManager implements OnViewClickListener<DayView> {
         if (selectionAdapter != null) {
             selectionAdapter.onSelectionChanged(selectedDayz);
         }
+    }
+
+    public void setIncludeCurrent(boolean include) {
+        includeCurrent = include;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Day day : selectedDayz) {
+                    if (day.isCurrent()) {
+                        if (day.isSelected()) {
+                            day.setSelectionState(null);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                        break;
+                    }
+                }
+            }
+        }).start();
     }
 }

@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Day implements Comparable {
+public class Day implements Comparable<Day> {
 
     private static final String TAG = Day.class.getSimpleName();
     private static final SimpleDateFormat NEW_DATE_FORMAT =
@@ -130,8 +130,7 @@ public class Day implements Comparable {
     }
 
     @Override
-    public int compareTo(@NonNull Object o) {
-        Day day = (Day) o;
+    public int compareTo(@NonNull Day day) {
         return compareTo(day.calendar);
     }
 

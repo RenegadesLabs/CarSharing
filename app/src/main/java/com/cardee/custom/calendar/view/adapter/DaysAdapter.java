@@ -57,7 +57,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayHolder>
     public void onClick(View view) {
         if (listener != null) {
             DayView dayView = (DayView) view;
-            if (dayView.getDay() != null && dayView.getDay().isEnabled()) {
+            if (dayView.getDay() != null) {
                 listener.onViewClick(dayView);
             }
         }

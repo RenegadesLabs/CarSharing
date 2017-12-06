@@ -172,6 +172,10 @@ public class CalendarView extends LinearLayout {
         selectionManager.addToPeriod(months);
     }
 
+    public void setIncludeCurrent(boolean include) {
+        selectionManager.setIncludeCurrent(include);
+    }
+
     public void reset() {
         selectionManager.reset();
     }
