@@ -27,6 +27,7 @@ import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
 import com.cardee.owner_home.view.adapter.MoreTabAdapter;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
+import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.util.glide.CircleTransform;
 
 public class OwnerProfileFragment extends Fragment implements OwnerProfileContract.View {
@@ -109,7 +110,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openSettings() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(getActivity(), OwnerSettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override

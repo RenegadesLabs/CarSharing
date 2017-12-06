@@ -190,5 +190,8 @@
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
 
+    <style name="AppCompatAlertDialogTheme" parent="AppTheme">
+        <item name="android:textColorAlertDialogListItem">@color/blue</item>
+    </style>
 
 </resources>
