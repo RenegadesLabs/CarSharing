@@ -162,6 +162,7 @@
                         android:textColor="@color/add_car_item_vehicle_secondary_txt"
                         android:textSize="@dimen/text_regular" />
 
+                    
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
