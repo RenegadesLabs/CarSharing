@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
+import com.cardee.owner_car_details.CarDetailsEditContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 

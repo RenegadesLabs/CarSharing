@@ -14,7 +14,8 @@ public class Error {
         OTHER,
         LOST_CONNECTION,
         INTERNAL,
-        INVALID_REQUEST
+        INVALID_REQUEST,
+        WRONG_AUTHENTICATION
     }
 
     public static class Message {
@@ -28,6 +29,8 @@ public class Error {
         public final static String PASSWORD_LENGTH = "Length must be between 3 and 36.";
 
         public final static String PASSWORD_DO_EXIST = "Password do exist.";
+
+        public final static String WRONG_AUTHENTICATION = "Wrong password.";
     }
 
     public Error(@NonNull Type type, @NonNull String message) {

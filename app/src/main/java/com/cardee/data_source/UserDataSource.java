@@ -1,6 +1,5 @@
 package com.cardee.data_source;
 
-import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.domain.owner.usecase.Register;
 
 public interface UserDataSource {
@@ -16,6 +15,8 @@ public interface UserDataSource {
     void checkUniqueLogin(String login, String password, Callback callback);
 
     void register(Register.RequestValues registerValues, Callback callback);
+
+    void setProfilePicture(Register.RequestValues registerValues, Callback callback);
 
     interface Callback {
 

@@ -24,17 +24,19 @@ import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
+import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_home.view.modal.AvailabilityMenuFragment;
 import com.cardee.owner_home.view.service.FragmentFactory;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
-        CarListItemEventListener, View.OnClickListener {
+        CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
     private static final int ADD_NEW_CAR_REQUEST_CODE = 101;
@@ -100,6 +102,9 @@ public class OwnerHomeActivity extends AppCompatActivity
             case 1:
                 fragmentClazz = OwnerCarsFragment.class;
                 break;
+            case 3:
+                fragmentClazz = OwnerProfileFragment.class;
+                break;
             default:
                 Log.e(TAG, "Position changed to: " + position);
         }
@@ -146,13 +151,15 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     public void onHourlyPickerClick(Car car) {
-        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment.getInstance(AvailabilityMenuFragment.Mode.HOURLY);
+        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment
+                .getInstance(car.getCarId(), AvailabilityContract.Mode.HOURLY);
         menuFragment.show(getSupportFragmentManager(), menuFragment.getTag());
     }
 
     @Override
     public void onDailyPickerClick(Car car) {
-        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment.getInstance(AvailabilityMenuFragment.Mode.DAILY);
+        AvailabilityMenuFragment menuFragment = AvailabilityMenuFragment
+                .getInstance(car.getCarId(), AvailabilityContract.Mode.DAILY);
         menuFragment.show(getSupportFragmentManager(), menuFragment.getTag());
     }
 

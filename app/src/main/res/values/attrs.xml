@@ -11,4 +11,20 @@
         <attr name="LineWidth" format="dimension" />
         <attr name="Icon" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="CalendarView">
+        <attr name="header_height" format="dimension" />
+        <attr name="header_background" format="reference" />
+        <attr name="header_text_color" format="color" />
+        <attr name="header_highlighted_text_color" format="color" />
+        <attr name="title_gravity" format="enum">
+            <enum name="center" value="1" />
+            <enum name="start" value="2" />
+            <enum name="end" value="3" />
+        </attr>
+        <attr name="title_background" format="reference" />
+        <attr name="selection_color" format="color" />
+        <attr name="body_text_color" format="color" />
+        <attr name="current_date_color" format="color" />
+    </declare-styleable>
 </resources>

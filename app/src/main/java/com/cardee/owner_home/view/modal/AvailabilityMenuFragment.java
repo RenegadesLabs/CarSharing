@@ -1,9 +1,12 @@
 package com.cardee.owner_home.view.modal;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,20 +16,20 @@ import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.owner_car_details.AvailabilityContract;
+import com.cardee.owner_car_details.view.AvailabilityCalendarActivity;
 
 public class AvailabilityMenuFragment extends BottomSheetDialogFragment
         implements View.OnClickListener {
 
-    public enum Mode {
-        DAILY, HOURLY
-    }
-
-    private Mode mMode;
     private Toast mCurrentToast;
 
-    public static AvailabilityMenuFragment getInstance(Mode mode) {
+    public static AvailabilityMenuFragment getInstance(int id, AvailabilityContract.Mode mode) {
         AvailabilityMenuFragment fragment = new AvailabilityMenuFragment();
-        fragment.mMode = mode;
+        Bundle args = new Bundle();
+        args.putInt(AvailabilityContract.CAR_ID, id);
+        args.putSerializable(AvailabilityContract.CALENDAR_MODE, mode);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -76,12 +79,15 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
                 showMessage("Coming soon");
                 break;
             case R.id.availability_calendar:
-                showMessage("Coming soon");
+                Intent intent = new Intent(getActivity(), AvailabilityCalendarActivity.class);
+                intent.putExtras(getArguments());
+                getActivity().startActivity(intent);
                 break;
             case R.id.availability_days_of_week:
                 showMessage("Coming soon");
                 break;
         }
+        dismiss();
     }
 
     private void showMessage(String message) {

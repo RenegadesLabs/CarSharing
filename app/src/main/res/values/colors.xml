@@ -12,6 +12,7 @@
     <color name="main_enabled">#569be7</color>
     <color name="main_disabled">#d8d8d8</color>
     <color name="divider">#e2e2e2</color>
+    <color name="divider_light">#d0d0d0</color>
     <color name="bg_main">#ffffff</color>
     <color name="bg_widget">#ffffff</color>
     <color name="bg_widget_pressed">#d6d6d6</color>
@@ -20,6 +21,7 @@
     <color name="bg_transparent_black">#80000000</color>
     <color name="bg_button_regular">#55b6ad</color>
     <color name="bg_button_regular_dim">#49968f</color>
+    <color name="bg_owner_profile">#f2f2f2</color>
 
     <color name="text_disabled">#bababa</color>
     <color name="turquoise_text">#19B9AD</color>
@@ -29,6 +31,10 @@
     <color name="text_picture_overlaid">#ffffff</color>
     <color name="text_blue">@color/colorPrimaryDark</color>
     <color name="text_subtitle">#838d99</color>
+    <color name="text_owner_profile_name">#353739</color>
+    <color name="text_more_tab_item">#282A2B</color>
+    <color name="text_account_settings">#9C9FA1</color>
+    <color name="text_change_pass_cancel">#535E67</color>
 
     <color name="add_car_divider">#7A8794</color>
 

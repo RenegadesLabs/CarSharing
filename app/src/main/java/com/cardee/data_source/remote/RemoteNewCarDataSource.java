@@ -116,7 +116,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
 
     private void handleErrorResponse(BaseResponse response, Callback callback) {
         if (response == null) {
-            callback.onError(new Error(Error.Type.OTHER, "null"));
+            callback.onError(new Error(Error.Type.OTHER, "An error occurred. Please try later"));
             return;
         }
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {

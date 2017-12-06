@@ -1,7 +1,5 @@
-package com.cardee.data_source.remote.api.profile.response;
+package com.cardee.data_source.remote.api;
 
-import com.cardee.data_source.remote.api.BaseResponse;
-import com.cardee.data_source.remote.api.ErrorResponseBody;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
