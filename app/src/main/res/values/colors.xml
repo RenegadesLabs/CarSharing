@@ -51,4 +51,6 @@
     <color name="button_google">#D95232</color>
 
     <color name="modal_menu_title">#ffffff</color>
+
+    <color name="bg_regular">#F2F2F2</color>
 </resources>

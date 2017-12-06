@@ -5,9 +5,14 @@ import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponse;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
+import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,4 +45,20 @@ public interface Cars {
 
     @PUT("cars/{id}/description")
     Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body NewCarData requestBody);
+
+    @PUT("cars/{id}/rental/terms")
+    Call<BaseResponse> updateRentalRequirements(@Path("id") Integer carId, @Body RentalTermsRequirementsEntity requestBody);
+
+    @PUT("cars/{id}/rental/rules")
+    Call<BaseResponse> updateRentalRules(@Path("id") Integer carId, @Body CarRuleEntity requestBody);
+
+    @PUT("cars/{id}/rental/terms")
+    Call<BaseResponse> updateRentalSecurityDeposit(@Path("id") Integer carId, @Body RentalTermsSecurityDepositEntity requestBody);
+
+    @PUT("cars/{id}/rental/terms")
+    Call<BaseResponse> updateRentalInsuranceExcess(@Path("id") Integer carId, @Body RentalTermsInsuranceEntity requestBody);
+
+    @PUT("cars/{id}/rental/terms")
+    Call<BaseResponse> updateRentalAdditional(@Path("id") Integer carId, @Body RentalTermsAdditionalEntity requestBody);
+
 }

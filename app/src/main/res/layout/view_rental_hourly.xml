@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_availability"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="@dimen/xlarge_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_calendar_rental" />
+
+                <TextView
+                    android:id="@+id/availability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="@dimen/xlarge_margin"
+                    android:text="@string/car_rental_info_availability"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintStart_toEndOf="@+id/icon_availability"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/xsmall_margin"
+                    android:text="@string/car_rental_info_hourly_b"
+                    app:layout_constraintBottom_toBottomOf="@+id/availability"
+                    app:layout_constraintStart_toEndOf="@+id/availability" />
+
+                <TextView
+                    android:id="@+id/currently"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="Currently no available"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/availability"
+                    app:layout_constraintTop_toBottomOf="@+id/availability" />
+
+                <TextView
+                    android:id="@+id/tv_rentalAvailabilityEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/title_edit"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/currently"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+
+                <View
+                    android:id="@+id/div1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/currently" />
+
+                <TextView
+                    android:id="@+id/tv_rentalAvailableTimingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="Available timing"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/availability"
+                    app:layout_constraintTop_toBottomOf="@+id/div1" />
+
+                <TextView
+                    android:id="@+id/tv_rentalTimingEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/title_edit"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_rentalAvailableTimingValue"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/div2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rentalAvailableTimingValue" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_margin">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_settings"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_settings" />
+
+                <TextView
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="@string/car_rental_info_settings"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_settings"
+                    app:layout_constraintStart_toEndOf="@+id/icon_settings" />
+
+                <TextView
+                    android:id="@+id/settings_h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/xsmall_margin"
+                    android:text="@string/car_rental_info_hourly_b"
+                    app:layout_constraintBottom_toBottomOf="@+id/settings"
+                    app:layout_constraintStart_toEndOf="@+id/settings" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_rentalHelp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/settings"
+                    app:layout_constraintStart_toEndOf="@+id/settings_h"
+                    app:srcCompat="@drawable/ic_help" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_instant"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/icon_settings"
+                    app:srcCompat="@drawable/ic_instant" />
+
+                <TextView
+                    android:id="@+id/instant_booking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_rental_info_instant"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/settings"
+                    app:layout_constraintTop_toTopOf="@+id/icon_instant" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sw_rentalInstant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_instant"
+                    app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
+
+                <TextView
+                    android:id="@+id/tv_rentalInstantEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/title_edit"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sw_rentalInstant" />
+
+                <View
+                    android:id="@+id/div3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/icon_instant" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_curbside"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/div3"
+                    app:srcCompat="@drawable/ic_direction" />
+
+                <TextView
+                    android:id="@+id/curbside_delivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_rental_info_delivery"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/settings"
+                    app:layout_constraintTop_toTopOf="@+id/icon_curbside" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sw_rentalDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_curbside"
+                    app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
+
+                <TextView
+                    android:id="@+id/tv_rentalCurbsideRatesEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/rates"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sw_rentalDelivery" />
+
+                <View
+                    android:id="@+id/div4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/icon_curbside" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_cash"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/div4"
+                    app:srcCompat="@drawable/ic_cash" />
+
+                <TextView
+                    android:id="@+id/accept_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/car_rental_info_cash"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/settings"
+                    app:layout_constraintTop_toTopOf="@+id/icon_cash" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sw_rentalCash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/Switch"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_cash"
+                    app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/div5"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@+id/icon_cash" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_rates"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_bage" />
+
+                <TextView
+                    android:id="@+id/rates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/car_rental_info_rates"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintStart_toEndOf="@+id/icon_rates"
+                    app:layout_constraintTop_toTopOf="@+id/icon_rates" />
+
+                <TextView
+                    android:id="@+id/rates_h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/xsmall_margin"
+                    android:text="@string/car_rental_info_hourly_b"
+                    app:layout_constraintBottom_toBottomOf="@+id/rates"
+                    app:layout_constraintStart_toEndOf="@+id/rates" />
+
+                <TextView
+                    android:id="@+id/tv_rentalRentalRatesEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/title_edit"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rates" />
+
+                <TextView
+                    android:id="@+id/tv_rentalOffPeakValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="fggf"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/rates"
+                    app:layout_constraintTop_toBottomOf="@+id/rates" />
+
+                <TextView
+                    android:id="@+id/tv_rentalPeakValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="fdhgfhgf"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/rates"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalOffPeakValue" />
+
+                <TextView
+                    android:id="@+id/tv_rentalMinimumValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="dfglkdf';k"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/rates"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalPeakValue" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/div6"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rentalMinimumValue" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_fuel"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_fuel" />
+
+                <TextView
+                    android:id="@+id/fuel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/car_rental_info_fuel"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintStart_toEndOf="@+id/icon_fuel"
+                    app:layout_constraintTop_toTopOf="@+id/icon_fuel" />
+
+                <TextView
+                    android:id="@+id/fuel_h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/xsmall_margin"
+                    android:text="@string/car_rental_info_hourly_b"
+                    app:layout_constraintBottom_toBottomOf="@+id/fuel"
+                    app:layout_constraintStart_toEndOf="@+id/fuel" />
+
+                <TextView
+                    android:id="@+id/tv_rentalFuelEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:background="@drawable/bg_item_transparent"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:paddingStart="@dimen/small_margin"
+                    android:text="@string/title_edit"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/fuel" />
+
+                <TextView
+                    android:id="@+id/tv_rentalFuelValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="dfgfdgl;,"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular"
+                    app:layout_constraintStart_toStartOf="@id/fuel"
+                    app:layout_constraintTop_toBottomOf="@+id/fuel" />
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/div7"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rentalFuelValue" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_rentalTermsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_item_transparent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/div7">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_terms"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_margin="@dimen/large_margin"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_rental_terms" />
+
+                <TextView
+                    android:id="@+id/terms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:text="@string/car_rental_info_terms"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/icon_terms"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/icon_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
+

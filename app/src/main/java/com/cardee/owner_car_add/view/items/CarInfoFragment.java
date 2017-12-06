@@ -17,7 +17,7 @@ import com.cardee.owner_car_add.presenter.CarInfoPresenter;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
-import com.cardee.owner_home.view.modal.PickerMenuFragment;
+import com.cardee.custom.modal.PickerMenuFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

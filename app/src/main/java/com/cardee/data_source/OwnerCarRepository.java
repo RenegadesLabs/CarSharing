@@ -18,6 +18,8 @@ public class OwnerCarRepository implements OwnerCarDataSource {
     private final OwnerCarDataSource mRemoteDataSource;
     private final LruCache<Integer, CarResponseBody> mCache;
 
+    private static int mCarId;
+
     private OwnerCarRepository() {
         mCarsRepository = OwnerCarsRepository.getInstance();
         mLocalDataSource = LocalOwnerCarDataSource.getInstance();
@@ -49,6 +51,7 @@ public class OwnerCarRepository implements OwnerCarDataSource {
             public void onSuccess(CarResponseBody carResponse) {
                 callback.onSuccess(carResponse);
                 mCache.put(carResponse.getCarDetails().getCarId(), carResponse);
+                mCarId = carResponse.getCarDetails().getCarId();
             }
 
             @Override
@@ -56,6 +59,10 @@ public class OwnerCarRepository implements OwnerCarDataSource {
                 callback.onError(error);
             }
         });
+    }
+
+    public static int currentCarId() {
+        return mCarId;
     }
 
     void refresh(Integer id) {
