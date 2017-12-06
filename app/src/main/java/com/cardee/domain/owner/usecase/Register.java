@@ -45,7 +45,7 @@ public class Register implements UseCase<Register.RequestValues, Register.Respon
         private final File mImage;
         private final String mUserName;
 
-        public RequestValues(@NonNull String login, @NonNull String password, @NonNull File image, @NonNull String userName) {
+        public RequestValues(String login, String password, @NonNull File image, String userName) {
             mLogin = login;
             mPassword = password;
             mImage = image;

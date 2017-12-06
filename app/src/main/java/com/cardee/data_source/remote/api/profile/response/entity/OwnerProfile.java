@@ -15,6 +15,15 @@ public class OwnerProfile extends ErrorResponseBody {
     @SerializedName("name")
     private String name;
     @Expose
+    @SerializedName("email")
+    private String email;
+    @Expose
+    @SerializedName("phone")
+    private String phone;
+    @Expose
+    @SerializedName("address")
+    private String address;
+    @Expose
     @SerializedName("acceptance")
     private String acceptance;
     @Expose
@@ -27,20 +36,23 @@ public class OwnerProfile extends ErrorResponseBody {
     @SerializedName("note")
     private String note;
     @Expose
+    @SerializedName("social_net")
+    private String socialNetwork;
+    @Expose
+    @SerializedName("credit_balance")
+    private Float creditBalance;
+    @Expose
     @SerializedName("car_cnt")
     private Integer carCount;
     @Expose
     @SerializedName("review_cnt")
     private Integer reviewCount;
-    @Expose
     @SerializedName("reviews")
-    private Object[] reviews;
+    @Expose
+    private OwnerReview[] reviews;
     @Expose
     @SerializedName("rating")
-    private Integer rating;
-    @Expose
-    @SerializedName("social_net")
-    private String socialNetwork;
+    private Float rating;
     @Expose
     @SerializedName("cars")
     private CarEntity[] cars;
@@ -124,19 +136,19 @@ public class OwnerProfile extends ErrorResponseBody {
         this.reviewCount = reviewCount;
     }
 
-    public Object[] getReviews() {
+    public OwnerReview[] getReviews() {
         return reviews;
     }
 
-    public void setReviews(Object[] reviews) {
+    public void setReviews(OwnerReview[] reviews) {
         this.reviews = reviews;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
@@ -162,5 +174,37 @@ public class OwnerProfile extends ErrorResponseBody {
 
     public void setSettings(NotificationSettings[] settings) {
         this.settings = settings;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Float getCreditBalance() {
+        return creditBalance;
+    }
+
+    public void setCreditBalance(Float creditBalance) {
+        this.creditBalance = creditBalance;
     }
 }

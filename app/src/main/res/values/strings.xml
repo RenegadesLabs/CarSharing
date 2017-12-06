@@ -33,6 +33,9 @@
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
     <string name="login_process">Logging in…</string>
+    <string name="preference_file_key">LOGIN_STORE</string>
+    <string name="pass_length_key">PASSWORD_LENGTH</string>
+    <string name="social_logged_key">SOCIAL_LOGIN</string>
 
     <!--Send Email Password Recover-->
     <string name="send_email_title">Forgot Password</string>
@@ -46,7 +49,7 @@
     <string name="change_pass_new_pass">New password</string>
     <string name="change_pass_confirm_pass">Confirm new password</string>
     <string name="change_pass_edit_error">This field must be filled, more than 3 characters!</string>
-    <string name="change_pass_edit_error_matching">Passwords is not matching!</string>
+    <string name="change_pass_edit_error_matching">Passwords do not match!</string>
     <string name="change_pass_success">Password changed successfully!</string>
 
     <!--Loading-->
@@ -81,7 +84,7 @@
     <string name="car_details_tab_rental">Rental</string>
     <string name="car_details_tab_car">Car</string>
     <string name="car_details_tab_reviews">Reviews</string>
-    
+
     <string name="car_details_more_listing">View listing</string>
     <string name="car_details_more_delete">Delete car</string>
 
@@ -183,6 +186,64 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
+
+    <!--Owner Profile Info-->
+    <string name="owner_profile_info_title">Owner Profile</string>
+    <string name="owner_profile_info_acceptance">Acceptance</string>
+    <string name="owner_profile_info_response">Response Time</string>
+    <string name="owner_profile_info_bookings">Bookings</string>
+    <string name="owner_profile_info_edit">edit</string>
+    <string name="owner_profile_info_car">\u0020Car</string>
+    <string name="owner_profile_info_car_review">\u0020Car Review</string>
+    <string name="owner_profile_info_dot">\u2022</string>
+    <string name="owner_profile_info_percent">%</string>
+    <string name="owner_profile_info_minutes">min</string>
+    <string name="owner_profile_info_note_edit">Note</string>
+    <string name="owner_profile_info_note_change">Change</string>
+    <string name="owner_profile_info_note_change_title">Change note</string>
+    <string name="owner_profile_info_note_change_success">Note changed</string>
+    <string name="owner_profile_info_name_change_success">Name changed</string>
+    <string name="owner_profile_info_default_city">Singapore</string>
+    <string name="owner_profile_info_photo_success">Profile photo changed!</string>
+    <string name="owner_profile_info_default_note">Please leave a note about yourself</string>
+
+    <!--More Tab-->
+    <string name="more_tab_owner_profile">Owner Profile</string>
+    <string name="more_tab_account">Account</string>
+    <string name="more_tab_settings">Settings</string>
+    <string name="more_tab_credit">Credit Balance</string>
+    <string name="more_tab_chat">Live Chat</string>
+    <string name="more_tab_friends">Invite Friends</string>
+    <string name="more_tab_cardee">Cardee</string>
+    <string name="more_tab_switch">Switch To Renter</string>
+    <string name="more_tab_version">version</string>
+    <string name="invite_friends_body">
+        http://cardee.co - With Cardee, you can rent flexibly for days, weeks, or just a few hours!
+        Book spontaneously, pickup available cars around you and drive away in minutes!</string>
+    <string name="invite_friends_title">Share with:</string>
+
+    <!--Account details-->
+    <string name="account_details_account">Account</string>
+    <string name="account_details">Account details</string>
+    <string name="account_details_name">Name</string>
+    <string name="account_details_mobile_number">Mobile number</string>
+    <string name="account_details_verify_account">Verify Account</string>
+    <string name="account_details_log_out">Log Out</string>
+    <string name="account_details_payment_method">Payment Method</string>
+    <string name="account_details_add_card">Add Card</string>
+    <string name="account_details_default_phone_text">Enter mobile number here</string>
+    <string name="account_details_change_name_title">Change name</string>
+    <string name="account_details_change_email_title">Change email</string>
+    <string name="account_details_change_phone_title">Change mobile number</string>
+    <string name="account_details_email_change_success">Email changed</string>
+    <string name="account_details_phone_change_success">Mobile number changed</string>
+
+    <!--Owner change password-->
+    <string name="change_pass_current_pass">Current password</string>
+    <string name="change_pass_retype">Retype new password</string>
+    <string name="change_pass_save">Save Changes</string>
+    <string name="change_pass_cancel">Cancel</string>
+    <string name="change_pass_forgotten">Forgotten Password?</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">

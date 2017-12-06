@@ -38,6 +38,6 @@ public class CarResponseToCarMapper {
                 carResponse.getCarAvailableOrderHours(), carResponse.getCarAvailableOrderDays(),
                 carResponse.getCarAvailabilityHourlyDates(), carResponse.getCarAvailabilityDailyDates(),
                 carResponse.getCarDetails().getDescription(), images, carDetails.getLongitude(),
-                carDetails.getLatitude(), carDetails.getAddress(), carDetails.getTown());
+                carDetails.getLatitude(), carDetails.getAddress(), carDetails.getTown(), carDetails.getCarRating());
     }
 }

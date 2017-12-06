@@ -29,6 +29,7 @@
     <dimen name="widget_padding_x_large">28dp</dimen>
 
     <dimen name="image_loading_indicator_side">32dp</dimen>
+    <dimen name="image_loading_indicator_side_small">16dp</dimen>
 
     <dimen name="modal_menu_title_height">32dp</dimen>
     <dimen name="modal_menu_item_height">56dp</dimen>

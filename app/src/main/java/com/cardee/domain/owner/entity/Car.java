@@ -32,6 +32,7 @@ public class Car {
     private final Double mLatitude;
     private final String mAddress;
     private final String mTown;
+    private final Float mRating;
 
     public Car(@NonNull Integer carId,
                String carMake,
@@ -59,7 +60,8 @@ public class Car {
                Double longitude,
                Double latitude,
                String address,
-               String town) {
+               String town,
+               Float rating) {
         mCarId = carId;
         mCarMake = carMake;
         mCarTitle = carTitle;
@@ -87,6 +89,7 @@ public class Car {
         mLatitude = latitude;
         mAddress = address;
         mTown = town;
+        mRating = rating;
     }
 
     public static class Builder {
@@ -118,6 +121,7 @@ public class Car {
         private Double mBuilderLatitude;
         private String mBuilderAddress;
         private String mBuilderTown;
+        private Float mRating;
 
         private Builder(Car car) {
             mBuilderCarId = car.getCarId();
@@ -147,6 +151,7 @@ public class Car {
             mBuilderLongitude = car.getLongitude();
             mBuilderAddress = car.getAddress();
             mBuilderTown = car.getTown();
+            mRating = car.getRating();
         }
 
         public Builder setCarMake(String carMake) {
@@ -229,6 +234,10 @@ public class Car {
             return this;
         }
 
+        public void setRating(Float rating) {
+            mRating = rating;
+        }
+
         //TODO implement Availability setting
 
         public Car build() {
@@ -259,7 +268,8 @@ public class Car {
                     mBuilderLongitude,
                     mBuilderLatitude,
                     mBuilderAddress,
-                    mBuilderTown);
+                    mBuilderTown,
+                    mRating);
         }
     }
 
@@ -373,6 +383,10 @@ public class Car {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public Float getRating() {
+        return mRating;
     }
 
     public boolean isAvailableHourly() {
