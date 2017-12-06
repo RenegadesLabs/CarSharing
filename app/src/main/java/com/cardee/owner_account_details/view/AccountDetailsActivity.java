@@ -99,17 +99,17 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @OnClick(R.id.name_card)
     public void nameClicked() {
-        showMessage("Coming soon");
+        mPresenter.showChangeNameDialog(this);
     }
 
     @OnClick(R.id.email_card)
     public void emailClicked() {
-        showMessage("Coming soon");
+        mPresenter.showChangeEmailDialog(this);
     }
 
     @OnClick(R.id.phone_card)
     public void phoneClicked() {
-        showMessage("Coming soon");
+        mPresenter.showChangePhoneDialog(this);
     }
 
     @OnClick(R.id.pass_card)

@@ -13,7 +13,9 @@
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/owner_profile_info_note_edit" />
+            android:hint="@string/account_details_mobile_number"
+            android:inputType="phone"
+            android:maxLength="20" />
 
     </android.support.design.widget.TextInputLayout>
 

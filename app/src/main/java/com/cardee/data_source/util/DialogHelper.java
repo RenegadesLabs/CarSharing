@@ -22,12 +22,12 @@ public class DialogHelper {
         return d;
     }
 
-    public static AlertDialog getAlertDialog(final Context context, @LayoutRes int layout, String positiveButtonText, final OnClickCallback callback) {
+    public static AlertDialog.Builder getAlertDialog(final Context context, @LayoutRes int layout, String titleText, String positiveButtonText, final OnClickCallback callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.NoteChangeTextInputStyle));
         LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
         final View inflater = layoutInflater.inflate(layout, null);
-        final TextInputEditText editText = inflater.findViewById(R.id.note_edit);
-        builder.setTitle(context.getResources().getString(R.string.owner_profile_info_note_change_title))
+        final TextInputEditText editText = inflater.findViewById(R.id.edit_text);
+        builder.setTitle(titleText)
                 .setView(inflater)
                 .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
                     @Override
@@ -47,8 +47,7 @@ public class DialogHelper {
                                 callback.onNegativeButtonClick(dialog);
                             }
                         });
-
-        return builder.create();
+        return builder;
     }
 
     public interface OnClickCallback {

@@ -93,20 +93,22 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                         }
                         mView.setNote(note);
 
+                        String city = null;
                         String address = profile.getAddress();
                         if (address != null && !address.isEmpty()) {
                             Geocoder geocoder = new Geocoder((Context) mView, Locale.getDefault());
                             try {
                                 List<Address> addresses = geocoder.getFromLocationName(address, 1);
-                                String city = addresses.get(0).getLocality();
-                                if (city == null) {
-                                    city = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_city);
-                                }
-                                mView.setNoteTitle(city);
+                                city = addresses.get(0).getLocality();
                             } catch (IOException e) {
                                 Log.d(TAG, e.getMessage());
                             }
                         }
+
+                        if (city == null) {
+                            city = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_city);
+                        }
+                        mView.setNoteTitle(city);
 
                         int carsCount = profile.getCarCount();
                         StringBuilder builder = new StringBuilder(String.valueOf(carsCount));
@@ -164,6 +166,7 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
     public void changeNote(final Context context) {
         DialogHelper.getAlertDialog(context, R.layout.dialog_owner_profile_change_note,
+                context.getResources().getString(R.string.owner_profile_info_note_change_title),
                 context.getResources().getString(R.string.owner_profile_info_note_change),
                 new DialogHelper.OnClickCallback() {
                     @Override

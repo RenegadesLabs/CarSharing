@@ -8,6 +8,9 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerProfileDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
+import com.cardee.data_source.remote.api.profile.request.ChangeEmailRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
 import com.cardee.data_source.remote.api.profile.response.NoDataResponse;
@@ -92,6 +95,66 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
                 } else {
                     callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
                 }
+            }
+        });
+    }
+
+    @Override
+    public void changeName(ChangeNameRequest request, final NoResponseCallback callback) {
+        mApi.changeName(request).subscribe(new Consumer<NoDataResponse>() {
+            @Override
+            public void accept(NoDataResponse noDataResponse) throws Exception {
+                if (noDataResponse.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(callback, noDataResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void changeEmail(ChangeEmailRequest request, final NoResponseCallback callback) {
+        mApi.changeEmail(request).subscribe(new Consumer<NoDataResponse>() {
+            @Override
+            public void accept(NoDataResponse noDataResponse) throws Exception {
+                if (noDataResponse.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(callback, noDataResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void changePhone(ChangePhoneRequest request, final NoResponseCallback callback) {
+        mApi.changePhone(request).subscribe(new Consumer<NoDataResponse>() {
+            @Override
+            public void accept(NoDataResponse noDataResponse) throws Exception {
+                if (noDataResponse.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(callback, noDataResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
             }
         });
     }
