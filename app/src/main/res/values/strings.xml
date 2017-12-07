@@ -269,6 +269,24 @@
     <string name="two_days_before">2 days before</string>
     <string name="off">Off</string>
 
+    <!--Owner cardee-->
+    <string name="owner_cardee_title">Cardee</string>
+    <string name="mobile_one_text">Mobile 1</string>
+    <string name="mobile_two_text">Mobile 2</string>
+    <string name="mobile_one">+65 8179 8186</string>
+    <string name="mobile_two">+65 8742 8281</string>
+    <string name="cardee_email">support@cardee.co</string>
+    <string name="website">Website</string>
+    <string name="cardee_website">cardee.co</string>
+    <string name="faq">FAQ</string>
+    <string name="cardee_faq">cardee.co/faq</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedback_hint">Have something to say? Let us hear from you!</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="http">http://</string>
+    <string name="send_feedback_success">Feedback sent</string>
+
 
     <!--Calendar-->
     <string-array name="days_of_week">

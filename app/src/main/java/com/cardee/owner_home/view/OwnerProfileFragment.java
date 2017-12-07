@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -24,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_account_details.view.AccountDetailsActivity;
+import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
 import com.cardee.owner_home.view.adapter.MoreTabAdapter;
@@ -31,9 +30,6 @@ import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.util.glide.CircleTransform;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -143,7 +139,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openCardee() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(getActivity(), OwnerCardeeActivity.class);
+        startActivity(intent);
     }
 
     @Override

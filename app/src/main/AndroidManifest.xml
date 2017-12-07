@@ -103,6 +103,7 @@
         <activity
             android:name=".owner_notifications.view.OwnerNotifActivity"
             android:theme="@style/AppCompatAlertDialogTheme" />
+        <activity android:name=".owner_cardee.view.OwnerCardeeActivity"></activity>
     </application>
 
 </manifest>
