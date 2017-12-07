@@ -47,7 +47,7 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
         TextView titleTV = toolbar.findViewById(R.id.toolbar_title);
         String title = getString(R.string.car_rental_info_fuel);
         switch (mode) {
-            case OwnerCarRentalFragment.HOULY:
+            case OwnerCarRentalFragment.HOURLY:
                 title += " " + getString(R.string.car_rental_info_hourly_b);
                 break;
             case OwnerCarRentalFragment.DAILY:
@@ -65,7 +65,7 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
     }
 
     private void initViewsState(int mode) {
-        if (mode == OwnerCarRentalFragment.HOULY) {
+        if (mode == OwnerCarRentalFragment.HOURLY) {
             findViewById(R.id.ll_fuelMileageContainer)
                     .setVisibility(View.VISIBLE);
             return;

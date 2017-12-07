@@ -1,39 +1,45 @@
 package com.cardee.owner_car_details.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
-import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
+import com.cardee.domain.owner.entity.RentalDetails;
+import com.cardee.owner_car_details.view.adapter.OnTabSelectedAdapter;
+import com.cardee.owner_car_details.view.viewholder.BaseViewHolder;
+import com.cardee.owner_car_details.view.viewholder.DailyRentalViewHolder;
+import com.cardee.owner_car_details.view.viewholder.HourlyRentalViewHolder;
 
-public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabSelectedListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class OwnerCarRentalFragment extends Fragment {
 
     private static final String CAR_ID = "car_id";
-
     public final static String MODE = "key_rental_mode";
 
-    public final static int HOULY = 0;
-
+    public final static int HOURLY = 0;
     public final static int DAILY = 1;
 
     private final int[] mTabTitleIds =
-            {R.string.car_rental_info_hourly,
-                    R.string.car_rental_info_daily};
+            {R.string.car_rental_info_hourly, R.string.car_rental_info_daily};
 
     private TabLayout mTabLayout;
     private ViewPager mPager;
+    private ContentPage currentPage;
+    private Map<ContentPage, BaseViewHolder<RentalDetails>> views;
 
     public static Fragment newInstance(Integer carId) {
         OwnerCarRentalFragment fragment = new OwnerCarRentalFragment();
         Bundle args = new Bundle();
+        args.putInt(CAR_ID, carId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,61 +48,56 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_owner_car_rental, container, false);
+        views = new HashMap<>();
         initPages(rootView, new String[]{getString(mTabTitleIds[0], mTabTitleIds[1])});
         return rootView;
     }
 
     private void initPages(View root, String[] tabTitles) {
-        mTabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
-        mPager = (ViewPager) root.findViewById(R.id.rental_pager);
-        mPager.setAdapter(new PagerAdapter());
+        mTabLayout = root.findViewById(R.id.tab_layout);
+        mPager = root.findViewById(R.id.rental_pager);
+        mPager.setAdapter(new RentalPagerAdapter());
         mTabLayout.setupWithViewPager(mPager);
         mTabLayout.getTabAt(1).select();
-        mTabLayout.addOnTabSelectedListener(this);
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdapter() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                currentPage = ContentPage.values()[position];
+            }
+        });
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
+    private class RentalPagerAdapter extends PagerAdapter {
 
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
-    private class PagerAdapter extends android.support.v4.view.PagerAdapter implements View.OnClickListener {
-
-        private int mPosition;
-
-        public PagerAdapter() {}
+        public RentalPagerAdapter() {
+        }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            mPosition = position;
-            ContentPagerEnum contentPagerEnum = ContentPagerEnum.values()[position];
+            ContentPage contentPage = ContentPage.values()[position];
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            ViewGroup layout = (ViewGroup) inflater.inflate(contentPagerEnum.getLayoutResId(), container, false);
-            layout.findViewById(R.id.cl_rentalTermsContainer).setOnClickListener(this);
-            layout.findViewById(R.id.tv_rentalFuelEdit).setOnClickListener(this);
+            ViewGroup layout = (ViewGroup) inflater.inflate(contentPage.getLayoutResId(), container, false);
+            BaseViewHolder<RentalDetails> holder;
+            if (ContentPage.DAILY.equals(contentPage)) {
+                holder = new DailyRentalViewHolder(layout, getActivity());
+            } else {
+                holder = new HourlyRentalViewHolder(layout, getActivity());
+            }
+            views.put(contentPage, holder);
             container.addView(layout);
             return layout;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            ContentPagerEnum customPagerEnum = ContentPagerEnum.values()[position];
+            ContentPage customPagerEnum = ContentPage.values()[position];
             return getActivity().getString(customPagerEnum.getTitleResId());
         }
 
         @Override
         public int getCount() {
-            return ContentPagerEnum.values().length;
+            return ContentPage.values().length;
         }
 
         @Override
@@ -108,30 +109,9 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.cl_rentalTermsContainer:
-                    getActivity().startActivity(new Intent(getActivity(),
-                                    RentalTermsActivity.class));
-                    break;
-                case R.id.tv_rentalFuelEdit:
-                    Intent i = new Intent(getActivity(),
-                            RentalFuelPolicyActivity.class);
-                    if (mPosition == HOULY) {
-                        i.putExtra(MODE, mPosition);
-                        getActivity().startActivity(i);
-                        break;
-                    }
-                    i.putExtra(MODE, DAILY);
-                    getActivity().startActivity(i);
-                    break;
-            }
-        }
     }
 
-    public enum ContentPagerEnum {
+    public enum ContentPage {
 
         HOURLY(R.string.car_rental_info_hourly, R.layout.view_rental_hourly),
         DAILY(R.string.car_rental_info_daily, R.layout.view_rental_daily);
@@ -139,7 +119,7 @@ public class OwnerCarRentalFragment extends Fragment implements TabLayout.OnTabS
         private int mTitleResId;
         private int mLayoutResId;
 
-        ContentPagerEnum(int titleResId, int layoutResId) {
+        ContentPage(int titleResId, int layoutResId) {
             mTitleResId = titleResId;
             mLayoutResId = layoutResId;
         }

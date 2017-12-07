@@ -27,6 +27,9 @@ public class AvailabilityPresenter implements AvailabilityContract.Presenter {
     private final SaveHourlyDates saveHourly;
     private final UseCaseExecutor executor;
     private final AvailabilityContract.Mode mode;
+    private String startTime;
+    private String endTime;
+
     private AvailabilityConfig config;
 
     public AvailabilityPresenter(AvailabilityContract.View view, Bundle args, AvailabilityConfig config) {
@@ -56,6 +59,8 @@ public class AvailabilityPresenter implements AvailabilityContract.Presenter {
                         } else if (mode == AvailabilityContract.Mode.HOURLY) {
                             view.onDatesRetrieved(response.getHourlyDates());
                             view.onTimeBoundsRetrieved(response.getBeginTime(), response.getEndTime());
+                            startTime = response.getBeginTime();
+                            endTime = response.getEndTime();
                         } else {
                             throw new IllegalStateException("Invalid mode: " + mode);
                         }
@@ -81,42 +86,42 @@ public class AvailabilityPresenter implements AvailabilityContract.Presenter {
 
     private void saveDaily(final List<Date> data) {
         view.showProgress(true);
-        executor.execute(saveDaily, new SaveDailyDates.RequestValues(id, data),
-                new UseCase.Callback<SaveDailyDates.ResponseValues>() {
-                    @Override
-                    public void onSuccess(SaveDailyDates.ResponseValues response) {
-                        if (mode == AvailabilityContract.Mode.DAILY && config.isSingleDatesSet()) {
-                            saveHourly(data);
-                            return;
-                        }
-                        close();
-                    }
+        SaveDailyDates.RequestValues request = new SaveDailyDates.RequestValues(id, data);
+        executor.execute(saveDaily, request, new UseCase.Callback<SaveDailyDates.ResponseValues>() {
+            @Override
+            public void onSuccess(SaveDailyDates.ResponseValues response) {
+                if (mode == AvailabilityContract.Mode.DAILY && config.isSingleDatesSet()) {
+                    saveHourly(data);
+                    return;
+                }
+                close();
+            }
 
-                    @Override
-                    public void onError(Error error) {
-                        hideProgressWithError(error.getMessage());
-                    }
-                });
+            @Override
+            public void onError(Error error) {
+                hideProgressWithError(error.getMessage());
+            }
+        });
     }
 
     private void saveHourly(final List<Date> data) {
         view.showProgress(true);
-        executor.execute(saveHourly, new SaveHourlyDates.RequestValues(),
-                new UseCase.Callback<SaveHourlyDates.ResponseValues>() {
-                    @Override
-                    public void onSuccess(SaveHourlyDates.ResponseValues response) {
-                        if (mode == AvailabilityContract.Mode.HOURLY && config.isSingleDatesSet()) {
-                            saveDaily(data);
-                            return;
-                        }
-                        close();
-                    }
+        SaveHourlyDates.RequestValues request = new SaveHourlyDates.RequestValues(id, startTime, endTime, data);
+        executor.execute(saveHourly, request, new UseCase.Callback<SaveHourlyDates.ResponseValues>() {
+            @Override
+            public void onSuccess(SaveHourlyDates.ResponseValues response) {
+                if (mode == AvailabilityContract.Mode.HOURLY && config.isSingleDatesSet()) {
+                    saveDaily(data);
+                    return;
+                }
+                close();
+            }
 
-                    @Override
-                    public void onError(Error error) {
-                        hideProgressWithError(error.getMessage());
-                    }
-                });
+            @Override
+            public void onError(Error error) {
+                hideProgressWithError(error.getMessage());
+            }
+        });
 
     }
 

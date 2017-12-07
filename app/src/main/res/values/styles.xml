@@ -195,6 +195,4 @@
         <item name="colorControlNormal">@color/text_account_settings</item>
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
-
-
 </resources>
