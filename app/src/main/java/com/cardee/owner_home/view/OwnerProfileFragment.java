@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,11 @@ import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.util.glide.CircleTransform;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import static android.app.Activity.RESULT_OK;
+
 public class OwnerProfileFragment extends Fragment implements OwnerProfileContract.View {
 
     private MoreTabItemEventListener mEventListener;
@@ -42,8 +49,9 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     private TextView mProfileName;
     private View mHeaderContainer;
     private View mContainer;
-
     private Toast mCurrentToast;
+
+    public static final int GET_PICTURE_REQUEST = 19;
 
     public static Fragment newInstance() {
         return new OwnerProfileFragment();
@@ -99,7 +107,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void openOwnerProfile() {
         Intent intent = new Intent(getActivity(), OwnerProfileInfoActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, GET_PICTURE_REQUEST);
     }
 
     @Override
@@ -148,6 +156,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         if (getActivity() != null) {
             Glide.with(getActivity())
                     .load(profilePhotoLink)
+                    .placeholder(R.drawable.ic_photo_placeholder)
                     .error(R.drawable.ic_photo_placeholder)
                     .transform(new CircleTransform(getActivity()))
                     .into(mProfileImage);
@@ -164,6 +173,15 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         mAdapter.setCreditBalance(creditBalance);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_PICTURE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                mPresenter.loadProfile();
+            }
+        }
+    }
 
     @Override
     public void showProgress(boolean show) {

@@ -52,7 +52,6 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private CarPreviewListAdapter mCarsAdapter;
     private ReviewListAdapter mReviewAdapter;
     private Toast mCurrentToast;
-
     private byte[] mPictureByteArray;
 
     @BindView(R.id.profile_info_container)
@@ -232,6 +231,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     public void setProfileImage(String photoLink) {
         Glide.with(this)
                 .load(photoLink)
+                .placeholder(R.drawable.ic_photo_placeholder)
                 .error(R.drawable.ic_photo_placeholder)
                 .centerCrop()
                 .transform(new CircleTransform(this))
@@ -307,6 +307,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     public void onChangeImageSuccess() {
         if (mPictureByteArray != null) {
             setProfileImage(mPictureByteArray);
+            setResult(RESULT_OK);
         }
     }
 

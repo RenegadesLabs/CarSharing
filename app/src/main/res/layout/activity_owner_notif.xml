@@ -141,7 +141,8 @@
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="12dp"
-            android:theme="@style/TextClickable" />
+            android:theme="@style/TextClickable"
+            app:theme="@style/Color1SwitchStyle" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -171,7 +172,8 @@
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="12dp"
-            android:theme="@style/TextClickable" />
+            android:theme="@style/TextClickable"
+            app:theme="@style/Color1SwitchStyle" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -201,7 +203,8 @@
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="12dp"
-            android:theme="@style/TextClickable" />
+            android:theme="@style/TextClickable"
+            app:theme="@style/Color1SwitchStyle" />
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
