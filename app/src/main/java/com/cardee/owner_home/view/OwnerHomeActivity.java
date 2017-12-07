@@ -28,6 +28,7 @@ import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
+import com.cardee.owner_home.view.fragment.inbox.InboxFragment;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
@@ -65,7 +66,6 @@ public class OwnerHomeActivity extends AppCompatActivity
         BottomNavigationHelper.prepare(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(1);
-        bottomMenu.disableItemAtPosition(0); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
     }
 
@@ -79,7 +79,6 @@ public class OwnerHomeActivity extends AppCompatActivity
         if (!wasSelected) {
             switch (position) {
                 case 0:
-                case 3:
                     getSupportActionBar().hide();
                     break;
                 case 1:
@@ -90,6 +89,9 @@ public class OwnerHomeActivity extends AppCompatActivity
                     getSupportActionBar().show();
                     mTitle.setText(R.string.title_my_bookings);
                     break;
+                case 3:
+                    getSupportActionBar().hide();
+                    break;
             }
             showFragmentOnPosition(position);
         }
@@ -99,6 +101,9 @@ public class OwnerHomeActivity extends AppCompatActivity
     private void showFragmentOnPosition(int position) {
         Class fragmentClazz = null;
         switch (position) {
+            case 0:
+                fragmentClazz = InboxFragment.class;
+                break;
             case 1:
                 fragmentClazz = OwnerCarsFragment.class;
                 break;

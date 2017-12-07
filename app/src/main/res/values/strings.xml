@@ -245,6 +245,10 @@
     <string name="change_pass_cancel">Cancel</string>
     <string name="change_pass_forgotten">Forgotten Password?</string>
 
+    <!-- Inbox Fragment -->
+    <string name="inbox_tab_alerts">Alerts</string>
+    <string name="inbox_tab_chats">Chats</string>
+
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

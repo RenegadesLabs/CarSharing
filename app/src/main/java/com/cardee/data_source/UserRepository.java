@@ -1,6 +1,5 @@
 package com.cardee.data_source;
 
-
 import com.cardee.CardeeApp;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.auth.Authentication;
@@ -31,9 +30,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
-
 public class UserRepository implements UserDataSource {
-
 
     private static UserRepository INSTANCE;
     private Authentication api;
