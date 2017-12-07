@@ -1,353 +1,371 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profile_info_container"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_owner_profile"
     tools:context="com.cardee.owner_profile_info.view.OwnerProfileInfoActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_layout"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/profile_info_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:theme="@style/CardeeToolbar"
-            app:titleTextColor="@color/colorAccent">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/ToolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/owner_profile_info_title" />
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:background="@android:color/white"
-            app:elevation="4dp">
-
-            <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/profile_image_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_half_circle"
-                android:gravity="center_horizontal"
-                android:text="@string/owner_profile_info_edit"
-                android:textAlignment="gravity"
-                android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-                app:layout_constraintEnd_toEndOf="@id/profile_image"
-                app:layout_constraintStart_toStartOf="@id/profile_image" />
-
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/text_owner_profile_name"
-                android:textSize="22sp"
-                app:layout_constraintStart_toEndOf="@id/profile_image"
-                app:layout_constraintTop_toTopOf="@id/profile_image" />
-
-            <ImageView
-                android:id="@+id/star_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintBottom_toBottomOf="@id/profile_image"
-                app:layout_constraintStart_toEndOf="@id/profile_image"
-                app:srcCompat="@drawable/ic_star_rate" />
-
-            <TextView
-                android:id="@+id/profile_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/text_owner_profile_name"
-                android:textSize="@dimen/text_xlarge"
-                app:layout_constraintBottom_toBottomOf="@id/star_rate"
-                app:layout_constraintStart_toEndOf="@id/star_rate" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_image">
-
-                <LinearLayout
-                    android:id="@+id/acceptance"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/owner_profile_info_acceptance"
-                        android:textAlignment="center"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
-                        android:textSize="@dimen/text_regular" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/acceptance_percentage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_owner_profile_name"
-                            android:textSize="@dimen/text_xlarge" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="1dp"
-                            android:text="@string/owner_profile_info_percent"
-                            android:textColor="@color/text_owner_profile_name"
-                            android:textSize="@dimen/text_small" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/divider1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_owner_profile_divider"
-                    app:layout_constraintStart_toEndOf="@id/acceptance"
-                    app:layout_constraintTop_toTopOf="@+id/acceptance" />
-
-
-                <LinearLayout
-                    android:id="@+id/response"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/owner_profile_info_response"
-                        android:textAlignment="center"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
-                        android:textSize="@dimen/text_regular" />
-
-                    
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:id="@+id/response_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/text_owner_profile_name"
-                            android:textSize="@dimen/text_xlarge" />
-
-                        <TextView
-                            android:id="@+id/response_minutes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:textColor="@color/text_owner_profile_name"
-                            android:textSize="@dimen/text_small" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/divider2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_owner_profile_divider"
-                    app:layout_constraintStart_toEndOf="@id/response"
-                    app:layout_constraintTop_toTopOf="@+id/acceptance" />
-
-                <LinearLayout
-                    android:id="@+id/bookings"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/owner_profile_info_bookings"
-                        android:textAlignment="center"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
-                        android:textSize="@dimen/text_regular" />
-
-                    <TextView
-                        android:id="@+id/bookings_count"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/text_owner_profile_name"
-                        android:textSize="@dimen/text_xlarge" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.constraint.ConstraintLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="242dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
-
-        <android.support.constraint.ConstraintLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/note_layout"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                card_view:cardElevation="0dp">
+                android:layout_height="@dimen/toolbar_height"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:theme="@style/CardeeToolbar"
+                app:titleTextColor="@color/colorAccent">
 
-                <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/ToolbarTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:padding="24dp">
+                    android:text="@string/owner_profile_info_title" />
+            </android.support.v7.widget.Toolbar>
 
-                    <TextView
-                        android:id="@+id/note_title"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="194dp"
+                android:background="@android:color/white"
+                app:elevation="4dp">
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/profile_image_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button_half_circle"
+                    android:gravity="center_horizontal"
+                    android:text="@string/owner_profile_info_edit"
+                    android:textAlignment="gravity"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                    app:layout_constraintEnd_toEndOf="@id/profile_image"
+                    app:layout_constraintStart_toStartOf="@id/profile_image" />
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_owner_profile_name"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/profile_image"
+                    app:layout_constraintTop_toTopOf="@id/profile_image" />
+
+                <ImageView
+                    android:id="@+id/star_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image"
+                    app:layout_constraintStart_toEndOf="@id/profile_image"
+                    app:srcCompat="@drawable/ic_star_rate" />
+
+                <TextView
+                    android:id="@+id/profile_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/text_owner_profile_name"
+                    android:textSize="@dimen/text_xlarge"
+                    app:layout_constraintBottom_toBottomOf="@id/star_rate"
+                    app:layout_constraintStart_toEndOf="@id/star_rate" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="27dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_image">
+
+                    <LinearLayout
+                        android:id="@+id/acceptance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/owner_profile_info_acceptance"
+                            android:textAlignment="center"
+                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textSize="@dimen/text_regular" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/acceptance_percentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_owner_profile_name"
+                                android:textSize="@dimen/text_xlarge" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="1dp"
+                                android:text="@string/owner_profile_info_percent"
+                                android:textColor="@color/text_owner_profile_name"
+                                android:textSize="@dimen/text_small" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/divider1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:src="@drawable/ic_owner_profile_divider"
+                        app:layout_constraintStart_toEndOf="@id/acceptance"
+                        app:layout_constraintTop_toTopOf="@+id/acceptance" />
+
+
+                    <LinearLayout
+                        android:id="@+id/response"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/owner_profile_info_response"
+                            android:textAlignment="center"
+                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textSize="@dimen/text_regular" />
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/response_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_owner_profile_name"
+                                android:textSize="@dimen/text_xlarge" />
+
+                            <TextView
+                                android:id="@+id/response_minutes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:textColor="@color/text_owner_profile_name"
+                                android:textSize="@dimen/text_small" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/divider2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_owner_profile_divider"
+                        app:layout_constraintStart_toEndOf="@id/response"
+                        app:layout_constraintTop_toTopOf="@+id/acceptance" />
+
+                    <LinearLayout
+                        android:id="@+id/bookings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/owner_profile_info_bookings"
+                            android:textAlignment="center"
+                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textSize="@dimen/text_regular" />
+
+                        <TextView
+                            android:id="@+id/bookings_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/text_owner_profile_name"
+                            android:textSize="@dimen/text_xlarge" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="242dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/note_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    card_view:cardElevation="0dp">
+
+                    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="24dp">
+
+                        <TextView
+                            android:id="@+id/note_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_owner_profile_name"
+                            android:textSize="@dimen/text_large"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/note_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/owner_profile_info_edit"
+                            android:textColor="@color/text_blue"
+                            android:textSize="@dimen/text_large"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/note_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/small_margin"
+                            android:textColor="@color/text_owner_profile_name"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/note_title" />
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cars_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/note_layout"
+                    card_view:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/cars_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="24dp"
+                        android:paddingTop="18dp"
                         android:textColor="@color/text_owner_profile_name"
-                        android:textSize="@dimen/text_large"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/note_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/owner_profile_info_edit"
-                        android:textColor="@color/text_blue"
                         android:textSize="@dimen/text_large"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/cars_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="42dp"
+                        android:orientation="horizontal" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/reviews_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    card_view:cardElevation="0dp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/cars_layout">
+
                     <TextView
-                        android:id="@+id/note_text"
+                        android:id="@+id/reviews_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/small_margin"
+                        android:paddingStart="24dp"
+                        android:paddingTop="18dp"
                         android:textColor="@color/text_owner_profile_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/note_title" />
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
+                        android:textSize="@dimen/text_large"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/cars_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_layout"
-                card_view:cardElevation="0dp">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/reviews_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="42dp"
+                        android:fillViewport="true" />
 
-                <TextView
-                    android:id="@+id/cars_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="24dp"
-                    android:paddingTop="18dp"
-                    android:textColor="@color/text_owner_profile_name"
-                    android:textSize="@dimen/text_large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/cars_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="42dp"
-                    android:orientation="horizontal" />
+            </android.support.constraint.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
+        </ScrollView>
 
-            <android.support.v7.widget.CardView
+    </android.support.constraint.ConstraintLayout>
 
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/reviews_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                card_view:cardElevation="0dp"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@id/cars_layout">
-
-                <TextView
-                    android:id="@+id/reviews_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="24dp"
-                    android:paddingTop="18dp"
-                    android:textColor="@color/text_owner_profile_name"
-                    android:textSize="@dimen/text_large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/reviews_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="42dp"
-                    android:fillViewport="true" />
-
-            </android.support.v7.widget.CardView>
-
-        </android.support.constraint.ConstraintLayout>
-
-    </ScrollView>
+    <ProgressBar
+        android:id="@+id/owner_info_progress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
