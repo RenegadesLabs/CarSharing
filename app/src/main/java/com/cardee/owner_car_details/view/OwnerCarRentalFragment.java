@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.RentalDetails;
+import com.cardee.owner_car_details.presenter.RentalDetailsPresenter;
 import com.cardee.owner_car_details.view.adapter.OnTabSelectedAdapter;
+import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.viewholder.BaseViewHolder;
 import com.cardee.owner_car_details.view.viewholder.DailyRentalViewHolder;
 import com.cardee.owner_car_details.view.viewholder.HourlyRentalViewHolder;
@@ -20,7 +22,7 @@ import com.cardee.owner_car_details.view.viewholder.HourlyRentalViewHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OwnerCarRentalFragment extends Fragment {
+public class OwnerCarRentalFragment extends Fragment implements ChildProgressListener {
 
     private static final String CAR_ID = "car_id";
     public final static String MODE = "key_rental_mode";
@@ -28,13 +30,13 @@ public class OwnerCarRentalFragment extends Fragment {
     public final static int HOURLY = 0;
     public final static int DAILY = 1;
 
-    private final int[] mTabTitleIds =
-            {R.string.car_rental_info_hourly, R.string.car_rental_info_daily};
+    private final int[] mTabTitleIds = {R.string.car_rental_info_hourly, R.string.car_rental_info_daily};
 
     private TabLayout mTabLayout;
     private ViewPager mPager;
     private ContentPage currentPage;
     private Map<ContentPage, BaseViewHolder<RentalDetails>> views;
+    private RentalDetailsPresenter presenter;
 
     public static Fragment newInstance(Integer carId) {
         OwnerCarRentalFragment fragment = new OwnerCarRentalFragment();
@@ -50,6 +52,8 @@ public class OwnerCarRentalFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_owner_car_rental, container, false);
         views = new HashMap<>();
         initPages(rootView, new String[]{getString(mTabTitleIds[0], mTabTitleIds[1])});
+        Bundle args = getArguments();
+        presenter = new RentalDetailsPresenter(args.containsKey(CAR_ID) ? args.getInt(CAR_ID) : -1);
         return rootView;
     }
 
@@ -68,6 +72,11 @@ public class OwnerCarRentalFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onChildProgressShow(boolean show) {
+
+    }
+
     private class RentalPagerAdapter extends PagerAdapter {
 
         public RentalPagerAdapter() {
@@ -81,8 +90,10 @@ public class OwnerCarRentalFragment extends Fragment {
             BaseViewHolder<RentalDetails> holder;
             if (ContentPage.DAILY.equals(contentPage)) {
                 holder = new DailyRentalViewHolder(layout, getActivity());
+                ((DailyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
             } else {
                 holder = new HourlyRentalViewHolder(layout, getActivity());
+                ((HourlyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
             }
             views.put(contentPage, holder);
             container.addView(layout);

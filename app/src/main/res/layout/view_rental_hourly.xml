@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main">
@@ -56,7 +55,7 @@
                     app:layout_constraintStart_toEndOf="@+id/availability" />
 
                 <TextView
-                    android:id="@+id/currently"
+                    android:id="@+id/availability_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
@@ -76,9 +75,8 @@
                     android:paddingStart="@dimen/small_margin"
                     android:text="@string/title_edit"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintBottom_toBottomOf="@+id/currently"
+                    app:layout_constraintBottom_toBottomOf="@+id/availability_days"
                     app:layout_constraintEnd_toEndOf="parent" />
-
 
                 <View
                     android:id="@+id/div1"
@@ -86,7 +84,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="@dimen/medium_margin"
                     android:background="@color/divider"
-                    app:layout_constraintTop_toBottomOf="@+id/currently" />
+                    app:layout_constraintTop_toBottomOf="@+id/availability_days" />
 
                 <TextView
                     android:id="@+id/tv_rentalAvailableTimingValue"

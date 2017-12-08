@@ -29,7 +29,7 @@ public class GetRentalDetails
         repository.obtainCar(id, new OwnerCarDataSource.Callback() {
             @Override
             public void onSuccess(CarResponseBody carResponse) {
-                callback.onSuccess(new ResponseValues(mapper.transfor(carResponse)));
+                callback.onSuccess(new ResponseValues(mapper.transform(carResponse)));
             }
 
             @Override
