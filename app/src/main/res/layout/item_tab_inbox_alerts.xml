@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <TextView
@@ -13,7 +14,6 @@
         style="@style/InboxTabItemTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:text="@string/inbox_tab_alerts"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -32,9 +32,7 @@
 
     <ImageView
         android:id="@+id/tab_notification"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
-        android:visibility="gone"
+        style="@style/InboxTabItemDotStyle"
         app:layout_constraintLeft_toRightOf="@id/tab_image"
         app:layout_constraintTop_toTopOf="@id/tab_image"
         app:srcCompat="@drawable/ic_inbox_notification" />

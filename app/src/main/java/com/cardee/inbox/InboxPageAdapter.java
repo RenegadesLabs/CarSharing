@@ -1,28 +1,24 @@
-package com.cardee.owner_home.view.adapter;
+package com.cardee.inbox;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.cardee.CardeeApp;
-import com.cardee.owner_home.view.fragment.inbox.AlertsFragment;
-import com.cardee.owner_home.view.fragment.inbox.ChatsFragment;
+import com.cardee.inbox.alert.AlertFragment;
+import com.cardee.inbox.chat.ChatFragment;
 
 public class InboxPageAdapter extends FragmentPagerAdapter {
 
     private static final int ALERTS_FRAGMENT = 0;
     private static final int CHATS_FRAGMENT = 1;
 
-    private AlertsFragment mAlertsFragment;
-    private ChatsFragment mChatsFragment;
+    private AlertFragment mAlertsFragment;
+    private ChatFragment mChatsFragment;
 
     public InboxPageAdapter(FragmentManager fm) {
         super(fm);
-        mAlertsFragment = AlertsFragment.newInstance();
-        mChatsFragment = ChatsFragment.newInstance();
+        mAlertsFragment = AlertFragment.newInstance();
+        mChatsFragment = ChatFragment.newInstance();
     }
 
     @Override

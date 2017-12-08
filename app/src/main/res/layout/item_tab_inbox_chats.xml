@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:alpha="0.4"
     android:gravity="center"
     android:orientation="horizontal">
 
@@ -33,10 +32,7 @@
 
     <ImageView
         android:id="@+id/tab_notification"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
-        android:layout_gravity="top"
-        android:visibility="gone"
+        style="@style/InboxTabItemDotStyle"
         app:layout_constraintLeft_toRightOf="@id/tab_image"
         app:layout_constraintTop_toTopOf="@id/tab_image"
         app:srcCompat="@drawable/ic_inbox_notification" />

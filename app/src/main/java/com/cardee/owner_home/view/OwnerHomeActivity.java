@@ -28,7 +28,7 @@ import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
-import com.cardee.owner_home.view.fragment.inbox.InboxFragment;
+import com.cardee.inbox.InboxFragment;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;

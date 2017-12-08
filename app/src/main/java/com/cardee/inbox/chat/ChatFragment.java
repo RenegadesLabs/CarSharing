@@ -1,4 +1,4 @@
-package com.cardee.owner_home.view.fragment.inbox;
+package com.cardee.inbox.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 
-public class AlertsFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
-    public static AlertsFragment newInstance() {
+    public static ChatFragment newInstance() {
         Bundle args = new Bundle();
-        AlertsFragment fragment = new AlertsFragment();
+        ChatFragment fragment = new ChatFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -21,7 +21,7 @@ public class AlertsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_inbox_alerts, container, false);
+        View root = inflater.inflate(R.layout.fragment_inbox_chats, container, false);
         return root;
     }
 }

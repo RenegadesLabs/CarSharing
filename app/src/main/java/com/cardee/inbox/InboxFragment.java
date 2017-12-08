@@ -1,4 +1,4 @@
-package com.cardee.owner_home.view.fragment.inbox;
+package com.cardee.inbox;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,61 +11,44 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.owner_home.view.adapter.InboxPageAdapter;
 
-public class InboxFragment extends Fragment {
+public class InboxFragment extends Fragment implements InboxContract.View {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private InboxPageAdapter mPageAdapter;
+    private TabItem mAlertsTab;
+    private TabItem mChatsTab;
 
-    public static Fragment newInstance() {
-        return new InboxFragment();
+    public static InboxFragment newInstance() {
+        Bundle args = new Bundle();
+        InboxFragment fragment = new InboxFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
-
+        mPageAdapter = new InboxPageAdapter(getChildFragmentManager());
         mViewPager = rootView.findViewById(R.id.inbox_fragment_viewpager);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mPageAdapter);
+
+        mAlertsTab = rootView.findViewById(R.id.inbox_fragment_tab_alerts);
+        mChatsTab = rootView.findViewById(R.id.inbox_fragment_tab_chats);
+
         mTabLayout = rootView.findViewById(R.id.inbox_fragment_tabs);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTabLayout.getTabAt(position).select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getCustomView() != null) {
                     tab.getCustomView().setAlpha(1.f);
                 }
@@ -84,9 +67,21 @@ public class InboxFragment extends Fragment {
             }
         });
 
-        mPageAdapter = new InboxPageAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(mPageAdapter);
-
         return rootView;
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+
     }
 }
