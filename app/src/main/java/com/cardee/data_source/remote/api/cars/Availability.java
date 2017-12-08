@@ -1,6 +1,7 @@
 package com.cardee.data_source.remote.api.cars;
 
 import com.cardee.data_source.remote.api.NoDataResponse;
+import com.cardee.data_source.remote.api.cars.request.AvailabilityValues;
 import com.cardee.data_source.remote.api.cars.request.DailyAvailability;
 import com.cardee.data_source.remote.api.cars.request.HourlyAvailability;
 
@@ -20,5 +21,9 @@ public interface Availability {
     @PUT("cars/{id}/availability/hourly")
     @Headers("Content-Type: application/json")
     Call<NoDataResponse> saveHourlyAvailability(@Path("id") int id, @Body HourlyAvailability availability);
+
+    @PUT("cars/{id}/availability")
+    @Headers("Content-Type: application/json")
+    Call<NoDataResponse> saveAvailabililty(@Path("id") int id, @Body AvailabilityValues availability);
 
 }

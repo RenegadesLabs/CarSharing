@@ -7,13 +7,13 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.RentalDetails;
-import com.cardee.mvp.BaseView;
+import com.cardee.owner_car_details.RentalDetailsContract;
+import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
@@ -21,9 +21,7 @@ import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 
 public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
-        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BaseView {
-
-    private RentalDetails dailyRental;
+        implements View.OnClickListener, RentalDetailsContract.ControlView {
 
     private TextView availabilityDays;
     private TextView timingPickup;
@@ -48,12 +46,14 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private TextView fuelPolicyValue;
     private View rentalTermsEdit;
 
+    private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
     private Toast currentToast;
 
 
     public DailyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
         super(rootView, activity);
+        presenter = new StrategyRentalDetailPresenter(this, StrategyRentalDetailPresenter.Strategy.DAILY);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timingPickup = rootView.findViewById(R.id.tv_rentalAvailableTimingPickup);
         timingReturn = rootView.findViewById(R.id.tv_rentalAvailableTimingReturn);
@@ -84,19 +84,19 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         fuelPolicyEdit.setOnClickListener(this);
         rentalTermsEdit.setOnClickListener(this);
         settingsHelp.setOnClickListener(this);
-        instantBookingSwitch.setOnCheckedChangeListener(this);
-        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
-        acceptCashSwitch.setOnCheckedChangeListener(this);
+        instantBookingSwitch.setOnCheckedChangeListener(presenter);
+        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
+        acceptCashSwitch.setOnCheckedChangeListener(presenter);
         initResources();
     }
 
-    private void initResources(){
+    private void initResources() {
 
     }
 
     @Override
     public void bind(RentalDetails model) {
-        dailyRental = model;
+        presenter.onBind(model);
     }
 
     @Override
@@ -123,16 +123,6 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (compoundButton.getId()) {
-            case R.id.sw_rentalInstant:
-            case R.id.sw_rentalDelivery:
-            case R.id.sw_rentalCash:
-                showMessage("Checked: " + b);
-        }
-    }
-
-    @Override
     public void showProgress(boolean show) {
         if (progressListener != null) {
             progressListener.onChildProgressShow(show);
@@ -155,5 +145,25 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     public void setProgressListener(ChildProgressListener progressListener) {
         this.progressListener = progressListener;
+    }
+
+    @Override
+    public void setData(RentalDetails rentalDetails) {
+
+    }
+
+    @Override
+    public void onInstantEnabled(boolean enabled) {
+
+    }
+
+    @Override
+    public void onCurbsideEnabled(boolean enabled) {
+
+    }
+
+    @Override
+    public void onCashEnabled(boolean enabled) {
+
     }
 }

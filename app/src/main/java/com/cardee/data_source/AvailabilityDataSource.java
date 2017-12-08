@@ -8,6 +8,8 @@ public interface AvailabilityDataSource {
 
     void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback);
 
+    void saveAvailability(int id, boolean availableDaily, boolean availableHourly, Callback callback);
+
     interface Callback {
         void onSuccess();
 

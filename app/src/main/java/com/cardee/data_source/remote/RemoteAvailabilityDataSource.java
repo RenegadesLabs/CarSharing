@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.ErrorResponseBody;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.cars.Availability;
+import com.cardee.data_source.remote.api.cars.request.AvailabilityValues;
 import com.cardee.data_source.remote.api.cars.request.DailyAvailability;
 import com.cardee.data_source.remote.api.cars.request.HourlyAvailability;
 
@@ -61,6 +62,29 @@ public class RemoteAvailabilityDataSource implements AvailabilityDataSource {
         request.setDates(dates == null ? new String[]{} : dates);
         try {
             Response<NoDataResponse> response = api.saveHourlyAvailability(id, request).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, "Cannot connect to the server"));
+        }
+    }
+
+    @Override
+    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
+
+    }
+
+    @Override
+    public void saveAvailability(int id, boolean availableDaily, boolean availableHourly, Callback callback) {
+        AvailabilityValues request = new AvailabilityValues();
+        request.setAvailableDaily(availableDaily);
+        request.setAvailableHourly(availableHourly);
+        try {
+            Response<NoDataResponse> response = api.saveAvailabililty(id, request).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
