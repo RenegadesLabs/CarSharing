@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,12 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
 
     private OwnerNotifPresenter mPresenter;
     private Toast mCurrentToast;
+
+    @BindView(R.id.notif_container)
+    View mContainer;
+
+    @BindView(R.id.notif_progress)
+    ProgressBar mProgressBar;
 
     @BindView(R.id.tv_handover_reminder)
     TextView mHandover;
@@ -84,7 +92,13 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
 
     @Override
     public void showProgress(boolean show) {
-
+        if (show) {
+            mContainer.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+            return;
+        }
+        mContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -99,6 +113,16 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
     @Override
     public void showMessage(int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    public void setHandoverReminder(String s) {
+        mHandover.setText(s);
+    }
+
+    @Override
+    public void setReturnReminder(String s) {
+        mReturn.setText(s);
     }
 
     @Override

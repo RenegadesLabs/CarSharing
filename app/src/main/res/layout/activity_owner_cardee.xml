@@ -175,7 +175,8 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="13dp">
+                android:layout_marginBottom="13dp"
+                android:focusableInTouchMode="true">
 
                 <TextView
                     android:id="@+id/feedback_title"
@@ -199,6 +200,8 @@
                     android:background="@drawable/bg_edittext_feedback"
                     android:gravity="top|start"
                     android:hint="@string/feedback_hint"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLines="8"
                     android:paddingBottom="7dp"
                     android:paddingEnd="14dp"
                     android:paddingStart="14dp"

@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 
 public interface Commons {
 
-    @POST("/commons/feedback")
+    @POST("commons/feedback")
     @Headers("Content-Type: application/json")
     Observable<NoDataResponse> sendFeedback(@Body FeedbackRequest request);
 }
