@@ -1,9 +1,9 @@
-package com.cardee.data_source.remote.api.inbox.model;
+package com.cardee.data_source.inbox.remote.api.model;
 
-import com.cardee.data_source.remote.api.inbox.model.entity.Booking;
-import com.cardee.data_source.remote.api.inbox.model.entity.CarVersion;
-import com.cardee.data_source.remote.api.inbox.model.entity.ChatMessage;
-import com.cardee.data_source.remote.api.inbox.model.entity.Recipient;
+import com.cardee.data_source.inbox.remote.api.model.entity.Booking;
+import com.cardee.data_source.inbox.remote.api.model.entity.CarVersion;
+import com.cardee.data_source.inbox.remote.api.model.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.Recipient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

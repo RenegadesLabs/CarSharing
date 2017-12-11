@@ -1,7 +1,7 @@
-package com.cardee.data_source.remote.api.inbox.response;
+package com.cardee.data_source.inbox.remote.api.response;
 
 import com.cardee.data_source.remote.api.BaseResponse;
-import com.cardee.data_source.remote.api.inbox.model.Chat;
+import com.cardee.data_source.inbox.remote.api.model.Chat;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

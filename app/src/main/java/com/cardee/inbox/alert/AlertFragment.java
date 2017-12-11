@@ -24,4 +24,10 @@ public class AlertFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_inbox_alerts, container, false);
         return root;
     }
+
+    @Override
+    public void onDestroyView() {
+
+        super.onDestroyView();
+    }
 }

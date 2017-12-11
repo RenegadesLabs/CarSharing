@@ -14,6 +14,9 @@ public class InboxChat {
 
     private String mLastMessageTime;
 
+    private String mCarPhotoUrl;
+
+
     public InboxChat() {
     }
 
@@ -41,7 +44,11 @@ public class InboxChat {
         return mLastMessageTime;
     }
 
-    private static class Builder {
+    public String getCarPhotoUrl() {
+        return mCarPhotoUrl;
+    }
+
+    public static class Builder {
 
         private InboxChat mInboxChat;
 
@@ -76,6 +83,11 @@ public class InboxChat {
 
         public Builder withLastMessageTime(String time) {
             mInboxChat.mLastMessageTime = time;
+            return this;
+        }
+
+        public Builder withCarPhoto(String url) {
+            mInboxChat.mCarPhotoUrl = url;
             return this;
         }
 

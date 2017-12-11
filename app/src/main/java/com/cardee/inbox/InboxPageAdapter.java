@@ -9,13 +9,13 @@ import com.cardee.inbox.chat.ChatFragment;
 
 public class InboxPageAdapter extends FragmentPagerAdapter {
 
-    private static final int ALERTS_FRAGMENT = 0;
-    private static final int CHATS_FRAGMENT = 1;
+    public static final int ALERTS_FRAGMENT = 0;
+    public static final int CHATS_FRAGMENT = 1;
 
     private AlertFragment mAlertsFragment;
     private ChatFragment mChatsFragment;
 
-    public InboxPageAdapter(FragmentManager fm) {
+    InboxPageAdapter(FragmentManager fm) {
         super(fm);
         mAlertsFragment = AlertFragment.newInstance();
         mChatsFragment = ChatFragment.newInstance();
@@ -23,16 +23,13 @@ public class InboxPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
         switch (position) {
             case ALERTS_FRAGMENT:
-                fragment = mAlertsFragment;
-                break;
+                return mAlertsFragment;
             case CHATS_FRAGMENT:
-                fragment = mChatsFragment;
-                break;
+                return mChatsFragment;
         }
-        return fragment;
+        return null;
     }
 
     @Override

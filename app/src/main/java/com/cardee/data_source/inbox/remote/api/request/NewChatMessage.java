@@ -1,16 +1,15 @@
-package com.cardee.data_source.remote.api.inbox.response;
+package com.cardee.data_source.inbox.remote.api.request;
 
-import com.cardee.data_source.remote.api.BaseResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MessageResponse extends BaseResponse{
+public class NewChatMessage {
 
     @Expose
     @SerializedName("message")
     private String mMessage;
 
-    public MessageResponse() {
+    public NewChatMessage() {
     }
 
     public String getMessage() {

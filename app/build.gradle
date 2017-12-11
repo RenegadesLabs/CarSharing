@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.cardee"
         minSdkVersion 19
@@ -26,6 +26,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -86,5 +90,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
+    //Room
+    compile "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    implementation 'android.arch.persistence.room:rxjava2:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

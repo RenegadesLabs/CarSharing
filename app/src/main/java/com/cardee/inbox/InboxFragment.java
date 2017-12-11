@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.domain.inbox.usecase.entity.InboxAlert;
+import com.cardee.domain.inbox.usecase.entity.InboxChat;
+
+import java.util.List;
 
 public class InboxFragment extends Fragment implements InboxContract.View {
 

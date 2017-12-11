@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.inbox.model.entity;
+package com.cardee.data_source.inbox.remote.api.model.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
