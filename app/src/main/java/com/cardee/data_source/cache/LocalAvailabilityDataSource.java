@@ -32,4 +32,9 @@ public class LocalAvailabilityDataSource implements AvailabilityDataSource {
     public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
 
     }
+
+    @Override
+    public void saveAvailability(int id, boolean availableDaily, boolean availableHourly, Callback callback) {
+
+    }
 }

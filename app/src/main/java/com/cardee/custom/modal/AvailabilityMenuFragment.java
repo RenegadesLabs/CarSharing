@@ -54,7 +54,6 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
         setClickListeners(rootView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) rootView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
-
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mCallback);
         }

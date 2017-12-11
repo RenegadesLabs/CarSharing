@@ -20,11 +20,12 @@ public class MultiselectCriteria implements SelectionCriteria {
      */
     MultiselectCriteria(List<Date> dates, boolean includeCurrent) {
         Day currentDay = Day.from(new Date());
+        Collections.sort(dates);
         days = new ArrayList<>();
         for (int i = 0; i < dates.size(); i++) {
             Day day = Day.from(dates.get(i));
             int compare = day.compareTo(currentDay);
-            if ((includeCurrent && compare == 0) || compare <= 0) {
+            if (compare < 0 || (!includeCurrent && compare == 0)) {
                 continue;
             }
             days.add(day);

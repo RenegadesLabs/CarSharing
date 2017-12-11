@@ -65,6 +65,10 @@ public class OwnerCarRepository implements OwnerCarDataSource {
         return mCarId;
     }
 
+    CarResponseBody getCachedCar(Integer id) {
+        return mCache.get(id);
+    }
+
     void refresh(Integer id) {
         if (id == null) {
             return;

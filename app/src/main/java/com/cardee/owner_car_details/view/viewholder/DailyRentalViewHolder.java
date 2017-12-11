@@ -1,30 +1,33 @@
 package com.cardee.owner_car_details.view.viewholder;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.AvailabilityMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
-import com.cardee.mvp.BaseView;
+import com.cardee.owner_car_details.AvailabilityContract;
+import com.cardee.owner_car_details.RentalDetailsContract;
+import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
+import com.cardee.owner_car_details.view.AvailabilityCalendarActivity;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
+import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
-import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 
 public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
-        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BaseView {
-
-    private RentalDetails dailyRental;
+        implements View.OnClickListener, RentalDetailsContract.ControlView {
 
     private TextView availabilityDays;
     private TextView timingPickup;
@@ -49,12 +52,16 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private TextView fuelPolicyValue;
     private View rentalTermsEdit;
 
+    private RentalDetails dailyRental;
+    private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
+    private AvailabilityStringDelegate stringDelegate;
     private Toast currentToast;
 
 
     public DailyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
         super(rootView, activity);
+        presenter = new StrategyRentalDetailPresenter(this, StrategyRentalDetailPresenter.Strategy.DAILY);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timingPickup = rootView.findViewById(R.id.tv_rentalAvailableTimingPickup);
         timingReturn = rootView.findViewById(R.id.tv_rentalAvailableTimingReturn);
@@ -85,56 +92,50 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         fuelPolicyEdit.setOnClickListener(this);
         rentalTermsEdit.setOnClickListener(this);
         settingsHelp.setOnClickListener(this);
-        instantBookingSwitch.setOnCheckedChangeListener(this);
-        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
-        acceptCashSwitch.setOnCheckedChangeListener(this);
-        initResources();
+        instantBookingSwitch.setOnCheckedChangeListener(presenter);
+        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
+        acceptCashSwitch.setOnCheckedChangeListener(presenter);
+        initResources(activity);
     }
 
-    private void initResources() {
-
+    private void initResources(Context context) {
+        stringDelegate = new AvailabilityStringDelegate(context);
     }
 
     @Override
     public void bind(RentalDetails model) {
-        dailyRental = model;
+        this.dailyRental = model;
+        presenter.onBind(model);
     }
 
     @Override
     public void onClick(View view) {
+        if (dailyRental == null) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.cl_rentalTermsContainer:
-                getActivity().startActivity(new Intent(getActivity(),
-                        RentalTermsActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), RentalTermsActivity.class));
                 break;
             case R.id.tv_rentalFuelEdit:
-                Intent iFuel = new Intent(getActivity(),
-                        RentalFuelPolicyActivity.class);
-                iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
-                getActivity().startActivity(iFuel);
+                Intent i = new Intent(getActivity(), RentalFuelPolicyActivity.class);
+                i.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
+                getActivity().startActivity(i);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
+                Intent intent = new Intent(getActivity(), AvailabilityCalendarActivity.class);
+                Bundle args = new Bundle();
+                args.putInt(AvailabilityContract.CAR_ID, dailyRental.getCarId());
+                args.putSerializable(AvailabilityContract.CALENDAR_MODE, AvailabilityContract.Mode.DAILY);
+                intent.putExtras(args);
+                getActivity().startActivity(intent);
+                break;
             case R.id.tv_rentalTimingEdit:
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
-                Intent iRates = new Intent(getActivity(),
-                        RentalRatesActivity.class);
-                iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
-                getActivity().startActivity(iRates);
-                break;
             case R.id.iv_rentalHelp:
                 showMessage("Coming soon");
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (compoundButton.getId()) {
-            case R.id.sw_rentalInstant:
-            case R.id.sw_rentalDelivery:
-            case R.id.sw_rentalCash:
-                showMessage("Checked: " + b);
         }
     }
 
@@ -161,5 +162,33 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     public void setProgressListener(ChildProgressListener progressListener) {
         this.progressListener = progressListener;
+    }
+
+    @Override
+    public void setData(RentalDetails rentalDetails) {
+        stringDelegate.onSetValue(availabilityDays, rentalDetails.getDailyCount());
+        stringDelegate.onSetPickupTime(timingPickup, rentalDetails.getDailyTimePickup());
+        stringDelegate.onSetReturnTime(timingReturn, rentalDetails.getDailyTimeReturn());
+    }
+
+    @Override
+    public void onInstantEnabled(boolean enabled) {
+        instantBookingSwitch.setOnCheckedChangeListener(null);
+        instantBookingSwitch.setChecked(enabled);
+        instantBookingSwitch.setOnCheckedChangeListener(presenter);
+    }
+
+    @Override
+    public void onCurbsideEnabled(boolean enabled) {
+        curbsideDeliverySwitch.setOnCheckedChangeListener(null);
+        curbsideDeliverySwitch.setChecked(enabled);
+        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
+    }
+
+    @Override
+    public void onCashEnabled(boolean enabled) {
+        acceptCashSwitch.setOnCheckedChangeListener(null);
+        acceptCashSwitch.setChecked(enabled);
+        acceptCashSwitch.setOnCheckedChangeListener(presenter);
     }
 }

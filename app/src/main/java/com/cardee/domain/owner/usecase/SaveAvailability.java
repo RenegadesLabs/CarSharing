@@ -4,21 +4,14 @@ import com.cardee.data_source.AvailabilityDataSource;
 import com.cardee.data_source.AvailabilitySettingsRepository;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
-import com.cardee.domain.owner.entity.mapper.DateListToArrayMapper;
 
-import java.util.Date;
-import java.util.List;
-
-public class SaveHourlyDates implements UseCase<SaveHourlyDates.RequestValues, SaveHourlyDates.ResponseValues> {
-
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
+public class SaveAvailability
+        implements UseCase<SaveAvailability.RequestValues, SaveAvailability.ResponseValues> {
 
     private final AvailabilitySettingsRepository repository;
-    private final DateListToArrayMapper mapper;
 
-    public SaveHourlyDates() {
+    public SaveAvailability() {
         repository = AvailabilitySettingsRepository.getInstance();
-        mapper = new DateListToArrayMapper(DATE_PATTERN);
     }
 
     @Override
@@ -28,11 +21,11 @@ public class SaveHourlyDates implements UseCase<SaveHourlyDates.RequestValues, S
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
             return;
         }
-        repository.saveHourlyAvailability(values.getId(), mapper.transform(values.getDates()),
-                values.getStartTime(), values.getEndTime(), new AvailabilityDataSource.Callback() {
+        repository.saveAvailability(id, values.getIsAvailableDaily(), values.getIsAvailableHourly(),
+                new AvailabilityDataSource.Callback() {
                     @Override
                     public void onSuccess() {
-                        callback.onSuccess(new SaveHourlyDates.ResponseValues(true));
+                        callback.onSuccess(new ResponseValues(true));
                     }
 
                     @Override
@@ -43,36 +36,32 @@ public class SaveHourlyDates implements UseCase<SaveHourlyDates.RequestValues, S
     }
 
     public static class RequestValues implements UseCase.RequestValues {
-        private final int id;
-        private final String startTime;
-        private final String endTime;
-        private final List<Date> dates;
 
-        public RequestValues(int id, String startTime, String endTime, List<Date> dates) {
+        private final int id;
+        private final boolean isAvailableDaily;
+        private final boolean isAvailableHourly;
+
+        public RequestValues(int id, boolean availableDaily, boolean availableHourly) {
             this.id = id;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.dates = dates;
+            this.isAvailableDaily = availableDaily;
+            this.isAvailableHourly = availableHourly;
         }
 
         public int getId() {
             return id;
         }
 
-        public String getStartTime() {
-            return startTime;
+        public boolean getIsAvailableDaily() {
+            return isAvailableDaily;
         }
 
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public List<Date> getDates() {
-            return dates;
+        public boolean getIsAvailableHourly() {
+            return isAvailableHourly;
         }
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {
+
         private final boolean successful;
 
         public ResponseValues(boolean successful) {
