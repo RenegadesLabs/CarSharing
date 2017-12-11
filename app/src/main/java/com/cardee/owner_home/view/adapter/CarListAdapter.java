@@ -167,11 +167,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
     }
 
     public void insert(List<Car> cars) {
-        for (Car car : cars) {
-            if (!mCarViewItems.contains(car)) {
-                mCarViewItems.add(car);
-            }
-        }
+        mCarViewItems.clear();
+        mCarViewItems.addAll(cars);
         notifyDataSetChanged();
     }
 
