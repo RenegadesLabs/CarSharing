@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +18,7 @@ import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
+import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
@@ -31,16 +32,16 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private View timeEdit;
     private View instantBookingTitle;
     private AppCompatImageView instantBookingIcon;
-    private Switch instantBookingSwitch;
+    private SwitchCompat instantBookingSwitch;
     private TextView instantBookingEdit;
     private View settingsHelp;
     private View curbsideDeliveryTitle;
     private AppCompatImageView curbsideDeliveryIcon;
-    private Switch curbsideDeliverySwitch;
+    private SwitchCompat curbsideDeliverySwitch;
     private View curbsideDeliveryEdit;
     private View acceptCashTitle;
     private AppCompatImageView acceptCashImage;
-    private Switch acceptCashSwitch;
+    private SwitchCompat acceptCashSwitch;
     private View rentalRatesEdit;
     private TextView rentalRatesValue;
     private View fuelPolicyEdit;
@@ -105,16 +106,21 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                         RentalTermsActivity.class));
                 break;
             case R.id.tv_rentalFuelEdit:
-                Intent i = new Intent(getActivity(),
+                Intent iFuel = new Intent(getActivity(),
                         RentalFuelPolicyActivity.class);
-                i.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
-                getActivity().startActivity(i);
+                iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iFuel);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
             case R.id.tv_rentalTimingEdit:
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
+                Intent iRates = new Intent(getActivity(),
+                        RentalRatesActivity.class);
+                iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iRates);
+                break;
             case R.id.iv_rentalHelp:
                 showMessage("Coming soon");
         }

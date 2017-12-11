@@ -15,6 +15,7 @@ import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.presenter.RentalDetailsPresenter;
 import com.cardee.owner_car_details.view.adapter.OnTabSelectedAdapter;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
+import com.cardee.owner_car_details.view.listener.RentalDetailsListener;
 import com.cardee.owner_car_details.view.viewholder.BaseViewHolder;
 import com.cardee.owner_car_details.view.viewholder.DailyRentalViewHolder;
 import com.cardee.owner_car_details.view.viewholder.HourlyRentalViewHolder;
@@ -22,7 +23,8 @@ import com.cardee.owner_car_details.view.viewholder.HourlyRentalViewHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OwnerCarRentalFragment extends Fragment implements ChildProgressListener {
+public class OwnerCarRentalFragment extends Fragment implements ChildProgressListener,
+        RentalDetailsListener {
 
     private static final String CAR_ID = "car_id";
     public final static String MODE = "key_rental_mode";
@@ -37,6 +39,9 @@ public class OwnerCarRentalFragment extends Fragment implements ChildProgressLis
     private ContentPage currentPage;
     private Map<ContentPage, BaseViewHolder<RentalDetails>> views;
     private RentalDetailsPresenter presenter;
+    private RentalDetails mRentalDetails;
+
+    private View rootView;
 
     public static Fragment newInstance(Integer carId) {
         OwnerCarRentalFragment fragment = new OwnerCarRentalFragment();
@@ -49,11 +54,12 @@ public class OwnerCarRentalFragment extends Fragment implements ChildProgressLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_owner_car_rental, container, false);
+        rootView = inflater.inflate(R.layout.fragment_owner_car_rental, container, false);
         views = new HashMap<>();
-        initPages(rootView, new String[]{getString(mTabTitleIds[0], mTabTitleIds[1])});
+//        initPages(rootView, new String[]{getString(mTabTitleIds[0], mTabTitleIds[1])});
         Bundle args = getArguments();
-        presenter = new RentalDetailsPresenter(args.containsKey(CAR_ID) ? args.getInt(CAR_ID) : -1);
+        presenter = new RentalDetailsPresenter(args.containsKey(CAR_ID) ? args.getInt(CAR_ID) : -1, this);
+        presenter.getRentalDetails();
         return rootView;
     }
 
@@ -74,6 +80,13 @@ public class OwnerCarRentalFragment extends Fragment implements ChildProgressLis
 
     @Override
     public void onChildProgressShow(boolean show) {
+
+    }
+
+    @Override
+    public void onRentalDetailsFetched(Object object) {
+        mRentalDetails = (RentalDetails) object;
+        initPages(rootView, new String[]{getString(mTabTitleIds[0], mTabTitleIds[1])});
 
     }
 

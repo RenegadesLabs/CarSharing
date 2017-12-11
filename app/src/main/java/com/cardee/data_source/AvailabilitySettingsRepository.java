@@ -57,4 +57,9 @@ public class AvailabilitySettingsRepository implements AvailabilityDataSource {
             }
         });
     }
+
+    @Override
+    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
+
+    }
 }

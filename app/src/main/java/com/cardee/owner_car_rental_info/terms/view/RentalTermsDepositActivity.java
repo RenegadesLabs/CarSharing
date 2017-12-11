@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsDepositPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RentalTermsDepositActivity extends AppCompatActivity implements View.OnClickListener,
-        RentalTermsContract.View {
+        RentalContract.View {
 
     @BindView(R.id.sw_depositRequire)
     public SwitchCompat depositRequireSW;

@@ -72,6 +72,11 @@ public class RemoteAvailabilityDataSource implements AvailabilityDataSource {
         }
     }
 
+    @Override
+    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
+
+    }
+
     private void handleErrorResponse(NoDataResponse response, Callback callback) {
         if (response == null) {
             callback.onError(new Error(Error.Type.OTHER, "null"));

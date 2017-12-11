@@ -8,15 +8,15 @@ import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.UpdateRentalRules;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 
-public class RentalTermsRulesPresenter implements RentalTermsContract.Presenter {
+public class RentalTermsRulesPresenter implements RentalContract.Presenter {
 
-    private final RentalTermsContract.View mView;
+    private final RentalContract.View mView;
 
     private UseCaseExecutor mExecutor;
 
-    public RentalTermsRulesPresenter(RentalTermsContract.View view) {
+    public RentalTermsRulesPresenter(RentalContract.View view) {
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
     }

@@ -6,6 +6,7 @@ import com.cardee.data_source.remote.api.cars.response.CarResponse;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
@@ -60,5 +61,11 @@ public interface Cars {
 
     @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalAdditional(@Path("id") Integer carId, @Body RentalTermsAdditionalEntity requestBody);
+
+    @PUT("cars/{id}/rental/daily")
+    Call<BaseResponse> updateRentalRatesDaily(@Path("id") Integer carId, @Body RentalRatesEntity requestBody);
+
+    @PUT("cars/{id}/rental/hourly")
+    Call<BaseResponse> updateRentalRatesHourly(@Path("id") Integer carId, @Body RentalRatesEntity requestBody);
 
 }

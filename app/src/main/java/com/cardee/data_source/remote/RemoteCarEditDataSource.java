@@ -9,6 +9,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
@@ -130,6 +131,36 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     public void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additionalEntity, Callback callback) {
         try {
             Response<BaseResponse> response = api.updateRentalAdditional(id, additionalEntity).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateRentalRatesDaily(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateRentalRatesDaily(id, ratesEntity).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateRentalRatesHourly(id, ratesEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;

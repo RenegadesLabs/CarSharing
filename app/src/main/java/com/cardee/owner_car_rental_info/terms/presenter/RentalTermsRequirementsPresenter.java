@@ -6,15 +6,15 @@ import com.cardee.data_source.OwnerCarRepository;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.UpdateRentalRequirements;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 
-public class RentalTermsRequirementsPresenter implements RentalTermsContract.Presenter {
+public class RentalTermsRequirementsPresenter implements RentalContract.Presenter {
 
-    private final RentalTermsContract.View mView;
+    private final RentalContract.View mView;
 
     private final UseCaseExecutor mExecutor;
 
-    public RentalTermsRequirementsPresenter(RentalTermsContract.View view) {
+    public RentalTermsRequirementsPresenter(RentalContract.View view) {
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
     }

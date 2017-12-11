@@ -17,6 +17,7 @@ import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
+import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 
@@ -90,7 +91,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         initResources();
     }
 
-    private void initResources(){
+    private void initResources() {
 
     }
 
@@ -107,16 +108,21 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                         RentalTermsActivity.class));
                 break;
             case R.id.tv_rentalFuelEdit:
-                Intent i = new Intent(getActivity(),
+                Intent iFuel = new Intent(getActivity(),
                         RentalFuelPolicyActivity.class);
-                i.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
-                getActivity().startActivity(i);
+                iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
+                getActivity().startActivity(iFuel);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
             case R.id.tv_rentalTimingEdit:
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
+                Intent iRates = new Intent(getActivity(),
+                        RentalRatesActivity.class);
+                iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
+                getActivity().startActivity(iRates);
+                break;
             case R.id.iv_rentalHelp:
                 showMessage("Coming soon");
         }
