@@ -153,8 +153,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         if (getActivity() != null) {
             Glide.with(getActivity())
                     .load(profilePhotoLink)
-                    .placeholder(R.drawable.ic_photo_placeholder)
-                    .error(R.drawable.ic_photo_placeholder)
+                    .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
+                    .error(getResources().getDrawable(R.drawable.ic_photo_placeholder))
                     .transform(new CircleTransform(getActivity()))
                     .into(mProfileImage);
         }

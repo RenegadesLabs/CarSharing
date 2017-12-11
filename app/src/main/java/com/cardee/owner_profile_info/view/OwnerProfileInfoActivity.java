@@ -231,8 +231,8 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     public void setProfileImage(String photoLink) {
         Glide.with(this)
                 .load(photoLink)
-                .placeholder(R.drawable.ic_photo_placeholder)
-                .error(R.drawable.ic_photo_placeholder)
+                .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
+                .error(getResources().getDrawable(R.drawable.ic_photo_placeholder))
                 .centerCrop()
                 .transform(new CircleTransform(this))
                 .into(mProfilePhoto);

@@ -2,6 +2,7 @@ package com.cardee.owner_home.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,10 +24,6 @@ import com.cardee.owner_home.OwnerCarListContract;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
@@ -74,8 +70,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         private final ImageView mPrimaryImage;
         private final TextView mYearView;
         private final TextView mLicenceNumberView;
-        private final Switch mHourlySwitch;
-        private final Switch mDailySwitch;
+        private final SwitchCompat mHourlySwitch;
+        private final SwitchCompat mDailySwitch;
         private final TextView mHourlyView;
         private final TextView mDailyView;
         private final TextView mLocationView;

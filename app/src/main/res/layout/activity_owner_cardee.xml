@@ -30,8 +30,7 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/container"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,236 +38,241 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/info_card"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <android.support.constraint.ConstraintLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/info_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="26dp">
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <android.support.constraint.Guideline
-                    android:id="@+id/guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_begin="138dp" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="26dp">
 
-                <TextView
-                    android:id="@+id/mobile1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/mobile_one_text"
-                    android:theme="@style/TextSettingsRegular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <android.support.constraint.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="138dp" />
 
-                <TextView
-                    android:id="@+id/mobile2_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/mobile_two_text"
-                    android:theme="@style/TextSettingsRegular"
-                    app:layout_constraintStart_toStartOf="@id/mobile1_text"
-                    app:layout_constraintTop_toBottomOf="@id/mobile1_text" />
+                    <TextView
+                        android:id="@+id/mobile1_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/mobile_one_text"
+                        android:theme="@style/TextSettingsRegular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/mobile1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mobile_one"
-                    android:theme="@style/TextClickable"
-                    app:layout_constraintBottom_toBottomOf="@id/mobile1_text"
-                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+                    <TextView
+                        android:id="@+id/mobile2_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/mobile_two_text"
+                        android:theme="@style/TextSettingsRegular"
+                        app:layout_constraintStart_toStartOf="@id/mobile1_text"
+                        app:layout_constraintTop_toBottomOf="@id/mobile1_text" />
 
-                <TextView
-                    android:id="@+id/mobile2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mobile_two"
-                    android:theme="@style/TextClickable"
-                    app:layout_constraintBottom_toBottomOf="@id/mobile2_text"
-                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+                    <TextView
+                        android:id="@+id/mobile1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mobile_one"
+                        android:theme="@style/TextClickable"
+                        app:layout_constraintBottom_toBottomOf="@id/mobile1_text"
+                        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-                <TextView
-                    android:id="@+id/email_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/email"
-                    android:theme="@style/TextSettingsRegular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mobile2_text" />
+                    <TextView
+                        android:id="@+id/mobile2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mobile_two"
+                        android:theme="@style/TextClickable"
+                        app:layout_constraintBottom_toBottomOf="@id/mobile2_text"
+                        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cardee_email"
-                    android:theme="@style/TextClickable"
-                    app:layout_constraintBottom_toBottomOf="@id/email_text"
-                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+                    <TextView
+                        android:id="@+id/email_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/email"
+                        android:theme="@style/TextSettingsRegular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mobile2_text" />
 
-                <TextView
-                    android:id="@+id/website_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/website"
-                    android:theme="@style/TextSettingsRegular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/email_text" />
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cardee_email"
+                        android:theme="@style/TextClickable"
+                        app:layout_constraintBottom_toBottomOf="@id/email_text"
+                        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-                <TextView
-                    android:id="@+id/website"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cardee_website"
-                    android:theme="@style/TextClickable"
-                    app:layout_constraintBottom_toBottomOf="@id/website_text"
-                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+                    <TextView
+                        android:id="@+id/website_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/website"
+                        android:theme="@style/TextSettingsRegular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/email_text" />
 
-                <TextView
-                    android:id="@+id/faq_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/faq"
-                    android:theme="@style/TextSettingsRegular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/website_text" />
+                    <TextView
+                        android:id="@+id/website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cardee_website"
+                        android:theme="@style/TextClickable"
+                        app:layout_constraintBottom_toBottomOf="@id/website_text"
+                        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-                <TextView
-                    android:id="@+id/faq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cardee_faq"
-                    android:theme="@style/TextClickable"
-                    app:layout_constraintBottom_toBottomOf="@id/faq_text"
-                    app:layout_constraintStart_toStartOf="@+id/guideline" />
+                    <TextView
+                        android:id="@+id/faq_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/faq"
+                        android:theme="@style/TextSettingsRegular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/website_text" />
 
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/faq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cardee_faq"
+                        android:theme="@style/TextClickable"
+                        app:layout_constraintBottom_toBottomOf="@id/faq_text"
+                        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/feedback_card"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="3dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_card">
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
 
-            <android.support.constraint.ConstraintLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/feedback_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="13dp"
-                android:focusableInTouchMode="true">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_card">
 
-                <TextView
-                    android:id="@+id/feedback_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/feedback"
-                    android:textColor="@color/text_regular"
-                    android:theme="@style/TextSettingsSection"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="13dp">
 
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/et_feedback"
-                    android:layout_width="0dp"
-                    android:layout_height="110dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/bg_edittext_feedback"
-                    android:gravity="top|start"
-                    android:hint="@string/feedback_hint"
-                    android:inputType="textCapSentences|textMultiLine"
-                    android:maxLines="8"
-                    android:paddingBottom="7dp"
-                    android:paddingEnd="14dp"
-                    android:paddingStart="14dp"
-                    android:paddingTop="7dp"
-                    android:textSize="12sp"
-                    android:theme="@style/ChangePassEditTextStyle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/feedback_title" />
+                    <TextView
+                        android:id="@+id/feedback_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/feedback"
+                        android:textColor="@color/text_regular"
+                        android:theme="@style/TextSettingsSection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/b_submit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/bg_button_regular"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/car_add_submit"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_large"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_feedback" />
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_feedback"
+                        android:layout_width="0dp"
+                        android:layout_height="110dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_edittext_feedback"
+                        android:gravity="top|start"
+                        android:hint="@string/feedback_hint"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLines="8"
+                        android:paddingBottom="7dp"
+                        android:paddingEnd="14dp"
+                        android:paddingStart="14dp"
+                        android:paddingTop="7dp"
+                        android:textSize="12sp"
+                        android:theme="@style/ChangePassEditTextStyle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/feedback_title" />
 
-                <TextView
-                    android:id="@+id/terms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/terms_of_use"
-                    android:theme="@style/TextSettingsInactive"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/vertical_bar"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/b_submit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_button_regular"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/car_add_submit"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_feedback" />
 
-                <TextView
-                    android:id="@+id/vertical_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:text="|"
-                    android:theme="@style/TextSettingsInactive"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/policy"
-                    app:layout_constraintStart_toEndOf="@+id/terms" />
+                    <TextView
+                        android:id="@+id/terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/terms_of_use"
+                        android:theme="@style/TextSettingsInactive"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/vertical_bar"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/b_submit" />
 
-                <TextView
-                    android:id="@id/policy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/privacy_policy"
-                    android:theme="@style/TextSettingsInactive"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/vertical_bar" />
+                    <TextView
+                        android:id="@+id/vertical_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="|"
+                        android:theme="@style/TextSettingsInactive"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/policy"
+                        app:layout_constraintStart_toEndOf="@+id/terms" />
 
+                    <TextView
+                        android:id="@id/policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/privacy_policy"
+                        android:theme="@style/TextSettingsInactive"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/vertical_bar" />
 
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
-    </android.support.constraint.ConstraintLayout>
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/cardee_progress"
