@@ -33,6 +33,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +65,18 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_begin="138dp" />
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="28dp"
+                        app:layout_constraintEnd_toStartOf="@+id/mobile1_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_mobile_number" />
+
                     <TextView
-                        android:id="@+id/mobile1_text"
+                        android:id="@id/mobile1_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="53dp"
@@ -103,8 +114,18 @@
                         app:layout_constraintBottom_toBottomOf="@id/mobile2_text"
                         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintEnd_toStartOf="@+id/email_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mobile2_text"
+                        app:srcCompat="@drawable/ic_email" />
+
                     <TextView
-                        android:id="@+id/email_text"
+                        android:id="@id/email_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="53dp"
@@ -123,8 +144,18 @@
                         app:layout_constraintBottom_toBottomOf="@id/email_text"
                         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="28dp"
+                        app:layout_constraintEnd_toStartOf="@+id/website_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/email_text"
+                        app:srcCompat="@drawable/ic_world" />
+
                     <TextView
-                        android:id="@+id/website_text"
+                        android:id="@id/website_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="53dp"
@@ -143,8 +174,18 @@
                         app:layout_constraintBottom_toBottomOf="@id/website_text"
                         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="28dp"
+                        app:layout_constraintEnd_toStartOf="@+id/faq_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/website_text"
+                        app:srcCompat="@drawable/ic_question_mark" />
+
                     <TextView
-                        android:id="@+id/faq_text"
+                        android:id="@id/faq_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="53dp"
@@ -180,8 +221,18 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="13dp">
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="28dp"
+                        app:layout_constraintEnd_toStartOf="@+id/feedback_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_send_feedback" />
+
                     <TextView
-                        android:id="@+id/feedback_title"
+                        android:id="@id/feedback_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="53dp"
@@ -233,6 +284,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_feedback" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/terms"

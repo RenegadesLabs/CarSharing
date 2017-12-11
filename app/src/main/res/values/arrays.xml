@@ -25,7 +25,7 @@
     <integer-array name="more_tab_icons">
         <item>@drawable/ic_account_icon</item>
         <item>@drawable/ic_settings_icon</item>
-        <item>@drawable/ic_settings_icon</item>
+        <item>@drawable/ic_credit_balance</item>
         <item>@drawable/ic_livechat_icon</item>
         <item>@drawable/ic_invite_icon</item>
         <item>@drawable/ic_cardee_icon</item>
