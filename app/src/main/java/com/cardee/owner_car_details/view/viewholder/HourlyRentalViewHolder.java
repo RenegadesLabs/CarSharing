@@ -1,23 +1,20 @@
 package com.cardee.owner_car_details.view.viewholder;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.RentalDetails;
-import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
@@ -60,7 +57,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private Toast currentToast;
 
 
-    public HourlyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
+    public HourlyRentalViewHolder(@NonNull View rootView, @NonNull AppCompatActivity activity) {
         super(rootView, activity);
         presenter = new StrategyRentalDetailPresenter(this, StrategyRentalDetailPresenter.Strategy.HOURLY);
         availabilityDays = rootView.findViewById(R.id.availability_days);

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,10 +172,10 @@ public class OwnerCarRentalFragment extends Fragment
             ViewGroup layout = (ViewGroup) inflater.inflate(contentPage.getLayoutResId(), container, false);
             BaseViewHolder<RentalDetails> holder;
             if (ContentPage.DAILY.equals(contentPage)) {
-                holder = new DailyRentalViewHolder(layout, getActivity());
+                holder = new DailyRentalViewHolder(layout, (AppCompatActivity) getActivity());
                 ((DailyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
             } else {
-                holder = new HourlyRentalViewHolder(layout, getActivity());
+                holder = new HourlyRentalViewHolder(layout, (AppCompatActivity) getActivity());
                 ((HourlyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
             }
             views.put(contentPage, holder);

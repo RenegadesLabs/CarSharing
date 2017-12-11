@@ -1,11 +1,11 @@
 package com.cardee.owner_car_details.view.viewholder;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
@@ -13,13 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.custom.modal.AvailabilityMenuFragment;
+import com.cardee.custom.modal.DailyAvailabilityTimingFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
 import com.cardee.owner_car_details.view.AvailabilityCalendarActivity;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
+import com.cardee.owner_car_details.view.eventbus.DailyTimingEventBus;
+import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
@@ -27,7 +29,8 @@ import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 
 public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
-        implements View.OnClickListener, RentalDetailsContract.ControlView {
+        implements View.OnClickListener, RentalDetailsContract.ControlView,
+        DailyTimingEventBus.Listener {
 
     private TextView availabilityDays;
     private TextView timingPickup;
@@ -59,8 +62,9 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private Toast currentToast;
 
 
-    public DailyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
+    public DailyRentalViewHolder(@NonNull View rootView, @NonNull AppCompatActivity activity) {
         super(rootView, activity);
+        DailyTimingEventBus.getInstance().setListener(this);
         presenter = new StrategyRentalDetailPresenter(this, StrategyRentalDetailPresenter.Strategy.DAILY);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timingPickup = rootView.findViewById(R.id.tv_rentalAvailableTimingPickup);
@@ -131,6 +135,12 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(intent);
                 break;
             case R.id.tv_rentalTimingEdit:
+                DailyAvailabilityTimingFragment.newInstance(
+                        stringDelegate.getSimpleTimeFormat(dailyRental.getDailyTimePickup()),
+                        stringDelegate.getSimpleTimeFormat(dailyRental.getDailyTimeReturn()))
+                        .show(getActivity().getSupportFragmentManager(),
+                                DailyAvailabilityTimingFragment.class.getSimpleName());
+                break;
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
@@ -190,5 +200,11 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         acceptCashSwitch.setOnCheckedChangeListener(null);
         acceptCashSwitch.setChecked(enabled);
         acceptCashSwitch.setOnCheckedChangeListener(presenter);
+    }
+
+    @Override
+    public void onSave(TimingSaveEvent event) {
+        timingPickup.setText(event.getTimeBegin());
+        timingReturn.setText(event.getTimeEnd());
     }
 }

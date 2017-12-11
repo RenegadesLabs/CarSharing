@@ -195,4 +195,8 @@
         <item name="colorControlNormal">@color/text_account_settings</item>
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
+
+    <style name="NumberPicker" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/blue</item>
+    </style>
 </resources>

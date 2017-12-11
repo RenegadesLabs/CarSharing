@@ -81,4 +81,14 @@ public class AvailabilityStringDelegate {
             }
         }
     }
+
+    public String getSimpleTimeFormat(String time) {
+        try {
+            Date parsed = timeFormatter.parse(time);
+            return timeViewFormatter.format(parsed).toLowerCase();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

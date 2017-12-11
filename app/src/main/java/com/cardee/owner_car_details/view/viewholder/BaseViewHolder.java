@@ -1,15 +1,15 @@
 package com.cardee.owner_car_details.view.viewholder;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public abstract class BaseViewHolder <T> {
 
     private View rootView;
-    private Activity activity;
+    private AppCompatActivity activity;
 
-    public BaseViewHolder(@NonNull View rootView, @NonNull Activity activity) {
+    public BaseViewHolder(@NonNull View rootView, @NonNull AppCompatActivity activity) {
         this.rootView = rootView;
         this.activity = activity;
     }
@@ -18,7 +18,7 @@ public abstract class BaseViewHolder <T> {
         return rootView;
     }
 
-    protected Activity getActivity() {
+    protected AppCompatActivity getActivity() {
         return activity;
     }
 
