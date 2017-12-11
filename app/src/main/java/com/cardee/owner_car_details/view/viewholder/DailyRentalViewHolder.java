@@ -167,6 +167,8 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     @Override
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getDailyCount());
+        stringDelegate.onSetPickupTime(timingPickup, rentalDetails.getDailyTimePickup());
+        stringDelegate.onSetReturnTime(timingReturn, rentalDetails.getDailyTimeReturn());
     }
 
     @Override

@@ -373,4 +373,8 @@
     </string-array>
     <string name="availability_calendar_daily">Calendar (Daily)</string>
     <string name="availability_calendar_hourly">Calendar (Hourly)</string>
+    <string name="availability_pickup_prefix">Pickup car from</string>
+    <string name="availability_pickup_suffix">onwards</string>
+    <string name="availability_return_prefix">Return car by</string>
+    <string name="availability_return_suffix">(next day)</string>
 </resources>
