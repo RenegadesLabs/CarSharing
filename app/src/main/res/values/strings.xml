@@ -192,7 +192,7 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
-    
+
     <!--Car Rental Info-->
     <string name="car_rental_info_hourly">Hourly</string>
     <string name="car_rental_info_hourly_b">(Hourly)</string>
@@ -223,7 +223,7 @@
     <string name="years">years</string>
     <string name="car_rental_terms_requirements_age_range_fail">Please select correct range!</string>
     <string name="car_rental_terms_requirements_experience">Driving experience</string>
-    
+
     <!--Car Rental Terms Rules-->
     <string name="car_rental_terms_rules_general">General rules</string>
     <string name="car_rental_terms_rules_other">Other rules</string>
@@ -365,6 +365,11 @@
         <item>No available days \u2022 Save</item>
         <item>available day \u2022 Save</item>
         <item>available days \u2022 Save</item>
+    </string-array>
+    <string-array name="days_availability_suffixes">
+        <item>Currently not available</item>
+        <item>available day</item>
+        <item>available days</item>
     </string-array>
     <string name="availability_calendar_daily">Calendar (Daily)</string>
     <string name="availability_calendar_hourly">Calendar (Hourly)</string>
