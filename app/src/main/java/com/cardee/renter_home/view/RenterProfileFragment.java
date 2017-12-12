@@ -27,6 +27,7 @@ import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.renter_home.presenter.RenterMoreTabPresenter;
 import com.cardee.renter_home.view.adapter.RenterMoreTabAdapter;
 import com.cardee.renter_home.view.listener.RenterMoreTabEventListener;
+import com.cardee.renter_profile.view.RenterProfileActivity;
 import com.cardee.util.glide.CircleTransform;
 
 public class RenterProfileFragment extends Fragment implements RenterProfileContract.View {
@@ -97,8 +98,8 @@ public class RenterProfileFragment extends Fragment implements RenterProfileCont
 
     @Override
     public void openOwnerProfile() {
-//        Intent intent = new Intent(getActivity(), RenterProfileInfoActivity.class);
-//        startActivityForResult(intent, GET_PICTURE_REQUEST);
+        Intent intent = new Intent(getActivity(), RenterProfileActivity.class);
+        startActivityForResult(intent, GET_PICTURE_REQUEST);
     }
 
 

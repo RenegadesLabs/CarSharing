@@ -192,8 +192,8 @@
     <string name="owner_profile_info_title">Owner Profile</string>
     <string name="owner_profile_info_acceptance">Acceptance</string>
     <string name="owner_profile_info_response">Response Time</string>
-    <string name="owner_profile_info_bookings">Bookings</string>
-    <string name="owner_profile_info_edit">edit</string>
+    <string name="bookings">Bookings</string>
+    <string name="edit">edit</string>
     <string name="owner_profile_info_car">\u0020Car</string>
     <string name="owner_profile_info_car_review">\u0020Car Review</string>
     <string name="owner_profile_info_dot">\u2022</string>
@@ -289,6 +289,10 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="http">http://</string>
     <string name="send_feedback_success">Feedback sent</string>
+
+    <!--Renter Profile-->
+    <string name="renter_profile_age">Age</string>
+    <string name="driving_exp">Driving Exp.</string>
 
 
     <!--Calendar-->
