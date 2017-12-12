@@ -96,15 +96,26 @@
 
         <service android:name=".owner_car_details.service.FetchAddressService" />
 
-        <activity android:name=".owner_profile_info.view.OwnerProfileInfoActivity" />
-        <activity android:name=".owner_account_details.view.AccountDetailsActivity" />
-        <activity android:name=".owner_change_pass.view.ChangePassActivity" />
-        <activity android:name=".owner_settings.view.OwnerSettingsActivity" />
+        <activity
+            android:name=".owner_profile_info.view.OwnerProfileInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".owner_account_details.view.AccountDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".owner_change_pass.view.ChangePassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".owner_settings.view.OwnerSettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".owner_notifications.view.OwnerNotifActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppCompatAlertDialogTheme" />
-        <activity android:name=".owner_cardee.view.OwnerCardeeActivity" />
-        <activity android:name=".renter_home.view.RenterHomeActivity"></activity>
+        <activity
+            android:name=".owner_cardee.view.OwnerCardeeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".renter_home.view.RenterHomeActivity" />
     </application>
 
 </manifest>

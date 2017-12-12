@@ -138,7 +138,9 @@ public class RenterProfileFragment extends Fragment implements RenterProfileCont
     public void openSwitchToRenter() {
         mPresenter.setAccState(AccountManager.ACC_STATE.OWNER);
         Intent intent = new Intent(getActivity(), OwnerHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

@@ -146,6 +146,9 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         mPresenter.setAccState(AccountManager.ACC_STATE.RENTER);
         Intent intent = new Intent(getActivity(), RenterHomeActivity.class);
         startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
