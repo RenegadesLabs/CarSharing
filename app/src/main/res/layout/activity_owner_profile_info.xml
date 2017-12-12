@@ -139,7 +139,6 @@
                                 android:textSize="@dimen/text_small" />
 
                         </LinearLayout>
-
                     </LinearLayout>
 
                     <ImageView
