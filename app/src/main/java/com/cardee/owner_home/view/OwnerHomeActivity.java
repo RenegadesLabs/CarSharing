@@ -62,7 +62,7 @@ public class OwnerHomeActivity extends AppCompatActivity
         }
         mProgress = (ProgressBar) findViewById(R.id.home_progress);
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
-        BottomNavigationHelper.prepare(bottomMenu);
+        BottomNavigationHelper.prepareForOwner(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(1);
         bottomMenu.disableItemAtPosition(0); //Just for demo

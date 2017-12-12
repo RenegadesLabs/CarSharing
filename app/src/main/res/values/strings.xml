@@ -72,6 +72,7 @@
     <string name="menu_item_cars_title">My Cars</string>
     <string name="menu_item_bookings_title">Bookings</string>
     <string name="menu_item_more_title">More</string>
+    <string name="menu_item_browse_title">Browse</string>
 
     <string name="car_list_item_hourly_label">Hourly</string>
     <string name="car_list_item_daily_label">Daily</string>
@@ -209,13 +210,15 @@
 
     <!--More Tab-->
     <string name="more_tab_owner_profile">Owner Profile</string>
+    <string name="more_tab_renter_profile">Renter Profile</string>
     <string name="more_tab_account">Account</string>
     <string name="more_tab_settings">Settings</string>
     <string name="more_tab_credit">Credit Balance</string>
     <string name="more_tab_chat">Live Chat</string>
     <string name="more_tab_friends">Invite Friends</string>
     <string name="more_tab_cardee">Cardee</string>
-    <string name="more_tab_switch">Switch To Renter</string>
+    <string name="more_tab_switch_to_renter">Switch To Renter</string>
+    <string name="more_tab_switch_to_owner">Switch To Owner</string>
     <string name="more_tab_version">version</string>
     <string name="invite_friends_body">
         http://cardee.co - With Cardee, you can rent flexibly for days, weeks, or just a few hours!

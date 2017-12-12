@@ -19,6 +19,7 @@ import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.presenter.RegisterPresenter;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.display.ActivityHelper;
@@ -37,7 +38,7 @@ import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
-//    private final int PICK_IMAGE = 1;
+    //    private final int PICK_IMAGE = 1;
     private static final int RC_SIGN_IN = 9001;
     private final int CROP_IMAGE = 2;
 
@@ -248,11 +249,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onSignUpAsRenter(String name, File picture) {
+        mPresenter.setAccountState(AccountManager.ACC_STATE.RENTER);
         mPresenter.signUp(mLogin, mPass, name, picture);
     }
 
     @Override
     public void onSignUpAsOwner(String name, File picture) {
+        mPresenter.setAccountState(AccountManager.ACC_STATE.OWNER);
         mPresenter.signUp(mLogin, mPass, name, picture);
     }
 

@@ -103,7 +103,8 @@
         <activity
             android:name=".owner_notifications.view.OwnerNotifActivity"
             android:theme="@style/AppCompatAlertDialogTheme" />
-        <activity android:name=".owner_cardee.view.OwnerCardeeActivity"></activity>
+        <activity android:name=".owner_cardee.view.OwnerCardeeActivity" />
+        <activity android:name=".renter_home.view.RenterHomeActivity"></activity>
     </application>
 
 </manifest>

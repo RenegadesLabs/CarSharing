@@ -1,20 +1,16 @@
 package com.cardee.auth.register.presenter;
 
 
-import android.os.Bundle;
-
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.register.view.RegisterView;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.CheckUniqueLogin;
 import com.cardee.domain.owner.usecase.Register;
 import com.cardee.domain.user.usecase.SocialLogin;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.squareup.okhttp.Callback;
@@ -134,5 +130,9 @@ public class RegisterPresenter {
                 }
             });
         }
+    }
+
+    public void setAccountState(AccountManager.ACC_STATE state) {
+        AccountManager.getInstance(CardeeApp.context).setCurrentState(state);
     }
 }
