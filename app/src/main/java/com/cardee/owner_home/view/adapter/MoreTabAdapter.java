@@ -2,7 +2,8 @@ package com.cardee.owner_home.view.adapter;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.content.res.TypedArray;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.cardee.BuildConfig;
 import com.cardee.R;
 import com.cardee.owner_home.OwnerProfileContract;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +24,8 @@ import io.reactivex.subjects.PublishSubject;
 
 public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabItemViewHolder> {
 
-    private final List<String> mMenuItems;
+    private final List<String> mMenuNames;
+    private final List<Integer> mMenuIcons;
     private final LayoutInflater mInflater;
     private final String mCardee;
     private final String mCredit;
@@ -33,12 +36,24 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
 
     public MoreTabAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMenuItems = Arrays.asList(context.getResources().getStringArray(R.array.more_tab_menu));
-        mEventObservable = PublishSubject.create();
-        mCardee = context.getResources().getString(R.string.more_tab_cardee);
-        mCredit = context.getResources().getString(R.string.more_tab_credit);
-        mVersionString = context.getResources().getString(R.string.more_tab_version);
+        mMenuNames = Arrays.asList(context.getResources().getStringArray(R.array.more_tab_menu));
+        mMenuIcons = new ArrayList<>();
+        TypedArray array = context.getResources().obtainTypedArray(R.array.more_tab_icons);
+        for (int i = 0; i < array.length(); i++) {
+            mMenuIcons.add(array.getResourceId(i, -1));
+        }
+        array.recycle();
 
+        mEventObservable = PublishSubject.create();
+        mCardee = context.getResources().
+
+                getString(R.string.more_tab_cardee);
+        mCredit = context.getResources().
+
+                getString(R.string.more_tab_credit);
+        mVersionString = context.getResources().
+
+                getString(R.string.more_tab_version);
     }
 
     @Override
@@ -49,17 +64,19 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
 
     @Override
     public void onBindViewHolder(MoreTabItemViewHolder holder, int position) {
-        String text = mMenuItems.get(position);
+        String text = mMenuNames.get(position);
         holder.setText(text);
         holder.setOnClickListener(mEventObservable, position);
 
+        holder.setIcon(mMenuIcons.get(position));
         if (text.equals(mCardee)) {
             String versionCode = BuildConfig.VERSION_NAME;
             String version = mVersionString + " " + versionCode;
             holder.setItemInfo(version);
-        }
-        if (text.equals(mCredit)) {
+        } else if (text.equals(mCredit)) {
             holder.setItemInfo(mCreditBalance);
+        } else {
+            holder.setItemInfo("");
         }
 
         // TODO set icon and info;
@@ -67,7 +84,7 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
 
     @Override
     public int getItemCount() {
-        return mMenuItems.size();
+        return mMenuNames.size();
     }
 
     public void setCreditBalance(String creditBalance) {
@@ -90,8 +107,8 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
             mItemInfo = itemView.findViewById(R.id.item_info);
         }
 
-        private void setIcon(Drawable icon) {
-            mIcon.setImageDrawable(icon);
+        private void setIcon(@DrawableRes int icon) {
+            mIcon.setImageResource(icon);
         }
 
         private void setText(String text) {
@@ -132,6 +149,7 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
                 }
             });
         }
+
     }
 
     public void subscribe(Consumer<OwnerProfileContract.Action> consumer) {

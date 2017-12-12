@@ -245,6 +245,49 @@
     <string name="change_pass_cancel">Cancel</string>
     <string name="change_pass_forgotten">Forgotten Password?</string>
 
+    <!--Owner settings-->
+    <string name="owner_settings_title">Settings</string>
+    <string name="owner_settings_renter_notifications">Renter Notifications</string>
+    <string name="owner_settings_owner_notifications">Owner Notifications</string>
+
+    <!--Owner notifications-->
+    <string name="owner_notif_title">Owner Notifications</string>
+    <string name="reminder_settings">Reminder Settings</string>
+    <string name="car_handover_reminder">Car Handover Reminder</string>
+    <string name="car_return_reminder">Car Return Reminder</string>
+    <string name="email_me">Email me for</string>
+    <string name="new_booking_request">New Booking Request</string>
+    <string name="new_instant_booking">New Instant Booking</string>
+    <string name="reminders">Reminders</string>
+    <string name="one_hour">1 hour before</string>
+    <string name="two_hours">2 hours before</string>
+    <string name="three_hours">3 hours before</string>
+    <string name="four_hours">4 hours before</string>
+    <string name="six_hours">6 hours before</string>
+    <string name="twelve_hours">12 hours before</string>
+    <string name="one_day_before">1 day before</string>
+    <string name="two_days_before">2 days before</string>
+    <string name="off">Off</string>
+
+    <!--Owner cardee-->
+    <string name="owner_cardee_title">Cardee</string>
+    <string name="mobile_one_text">Mobile 1</string>
+    <string name="mobile_two_text">Mobile 2</string>
+    <string name="mobile_one">+65 8179 8186</string>
+    <string name="mobile_two">+65 8742 8281</string>
+    <string name="cardee_email">support@cardee.co</string>
+    <string name="website">Website</string>
+    <string name="cardee_website">cardee.co</string>
+    <string name="faq">FAQ</string>
+    <string name="cardee_faq">cardee.co/faq</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedback_hint">Have something to say? Let us hear from you!</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="http">http://</string>
+    <string name="send_feedback_success">Feedback sent</string>
+
+
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

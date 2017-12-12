@@ -98,8 +98,10 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                         if (address != null && !address.isEmpty()) {
                             Geocoder geocoder = new Geocoder((Context) mView, Locale.getDefault());
                             try {
-                                List<Address> addresses = geocoder.getFromLocationName(address, 1);
-                                city = addresses.get(0).getLocality();
+                                List<Address> addressList = geocoder.getFromLocationName(address, 1);
+                                if (addressList != null && !addressList.isEmpty()) {
+                                    city = addressList.get(0).getLocality();
+                                }
                             } catch (IOException e) {
                                 Log.d(TAG, e.getMessage());
                             }

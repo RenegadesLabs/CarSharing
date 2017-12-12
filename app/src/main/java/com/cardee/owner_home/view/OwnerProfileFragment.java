@@ -22,12 +22,16 @@ import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_account_details.view.AccountDetailsActivity;
+import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
 import com.cardee.owner_home.view.adapter.MoreTabAdapter;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
+import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.util.glide.CircleTransform;
+
+import static android.app.Activity.RESULT_OK;
 
 public class OwnerProfileFragment extends Fragment implements OwnerProfileContract.View {
 
@@ -41,8 +45,9 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     private TextView mProfileName;
     private View mHeaderContainer;
     private View mContainer;
-
     private Toast mCurrentToast;
+
+    public static final int GET_PICTURE_REQUEST = 19;
 
     public static Fragment newInstance() {
         return new OwnerProfileFragment();
@@ -98,7 +103,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void openOwnerProfile() {
         Intent intent = new Intent(getActivity(), OwnerProfileInfoActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, GET_PICTURE_REQUEST);
     }
 
     @Override
@@ -109,7 +114,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openSettings() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(getActivity(), OwnerSettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -133,7 +139,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openCardee() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(getActivity(), OwnerCardeeActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -146,7 +153,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         if (getActivity() != null) {
             Glide.with(getActivity())
                     .load(profilePhotoLink)
-                    .error(R.drawable.ic_photo_placeholder)
+                    .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
+                    .error(getResources().getDrawable(R.drawable.ic_photo_placeholder))
                     .transform(new CircleTransform(getActivity()))
                     .into(mProfileImage);
         }
@@ -162,6 +170,15 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         mAdapter.setCreditBalance(creditBalance);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_PICTURE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                mPresenter.loadProfile();
+            }
+        }
+    }
 
     @Override
     public void showProgress(boolean show) {

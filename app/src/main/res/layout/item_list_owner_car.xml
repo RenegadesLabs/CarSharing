@@ -30,11 +30,11 @@
             android:layout_width="@dimen/image_loading_indicator_side"
             android:layout_height="@dimen/image_loading_indicator_side"
             android:theme="@style/LoadingIndicator"
-            app:layout_constraintVertical_bias="0.4"
             app:layout_constraintBottom_toBottomOf="@id/car_primary_image"
             app:layout_constraintEnd_toEndOf="@id/car_primary_image"
             app:layout_constraintStart_toStartOf="@id/car_primary_image"
-            app:layout_constraintTop_toTopOf="@id/car_primary_image" />
+            app:layout_constraintTop_toTopOf="@id/car_primary_image"
+            app:layout_constraintVertical_bias="0.4" />
 
         <FrameLayout
             android:id="@+id/faded_line"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/car_hourly_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/car_daily_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

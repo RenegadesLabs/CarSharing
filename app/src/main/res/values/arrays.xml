@@ -10,4 +10,26 @@
         <item>@string/more_tab_switch</item>
     </string-array>
 
+    <string-array name="reminders">
+        <item>@string/one_hour</item>
+        <item>@string/two_hours</item>
+        <item>@string/three_hours</item>
+        <item>@string/four_hours</item>
+        <item>@string/six_hours</item>
+        <item>@string/twelve_hours</item>
+        <item>@string/one_day_before</item>
+        <item>@string/two_days_before</item>
+        <item>@string/off</item>
+    </string-array>
+
+    <integer-array name="more_tab_icons">
+        <item>@drawable/ic_account_icon</item>
+        <item>@drawable/ic_settings_icon</item>
+        <item>@drawable/ic_credit_balance</item>
+        <item>@drawable/ic_livechat_icon</item>
+        <item>@drawable/ic_invite_icon</item>
+        <item>@drawable/ic_cardee_icon</item>
+        <item>@drawable/ic_switch_icon</item>
+    </integer-array>
+
 </resources>
