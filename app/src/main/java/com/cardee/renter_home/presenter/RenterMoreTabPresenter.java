@@ -2,8 +2,10 @@ package com.cardee.renter_home.presenter;
 
 import android.view.View;
 
+import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.profile.response.entity.RenterProfile;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.renter.usecase.GetRenterProfile;
@@ -75,5 +77,9 @@ public class RenterMoreTabPresenter implements Consumer<RenterProfileContract.Ac
                 mView.openOwnerProfile();
             }
         });
+    }
+
+    public void setAccState(AccountManager.ACC_STATE state) {
+        AccountManager.getInstance(CardeeApp.context).setCurrentState(state);
     }
 }

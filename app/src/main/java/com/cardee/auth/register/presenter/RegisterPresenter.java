@@ -57,7 +57,7 @@ public class RegisterPresenter {
                 });
     }
 
-    public void signUp(String login, String password, String name, File picture) {
+    public void signUp(String login, String password, String name, File picture, final AccountManager.ACC_STATE accState) {
         mView.showProgress(true);
         mExecutor.execute(new Register(), new Register.RequestValues(login, password, picture, name),
                 new UseCase.Callback<Register.ResponseValues>() {
@@ -65,7 +65,7 @@ public class RegisterPresenter {
                     public void onSuccess(Register.ResponseValues response) {
                         mView.showProgress(false);
                         mView.showMessage(R.string.signup_registration_success);
-                        mView.onRegistrationSuccess();
+                        mView.onRegistrationSuccess(accState);
                     }
 
                     @Override
@@ -85,7 +85,9 @@ public class RegisterPresenter {
             public void onSuccess(SocialLogin.ResponseValues response) {
                 if (response.isSuccess()) {
                     mView.showProgress(false);
-                    mView.onRegistrationSuccess();
+
+                    // TODO: implement for renter also;
+                    mView.onRegistrationSuccess(AccountManager.ACC_STATE.OWNER);
                 }
             }
 
