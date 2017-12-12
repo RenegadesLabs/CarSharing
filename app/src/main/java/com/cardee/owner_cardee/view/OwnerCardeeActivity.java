@@ -3,13 +3,13 @@ package com.cardee.owner_cardee.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +27,7 @@ public class OwnerCardeeActivity extends AppCompatActivity implements OwnerCarde
     private Toast mCurrentToast;
 
     @BindView(R.id.container)
-    ConstraintLayout mContainer;
+    LinearLayout mContainer;
 
     @BindView(R.id.cardee_progress)
     ProgressBar mProgressBar;
