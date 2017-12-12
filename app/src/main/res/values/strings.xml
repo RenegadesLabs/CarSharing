@@ -378,9 +378,11 @@
     <string name="availability_return_prefix">Return car by</string>
     <string name="availability_return_suffix">(next day)</string>
     <string name="daily_timing_dialog_title">Pickup and return timing</string>
+    <string name="hourly_timing_dialog_title">Availability timing</string>
     <string name="title_save">Save</string>
     <string name="time_pickup_title">From what time can renters pick up the car on collection date?</string>
     <string name="time_return_title">By what time do renters need to return the car on return date?</string>
+    <string name="time_pickers_title">Between what time will the car be available for booking on the available dates</string>
     <string-array name="availability_time_titles">
         <item>1am</item>
         <item>2am</item>

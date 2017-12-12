@@ -204,7 +204,9 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void onSave(TimingSaveEvent event) {
-        timingPickup.setText(event.getTimeBegin());
-        timingReturn.setText(event.getTimeEnd());
+        String pickupTime = stringDelegate.getGMTTimeString(event.getHourBegin());
+        String returnTime = stringDelegate.getGMTTimeString(event.getHourEnd());
+        stringDelegate.onSetPickupTime(timingPickup, pickupTime);
+        stringDelegate.onSetReturnTime(timingReturn, returnTime);
     }
 }

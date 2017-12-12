@@ -7,15 +7,19 @@ import com.cardee.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class AvailabilityStringDelegate {
 
-    private static final String TIME_PATTERN = "hh:mm:ssXXX";
+    private static final String TIME_PATTERN = "HH:mm:ssXXX";
     private static final String TIME_VIEW_PATTERN = "ha";
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
+    private TimeZone timeZone;
+    private Calendar calendar;
     private String[] saveSuffixes;
     private String[] valueSuffixes;
     private String availabilityPickupPrefix;
@@ -26,8 +30,13 @@ public class AvailabilityStringDelegate {
     public AvailabilityStringDelegate(Context context) {
         saveSuffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
         valueSuffixes = context.getResources().getStringArray(R.array.days_availability_suffixes);
-        timeFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
-        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.getDefault());
+        timeZone = TimeZone.getTimeZone("GMT+08:00");
+        calendar = Calendar.getInstance();
+        timeFormatter = new SimpleDateFormat(TIME_PATTERN);
+        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN);
+        calendar.setTimeZone(timeZone);
+        timeFormatter.setTimeZone(timeZone);
+        timeViewFormatter.setTimeZone(timeZone);
         availabilityPickupPrefix = context.getString(R.string.availability_pickup_prefix);
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix);
         availabilityReturnPrefix = context.getString(R.string.availability_return_prefix);
@@ -83,6 +92,9 @@ public class AvailabilityStringDelegate {
     }
 
     public String getSimpleTimeFormat(String time) {
+        if (time == null) {
+            return null;
+        }
         try {
             Date parsed = timeFormatter.parse(time);
             return timeViewFormatter.format(parsed).toLowerCase();
@@ -90,5 +102,15 @@ public class AvailabilityStringDelegate {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getGMTTimeString(int hour) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date time = calendar.getTime();
+        String formattedTime = timeFormatter.format(time);
+        System.out.println(formattedTime);
+        return formattedTime;
     }
 }

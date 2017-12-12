@@ -14,19 +14,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
 import com.cardee.owner_car_details.view.AvailabilityCalendarActivity;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
+import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
+import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
-        implements View.OnClickListener, RentalDetailsContract.ControlView {
+        implements View.OnClickListener, RentalDetailsContract.ControlView, HourlyTimingEventBus.Listener {
 
     private TextView availabilityDays;
     private TextView timing;
@@ -60,6 +63,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public HourlyRentalViewHolder(@NonNull View rootView, @NonNull AppCompatActivity activity) {
         super(rootView, activity);
         presenter = new StrategyRentalDetailPresenter(this, StrategyRentalDetailPresenter.Strategy.HOURLY);
+        HourlyTimingEventBus.getInstance().setListener(this);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timing = rootView.findViewById(R.id.tv_rentalAvailableTimingValue);
         availabilityDaysEdit = rootView.findViewById(R.id.tv_rentalAvailabilityEdit);
@@ -128,6 +132,12 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(intent);
                 break;
             case R.id.tv_rentalTimingEdit:
+                HourlyAvailabilityTimingFragment.newInstance(
+                        stringDelegate.getSimpleTimeFormat(hourlyRental.getHourlyBeginTime()),
+                        stringDelegate.getSimpleTimeFormat(hourlyRental.getHourlyEndTime()))
+                        .show(getActivity().getSupportFragmentManager(),
+                                HourlyAvailabilityTimingFragment.class.getSimpleName());
+                break;
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
@@ -179,5 +189,10 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     @Override
     public void onCashEnabled(boolean enabled) {
 
+    }
+
+    @Override
+    public void onSave(TimingSaveEvent event) {
+        
     }
 }
