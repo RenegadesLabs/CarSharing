@@ -7,7 +7,7 @@ import com.cardee.data_source.inbox.remote.api.model.entity.Recipient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Chat {
+public class ChatRemote {
 
     @Expose
     @SerializedName("chat_id")
@@ -28,7 +28,7 @@ public class Chat {
     @SerializedName("new_messages")
     private Integer mNewCount;
 
-    public Chat() {
+    public ChatRemote() {
     }
 
     public Integer getChatId() {

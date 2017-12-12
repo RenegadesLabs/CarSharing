@@ -4,8 +4,11 @@ import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.GetChats;
+import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
-public class ChatPresenterImp implements ChatContract.Presenter {
+import io.reactivex.functions.Consumer;
+
+public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxChat> {
 
     private ChatContract.View mView;
     private final GetChats mGetChats;
@@ -51,7 +54,13 @@ public class ChatPresenterImp implements ChatContract.Presenter {
     }
 
     @Override
+    public void accept(InboxChat inboxChat) throws Exception {
+
+    }
+
+    @Override
     public void onDestroy() {
         mView = null;
     }
+
 }
