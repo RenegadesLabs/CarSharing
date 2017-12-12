@@ -174,6 +174,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     @Override
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
+        stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
     }
 
     @Override
@@ -193,6 +194,9 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void onSave(TimingSaveEvent event) {
-        
+        String startTime = stringDelegate.getGMTTimeString(event.getHourBegin());
+        String endTime = stringDelegate.getGMTTimeString(event.getHourEnd());
+        stringDelegate.onSetHourlyAvailabilityTime(timing, startTime, endTime);
+        presenter.updateAvailabilityTiming(startTime, endTime);
     }
 }

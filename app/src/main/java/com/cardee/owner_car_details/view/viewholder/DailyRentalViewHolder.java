@@ -208,5 +208,6 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         String returnTime = stringDelegate.getGMTTimeString(event.getHourEnd());
         stringDelegate.onSetPickupTime(timingPickup, pickupTime);
         stringDelegate.onSetReturnTime(timingReturn, returnTime);
+        presenter.updateAvailabilityTiming(pickupTime, returnTime);
     }
 }

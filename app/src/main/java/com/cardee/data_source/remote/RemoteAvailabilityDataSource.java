@@ -74,11 +74,6 @@ public class RemoteAvailabilityDataSource implements AvailabilityDataSource {
     }
 
     @Override
-    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
-
-    }
-
-    @Override
     public void saveAvailability(int id, boolean availableDaily, boolean availableHourly, Callback callback) {
         AvailabilityValues request = new AvailabilityValues();
         request.setAvailableDaily(availableDaily);

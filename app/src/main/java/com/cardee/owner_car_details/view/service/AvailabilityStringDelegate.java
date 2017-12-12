@@ -26,6 +26,7 @@ public class AvailabilityStringDelegate {
     private String availabilityPickupSuffix;
     private String availabilityReturnPrefix;
     private String availabilityReturnSuffix;
+    private String availabilityHourlyPrefix;
 
     public AvailabilityStringDelegate(Context context) {
         saveSuffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
@@ -41,6 +42,7 @@ public class AvailabilityStringDelegate {
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix);
         availabilityReturnPrefix = context.getString(R.string.availability_return_prefix);
         availabilityReturnSuffix = context.getString(R.string.availability_return_suffix);
+        availabilityHourlyPrefix = context.getString(R.string.hourly_timing_dialog_title);
     }
 
     public void onTitleChanged(TextView view, int count) {
@@ -88,6 +90,23 @@ public class AvailabilityStringDelegate {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void onSetHourlyAvailabilityTime(TextView view, String beginTime, String endTime) {
+        if (beginTime == null || endTime == null) {
+            view.setText(availabilityHourlyPrefix);
+            return;
+        }
+        try {
+            Date beginDate = timeFormatter.parse(beginTime);
+            Date endDate = timeFormatter.parse(endTime);
+            String formattedBeginTime = timeViewFormatter.format(beginDate).toLowerCase();
+            String formattedEndTime = timeViewFormatter.format(endDate).toLowerCase();
+            String hourlyTiming = availabilityHourlyPrefix + " " + formattedBeginTime + " - " + formattedEndTime;
+            view.setText(hourlyTiming);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

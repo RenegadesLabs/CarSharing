@@ -6,8 +6,6 @@ public interface AvailabilityDataSource {
 
     void saveHourlyAvailability(int id, String[] dates, String startTime, String endTime, Callback callback);
 
-    void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback);
-
     void saveAvailability(int id, boolean availableDaily, boolean availableHourly, Callback callback);
 
     interface Callback {

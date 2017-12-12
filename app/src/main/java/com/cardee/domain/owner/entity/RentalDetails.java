@@ -1,5 +1,7 @@
 package com.cardee.domain.owner.entity;
 
+import android.support.annotation.NonNull;
+
 public class RentalDetails {
 
     private final int carId;
@@ -16,7 +18,7 @@ public class RentalDetails {
     private Float dailyAmountRateSecond;
     private Float dailyAmountDiscountFirst;
     private Float dailyAmountDiscountSecond;
-    private Float dailyMinRentalDuration;
+    private Integer dailyMinRentalDuration;
     private Integer dailyFuelPolicyId;
     private String dailyFuelPolicyName;
 
@@ -30,7 +32,7 @@ public class RentalDetails {
     private boolean hourlyAcceptCash;
     private Float hourlyAmountRateFirst;
     private Float hourlyAmountRateSecond;
-    private Float hourlyMinRentalDuration;
+    private Integer hourlyMinRentalDuration;
     private String hourlyAmountPayMileage;
     private Integer hourlyFuelPolicyId;
     private String hourlyFuelPolicyName;
@@ -139,11 +141,11 @@ public class RentalDetails {
         this.dailyAmountDiscountSecond = dailyAmountDiscountSecond;
     }
 
-    public Float getDailyMinRentalDuration() {
+    public Integer getDailyMinRentalDuration() {
         return dailyMinRentalDuration;
     }
 
-    public void setDailyMinRentalDuration(Float dailyMinRentalDuration) {
+    public void setDailyMinRentalDuration(Integer dailyMinRentalDuration) {
         this.dailyMinRentalDuration = dailyMinRentalDuration;
     }
 
@@ -243,11 +245,11 @@ public class RentalDetails {
         this.hourlyAmountRateSecond = hourlyAmountRateSecond;
     }
 
-    public Float getHourlyMinRentalDuration() {
+    public Integer getHourlyMinRentalDuration() {
         return hourlyMinRentalDuration;
     }
 
-    public void setHourlyMinRentalDuration(Float hourlyMinRentalDuration) {
+    public void setHourlyMinRentalDuration(Integer hourlyMinRentalDuration) {
         this.hourlyMinRentalDuration = hourlyMinRentalDuration;
     }
 
@@ -273,5 +275,39 @@ public class RentalDetails {
 
     public void setHourlyFuelPolicyName(String hourlyFuelPolicyName) {
         this.hourlyFuelPolicyName = hourlyFuelPolicyName;
+    }
+
+    public static RentalDetails from(@NonNull RentalDetails prototype) {
+        RentalDetails copy = new RentalDetails(prototype.getCarId());
+        copy.setAvailableHourly(prototype.isAvailableHourly());
+        copy.setAvailableDaily(prototype.isAvailableDaily());
+        copy.setDailyDates(prototype.getDailyDates());
+        copy.setHourlyDates(prototype.getHourlyDates());
+        copy.setDailyTimePickup(prototype.getDailyTimePickup());
+        copy.setDailyTimeReturn(prototype.getDailyTimeReturn());
+        copy.setHourlyBeginTime(prototype.getHourlyBeginTime());
+        copy.setHourlyEndTime(prototype.getHourlyEndTime());
+        copy.setDailyCount(prototype.getDailyCount());
+        copy.setDailyInstantBooking(prototype.isDailyInstantBooking());
+        copy.setDailyCurbsideDelivery(prototype.isDailyCurbsideDelivery());
+        copy.setDailyAcceptCash(prototype.isDailyAcceptCash());
+        copy.setDailyFuelPolicyName(prototype.getDailyFuelPolicyName());
+        copy.setDailyFuelPolicyId(prototype.getDailyFuelPolicyId());
+        copy.setDailyAmountDiscountFirst(prototype.getDailyAmountDiscountFirst());
+        copy.setDailyAmountDiscountSecond(prototype.getDailyAmountDiscountSecond());
+        copy.setDailyAmountRateFirst(prototype.getDailyAmountRateFirst());
+        copy.setDailyAmountRateSecond(prototype.getDailyAmountRateSecond());
+        copy.setDailyMinRentalDuration(prototype.getDailyMinRentalDuration());
+        copy.setHourlyCount(prototype.getHourlyCount());
+        copy.setHourlyInstantBooking(prototype.isHourlyInstantBooking());
+        copy.setHourlyCurbsideDelivery(prototype.isHourlyCurbsideDelivery());
+        copy.setHourlyAcceptCash(prototype.isHourlyAcceptCash());
+        copy.setHourlyFuelPolicyId(prototype.getHourlyFuelPolicyId());
+        copy.setHourlyFuelPolicyName(prototype.getHourlyFuelPolicyName());
+        copy.setHourlyAmountRateFirst(prototype.getHourlyAmountRateFirst());
+        copy.setHourlyAmountRateSecond(prototype.getHourlyAmountRateSecond());
+        copy.setHourlyAmountPayMileage(prototype.getHourlyAmountPayMileage());
+        copy.setHourlyMinRentalDuration(prototype.getHourlyMinRentalDuration());
+        return copy;
     }
 }
