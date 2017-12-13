@@ -50,6 +50,9 @@ public class BaseCarEntity {
     @Expose
     @SerializedName("images")
     private ImageEntity[] images;
+    @Expose
+    @SerializedName("address")
+    private String address;
 
 
     public BaseCarEntity() {
@@ -174,5 +177,13 @@ public class BaseCarEntity {
 
     public void setCarRating(Float carRating) {
         this.carRating = carRating;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

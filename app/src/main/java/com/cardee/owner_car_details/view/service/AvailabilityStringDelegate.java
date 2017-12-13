@@ -98,16 +98,31 @@ public class AvailabilityStringDelegate {
             view.setText(availabilityHourlyPrefix);
             return;
         }
+        String formattedBeginTime = getShortTime(beginTime);
+        String formattedEndTime = getShortTime(endTime);
+        String hourlyTiming = availabilityHourlyPrefix + " " + formattedBeginTime + " - " + formattedEndTime;
+        view.setText(hourlyTiming);
+    }
+
+    private String getShortTime(String gmtTime) {
         try {
-            Date beginDate = timeFormatter.parse(beginTime);
-            Date endDate = timeFormatter.parse(endTime);
-            String formattedBeginTime = timeViewFormatter.format(beginDate).toLowerCase();
-            String formattedEndTime = timeViewFormatter.format(endDate).toLowerCase();
-            String hourlyTiming = availabilityHourlyPrefix + " " + formattedBeginTime + " - " + formattedEndTime;
-            view.setText(hourlyTiming);
+            Date date = timeFormatter.parse(gmtTime);
+            return timeViewFormatter.format(date).toLowerCase();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public void onSetHourlyShortTitle(TextView view, int daysCount, String beginTime, String endTime) {
+        int index = daysCount > 1 ? 2 : daysCount;
+        String prefix = index == 0 ? "" : String.valueOf(daysCount) + " ";
+        String title = prefix + valueSuffixes[index];
+        if (beginTime != null && endTime != null) {
+            title = title + "\n";
+            title = title + getShortTime(beginTime) + " - " + getShortTime(endTime);
+        }
+        view.setText(title);
     }
 
     public String getSimpleTimeFormat(String time) {
