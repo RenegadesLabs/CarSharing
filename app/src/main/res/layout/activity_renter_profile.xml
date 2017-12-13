@@ -248,8 +248,8 @@
                             android:id="@+id/note_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/small_margin"
                             android:textColor="@color/text_owner_profile_name"
+                            android:theme="@style/TextInfo"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </android.support.constraint.ConstraintLayout>

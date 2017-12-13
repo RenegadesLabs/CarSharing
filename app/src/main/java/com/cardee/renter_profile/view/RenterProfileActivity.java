@@ -276,6 +276,12 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdapter.destroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

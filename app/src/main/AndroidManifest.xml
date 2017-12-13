@@ -100,7 +100,7 @@
             android:name=".owner_profile_info.view.OwnerProfileInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".owner_account_details.view.AccountDetailsActivity"
+            android:name=".account_details.view.AccountDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".owner_change_pass.view.ChangePassActivity"

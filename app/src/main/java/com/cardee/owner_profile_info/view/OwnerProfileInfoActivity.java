@@ -350,6 +350,12 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mReviewAdapter.destroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

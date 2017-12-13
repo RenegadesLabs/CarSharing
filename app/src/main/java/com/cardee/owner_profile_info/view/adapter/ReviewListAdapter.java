@@ -63,6 +63,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         notifyDataSetChanged();
     }
 
+    public void destroy() {
+        mContext = null;
+    }
+
     public static class ReviewListViewHolder extends RecyclerView.ViewHolder {
         private final ImageView mProfileImage;
         private final TextView mProfileName;

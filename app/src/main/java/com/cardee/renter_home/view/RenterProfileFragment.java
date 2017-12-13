@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.cardee.owner_account_details.view.AccountDetailsActivity;
+import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.owner_settings.view.OwnerSettingsActivity;
