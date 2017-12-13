@@ -10,17 +10,20 @@ import okhttp3.Response;
 
 public class AccountManager {
 
-    private static final String AUTH_TOKEN_STORE = "_auth_token_store";
+    private static final String AUTH_STORE = "_auth_store";
     private static final String AUTH_TOKEN = "_auth_token";
     private static final String AUTH_HEADER_NAME = "Authorization";
     private static final String DEFAULT_AUTH_TOKEN = "";
+    private static final String ACC_STATE_KEY = "account_state";
 
     private static AccountManager INSTANCE;
 
     private SharedPreferences mPrefs;
 
+    public enum ACC_STATE {OWNER, RENTER}
+
     private AccountManager(Context context) {
-        mPrefs = context.getSharedPreferences(AUTH_TOKEN_STORE, Context.MODE_PRIVATE);
+        mPrefs = context.getSharedPreferences(AUTH_STORE, Context.MODE_PRIVATE);
     }
 
     public Request modifyRequestHeaders(Request request) {
@@ -60,4 +63,14 @@ public class AccountManager {
     public boolean isLoggedIn() {
         return !mPrefs.getString(AUTH_TOKEN, "").equals("");
     }
+
+    public ACC_STATE getCurrentState() {
+        String currentState = mPrefs.getString(ACC_STATE_KEY, "");
+        return ACC_STATE.valueOf(currentState);
+    }
+
+    public void setCurrentState(ACC_STATE state) {
+        mPrefs.edit().putString(ACC_STATE_KEY, state.toString()).apply();
+    }
+
 }

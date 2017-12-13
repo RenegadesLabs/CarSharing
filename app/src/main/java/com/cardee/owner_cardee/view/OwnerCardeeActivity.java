@@ -115,6 +115,11 @@ public class OwnerCardeeActivity extends AppCompatActivity implements OwnerCarde
     }
 
     @Override
+    public void returnToPreviousActivity() {
+        onBackPressed();
+    }
+
+    @Override
     public void showProgress(boolean show) {
         if (show) {
             mContainer.setVisibility(View.GONE);
@@ -148,4 +153,5 @@ public class OwnerCardeeActivity extends AppCompatActivity implements OwnerCarde
         }
         return true;
     }
+
 }

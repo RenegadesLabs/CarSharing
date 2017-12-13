@@ -1,4 +1,4 @@
-package com.cardee.owner_profile_info.view;
+package com.cardee.renter_profile.view;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,13 +22,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
-import com.cardee.domain.owner.entity.CarReview;
-import com.cardee.owner_car_details.OwnerCarDetailsContract;
-import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
-import com.cardee.owner_profile_info.presenter.OwnerProfileInfoPresenter;
-import com.cardee.owner_profile_info.view.adapter.CarPreviewListAdapter;
-import com.cardee.owner_profile_info.view.adapter.ReviewListAdapter;
+import com.cardee.data_source.remote.api.profile.response.entity.RenterReview;
+import com.cardee.renter_profile.presenter.RenterProfilePresenter;
+import com.cardee.renter_profile.view.adapter.RenterReviewListAdapter;
 import com.cardee.util.display.ActivityHelper;
 import com.cardee.util.glide.CircleTransform;
 
@@ -40,20 +36,23 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class OwnerProfileInfoActivity extends AppCompatActivity implements ProfileInfoView {
+public class RenterProfileActivity extends AppCompatActivity implements RenterProfileView {
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
-    public final static String TAG = OwnerProfileInfoActivity.class.getCanonicalName();
-    private OwnerProfileInfoPresenter mPresenter;
-    private CarPreviewListAdapter mCarsAdapter;
-    private ReviewListAdapter mReviewAdapter;
+    private RenterProfilePresenter mPresenter;
+    private RenterReviewListAdapter mAdapter;
     private Toast mCurrentToast;
     private byte[] mPictureByteArray;
 
-    @BindView(R.id.profile_info_container)
+
+    @BindView(R.id.renter_profile_container)
     View mContainer;
+
+    @BindView(R.id.renter_profile_progress)
+    ProgressBar mProgressBar;
 
     @BindView(R.id.profile_name)
     TextView mProfileNameText;
@@ -61,104 +60,49 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @BindView(R.id.profile_rating)
     TextView mProfileRatingText;
 
-    @BindView(R.id.acceptance_percentage)
-    TextView mProfileAcceptance;
-
-    @BindView(R.id.response_time)
-    TextView mProfileResponse;
-
-    @BindView(R.id.response_minutes)
-    TextView mResponseMins;
-
-    @BindView(R.id.bookings_count)
-    TextView mProfileBookings;
-
     @BindView(R.id.profile_image)
     ImageView mProfilePhoto;
 
     @BindView(R.id.profile_image_edit)
     TextView mProfilePhotoEdit;
 
-    @BindView(R.id.note_edit)
-    TextView mNoteEdit;
+    @BindView(R.id.tv_age)
+    TextView mProfileAge;
+
+    @BindView(R.id.tv_driving_exp)
+    TextView mDrivingExp;
+
+    @BindView(R.id.driving_exp_years)
+    TextView mDrivingExpYears;
+
+    @BindView(R.id.bookings_count)
+    TextView mBookings;
 
     @BindView(R.id.note_text)
-    TextView mNoteText;
-
-    @BindView(R.id.note_title)
-    TextView mNoteTitle;
-
-    @BindView(R.id.cars_count)
-    TextView mCarsCount;
+    TextView mNote;
 
     @BindView(R.id.reviews_count)
     TextView mReviewsCount;
 
-    @BindView(R.id.cars_list)
-    RecyclerView mCarsListView;
-
     @BindView(R.id.reviews_list)
     RecyclerView mReviewsListView;
-
-    @BindView(R.id.owner_info_progress)
-    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_profile_info);
+        setContentView(R.layout.activity_renter_profile);
         ButterKnife.bind(this);
 
-        initPresenter();
         initToolBar();
-        initAdapters();
-        initCarList(mCarsListView);
-        initReviewList(mReviewsListView);
-        initListners();
+        mPresenter = new RenterProfilePresenter(this);
+        initReviewList();
+        mAdapter = new RenterReviewListAdapter(this);
 
-        mPresenter.getOwnerInfo();
+        mPresenter.getRenterProfile();
     }
 
-    private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
-
-    }
-
-    private void initListners() {
-        mNoteEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.changeNote(OwnerProfileInfoActivity.this);
-            }
-        });
-        mProfilePhotoEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verifyPermissionAndChangeImage();
-            }
-        });
-    }
-
-    private void verifyPermissionAndChangeImage() {
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
-        } else {
-            ActivityHelper.pickImageIntent(OwnerProfileInfoActivity.this, ActivityHelper.PICK_IMAGE);
-        }
-    }
-
-    private void initAdapters() {
-        mCarsAdapter = new CarPreviewListAdapter(this);
-        mReviewAdapter = new ReviewListAdapter(this);
-        mCarsAdapter.subscribe(mPresenter);
-    }
-
-    private void initReviewList(RecyclerView mReviewsListView) {
-        mReviewsListView.setAdapter(mReviewAdapter);
+    private void initReviewList() {
+        mReviewsListView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mReviewsListView.setLayoutManager(layoutManager);
         mReviewsListView.setNestedScrollingEnabled(false);
@@ -167,14 +111,21 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         mReviewsListView.addItemDecoration(dividerItemDecoration);
     }
 
-    private void initCarList(RecyclerView mCarsListView) {
-        mCarsListView.setHasFixedSize(true);
-        mCarsListView.setAdapter(mCarsAdapter);
-        mCarsListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    private void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
     }
 
-    private void initPresenter() {
-        mPresenter = new OwnerProfileInfoPresenter(this);
+    @OnClick(R.id.profile_image_edit)
+    public void onEditPhotoClicked() {
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+        } else {
+            ActivityHelper.pickImageIntent(RenterProfileActivity.this, ActivityHelper.PICK_IMAGE);
+        }
     }
 
     @Override
@@ -213,18 +164,23 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     }
 
     @Override
-    public void setAcceptance(String percent) {
-        mProfileAcceptance.setText(percent);
+    public void setProfileAge(String age) {
+        mProfileAge.setText(age);
     }
 
     @Override
-    public void setResponseText(String time) {
-        mProfileResponse.setText(time);
+    public void setDrivingExp(String exp) {
+        mDrivingExp.setText(exp);
+    }
+
+    @Override
+    public void setDrivingExpYears(String years) {
+        mDrivingExpYears.setText(years);
     }
 
     @Override
     public void setBookings(String count) {
-        mProfileBookings.setText(count);
+        mBookings.setText(count);
     }
 
     @Override
@@ -248,12 +204,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
     @Override
     public void setNote(String note) {
-        mNoteText.setText(note);
-    }
-
-    @Override
-    public void setCarsCount(String text) {
-        mCarsCount.setText(text);
+        mNote.setText(note);
     }
 
     @Override
@@ -262,33 +213,16 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     }
 
     @Override
-    public void setCars(List<Car> items) {
-        mCarsAdapter.insert(items);
+    public void setReviews(List<RenterReview> reviews) {
+        mAdapter.insert(reviews);
     }
 
     @Override
-    public void setCarReviews(List<CarReview> reviews) {
-        mReviewAdapter.insert(reviews);
-    }
-
-    @Override
-    public void openItem(Car car) {
-        Intent intent = new Intent(this, OwnerCarDetailsActivity.class);
-        Bundle args = new Bundle();
-        args.putInt(OwnerCarDetailsContract.CAR_ID, car.getCarId() == null ? -1 : car.getCarId());
-        args.putString(OwnerCarDetailsContract.CAR_NUMBER, car.getLicenceNumber());
-        intent.putExtras(args);
-        startActivity(intent);
-    }
-
-    @Override
-    public void setMinutes(String minutes) {
-        mResponseMins.setText(minutes);
-    }
-
-    @Override
-    public void setNoteTitle(String address) {
-        mNoteTitle.setText(address);
+    public void onChangeImageSuccess() {
+        if (mPictureByteArray != null) {
+            setProfileImage(mPictureByteArray);
+            setResult(RESULT_OK);
+        }
     }
 
     @Override
@@ -297,17 +231,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
             case REQUEST_EXTERNAL_STORAGE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ActivityHelper.pickImageIntent(OwnerProfileInfoActivity.this, ActivityHelper.PICK_IMAGE);
+                    ActivityHelper.pickImageIntent(RenterProfileActivity.this, ActivityHelper.PICK_IMAGE);
                 }
                 break;
-        }
-    }
-
-    @Override
-    public void onChangeImageSuccess() {
-        if (mPictureByteArray != null) {
-            setProfileImage(mPictureByteArray);
-            setResult(RESULT_OK);
         }
     }
 
@@ -352,7 +278,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mReviewAdapter.destroy();
+        mAdapter.destroy();
     }
 
     @Override
@@ -364,5 +290,4 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         }
         return true;
     }
-
 }

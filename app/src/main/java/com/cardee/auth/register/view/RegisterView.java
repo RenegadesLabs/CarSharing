@@ -1,6 +1,7 @@
 package com.cardee.auth.register.view;
 
 
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.mvp.BaseView;
 
 import java.io.File;
@@ -28,5 +29,5 @@ public interface RegisterView extends BaseView {
 
     void onValidationSuccess(String login, String password);
 
-    void onRegistrationSuccess();
+    void onRegistrationSuccess(AccountManager.ACC_STATE accState);
 }

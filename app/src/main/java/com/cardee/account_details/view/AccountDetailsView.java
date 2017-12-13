@@ -1,4 +1,4 @@
-package com.cardee.owner_account_details.view;
+package com.cardee.account_details.view;
 
 import com.cardee.mvp.BaseView;
 

@@ -9,6 +9,7 @@ import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
+import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -25,6 +26,10 @@ public interface Profile {
     @GET("profiles/owner/cars")
     @Headers("Content-Type: application/json")
     Observable<CarsResponse> loadOwnersCarList();
+
+    @GET("profiles/renter")
+    @Headers("Content-Type: application/json")
+    Observable<RenterProfileResponse> loadRenterProfile();
 
     //TODO: implement
     void uploadProfilePhoto();

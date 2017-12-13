@@ -1,4 +1,4 @@
-package com.cardee.owner_account_details.presenter;
+package com.cardee.account_details.presenter;
 
 
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.cardee.domain.owner.usecase.ChangeEmail;
 import com.cardee.domain.owner.usecase.ChangeName;
 import com.cardee.domain.owner.usecase.ChangePhone;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
-import com.cardee.owner_account_details.view.AccountDetailsView;
+import com.cardee.account_details.view.AccountDetailsView;
 
 public class AccountDetailsPresenter {
 
