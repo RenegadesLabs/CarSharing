@@ -6,7 +6,9 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterProfileDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
 import io.reactivex.functions.Consumer;
@@ -47,6 +49,27 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
             }
         });
     }
+
+    @Override
+    public void changeRenterNote(ChangeNoteRequest changeNoteRequest, final NoResponseCallback callback) {
+        mApi.updateRenterNote(changeNoteRequest).subscribe(new Consumer<NoDataResponse>() {
+            @Override
+            public void accept(NoDataResponse noDataResponse) throws Exception {
+                if (noDataResponse.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(callback, noDataResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
+    }
+
 
     private void handleErrorResponse(BaseCallback callback, BaseResponse response) {
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {

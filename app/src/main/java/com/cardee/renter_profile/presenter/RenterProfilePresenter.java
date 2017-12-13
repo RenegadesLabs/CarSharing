@@ -2,14 +2,18 @@ package com.cardee.renter_profile.presenter;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.cardee.R;
 import com.cardee.data_source.Error;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.response.entity.RenterProfile;
 import com.cardee.data_source.remote.api.profile.response.entity.RenterReview;
+import com.cardee.data_source.util.DialogHelper;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.ChangeImage;
+import com.cardee.domain.renter.usecase.ChangeNote;
 import com.cardee.domain.renter.usecase.GetRenterProfile;
 import com.cardee.renter_profile.view.RenterProfileView;
 
@@ -23,6 +27,7 @@ public class RenterProfilePresenter {
     private final String TAG = this.getClass().getSimpleName();
     private final GetRenterProfile mGetProfileUseCase;
     private final ChangeImage mChangeImage;
+    private final ChangeNote mChangeNote;
     private RenterProfileView mView;
     private UseCaseExecutor mExecutor;
 
@@ -31,6 +36,7 @@ public class RenterProfilePresenter {
         mExecutor = UseCaseExecutor.getInstance();
         mGetProfileUseCase = new GetRenterProfile();
         mChangeImage = new ChangeImage();
+        mChangeNote = new ChangeNote();
     }
 
     public void getRenterProfile() {
@@ -54,7 +60,10 @@ public class RenterProfilePresenter {
 
                     mView.setProfileAge(String.valueOf(profile.getAge()));
 
-                    int drivingExp = profile.getYearsDrivingExp();
+                    Integer drivingExp = profile.getYearsDrivingExp();
+                    if (drivingExp == null) {
+                        drivingExp = 0;
+                    }
                     mView.setDrivingExp(String.valueOf(drivingExp));
 
                     if (drivingExp == 1) {
@@ -69,21 +78,31 @@ public class RenterProfilePresenter {
 
                     String note = profile.getNote();
                     if (note == null || note.isEmpty()) {
-                        note = ((Context) mView).getResources().getString(R.string.renter_profile_default_note);
+                        note = ((Context) mView).getResources().getString(R.string.profile_default_note);
                     }
                     mView.setNote(note);
 
-                    int reviewsCount = profile.getReviewCnt();
-                    mView.setReviewsCount(String.valueOf(reviewsCount));
+                    Integer reviewsCount = profile.getReviewCnt();
+                    if (reviewsCount == null) {
+                        reviewsCount = 0;
+                    }
+                    StringBuilder builder = new StringBuilder(String.valueOf(reviewsCount));
+                    builder.append(((Context) mView).getResources().getString(R.string.comment));
+                    if (reviewsCount != 1) {
+                        builder.append("s");
+                    }
+                    mView.setReviewsCount(builder.toString());
 
                     List<RenterReview> reviews = profile.getReviews();
                     if (reviews != null && !reviews.isEmpty()) {
                         Iterator<RenterReview> iterator = reviews.iterator();
                         while (iterator.hasNext()) {
-                            String text = iterator.next().getReview();
+                            RenterReview review = iterator.next();
+                            String text = review.getReview();
                             if (text == null || text.isEmpty()) {
                                 iterator.remove();
                             }
+                            review.setReview(review.getReview().trim());
                         }
                         mView.setReviews(reviews);
                     }
@@ -118,5 +137,37 @@ public class RenterProfilePresenter {
                         mView.showMessage(error.getMessage());
                     }
                 });
+    }
+
+    public void changeNote(Context context) {
+        DialogHelper.getAlertDialog(context, R.layout.dialog_profile_change_note,
+                context.getResources().getString(R.string.profile_info_note_change_title),
+                context.getResources().getString(R.string.profile_info_note_change),
+                new DialogHelper.OnClickCallback() {
+                    @Override
+                    public void onPositiveButtonClick(final String newNote, final DialogInterface dialog) {
+                        ChangeNoteRequest changeNoteRequest = new ChangeNoteRequest();
+                        changeNoteRequest.setNote(newNote);
+                        mExecutor.execute(mChangeNote, new ChangeNote.RequestValues(changeNoteRequest), new UseCase.Callback<ChangeNote.ResponseValues>() {
+                            @Override
+                            public void onSuccess(ChangeNote.ResponseValues response) {
+                                dialog.dismiss();
+                                mView.setNote(newNote);
+                                mView.showMessage(R.string.profile_info_note_change_success);
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                dialog.dismiss();
+                                mView.showMessage(error.getMessage());
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNegativeButtonClick(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 }

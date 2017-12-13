@@ -200,9 +200,9 @@
     <string name="owner_profile_info_percent">%</string>
     <string name="owner_profile_info_minutes">min</string>
     <string name="owner_profile_info_note_edit">Note</string>
-    <string name="owner_profile_info_note_change">Change</string>
-    <string name="owner_profile_info_note_change_title">Change note</string>
-    <string name="owner_profile_info_note_change_success">Note changed</string>
+    <string name="profile_info_note_change">Change</string>
+    <string name="profile_info_note_change_title">Change note</string>
+    <string name="profile_info_note_change_success">Note changed</string>
     <string name="owner_profile_info_name_change_success">Name changed</string>
     <string name="owner_profile_info_default_city">Singapore</string>
     <string name="owner_profile_info_photo_success">Profile photo changed!</string>
@@ -291,11 +291,13 @@
     <string name="send_feedback_success">Feedback sent</string>
 
     <!--Renter Profile-->
+    <string name="renter_profile_title">Renter Profile</string>
     <string name="renter_profile_age">Age</string>
     <string name="driving_exp">Driving Exp.</string>
     <string name="year">year</string>
     <string name="yrs">yrs</string>
-    <string name="renter_profile_default_note">Add some info about yourself :)</string>
+    <string name="profile_default_note">Add some info about yourself :)</string>
+    <string name="comment">\u0020Comment</string>
 
 
     <!--Calendar-->

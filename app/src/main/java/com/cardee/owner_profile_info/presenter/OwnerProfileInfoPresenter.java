@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.cardee.R;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerReview;
 import com.cardee.data_source.util.DialogHelper;
@@ -89,7 +89,7 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
                         String note = profile.getNote();
                         if (note == null || note.isEmpty()) {
-                            note = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_note);
+                            note = ((Context) mView).getResources().getString(R.string.profile_default_note);
                         }
                         mView.setNote(note);
 
@@ -141,10 +141,12 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                         List<CarReview> carReviewList = mapper.transform(reviews);
                         Iterator<CarReview> iterator = carReviewList.iterator();
                         while (iterator.hasNext()) {
-                            String text = iterator.next().getReviewText();
+                            CarReview review = iterator.next();
+                            String text = review.getReviewText();
                             if (text == null || text.isEmpty()) {
                                 iterator.remove();
                             }
+                            review.setReviewText(review.getReviewText().trim());
                         }
                         mView.setCarReviews(carReviewList);
                     }
@@ -167,24 +169,25 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
     }
 
     public void changeNote(final Context context) {
-        DialogHelper.getAlertDialog(context, R.layout.dialog_owner_profile_change_note,
-                context.getResources().getString(R.string.owner_profile_info_note_change_title),
-                context.getResources().getString(R.string.owner_profile_info_note_change),
+        DialogHelper.getAlertDialog(context, R.layout.dialog_profile_change_note,
+                context.getResources().getString(R.string.profile_info_note_change_title),
+                context.getResources().getString(R.string.profile_info_note_change),
                 new DialogHelper.OnClickCallback() {
                     @Override
                     public void onPositiveButtonClick(final String newNote, final DialogInterface dialog) {
-                        OwnerNoteRequest ownerNoteRequest = new OwnerNoteRequest();
-                        ownerNoteRequest.setNote(newNote);
-                        mExecutor.execute(mChangeNote, new ChangeNote.RequestValues(ownerNoteRequest), new UseCase.Callback<ChangeNote.ResponseValues>() {
+                        ChangeNoteRequest changeNoteRequest = new ChangeNoteRequest();
+                        changeNoteRequest.setNote(newNote);
+                        mExecutor.execute(mChangeNote, new ChangeNote.RequestValues(changeNoteRequest), new UseCase.Callback<ChangeNote.ResponseValues>() {
                             @Override
                             public void onSuccess(ChangeNote.ResponseValues response) {
                                 dialog.dismiss();
                                 mView.setNote(newNote);
-                                mView.showMessage(R.string.owner_profile_info_note_change_success);
+                                mView.showMessage(R.string.profile_info_note_change_success);
                             }
 
                             @Override
                             public void onError(Error error) {
+                                dialog.dismiss();
                                 mView.showMessage(error.getMessage());
                             }
                         });

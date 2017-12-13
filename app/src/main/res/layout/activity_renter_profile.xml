@@ -28,7 +28,7 @@
                     style="@style/ToolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/owner_profile_info_title" />
+                    android:text="@string/renter_profile_title" />
             </android.support.v7.widget.Toolbar>
 
             <android.support.constraint.ConstraintLayout
@@ -209,7 +209,7 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="242dp"
@@ -278,7 +278,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reviews_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginStart="24dp"
@@ -286,7 +286,7 @@
                         android:fillViewport="true" />
                 </android.support.v7.widget.CardView>
             </android.support.constraint.ConstraintLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.constraint.ConstraintLayout>
 
     <ProgressBar

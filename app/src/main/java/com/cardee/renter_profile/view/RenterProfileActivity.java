@@ -81,6 +81,9 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
     @BindView(R.id.note_text)
     TextView mNote;
 
+    @BindView(R.id.note_edit)
+    TextView mNoteEdit;
+
     @BindView(R.id.reviews_count)
     TextView mReviewsCount;
 
@@ -95,8 +98,8 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
 
         initToolBar();
         mPresenter = new RenterProfilePresenter(this);
-        initReviewList();
         mAdapter = new RenterReviewListAdapter(this);
+        initReviewList();
 
         mPresenter.getRenterProfile();
     }
@@ -126,6 +129,11 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
         } else {
             ActivityHelper.pickImageIntent(RenterProfileActivity.this, ActivityHelper.PICK_IMAGE);
         }
+    }
+
+    @OnClick(R.id.note_edit)
+    public void onNoteEditClicked() {
+        mPresenter.changeNote(this);
     }
 
     @Override
