@@ -128,29 +128,28 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                         }
 
                         mView.setReviewsCount(builder.toString());
-                    }
 
-                    List<Car> cars = response.getCars();
-                    if (cars != null && !cars.isEmpty()) {
-                        mView.setCars(cars);
-                    }
-
-                    OwnerReview[] reviews = profile.getReviews();
-                    if (reviews != null && reviews.length > 0) {
-                        OwnerReviewToCarReviewMapper mapper = new OwnerReviewToCarReviewMapper();
-                        List<CarReview> carReviewList = mapper.transform(reviews);
-                        Iterator<CarReview> iterator = carReviewList.iterator();
-                        while (iterator.hasNext()) {
-                            CarReview review = iterator.next();
-                            String text = review.getReviewText();
-                            if (text == null || text.isEmpty()) {
-                                iterator.remove();
-                            }
-                            review.setReviewText(review.getReviewText().trim());
+                        List<Car> cars = response.getCars();
+                        if (cars != null && !cars.isEmpty()) {
+                            mView.setCars(cars);
                         }
-                        mView.setCarReviews(carReviewList);
-                    }
 
+                        OwnerReview[] reviews = profile.getReviews();
+                        if (reviews != null && reviews.length > 0) {
+                            OwnerReviewToCarReviewMapper mapper = new OwnerReviewToCarReviewMapper();
+                            List<CarReview> carReviewList = mapper.transform(reviews);
+                            Iterator<CarReview> iterator = carReviewList.iterator();
+                            while (iterator.hasNext()) {
+                                CarReview review = iterator.next();
+                                String text = review.getReviewText();
+                                if (text == null || text.isEmpty()) {
+                                    iterator.remove();
+                                }
+                                review.setReviewText(review.getReviewText().trim());
+                            }
+                            mView.setCarReviews(carReviewList);
+                        }
+                    }
                     mView.showProgress(false);
                 }
             }
