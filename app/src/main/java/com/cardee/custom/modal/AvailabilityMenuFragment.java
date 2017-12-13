@@ -1,4 +1,4 @@
-package com.cardee.owner_home.view.modal;
+package com.cardee.custom.modal;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.Toast;
@@ -55,7 +54,6 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
         setClickListeners(rootView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) rootView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
-
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mCallback);
         }

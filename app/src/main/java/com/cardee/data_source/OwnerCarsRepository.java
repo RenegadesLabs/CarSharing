@@ -99,7 +99,7 @@ public class OwnerCarsRepository implements OwnerCarsDataSource {
         mDirtyCache = false;
     }
 
-    CarEntity getCachedCar(int id){
+    CarEntity getCachedCar(int id) {
         return mCachedCars.get(id);
     }
 }

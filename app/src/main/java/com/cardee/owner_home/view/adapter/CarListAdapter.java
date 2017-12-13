@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
 import com.cardee.owner_home.OwnerCarListContract;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
 
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
+    private final AvailabilityStringDelegate stringDelegate;
 
     private SparseArray<CarListItemViewHolder> mHolders;
 
@@ -44,12 +46,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
         mEventObservable = PublishSubject.create();
+        stringDelegate = new AvailabilityStringDelegate(context);
     }
 
     @Override
     public CarListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.item_list_owner_car, parent, false);
-        return new CarListItemViewHolder(itemView);
+        return new CarListItemViewHolder(itemView, stringDelegate);
     }
 
     @Override
@@ -77,9 +80,12 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         private final TextView mLocationView;
         private final ProgressBar mLoadingIndicator;
 
-        public CarListItemViewHolder(View itemView) {
-            super(itemView);
+        private String notAvailable;
+        private AvailabilityStringDelegate delegate;
 
+        public CarListItemViewHolder(View itemView, AvailabilityStringDelegate delegate) {
+            super(itemView);
+            this.delegate = delegate;
             mTitleView = itemView.findViewById(R.id.car_title);
             mPrimaryImage = itemView.findViewById(R.id.car_primary_image);
             mYearView = itemView.findViewById(R.id.car_year);
@@ -90,6 +96,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mDailyView = itemView.findViewById(R.id.car_daily_selector);
             mLocationView = itemView.findViewById(R.id.car_location_selector);
             mLoadingIndicator = itemView.findViewById(R.id.car_primary_image_loading_indicator);
+            notAvailable = itemView.getContext().getString(R.string.not_available);
         }
 
         private void bind(final Car model, RequestManager imageRequestManager, final PublishSubject<OwnerCarListContract.CarEvent> observable) {
@@ -159,15 +166,32 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                     observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED));
                 }
             });
+            mHourlyView.setEnabled(model.isAvailableHourly());
+            if (!model.isAvailableHourly() ||
+                    (model.getCarAvailabilityHourlyDates() == null ||
+                            model.getCarAvailabilityHourlyDates().length == 0)) {
+                mHourlyView.setText(notAvailable);
+            } else {
+                delegate.onSetHourlyShortTitle(mHourlyView,
+                        model.getCarAvailabilityHourlyDates().length,
+                        model.getCarAvailabilityTimeBegin(),
+                        model.getCarAvailabilityTimeEnd());
+            }
+            mDailyView.setEnabled(model.isAvailableDaily());
+            if (!model.isAvailableDaily() ||
+                    (model.getCarAvailabilityDailyDates() == null ||
+                            model.getCarAvailabilityDailyDates().length == 0)) {
+                mDailyView.setText(notAvailable);
+            } else {
+                delegate.onSetValue(mDailyView, model.getCarAvailabilityDailyDates().length);
+            }
+            mLocationView.setText(model.getAddress());
         }
     }
 
     public void insert(List<Car> cars) {
-        for (Car car : cars) {
-            if (!mCarViewItems.contains(car)) {
-                mCarViewItems.add(car);
-            }
-        }
+        mCarViewItems.clear();
+        mCarViewItems.addAll(cars);
         notifyDataSetChanged();
     }
 

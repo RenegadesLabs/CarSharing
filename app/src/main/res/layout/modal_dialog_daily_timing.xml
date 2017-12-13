@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/timing_title"
+        style="@style/ModalMenuTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_title_height"
+        android:background="@android:color/transparent"
+        android:text="@string/daily_timing_dialog_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/timing_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_top_without_div"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/widget_padding_mid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timing_title">
+
+        <View
+            android:id="@+id/timing_selector"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_regular"
+            app:layout_constraintBottom_toBottomOf="@+id/time_pickup_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_pickup_picker" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_large"
+            android:background="@color/divider"
+            app:layout_constraintBottom_toTopOf="@+id/btn_timing_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time_pickup_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingEnd="@dimen/widget_padding_mid"
+            android:paddingStart="@dimen/widget_padding_mid"
+            android:text="@string/time_pickup_title"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <NumberPicker
+            android:id="@+id/time_pickup_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintEnd_toStartOf="@id/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_pickup_title" />
+
+        <TextView
+            android:id="@+id/time_return_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingEnd="@dimen/widget_padding_mid"
+            android:paddingStart="@dimen/widget_padding_mid"
+            android:text="@string/time_return_title"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <NumberPicker
+            android:id="@+id/time_return_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/time_return_title" />
+
+        <TextView
+            android:id="@id/btn_timing_save"
+            style="@style/RegularButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_regular_height"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginEnd="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:clickable="true"
+            android:text="@string/title_save"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close"
+            app:titleTextColor="@color/bg_main">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/toolbar_action"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/toolbar_action_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="@string/car_rental_fuel_policy_petrol"
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/similar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@android:color/white"
+            android:padding="@dimen/large_margin"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <CheckedTextView
+                android:id="@+id/tv_fuelSimilarLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_large"
+                android:textColor="@color/text_subtitle"
+                android:text="@string/car_rental_fuel_policy_similar_lvl"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_fuelSimilar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end" />
+
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/ll_fuelMileageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/similar_container">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"/>
+
+            <FrameLayout
+                android:id="@+id/fl_fuelMileageTextContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="@dimen/large_margin"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+
+                <CheckedTextView
+                    android:id="@+id/tv_fuelMileage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_subtitle"
+                    android:textSize="@dimen/text_large"
+                    android:text="@string/car_rental_fuel_policy_by_mileage"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_fuelMileage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_fuelCostTextContainer"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="@dimen/large_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_large"
+                    android:text="@string/car_rental_fuel_policy_cost"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tv_fuelPerKm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingStart="@dimen/small_margin"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:text="@string/set"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_large"
+                    android:textColor="@color/colorPrimary" />
+                
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_fuelPerKm"
+                    style="@style/CardeeEditTextWithoutUnderlineStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_large"
+                    android:inputType="numberDecimal"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical|end"
+                    android:textColor="@color/colorPrimary"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_regular"
+                android:padding="@dimen/small_margin"
+                android:text="@string/car_rental_fuel_policy_cost_info"/>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -15,10 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
-import com.cardee.owner_home.view.modal.DetailsMoreMenuFragment;
+import com.cardee.custom.modal.DetailsMoreMenuFragment;
 
 public class OwnerCarDetailsActivity extends AppCompatActivity
         implements TabLayout.OnTabSelectedListener, View.OnClickListener {

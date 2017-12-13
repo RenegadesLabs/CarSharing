@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,8 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            app:theme="@style/CardeeToolbar"
             app:navigationIcon="@drawable/ic_close"
+            app:theme="@style/CardeeToolbar"
             app:titleTextColor="@color/colorAccent">
 
             <TextView
@@ -66,7 +65,7 @@
             android:layout_marginEnd="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_small"
             android:clickable="true"
-            android:text="Save"
+            android:text="@string/title_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/availability_calendar" />
 
@@ -74,8 +73,8 @@
             android:id="@+id/progress_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             android:clickable="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/availability_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

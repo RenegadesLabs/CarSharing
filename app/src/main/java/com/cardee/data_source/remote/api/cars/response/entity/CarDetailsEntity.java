@@ -15,9 +15,6 @@ public class CarDetailsEntity extends BaseCarEntity {
     @SerializedName("latitude")
     private Double latitude;
     @Expose
-    @SerializedName("address")
-    private String address;
-    @Expose
     @SerializedName("town")
     private String town;
     @Expose
@@ -72,14 +69,6 @@ public class CarDetailsEntity extends BaseCarEntity {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getTown() {

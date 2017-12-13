@@ -24,7 +24,7 @@ public class OrderHourlyDetailsEntity {
     private Float amntRateSecond;
     @Expose
     @SerializedName("min_rental_duration")
-    private Float minRentalDuration;
+    private Integer minRentalDuration;
     @Expose
     @SerializedName("fuel_policy")
     private FuelPolicyEntity fuelPolicy;
@@ -76,11 +76,11 @@ public class OrderHourlyDetailsEntity {
         this.amntRateSecond = amntRateSecond;
     }
 
-    public Float getMinRentalDuration() {
+    public Integer getMinRentalDuration() {
         return minRentalDuration;
     }
 
-    public void setMinRentalDuration(Float minRentalDuration) {
+    public void setMinRentalDuration(Integer minRentalDuration) {
         this.minRentalDuration = minRentalDuration;
     }
 

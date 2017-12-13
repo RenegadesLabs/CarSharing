@@ -1,4 +1,4 @@
-package com.cardee.owner_home.view.modal;
+package com.cardee.custom.modal;
 
 import android.app.Dialog;
 import android.content.res.Resources;
@@ -14,42 +14,27 @@ import android.widget.NumberPicker;
 
 import com.cardee.R;
 
-public class PickerMenuFragment extends BottomSheetDialogFragment {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-    private final static String[] YEARS = {"2007", "2008", "2009", "2010", "2011", "2012",
-            "2013", "2014", "2015", "2016", "2017"};
-
-    private final static String[] SEATS = {"2", "3", "4", "5", "6", "7", "8"};
-
-    private final static String[] ENGINES = {
-            "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
-            "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3",
-            "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0",
-            "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7",
-            "3.8", "3.9", "4.0", "4.1", "4.2", "4.3", "4.4",
-            "4.5", "4.6", "4.7", "4.8", "4.9", "5.0", "5.1",
-            "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8",
-            "5.9", "6.0", "6.1", "6.2", "6.3", "6.4", "6.5",
-            "6.6", "6.7", "6.8", "6.9", "7.0", "7.1", "7.2",
-            "7.3", "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.0"};
-
-    public final static String[] TRANSMISSION = {"Automatic", "Manual"};
-
-    public final static String[] BODY_TYPES = {
-            "Sedan", "Liftback", "SUV", "Hatchback",
-            "Wagon", "Coupe", "Convertible",
-            "Minivan", "Pickup", "Van", "Limousin"};
+public class DoublePickerMenuFragment extends BottomSheetDialogFragment {
 
     private static String[] mValues;
 
-    private static String mSelectedValue;
+    private static String mSelectedValue1;
 
-    public enum Mode {
-        YEAR_OF_MANUFACTURE, SEATING_CAPACITY, ENGINE_CAPACITY, TRANSMISSION, BODY_TYPE
-    }
+    private static String mSelectedValue2;
 
     public interface DialogOnClickListener {
-        void onDoneClicked(String value);
+        void onDoneClicked(String value1, String value2);
+
+        void onFail();
+    }
+
+    public enum Mode {
+        YEARS_RANGE
     }
 
     private DialogOnClickListener mListener;
@@ -58,26 +43,17 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         mListener = listener;
     }
 
-    public static PickerMenuFragment getInstance(String selected, Mode mode) {
-        PickerMenuFragment fragment = new PickerMenuFragment();
-        mSelectedValue = selected;
+    public static DoublePickerMenuFragment getInstance(String selected1, String selected2, Mode mode) {
+        DoublePickerMenuFragment fragment = new DoublePickerMenuFragment();
+        mSelectedValue1 = selected1;
+        mSelectedValue2 = selected2;
+
         switch (mode) {
-            case YEAR_OF_MANUFACTURE:
-                mValues = YEARS;
-                break;
-            case SEATING_CAPACITY:
-                mValues = SEATS;
-                break;
-            case ENGINE_CAPACITY:
-                mValues = ENGINES;
-                break;
-            case TRANSMISSION:
-                mValues = TRANSMISSION;
-                break;
-            case BODY_TYPE:
-                mValues = BODY_TYPES;
+            case YEARS_RANGE:
+                mValues = initYearsValues();
                 break;
         }
+
         return fragment;
     }
 
@@ -99,19 +75,36 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View rootView = View.inflate(getContext(), R.layout.modal_dialog_numberpicker, null);
+        View rootView = View.inflate(getContext(), R.layout.modal_dialog_double_numberpicker, null);
         dialog.setContentView(rootView);
 
-        final NumberPicker np = rootView.findViewById(R.id.np_dialogNumberPicker);
-        setDividerColor(np, getActivity().getResources().getColor(R.color.colorPrimary));
-        np.setDisplayedValues(mValues);
-        np.setMaxValue(mValues.length - 1);
-        np.setMinValue(0);
+        final NumberPicker np1 = rootView.findViewById(R.id.np_dialogNumberPicker1);
+        setDividerColor(np1, getActivity().getResources().getColor(R.color.colorPrimary));
+        np1.setDisplayedValues(mValues);
+        np1.setMaxValue(mValues.length - 1);
+        np1.setMinValue(0);
+        np1.setValue(0);
 
-        if (mSelectedValue != null && !mSelectedValue.equals("")) {
+        if (mSelectedValue1 != null && !mSelectedValue1.equals("")) {
             for (int i = 0; i < mValues.length; i++) {
-                if (mValues[i].equals(mSelectedValue)) {
-                    np.setValue(i);
+                if (mValues[i].equals(mSelectedValue1)) {
+                    np1.setValue(i);
+                    break;
+                }
+            }
+        }
+
+        final NumberPicker np2 = rootView.findViewById(R.id.np_dialogNumberPicker2);
+        setDividerColor(np2, getActivity().getResources().getColor(R.color.colorPrimary));
+        np2.setDisplayedValues(mValues);
+        np2.setMaxValue(mValues.length - 1);
+        np2.setMinValue(0);
+        np2.setValue(mValues.length - 1);
+
+        if (mSelectedValue2 != null && !mSelectedValue2.equals("")) {
+            for (int i = 0; i < mValues.length; i++) {
+                if (mValues[i].equals(mSelectedValue2)) {
+                    np2.setValue(i);
                     break;
                 }
             }
@@ -130,8 +123,15 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
                 if (mListener == null) {
                     return;
                 }
+
+                if (Integer.parseInt(mValues[np1.getValue()])
+                        >= Integer.parseInt(mValues[np2.getValue()])) {
+                    mListener.onFail();
+                    return;
+                }
+
                 dismiss();
-                mListener.onDoneClicked(mValues[np.getValue()]);
+                mListener.onDoneClicked(mValues[np1.getValue()], mValues[np2.getValue()]);
             }
         });
 
@@ -162,5 +162,17 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
                 break;
             }
         }
+    }
+
+    private static String[] initYearsValues() {
+        int[] years = new int[99];
+        List<String> values = new ArrayList<>();
+        for (int i = 18; i < years.length; ++i) {
+            years[i] = i;
+            if (years[i] != 0) {
+                values.add(String.valueOf(years[i]));
+            }
+        }
+        return values.toArray(new String[values.size()]);
     }
 }

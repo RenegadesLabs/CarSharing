@@ -52,6 +52,10 @@
     <string name="change_pass_edit_error_matching">Passwords do not match!</string>
     <string name="change_pass_success">Password changed successfully!</string>
 
+    <string name="error_occurred">An error has occurred!</string>
+    <string name="saved_successfully">Saved successfully!</string>
+    <string name="nothing_to_save">Nothing to save</string>
+
     <!--Loading-->
     <string name="loading">Loading…</string>
 
@@ -100,6 +104,8 @@
     <string name="toolbar_action_save">Save</string>
 
     <string name="title_edit">edit</string>
+    <string name="set">set</string>
+    <string name="rates">rates</string>
     <string name="car_details_location_title">Location</string>
     <string name="car_details_description_title">Description</string>
 
@@ -160,7 +166,7 @@
     <string name="car_add_info_body_sports">Sports / Coupe</string>
     <string name="car_add_info_body_convertible">+ Convertible</string>
 
-    <string name="error_empty_field">Field must be filled!</string>
+    <string name="error_empty_field">Field(s) must be filled!</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
 
@@ -186,6 +192,94 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
+
+    <!--Car Rental Info-->
+    <string name="car_rental_info_hourly">Hourly</string>
+    <string name="car_rental_info_hourly_b">(Hourly)</string>
+    <string name="car_rental_info_daily">Daily</string>
+    <string name="car_rental_info_daily_b">(Daily)</string>
+    <string name="car_rental_info_availability">Availability</string>
+    <string name="car_rental_info_settings">Settings</string>
+    <string name="car_rental_info_cash">Accept Cash</string>
+    <string name="car_rental_info_rates">Rental Rates</string>
+    <string name="car_rental_info_fuel">Fuel Policy</string>
+    <string name="car_rental_info_terms">Rental Terms</string>
+    <string name="car_rental_info_instant">Instant Booking</string>
+    <string name="car_rental_info_delivery">Curbside Delivery</string>
+
+    <!--Car Rental Terms-->
+    <string name="car_rental_terms_requirements">Basic Requirements</string>
+    <string name="car_rental_terms_rules">Car Rules</string>
+    <string name="car_rental_terms_deposit">Security Deposit</string>
+    <string name="car_rental_terms_insurance">Insurance Excess</string>
+    <string name="car_rental_terms_additional">Additional Terms</string>
+
+    <!--Car Rental Terms Requirements-->
+    <string name="car_rental_terms_requirements_profile">Renter profile</string>
+    <string name="car_rental_terms_requirements_age">Age</string>
+    <string name="car_rental_terms_requirements_age_range">Select age range</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="years">years</string>
+    <string name="car_rental_terms_requirements_age_range_fail">Please select correct range!</string>
+    <string name="car_rental_terms_requirements_experience">Driving experience</string>
+
+    <!--Car Rental Terms Rules-->
+    <string name="car_rental_terms_rules_general">General rules</string>
+    <string name="car_rental_terms_rules_other">Other rules</string>
+    <string name="car_rental_terms_rules_smoking">Smoking In Car</string>
+    <string name="car_rental_terms_rules_malaysia">Driving To Malaysia</string>
+    <string name="car_rental_terms_rules_dogs">Dogs On Car</string>
+    <string name="car_rental_terms_rules_own">Add your own rules here…\n\nExample\n1.Pump petrol 95 or above only. Keep receipts.
+    \n\n2.For rental more than 3 days, wash and vacuum before return</string>
+    <string name="allow">Allow</string>
+    <string name="no">No</string>
+
+    <!--Car Rental Terms Security Deposit-->
+    <string name="car_rental_terms_security_deposit">Security Deposit</string>
+    <string name="car_rental_terms_security_deposit_require">Require Security Deposit</string>
+    <string name="car_rental_terms_security_deposit_enter">Enter deposit amount (SGD)</string>
+    <string name="car_rental_terms_security_deposit_info">Security deposit will be held by Cardee for up to 7 days
+    upon car collection. To make a claim from the deposit, contact Cardee.</string>
+
+    <!--Car Rental Terms Insurance Excess-->
+    <string name="car_rental_terms_insurance_excess_example">Example\nExcess payable per section - $1,000\nIf accident occurs in Malaysia - $2,000
+        \nIf driver is below the age of 25 - $1,500</string>
+    <string name="car_rental_terms_insurance_excess_info">Excess is the maximum payable amount by Renter in case of accident. Refer to your instance
+    policy for information on your insurance excess.</string>
+
+    <!--Car Rental Terms Additional-->
+    <string name="car_rental_terms_additional_example">Add any additional terms you would like to add here…</string>
+
+    <!--Car Rental Rates -->
+    <string name="car_rental_rates_daily">Daily rates</string>
+    <string name="car_rental_rates_per_day">per day</string>
+    <string name="car_rental_rates_per_hour">per hour</string>
+    <string name="car_rental_rates_weekdays">Weekdays</string>
+    <string name="car_rental_rates_weekends">Weekends and public holidays</string>
+    <string name="car_rental_rates_discount">Discount</string>
+    <string name="car_rental_rates_discount_3_days">3 days discount</string>
+    <string name="car_rental_rates_discount_weekly">Weekly discount</string>
+    <string name="car_rental_rates_minimum">Minimum</string>
+    <string name="car_rental_rates_minimum_duration">Minimum rental duration</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="car_rental_rates_hourly">Hourly rates</string>
+    <string name="car_rental_rates_peak_h">Peak hour</string>
+    <string name="car_rental_rates_peak_non_h">Non-peak hour</string>
+    <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
+    <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
+    <string name="car_rental_rates_peak_desc">Friday 6:00pm to Sunday 11:59pm,\n6:00pm onwards on holiday eve,
+    \nand whole day on public holiday</string>
+
+    <!--Car Rental Fuel Policy-->
+    <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
+    <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_cost">Cost per km</string>
+    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 12 to 14 km per litre</string>
 
     <!--Owner Profile Info-->
     <string name="owner_profile_info_title">Owner Profile</string>
@@ -317,6 +411,48 @@
         <item>available day \u2022 Save</item>
         <item>available days \u2022 Save</item>
     </string-array>
+    <string-array name="days_availability_suffixes">
+        <item>Currently not available</item>
+        <item>available day</item>
+        <item>available days</item>
+    </string-array>
     <string name="availability_calendar_daily">Calendar (Daily)</string>
     <string name="availability_calendar_hourly">Calendar (Hourly)</string>
+    <string name="availability_pickup_prefix">Pickup car from</string>
+    <string name="availability_pickup_suffix">onwards</string>
+    <string name="availability_return_prefix">Return car by</string>
+    <string name="availability_return_suffix">(next day)</string>
+    <string name="daily_timing_dialog_title">Pickup and return timing</string>
+    <string name="hourly_timing_dialog_title">Availability timing</string>
+    <string name="title_save">Save</string>
+    <string name="time_pickup_title">From what time can renters pick up the car on collection date?</string>
+    <string name="time_return_title">By what time do renters need to return the car on return date?</string>
+    <string name="time_pickers_title">Between what time will the car be available for booking on the available dates</string>
+    <string name="not_available">Currently not available</string>
+    <string-array name="availability_time_titles">
+        <item>1am</item>
+        <item>2am</item>
+        <item>3am</item>
+        <item>4am</item>
+        <item>5am</item>
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
+        <item>12am</item>
+        <item>1pm</item>
+        <item>2pm</item>
+        <item>3pm</item>
+        <item>4pm</item>
+        <item>5pm</item>
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+        <item>12pm</item>
+    </string-array>
 </resources>

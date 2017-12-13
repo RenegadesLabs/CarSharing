@@ -40,7 +40,7 @@ public class CarEntityToCarMapper {
                 carEntity.getCarAvailabilityTimeBegin(), carEntity.getCarAvailabilityTimeEnd(),
                 carEntity.getCarAvailableOrderHours(), carEntity.getCarAvailableOrderDays(),
                 carEntity.getCarAvailabilityHourlyDates(), carEntity.getCarAvailabilityDailyDates(),
-                carDetails.getDescription(), images, null, null, null, null, carDetails.getCarRating());
+                carDetails.getDescription(), images, null, null, carDetails.getAddress(), null, carDetails.getCarRating());
     }
 
     public List<Car> transform(CarEntity[] carEntities) {
