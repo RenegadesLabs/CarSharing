@@ -103,7 +103,6 @@
         <activity
             android:name=".owner_car_details.view.AvailabilityCalendarActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".owner_car_add.view.CarAddActivity"
             android:screenOrientation="portrait"
@@ -114,6 +113,11 @@
         <activity android:name=".owner_profile_info.view.OwnerProfileInfoActivity" />
         <activity android:name=".owner_account_details.view.AccountDetailsActivity" />
         <activity android:name=".owner_change_pass.view.ChangePassActivity" />
+        <activity android:name=".owner_settings.view.OwnerSettingsActivity" />
+        <activity
+            android:name=".owner_notifications.view.OwnerNotifActivity"
+            android:theme="@style/AppCompatAlertDialogTheme" />
+        <activity android:name=".owner_cardee.view.OwnerCardeeActivity"></activity>
     </application>
 
 </manifest>

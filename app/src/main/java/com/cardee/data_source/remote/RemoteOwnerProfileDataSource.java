@@ -7,13 +7,13 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerProfileDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
 import com.cardee.data_source.remote.api.profile.request.ChangeEmailRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
-import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 
 import io.reactivex.functions.Consumer;

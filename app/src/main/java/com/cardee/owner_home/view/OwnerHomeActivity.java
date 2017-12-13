@@ -182,6 +182,7 @@ public class OwnerHomeActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_NEW_CAR_REQUEST_CODE && resultCode == NewCarFormsContract.CAR_CREATED) {
             final AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.car_added_title)

@@ -1,6 +1,5 @@
 package com.cardee.owner_account_details.view;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,13 +8,13 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.auth.preview.PreviewActivity;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_account_details.presenter.AccountDetailsPresenter;
 import com.cardee.owner_change_pass.view.ChangePassActivity;
 
@@ -25,7 +24,6 @@ import butterknife.OnClick;
 
 public class AccountDetailsActivity extends AppCompatActivity implements AccountDetailsView {
 
-    private ProgressDialog mProgress;
     private AccountDetailsPresenter mPresenter;
     private Toast mCurrentToast;
 
@@ -65,6 +63,9 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @BindView(R.id.add_card_card)
     CardView mAddCard;
 
+    @BindView(R.id.account_progress)
+    ProgressBar mProgressBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +73,6 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         setContentView(R.layout.activity_owner_account_details);
         ButterKnife.bind(this);
 
-        mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
         initToolBar();
         initPresenter();
 
@@ -180,11 +180,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     public void showProgress(boolean show) {
         if (show) {
             mContainer.setVisibility(View.GONE);
-            mProgress.show();
+            mProgressBar.setVisibility(View.VISIBLE);
             return;
         }
         mContainer.setVisibility(View.VISIBLE);
-        mProgress.dismiss();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
