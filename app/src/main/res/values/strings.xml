@@ -293,6 +293,9 @@
     <!--Renter Profile-->
     <string name="renter_profile_age">Age</string>
     <string name="driving_exp">Driving Exp.</string>
+    <string name="year">year</string>
+    <string name="yrs">yrs</string>
+    <string name="renter_profile_default_note">Add some info about yourself :)</string>
 
 
     <!--Calendar-->

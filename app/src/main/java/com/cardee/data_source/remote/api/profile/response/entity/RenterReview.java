@@ -12,7 +12,7 @@ public class RenterReview {
     private String reviewDate;
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private Float rating;
     @SerializedName("author")
     @Expose
     private Author author;
@@ -33,11 +33,11 @@ public class RenterReview {
         this.reviewDate = reviewDate;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

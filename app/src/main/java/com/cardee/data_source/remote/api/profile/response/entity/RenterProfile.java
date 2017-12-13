@@ -52,7 +52,7 @@ public class RenterProfile {
     private Integer cntBookings;
     @SerializedName("rating")
     @Expose
-    private Double rating;
+    private Float rating;
     @SerializedName("review_cnt")
     @Expose
     private Integer reviewCnt;
@@ -175,11 +175,11 @@ public class RenterProfile {
         this.cntBookings = cntBookings;
     }
 
-    public Double getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
