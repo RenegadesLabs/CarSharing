@@ -3,6 +3,7 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
@@ -24,6 +25,10 @@ public interface CarEditDataSource {
     void updateRentalInsuranceExcess(Integer id, RentalTermsInsuranceEntity insuranceExcess, Callback callback);
 
     void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additionalEntity, Callback callback);
+
+    void updateRentalRatesDaily(Integer id, RentalRatesEntity ratesEntity, Callback callback);
+
+    void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback);
 
 
     interface Callback {

@@ -14,7 +14,7 @@ import com.cardee.R;
 import com.cardee.custom.modal.DoublePickerMenuFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsRequirementsPresenter;
 
 import butterknife.BindView;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RentalTermsRequirementsActivity extends AppCompatActivity implements View.OnClickListener,
-        RentalTermsContract.View {
+        RentalContract.View {
 
     @BindView(R.id.tv_requirementsAge)
     public TextView ageRangeTV;

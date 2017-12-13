@@ -4,6 +4,7 @@ package com.cardee.data_source.cache;
 import com.cardee.data_source.CarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
@@ -56,6 +57,16 @@ public class LocalCarEditDataSource implements CarEditDataSource {
 
     @Override
     public void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additionalEntity, Callback callback) {
+
+    }
+
+    @Override
+    public void updateRentalRatesDaily(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
+
+    }
+
+    @Override
+    public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
 
     }
 }

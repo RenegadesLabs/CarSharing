@@ -13,14 +13,14 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsInsurancePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RentalTermsInsuranceActivity extends AppCompatActivity implements View.OnClickListener,
-        RentalTermsContract.View {
+        RentalContract.View {
 
     @BindView(R.id.et_insuranceText)
     public AppCompatEditText insuranceTextET;

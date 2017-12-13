@@ -204,7 +204,7 @@
                 android:background="@drawable/bg_item_transparent">
 
                 <TextView
-                    android:id="@+id/experience"
+                    android:id="@+id/tv_ratesTitleValue4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_margin"

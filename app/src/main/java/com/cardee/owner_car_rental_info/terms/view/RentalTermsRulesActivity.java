@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_car_rental_info.terms.RentalTermsContract;
+import com.cardee.owner_car_rental_info.RentalContract;
 import com.cardee.owner_car_rental_info.terms.presenter.RentalTermsRulesPresenter;
 
 import butterknife.BindView;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RentalTermsRulesActivity extends AppCompatActivity implements View.OnClickListener,
-        RentalTermsContract.View {
+        RentalContract.View {
 
     @BindView(R.id.tv_allowSmoking)
     public CheckedTextView allowSmokingTV;

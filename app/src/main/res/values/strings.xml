@@ -166,7 +166,7 @@
     <string name="car_add_info_body_sports">Sports / Coupe</string>
     <string name="car_add_info_body_convertible">+ Convertible</string>
 
-    <string name="error_empty_field">Field must be filled!</string>
+    <string name="error_empty_field">Field(s) must be filled!</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
 
@@ -271,6 +271,8 @@
     <string name="car_rental_rates_peak_non_h">Non-peak hour</string>
     <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
     <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
+    <string name="car_rental_rates_peak_desc">Friday 6:00pm to Sunday 11:59pm,\n6:00pm onwards on holiday eve,
+    \nand whole day on public holiday</string>
 
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
