@@ -88,7 +88,8 @@ public class OwnerCarDetailsPresenter
                 mView.moveToLocation(args);
                 break;
             case EDIT_DESCRIPTION:
-                mView.moveToDescription(null);
+                args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.DESCRIPTION);
+                mView.moveToDescription(args);
                 break;
         }
     }
