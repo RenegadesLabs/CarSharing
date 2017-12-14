@@ -14,7 +14,7 @@ import java.util.TimeZone;
 
 public class AvailabilityStringDelegate {
 
-    private static final String TIME_PATTERN = "HH:mm:ssXXX";
+    private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
     private static final String TIME_VIEW_PATTERN = "ha";
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;

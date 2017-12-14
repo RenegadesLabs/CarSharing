@@ -32,9 +32,16 @@ import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.service.FetchAddressService;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
+import com.cardee.service.delegate.HideAnimationDelegate;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,6 +53,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Locale;
+
 public class CarLocationFragment extends Fragment
         implements OnMapReadyCallback,
         NewCarFormsContract.View,
@@ -54,10 +63,14 @@ public class CarLocationFragment extends Fragment
         View.OnClickListener {
 
     private static final String TAG = CarLocationFragment.class.getSimpleName();
+
+    private static final int SEARCH_ADDRESS_REQUEST_CODE = 101;
+    private static final int RESULT_OK = -1;
     private static final String CAR_ID = "_car_id";
 
     private TextView carLocationAddress;
     private MapView mapView;
+    private HideAnimationDelegate hideDelegate;
     private GoogleApiClient apiClient;
     private GoogleMap map;
     private Marker currentLocationMarker;
@@ -122,6 +135,8 @@ public class CarLocationFragment extends Fragment
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
                 .build();
         Bundle args = getArguments();
         Integer carId = args.containsKey(CAR_ID) ? args.getInt(CAR_ID) : null;
@@ -135,6 +150,8 @@ public class CarLocationFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_car_location, container, false);
         parentListener.showProgress(true);
         carLocationAddress = rootView.findViewById(R.id.car_location_address);
+        carLocationAddress.setOnClickListener(this);
+        hideDelegate = new HideAnimationDelegate(rootView.findViewById(R.id.address_view));
         FloatingActionButton btnMyLocation = rootView.findViewById(R.id.btn_my_location);
         btnMyLocation.setOnClickListener(this);
         mapView = rootView.findViewById(R.id.map);
@@ -263,6 +280,38 @@ public class CarLocationFragment extends Fragment
             case R.id.btn_my_location:
                 showCurrentLocationIfPermitted();
                 break;
+            case R.id.car_location_address:
+                if (hideDelegate.isAnimating()) {
+                    return;
+                }
+                try {
+                    Intent intent = new PlaceAutocomplete
+                            .IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(getActivity());
+                    startActivityForResult(intent, SEARCH_ADDRESS_REQUEST_CODE);
+                    if (!hideDelegate.isHidden()) {
+                        hideDelegate.hide();
+                    }
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SEARCH_ADDRESS_REQUEST_CODE) {
+            if (hideDelegate.isHidden()) {
+                hideDelegate.show();
+            }
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(getActivity(), data);
+                renderLocation(place.getLatLng());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getActivity(), data);
+                Log.e(TAG, status.getStatusMessage());
+            }
         }
     }
 
@@ -284,6 +333,10 @@ public class CarLocationFragment extends Fragment
     @Override
     public void setCarData(CarData carData) {
         LatLng location = new LatLng(carData.getLatitude(), carData.getLongitude());
+        renderLocation(location);
+    }
+
+    private void renderLocation(LatLng location) {
         moveMapToLocation(location);
         fetchLocationAddress(location);
     }

@@ -1,5 +1,6 @@
 package com.cardee.owner_car_details.view;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -140,6 +141,11 @@ public class CarDetailsEditActivity extends AppCompatActivity
             args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
             childBinder.push(args);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
