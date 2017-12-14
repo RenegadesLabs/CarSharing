@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
 import butterknife.ButterKnife;

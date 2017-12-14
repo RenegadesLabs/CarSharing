@@ -9,7 +9,7 @@ import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.usecase.GetCarData;
 import com.cardee.domain.owner.usecase.UpdateCarLocation;
 import com.cardee.owner_car_add.factory.CarDataFactory;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 
 public class CarLocationPresenter extends NewCarPresenter {
 

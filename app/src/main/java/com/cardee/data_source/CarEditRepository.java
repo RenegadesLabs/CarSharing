@@ -191,4 +191,23 @@ public class CarEditRepository implements CarEditDataSource {
             }
         });
     }
+
+    @Override
+    public void updateDescription(Integer id, String description, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateDescription(id, description, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
 }

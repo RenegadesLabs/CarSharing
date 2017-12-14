@@ -23,7 +23,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.owner_car_add.view.CarAddActivity;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;

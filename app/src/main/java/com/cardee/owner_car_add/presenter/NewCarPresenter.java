@@ -8,7 +8,7 @@ import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.domain.owner.usecase.GetSavedCar;
 import com.cardee.domain.owner.usecase.SaveCar;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 
 
 public class NewCarPresenter implements NewCarFormsContract.Presenter {

@@ -30,6 +30,8 @@ public interface CarEditDataSource {
 
     void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback);
 
+    void updateDescription(Integer id, String description, Callback callback);
+
 
     interface Callback {
         void onSuccess();

@@ -18,7 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
+import com.cardee.owner_car_add.view.items.CarDescriptionFragment;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
 import com.cardee.owner_car_details.CarDetailsEditContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
@@ -74,6 +75,9 @@ public class CarDetailsEditActivity extends AppCompatActivity
         switch (mode) {
             case LOCATION:
                 showFragment(CarLocationFragment.newInstance(carId)); //add valid car ID
+                break;
+            case DESCRIPTION:
+                showFragment(CarDescriptionFragment.newInstance(carId));
                 break;
             default:
                 Toast.makeText(this, "Mode is not supported yet", Toast.LENGTH_SHORT).show(); //PLUG

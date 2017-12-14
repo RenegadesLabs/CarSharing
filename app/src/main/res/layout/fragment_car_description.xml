@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/car_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/car_description_hint"
+        app:layout_constraintBottom_toTopOf="@+id/car_description_caution"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/car_description_caution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/widget_padding_large"
+        android:text="@string/car_description_caution"
+        android:textColor="@color/red_error"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:layout_gravity="center"
+            android:theme="@style/LoadingIndicator" />
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
