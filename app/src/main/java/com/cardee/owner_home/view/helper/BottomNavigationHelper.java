@@ -41,7 +41,7 @@ public class BottomNavigationHelper {
             Log.e(TAG, "Bottom navigation instance is null");
             return null;
         }
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.menu_item_browse_title, R.drawable.ic_question_mark, 0);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.menu_item_browse_title, R.drawable.ic_browse, 0);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.menu_item_bookings_title, R.drawable.ic_temp_bookings, 0);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.menu_item_inbox_title, R.drawable.ic_temp_inbox, 0);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.menu_item_more_title, R.drawable.ic_temp_more_h, 0);
