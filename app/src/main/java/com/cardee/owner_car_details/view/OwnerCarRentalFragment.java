@@ -104,9 +104,11 @@ public class OwnerCarRentalFragment extends Fragment implements ChildProgressLis
             if (ContentPage.DAILY.equals(contentPage)) {
                 holder = new DailyRentalViewHolder(layout, getActivity());
                 ((DailyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
+                holder.bind(mRentalDetails);
             } else {
                 holder = new HourlyRentalViewHolder(layout, getActivity());
                 ((HourlyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
+                holder.bind(mRentalDetails);
             }
             views.put(contentPage, holder);
             container.addView(layout);

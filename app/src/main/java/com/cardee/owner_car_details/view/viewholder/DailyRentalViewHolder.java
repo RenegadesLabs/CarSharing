@@ -1,11 +1,15 @@
 package com.cardee.owner_car_details.view.viewholder;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -53,7 +57,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private Toast currentToast;
 
 
-    public DailyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
+    public DailyRentalViewHolder(@NonNull View rootView, @NonNull FragmentActivity activity) {
         super(rootView, activity);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timingPickup = rootView.findViewById(R.id.tv_rentalAvailableTimingPickup);
@@ -124,8 +128,25 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(iRates);
                 break;
             case R.id.iv_rentalHelp:
-                showMessage("Coming soon");
+                showInfoDialog();
+                break;
         }
+    }
+
+    private void showInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View rootView = inflater.inflate(R.layout.dialog_rental_info_settings, null);
+        builder.setView(rootView);
+        final Dialog dialog = builder.create();
+        AppCompatButton buttonOk = rootView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override

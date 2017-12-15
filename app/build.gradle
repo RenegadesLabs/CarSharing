@@ -64,7 +64,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.squareup.retrofit2:retrofit-converters:2.3.0'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 
     //Facebook SDK
     compile 'com.facebook.android:facebook-login:4.27.0'

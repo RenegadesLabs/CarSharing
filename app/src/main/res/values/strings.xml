@@ -193,7 +193,7 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
-    
+
     <!--Car Rental Info-->
     <string name="car_rental_info_hourly">Hourly</string>
     <string name="car_rental_info_hourly_b">(Hourly)</string>
@@ -207,6 +207,17 @@
     <string name="car_rental_info_terms">Rental Terms</string>
     <string name="car_rental_info_instant">Instant Booking</string>
     <string name="car_rental_info_delivery">Curbside Delivery</string>
+    <string name="car_rental_info_instant_text">Confirm booking request instantly if it meets the
+        criteria you set.</string>
+    <string name="car_rental_info_delivery_text">Send vehicle to Renter\'s desired pickup location
+        for collection, at a delivery rate you set.</string>
+    <string name="car_rental_info_cash_text">Allow Renter\'s to pay in cash for the booking. Note
+        that it will be your responsibility to ensure cash is collected.</string>
+    <string name="car_rental_info_instant_criteria">Instant booking criteria</string>
+    <string name="at_least">at least</string>
+    <string name="in_advance">in advance</string>
+    <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
+        be confirmed automatically?</string>
 
     <!--Car Rental Terms-->
     <string name="car_rental_terms_requirements">Basic Requirements</string>
@@ -224,7 +235,7 @@
     <string name="years">years</string>
     <string name="car_rental_terms_requirements_age_range_fail">Please select correct range!</string>
     <string name="car_rental_terms_requirements_experience">Driving experience</string>
-    
+
     <!--Car Rental Terms Rules-->
     <string name="car_rental_terms_rules_general">General rules</string>
     <string name="car_rental_terms_rules_other">Other rules</string>

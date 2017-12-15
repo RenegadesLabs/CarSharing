@@ -1,18 +1,24 @@
 package com.cardee.owner_car_details.view.viewholder;
 
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.HoursPickerMenuFragment;
+import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
@@ -24,22 +30,22 @@ import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BaseView {
 
-    private RentalDetails hourlyRental;
+    private RentalDetails mHourlyRental;
 
     private TextView availabilityDays;
     private TextView timing;
     private View availabilityDaysEdit;
     private View timeEdit;
-    private View instantBookingTitle;
+    private TextView instantBookingTitle;
     private AppCompatImageView instantBookingIcon;
     private SwitchCompat instantBookingSwitch;
     private TextView instantBookingEdit;
     private View settingsHelp;
-    private View curbsideDeliveryTitle;
+    private TextView curbsideDeliveryTitle;
     private AppCompatImageView curbsideDeliveryIcon;
     private SwitchCompat curbsideDeliverySwitch;
-    private View curbsideDeliveryEdit;
-    private View acceptCashTitle;
+    private TextView curbsideDeliveryEdit;
+    private TextView acceptCashTitle;
     private AppCompatImageView acceptCashImage;
     private SwitchCompat acceptCashSwitch;
     private View rentalRatesEdit;
@@ -52,7 +58,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private Toast currentToast;
 
 
-    public HourlyRentalViewHolder(@NonNull View rootView, @NonNull Activity activity) {
+    public HourlyRentalViewHolder(@NonNull View rootView, @NonNull FragmentActivity activity) {
         super(rootView, activity);
         availabilityDays = rootView.findViewById(R.id.availability_days);
         timing = rootView.findViewById(R.id.tv_rentalAvailableTimingValue);
@@ -90,12 +96,14 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     }
 
     private void initResources() {
-
+        setInstantViewsState(instantBookingSwitch.isChecked());
+        setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
+        setCashViewState(acceptCashSwitch.isChecked());
     }
 
     @Override
     public void bind(RentalDetails model) {
-        hourlyRental = model;
+        mHourlyRental = model;
     }
 
     @Override
@@ -114,6 +122,16 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
             case R.id.tv_rentalAvailabilityEdit:
             case R.id.tv_rentalTimingEdit:
             case R.id.tv_rentalInstantEdit:
+                HoursPickerMenuFragment menu = HoursPickerMenuFragment.getInstance(instantBookingEdit.getText().toString(),
+                        HoursPickerMenuFragment.Mode.BOOKING_HOURS);
+                menu.show(getActivity().getSupportFragmentManager(), menu.getTag());
+                menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
+                    @Override
+                    public void onDoneClicked(String value) {
+                        instantBookingEdit.setText(value);
+                    }
+                });
+                break;
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
                 Intent iRates = new Intent(getActivity(),
@@ -122,17 +140,75 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(iRates);
                 break;
             case R.id.iv_rentalHelp:
-                showMessage("Coming soon");
+                showInfoDialog();
+                break;
         }
+    }
+
+    private void showInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View rootView = inflater.inflate(R.layout.dialog_rental_info_settings, null);
+        builder.setView(rootView);
+        final Dialog dialog = builder.create();
+        AppCompatButton buttonOk = rootView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()) {
             case R.id.sw_rentalInstant:
+                setInstantViewsState(b);
+                break;
             case R.id.sw_rentalDelivery:
+                setDeliveryViewsState(b);
+                break;
             case R.id.sw_rentalCash:
-                showMessage("Checked: " + b);
+                setCashViewState(b);
+                break;
+        }
+    }
+
+    private void setInstantViewsState(boolean enabled) {
+        instantBookingEdit.setClickable(enabled);
+        if (enabled) {
+            instantBookingIcon.setImageResource(R.drawable.ic_instant);
+            instantBookingTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+            instantBookingEdit.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        } else {
+            instantBookingIcon.setImageResource(R.drawable.ic_instant_inactive);
+            instantBookingTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+            instantBookingEdit.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+        }
+    }
+
+    private void setDeliveryViewsState(boolean enabled) {
+        curbsideDeliveryEdit.setClickable(enabled);
+        if (enabled) {
+            curbsideDeliveryIcon.setImageResource(R.drawable.ic_direction);
+            curbsideDeliveryTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+            curbsideDeliveryEdit.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        } else {
+            curbsideDeliveryIcon.setImageResource(R.drawable.ic_direction_inactive);
+            curbsideDeliveryTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+            curbsideDeliveryEdit.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+        }
+    }
+
+    private void setCashViewState(boolean enabled) {
+        if (enabled) {
+            acceptCashImage.setImageResource(R.drawable.ic_cash);
+            acceptCashTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+        } else {
+            acceptCashImage.setImageResource(R.drawable.ic_cash_inactive);
+            acceptCashTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
         }
     }
 
