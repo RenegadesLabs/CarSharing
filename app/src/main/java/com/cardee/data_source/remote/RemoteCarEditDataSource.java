@@ -7,6 +7,7 @@ import com.cardee.data_source.CarEditDataSource;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
+import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
@@ -16,6 +17,7 @@ import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEn
 import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
 
 import java.io.IOException;
+
 import retrofit2.Response;
 
 
@@ -161,6 +163,22 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
         try {
             Response<BaseResponse> response = api.updateRentalRatesHourly(id, ratesEntity).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateDescription(Integer id, String description, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateDescription(id,
+                    new DescriptionBody(description)).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;

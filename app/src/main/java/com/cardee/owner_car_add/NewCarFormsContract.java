@@ -1,4 +1,4 @@
-package com.cardee.owner_car_add.view;
+package com.cardee.owner_car_add;
 
 import android.graphics.Bitmap;
 import android.support.annotation.StringRes;
@@ -135,7 +135,8 @@ public interface NewCarFormsContract {
         IMAGE(R.string.car_add_image_title),
         LOCATION(R.string.car_add_location_title),
         CONTACT(R.string.car_add_contact_title),
-        PAYMENT(R.string.car_add_payment_title);
+        PAYMENT(R.string.car_add_payment_title),
+        DESCRIPTION(R.string.title_owner_car_description);
 
         @StringRes
         private int titleId;

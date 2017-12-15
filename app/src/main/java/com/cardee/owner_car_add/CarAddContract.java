@@ -1,5 +1,7 @@
-package com.cardee.owner_car_add.view;
+package com.cardee.owner_car_add;
 
+
+import com.cardee.owner_car_add.NewCarFormsContract;
 
 public interface CarAddContract {
 

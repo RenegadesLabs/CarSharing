@@ -4,6 +4,7 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
+import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
@@ -182,6 +183,29 @@ public class CarEditRepository implements CarEditDataSource {
         remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
             @Override
             public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateDescription(final Integer id, final String description, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            return;
+        }
+        remoteDataSource.updateDescription(id, description, new Callback() {
+            @Override
+            public void onSuccess() {
+                CarResponseBody car = OwnerCarRepository.getInstance().getCachedCar(id);
+                if (car != null) {
+                    car.getCarDetails().setDescription(description);
+                }
                 callback.onSuccess();
             }
 

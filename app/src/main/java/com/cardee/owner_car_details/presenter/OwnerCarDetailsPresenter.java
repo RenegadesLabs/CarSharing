@@ -9,7 +9,7 @@ import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetCar;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
 import io.reactivex.functions.Consumer;
@@ -88,7 +88,8 @@ public class OwnerCarDetailsPresenter
                 mView.moveToLocation(args);
                 break;
             case EDIT_DESCRIPTION:
-                mView.moveToDescription(null);
+                args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.DESCRIPTION);
+                mView.moveToDescription(args);
                 break;
         }
     }

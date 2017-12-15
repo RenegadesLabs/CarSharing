@@ -69,4 +69,9 @@ public class LocalCarEditDataSource implements CarEditDataSource {
     public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
 
     }
+
+    @Override
+    public void updateDescription(Integer id, String description, Callback callback) {
+
+    }
 }
