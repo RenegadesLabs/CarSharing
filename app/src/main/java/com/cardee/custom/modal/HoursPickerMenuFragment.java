@@ -19,7 +19,7 @@ import com.cardee.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoursPickerMenuFragment  extends BottomSheetDialogFragment {
+public class HoursPickerMenuFragment extends BottomSheetDialogFragment {
 
     private static HoursPickerMenuFragment.Mode mMode;
 
@@ -28,7 +28,7 @@ public class HoursPickerMenuFragment  extends BottomSheetDialogFragment {
     private static String mSelectedValue;
 
     public enum Mode {
-        BOOKING_HOURS
+        BOOKING_HOURS, BOOKING_DAYS
     }
 
     public interface DialogOnClickListener {
@@ -49,9 +49,13 @@ public class HoursPickerMenuFragment  extends BottomSheetDialogFragment {
             case BOOKING_HOURS:
                 mValues = initBookingHoursArray();
                 break;
+            case BOOKING_DAYS:
+                mValues = initBookingDaysArray();
+                break;
         }
         return fragment;
     }
+
 
     private BottomSheetBehavior.BottomSheetCallback mCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
@@ -76,6 +80,9 @@ public class HoursPickerMenuFragment  extends BottomSheetDialogFragment {
         TextView title = rootView.findViewById(R.id.menu_title);
         switch (mMode) {
             case BOOKING_HOURS:
+                title.setText(R.string.car_rental_info_instant_criteria);
+                break;
+            case BOOKING_DAYS:
                 title.setText(R.string.car_rental_info_instant_criteria);
                 break;
         }
@@ -151,6 +158,21 @@ public class HoursPickerMenuFragment  extends BottomSheetDialogFragment {
                 values.add(String.valueOf(hours[i] + " hour"));
             } else {
                 values.add(String.valueOf(hours[i] + " hours"));
+            }
+        }
+        return values.toArray(new String[values.size()]);
+    }
+
+
+    private static String[] initBookingDaysArray() {
+        int[] hours = new int[14];
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < hours.length; i++) {
+            hours[i] = i + 1;
+            if (i == 1) {
+                values.add(String.valueOf(hours[i] + " day"));
+            } else {
+                values.add(String.valueOf(hours[i] + " days"));
             }
         }
         return values.toArray(new String[values.size()]);

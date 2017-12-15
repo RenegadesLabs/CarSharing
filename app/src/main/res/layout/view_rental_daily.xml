@@ -208,7 +208,7 @@
                     android:background="@drawable/bg_item_transparent"
                     android:paddingEnd="@dimen/small_margin"
                     android:paddingStart="@dimen/small_margin"
-                    android:text="@string/title_edit"
+                    android:text="1 day"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sw_rentalInstant" />
