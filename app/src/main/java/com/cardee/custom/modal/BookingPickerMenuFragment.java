@@ -19,9 +19,9 @@ import com.cardee.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoursPickerMenuFragment extends BottomSheetDialogFragment {
+public class BookingPickerMenuFragment extends BottomSheetDialogFragment {
 
-    private static HoursPickerMenuFragment.Mode mMode;
+    private static BookingPickerMenuFragment.Mode mMode;
 
     private static String[] mValues;
 
@@ -41,8 +41,8 @@ public class HoursPickerMenuFragment extends BottomSheetDialogFragment {
         mListener = listener;
     }
 
-    public static HoursPickerMenuFragment getInstance(String selected, Mode mode) {
-        HoursPickerMenuFragment fragment = new HoursPickerMenuFragment();
+    public static BookingPickerMenuFragment getInstance(String selected, Mode mode) {
+        BookingPickerMenuFragment fragment = new BookingPickerMenuFragment();
         mSelectedValue = selected;
         mMode = mode;
         switch (mode) {
@@ -169,7 +169,7 @@ public class HoursPickerMenuFragment extends BottomSheetDialogFragment {
         List<String> values = new ArrayList<>();
         for (int i = 0; i < hours.length; i++) {
             hours[i] = i + 1;
-            if (i == 1) {
+            if (hours[i] == 1) {
                 values.add(String.valueOf(hours[i] + " day"));
             } else {
                 values.add(String.valueOf(hours[i] + " days"));

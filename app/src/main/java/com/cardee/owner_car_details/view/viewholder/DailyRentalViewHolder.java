@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.custom.modal.HoursPickerMenuFragment;
+import com.cardee.custom.modal.BookingPickerMenuFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.mvp.BaseView;
@@ -122,10 +122,12 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(iFuel);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
+                break;
             case R.id.tv_rentalTimingEdit:
+                break;
             case R.id.tv_rentalInstantEdit:
-                HoursPickerMenuFragment menu = HoursPickerMenuFragment.getInstance(instantBookingEdit.getText().toString(),
-                        HoursPickerMenuFragment.Mode.BOOKING_DAYS);
+                BookingPickerMenuFragment menu = BookingPickerMenuFragment.getInstance(instantBookingEdit.getText().toString(),
+                        BookingPickerMenuFragment.Mode.BOOKING_DAYS);
                 menu.show(getActivity().getSupportFragmentManager(), menu.getTag());
                 menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
                     @Override
@@ -135,6 +137,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 });
                 break;
             case R.id.tv_rentalCurbsideRatesEdit:
+                break;
             case R.id.tv_rentalRentalRatesEdit:
                 Intent iRates = new Intent(getActivity(),
                         RentalRatesActivity.class);
