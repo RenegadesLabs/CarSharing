@@ -7,40 +7,46 @@ import com.google.gson.annotations.SerializedName;
 public class CarRuleEntity {
 
     @Expose
-    @SerializedName("rule_id")
-    private Integer ruleId;
+    @SerializedName("rules")
+    private Rule[] rules;
+
     @Expose
-    @SerializedName("rule_name")
-    private String ruleName;
-    @Expose
-    @SerializedName("is_active_rule")
-    private Boolean ruleActive;
+    @SerializedName("car_other_rules")
+    private String otherRules;
 
-    public CarRuleEntity() {
-
+    public CarRuleEntity(Rule[] rules, String otherRules) {
+        this.rules = rules;
+        this.otherRules = otherRules;
     }
 
-    public Integer getRuleId() {
-        return ruleId;
+    public static class Rule {
+
+        @Expose
+        @SerializedName("rule_id")
+        private Integer ruleId;
+        @Expose
+        @SerializedName("is_active_rule")
+        private Boolean ruleActive;
+
+        public Rule(int ruleId, boolean isActive) {
+            this.ruleId = ruleId;
+            this.ruleActive = isActive;
+        }
+
+        public Integer getRuleId() {
+            return ruleId;
+        }
+
+        public Boolean getRuleActive() {
+            return ruleActive;
+        }
     }
 
-    public void setRuleId(Integer ruleId) {
-        this.ruleId = ruleId;
+    public Rule[] getRules() {
+        return rules;
     }
 
-    public String getRuleName() {
-        return ruleName;
-    }
-
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-    }
-
-    public Boolean getRuleActive() {
-        return ruleActive;
-    }
-
-    public void setRuleActive(Boolean ruleActive) {
-        this.ruleActive = ruleActive;
+    public String getOtherRules() {
+        return otherRules;
     }
 }

@@ -35,6 +35,12 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="CardeeEditTextWithoutUnderlineStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+
     <style name="CardeeTextInputStyle" parent="Widget.Design.TextInputLayout">
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/colorPrimary</item>

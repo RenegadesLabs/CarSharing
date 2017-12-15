@@ -27,4 +27,9 @@ public class LocalAvailabilityDataSource implements AvailabilityDataSource {
     public void saveHourlyAvailability(int id, String[] dates, String startTime, String endTime, Callback callback) {
 
     }
+
+    @Override
+    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
+
+    }
 }
