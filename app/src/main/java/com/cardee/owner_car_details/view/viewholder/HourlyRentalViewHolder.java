@@ -26,6 +26,7 @@ import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
+import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
@@ -141,6 +142,9 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
             case R.id.tv_rentalInstantEdit:
             case R.id.tv_rentalCurbsideRatesEdit:
             case R.id.tv_rentalRentalRatesEdit:
+                Intent ratesIntent = new Intent(getActivity(), RentalRatesActivity.class);
+                ratesIntent.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(ratesIntent);
             case R.id.iv_rentalHelp:
                 showMessage("Coming soon");
         }

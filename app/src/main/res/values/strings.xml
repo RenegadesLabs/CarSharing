@@ -231,8 +231,13 @@
     <string name="car_rental_terms_rules_smoking">Smoking In Car</string>
     <string name="car_rental_terms_rules_malaysia">Driving To Malaysia</string>
     <string name="car_rental_terms_rules_dogs">Dogs On Car</string>
-    <string name="car_rental_terms_rules_own">Add your own rules here…\n\nExample\n1.Pump petrol 95 or above only. Keep receipts.
-    \n\n2.For rental more than 3 days, wash and vacuum before return</string>
+    <string name="car_rental_terms_rules_own">Add your car rules here…\n\nSome examples
+        \n\nNo smoking in car.
+    \nNo driving to malaysia
+    \n\nFor rental of 3 days or more, please wash and vacuum car before returning.
+    \n\nPump only 95 and above for petrol.
+    \n\nIf you have child, booster seats is required and can be provided for additional $5.
+    \n\nIf you have dogs, seats protector is required and can be provided at an additional $10.</string>
     <string name="allow">Allow</string>
     <string name="no">No</string>
 
@@ -280,7 +285,10 @@
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
     <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
-    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 12 to 14 km per litre</string>
+    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
+    <string name="car_rental_fuel_modal_title">Petrol cost</string>
+    <string name="car_rental_fuel_modal_per_km">Per Km</string>
+    <string name="car_rental_fuel_modal_consumption">Suitable for consumption of</string>
 
     <!--Owner Profile Info-->
     <string name="owner_profile_info_title">Owner Profile</string>
