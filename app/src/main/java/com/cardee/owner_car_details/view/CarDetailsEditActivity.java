@@ -74,11 +74,13 @@ public class CarDetailsEditActivity extends AppCompatActivity
         }
         switch (mode) {
             case LOCATION:
-                showFragment(CarLocationFragment.newInstance(carId)); //add valid car ID
+                showFragment(CarLocationFragment.newInstance(carId));
                 break;
             case DESCRIPTION:
                 showFragment(CarDescriptionFragment.newInstance(carId));
                 break;
+            case IMAGES:
+                showFragment(CarImagesFragment.newInstance(carId));
             default:
                 Toast.makeText(this, "Mode is not supported yet", Toast.LENGTH_SHORT).show(); //PLUG
         }

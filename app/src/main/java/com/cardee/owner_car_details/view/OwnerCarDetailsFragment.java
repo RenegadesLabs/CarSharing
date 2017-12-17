@@ -93,7 +93,9 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void moveToImages(Bundle args) {
-        showMessage("Move to images");
+        Intent intent = new Intent(getActivity(), CarDetailsEditActivity.class);
+        intent.putExtras(args);
+        getActivity().startActivity(intent);
     }
 
     @Override

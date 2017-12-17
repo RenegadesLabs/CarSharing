@@ -128,7 +128,7 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
         super.onStart();
         presenter.init();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGES);
     }
 
     @Override
