@@ -1,12 +1,15 @@
 package com.cardee.data_source;
 
 import com.cardee.domain.owner.usecase.Register;
+import com.cardee.domain.user.usecase.AuthFcmToken;
 
 public interface UserDataSource {
 
     void login(String login, String password, Callback callback);
 
     void loginSocial(String provider, String token, Callback callback);
+
+    void sendFcmToken(String fcmToken, Callback callback);
 
     void sendEmailToChangePassword(String email, Callback callback);
 

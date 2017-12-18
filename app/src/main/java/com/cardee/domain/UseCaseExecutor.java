@@ -20,12 +20,7 @@ public class UseCaseExecutor {
     public <V extends UseCase.RequestValues, R extends UseCase.ResponseValues> void execute(
             final UseCase<V, R> useCase, final V values, UseCase.Callback<R> callback) {
         final UIThreadCallback<R> uiCallback = new UIThreadCallback<>(mResponseHandler, callback);
-        mThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                useCase.execute(values, uiCallback);
-            }
-        });
+        mThreadPool.execute(() -> useCase.execute(values, uiCallback));
     }
 
     public static UseCaseExecutor getInstance() {

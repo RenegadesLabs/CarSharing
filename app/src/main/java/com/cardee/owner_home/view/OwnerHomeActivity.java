@@ -1,6 +1,5 @@
 package com.cardee.owner_home.view;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,13 +21,13 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.inbox.InboxFragment;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_add.view.NewCarFormsContract;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
-import com.cardee.inbox.InboxFragment;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
@@ -61,8 +60,8 @@ public class OwnerHomeActivity extends AppCompatActivity
             mAddCarAction = toolbar.findViewById(R.id.toolbar_action);
             mAddCarAction.setOnClickListener(this);
         }
-        mProgress = (ProgressBar) findViewById(R.id.home_progress);
-        AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
+        mProgress = findViewById(R.id.home_progress);
+        AHBottomNavigation bottomMenu = findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepare(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(1);
@@ -191,20 +190,12 @@ public class OwnerHomeActivity extends AppCompatActivity
             final AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.car_added_title)
                     .setMessage(R.string.car_added_message)
-                    .setPositiveButton(R.string.car_added_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
+                    .setPositiveButton(R.string.car_added_ok, (dialogInterface, i) ->
+                            dialogInterface.dismiss())
                     .create();
-            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialogInterface) {
+            alertDialog.setOnShowListener(dialogInterface ->
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                            .setTextColor(ContextCompat.getColor(OwnerHomeActivity.this, R.color.blue));
-                }
-            });
+                            .setTextColor(ContextCompat.getColor(OwnerHomeActivity.this, R.color.blue)));
             alertDialog.show();
         }
     }

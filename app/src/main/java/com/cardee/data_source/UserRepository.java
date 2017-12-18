@@ -6,6 +6,7 @@ import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
+import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
@@ -13,6 +14,7 @@ import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.owner.usecase.Register;
+import com.cardee.domain.user.usecase.AuthFcmToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +50,6 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void login(String login, String password, final UserDataSource.Callback callback) {
-
         LoginRequest req = new LoginRequest();
         req.setLogin(login);
         req.setPassword(password);
@@ -80,7 +81,6 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void loginSocial(String provider, String token, final Callback callback) {
-
         SocialLoginRequest req = new SocialLoginRequest();
         req.setProvider(provider);
         req.setToken(token);
@@ -108,6 +108,18 @@ public class UserRepository implements UserDataSource {
 
             }
         });
+    }
+
+    @Override
+    public void sendFcmToken(String fcmToken, Callback callback) {
+        PushRequest pushRequest = new PushRequest();
+        pushRequest.setDeviceToken(fcmToken);
+        api.pushToken(pushRequest)
+                .retry(5)
+                .subscribe(baseAuthResponse ->
+                                callback.onSuccess(true),
+                        throwable ->
+                                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
     }
 
     @Override
@@ -211,7 +223,6 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void register(final Register.RequestValues registerValues, final Callback callback) {
-
         SignUpRequest req = new SignUpRequest();
         req.setLogin(registerValues.getLogin());
         req.setPassword(registerValues.getPassword());

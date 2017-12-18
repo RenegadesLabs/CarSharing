@@ -12,6 +12,7 @@ import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -61,6 +62,5 @@ public interface Authentication {
     Observable<BaseAuthResponse> logout(@Header("Authentication") String authenticationToken);
 
     @POST("auth/push")
-    @Headers("Content-Type: application/json")
-    Observable<BaseAuthResponse> push(@Body PushRequest request);
+    Single<BaseAuthResponse> pushToken(@Body PushRequest request);
 }

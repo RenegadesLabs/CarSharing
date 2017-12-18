@@ -17,8 +17,16 @@ public class AccountManager {
     private static final String OWNER_SESSION = "owner";
     private static final String RENTER_SESSION = "renter";
     private static final String SESSION = "session";
+    private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
 
     private static AccountManager INSTANCE;
+
+    public static AccountManager getInstance(@NonNull Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = new AccountManager(context);
+        }
+        return INSTANCE;
+    }
 
     private SharedPreferences mPrefs;
 
@@ -46,6 +54,12 @@ public class AccountManager {
                 .apply();
     }
 
+    public void saveFcmAuthAction() {
+        mPrefs.edit()
+                .putBoolean(FCM_TOKEN_AUTH, true)
+                .apply();
+    }
+
     //TODO: delete after user logged state handling implemented
     public boolean isLogedIn() {
         String string = mPrefs.getString(AUTH_TOKEN, null);
@@ -56,14 +70,11 @@ public class AccountManager {
         mPrefs.edit().remove(AUTH_TOKEN).apply();
     }
 
-    public static AccountManager getInstance(@NonNull Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = new AccountManager(context);
-        }
-        return INSTANCE;
-    }
-
     public boolean isLoggedIn() {
         return !mPrefs.getString(AUTH_TOKEN, "").equals("");
+    }
+
+    public boolean isFcmTokenAuthenticated() {
+        return mPrefs.getBoolean(FCM_TOKEN_AUTH, false);
     }
 }

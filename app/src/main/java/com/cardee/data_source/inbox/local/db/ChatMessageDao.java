@@ -10,12 +10,12 @@ import com.cardee.data_source.inbox.local.entity.ChatMessage;
 import java.util.List;
 
 @Dao
-public interface MessageDao {
+public interface ChatMessageDao {
+
+    @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId")
+    List<ChatMessage> getMessages(String chatId);
 
     @Insert()
     void persistMessage(ChatMessage chatMessage);
-
-    @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId")
-    List<ChatMessage> getAllMessages(String chatId);
 
 }

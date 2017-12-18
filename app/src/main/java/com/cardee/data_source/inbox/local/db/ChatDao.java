@@ -1,8 +1,13 @@
 package com.cardee.data_source.inbox.local.db;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.Update;
 
+import com.cardee.data_source.inbox.local.entity.Chat;
 import com.cardee.data_source.inbox.local.entity.ChatMessage;
 
 import java.util.List;
@@ -10,6 +15,12 @@ import java.util.List;
 @Dao
 public interface ChatDao {
 
-    @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId")
-    List<ChatMessage> getMessagesForChat(String chatId);
+    @Query("SELECT * FROM chats WHERE attachment IS :attachment")
+    List<ChatMessage> getChats(String attachment);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addChat(Chat chat);
+
+    @Update
+    void updateChat(Chat chat);
 }

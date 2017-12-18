@@ -3,11 +3,14 @@ package com.cardee.auth.login.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
+import com.cardee.domain.user.usecase.AuthFcmToken;
 import com.cardee.domain.user.usecase.Login;
 import com.cardee.domain.user.usecase.SocialLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,6 +30,7 @@ import java.io.IOException;
 public class LoginPresenter {
 
     private final Login mLoginUseCase;
+    private final AuthFcmToken mAuthFcmUseCase;
     private UseCaseExecutor mExecutor;
     private LoginView mView;
     private SharedPreferences mSharedPref;
@@ -36,6 +40,7 @@ public class LoginPresenter {
 
     public LoginPresenter(LoginView view) {
         mLoginUseCase = new Login();
+        mAuthFcmUseCase = new AuthFcmToken();
         mExecutor = UseCaseExecutor.getInstance();
         mView = view;
         Context context = (Context) mView;
@@ -68,6 +73,8 @@ public class LoginPresenter {
                 }
             }
         });
+
+        pushFcmTokenIfNeeded();
     }
 
     private void saveSharedPreferences(String password) {
@@ -102,6 +109,8 @@ public class LoginPresenter {
                 mView.showMessage(R.string.auth_error);
             }
         });
+
+        pushFcmTokenIfNeeded();
     }
 
     public void loginGoogle(GoogleSignInResult result) {
@@ -137,5 +146,24 @@ public class LoginPresenter {
                 }
             });
         }
+
+        pushFcmTokenIfNeeded();
+    }
+
+    private void pushFcmTokenIfNeeded() {
+        if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()) {
+            return;
+        }
+
+//        String fcmToken = FirebaseInstanceId.getInstance().getToken();
+//        mExecutor.execute(mAuthFcmUseCase, new AuthFcmToken.RequestValues(fcmToken), new UseCase.Callback<AuthFcmToken.ResponseValues>() {
+//            @Override
+//            public void onSuccess(AuthFcmToken.ResponseValues response) {
+//            }
+//
+//            @Override
+//            public void onError(Error error) {
+//            }
+//        });
     }
 }

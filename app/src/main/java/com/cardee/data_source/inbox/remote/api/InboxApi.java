@@ -19,10 +19,6 @@ import retrofit2.http.Path;
 
 public interface InboxApi {
 
-    @POST("auth/push")
-    @Headers("Content-Type: application/json")
-    Single<BaseAuthResponse> pushToken(@Body PushRequest request);
-
     @GET("/chats/")
     Single<ChatListResponse> getChats();
 

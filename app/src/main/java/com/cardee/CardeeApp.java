@@ -2,6 +2,8 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -24,6 +26,11 @@ public class CardeeApp extends Application {
 
     public static Context context;
     public static Retrofit retrofit;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
 
     @Override
     public void onCreate() {
