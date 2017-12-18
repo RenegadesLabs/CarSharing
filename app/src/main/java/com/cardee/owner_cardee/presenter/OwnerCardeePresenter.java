@@ -25,6 +25,7 @@ public class OwnerCardeePresenter {
             public void onSuccess(SendFeedback.ResponseValues response) {
                 mView.showProgress(false);
                 mView.showMessage(R.string.send_feedback_success);
+                mView.returnToPreviousActivity();
             }
 
             @Override

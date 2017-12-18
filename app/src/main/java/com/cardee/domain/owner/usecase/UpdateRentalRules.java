@@ -16,7 +16,7 @@ public class UpdateRentalRules implements UseCase<UpdateRentalRules.RequestValue
 
     @Override
     public void execute(RequestValues values, final Callback<ResponseValues> callback) {
-        mRepository.updateRentalRules(values.getId(), new CarRuleEntity(values.getRules(), values.getOtherRules()),
+        mRepository.updateRentalRules(values.getId(), new CarRuleEntity(values.getOtherRules()),
                 new CarEditDataSource.Callback() {
             @Override
             public void onSuccess() {
@@ -33,21 +33,16 @@ public class UpdateRentalRules implements UseCase<UpdateRentalRules.RequestValue
     public static class RequestValues implements UseCase.RequestValues {
 
         private final int mId;
-        private final CarRuleEntity.Rule[] mRules;
+//        private final CarRuleEntity.Rule[] mRules;
         private final String mOtherRules;
 
-        public RequestValues(int id, CarRuleEntity.Rule[] rules, String otherRules) {
+        public RequestValues(int id, String otherRules) {
             mId = id;
-            mRules = rules;
             mOtherRules = otherRules;
         }
 
         public int getId() {
             return mId;
-        }
-
-        public CarRuleEntity.Rule[] getRules() {
-            return mRules;
         }
 
         public String getOtherRules() {

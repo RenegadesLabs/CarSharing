@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_button_half_circle"
                     android:gravity="center_horizontal"
-                    android:text="@string/owner_profile_info_edit"
+                    android:text="@string/edit"
                     android:textAlignment="gravity"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/profile_image"
@@ -208,7 +208,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/owner_profile_info_bookings"
+                            android:text="@string/bookings"
                             android:textAlignment="center"
                             android:textColor="@color/add_car_item_vehicle_secondary_txt"
                             android:textSize="@dimen/text_regular" />
@@ -228,7 +228,7 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="242dp"
@@ -266,7 +266,7 @@
                             android:id="@+id/note_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/owner_profile_info_edit"
+                            android:text="@string/edit"
                             android:textColor="@color/text_blue"
                             android:textSize="@dimen/text_large"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -351,7 +351,7 @@
 
             </android.support.constraint.ConstraintLayout>
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
     </android.support.constraint.ConstraintLayout>
 

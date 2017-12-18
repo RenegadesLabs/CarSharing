@@ -1,4 +1,4 @@
-package com.cardee.owner_account_details.view;
+package com.cardee.account_details.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.auth.preview.PreviewActivity;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.cardee.owner_account_details.presenter.AccountDetailsPresenter;
+import com.cardee.account_details.presenter.AccountDetailsPresenter;
 import com.cardee.owner_change_pass.view.ChangePassActivity;
 
 import butterknife.BindView;

@@ -164,6 +164,7 @@ public class CarImagesFragment extends Fragment
         Bundle args = new Bundle();
         args.putInt(CarImagesEditContract.CAR_ID, carId);
         args.putInt(CarImagesEditContract.IMAGE_ID, image.getImageId());
+        intent.putExtras(args);
         getActivity().startActivity(intent);
     }
 

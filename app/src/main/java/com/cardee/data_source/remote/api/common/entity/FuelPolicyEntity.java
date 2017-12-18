@@ -12,6 +12,10 @@ public class FuelPolicyEntity {
     @SerializedName("fuel_policy_name")
     private String fuelPolicyName;
 
+    @Expose
+    @SerializedName("amnt_pay_mileage")
+    private Float amountPayMileage;
+
     public FuelPolicyEntity() {
 
     }
@@ -30,5 +34,12 @@ public class FuelPolicyEntity {
 
     public void setFuelPolicyName(String fuelPolicyName) {
         this.fuelPolicyName = fuelPolicyName;
+    }
+    public Float getAmountPayMileage() {
+        return amountPayMileage;
+    }
+
+    public void setAmountPayMileage(Float amountPayMileage) {
+        this.amountPayMileage = amountPayMileage;
     }
 }

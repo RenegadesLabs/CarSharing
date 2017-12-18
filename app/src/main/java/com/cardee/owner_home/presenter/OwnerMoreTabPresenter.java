@@ -3,8 +3,10 @@ package com.cardee.owner_home.presenter;
 
 import android.view.View;
 
+import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
@@ -90,5 +92,9 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
                 mView.openSwitchToRenter();
                 break;
         }
+    }
+
+    public void setAccState(AccountManager.ACC_STATE renter) {
+        AccountManager.getInstance(CardeeApp.context).setCurrentState(renter);
     }
 }

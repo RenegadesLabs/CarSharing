@@ -22,7 +22,7 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
-public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabItemViewHolder> {
+public class OwnerMoreTabAdapter extends RecyclerView.Adapter<OwnerMoreTabAdapter.MoreTabItemViewHolder> {
 
     private final List<String> mMenuNames;
     private final List<Integer> mMenuIcons;
@@ -34,26 +34,20 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
 
     private final PublishSubject<OwnerProfileContract.Action> mEventObservable;
 
-    public MoreTabAdapter(Context context) {
+    public OwnerMoreTabAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMenuNames = Arrays.asList(context.getResources().getStringArray(R.array.more_tab_menu));
+        mMenuNames = Arrays.asList(context.getResources().getStringArray(R.array.owner_more_tab_menu));
         mMenuIcons = new ArrayList<>();
-        TypedArray array = context.getResources().obtainTypedArray(R.array.more_tab_icons);
+        TypedArray array = context.getResources().obtainTypedArray(R.array.owner_more_tab_icons);
         for (int i = 0; i < array.length(); i++) {
             mMenuIcons.add(array.getResourceId(i, -1));
         }
         array.recycle();
 
         mEventObservable = PublishSubject.create();
-        mCardee = context.getResources().
-
-                getString(R.string.more_tab_cardee);
-        mCredit = context.getResources().
-
-                getString(R.string.more_tab_credit);
-        mVersionString = context.getResources().
-
-                getString(R.string.more_tab_version);
+        mCardee = context.getResources().getString(R.string.more_tab_cardee);
+        mCredit = context.getResources().getString(R.string.more_tab_credit);
+        mVersionString = context.getResources().getString(R.string.more_tab_version);
     }
 
     @Override
@@ -78,8 +72,6 @@ public class MoreTabAdapter extends RecyclerView.Adapter<MoreTabAdapter.MoreTabI
         } else {
             holder.setItemInfo("");
         }
-
-        // TODO set icon and info;
     }
 
     @Override

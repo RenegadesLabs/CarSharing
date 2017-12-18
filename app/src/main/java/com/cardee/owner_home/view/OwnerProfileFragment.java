@@ -1,7 +1,6 @@
 package com.cardee.owner_home.view;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,15 +19,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
-import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_account_details.view.AccountDetailsActivity;
+import com.cardee.data_source.remote.service.AccountManager;
+import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
-import com.cardee.owner_home.view.adapter.MoreTabAdapter;
+import com.cardee.owner_home.view.adapter.OwnerMoreTabAdapter;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 import com.cardee.owner_settings.view.OwnerSettingsActivity;
+import com.cardee.renter_home.view.RenterHomeActivity;
 import com.cardee.util.glide.CircleTransform;
 
 import static android.app.Activity.RESULT_OK;
@@ -37,9 +37,8 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     private MoreTabItemEventListener mEventListener;
     private RecyclerView mMenuListView;
-    private MoreTabAdapter mAdapter;
+    private OwnerMoreTabAdapter mAdapter;
     private OwnerMoreTabPresenter mPresenter;
-    private ProgressDialog mProgress;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
@@ -68,8 +67,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProgress = DialogHelper.getProgressDialog(getActivity(), getString(R.string.loading), false);
-        mAdapter = new MoreTabAdapter(getActivity());
+        mAdapter = new OwnerMoreTabAdapter(getActivity());
         mPresenter = new OwnerMoreTabPresenter(this);
         mAdapter.subscribe(mPresenter);
     }
@@ -145,7 +143,12 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openSwitchToRenter() {
-        showMessage("Coming soon");
+        mPresenter.setAccState(AccountManager.ACC_STATE.RENTER);
+        Intent intent = new Intent(getActivity(), RenterHomeActivity.class);
+        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

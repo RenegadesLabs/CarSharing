@@ -76,6 +76,7 @@
     <string name="menu_item_cars_title">My Cars</string>
     <string name="menu_item_bookings_title">Bookings</string>
     <string name="menu_item_more_title">More</string>
+    <string name="menu_item_browse_title">Browse</string>
 
     <string name="car_list_item_hourly_label">Hourly</string>
     <string name="car_list_item_daily_label">Daily</string>
@@ -208,6 +209,17 @@
     <string name="car_rental_info_terms">Rental Terms</string>
     <string name="car_rental_info_instant">Instant Booking</string>
     <string name="car_rental_info_delivery">Curbside Delivery</string>
+    <string name="car_rental_info_instant_text">Confirm booking request instantly if it meets the
+        criteria you set.</string>
+    <string name="car_rental_info_delivery_text">Send vehicle to Renter\'s desired pickup location
+        for collection, at a delivery rate you set.</string>
+    <string name="car_rental_info_cash_text">Allow Renter\'s to pay in cash for the booking. Note
+        that it will be your responsibility to ensure cash is collected.</string>
+    <string name="car_rental_info_instant_criteria">Instant booking criteria</string>
+    <string name="at_least">at least</string>
+    <string name="in_advance">in advance</string>
+    <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
+        be confirmed automatically?</string>
 
     <!--Car Rental Terms-->
     <string name="car_rental_terms_requirements">Basic Requirements</string>
@@ -232,8 +244,13 @@
     <string name="car_rental_terms_rules_smoking">Smoking In Car</string>
     <string name="car_rental_terms_rules_malaysia">Driving To Malaysia</string>
     <string name="car_rental_terms_rules_dogs">Dogs On Car</string>
-    <string name="car_rental_terms_rules_own">Add your own rules here…\n\nExample\n1.Pump petrol 95 or above only. Keep receipts.
-    \n\n2.For rental more than 3 days, wash and vacuum before return</string>
+    <string name="car_rental_terms_rules_own">Add your car rules here…\n\nSome examples
+        \n\nNo smoking in car.
+    \nNo driving to malaysia
+    \n\nFor rental of 3 days or more, please wash and vacuum car before returning.
+    \n\nPump only 95 and above for petrol.
+    \n\nIf you have child, booster seats is required and can be provided for additional $5.
+    \n\nIf you have dogs, seats protector is required and can be provided at an additional $10.</string>
     <string name="allow">Allow</string>
     <string name="no">No</string>
 
@@ -281,23 +298,26 @@
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
     <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
-    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 12 to 14 km per litre</string>
+    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
+    <string name="car_rental_fuel_modal_title">Petrol cost</string>
+    <string name="car_rental_fuel_modal_per_km">Per Km</string>
+    <string name="car_rental_fuel_modal_consumption">Suitable for consumption of</string>
 
     <!--Owner Profile Info-->
     <string name="owner_profile_info_title">Owner Profile</string>
     <string name="owner_profile_info_acceptance">Acceptance</string>
     <string name="owner_profile_info_response">Response Time</string>
-    <string name="owner_profile_info_bookings">Bookings</string>
-    <string name="owner_profile_info_edit">edit</string>
+    <string name="bookings">Bookings</string>
+    <string name="edit">edit</string>
     <string name="owner_profile_info_car">\u0020Car</string>
     <string name="owner_profile_info_car_review">\u0020Car Review</string>
     <string name="owner_profile_info_dot">\u2022</string>
     <string name="owner_profile_info_percent">%</string>
     <string name="owner_profile_info_minutes">min</string>
     <string name="owner_profile_info_note_edit">Note</string>
-    <string name="owner_profile_info_note_change">Change</string>
-    <string name="owner_profile_info_note_change_title">Change note</string>
-    <string name="owner_profile_info_note_change_success">Note changed</string>
+    <string name="profile_info_note_change">Change</string>
+    <string name="profile_info_note_change_title">Change note</string>
+    <string name="profile_info_note_change_success">Note changed</string>
     <string name="owner_profile_info_name_change_success">Name changed</string>
     <string name="owner_profile_info_default_city">Singapore</string>
     <string name="owner_profile_info_photo_success">Profile photo changed!</string>
@@ -305,13 +325,15 @@
 
     <!--More Tab-->
     <string name="more_tab_owner_profile">Owner Profile</string>
+    <string name="more_tab_renter_profile">Renter Profile</string>
     <string name="more_tab_account">Account</string>
     <string name="more_tab_settings">Settings</string>
     <string name="more_tab_credit">Credit Balance</string>
     <string name="more_tab_chat">Live Chat</string>
     <string name="more_tab_friends">Invite Friends</string>
     <string name="more_tab_cardee">Cardee</string>
-    <string name="more_tab_switch">Switch To Renter</string>
+    <string name="more_tab_switch_to_renter">Switch To Renter</string>
+    <string name="more_tab_switch_to_owner">Switch To Owner</string>
     <string name="more_tab_version">version</string>
     <string name="invite_friends_body">
         http://cardee.co - With Cardee, you can rent flexibly for days, weeks, or just a few hours!
@@ -382,6 +404,15 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="http">http://</string>
     <string name="send_feedback_success">Feedback sent</string>
+
+    <!--Renter Profile-->
+    <string name="renter_profile_title">Renter Profile</string>
+    <string name="renter_profile_age">Age</string>
+    <string name="driving_exp">Driving Exp.</string>
+    <string name="year">year</string>
+    <string name="yrs">yrs</string>
+    <string name="profile_default_note">Add some info about yourself :)</string>
+    <string name="comment">\u0020Comment</string>
 
 
     <!--Calendar-->

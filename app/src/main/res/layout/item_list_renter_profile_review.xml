@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp">
+
+    <ImageView
+        android:id="@+id/review_profile_image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/review_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintStart_toEndOf="@id/review_profile_image"
+        app:layout_constraintTop_toTopOf="@id/review_profile_image" />
+
+    <TextView
+        android:id="@+id/review_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="@id/review_profile_name"
+        app:layout_constraintTop_toBottomOf="@id/review_profile_name" />
+
+    <TextView
+        android:id="@id/review_rate_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:theme="@style/TextSettingsRegular"
+        app:layout_constraintBottom_toBottomOf="@id/review_date"
+        app:layout_constraintEnd_toStartOf="@+id/review_star_rate" />
+
+    <ImageView
+        android:id="@id/review_star_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/review_rate_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/review_rate_text"
+        app:srcCompat="@drawable/ic_star_rate" />
+
+    <TextView
+        android:id="@+id/review_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/review_date" />
+</android.support.constraint.ConstraintLayout>

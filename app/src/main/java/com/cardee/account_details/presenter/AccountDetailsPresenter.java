@@ -1,4 +1,4 @@
-package com.cardee.owner_account_details.presenter;
+package com.cardee.account_details.presenter;
 
 
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.cardee.domain.owner.usecase.ChangeEmail;
 import com.cardee.domain.owner.usecase.ChangeName;
 import com.cardee.domain.owner.usecase.ChangePhone;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
-import com.cardee.owner_account_details.view.AccountDetailsView;
+import com.cardee.account_details.view.AccountDetailsView;
 
 public class AccountDetailsPresenter {
 
@@ -93,7 +93,7 @@ public class AccountDetailsPresenter {
     public void showChangeNameDialog(Context context) {
         DialogHelper.getAlertDialog(context, R.layout.dialog_account_details_change_name,
                 context.getResources().getString(R.string.account_details_change_name_title),
-                context.getResources().getString(R.string.owner_profile_info_note_change),
+                context.getResources().getString(R.string.profile_info_note_change),
                 new DialogHelper.OnClickCallback() {
                     @Override
                     public void onPositiveButtonClick(final String newName, final DialogInterface dialog) {
@@ -126,7 +126,7 @@ public class AccountDetailsPresenter {
     public void showChangeEmailDialog(Context context) {
         DialogHelper.getAlertDialog(context, R.layout.dialog_account_details_change_email,
                 context.getResources().getString(R.string.account_details_change_email_title),
-                context.getResources().getString(R.string.owner_profile_info_note_change),
+                context.getResources().getString(R.string.profile_info_note_change),
                 new DialogHelper.OnClickCallback() {
                     @Override
                     public void onPositiveButtonClick(final String newEmail, final DialogInterface dialog) {
@@ -158,7 +158,7 @@ public class AccountDetailsPresenter {
     public void showChangePhoneDialog(Context context) {
         DialogHelper.getAlertDialog(context, R.layout.dialog_account_details_change_phone,
                 context.getResources().getString(R.string.account_details_change_phone_title),
-                context.getResources().getString(R.string.owner_profile_info_note_change),
+                context.getResources().getString(R.string.profile_info_note_change),
                 new DialogHelper.OnClickCallback() {
                     @Override
                     public void onPositiveButtonClick(final String newPhone, final DialogInterface dialog) {
