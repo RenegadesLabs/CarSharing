@@ -2,6 +2,8 @@ package com.cardee.owner_car_details.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Image;
@@ -30,12 +33,17 @@ public class CarImagesFragment extends Fragment
         implements CarImagesEditContract.View, ImageViewListener {
 
     private static final String CAR_ID = "car_id";
+    private static final int IMAGE_REQUEST_CODE = 102;
 
     private DetailsChangedListener parentListener;
     private NewCarFormsContract.Action pendingAction;
     private RecyclerView imagesGrid;
+    private View topView;
+    private View cautionView;
+    private View loadingView;
     private CarImagesAdapter adapter;
     private CarImagesPresenter presenter;
+    private Toast currentToast;
 
     public static CarImagesFragment newInstance(int id) {
         CarImagesFragment fragment = new CarImagesFragment();
@@ -56,6 +64,9 @@ public class CarImagesFragment extends Fragment
             pendingAction = action;
             switch (action) {
                 case SAVE:
+                    if (loadingView.getVisibility() == View.VISIBLE) {
+                        return;
+                    }
                 case FINISH:
                     parentListener.onFinish(NewCarFormsContract.Mode.IMAGE, pendingAction);
                     break;
@@ -80,6 +91,9 @@ public class CarImagesFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_car_images, container, false);
         imagesGrid = rootView.findViewById(R.id.images_grid);
+        topView = rootView.findViewById(R.id.top_block);
+        cautionView = rootView.findViewById(R.id.images_caution);
+        loadingView = rootView.findViewById(R.id.progress_layout);
         presenter = new CarImagesPresenter(this, getArguments().getInt(CAR_ID));
         adapter = new CarImagesAdapter(getActivity());
         adapter.setImageViewListener(this);
@@ -105,22 +119,29 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void showProgress(boolean show) {
-
+        loadingView.setVisibility(show ? View.VISIBLE : View.GONE);
+        topView.setAlpha(show ? .5f : 1f);
+        imagesGrid.setAlpha(show ? .5f : 1f);
+        cautionView.setAlpha(show ? .5f : 1f);
     }
 
     @Override
     public void showMessage(String message) {
-
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        currentToast.show();
     }
 
     @Override
     public void showMessage(@StringRes int messageId) {
-
+        showMessage(getString(messageId));
     }
 
     @Override
     public void onImagesObtained(List<Image> images) {
-        adapter.addItems(images);
+        adapter.setItems(images);
     }
 
     @Override
@@ -140,6 +161,18 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void onAddNewClick() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, IMAGE_REQUEST_CODE);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IMAGE_REQUEST_CODE) {
+            Uri uri = data.getData();
+            presenter.onAddNewImage(uri);
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -81,6 +81,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
                 break;
             case IMAGES:
                 showFragment(CarImagesFragment.newInstance(carId));
+                break;
             default:
                 Toast.makeText(this, "Mode is not supported yet", Toast.LENGTH_SHORT).show(); //PLUG
         }

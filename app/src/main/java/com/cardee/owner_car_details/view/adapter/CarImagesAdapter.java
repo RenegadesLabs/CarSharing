@@ -15,6 +15,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Image;
+import com.cardee.domain.util.ListUtil;
+import com.cardee.domain.util.Mapper;
 import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
 import java.util.ArrayList;
@@ -36,13 +38,35 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         glideRequestManager = Glide.with(context);
     }
 
-    public void addItems(List<Image> images) {
-        items.clear();
-        items.add(ImageItemWrapper.newAddButtonItem());
-        for (Image image : images) {
-            items.add(items.size() - 1, ImageItemWrapper.newImageItem(image));
+    public void setItems(List<Image> images) {
+        if (items.isEmpty()) {
+            items.add(ImageItemWrapper.newAddButtonItem());
         }
-        notifyDataSetChanged();
+        List<ImageItemWrapper> newItems = ListUtil.map(images, new Mapper<Image, ImageItemWrapper>() {
+            @Override
+            public ImageItemWrapper map(Image input) {
+                return ImageItemWrapper.newImageItem(input);
+            }
+        });
+        for (int i = 0; i < newItems.size(); i++) {
+            ImageItemWrapper item = newItems.get(i);
+            if (!items.contains(item)) {
+                int index = items.size() - 1;
+                items.add(index, item);
+                notifyItemInserted(index);
+            }
+        }
+        for (int i = 0; i < items.size(); i++) {
+            ImageItemWrapper item = items.get(i);
+            if (item.getViewType() == IMAGE_VIEW && !newItems.contains(item)) {
+                items.remove(i);
+                notifyItemRemoved(i);
+            }
+        }
+    }
+
+    public void setItem(Image image) {
+
     }
 
     public void setImageViewListener(ImageViewListener listener) {
@@ -109,7 +133,7 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public ImageHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
-            loadingIndicator = itemView.findViewById(R.id.progress_layout);
+            loadingIndicator = itemView.findViewById(R.id.item_progress_layout);
             primaryImageSign = itemView.findViewById(R.id.primary_image_sign);
         }
 
@@ -165,6 +189,27 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public int getViewType() {
             return viewType;
+        }
+
+        @Override
+        public int hashCode() {
+            return image == null ? 0 : image.getLink().hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            } else if (obj == null) {
+                return false;
+            } else if (!obj.getClass().equals(getClass())) {
+                return false;
+            } else {
+                Image image = ((ImageItemWrapper) obj).getImage();
+                return image != null &&
+                        getImage() != null &&
+                        image.getLink().equals(getImage().getLink());
+            }
         }
     }
 }

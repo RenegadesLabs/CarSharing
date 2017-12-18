@@ -1,5 +1,7 @@
 package com.cardee.owner_car_details;
 
+import android.net.Uri;
+
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
@@ -22,6 +24,8 @@ public interface CarImagesEditContract {
         void onImageSetPrimary(Image image);
 
         void onImageRemove(Image image);
+
+        void onAddNewImage(Uri uri);
     }
 
 }

@@ -55,4 +55,23 @@
         android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/car_primary_image_loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:layout_gravity="center"
+            android:theme="@style/LoadingIndicator" />
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
