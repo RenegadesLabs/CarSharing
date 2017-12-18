@@ -14,7 +14,7 @@ import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.owner.usecase.Register;
-import com.cardee.domain.user.usecase.AuthFcmToken;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Observable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -58,6 +59,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(BaseAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
+                    pushFcmOb();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
@@ -89,6 +91,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(SocialAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
+                    pushFcmOb();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
@@ -108,18 +111,27 @@ public class UserRepository implements UserDataSource {
 
             }
         });
+
+        pushFcmOb();
     }
 
-    @Override
-    public void sendFcmToken(String fcmToken, Callback callback) {
+    public void pushFcmOb() {
+        if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()){
+            return;
+        }
         PushRequest pushRequest = new PushRequest();
-        pushRequest.setDeviceToken(fcmToken);
-        api.pushToken(pushRequest)
-                .retry(5)
-                .subscribe(baseAuthResponse ->
-                                callback.onSuccess(true),
-                        throwable ->
-                                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+        pushRequest.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+        api.pushToken(pushRequest).subscribe(new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {
+                AccountManager.getInstance(CardeeApp.context).saveFcmAuthAction();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     @Override
@@ -143,6 +155,8 @@ public class UserRepository implements UserDataSource {
 
             }
         });
+
+        pushFcmOb();
     }
 
     @Override
@@ -232,6 +246,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onResponse(Call<BaseAuthResponse> call, Response<BaseAuthResponse> response) {
                 if (response.isSuccessful()) {
+                    pushFcmOb();
                     String token = response.body().getBody().getToken();
                     AccountManager.getInstance(CardeeApp.context).saveToken(token);
                     if (registerValues.getImage() != null) {

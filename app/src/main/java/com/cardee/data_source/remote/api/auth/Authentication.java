@@ -11,6 +11,7 @@ import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
@@ -62,5 +63,6 @@ public interface Authentication {
     Observable<BaseAuthResponse> logout(@Header("Authentication") String authenticationToken);
 
     @POST("auth/push")
-    Single<BaseAuthResponse> pushToken(@Body PushRequest request);
+    @Headers("Content-Type: application/json")
+    Completable pushToken(@Body PushRequest request);
 }
