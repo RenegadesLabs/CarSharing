@@ -5,14 +5,13 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
 import java.util.List;
 
-import io.reactivex.Maybe;
-import io.reactivex.Single;
+import io.reactivex.Observable;
 
 public interface ChatDataSource {
 
-    Single<List<InboxChat>> getRemoteChats();
+    Observable<List<InboxChat>> getRemoteChats(String attachment);
 
-    Maybe<List<InboxChat>> getLocalChats();
+    Observable<List<InboxChat>> getLocalChats(String attachment);
 
     void saveDataToDb(List<Chat> inboxChats);
 

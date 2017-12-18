@@ -1,6 +1,5 @@
 package com.cardee.data_source.remote.service;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -14,9 +13,10 @@ public class AccountManager {
     private static final String AUTH_TOKEN = "_auth_token";
     private static final String AUTH_HEADER_NAME = "Authorization";
     private static final String DEFAULT_AUTH_TOKEN = "";
+
+    private static final String ATTACHMENT = "attachment";
     private static final String OWNER_SESSION = "owner";
     private static final String RENTER_SESSION = "renter";
-    private static final String SESSION = "session";
     private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
 
     private static AccountManager INSTANCE;
@@ -49,7 +49,7 @@ public class AccountManager {
 
     public void saveToken(String token) {
         mPrefs.edit()
-                .putString(SESSION, OWNER_SESSION)
+                .putString(ATTACHMENT, OWNER_SESSION)
                 .putString(AUTH_TOKEN, token)
                 .apply();
     }
@@ -76,5 +76,9 @@ public class AccountManager {
 
     public boolean isFcmTokenAuthenticated() {
         return mPrefs.getBoolean(FCM_TOKEN_AUTH, false);
+    }
+
+    public String getSessionInfo() {
+        return mPrefs.getString(ATTACHMENT, OWNER_SESSION);
     }
 }

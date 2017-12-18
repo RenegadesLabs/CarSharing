@@ -37,7 +37,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenterImp = new ChatPresenterImp();
+        mPresenterImp = new ChatPresenterImp(getActivity());
         mPresenterImp.onInit(this);
         mChatAdapter = new ChatAdapter(getActivity());
         mChatAdapter.subscribe(mPresenterImp);

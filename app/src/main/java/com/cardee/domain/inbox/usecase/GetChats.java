@@ -7,7 +7,6 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class GetChats implements UseCase<GetChats.RequestValues, GetChats.ResponseValues> {
 
@@ -20,7 +19,7 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mDisposable = mRepository.getChats()
+        mDisposable = mRepository.getChats(values.getAttachment())
                 .subscribe(
                         inboxChats -> callback.onSuccess(new ResponseValues(inboxChats)),
                         throwable -> {
@@ -29,6 +28,15 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
 
     public static class RequestValues implements UseCase.RequestValues {
 
+        private final String mAttachment;
+
+        public RequestValues(String attachment) {
+            mAttachment = attachment;
+        }
+
+        public String getAttachment() {
+            return mAttachment;
+        }
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {

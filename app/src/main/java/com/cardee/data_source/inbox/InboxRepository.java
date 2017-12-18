@@ -7,6 +7,7 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Predicate;
 
 public class InboxRepository implements InboxRepositoryContract {
 
@@ -29,12 +30,11 @@ public class InboxRepository implements InboxRepositoryContract {
     }
 
     @Override
-    public Observable<List<InboxChat>> getChats() {
-        return Observable.create(emitter ->
-                mChatLocalSource.getLocalChats().subscribe(inboxChats -> {
-                    emitter.onNext(inboxChats);
-                    emitter.onComplete();
-                }, emitter::onError));
+    public Observable<List<InboxChat>> getChats(String attachment) {
+        Observable<List<InboxChat>> localObservable = mChatLocalSource.getLocalChats(attachment);
+        Observable<List<InboxChat>> remoteObservable = mChatRemoteSource.getRemoteChats(attachment);
+        return Observable
+                .merge(localObservable, remoteObservable);
 
     }
 }

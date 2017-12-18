@@ -59,7 +59,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(BaseAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
-                    pushFcmOb();
+                    pushFcTokenToServer();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
@@ -91,7 +91,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(SocialAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
-                    pushFcmOb();
+                    pushFcTokenToServer();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
@@ -111,11 +111,10 @@ public class UserRepository implements UserDataSource {
 
             }
         });
-
-        pushFcmOb();
+        pushFcTokenToServer();
     }
 
-    public void pushFcmOb() {
+    private void pushFcTokenToServer() {
         if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()){
             return;
         }
@@ -155,8 +154,7 @@ public class UserRepository implements UserDataSource {
 
             }
         });
-
-        pushFcmOb();
+        pushFcTokenToServer();
     }
 
     @Override
@@ -246,7 +244,7 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onResponse(Call<BaseAuthResponse> call, Response<BaseAuthResponse> response) {
                 if (response.isSuccessful()) {
-                    pushFcmOb();
+                    pushFcTokenToServer();
                     String token = response.body().getBody().getToken();
                     AccountManager.getInstance(CardeeApp.context).saveToken(token);
                     if (registerValues.getImage() != null) {

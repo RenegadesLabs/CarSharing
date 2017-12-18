@@ -7,11 +7,12 @@ import com.cardee.data_source.inbox.ChatDataSource;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
 import com.cardee.data_source.inbox.local.entity.Chat;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.domain.util.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Maybe;
-import io.reactivex.Single;
+import io.reactivex.Observable;
 
 public class ChatLocalDataSource implements ChatDataSource {
 
@@ -32,8 +33,12 @@ public class ChatLocalDataSource implements ChatDataSource {
     }
 
     @Override
-    public Maybe<List<InboxChat>> getLocalChats() {
-        return null;
+    public Observable<List<InboxChat>> getLocalChats(String attachment) {
+        ChatMapper mapper = new ChatMapper();
+        return mDataBase.getChatDao()
+                .getChats(attachment)
+                .map(mapper::map)
+                .toObservable();
     }
 
     @Override
@@ -42,7 +47,32 @@ public class ChatLocalDataSource implements ChatDataSource {
     }
 
     @Override
-    public Single<List<InboxChat>> getRemoteChats() {
+    public Observable<List<InboxChat>> getRemoteChats(String attachment) {
         return null;
+    }
+
+    private class ChatMapper implements Mapper<List<Chat>, List<InboxChat>> {
+
+        private List<InboxChat> mChats;
+
+        ChatMapper() {
+            mChats = new ArrayList<>();
+        }
+
+        @Override
+        public List<InboxChat> map(List<Chat> localChats) {
+            for (Chat localChat : localChats) {
+                InboxChat chat = new InboxChat.Builder()
+                        .withChatId(localChat.getChatId())
+                        .withName(localChat.getRecipientName())
+                        .withPhotoUrl(localChat.getPhotoUrl())
+                        .withLastMessage(localChat.getLastMessageText())
+                        .withLastMessageTime(localChat.getLastMessageTime())
+                        .withCarPhoto(localChat.getCarPhotoUrl())
+                        .build();
+                mChats.add(chat);
+            }
+            return mChats;
+        }
     }
 }

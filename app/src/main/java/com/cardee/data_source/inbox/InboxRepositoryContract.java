@@ -8,5 +8,5 @@ import io.reactivex.Observable;
 
 public interface InboxRepositoryContract {
 
-    Observable<List<InboxChat>> getChats();
+    Observable<List<InboxChat>> getChats(String attachment);
 }

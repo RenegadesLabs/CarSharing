@@ -1,6 +1,9 @@
 package com.cardee.inbox.chat;
 
+import android.content.Context;
+
 import com.cardee.data_source.Error;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.GetChats;
@@ -11,12 +14,15 @@ import io.reactivex.functions.Consumer;
 public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxChat> {
 
     private ChatContract.View mView;
+
     private final GetChats mGetChats;
     private final UseCaseExecutor mExecutor;
+    private final String mAttachment;
 
-    ChatPresenterImp() {
+    ChatPresenterImp(Context context) {
         mGetChats = new GetChats();
         mExecutor = UseCaseExecutor.getInstance();
+        mAttachment = AccountManager.getInstance(context).getSessionInfo();
     }
 
     @Override
@@ -27,7 +33,7 @@ public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxC
     @Override
     public void onGetChats() {
         mExecutor.execute(mGetChats,
-                new GetChats.RequestValues(),
+                new GetChats.RequestValues(mAttachment),
                 new UseCase.Callback<GetChats.ResponseValues>() {
                     @Override
                     public void onSuccess(GetChats.ResponseValues response) {

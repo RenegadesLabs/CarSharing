@@ -19,8 +19,8 @@ import retrofit2.http.Path;
 
 public interface InboxApi {
 
-    @GET("/chats/")
-    Single<ChatListResponse> getChats();
+    @GET("/api/dev/chats/{attachment}")
+    Single<ChatListResponse> getChats(@Path(value = "attachment") String attachment);
 
     @GET("/chats/{chat_id}")
     Observable<ChatMessagesResponse> getMessages(@Path("chat_id") int chatId);
