@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface CarImagesEditContract {
 
+    String CAR_ID = "car_id";
+    String IMAGE_ID = "image_id";
+
     interface View extends BaseView {
 
         void onImagesObtained(List<Image> images);

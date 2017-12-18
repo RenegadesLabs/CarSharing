@@ -73,8 +73,8 @@
         <activity android:name=".owner_car_rental_info.terms.view.RentalTermsInsuranceActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".owner_car_rental_info.terms.view.RentalTermsAdditional"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".owner_car_details.view.CarImagesActivity" android:theme="@style/BlackTheme" />
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
         <meta-data

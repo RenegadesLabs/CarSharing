@@ -28,11 +28,12 @@ import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
 import java.util.List;
 
+import static com.cardee.owner_car_details.CarImagesEditContract.CAR_ID;
+
 
 public class CarImagesFragment extends Fragment
         implements CarImagesEditContract.View, ImageViewListener {
 
-    private static final String CAR_ID = "car_id";
     private static final int IMAGE_REQUEST_CODE = 102;
 
     private DetailsChangedListener parentListener;
@@ -44,6 +45,8 @@ public class CarImagesFragment extends Fragment
     private CarImagesAdapter adapter;
     private CarImagesPresenter presenter;
     private Toast currentToast;
+
+    private int carId;
 
     public static CarImagesFragment newInstance(int id) {
         CarImagesFragment fragment = new CarImagesFragment();
@@ -90,11 +93,12 @@ public class CarImagesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_car_images, container, false);
+        carId = getArguments().getInt(CAR_ID);
         imagesGrid = rootView.findViewById(R.id.images_grid);
         topView = rootView.findViewById(R.id.top_block);
         cautionView = rootView.findViewById(R.id.images_caution);
         loadingView = rootView.findViewById(R.id.progress_layout);
-        presenter = new CarImagesPresenter(this, getArguments().getInt(CAR_ID));
+        presenter = new CarImagesPresenter(this, carId);
         adapter = new CarImagesAdapter(getActivity());
         adapter.setImageViewListener(this);
         imagesGrid.setAdapter(adapter);
@@ -156,7 +160,11 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void onImageClick(Image image) {
-
+        Intent intent = new Intent(getActivity(), CarImagesActivity.class);
+        Bundle args = new Bundle();
+        args.putInt(CarImagesEditContract.CAR_ID, carId);
+        args.putInt(CarImagesEditContract.IMAGE_ID, image.getImageId());
+        getActivity().startActivity(intent);
     }
 
     @Override

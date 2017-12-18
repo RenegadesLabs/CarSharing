@@ -65,7 +65,7 @@ public class CarImagesPresenter implements CarImagesEditContract.Presenter {
         executor.execute(addImage, new AddImage.RequestValues(id, uri), new UseCase.Callback<AddImage.ResponseValues>() {
             @Override
             public void onSuccess(AddImage.ResponseValues response) {
-                Integer imageId = response.getImageId();
+//                Integer imageId = response.getImageId();
                 init();
             }
 

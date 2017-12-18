@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
-</LinearLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close"
+            app:titleTextColor="@color/bg_main">
+
+            <TextView
+                android:id="@+id/toolbar_action"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/toolbar_action_delete" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/image_slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="160dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/slider_indicator"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="@dimen/widget_padding_regular"
+            android:paddingStart="@dimen/widget_padding_regular"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintEnd_toEndOf="@id/image_slider"
+            app:layout_constraintTop_toBottomOf="@id/image_slider" />
+
+        <TextView
+            android:id="@+id/btn_delete"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_btn_stroke"
+            android:gravity="center"
+            android:text="@string/set_cover_image"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

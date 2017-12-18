@@ -102,6 +102,7 @@
     <string name="toolbar_action_options">Options</string>
     <string name="toolbar_action_more">More</string>
     <string name="toolbar_action_save">Save</string>
+    <string name="toolbar_action_delete">Delete</string>
 
     <string name="title_edit">edit</string>
     <string name="set">set</string>
@@ -466,4 +467,5 @@
     Posting fake images may lead to account flag or suspension.</string>
     <string name="add_image">Add Image</string>
     <string name="cover_image">Cover Image</string>
+    <string name="set_cover_image">Set As Cover Image</string>
 </resources>
