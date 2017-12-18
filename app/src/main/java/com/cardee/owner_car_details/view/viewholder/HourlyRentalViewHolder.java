@@ -277,9 +277,10 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
         stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
-        stringDelegate.onSetRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateFirst());
-        stringDelegate.onSetRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateFirst());
+        stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateSecond());
         stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
+        stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
     }
 
     @Override

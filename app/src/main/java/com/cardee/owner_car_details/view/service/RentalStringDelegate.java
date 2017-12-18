@@ -149,7 +149,7 @@ public class RentalStringDelegate {
         return formattedTime;
     }
 
-    public void onSetRentalRateFirst(TextView tv, Float amount) {
+    public void onSetDailyRentalRateFirst(TextView tv, Float amount) {
         if (amount != null) {
             String value = "$" + Float.toString(amount) + " per day (weekdays)";
             tv.setVisibility(View.VISIBLE);
@@ -157,9 +157,25 @@ public class RentalStringDelegate {
         }
     }
 
-    public void onSetRentalRateSecond(TextView tv, Float amount) {
+    public void onSetDailyRentalRateSecond(TextView tv, Float amount) {
         if (amount != null) {
             String value = "$" + Float.toString(amount) + " per day (weekends and P.H.)";
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(value);
+        }
+    }
+
+    public void onSetHourlyRentalRateFirst(TextView tv, Float amount) {
+        if (amount != null) {
+            String value = "$" + Float.toString(amount) + " per hour (off-peak)";
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(value);
+        }
+    }
+
+    public void onSetHourlyRentalRateSecond(TextView tv, Float amount) {
+        if (amount != null) {
+            String value = "$" + Float.toString(amount) + " per hour (peak)";
             tv.setVisibility(View.VISIBLE);
             tv.setText(value);
         }
@@ -181,5 +197,13 @@ public class RentalStringDelegate {
         }
     }
 
-
+    public void onSetFuelPolicy(TextView tv, String policyName, String payAmountMileage) {
+        if (policyName == null || policyName.isEmpty()) {
+            return;
+        }
+        String val = policyName + (payAmountMileage != null && !payAmountMileage.isEmpty() ? " @ "
+                + payAmountMileage + " per km" : "");
+        tv.setVisibility(View.VISIBLE);
+        tv.setText(val);
+    }
 }

@@ -277,9 +277,10 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getDailyCount());
         stringDelegate.onSetPickupTime(timingPickup, rentalDetails.getDailyTimePickup());
         stringDelegate.onSetReturnTime(timingReturn, rentalDetails.getDailyTimeReturn());
-        stringDelegate.onSetRentalRateFirst(rentalRatesValueFirst, rentalDetails.getDailyAmountRateFirst());
-        stringDelegate.onSetRentalRateSecond(rentalRatesValueSecond, rentalDetails.getDailyAmountRateSecond());
+        stringDelegate.onSetDailyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getDailyAmountRateFirst());
+        stringDelegate.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getDailyAmountRateSecond());
         stringDelegate.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.getDailyAmountDiscountFirst());
+        stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getDailyFuelPolicyName(), "");
     }
 
     @Override
