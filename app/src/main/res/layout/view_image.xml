@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/widget_margin_xx_small">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/primary_image_sign"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom"
+        android:background="@color/bg_transparent_black"
+        android:gravity="center"
+        android:text="@string/cover_image"
+        android:textColor="@color/bg_main"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="@id/image_view" />
+
+    <FrameLayout
+        android:id="@+id/item_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/car_primary_image_loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:layout_gravity="center"
+            android:theme="@style/LoadingIndicator" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

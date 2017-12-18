@@ -1,6 +1,8 @@
 package com.cardee.data_source;
 
 
+import android.net.Uri;
+
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
@@ -37,9 +39,21 @@ public interface CarEditDataSource {
 
     void updateFuelPolicyHourly(Integer id, FuelPolicyEntity fuelPolicy, Callback callback);
 
+    void uploadImage(Integer id, Uri uri, ImageCallback callback);
+
+
     interface Callback {
         void onSuccess();
 
         void onError(Error error);
+    }
+
+    abstract class ImageCallback implements Callback {
+        public abstract void onSuccess(int imageId);
+
+        @Override
+        public void onSuccess() {
+
+        }
     }
 }

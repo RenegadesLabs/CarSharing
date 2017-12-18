@@ -78,7 +78,6 @@
                 android:layout_marginEnd="@dimen/widget_margin_large"
                 android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
-                android:visibility="gone"
                 android:textColor="@color/text_picture_overlaid"
                 android:textSize="@dimen/text_regular"
                 app:layout_constraintEnd_toEndOf="parent"

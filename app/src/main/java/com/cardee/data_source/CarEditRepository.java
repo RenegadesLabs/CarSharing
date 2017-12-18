@@ -1,6 +1,8 @@
 package com.cardee.data_source;
 
 
+import android.net.Uri;
+
 import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
@@ -35,7 +37,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateLocation(final Integer id, NewCarData carData, final CarEditDataSource.Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateLocation(id, carData, new Callback() {
@@ -55,7 +57,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateInfo(Integer id, NewCarData carData, CarEditDataSource.Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateInfo(id, carData, callback);
@@ -64,7 +66,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalRequirements(Integer id, RentalTermsRequirementsEntity requirements, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalRequirements(id, requirements, new Callback() {
@@ -83,7 +85,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalRules(Integer id, CarRuleEntity rules, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalRules(id, rules, new Callback() {
@@ -102,7 +104,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalSecurityDeposit(Integer id, RentalTermsSecurityDepositEntity securityDeposit, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalSecurityDeposit(id, securityDeposit, new Callback() {
@@ -121,7 +123,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalInsuranceExcess(Integer id, RentalTermsInsuranceEntity insuranceExcess, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalInsuranceExcess(id, insuranceExcess, new Callback() {
@@ -140,7 +142,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additional, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalAdditionalTerms(id, additional, new Callback() {
@@ -159,7 +161,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalRatesDaily(Integer id, RentalRatesEntity ratesEntity, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
@@ -178,7 +180,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
@@ -197,7 +199,7 @@ public class CarEditRepository implements CarEditDataSource {
     @Override
     public void updateDescription(final Integer id, final String description, final Callback callback) {
         if (id == null) {
-            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
         remoteDataSource.updateDescription(id, description, new Callback() {
@@ -246,6 +248,27 @@ public class CarEditRepository implements CarEditDataSource {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void uploadImage(final Integer id, Uri uri, final ImageCallback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.uploadImage(id, uri, new ImageCallback() {
+            @Override
+            public void onSuccess(int imageId) {
+                OwnerCarRepository.getInstance().refresh(id);
+                OwnerCarsRepository.getInstance().refreshCars();
+                callback.onSuccess(imageId);
             }
 
             @Override

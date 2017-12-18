@@ -27,6 +27,6 @@ public class Image {
     }
 
     public Boolean getPrimary() {
-        return mPrimary;
+        return mPrimary != null && mPrimary;
     }
 }

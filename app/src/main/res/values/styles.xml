@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BlackTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/bg_splash</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -199,6 +204,7 @@
     <style name="NumberPicker" parent="AppTheme">
         <item name="android:textColorPrimary">@color/blue</item>
     </style>
+
     <style name="AppCompatAlertDialogTheme" parent="AppTheme">
         <item name="android:textColorAlertDialogListItem">@color/blue</item>
         <item name="textColorAlertDialogListItem">@color/blue</item>

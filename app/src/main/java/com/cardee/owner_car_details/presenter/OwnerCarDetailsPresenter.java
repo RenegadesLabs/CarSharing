@@ -78,7 +78,8 @@ public class OwnerCarDetailsPresenter
         args.putInt(NewCarFormsContract.CAR_ID, mCarId);
         switch (event.getAction()) {
             case EDIT_IMAGES:
-                mView.moveToImages(null);
+                args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.IMAGES);
+                mView.moveToImages(args);
                 break;
             case EDIT_SPECS:
                 mView.moveToSpecs(null);
