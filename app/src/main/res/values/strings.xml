@@ -207,6 +207,17 @@
     <string name="car_rental_info_terms">Rental Terms</string>
     <string name="car_rental_info_instant">Instant Booking</string>
     <string name="car_rental_info_delivery">Curbside Delivery</string>
+    <string name="car_rental_info_instant_text">Confirm booking request instantly if it meets the
+        criteria you set.</string>
+    <string name="car_rental_info_delivery_text">Send vehicle to Renter\'s desired pickup location
+        for collection, at a delivery rate you set.</string>
+    <string name="car_rental_info_cash_text">Allow Renter\'s to pay in cash for the booking. Note
+        that it will be your responsibility to ensure cash is collected.</string>
+    <string name="car_rental_info_instant_criteria">Instant booking criteria</string>
+    <string name="at_least">at least</string>
+    <string name="in_advance">in advance</string>
+    <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
+        be confirmed automatically?</string>
 
     <!--Car Rental Terms-->
     <string name="car_rental_terms_requirements">Basic Requirements</string>
@@ -302,9 +313,9 @@
     <string name="owner_profile_info_percent">%</string>
     <string name="owner_profile_info_minutes">min</string>
     <string name="owner_profile_info_note_edit">Note</string>
-    <string name="owner_profile_info_note_change">Change</string>
-    <string name="owner_profile_info_note_change_title">Change note</string>
-    <string name="owner_profile_info_note_change_success">Note changed</string>
+    <string name="profile_info_note_change">Change</string>
+    <string name="profile_info_note_change_title">Change note</string>
+    <string name="profile_info_note_change_success">Note changed</string>
     <string name="owner_profile_info_name_change_success">Name changed</string>
     <string name="owner_profile_info_default_city">Singapore</string>
     <string name="owner_profile_info_photo_success">Profile photo changed!</string>
@@ -393,11 +404,13 @@
     <string name="send_feedback_success">Feedback sent</string>
 
     <!--Renter Profile-->
+    <string name="renter_profile_title">Renter Profile</string>
     <string name="renter_profile_age">Age</string>
     <string name="driving_exp">Driving Exp.</string>
     <string name="year">year</string>
     <string name="yrs">yrs</string>
-    <string name="renter_profile_default_note">Add some info about yourself :)</string>
+    <string name="profile_default_note">Add some info about yourself :)</string>
+    <string name="comment">\u0020Comment</string>
 
 
     <!--Calendar-->

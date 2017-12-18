@@ -13,18 +13,20 @@ import com.cardee.domain.owner.usecase.Register;
 import com.cardee.domain.user.usecase.SocialLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegisterPresenter {
 
@@ -104,7 +106,7 @@ public class RegisterPresenter {
         if (acc != null) {
             String code = acc.getServerAuthCode();
             OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = new FormEncodingBuilder()
+            RequestBody requestBody = new FormBody.Builder()
                     .add("grant_type", "authorization_code")
                     .add("client_id", "223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com")
                     .add("code", code)
@@ -117,12 +119,12 @@ public class RegisterPresenter {
                     .build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(final Request request, final IOException e) {
+                public void onFailure(Call call, IOException e) {
 
                 }
 
                 @Override
-                public void onResponse(final Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         mView.onProceedGoogleLogin(jsonObject.getString("access_token"));

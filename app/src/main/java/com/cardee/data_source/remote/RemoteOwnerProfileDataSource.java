@@ -12,7 +12,7 @@ import com.cardee.data_source.remote.api.profile.Profile;
 import com.cardee.data_source.remote.api.profile.request.ChangeEmailRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
-import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 
@@ -56,7 +56,7 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
     }
 
     @Override
-    public void changeNote(OwnerNoteRequest noteRequest, final NoResponseCallback callback) {
+    public void changeNote(ChangeNoteRequest noteRequest, final NoResponseCallback callback) {
         mApi.updateOwnerNote(noteRequest).subscribe(new Consumer<NoDataResponse>() {
             @Override
             public void accept(NoDataResponse noDataResponse) throws Exception {
