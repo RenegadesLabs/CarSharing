@@ -24,6 +24,7 @@
         android:text="@string/cover_image"
         android:textColor="@color/bg_main"
         android:textSize="@dimen/text_small"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/image_view" />
 
     <FrameLayout

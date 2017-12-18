@@ -7,7 +7,9 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.domain.owner.usecase.AddImage;
+import com.cardee.domain.owner.usecase.DeleteImage;
 import com.cardee.domain.owner.usecase.GetCarImages;
+import com.cardee.domain.owner.usecase.SetPrimaryImage;
 import com.cardee.owner_car_details.CarImagesEditContract;
 
 
@@ -18,6 +20,8 @@ public class CarImagesPresenter implements CarImagesEditContract.Presenter {
     private final UseCaseExecutor executor;
     private final GetCarImages getCarImages;
     private final AddImage addImage;
+    private final DeleteImage deleteImage;
+    private final SetPrimaryImage setPrimaryImage;
 
     public CarImagesPresenter(CarImagesEditContract.View view, int id) {
         this.id = id;
@@ -25,6 +29,8 @@ public class CarImagesPresenter implements CarImagesEditContract.Presenter {
         executor = UseCaseExecutor.getInstance();
         getCarImages = new GetCarImages();
         addImage = new AddImage();
+        deleteImage = new DeleteImage();
+        setPrimaryImage = new SetPrimaryImage();
     }
 
     @Override
@@ -50,13 +56,49 @@ public class CarImagesPresenter implements CarImagesEditContract.Presenter {
     }
 
     @Override
-    public void onImageSetPrimary(Image image) {
+    public void onImageSetPrimary(final Image image) {
+        view.showProgress(true);
+        executor.execute(setPrimaryImage, new SetPrimaryImage.RequestValues(id, image.getImageId()),
+                new UseCase.Callback<SetPrimaryImage.ResponseValues>() {
+                    @Override
+                    public void onSuccess(SetPrimaryImage.ResponseValues response) {
+                        if (view != null) {
+                            view.showProgress(false);
+                            view.onImageSetPrimary(image);
+                        }
+                    }
 
+                    @Override
+                    public void onError(Error error) {
+                        if (view != null) {
+                            view.showProgress(false);
+                            view.showMessage(error.getMessage());
+                        }
+                    }
+                });
     }
 
     @Override
-    public void onImageRemove(Image image) {
+    public void onImageRemove(final Image image) {
+        view.showProgress(true);
+        executor.execute(deleteImage, new DeleteImage.RequestValues(id, image.getImageId()),
+                new UseCase.Callback<DeleteImage.ResponseValues>() {
+                    @Override
+                    public void onSuccess(DeleteImage.ResponseValues response) {
+                        if (view != null) {
+                            view.showProgress(false);
+                            view.onImageRemoved(image);
+                        }
+                    }
 
+                    @Override
+                    public void onError(Error error) {
+                        if (view != null) {
+                            view.showProgress(false);
+                            view.showMessage(error.getMessage());
+                        }
+                    }
+                });
     }
 
     @Override

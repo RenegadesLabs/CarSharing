@@ -177,7 +177,7 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_REQUEST_CODE) {
+        if (requestCode == IMAGE_REQUEST_CODE && data != null) {
             Uri uri = data.getData();
             presenter.onAddNewImage(uri);
             return;

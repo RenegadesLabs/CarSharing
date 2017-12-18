@@ -277,4 +277,46 @@ public class CarEditRepository implements CarEditDataSource {
             }
         });
     }
+
+    @Override
+    public void deleteImage(final Integer id, Integer imageId, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.deleteImage(id, imageId, new Callback() {
+            @Override
+            public void onSuccess() {
+                OwnerCarRepository.getInstance().refresh(id);
+                OwnerCarsRepository.getInstance().refreshCars();
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void setPrimaryImage(final Integer id, final Integer imageId, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.setPrimaryImage(id, imageId, new Callback() {
+            @Override
+            public void onSuccess() {
+                OwnerCarRepository.getInstance().refresh(id);
+                OwnerCarsRepository.getInstance().refreshCars();
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
 }

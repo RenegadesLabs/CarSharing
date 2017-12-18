@@ -29,13 +29,13 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/image_slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="160dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +50,12 @@
             android:paddingStart="@dimen/widget_padding_regular"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_regular"
+            android:text="1 of 4"
             app:layout_constraintEnd_toEndOf="@id/image_slider"
             app:layout_constraintTop_toBottomOf="@id/image_slider" />
 
         <TextView
-            android:id="@+id/btn_delete"
+            android:id="@+id/btn_set_cover_image"
             android:layout_width="0dp"
             android:layout_height="@dimen/toolbar_height"
             android:layout_margin="2dp"
@@ -67,5 +68,25 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/car_primary_image_loading_indicator"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:layout_gravity="center"
+                android:theme="@style/LoadingIndicator" />
+        </FrameLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

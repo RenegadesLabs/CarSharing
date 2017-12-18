@@ -39,30 +39,36 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void setItems(List<Image> images) {
-        if (items.isEmpty()) {
-            items.add(ImageItemWrapper.newAddButtonItem());
+        items.clear();
+        for (Image image : images) {
+            items.add(ImageItemWrapper.newImageItem(image));
         }
-        List<ImageItemWrapper> newItems = ListUtil.map(images, new Mapper<Image, ImageItemWrapper>() {
-            @Override
-            public ImageItemWrapper map(Image input) {
-                return ImageItemWrapper.newImageItem(input);
-            }
-        });
-        for (int i = 0; i < newItems.size(); i++) {
-            ImageItemWrapper item = newItems.get(i);
-            if (!items.contains(item)) {
-                int index = items.size() - 1;
-                items.add(index, item);
-                notifyItemInserted(index);
-            }
-        }
-        for (int i = 0; i < items.size(); i++) {
-            ImageItemWrapper item = items.get(i);
-            if (item.getViewType() == IMAGE_VIEW && !newItems.contains(item)) {
-                items.remove(i);
-                notifyItemRemoved(i);
-            }
-        }
+        items.add(ImageItemWrapper.newAddButtonItem());
+        notifyDataSetChanged();
+//        if (items.isEmpty()) {
+//            items.add(ImageItemWrapper.newAddButtonItem());
+//        }
+//        List<ImageItemWrapper> newItems = ListUtil.map(images, new Mapper<Image, ImageItemWrapper>() {
+//            @Override
+//            public ImageItemWrapper map(Image input) {
+//                return ImageItemWrapper.newImageItem(input);
+//            }
+//        });
+//        for (int i = 0; i < newItems.size(); i++) {
+//            ImageItemWrapper item = newItems.get(i);
+//            if (!items.contains(item)) {
+//                int index = items.size() - 1;
+//                items.add(index, item);
+//                notifyItemInserted(index);
+//            }
+//        }
+//        for (int i = 0; i < items.size(); i++) {
+//            ImageItemWrapper item = items.get(i);
+//            if (item.getViewType() == IMAGE_VIEW && !newItems.contains(item)) {
+//                items.remove(i);
+//                notifyItemRemoved(i);
+//            }
+//        }
     }
 
     public void setItem(Image image) {
@@ -138,7 +144,7 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void bind(Image image, RequestManager imageRequestManager) {
-            primaryImageSign.setVisibility(image.getPrimary() ? View.VISIBLE : View.GONE);
+            primaryImageSign.setVisibility(image.isPrimary() ? View.VISIBLE : View.GONE);
             imageRequestManager
                     .load(image.getLink())
                     .listener(new RequestListener<String, GlideDrawable>() {

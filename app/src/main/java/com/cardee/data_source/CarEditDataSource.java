@@ -41,6 +41,10 @@ public interface CarEditDataSource {
 
     void uploadImage(Integer id, Uri uri, ImageCallback callback);
 
+    void deleteImage(Integer id, Integer imageId, Callback callback);
+
+    void setPrimaryImage(Integer id, Integer imageId, Callback callback);
+
 
     interface Callback {
         void onSuccess();
