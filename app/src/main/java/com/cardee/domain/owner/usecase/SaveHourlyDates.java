@@ -28,8 +28,10 @@ public class SaveHourlyDates implements UseCase<SaveHourlyDates.RequestValues, S
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
             return;
         }
+        String begin = values.getDates().isEmpty() ? null : values.getStartTime();
+        String end = values.getDates().isEmpty() ? null : values.getEndTime();
         repository.saveHourlyAvailability(values.getId(), mapper.transform(values.getDates()),
-                values.getStartTime(), values.getEndTime(), new AvailabilityDataSource.Callback() {
+                begin, end, new AvailabilityDataSource.Callback() {
                     @Override
                     public void onSuccess() {
                         callback.onSuccess(new SaveHourlyDates.ResponseValues(true));

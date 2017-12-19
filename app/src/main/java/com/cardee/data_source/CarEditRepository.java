@@ -7,6 +7,7 @@ import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
+import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
@@ -14,6 +15,7 @@ import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEnti
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 
 public class CarEditRepository implements CarEditDataSource {
 
@@ -35,7 +37,7 @@ public class CarEditRepository implements CarEditDataSource {
     }
 
     @Override
-    public void updateLocation(final Integer id, NewCarData carData, final CarEditDataSource.Callback callback) {
+    public void updateLocation(final Integer id, final NewCarData carData, final CarEditDataSource.Callback callback) {
         if (id == null) {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
@@ -43,7 +45,20 @@ public class CarEditRepository implements CarEditDataSource {
         remoteDataSource.updateLocation(id, carData, new Callback() {
             @Override
             public void onSuccess() {
-                OwnerCarRepository.getInstance().refresh(id);
+                CarResponseBody car = OwnerCarRepository.getInstance().getCachedCar(id);
+                if (car != null && car.getCarDetails() != null) {
+                    car.getCarDetails().setAddress(carData.getAddress());
+                    car.getCarDetails().setTown(carData.getTown());
+                    car.getCarDetails().setLatitude(carData.getLatitude());
+                    car.getCarDetails().setLongitude(carData.getLongitude());
+                }
+                CarEntity carFromList = OwnerCarsRepository.getInstance().getCachedCar(id);
+                if (carFromList != null) {
+                    BaseCarEntity carDetails = carFromList.getCarDetails();
+                    if (carDetails != null) {
+                        carDetails.setAddress(carData.getAddress());
+                    }
+                }
                 callback.onSuccess();
             }
 
