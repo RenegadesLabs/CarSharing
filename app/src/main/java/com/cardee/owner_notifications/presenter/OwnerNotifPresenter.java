@@ -50,13 +50,13 @@ public class OwnerNotifPresenter {
         builder.create().show();
     }
 
-    public void onBookingRequestSwitched() {
+    public void onBookingRequestSwitched(boolean checked) {
     }
 
-    public void onInstantBookSwitched() {
+    public void onInstantBookSwitched(boolean checked) {
     }
 
-    public void onRemindersSwitched() {
+    public void onRemindersSwitched(boolean checked) {
     }
 
     private void sendHandoverReminderToServer(int i) {

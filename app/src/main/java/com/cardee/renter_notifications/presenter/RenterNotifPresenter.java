@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 import com.cardee.R;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.renter_notifications.RenterNotifView;
+import com.cardee.renter_notifications.view.RenterNotifView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,13 +49,13 @@ public class RenterNotifPresenter {
         builder.create().show();
     }
 
-    public void onBookingRequestSwitched() {
+    public void onBookingRequestSwitched(boolean checked) {
     }
 
-    public void onInstantBookSwitched() {
+    public void onInstantBookSwitched(boolean checked) {
     }
 
-    public void onRemindersSwitched() {
+    public void onRemindersSwitched(boolean checked) {
     }
 
     private void sendHandoverReminderToServer(int i) {

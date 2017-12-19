@@ -1,4 +1,4 @@
-package com.cardee.renter_notifications;
+package com.cardee.renter_notifications.view;
 
 
 import com.cardee.mvp.BaseView;

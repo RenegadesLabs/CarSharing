@@ -6,6 +6,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.cardee.owner_notifications.presenter.OwnerNotifPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifView {
@@ -74,19 +76,19 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
         mPresenter.onReturnReminderClicked(this);
     }
 
-    @OnClick(R.id.sw_booking_request)
-    public void onBookingRequestSwitched() {
-        mPresenter.onBookingRequestSwitched();
+    @OnCheckedChanged(R.id.sw_booking_request)
+    public void onBookingRequestSwitched(CompoundButton button, boolean checked) {
+        mPresenter.onBookingRequestSwitched(checked);
     }
 
-    @OnClick(R.id.sw_instant_booking)
-    public void onInstantBookSwitched() {
-        mPresenter.onInstantBookSwitched();
+    @OnCheckedChanged(R.id.sw_instant_booking)
+    public void onInstantBookSwitched(CompoundButton button, boolean checked) {
+        mPresenter.onInstantBookSwitched(checked);
     }
 
-    @OnClick(R.id.sw_reminders)
-    public void onRemindersSwitched() {
-        mPresenter.onRemindersSwitched();
+    @OnCheckedChanged(R.id.sw_reminders)
+    public void onRemindersSwitched(CompoundButton button, boolean checked) {
+        mPresenter.onRemindersSwitched(checked);
     }
 
 
