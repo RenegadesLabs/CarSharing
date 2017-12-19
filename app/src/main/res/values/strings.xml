@@ -389,6 +389,9 @@
     <string name="two_days_before">2 days before</string>
     <string name="off">Off</string>
 
+    <!--Renter notifications-->
+    <string name="renter_notif_title">Renter Notifications</string>
+
     <!--Owner cardee-->
     <string name="owner_cardee_title">Cardee</string>
     <string name="mobile_one_text">Mobile 1</string>

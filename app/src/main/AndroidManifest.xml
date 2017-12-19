@@ -118,7 +118,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".inbox.service.InboxMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -146,5 +145,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity" />
+        <activity android:name=".renter_notifications.view.RenterNotifActivity"></activity>
     </application>
+
 </manifest>

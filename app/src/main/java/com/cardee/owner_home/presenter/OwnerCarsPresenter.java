@@ -75,6 +75,9 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
     }
 
     public void destroy() {
+        if (mGetCars != null) {
+            mView.showProgress(false);
+        }
         mView = null;
     }
 

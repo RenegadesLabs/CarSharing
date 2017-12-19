@@ -43,7 +43,6 @@ public class OwnerCarsRepository implements OwnerCarsDataSource {
                 index++;
             }
             callback.onSuccess(cars);
-            return;
         }
 
         mRemoteDataSource.obtainCars(new Callback() {
