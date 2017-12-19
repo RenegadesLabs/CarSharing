@@ -201,7 +201,8 @@ public class RentalStringDelegate {
         if (policyName == null || policyName.isEmpty()) {
             return;
         }
-        String val = policyName + (payAmountMileage != null && !payAmountMileage.isEmpty() ? " @ "
+        String val = policyName + ((payAmountMileage != null && !payAmountMileage.isEmpty()
+                && !policyName.equals("Return with similar level")) ? " @ "
                 + payAmountMileage + " per km" : "");
         tv.setVisibility(View.VISIBLE);
         tv.setText(val);

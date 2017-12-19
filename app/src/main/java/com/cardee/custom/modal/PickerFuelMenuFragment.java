@@ -152,4 +152,13 @@ public class PickerFuelMenuFragment extends BottomSheetDialogFragment {
             }
         }
     }
+
+    public String getCurrentConsumption(String cost) {
+        for (int i = 0; i < COSTS.length; i++) {
+            if (cost.equals(COSTS[i])) {
+                return CONSUMPTIONS[i];
+            }
+        }
+        return "";
+    }
 }

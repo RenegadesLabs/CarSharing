@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
 public class RentalRatesEntity {
 
     @Expose
-    @SerializedName("rate_first")
+    @SerializedName("amnt_rate_first")
     private Double mRateFirst;
 
     @Expose
-    @SerializedName("rate_second")
+    @SerializedName("amnt_rate_second")
     private Double mRateSecond;
 
     @Expose

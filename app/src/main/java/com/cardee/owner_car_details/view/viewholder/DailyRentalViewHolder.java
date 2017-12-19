@@ -171,6 +171,11 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
             case R.id.tv_rentalRentalRatesEdit:
                 Intent iRates = new Intent(getActivity(),
                         RentalRatesActivity.class);
+                iRates.putExtra(RentalRatesActivity.RATE_FIRST, String.valueOf(dailyRental.getDailyAmountRateFirst()));
+                iRates.putExtra(RentalRatesActivity.RATE_SECOND, String.valueOf(dailyRental.getDailyAmountRateSecond()));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_FIRST, String.valueOf(Math.round(dailyRental.getDailyAmountDiscountFirst())));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_SECOND, String.valueOf(Math.round(dailyRental.getDailyAmountDiscountSecond())));
+                iRates.putExtra(RentalRatesActivity.MIN_RENTAL, dailyRental.getDailyMinRentalDuration());
                 iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.DAILY);
                 getActivity().startActivity(iRates);
                 break;

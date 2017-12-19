@@ -40,7 +40,6 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, RentalDetailsContract.ControlView,
         HourlyTimingEventBus.Listener, CompoundButton.OnCheckedChangeListener {
 
-    private RentalDetails mHourlyRental;
 
     private TextView availabilityDays;
     private TextView timing;
@@ -125,7 +124,6 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void bind(RentalDetails model) {
         hourlyRental = model;
         presenter.onBind(model);
-        mHourlyRental = model;
     }
 
     @Override
@@ -138,9 +136,11 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 getActivity().startActivity(new Intent(getActivity(), RentalTermsActivity.class));
                 break;
             case R.id.tv_rentalFuelEdit:
-                Intent i = new Intent(getActivity(), RentalFuelPolicyActivity.class);
-                i.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
-                getActivity().startActivity(i);
+                Intent iFuel = new Intent(getActivity(), RentalFuelPolicyActivity.class);
+                iFuel.putExtra(RentalFuelPolicyActivity.POLICY_ID, hourlyRental.getHourlyFuelPolicyId());
+                iFuel.putExtra(RentalFuelPolicyActivity.AMOUNT_MILEAGE, hourlyRental.getHourlyAmountPayMileage());
+                iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iFuel);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
                 Intent intent = new Intent(getActivity(), AvailabilityCalendarActivity.class);
@@ -171,9 +171,14 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
             case R.id.tv_rentalCurbsideRatesEdit:
                 break;
             case R.id.tv_rentalRentalRatesEdit:
-                Intent ratesIntent = new Intent(getActivity(), RentalRatesActivity.class);
-                ratesIntent.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
-                getActivity().startActivity(ratesIntent);
+                Intent iRates = new Intent(getActivity(), RentalRatesActivity.class);
+                iRates.putExtra(RentalRatesActivity.RATE_FIRST, String.valueOf(hourlyRental.getHourlyAmountRateFirst()));
+                iRates.putExtra(RentalRatesActivity.RATE_SECOND, String.valueOf(hourlyRental.getHourlyAmountRateSecond()));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_FIRST, String.valueOf(Math.round(hourlyRental.getHourlyAmountDiscountFirst())));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_SECOND, String.valueOf(Math.round(hourlyRental.getHourlyAmountDiscountSecond())));
+                iRates.putExtra(RentalRatesActivity.MIN_RENTAL, hourlyRental.getHourlyMinRentalDuration());
+                iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iRates);
                 break;
             case R.id.iv_rentalHelp:
                 showInfoDialog();

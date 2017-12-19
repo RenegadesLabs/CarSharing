@@ -32,6 +32,8 @@ public class RentalDetails {
     private boolean hourlyAcceptCash;
     private Float hourlyAmountRateFirst;
     private Float hourlyAmountRateSecond;
+    private Float hourlyAmountDiscountFirst;
+    private Float hourlyAmountDiscountSecond;
     private Integer hourlyMinRentalDuration;
     private String hourlyAmountPayMileage;
     private Integer hourlyFuelPolicyId;
@@ -243,6 +245,22 @@ public class RentalDetails {
 
     public void setHourlyAmountRateSecond(Float hourlyAmountRateSecond) {
         this.hourlyAmountRateSecond = hourlyAmountRateSecond;
+    }
+
+    public Float getHourlyAmountDiscountFirst() {
+        return hourlyAmountDiscountFirst;
+    }
+
+    public void setHourlyAmountDiscountFirst(Float hourlyAmountDiscountFirst) {
+        this.hourlyAmountDiscountFirst = hourlyAmountDiscountFirst;
+    }
+
+    public Float getHourlyAmountDiscountSecond() {
+        return hourlyAmountDiscountSecond;
+    }
+
+    public void setHourlyAmountDiscountSecond(Float hourlyAmountDiscountSecond) {
+        this.hourlyAmountDiscountSecond = hourlyAmountDiscountSecond;
     }
 
     public Integer getHourlyMinRentalDuration() {
