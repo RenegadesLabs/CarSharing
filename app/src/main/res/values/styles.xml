@@ -207,5 +207,23 @@
     <style name="Color1SwitchStyle">
         <item name="colorControlActivated">@color/blue</item>
     </style>
+    <style name="InboxTabItemTextStyle">
+        <item name="android:textColor">@color/bg_main</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_xlarge</item>
+    </style>
 
+    <style name="InboxTabItemImageStyle">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+    <style name="InboxTabItemDotStyle">
+        <item name="android:layout_width">8dp</item>
+        <item name="android:layout_height">8dp</item>
+        <item name="android:visibility">visible</item>
+    </style>
 </resources>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "223677953401-a7vuqmo73m6j65c6j64qvv5sfdj0bemr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cardee",
+            "certificate_hash": "8f2f604203701f5ea6e367e108a7e78193c7ded3"
+          }
+        },
+        {
           "client_id": "223677953401-5fhrjhb54uvqf1sapv5pospgm60ukjta.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

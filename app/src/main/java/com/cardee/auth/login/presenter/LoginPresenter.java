@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.user.usecase.Login;
@@ -71,6 +73,7 @@ public class LoginPresenter {
                 }
             }
         });
+
     }
 
     private void saveSharedPreferences(String password) {

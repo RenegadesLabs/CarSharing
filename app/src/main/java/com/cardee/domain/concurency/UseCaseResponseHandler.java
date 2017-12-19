@@ -15,20 +15,10 @@ public final class UseCaseResponseHandler {
     }
 
     <R extends UseCase.ResponseValues> void notifyResponse(final R response, final UseCase.Callback<R> callback) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onSuccess(response);
-            }
-        });
+        mHandler.post(() -> callback.onSuccess(response));
     }
 
     <R extends UseCase.ResponseValues> void onError(final Error error, final UseCase.Callback<R> callback) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onError(error);
-            }
-        });
+        mHandler.post(() -> callback.onError(error));
     }
 }

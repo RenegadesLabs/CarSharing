@@ -1,6 +1,5 @@
 package com.cardee.data_source.remote.service;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -10,20 +9,29 @@ import okhttp3.Response;
 
 public class AccountManager {
 
-    private static final String AUTH_STORE = "_auth_store";
+    private static final String AUTH_TOKEN_STORE = "_auth_token_store";
     private static final String AUTH_TOKEN = "_auth_token";
     private static final String AUTH_HEADER_NAME = "Authorization";
     private static final String DEFAULT_AUTH_TOKEN = "";
-    private static final String ACC_STATE_KEY = "account_state";
+
+    private static final String ATTACHMENT = "attachment";
+    private static final String OWNER_SESSION = "owner";
+    private static final String RENTER_SESSION = "renter";
+    private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
 
     private static AccountManager INSTANCE;
 
+    public static AccountManager getInstance(@NonNull Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = new AccountManager(context);
+        }
+        return INSTANCE;
+    }
+
     private SharedPreferences mPrefs;
 
-    public enum ACC_STATE {OWNER, RENTER}
-
     private AccountManager(Context context) {
-        mPrefs = context.getSharedPreferences(AUTH_STORE, Context.MODE_PRIVATE);
+        mPrefs = context.getSharedPreferences(AUTH_TOKEN_STORE, Context.MODE_PRIVATE);
     }
 
     public Request modifyRequestHeaders(Request request) {
@@ -40,7 +48,16 @@ public class AccountManager {
     }
 
     public void saveToken(String token) {
-        mPrefs.edit().putString(AUTH_TOKEN, token).apply();
+        mPrefs.edit()
+                .putString(ATTACHMENT, OWNER_SESSION)
+                .putString(AUTH_TOKEN, token)
+                .apply();
+    }
+
+    public void saveFcmAuthAction() {
+        mPrefs.edit()
+                .putBoolean(FCM_TOKEN_AUTH, true)
+                .apply();
     }
 
     //TODO: delete after user logged state handling implemented
@@ -53,24 +70,15 @@ public class AccountManager {
         mPrefs.edit().remove(AUTH_TOKEN).apply();
     }
 
-    public static AccountManager getInstance(@NonNull Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = new AccountManager(context);
-        }
-        return INSTANCE;
-    }
-
     public boolean isLoggedIn() {
         return !mPrefs.getString(AUTH_TOKEN, "").equals("");
     }
 
-    public ACC_STATE getCurrentState() {
-        String currentState = mPrefs.getString(ACC_STATE_KEY, "");
-        return ACC_STATE.valueOf(currentState);
+    public boolean isFcmTokenAuthenticated() {
+        return mPrefs.getBoolean(FCM_TOKEN_AUTH, false);
     }
 
-    public void setCurrentState(ACC_STATE state) {
-        mPrefs.edit().putString(ACC_STATE_KEY, state.toString()).apply();
+    public String getSessionInfo() {
+        return mPrefs.getString(ATTACHMENT, OWNER_SESSION);
     }
-
 }

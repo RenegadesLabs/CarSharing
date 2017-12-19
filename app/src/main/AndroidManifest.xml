@@ -110,6 +110,23 @@
 
         <service android:name=".owner_car_details.service.FetchAddressService" />
 
+        <activity android:name=".owner_profile_info.view.OwnerProfileInfoActivity" />
+        <activity android:name=".owner_account_details.view.AccountDetailsActivity" />
+        <activity android:name=".owner_change_pass.view.ChangePassActivity" />
+
+        <service android:name=".inbox.service.InboxIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".inbox.service.InboxMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".owner_profile_info.view.OwnerProfileInfoActivity"
             android:screenOrientation="portrait" />
@@ -132,5 +149,4 @@
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity"></activity>
     </application>
-
 </manifest>
