@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.CarAddContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_add.presenter.CarAddPresenter;
 
 import butterknife.BindView;

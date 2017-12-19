@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:paddingBottom="@dimen/widget_padding_mid">
+
+    <LinearLayout
+        android:id="@+id/top_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_underlined_fat"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/widget_padding_large"
+        android:paddingEnd="@dimen/widget_margin_mid"
+        android:paddingStart="@dimen/widget_margin_mid"
+        android:paddingTop="@dimen/widget_padding_large">
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_xlarge"
+            android:layout_height="@dimen/item_icon_side_xlarge"
+            android:background="@drawable/bg_blue_circle"
+            app:srcCompat="@drawable/ic_light_temp"
+            android:padding="@dimen/widget_padding_x_small"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/images_info"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/images_grid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/widget_margin_small"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:layout_marginTop="@dimen/widget_margin_large"
+        app:layout_constraintBottom_toTopOf="@+id/images_caution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_block" />
+
+    <TextView
+        android:id="@+id/images_caution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/widget_margin_regular"
+        android:layout_marginStart="@dimen/widget_margin_regular"
+        android:text="@string/images_caution"
+        android:textColor="@color/red_error"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/car_primary_image_loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:layout_gravity="center"
+            android:theme="@style/LoadingIndicator" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

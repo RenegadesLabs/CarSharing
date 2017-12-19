@@ -4,8 +4,8 @@ package com.cardee.data_source.remote.api.profile;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.request.ChangeEmailRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
-import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
@@ -37,7 +37,11 @@ public interface Profile {
 
     @PUT("profiles/owner/note")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> updateOwnerNote(@Body OwnerNoteRequest ownerNoteRequest);
+    Observable<NoDataResponse> updateOwnerNote(@Body ChangeNoteRequest changeNoteRequest);
+
+    @PUT("profiles/renter/note")
+    @Headers("Content-Type: application/json")
+    Observable<NoDataResponse> updateRenterNote(@Body ChangeNoteRequest changeNoteRequest);
 
     @PUT("profiles/settings")
     @Headers("Content-Type: application/json")

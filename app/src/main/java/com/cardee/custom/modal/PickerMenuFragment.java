@@ -208,4 +208,18 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         }
         return values.toArray(new String[values.size()]);
     }
+
+    private static String[] initBookingHoursArray() {
+        int[] hours = new int[25];
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < hours.length; i++) {
+            hours[i] = i;
+            if (i == 1) {
+                values.add(String.valueOf(hours[i] + " hour"));
+            } else {
+                values.add(String.valueOf(hours[i] + " hours"));
+            }
+        }
+        return values.toArray(new String[values.size()]);
+    }
 }

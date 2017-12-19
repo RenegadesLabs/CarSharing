@@ -19,7 +19,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
-import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
+import com.cardee.owner_car_details.view.service.RentalStringDelegate;
 import com.cardee.owner_home.OwnerCarListContract;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
 
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
-    private final AvailabilityStringDelegate stringDelegate;
+    private final RentalStringDelegate stringDelegate;
 
     private SparseArray<CarListItemViewHolder> mHolders;
 
@@ -46,7 +46,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
         mEventObservable = PublishSubject.create();
-        stringDelegate = new AvailabilityStringDelegate(context);
+        stringDelegate = new RentalStringDelegate(context);
     }
 
     @Override
@@ -81,9 +81,9 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         private final ProgressBar mLoadingIndicator;
 
         private String notAvailable;
-        private AvailabilityStringDelegate delegate;
+        private RentalStringDelegate delegate;
 
-        public CarListItemViewHolder(View itemView, AvailabilityStringDelegate delegate) {
+        public CarListItemViewHolder(View itemView, RentalStringDelegate delegate) {
             super(itemView);
             this.delegate = delegate;
             mTitleView = itemView.findViewById(R.id.car_title);

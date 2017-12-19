@@ -17,7 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.presenter.CarImagePresenter;
-import com.cardee.owner_car_add.view.NewCarFormsContract;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -128,7 +128,7 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
         super.onStart();
         presenter.init();
         parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGES);
     }
 
     @Override

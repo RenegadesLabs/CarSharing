@@ -103,6 +103,7 @@
     <string name="toolbar_action_options">Options</string>
     <string name="toolbar_action_more">More</string>
     <string name="toolbar_action_save">Save</string>
+    <string name="toolbar_action_delete">Delete</string>
 
     <string name="title_edit">edit</string>
     <string name="set">set</string>
@@ -173,6 +174,7 @@
 
     <!--Car Add Item Car Image-->
     <string name="car_add_image_title">Car Image</string>
+    <string name="car_add_images_title">Car Images</string>
     <string name="car_add_image_desc">Upload an image of the front of your vehicle with the license plate number displayed clearly.</string>
     <string name="car_add_image_why">This is for verification purpose only. You can add car images for listing later.</string>
 
@@ -207,6 +209,17 @@
     <string name="car_rental_info_terms">Rental Terms</string>
     <string name="car_rental_info_instant">Instant Booking</string>
     <string name="car_rental_info_delivery">Curbside Delivery</string>
+    <string name="car_rental_info_instant_text">Confirm booking request instantly if it meets the
+        criteria you set.</string>
+    <string name="car_rental_info_delivery_text">Send vehicle to Renter\'s desired pickup location
+        for collection, at a delivery rate you set.</string>
+    <string name="car_rental_info_cash_text">Allow Renter\'s to pay in cash for the booking. Note
+        that it will be your responsibility to ensure cash is collected.</string>
+    <string name="car_rental_info_instant_criteria">Instant booking criteria</string>
+    <string name="at_least">at least</string>
+    <string name="in_advance">in advance</string>
+    <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
+        be confirmed automatically?</string>
 
     <!--Car Rental Terms-->
     <string name="car_rental_terms_requirements">Basic Requirements</string>
@@ -231,8 +244,13 @@
     <string name="car_rental_terms_rules_smoking">Smoking In Car</string>
     <string name="car_rental_terms_rules_malaysia">Driving To Malaysia</string>
     <string name="car_rental_terms_rules_dogs">Dogs On Car</string>
-    <string name="car_rental_terms_rules_own">Add your own rules here…\n\nExample\n1.Pump petrol 95 or above only. Keep receipts.
-    \n\n2.For rental more than 3 days, wash and vacuum before return</string>
+    <string name="car_rental_terms_rules_own">Add your car rules here…\n\nSome examples
+        \n\nNo smoking in car.
+    \nNo driving to malaysia
+    \n\nFor rental of 3 days or more, please wash and vacuum car before returning.
+    \n\nPump only 95 and above for petrol.
+    \n\nIf you have child, booster seats is required and can be provided for additional $5.
+    \n\nIf you have dogs, seats protector is required and can be provided at an additional $10.</string>
     <string name="allow">Allow</string>
     <string name="no">No</string>
 
@@ -280,7 +298,10 @@
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
     <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
-    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 12 to 14 km per litre</string>
+    <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
+    <string name="car_rental_fuel_modal_title">Petrol cost</string>
+    <string name="car_rental_fuel_modal_per_km">Per Km</string>
+    <string name="car_rental_fuel_modal_consumption">Suitable for consumption of</string>
 
     <!--Owner Profile Info-->
     <string name="owner_profile_info_title">Owner Profile</string>
@@ -294,9 +315,9 @@
     <string name="owner_profile_info_percent">%</string>
     <string name="owner_profile_info_minutes">min</string>
     <string name="owner_profile_info_note_edit">Note</string>
-    <string name="owner_profile_info_note_change">Change</string>
-    <string name="owner_profile_info_note_change_title">Change note</string>
-    <string name="owner_profile_info_note_change_success">Note changed</string>
+    <string name="profile_info_note_change">Change</string>
+    <string name="profile_info_note_change_title">Change note</string>
+    <string name="profile_info_note_change_success">Note changed</string>
     <string name="owner_profile_info_name_change_success">Name changed</string>
     <string name="owner_profile_info_default_city">Singapore</string>
     <string name="owner_profile_info_photo_success">Profile photo changed!</string>
@@ -385,11 +406,13 @@
     <string name="send_feedback_success">Feedback sent</string>
 
     <!--Renter Profile-->
+    <string name="renter_profile_title">Renter Profile</string>
     <string name="renter_profile_age">Age</string>
     <string name="driving_exp">Driving Exp.</string>
     <string name="year">year</string>
     <string name="yrs">yrs</string>
-    <string name="renter_profile_default_note">Add some info about yourself :)</string>
+    <string name="profile_default_note">Add some info about yourself :)</string>
+    <string name="comment">\u0020Comment</string>
 
 
     <!--Calendar-->
@@ -465,4 +488,15 @@
         <item>11pm</item>
         <item>12pm</item>
     </string-array>
+    <string name="car_description_hint">Please enter your car description</string>
+    <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
+    and may result in account suspension or termination.</string>
+
+    <string name="images_info">Beautiful photos are key to attract Renter\'s interest!
+    Clean your car, set it up with a nice background, and take photo in good setting!</string>
+    <string name="images_caution">All uploaded images must be actual photos of your vehicle.
+    Posting fake images may lead to account flag or suspension.</string>
+    <string name="add_image">Add Image</string>
+    <string name="cover_image">Cover Image</string>
+    <string name="set_cover_image">Set As Cover Image</string>
 </resources>

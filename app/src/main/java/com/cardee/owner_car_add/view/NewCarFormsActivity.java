@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_add.view.items.CarContactsFragment;
 import com.cardee.owner_car_add.view.items.CarImageFragment;
 import com.cardee.owner_car_add.view.items.CarInfoFragment;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dash_rect"
+    android:layout_margin="@dimen/widget_margin_xx_small"
+    android:minHeight="96dp">
+
+    <ImageView
+        android:id="@+id/add_icon"
+        android:layout_width="@dimen/item_icon_side_large"
+        android:layout_height="@dimen/item_icon_side_large"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_camera_temp"
+        app:layout_constraintBottom_toTopOf="@+id/add_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <TextView
+        android:id="@id/add_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_image"
+        android:textColor="@color/light_blue"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_icon" />
+</android.support.constraint.ConstraintLayout>

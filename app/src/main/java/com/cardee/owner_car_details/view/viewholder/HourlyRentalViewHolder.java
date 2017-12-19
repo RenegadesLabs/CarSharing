@@ -2,19 +2,26 @@ package com.cardee.owner_car_details.view.viewholder;
 
 
 import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
+import com.cardee.custom.modal.BookingPickerMenuFragment;
+import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
@@ -24,37 +31,43 @@ import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
-import com.cardee.owner_car_details.view.service.AvailabilityStringDelegate;
+import com.cardee.owner_car_details.view.service.RentalStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
+import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
-        implements View.OnClickListener, RentalDetailsContract.ControlView, HourlyTimingEventBus.Listener {
+        implements View.OnClickListener, RentalDetailsContract.ControlView,
+        HourlyTimingEventBus.Listener, CompoundButton.OnCheckedChangeListener {
+
+    private RentalDetails mHourlyRental;
 
     private TextView availabilityDays;
     private TextView timing;
     private View availabilityDaysEdit;
     private View timeEdit;
-    private View instantBookingTitle;
+    private TextView instantBookingTitle;
     private AppCompatImageView instantBookingIcon;
     private SwitchCompat instantBookingSwitch;
     private TextView instantBookingEdit;
     private View settingsHelp;
-    private View curbsideDeliveryTitle;
+    private TextView curbsideDeliveryTitle;
     private AppCompatImageView curbsideDeliveryIcon;
     private SwitchCompat curbsideDeliverySwitch;
-    private View curbsideDeliveryEdit;
-    private View acceptCashTitle;
+    private TextView curbsideDeliveryEdit;
+    private TextView acceptCashTitle;
     private AppCompatImageView acceptCashImage;
     private SwitchCompat acceptCashSwitch;
     private View rentalRatesEdit;
-    private TextView rentalRatesValue;
+    private TextView rentalRatesValueFirst;
+    private TextView rentalRatesValueSecond;
+    private TextView rentalMinimum;
     private View fuelPolicyEdit;
     private TextView fuelPolicyValue;
     private View rentalTermsEdit;
 
     private RentalDetails hourlyRental;
-    private AvailabilityStringDelegate stringDelegate;
+    private RentalStringDelegate stringDelegate;
     private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
     private Toast currentToast;
@@ -81,7 +94,9 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         acceptCashTitle = rootView.findViewById(R.id.accept_cash);
         acceptCashSwitch = rootView.findViewById(R.id.sw_rentalCash);
         rentalRatesEdit = rootView.findViewById(R.id.tv_rentalRentalRatesEdit);
-        rentalRatesValue = rootView.findViewById(R.id.tv_rentalOffPeakValue);
+        rentalRatesValueFirst = rootView.findViewById(R.id.tv_rentalValueFirst);
+        rentalRatesValueSecond = rootView.findViewById(R.id.tv_rentalValueSecond);
+        rentalMinimum = rootView.findViewById(R.id.tv_rentalMinimumValue);
         fuelPolicyEdit = rootView.findViewById(R.id.tv_rentalFuelEdit);
         fuelPolicyValue = rootView.findViewById(R.id.tv_rentalFuelValue);
         rentalTermsEdit = rootView.findViewById(R.id.cl_rentalTermsContainer);
@@ -93,20 +108,24 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         fuelPolicyEdit.setOnClickListener(this);
         rentalTermsEdit.setOnClickListener(this);
         settingsHelp.setOnClickListener(this);
-        instantBookingSwitch.setOnCheckedChangeListener(presenter);
-        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
-        acceptCashSwitch.setOnCheckedChangeListener(presenter);
+        instantBookingSwitch.setOnCheckedChangeListener(this);
+        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
+        acceptCashSwitch.setOnCheckedChangeListener(this);
         initResources(activity);
     }
 
     private void initResources(Context context) {
-        stringDelegate = new AvailabilityStringDelegate(context);
+        setInstantViewsState(instantBookingSwitch.isChecked());
+        setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
+        setCashViewState(acceptCashSwitch.isChecked());
+        stringDelegate = new RentalStringDelegate(context);
     }
 
     @Override
     public void bind(RentalDetails model) {
         hourlyRental = model;
         presenter.onBind(model);
+        mHourlyRental = model;
     }
 
     @Override
@@ -139,10 +158,93 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                                 HourlyAvailabilityTimingFragment.class.getSimpleName());
                 break;
             case R.id.tv_rentalInstantEdit:
+                BookingPickerMenuFragment menu = BookingPickerMenuFragment.getInstance(instantBookingEdit.getText().toString(),
+                        BookingPickerMenuFragment.Mode.BOOKING_HOURS);
+                menu.show(getActivity().getSupportFragmentManager(), menu.getTag());
+                menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
+                    @Override
+                    public void onDoneClicked(String value) {
+                        instantBookingEdit.setText(value);
+                    }
+                });
+                break;
             case R.id.tv_rentalCurbsideRatesEdit:
+                break;
             case R.id.tv_rentalRentalRatesEdit:
+                Intent ratesIntent = new Intent(getActivity(), RentalRatesActivity.class);
+                ratesIntent.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(ratesIntent);
+                break;
             case R.id.iv_rentalHelp:
-                showMessage("Coming soon");
+                showInfoDialog();
+                break;
+        }
+    }
+
+    private void showInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View rootView = inflater.inflate(R.layout.dialog_rental_info_settings, null);
+        builder.setView(rootView);
+        final Dialog dialog = builder.create();
+        AppCompatButton buttonOk = rootView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()) {
+            case R.id.sw_rentalInstant:
+                setInstantViewsState(b);
+                break;
+            case R.id.sw_rentalDelivery:
+                setDeliveryViewsState(b);
+                break;
+            case R.id.sw_rentalCash:
+                setCashViewState(b);
+                break;
+        }
+    }
+
+    private void setInstantViewsState(boolean enabled) {
+        instantBookingEdit.setClickable(enabled);
+        if (enabled) {
+            instantBookingIcon.setImageResource(R.drawable.ic_instant);
+            instantBookingTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+            instantBookingEdit.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        } else {
+            instantBookingIcon.setImageResource(R.drawable.ic_instant_inactive);
+            instantBookingTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+            instantBookingEdit.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+        }
+    }
+
+    private void setDeliveryViewsState(boolean enabled) {
+        curbsideDeliveryEdit.setClickable(enabled);
+        if (enabled) {
+            curbsideDeliveryIcon.setImageResource(R.drawable.ic_direction);
+            curbsideDeliveryTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+            curbsideDeliveryEdit.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        } else {
+            curbsideDeliveryIcon.setImageResource(R.drawable.ic_direction_inactive);
+            curbsideDeliveryTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+            curbsideDeliveryEdit.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
+        }
+    }
+
+    private void setCashViewState(boolean enabled) {
+        if (enabled) {
+            acceptCashImage.setImageResource(R.drawable.ic_cash);
+            acceptCashTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
+        } else {
+            acceptCashImage.setImageResource(R.drawable.ic_cash_inactive);
+            acceptCashTitle.setTextColor(getActivity().getResources().getColor(R.color.text_disabled));
         }
     }
 
@@ -175,6 +277,9 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
         stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
+        stringDelegate.onSetRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateFirst());
+        stringDelegate.onSetRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
     }
 
     @Override

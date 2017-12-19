@@ -3,7 +3,7 @@ package com.cardee.domain.owner.usecase;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerProfileDataSource;
 import com.cardee.data_source.remote.RemoteOwnerProfileDataSource;
-import com.cardee.data_source.remote.api.profile.request.OwnerNoteRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.domain.UseCase;
 
 public class ChangeNote implements UseCase<ChangeNote.RequestValues, ChangeNote.ResponseValues> {
@@ -29,13 +29,13 @@ public class ChangeNote implements UseCase<ChangeNote.RequestValues, ChangeNote.
     }
 
     public static class RequestValues implements UseCase.RequestValues {
-        OwnerNoteRequest mNoteRequest;
+        ChangeNoteRequest mNoteRequest;
 
-        public RequestValues(OwnerNoteRequest ownerNoteRequest) {
-            mNoteRequest = ownerNoteRequest;
+        public RequestValues(ChangeNoteRequest changeNoteRequest) {
+            mNoteRequest = changeNoteRequest;
         }
 
-        public OwnerNoteRequest getNewNote() {
+        public ChangeNoteRequest getNewNote() {
             return mNoteRequest;
         }
     }

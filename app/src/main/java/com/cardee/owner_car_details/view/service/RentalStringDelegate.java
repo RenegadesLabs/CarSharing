@@ -1,6 +1,7 @@
 package com.cardee.owner_car_details.view.service;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cardee.R;
@@ -12,9 +13,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class AvailabilityStringDelegate {
+public class RentalStringDelegate {
 
-    private static final String TIME_PATTERN = "HH:mm:ssXXX";
+    private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
     private static final String TIME_VIEW_PATTERN = "ha";
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
@@ -28,13 +29,13 @@ public class AvailabilityStringDelegate {
     private String availabilityReturnSuffix;
     private String availabilityHourlyPrefix;
 
-    public AvailabilityStringDelegate(Context context) {
+    public RentalStringDelegate(Context context) {
         saveSuffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
         valueSuffixes = context.getResources().getStringArray(R.array.days_availability_suffixes);
         timeZone = TimeZone.getTimeZone("GMT+08:00");
         calendar = Calendar.getInstance();
-        timeFormatter = new SimpleDateFormat(TIME_PATTERN);
-        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN);
+        timeFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.US);
+        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
@@ -147,4 +148,38 @@ public class AvailabilityStringDelegate {
         System.out.println(formattedTime);
         return formattedTime;
     }
+
+    public void onSetRentalRateFirst(TextView tv, Float amount) {
+        if (amount != null) {
+            String value = "$" + Float.toString(amount) + " per day (weekdays)";
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(value);
+        }
+    }
+
+    public void onSetRentalRateSecond(TextView tv, Float amount) {
+        if (amount != null) {
+            String value = "$" + Float.toString(amount) + " per day (weekends and P.H.)";
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(value);
+        }
+    }
+
+    public void onSetDailyRentalDiscount(TextView tv, Float discount) {
+        if (discount != null) {
+            String val = "3 days discount " + Float.toString(discount) + "%";
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(val);
+        }
+    }
+
+    public void onSetHourlyRentalMinimum(TextView tv, Integer minimum) {
+        if (minimum != null) {
+            String val = "Minimum " + Integer.toString(minimum) + (minimum > 1 ? " hours" : " hour");
+            tv.setVisibility(View.VISIBLE);
+            tv.setText(val);
+        }
+    }
+
+
 }

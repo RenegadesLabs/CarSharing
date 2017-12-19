@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
-            android:id="@+id/similar_container"
+            android:id="@+id/fl_fuelSimilarContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
@@ -68,8 +68,8 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/iv_fuelSimilar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_gravity="center_vertical|end" />
 
         </FrameLayout>
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/similar_container">
+            app:layout_constraintTop_toBottomOf="@id/fl_fuelSimilarContainer">
 
             <View
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:background="@color/divider"/>
 
             <FrameLayout
-                android:id="@+id/fl_fuelMileageTextContainer"
+                android:id="@+id/fl_fuelMileageContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
@@ -103,8 +103,8 @@
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/iv_fuelMileage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_gravity="center_vertical|end" />
 
             </FrameLayout>
@@ -131,26 +131,27 @@
                     android:layout_gravity="center_vertical|end"
                     android:paddingStart="@dimen/small_margin"
                     android:paddingEnd="@dimen/small_margin"
-                    android:text="@string/set"
+                    android:text="$0.16"
                     android:textStyle="bold"
                     android:textSize="@dimen/text_large"
                     android:textColor="@color/colorPrimary" />
                 
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/et_fuelPerKm"
-                    style="@style/CardeeEditTextWithoutUnderlineStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_large"
-                    android:inputType="numberDecimal"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|end"
-                    android:textColor="@color/colorPrimary"/>
+                <!--<android.support.v7.widget.AppCompatEditText-->
+                    <!--android:id="@+id/et_fuelPerKm"-->
+                    <!--style="@style/CardeeEditTextWithoutUnderlineStyle"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="@dimen/text_large"-->
+                    <!--android:inputType="numberDecimal"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_gravity="center_vertical|end"-->
+                    <!--android:textColor="@color/colorPrimary"/>-->
 
             </FrameLayout>
 
             <TextView
+                android:id="@+id/tv_fuelConsumptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_regular"

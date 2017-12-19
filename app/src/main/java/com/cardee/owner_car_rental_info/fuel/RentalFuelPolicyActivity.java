@@ -1,5 +1,6 @@
 package com.cardee.owner_car_rental_info.fuel;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +11,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.PickerFuelMenuFragment;
+import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
+import com.cardee.owner_car_rental_info.RentalContract;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RentalFuelPolicyActivity extends AppCompatActivity implements View.OnClickListener {
+public class RentalFuelPolicyActivity extends AppCompatActivity implements View.OnClickListener,
+        RentalContract.View {
 
     @BindView(R.id.tv_fuelSimilarLevel)
     public CheckedTextView similarTV;
@@ -32,21 +39,42 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
     @BindView(R.id.iv_fuelMileage)
     public AppCompatImageView mileageIV;
 
+    @BindView(R.id.tv_fuelPerKm)
+    public TextView costValue;
+
+    @BindView(R.id.tv_fuelConsumptionText)
+    public TextView consumptionValue;
+
+    @BindView(R.id.fl_fuelCostTextContainer)
+    public View mileageSettingContainer;
+
+    private String mPickerSelectedVal;
+
+    private int mMode;
+
+    private ProgressDialog mProgress;
+
+    private RentalFuelPolicyPresenter mPresenter;
+
+    private int mFuelPolicyId = -1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_rental_fuel);
         ButterKnife.bind(this);
-        int mode = getIntent().getIntExtra(OwnerCarRentalFragment.MODE, 0);
-        initToolbar(mode);
-        initViewsState(mode);
+        mMode = getIntent().getIntExtra(OwnerCarRentalFragment.MODE, 0);
+        mPresenter = new RentalFuelPolicyPresenter(this);
+        mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
+        initToolbar();
+        initViewsState();
     }
 
-    private void initToolbar(int mode) {
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView titleTV = toolbar.findViewById(R.id.toolbar_title);
         String title = getString(R.string.car_rental_info_fuel);
-        switch (mode) {
+        switch (mMode) {
             case OwnerCarRentalFragment.HOURLY:
                 title += " " + getString(R.string.car_rental_info_hourly_b);
                 break;
@@ -64,45 +92,64 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
         getSupportActionBar().setTitle(null);
     }
 
-    private void initViewsState(int mode) {
-        if (mode == OwnerCarRentalFragment.HOURLY) {
+    private void initViewsState() {
+
+        if (mMode == OwnerCarRentalFragment.HOURLY) {
             findViewById(R.id.ll_fuelMileageContainer)
                     .setVisibility(View.VISIBLE);
+            mPickerSelectedVal = "$0.16";
+            mileageSettingContainer.setVisibility(View.GONE);
+            consumptionValue.setVisibility(View.GONE);
             return;
         }
         findViewById(R.id.ll_fuelMileageContainer)
                 .setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.tv_fuelSimilarLevel)
+    @OnClick(R.id.fl_fuelSimilarContainer)
     public void onReturnWithSimilarLevelClicked() {
-        toggleTV(similarTV, mileageTV);
-        toggleIV(similarIV, mileageIV);
+        mFuelPolicyId = 0;
+        toggleTV(similarTV, mileageTV, similarIV, mileageIV);
     }
 
-    @OnClick(R.id.tv_fuelMileage)
+    @OnClick(R.id.fl_fuelMileageContainer)
     public void onPaymentByMileageClicked() {
-        toggleTV(mileageTV, similarTV);
-        toggleIV(mileageIV, similarIV);
+        mFuelPolicyId = 1;
+        toggleTV(mileageTV, similarTV, mileageIV, similarIV);
     }
 
     @OnClick(R.id.tv_fuelPerKm)
     public void onFuelPerKmClicked() {
-
+        PickerFuelMenuFragment fm = PickerFuelMenuFragment.getInstance(mPickerSelectedVal);
+        fm.show(getSupportFragmentManager(), fm.getTag());
+        fm.setOnDoneClickListener(new PickerFuelMenuFragment.DialogOnClickListener() {
+            @Override
+            public void onDoneClicked(String value1, String value2) {
+                mPickerSelectedVal = value1;
+                costValue.setText(value1);
+                String consumptionTxt = "Suitable for car average petrol consumption of " + value2;
+                consumptionValue.setText(consumptionTxt);
+            }
+        });
     }
 
-    private void toggleTV(CheckedTextView tv1, CheckedTextView tv2) {
+    private void toggleTV(CheckedTextView tv1, CheckedTextView tv2,
+                          AppCompatImageView iv1, AppCompatImageView iv2) {
         if (!tv1.isChecked()) {
             tv1.setChecked(true);
             tv2.setChecked(false);
             tv1.setTextColor(Color.BLACK);
             tv2.setTextColor(getResources().getColor(R.color.text_disabled));
-        }
-    }
+            iv1.setImageResource(R.drawable.ic_check);
+            iv2.setImageResource(android.R.color.transparent);
 
-    private void toggleIV(AppCompatImageView iv1, AppCompatImageView iv2) {
-        iv1.setImageResource(R.drawable.ic_check);
-        iv2.setImageResource(-1);
+        } else {
+            tv1.setChecked(false);
+            tv1.setTextColor(getResources().getColor(R.color.text_disabled));
+            iv1.setImageResource(android.R.color.transparent);
+            mFuelPolicyId = -1;
+        }
+        toggleMileage(mileageTV);
     }
 
     @Override
@@ -116,13 +163,58 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
         return super.onOptionsItemSelected(item);
     }
 
+    private void toggleMileage(CheckedTextView tv) {
+        if (tv.isChecked()) {
+            mileageSettingContainer.setVisibility(View.VISIBLE);
+            consumptionValue.setVisibility(View.VISIBLE);
+            return;
+        }
+        mileageSettingContainer.setVisibility(View.GONE);
+        consumptionValue.setVisibility(View.GONE);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                // TODO: 12/4/17 Save
+                if (mFuelPolicyId == -1) {
+                    showMessage(R.string.nothing_to_save);
+                    break;
+                }
+
+                if (mMode == OwnerCarRentalFragment.HOURLY) {
+                    mPresenter.save(mMode, mFuelPolicyId,
+                            Float.parseFloat(mPickerSelectedVal.replace("$", "")));
+                    break;
+                }
+                mPresenter.save(mMode, mFuelPolicyId);
                 break;
         }
 
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess() {
+        onBackPressed();
+        finish();
     }
 }

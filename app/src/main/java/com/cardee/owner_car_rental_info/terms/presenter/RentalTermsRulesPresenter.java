@@ -23,15 +23,15 @@ public class RentalTermsRulesPresenter implements RentalContract.Presenter {
 
     @Override
     public void save(Object... objects) {
-        CarRuleEntity.Rule[] rules = (CarRuleEntity.Rule[]) objects[0];
-        String otherRules = (String) objects[1];
+//        CarRuleEntity.Rule[] rules = (CarRuleEntity.Rule[]) objects[0];
+        String otherRules = (String) objects[0];
 
         if (mView == null)
             return;
 
         mView.showProgress(true);
         mExecutor.execute(new UpdateRentalRules(),
-                new UpdateRentalRules.RequestValues(OwnerCarRepository.currentCarId(), rules, otherRules),
+                new UpdateRentalRules.RequestValues(OwnerCarRepository.currentCarId(), otherRules),
                 new UseCase.Callback<UpdateRentalRules.ResponseValues>() {
                     @Override
                     public void onSuccess(UpdateRentalRules.ResponseValues response) {
