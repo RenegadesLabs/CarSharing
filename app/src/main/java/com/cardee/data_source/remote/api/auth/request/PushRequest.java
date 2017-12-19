@@ -8,9 +8,20 @@ public class PushRequest {
     @Expose
     @SerializedName("device_token")
     private String deviceToken;
+    @Expose
+    @SerializedName("is_fcm")
+    private Boolean isFcm = true;
 
-    public PushRequest(){
+    public PushRequest() {
 
+    }
+
+    public Boolean getFcm() {
+        return isFcm;
+    }
+
+    public void setFcm(Boolean fcm) {
+        isFcm = fcm;
     }
 
     public String getDeviceToken() {

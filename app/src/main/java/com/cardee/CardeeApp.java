@@ -27,6 +27,12 @@ public class CardeeApp extends Application {
     public static Retrofit retrofit;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+//        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);

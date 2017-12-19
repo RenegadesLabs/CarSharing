@@ -29,7 +29,8 @@ public class JsonToAuthResponseAdapter extends TypeAdapter<BaseAuthResponse.Base
         } else {
             Gson gson = new Gson();
             Map<String, String[]> errors =
-                    gson.fromJson(in, new TypeToken<Map<String, String[]>>(){}.getType());
+                    gson.fromJson(in, new TypeToken<Map<String, String[]>>() {
+                    }.getType());
             body.setErrors(errors);
         }
         return body;
