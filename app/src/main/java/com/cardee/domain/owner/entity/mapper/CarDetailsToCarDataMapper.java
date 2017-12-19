@@ -1,6 +1,5 @@
 package com.cardee.domain.owner.entity.mapper;
 
-
 import com.cardee.data_source.remote.api.cars.response.entity.CarDetailsEntity;
 import com.cardee.domain.owner.entity.CarData;
 

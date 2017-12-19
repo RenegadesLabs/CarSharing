@@ -2,6 +2,7 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -26,11 +27,17 @@ public class CardeeApp extends Application {
     public static Retrofit retrofit;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+//        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
-
+        MultiDex.install(this);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
 //                .baseUrl("http://192.168.88.113:5550/api/dev/")

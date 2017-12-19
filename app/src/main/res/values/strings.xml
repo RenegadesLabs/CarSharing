@@ -363,6 +363,10 @@
     <string name="change_pass_cancel">Cancel</string>
     <string name="change_pass_forgotten">Forgotten Password?</string>
 
+    <!-- Inbox Fragment -->
+    <string name="inbox_tab_alerts">Alerts</string>
+    <string name="inbox_tab_chats">Chats</string>
+
     <!--Owner settings-->
     <string name="owner_settings_title">Settings</string>
     <string name="owner_settings_renter_notifications">Renter Notifications</string>

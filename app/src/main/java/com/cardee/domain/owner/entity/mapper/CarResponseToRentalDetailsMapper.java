@@ -54,6 +54,8 @@ public class CarResponseToRentalDetailsMapper {
             rentalDetails.setHourlyAmountRateFirst(hourlyDetails.getAmntRateFirst());
             rentalDetails.setHourlyAmountRateSecond(hourlyDetails.getAmntRateSecond());
             rentalDetails.setHourlyAmountPayMileage(hourlyDetails.getAmntPayMileage());
+            rentalDetails.setHourlyAmountDiscountFirst(hourlyDetails.getAmntDiscountFirst());
+            rentalDetails.setHourlyAmountDiscountSecond(hourlyDetails.getAmntDiscountSecond());
             rentalDetails.setHourlyMinRentalDuration(hourlyDetails.getMinRentalDuration());
             FuelPolicyEntity hourlyFuelPolicy = hourlyDetails.getFuelPolicy();
             if (hourlyFuelPolicy != null) {

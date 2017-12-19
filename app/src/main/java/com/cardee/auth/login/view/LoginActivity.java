@@ -32,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implements LoginView {
 
     private final static int RC_SIGN_IN = 9001;
@@ -134,12 +133,8 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     }
 
     private void initGoogleApi() {
-        mGoogleClient = CardeeApp.initLoginGoogleApi(this, new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                showMessage(connectionResult.getErrorMessage());
-            }
-        });
+        mGoogleClient = CardeeApp.initLoginGoogleApi(this,
+                connectionResult -> showMessage(connectionResult.getErrorMessage()));
     }
 
     private boolean isFieldsNotEmpty() {
@@ -190,11 +185,6 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     @Override
     public void onProceedGoogleLogin(final String accessToken) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.loginSocial(SocialLoginRequest.GOOGLE, accessToken);
-            }
-        });
+        runOnUiThread(() -> mPresenter.loginSocial(SocialLoginRequest.GOOGLE, accessToken));
     }
 }

@@ -1,6 +1,7 @@
 package com.cardee.owner_car_rental_info.rates;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -21,6 +22,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RentalRatesActivity extends AppCompatActivity implements RentalContract.View {
+
+    public final static String RATE_FIRST = "key_rental_rate_first";
+    public final static String RATE_SECOND = "key_rental_rate_second";
+    public final static String DISCOUNT_FIRST = "key_rental_discount_first";
+    public final static String DISCOUNT_SECOND = "key_rental_discount_second";
+    public final static String MIN_RENTAL = "key_rental_minimum";
 
     @BindView(R.id.tv_ratesTitle)
     public TextView ratesTitleTV;
@@ -75,17 +82,20 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
     private RentalRatesPresenter mPresenter;
 
     private int mMode;
+    private String mRateFirst;
+    private String mRateSecond;
+    private String mDiscountFirst;
+    private String mDiscountSecond;
+    private int mMinRental;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_rental_rates);
         ButterKnife.bind(this);
-        mMode = getIntent().getIntExtra(OwnerCarRentalFragment.MODE, 0);
+        getExtras();
         initToolbar();
-        initViewsState();
-        mProgress = DialogHelper.getProgressDialog(this,
-                getString(R.string.loading), false);
+        initViews();
         mPresenter = new RentalRatesPresenter(this);
     }
 
@@ -98,6 +108,16 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getExtras() {
+        Intent i = getIntent();
+        mMode = i.getIntExtra(OwnerCarRentalFragment.MODE, 0);
+        mRateFirst = i.getStringExtra(RATE_FIRST);
+        mRateSecond = i.getStringExtra(RATE_SECOND);
+        mDiscountFirst = i.getStringExtra(DISCOUNT_FIRST);
+        mDiscountSecond = i.getStringExtra(DISCOUNT_SECOND);
+        mMinRental = i.getIntExtra(MIN_RENTAL, 0);
     }
 
     private void initToolbar() {
@@ -121,7 +141,14 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
         getSupportActionBar().setTitle(null);
     }
 
-    private void initViewsState() {
+    private void initViews() {
+        mProgress = DialogHelper.getProgressDialog(this,
+                getString(R.string.loading), false);
+        ratesValue1ET.setText(mRateFirst);
+        ratesValue2ET.setText(mRateSecond);
+        ratesValue3ET.setText(mDiscountFirst);
+        ratesValue4ET.setText(mDiscountSecond);
+        ratesValue5ET.setText(String.valueOf(mMinRental));
         switch (mMode) {
             case OwnerCarRentalFragment.HOURLY:
                 ratesTitleTV.setText(R.string.car_rental_rates_hourly);

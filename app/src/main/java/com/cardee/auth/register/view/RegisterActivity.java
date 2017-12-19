@@ -37,6 +37,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.io.File;
 import java.io.IOException;
 
+import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
+import static com.cardee.data_source.remote.service.AccountManager.RENTER_SESSION;
+
 public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
     //    private final int PICK_IMAGE = 1;
@@ -109,12 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     }
 
     private void initGoogleApi() {
-        mGoogleClient = CardeeApp.initLoginGoogleApi(this, new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                showMessage(connectionResult.getErrorMessage());
-            }
-        });
+        mGoogleClient = CardeeApp.initLoginGoogleApi(this, connectionResult -> showMessage(connectionResult.getErrorMessage()));
     }
 
     private void cropImageIntent(Uri imgUri) {
@@ -240,24 +238,19 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onProceedGoogleLogin(final String accessToken) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.registerSocial(SocialLoginRequest.GOOGLE, accessToken);
-            }
-        });
+        runOnUiThread(() -> mPresenter.registerSocial(SocialLoginRequest.GOOGLE, accessToken));
     }
 
     @Override
     public void onSignUpAsRenter(String name, File picture) {
-        mPresenter.setAccountState(AccountManager.ACC_STATE.RENTER);
-        mPresenter.signUp(mLogin, mPass, name, picture, AccountManager.ACC_STATE.RENTER);
+        mPresenter.setAccountState(RENTER_SESSION);
+        mPresenter.signUp(mLogin, mPass, name, picture, RENTER_SESSION);
     }
 
     @Override
     public void onSignUpAsOwner(String name, File picture) {
-        mPresenter.setAccountState(AccountManager.ACC_STATE.OWNER);
-        mPresenter.signUp(mLogin, mPass, name, picture, AccountManager.ACC_STATE.OWNER);
+        mPresenter.setAccountState(OWNER_SESSION);
+        mPresenter.signUp(mLogin, mPass, name, picture,OWNER_SESSION);
     }
 
     @Override
@@ -271,13 +264,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     }
 
     @Override
-    public void onRegistrationSuccess(AccountManager.ACC_STATE accState) {
+    public void onRegistrationSuccess(String session) {
         Intent intent = null;
-        switch (accState) {
-            case OWNER:
+        switch (session) {
+            case OWNER_SESSION:
                 intent = new Intent(this, OwnerHomeActivity.class);
                 break;
-            case RENTER:
+            case RENTER_SESSION:
                 intent = new Intent(this, RenterHomeActivity.class);
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -3,6 +3,9 @@ package com.cardee.owner_car_rental_info.fuel;
 import com.cardee.R;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerCarRepository;
+import com.cardee.data_source.OwnerCarsRepository;
+import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerCar;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
@@ -45,6 +48,8 @@ public class RentalFuelPolicyPresenter implements RentalContract.Presenter {
                             public void onSuccess(UpdateFuelPolicyHourly.ResponseValues response) {
                                 mView.showProgress(false);
                                 if (response.isSuccess()) {
+                                    OwnerCarRepository.getInstance().refresh(OwnerCarRepository.currentCarId());
+                                    OwnerCarsRepository.getInstance().refreshCars();
                                     mView.onSuccess();
                                     mView.showMessage(R.string.saved_successfully);
                                 }
@@ -66,6 +71,8 @@ public class RentalFuelPolicyPresenter implements RentalContract.Presenter {
                             public void onSuccess(UpdateFuelPolicyDaily.ResponseValues response) {
                                 mView.showProgress(false);
                                 if (response.isSuccess()) {
+                                    OwnerCarRepository.getInstance().refresh(OwnerCarRepository.currentCarId());
+                                    OwnerCarsRepository.getInstance().refreshCars();
                                     mView.onSuccess();
                                     mView.showMessage(R.string.saved_successfully);
                                 }

@@ -198,7 +198,7 @@ public class CarEditRepository implements CarEditDataSource {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
-        remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
+        remoteDataSource.updateRentalRatesHourly(id, ratesEntity, new Callback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
