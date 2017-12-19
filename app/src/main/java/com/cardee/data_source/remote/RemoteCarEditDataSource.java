@@ -274,7 +274,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
                     }
                 }
                 if (response.code() == 400) {
-                    callback.onError(new Error(Error.Type.INVALID_REQUEST, "File already exist. Please select choose photo."));
+                    callback.onError(new Error(Error.Type.INVALID_REQUEST, "File already exist. Please choose another photo."));
                     return;
                 }
                 handleErrorResponse(response.body(), callback);
