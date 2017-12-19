@@ -19,6 +19,7 @@ public class InboxPageAdapter extends FragmentPagerAdapter {
         super(fm);
         mAlertsFragment = AlertFragment.newInstance();
         mChatsFragment = ChatFragment.newInstance();
+
     }
 
     @Override

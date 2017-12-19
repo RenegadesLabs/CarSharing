@@ -26,6 +26,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private List<InboxChat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<InboxChat> mOnClickSubject;
+    private final PublishSubject<Integer> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
 
     ChatAdapter(Context context) {
@@ -33,6 +34,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
+        mUnreadSubject = PublishSubject.create();
     }
 
     @Override
@@ -44,7 +46,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         InboxChat chat = mInboxChats.get(position);
-
         mRequestManager
                 .load(chat.getRecipientPhotoUrl())
                 .centerCrop()
@@ -74,6 +75,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             holder.mUnreadCount.setVisibility(View.VISIBLE);
             holder.mUnreadView.setVisibility(View.VISIBLE);
         }
+        mUnreadSubject.onNext(unreadMessages);
     }
 
     void addItems(List<InboxChat> list) {

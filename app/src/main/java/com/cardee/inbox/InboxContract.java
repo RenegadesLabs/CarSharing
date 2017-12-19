@@ -1,18 +1,19 @@
 package com.cardee.inbox;
 
-import com.cardee.mvp.BaseView;
-
 public interface InboxContract {
 
     interface Presenter {
 
-        void init(InboxContract.View view, int position);
+        void init(InboxContract.View view);
 
         void onDestroy();
     }
 
-    interface View extends BaseView {
+    interface View {
 
+        void setAlertTabState(boolean isUnread);
+
+        void setChatTabState(boolean isUnread);
     }
 
 }
