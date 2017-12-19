@@ -405,6 +405,10 @@
     <string name="comment">\u0020Comment</string>
 
 
+    <!-- Inbox Fragment -->
+    <string name="inbox_tab_alerts">Alerts</string>
+    <string name="inbox_tab_chats">Chats</string>
+
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

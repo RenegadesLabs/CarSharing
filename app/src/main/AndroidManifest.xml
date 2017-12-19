@@ -61,20 +61,6 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
-        <activity android:name=".owner_car_rental_info.fuel.RentalFuelPolicyActivity"/>
-        <activity android:name=".owner_car_rental_info.rates.RentalRatesActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsActivity"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsRequirementsActivity"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsRulesActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsDepositActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsInsuranceActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsAdditional"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
         <meta-data
@@ -103,6 +89,7 @@
         <activity
             android:name=".owner_car_details.view.AvailabilityCalendarActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".owner_car_add.view.CarAddActivity"
             android:screenOrientation="portrait"
@@ -110,27 +97,22 @@
 
         <service android:name=".owner_car_details.service.FetchAddressService" />
 
-        <activity
-            android:name=".owner_profile_info.view.OwnerProfileInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".account_details.view.AccountDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".owner_change_pass.view.ChangePassActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".owner_settings.view.OwnerSettingsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".owner_notifications.view.OwnerNotifActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppCompatAlertDialogTheme" />
-        <activity
-            android:name=".owner_cardee.view.OwnerCardeeActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".renter_home.view.RenterHomeActivity" />
-        <activity android:name=".renter_profile.view.RenterProfileActivity"></activity>
-    </application>
+        <activity android:name=".owner_profile_info.view.OwnerProfileInfoActivity" />
+        <activity android:name=".owner_account_details.view.AccountDetailsActivity" />
+        <activity android:name=".owner_change_pass.view.ChangePassActivity" />
 
+        <service android:name=".inbox.service.InboxIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".inbox.service.InboxMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+    </application>
 </manifest>
