@@ -1,6 +1,5 @@
 package com.cardee.data_source.remote.service;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -14,11 +13,20 @@ public class AccountManager {
     private static final String AUTH_TOKEN = "_auth_token";
     private static final String AUTH_HEADER_NAME = "Authorization";
     private static final String DEFAULT_AUTH_TOKEN = "";
-    private static final String OWNER_SESSION = "owner";
-    private static final String RENTER_SESSION = "renter";
-    private static final String SESSION = "session";
+    private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
+
+    public static final String SESSION = "attachment";
+    public static final String OWNER_SESSION = "owner";
+    public static final String RENTER_SESSION = "renter";
 
     private static AccountManager INSTANCE;
+
+    public static AccountManager getInstance(@NonNull Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = new AccountManager(context);
+        }
+        return INSTANCE;
+    }
 
     private SharedPreferences mPrefs;
 
@@ -46,6 +54,12 @@ public class AccountManager {
                 .apply();
     }
 
+    public void saveFcmAuthAction() {
+        mPrefs.edit()
+                .putBoolean(FCM_TOKEN_AUTH, true)
+                .apply();
+    }
+
     //TODO: delete after user logged state handling implemented
     public boolean isLogedIn() {
         String string = mPrefs.getString(AUTH_TOKEN, null);
@@ -56,14 +70,21 @@ public class AccountManager {
         mPrefs.edit().remove(AUTH_TOKEN).apply();
     }
 
-    public static AccountManager getInstance(@NonNull Context context) {
-        if (INSTANCE == null) {
-            INSTANCE = new AccountManager(context);
-        }
-        return INSTANCE;
-    }
-
     public boolean isLoggedIn() {
         return !mPrefs.getString(AUTH_TOKEN, "").equals("");
+    }
+
+    public boolean isFcmTokenAuthenticated() {
+        return mPrefs.getBoolean(FCM_TOKEN_AUTH, false);
+    }
+
+    public String getSessionInfo() {
+        return mPrefs.getString(SESSION, "");
+    }
+
+    public void setSession(String session) {
+        mPrefs.edit()
+                .putString(SESSION, session)
+                .apply();
     }
 }

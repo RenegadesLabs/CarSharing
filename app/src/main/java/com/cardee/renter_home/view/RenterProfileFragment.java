@@ -30,6 +30,8 @@ import com.cardee.renter_home.view.listener.RenterMoreTabEventListener;
 import com.cardee.renter_profile.view.RenterProfileActivity;
 import com.cardee.util.glide.CircleTransform;
 
+import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
+
 public class RenterProfileFragment extends Fragment implements RenterProfileContract.View {
 
     public static final int GET_PICTURE_REQUEST = 19;
@@ -137,7 +139,7 @@ public class RenterProfileFragment extends Fragment implements RenterProfileCont
 
     @Override
     public void openSwitchToRenter() {
-        mPresenter.setAccState(AccountManager.ACC_STATE.OWNER);
+        mPresenter.setAccState(OWNER_SESSION);
         Intent intent = new Intent(getActivity(), OwnerHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

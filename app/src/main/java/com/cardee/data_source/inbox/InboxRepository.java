@@ -6,11 +6,10 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
 import java.util.List;
 
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.functions.Predicate;
 
-public class InboxRepository implements AlertDataSource, ChatDataSource {
+public class InboxRepository implements InboxRepositoryContract {
 
     private static InboxRepository INSTANCE;
     private final ChatDataSource mChatLocalSource;
@@ -31,12 +30,11 @@ public class InboxRepository implements AlertDataSource, ChatDataSource {
     }
 
     @Override
-    public Single<List<InboxChat>> getRemoteChats() {
-        return null;
-    }
+    public Observable<List<InboxChat>> getChats(String attachment) {
+        Observable<List<InboxChat>> localObservable = mChatLocalSource.getLocalChats(attachment);
+        Observable<List<InboxChat>> remoteObservable = mChatRemoteSource.getRemoteChats(attachment);
+        return Observable
+                .merge(localObservable, remoteObservable);
 
-    @Override
-    public Maybe<List<InboxChat>> getLocalChats() {
-        return null;
     }
 }

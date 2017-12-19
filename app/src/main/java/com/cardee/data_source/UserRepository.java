@@ -6,6 +6,7 @@ import com.cardee.data_source.remote.api.auth.Authentication;
 import com.cardee.data_source.remote.api.auth.request.CheckUniqueLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.ForgotPassRequest;
 import com.cardee.data_source.remote.api.auth.request.LoginRequest;
+import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.request.SignUpRequest;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.api.auth.request.VerifyPasswordRequest;
@@ -13,6 +14,7 @@ import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 import com.cardee.data_source.remote.api.auth.response.SocialAuthResponse;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.owner.usecase.Register;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Observable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -48,7 +51,6 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void login(String login, String password, final UserDataSource.Callback callback) {
-
         LoginRequest req = new LoginRequest();
         req.setLogin(login);
         req.setPassword(password);
@@ -58,6 +60,7 @@ public class UserRepository implements UserDataSource {
             public void onNext(BaseAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                    pushFcTokenToServer();
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
@@ -80,7 +83,6 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void loginSocial(String provider, String token, final Callback callback) {
-
         SocialLoginRequest req = new SocialLoginRequest();
         req.setProvider(provider);
         req.setToken(token);
@@ -90,6 +92,7 @@ public class UserRepository implements UserDataSource {
             public void onNext(SocialAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                    pushFcTokenToServer();
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
@@ -105,6 +108,26 @@ public class UserRepository implements UserDataSource {
 
             @Override
             public void onComplete() {
+
+            }
+        });
+        pushFcTokenToServer();
+    }
+
+    private void pushFcTokenToServer() {
+        if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()){
+            return;
+        }
+        PushRequest pushRequest = new PushRequest();
+        pushRequest.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+        api.pushToken(pushRequest).subscribe(new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {
+                AccountManager.getInstance(CardeeApp.context).saveFcmAuthAction();
+            }
+
+            @Override
+            public void onError(Throwable e) {
 
             }
         });
@@ -131,6 +154,7 @@ public class UserRepository implements UserDataSource {
 
             }
         });
+        pushFcTokenToServer();
     }
 
     @Override
@@ -188,30 +212,10 @@ public class UserRepository implements UserDataSource {
                 callback.onError(new Error(Error.Type.OTHER, t.getMessage()));
             }
         });
-//        Observable<BaseAuthResponse> ob = api.checkUniqueLogin(req);
-//        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
-//            @Override
-//            public void onNext(BaseAuthResponse baseAuthResponse) {
-//                callback.onSuccess(baseAuthResponse.getSuccess());
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                RetrofitException error = (RetrofitException) e;
-//                callback.onError(new Error(Error.Type.AUTHORIZATION, error.getMessage()));
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
     }
 
     @Override
     public void register(final Register.RequestValues registerValues, final Callback callback) {
-
         SignUpRequest req = new SignUpRequest();
         req.setLogin(registerValues.getLogin());
         req.setPassword(registerValues.getPassword());
@@ -223,6 +227,7 @@ public class UserRepository implements UserDataSource {
                 if (response.isSuccessful()) {
                     String token = response.body().getBody().getToken();
                     AccountManager.getInstance(CardeeApp.context).saveToken(token);
+                    pushFcTokenToServer();
                     if (registerValues.getImage() != null) {
                         setProfilePicture(registerValues, callback);
                     } else {

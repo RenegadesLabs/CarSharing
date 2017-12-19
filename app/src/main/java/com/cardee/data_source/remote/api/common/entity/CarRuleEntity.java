@@ -14,7 +14,7 @@ public class CarRuleEntity {
     @SerializedName("car_other_rules")
     private String otherRules;
 
-    public CarRuleEntity(Rule[] rules, String otherRules) {
+    public CarRuleEntity(/*Rule[] rules, */String otherRules) {
         this.rules = rules;
         this.otherRules = otherRules;
     }

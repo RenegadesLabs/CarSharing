@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 
 public class ChatFragment extends Fragment implements ChatContract.View {
 
@@ -36,9 +37,10 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenterImp = new ChatPresenterImp();
+        mPresenterImp = new ChatPresenterImp(getActivity());
         mPresenterImp.onInit(this);
-        mChatAdapter = new ChatAdapter();
+        mChatAdapter = new ChatAdapter(getActivity());
+        mChatAdapter.subscribe(mPresenterImp);
     }
 
     @Nullable

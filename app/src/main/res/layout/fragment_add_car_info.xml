@@ -107,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_license_hint"
                 android:inputType="textCapCharacters"
+                android:maxLength="10"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 android:theme="@style/CardeeEditTextStyle"

@@ -3,7 +3,7 @@ package com.cardee.owner_car_add.presenter;
 
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.validator.NewCarDataValidator;
-import com.cardee.owner_car_add.view.CarAddContract;
+import com.cardee.owner_car_add.CarAddContract;
 
 public class CarAddPresenter extends NewCarPresenter {
 

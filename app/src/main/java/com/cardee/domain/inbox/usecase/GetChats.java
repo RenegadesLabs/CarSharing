@@ -19,11 +19,24 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-
+        mDisposable = mRepository.getChats(values.getAttachment())
+                .subscribe(
+                        inboxChats -> callback.onSuccess(new ResponseValues(inboxChats)),
+                        throwable -> {
+                        });
     }
 
     public static class RequestValues implements UseCase.RequestValues {
 
+        private final String mAttachment;
+
+        public RequestValues(String attachment) {
+            mAttachment = attachment;
+        }
+
+        public String getAttachment() {
+            return mAttachment;
+        }
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {

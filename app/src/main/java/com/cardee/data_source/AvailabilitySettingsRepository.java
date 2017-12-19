@@ -3,6 +3,8 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.cache.LocalAvailabilityDataSource;
 import com.cardee.data_source.remote.RemoteAvailabilityDataSource;
+import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 
 public class AvailabilitySettingsRepository implements AvailabilityDataSource {
 
@@ -59,7 +61,33 @@ public class AvailabilitySettingsRepository implements AvailabilityDataSource {
     }
 
     @Override
-    public void saveDailyTiming(int id, String pickupTime, String returnTime, Callback callback) {
+    public void saveAvailability(final int id, final boolean availableDaily, final boolean availableHourly,
+                                 final Callback callback) {
+        remoteDataSource.saveAvailability(id, availableDaily, availableHourly, new Callback() {
 
+            @Override
+            public void onSuccess() {
+                updateCarCache(id, availableDaily, availableHourly);
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    private void updateCarCache(int id, boolean availableDaily, boolean availableHourly) {
+        CarEntity carItem = OwnerCarsRepository.getInstance().getCachedCar(id);
+        if (carItem != null) {
+            carItem.setCarAvailableOrderDays(availableDaily);
+            carItem.setCarAvailableOrderHours(availableHourly);
+        }
+        CarResponseBody car = OwnerCarRepository.getInstance().getCachedCar(id);
+        if (car != null) {
+            car.setCarAvailableOrderDays(availableDaily);
+            car.setCarAvailableOrderHours(availableHourly);
+        }
     }
 }

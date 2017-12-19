@@ -117,7 +117,7 @@
                     android:paddingStart="@dimen/small_margin"
                     android:text="@string/title_edit"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_rentalAvailableTimingReturn"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_rentalAvailableTimingPickup"
                     app:layout_constraintEnd_toEndOf="parent" />
             </android.support.constraint.ConstraintLayout>
 
@@ -355,37 +355,40 @@
                     app:layout_constraintTop_toTopOf="@+id/rates" />
 
                 <TextView
-                    android:id="@+id/tv_rentalOffPeakValue"
+                    android:id="@+id/tv_rentalValueFirst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
                     android:text="fggf"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_regular"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/rates"
                     app:layout_constraintTop_toBottomOf="@+id/rates" />
 
                 <TextView
-                    android:id="@+id/tv_rentalPeakValue"
+                    android:id="@+id/tv_rentalValueSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
                     android:text="fdhgfhgf"
+                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="@id/rates"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalOffPeakValue" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalValueFirst" />
 
                 <TextView
-                    android:id="@+id/tv_rentalMinimumValue"
+                    android:id="@+id/tv_rentalDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
                     android:text="dfglkdf';k"
+                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="@id/rates"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalPeakValue" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalValueSecond" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -395,7 +398,7 @@
                 android:layout_height="3dp"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:background="@color/divider"
-                app:layout_constraintTop_toBottomOf="@+id/tv_rentalMinimumValue" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_rentalDiscount" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"

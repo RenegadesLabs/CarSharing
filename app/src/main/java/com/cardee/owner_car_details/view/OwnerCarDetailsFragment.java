@@ -110,7 +110,9 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void moveToDescription(Bundle args) {
-        showMessage("Move to description");
+        Intent intent = new Intent(getActivity(), CarDetailsEditActivity.class);
+        intent.putExtras(args);
+        getActivity().startActivity(intent);
     }
 
     @Override

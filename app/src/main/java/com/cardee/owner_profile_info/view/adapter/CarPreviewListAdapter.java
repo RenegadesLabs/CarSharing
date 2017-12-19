@@ -51,12 +51,7 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
         holder.setCarTitle(car.getCarTitle());
         holder.setCarRate(car.getRating());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSubject.onNext(car);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> onClickSubject.onNext(car));
     }
 
     @Override

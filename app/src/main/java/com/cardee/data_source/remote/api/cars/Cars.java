@@ -1,11 +1,13 @@
 package com.cardee.data_source.remote.api.cars;
 
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponse;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
@@ -45,7 +47,7 @@ public interface Cars {
     Call<BaseResponse> updateInfo(@Path("id") Integer carId, @Body NewCarData requestBody);
 
     @PUT("cars/{id}/description")
-    Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body NewCarData requestBody);
+    Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body DescriptionBody description);
 
     @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalRequirements(@Path("id") Integer carId, @Body RentalTermsRequirementsEntity requestBody);
@@ -68,4 +70,9 @@ public interface Cars {
     @PUT("cars/{id}/rental/hourly")
     Call<BaseResponse> updateRentalRatesHourly(@Path("id") Integer carId, @Body RentalRatesEntity requestBody);
 
+    @PUT("cars/{id}/rental/daily")
+    Call<BaseResponse> updateFuelPolicyDaily(@Path("id") Integer carId, @Body FuelPolicyEntity requestBody);
+
+    @PUT("cars/{id}/rental/hourly")
+    Call<BaseResponse> updateFuelPolicyHourly(@Path("id") Integer carId, @Body FuelPolicyEntity requestBody);
 }
