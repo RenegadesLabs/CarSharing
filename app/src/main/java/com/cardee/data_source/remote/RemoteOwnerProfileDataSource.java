@@ -37,125 +37,89 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
 
     @Override
     public void loadOwnerProfile(final ProfileCallback callback) {
-        mApi.loadOwnerProfile().subscribe(new Consumer<OwnerProfileResponse>() {
-            @Override
-            public void accept(OwnerProfileResponse ownerProfileResponse) throws Exception {
-                if (ownerProfileResponse.isSuccessful()) {
-                    callback.onSuccess(ownerProfileResponse.getOwnerProfile());
-                    return;
-                }
-                handleErrorResponse(callback, ownerProfileResponse);
+        mApi.loadOwnerProfile().subscribe(ownerProfileResponse -> {
+            if (ownerProfileResponse.isSuccessful()) {
+                callback.onSuccess(ownerProfileResponse.getOwnerProfile());
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, ownerProfileResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
     @Override
     public void changeNote(OwnerNoteRequest noteRequest, final NoResponseCallback callback) {
-        mApi.updateOwnerNote(noteRequest).subscribe(new Consumer<NoDataResponse>() {
-            @Override
-            public void accept(NoDataResponse noDataResponse) throws Exception {
-                if (noDataResponse.isSuccessful()) {
-                    callback.onSuccess();
-                    return;
-                }
-                handleErrorResponse(callback, noDataResponse);
+        mApi.updateOwnerNote(noteRequest).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
     @Override
     public void changePassword(PassChangeRequest request, final NoResponseCallback callback) {
-        mApi.changePassword(request).subscribe(new Consumer<NoDataResponse>() {
-            @Override
-            public void accept(NoDataResponse noDataResponse) throws Exception {
-                if (noDataResponse.isSuccessful()) {
-                    callback.onSuccess();
-                    return;
-                }
-                handleErrorResponse(callback, noDataResponse);
+        mApi.changePassword(request).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                if (throwable.getMessage().equals(Error.Message.WRONG_CREDENTIALS)) {
-                    callback.onError(new Error(Error.Type.WRONG_AUTHENTICATION, Error.Message.WRONG_AUTHENTICATION));
-                } else {
-                    callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-                }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            if (throwable.getMessage().equals(Error.Message.WRONG_CREDENTIALS)) {
+                callback.onError(new Error(Error.Type.WRONG_AUTHENTICATION, Error.Message.WRONG_AUTHENTICATION));
+            } else {
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
             }
         });
     }
 
     @Override
     public void changeName(ChangeNameRequest request, final NoResponseCallback callback) {
-        mApi.changeName(request).subscribe(new Consumer<NoDataResponse>() {
-            @Override
-            public void accept(NoDataResponse noDataResponse) throws Exception {
-                if (noDataResponse.isSuccessful()) {
-                    callback.onSuccess();
-                    return;
-                }
-                handleErrorResponse(callback, noDataResponse);
+        mApi.changeName(request).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
     @Override
     public void changeEmail(ChangeEmailRequest request, final NoResponseCallback callback) {
-        mApi.changeEmail(request).subscribe(new Consumer<NoDataResponse>() {
-            @Override
-            public void accept(NoDataResponse noDataResponse) throws Exception {
-                if (noDataResponse.isSuccessful()) {
-                    callback.onSuccess();
-                    return;
-                }
-                handleErrorResponse(callback, noDataResponse);
+        mApi.changeEmail(request).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
     @Override
     public void changePhone(ChangePhoneRequest request, final NoResponseCallback callback) {
-        mApi.changePhone(request).subscribe(new Consumer<NoDataResponse>() {
-            @Override
-            public void accept(NoDataResponse noDataResponse) throws Exception {
-                if (noDataResponse.isSuccessful()) {
-                    callback.onSuccess();
-                    return;
-                }
-                handleErrorResponse(callback, noDataResponse);
+        mApi.changePhone(request).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
