@@ -16,8 +16,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 
 public class ChatFragment extends Fragment implements ChatContract.View {
 

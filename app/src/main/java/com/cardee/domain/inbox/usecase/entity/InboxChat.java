@@ -2,7 +2,11 @@ package com.cardee.domain.inbox.usecase.entity;
 
 public class InboxChat {
 
+    private Integer databaseId;
+
     private Integer mChatId;
+
+    private String chatAttachment;
 
     private Integer mUnreadMessageCount;
 
@@ -48,6 +52,14 @@ public class InboxChat {
         return mCarPhotoUrl;
     }
 
+    public Integer getDatabaseId() {
+        return databaseId;
+    }
+
+    public String getChatAttachment() {
+        return chatAttachment;
+    }
+
     public static class Builder {
 
         private InboxChat mInboxChat;
@@ -56,8 +68,18 @@ public class InboxChat {
             mInboxChat = new InboxChat();
         }
 
+        public Builder withDatabaseId(Integer databaseId) {
+            mInboxChat.databaseId = databaseId;
+            return this;
+        }
+
         public Builder withChatId(Integer chatId) {
             mInboxChat.mChatId = chatId;
+            return this;
+        }
+
+        public Builder withChatAttachment(String chatAttachment) {
+            mInboxChat.chatAttachment = chatAttachment;
             return this;
         }
 

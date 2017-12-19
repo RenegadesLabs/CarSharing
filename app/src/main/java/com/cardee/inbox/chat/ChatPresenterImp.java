@@ -67,6 +67,6 @@ public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxC
     @Override
     public void onDestroy() {
         mView = null;
+        mGetChats.dispose();
     }
-
 }

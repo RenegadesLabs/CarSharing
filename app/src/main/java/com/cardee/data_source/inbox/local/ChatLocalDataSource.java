@@ -63,7 +63,9 @@ public class ChatLocalDataSource implements ChatDataSource {
         public List<InboxChat> map(List<Chat> localChats) {
             for (Chat localChat : localChats) {
                 InboxChat chat = new InboxChat.Builder()
+                        .withDatabaseId(localChat.getId())
                         .withChatId(localChat.getChatId())
+                        .withChatAttachment(localChat.getChatAttachment())
                         .withName(localChat.getRecipientName())
                         .withPhotoUrl(localChat.getPhotoUrl())
                         .withLastMessage(localChat.getLastMessageText())

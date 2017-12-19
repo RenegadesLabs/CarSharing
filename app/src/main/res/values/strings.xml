@@ -493,4 +493,5 @@
     <string name="car_description_hint">Please enter your car description</string>
     <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
     and may result in account suspension or termination.</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

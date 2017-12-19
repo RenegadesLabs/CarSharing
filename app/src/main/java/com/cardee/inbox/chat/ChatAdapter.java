@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private List<InboxChat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<InboxChat> mOnClickSubject;
+    private final UtcDateFormatter mDateFormatter;
 
     ChatAdapter(Context context) {
         mInboxChats = new ArrayList<>();
+        mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
     }
@@ -41,13 +45,35 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         InboxChat chat = mInboxChats.get(position);
 
-        mRequestManager.load(chat.getRecipientPhotoUrl()).into(holder.mAvatar);
-        mRequestManager.load(chat.getCarPhotoUrl()).into(holder.mCarPreview);
+        mRequestManager
+                .load(chat.getRecipientPhotoUrl())
+                .centerCrop()
+                .placeholder(R.drawable.ic_photo_placeholder)
+                .transform(new CircleTransform(CardeeApp.context))
+                .into(holder.mAvatar);
+        mRequestManager
+                .load(chat.getCarPhotoUrl())
+                .centerCrop()
+                .into(holder.mCarPreview);
+
         holder.mCompanionName.setText(chat.getRecipientName());
         holder.mLastMessage.setText(chat.getLastMessageText());
-        holder.mLastMessageTime.setText(chat.getLastMessageTime());
-
+        holder.mLastMessageTime.setText(mDateFormatter.formatDate(chat.getLastMessageTime()));
+        setUnreadMessageCount(chat, holder);
         holder.mContainer.setOnClickListener(view -> mOnClickSubject.onNext(chat));
+    }
+
+    private void setUnreadMessageCount(InboxChat chat, ChatViewHolder holder) {
+        int unreadMessages = chat.getUnreadMessageCount();
+        if (unreadMessages == 0) {
+            holder.mUnreadCount.setText(null);
+            holder.mUnreadCount.setVisibility(View.GONE);
+            holder.mUnreadView.setVisibility(View.GONE);
+        } else {
+            holder.mUnreadCount.setText(String.valueOf(unreadMessages));
+            holder.mUnreadCount.setVisibility(View.VISIBLE);
+            holder.mUnreadView.setVisibility(View.VISIBLE);
+        }
     }
 
     void addItems(List<InboxChat> list) {
@@ -84,6 +110,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         View mContainer;
         ImageView mAvatar;
         ImageView mCarPreview;
+        ImageView mUnreadView;
+        TextView mUnreadCount;
 
         TextView mCompanionName;
         TextView mLastMessage;
@@ -94,6 +122,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             mContainer = itemView;
             mAvatar = itemView.findViewById(R.id.chat_avatar);
             mCarPreview = itemView.findViewById(R.id.chat_car_preview);
+            mUnreadView = itemView.findViewById(R.id.chat_unread_message);
+            mUnreadCount = itemView.findViewById(R.id.chat_unread_message_count);
+
             mCompanionName = itemView.findViewById(R.id.chat_companion_name);
             mLastMessage = itemView.findViewById(R.id.chat_last_message);
             mLastMessageTime = itemView.findViewById(R.id.chat_last_message_time);

@@ -32,21 +32,15 @@ public class RemoteOwnerCarsDataSource implements OwnerCarsDataSource {
 
     @Override
     public void obtainCars(final Callback callback) {
-        mApi.loadOwnersCarList().subscribe(new Consumer<CarsResponse>() {
-            @Override
-            public void accept(CarsResponse carsResponse) throws Exception {
-                if (carsResponse.isSuccessful()) {
-                    callback.onSuccess(carsResponse.getCars());
-                    return;
-                }
-                handleErrorResponse(callback, carsResponse);
+        mApi.loadOwnersCarList().subscribe(carsResponse -> {
+            if (carsResponse.isSuccessful()) {
+                callback.onSuccess(carsResponse.getCars());
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, carsResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 

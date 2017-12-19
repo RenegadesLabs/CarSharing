@@ -22,7 +22,4 @@ public interface ChatDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addChat(Chat chat);
-
-    @Update
-    void updateChat(Chat chat);
 }

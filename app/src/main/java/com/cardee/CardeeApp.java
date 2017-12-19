@@ -39,29 +39,17 @@ public class CardeeApp extends Application {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-//                .baseUrl("http://192.168.88.113:5550/api/dev/")
                 .client(HttpClientProvider.newInstance().provide(this))
                 .addConverterFactory(buildGsonConverter())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .build();
-//        changeLocale();
-
-//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//            @Override
-//            public void uncaughtException(Thread thread, Throwable throwable) {
-//                FirebaseCrash.report(throwable);
-//            }
-//        });
     }
 
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-
         // Adding custom deserializer
         gsonBuilder.registerTypeAdapter(NoDataResponse.class, new ResponseDeserializer());
         Gson myGson = gsonBuilder.create();
-
         return GsonConverterFactory.create(myGson);
     }
 
@@ -77,10 +65,4 @@ public class CardeeApp extends Application {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
-
-//    private void changeLocale(){
-//        Configuration configuration = new Configuration();
-//        configuration.setLocale(new Locale("ms-MY"));
-//        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
-//    }
 }

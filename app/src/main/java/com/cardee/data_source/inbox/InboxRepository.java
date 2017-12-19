@@ -35,6 +35,5 @@ public class InboxRepository implements InboxRepositoryContract {
         Observable<List<InboxChat>> remoteObservable = mChatRemoteSource.getRemoteChats(attachment);
         return Observable
                 .merge(localObservable, remoteObservable);
-
     }
 }

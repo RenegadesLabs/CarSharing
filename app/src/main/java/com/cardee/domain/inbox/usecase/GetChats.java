@@ -26,6 +26,12 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
                         });
     }
 
+    public void dispose() {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
+    }
+
     public static class RequestValues implements UseCase.RequestValues {
 
         private final String mAttachment;

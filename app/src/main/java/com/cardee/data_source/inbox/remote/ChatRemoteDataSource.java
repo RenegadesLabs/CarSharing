@@ -32,7 +32,7 @@ public class ChatRemoteDataSource implements ChatDataSource {
 
     @Override
     public Observable<List<InboxChat>> getRemoteChats(String attachment) {
-        ChatMapper mapper = new ChatMapper();
+        ChatMapper mapper = new ChatMapper(attachment);
         return mInboxApi.getChats(attachment)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -48,8 +48,10 @@ public class ChatRemoteDataSource implements ChatDataSource {
     private static class ChatMapper implements Mapper<ChatRemote[], List<InboxChat>> {
 
         private List<InboxChat> mChats;
+        private String mAttachment;
 
-        ChatMapper() {
+        ChatMapper(String attachment) {
+            mAttachment = attachment;
             mChats = new ArrayList<>();
         }
 
@@ -58,6 +60,7 @@ public class ChatRemoteDataSource implements ChatDataSource {
             for (ChatRemote remoteChatRemote : remoteChatRemotes) {
                 InboxChat chat = new InboxChat.Builder()
                         .withChatId(remoteChatRemote.getChatId())
+                        .withChatAttachment(mAttachment)
                         .withName(remoteChatRemote.getRecipient().getName())
                         .withPhotoUrl(remoteChatRemote.getRecipient().getPhoto())
                         .withLastMessage(remoteChatRemote.getLastMessage().getMessage())
