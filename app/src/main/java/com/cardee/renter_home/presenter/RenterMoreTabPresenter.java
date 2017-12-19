@@ -71,15 +71,10 @@ public class RenterMoreTabPresenter implements Consumer<RenterProfileContract.Ac
     }
 
     public void setOnClickListenerToHeader(View header) {
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mView.openOwnerProfile();
-            }
-        });
+        header.setOnClickListener(view -> mView.openOwnerProfile());
     }
 
-    public void setAccState(AccountManager.ACC_STATE state) {
-        AccountManager.getInstance(CardeeApp.context).setCurrentState(state);
+    public void setAccState(String state) {
+        AccountManager.getInstance(CardeeApp.context).setSession(state);
     }
 }

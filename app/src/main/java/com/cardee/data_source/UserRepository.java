@@ -59,8 +59,8 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(BaseAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
-                    pushFcTokenToServer();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                    pushFcTokenToServer();
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
@@ -91,8 +91,8 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onNext(SocialAuthResponse baseAuthResponse) {
                 if (baseAuthResponse.getSuccess()) {
-                    pushFcTokenToServer();
                     AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+                    pushFcTokenToServer();
                 }
                 callback.onSuccess(baseAuthResponse.getSuccess());
             }
@@ -212,25 +212,6 @@ public class UserRepository implements UserDataSource {
                 callback.onError(new Error(Error.Type.OTHER, t.getMessage()));
             }
         });
-//        Observable<BaseAuthResponse> ob = api.checkUniqueLogin(req);
-//        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
-//            @Override
-//            public void onNext(BaseAuthResponse baseAuthResponse) {
-//                callback.onSuccess(baseAuthResponse.getSuccess());
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                RetrofitException error = (RetrofitException) e;
-//                callback.onError(new Error(Error.Type.AUTHORIZATION, error.getMessage()));
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
     }
 
     @Override
@@ -244,9 +225,9 @@ public class UserRepository implements UserDataSource {
             @Override
             public void onResponse(Call<BaseAuthResponse> call, Response<BaseAuthResponse> response) {
                 if (response.isSuccessful()) {
-                    pushFcTokenToServer();
                     String token = response.body().getBody().getToken();
                     AccountManager.getInstance(CardeeApp.context).saveToken(token);
+                    pushFcTokenToServer();
                     if (registerValues.getImage() != null) {
                         setProfilePicture(registerValues, callback);
                     } else {

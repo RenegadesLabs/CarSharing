@@ -1,6 +1,5 @@
 package com.cardee.auth.register.presenter;
 
-
 import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.register.view.RegisterView;
@@ -27,6 +26,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
 
 public class RegisterPresenter {
 
@@ -59,7 +60,7 @@ public class RegisterPresenter {
                 });
     }
 
-    public void signUp(String login, String password, String name, File picture, final AccountManager.ACC_STATE accState) {
+    public void signUp(String login, String password, String name, File picture, final String session) {
         mView.showProgress(true);
         mExecutor.execute(new Register(), new Register.RequestValues(login, password, picture, name),
                 new UseCase.Callback<Register.ResponseValues>() {
@@ -67,7 +68,7 @@ public class RegisterPresenter {
                     public void onSuccess(Register.ResponseValues response) {
                         mView.showProgress(false);
                         mView.showMessage(R.string.signup_registration_success);
-                        mView.onRegistrationSuccess(accState);
+                        mView.onRegistrationSuccess(session);
                     }
 
                     @Override
@@ -89,7 +90,7 @@ public class RegisterPresenter {
                     mView.showProgress(false);
 
                     // TODO: implement for renter also;
-                    mView.onRegistrationSuccess(AccountManager.ACC_STATE.OWNER);
+                    mView.onRegistrationSuccess(OWNER_SESSION);
                 }
             }
 
@@ -136,7 +137,7 @@ public class RegisterPresenter {
         }
     }
 
-    public void setAccountState(AccountManager.ACC_STATE state) {
-        AccountManager.getInstance(CardeeApp.context).setCurrentState(state);
+    public void setAccountState(String session) {
+        AccountManager.getInstance(CardeeApp.context).setSession(session);
     }
 }

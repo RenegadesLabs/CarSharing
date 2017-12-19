@@ -141,7 +141,7 @@ public class RegisterFinalStepFragment extends Fragment {
     }
 
     private void setImage(byte[] pictureByteArray) {
-        Glide.with((RegisterActivity) getActivity())
+        Glide.with(getActivity())
                 .load(pictureByteArray)
                 .placeholder(R.drawable.placeholder_user_img)
                 .override(300, 300)

@@ -94,7 +94,7 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
         }
     }
 
-    public void setAccState(AccountManager.ACC_STATE renter) {
-        AccountManager.getInstance(CardeeApp.context).setCurrentState(renter);
+    public void setAccState(String session) {
+        AccountManager.getInstance(CardeeApp.context).setSession(session);
     }
 }
