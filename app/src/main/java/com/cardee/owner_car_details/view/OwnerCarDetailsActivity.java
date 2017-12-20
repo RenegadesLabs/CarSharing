@@ -71,6 +71,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
         mTabs = (TabLayout) findViewById(R.id.tab_layout);
         mPager = (ViewPager) findViewById(R.id.car_details_pager);
         mPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabTitles));
+        mPager.setOffscreenPageLimit(2);
         mTabs.setupWithViewPager(mPager);
         mTabs.getTabAt(1).select();
         mTabs.addOnTabSelectedListener(this);
