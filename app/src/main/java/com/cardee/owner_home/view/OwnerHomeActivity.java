@@ -33,6 +33,7 @@ import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_home.view.service.FragmentFactory;
+import com.crashlytics.android.Crashlytics;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
@@ -53,7 +54,7 @@ public class OwnerHomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_home);
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(null);
             mTitle = toolbar.findViewById(R.id.toolbar_title);

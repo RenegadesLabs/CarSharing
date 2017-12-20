@@ -8,6 +8,7 @@ import com.cardee.domain.owner.usecase.GetCars;
 import com.cardee.domain.owner.usecase.SwitchDaily;
 import com.cardee.domain.owner.usecase.SwitchHourly;
 import com.cardee.owner_home.OwnerCarListContract;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
                     mView.showProgress(false);
                     mView.setItems(cars);
                     firstStart = false;
+                } else {
+                    Crashlytics.logException(new Throwable("Success: View is null"));
                 }
             }
 
@@ -56,11 +59,13 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
                     mView.showProgress(false);
                     handleError(error);
                 }
+                Crashlytics.logException(new Throwable("Error: " + error.getMessage()));
             }
         });
     }
 
     private void handleError(Error error) {
+
         if (error.isAuthError()) {
             mView.onUnauthorized();
         } else if (error.isConnectionError()) {

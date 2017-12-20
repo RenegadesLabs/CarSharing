@@ -12,6 +12,7 @@ import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -25,7 +26,7 @@ public interface Profile {
 
     @GET("profiles/owner/cars")
     @Headers("Content-Type: application/json")
-    Observable<CarsResponse> loadOwnersCarList();
+    Call<CarsResponse> loadOwnersCarList();
 
     @GET("profiles/renter")
     @Headers("Content-Type: application/json")
