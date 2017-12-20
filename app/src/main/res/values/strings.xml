@@ -419,6 +419,14 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
+    <!--Car Reviews-->
+    <string name="car_reviews_condition">Condition &amp; Cleanliness</string>
+    <string name="car_reviews_comfort">Comfort &amp; Performance</string>
+    <string name="car_reviews_car_owner">Car Owner</string>
+    <string name="car_reviews_overall">Overall Experience</string>
+    <string name="car_reviews_ratings">\u0020Rating</string>
+    <string name="car_reviews">\u0020Review</string>
+
 
     <!--Calendar-->
     <string-array name="days_of_week">

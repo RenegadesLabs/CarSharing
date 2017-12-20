@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.RentalDetails;
-import com.cardee.domain.owner.usecase.GetOwnerInfo;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.RentalDetailsPresenter;
 import com.cardee.owner_car_details.view.adapter.OnTabSelectedAdapter;
