@@ -503,4 +503,12 @@
     <string name="add_image">Add Image</string>
     <string name="cover_image">Cover Image</string>
     <string name="set_cover_image">Set As Cover Image</string>
+
+    <!--Bookings-->
+    <string name="booking_state_new">New</string>
+    <string name="booking_state_canceled">Canceled</string>
+    <string name="booking_state_confirmed">Confirmed</string>
+    <string name="booking_state_collected">Collected</string>
+    <string name="booking_state_collecting">Collecting</string>
+    <string name="booking_state_completed">Completed</string>
 </resources>

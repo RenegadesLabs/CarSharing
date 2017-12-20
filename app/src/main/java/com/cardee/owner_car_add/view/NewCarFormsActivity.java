@@ -61,7 +61,7 @@ public class NewCarFormsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_car);
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
@@ -73,7 +73,7 @@ public class NewCarFormsActivity extends AppCompatActivity
         btnAllDone = findViewById(R.id.btn_all_done);
         btnToNext.setOnClickListener(this);
         btnAllDone.setOnClickListener(this);
-        progress = (ProgressBar) findViewById(R.id.new_car_progress);
+        progress = findViewById(R.id.new_car_progress);
         Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
         if (extra != null) {
             NewCarFormsContract.Mode mode = (NewCarFormsContract.Mode) extra;
