@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.cardee"
         minSdkVersion 19
@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        multiDexEnabled true
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary true
     }
     buildTypes {
@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -66,16 +66,18 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     //Facebook SDK
     compile 'com.facebook.android:facebook-login:4.27.0'
+
     //Google Auth
     compile 'com.google.android.gms:play-services-auth:11.4.2'
     //Google Maps
     compile 'com.google.android.gms:play-services-maps:11.4.2'
     compile 'com.google.android.gms:play-services-location:11.4.2'
     compile 'com.google.android.gms:play-services-places:11.4.2'
+
     compile 'com.android.support:multidex:1.0.0'
-//    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
-//        transitive = true
-//    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true
+    }
     //FCM
     compile 'com.google.firebase:firebase-core:11.4.2'
     compile 'com.google.firebase:firebase-messaging:11.4.2'

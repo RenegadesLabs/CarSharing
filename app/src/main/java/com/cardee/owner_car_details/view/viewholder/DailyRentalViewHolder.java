@@ -206,12 +206,15 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         switch (compoundButton.getId()) {
             case R.id.sw_rentalInstant:
                 setInstantViewsState(b);
+                presenter.updateInstantBooking(b);
                 break;
             case R.id.sw_rentalDelivery:
                 setDeliveryViewsState(b);
+                presenter.updateCurbsideDelivery(b);
                 break;
             case R.id.sw_rentalCash:
                 setCashViewState(b);
+                presenter.updateAcceptCash(b);
                 break;
         }
     }
@@ -286,27 +289,30 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getDailyAmountRateSecond());
         stringDelegate.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.getDailyAmountDiscountFirst());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getDailyFuelPolicyName(), "");
+        setInstantBookingState(rentalDetails);
+        setCurbsideDeliveryState(rentalDetails);
+        setAcceptCashState(rentalDetails);
     }
 
-    @Override
-    public void onInstantEnabled(boolean enabled) {
+    private void setInstantBookingState(RentalDetails rentalDetails) {
         instantBookingSwitch.setOnCheckedChangeListener(null);
-        instantBookingSwitch.setChecked(enabled);
-        instantBookingSwitch.setOnCheckedChangeListener(presenter);
+        instantBookingSwitch.setChecked(rentalDetails.isDailyInstantBooking());
+        setInstantViewsState(rentalDetails.isDailyInstantBooking());
+        instantBookingSwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCurbsideEnabled(boolean enabled) {
+    private void setCurbsideDeliveryState(RentalDetails rentalDetails) {
         curbsideDeliverySwitch.setOnCheckedChangeListener(null);
-        curbsideDeliverySwitch.setChecked(enabled);
-        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
+        curbsideDeliverySwitch.setChecked(rentalDetails.isDailyCurbsideDelivery());
+        setDeliveryViewsState(rentalDetails.isDailyCurbsideDelivery());
+        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCashEnabled(boolean enabled) {
+    private void setAcceptCashState(RentalDetails rentalDetails) {
         acceptCashSwitch.setOnCheckedChangeListener(null);
-        acceptCashSwitch.setChecked(enabled);
-        acceptCashSwitch.setOnCheckedChangeListener(presenter);
+        acceptCashSwitch.setChecked(rentalDetails.isDailyAcceptCash());
+        setCashViewState(rentalDetails.isDailyAcceptCash());
+        acceptCashSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

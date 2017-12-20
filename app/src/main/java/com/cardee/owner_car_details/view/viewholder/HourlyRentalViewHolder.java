@@ -207,12 +207,15 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         switch (compoundButton.getId()) {
             case R.id.sw_rentalInstant:
                 setInstantViewsState(b);
+                presenter.updateInstantBooking(b);
                 break;
             case R.id.sw_rentalDelivery:
                 setDeliveryViewsState(b);
+                presenter.updateCurbsideDelivery(b);
                 break;
             case R.id.sw_rentalCash:
                 setCashViewState(b);
+                presenter.updateAcceptCash(b);
                 break;
         }
     }
@@ -282,25 +285,34 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
         stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
-        stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateFirst());
-        stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateFirst());
         stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
+        setInstantBookingState(rentalDetails);
+        setCurbsideDeliveryState(rentalDetails);
+        setAcceptCashState(rentalDetails);
     }
 
-    @Override
-    public void onInstantEnabled(boolean enabled) {
-
+    private void setInstantBookingState(RentalDetails rentalDetails) {
+        instantBookingSwitch.setOnCheckedChangeListener(null);
+        instantBookingSwitch.setChecked(rentalDetails.isHourlyInstantBooking());
+        setInstantViewsState(rentalDetails.isHourlyInstantBooking());
+        instantBookingSwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCurbsideEnabled(boolean enabled) {
-
+    private void setCurbsideDeliveryState(RentalDetails rentalDetails) {
+        curbsideDeliverySwitch.setOnCheckedChangeListener(null);
+        curbsideDeliverySwitch.setChecked(rentalDetails.isHourlyCurbsideDelivery());
+        setDeliveryViewsState(rentalDetails.isHourlyCurbsideDelivery());
+        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCashEnabled(boolean enabled) {
-
+    private void setAcceptCashState(RentalDetails rentalDetails) {
+        acceptCashSwitch.setOnCheckedChangeListener(null);
+        acceptCashSwitch.setChecked(rentalDetails.isHourlyAcceptCash());
+        setCashViewState(rentalDetails.isHourlyAcceptCash());
+        acceptCashSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

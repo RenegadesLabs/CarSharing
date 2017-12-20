@@ -4,13 +4,10 @@ import com.cardee.R;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerCarRepository;
 import com.cardee.data_source.OwnerCarsRepository;
-import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
-import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
-import com.cardee.data_source.remote.api.profile.response.entity.OwnerCar;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.owner.usecase.UpdateFuelPolicyDaily;
-import com.cardee.domain.owner.usecase.UpdateFuelPolicyHourly;
+import com.cardee.domain.owner.usecase.UpdateDailyFuelPolicy;
+import com.cardee.domain.owner.usecase.UpdateHourlyFuelPolicy;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_rental_info.RentalContract;
 
@@ -40,12 +37,12 @@ public class RentalFuelPolicyPresenter implements RentalContract.Presenter {
             case OwnerCarRentalFragment.HOURLY:
 
                 float amountPayMileage = (float) objects[2];
-                mExecutor.execute(new UpdateFuelPolicyHourly(),
-                        new UpdateFuelPolicyHourly.RequestValues(OwnerCarRepository.currentCarId(),
+                mExecutor.execute(new UpdateHourlyFuelPolicy(),
+                        new UpdateHourlyFuelPolicy.RequestValues(OwnerCarRepository.currentCarId(),
                                 fuelPolicyId, amountPayMileage),
-                        new UseCase.Callback<UpdateFuelPolicyHourly.ResponseValues>() {
+                        new UseCase.Callback<UpdateHourlyFuelPolicy.ResponseValues>() {
                             @Override
-                            public void onSuccess(UpdateFuelPolicyHourly.ResponseValues response) {
+                            public void onSuccess(UpdateHourlyFuelPolicy.ResponseValues response) {
                                 mView.showProgress(false);
                                 if (response.isSuccess()) {
                                     OwnerCarRepository.getInstance().refresh(OwnerCarRepository.currentCarId());
@@ -63,12 +60,12 @@ public class RentalFuelPolicyPresenter implements RentalContract.Presenter {
                         });
                 break;
             case OwnerCarRentalFragment.DAILY:
-                mExecutor.execute(new UpdateFuelPolicyDaily(),
-                        new UpdateFuelPolicyDaily.RequestValues(OwnerCarRepository.currentCarId(),
+                mExecutor.execute(new UpdateDailyFuelPolicy(),
+                        new UpdateDailyFuelPolicy.RequestValues(OwnerCarRepository.currentCarId(),
                                 fuelPolicyId),
-                        new UseCase.Callback<UpdateFuelPolicyDaily.ResponseValues>() {
+                        new UseCase.Callback<UpdateDailyFuelPolicy.ResponseValues>() {
                             @Override
-                            public void onSuccess(UpdateFuelPolicyDaily.ResponseValues response) {
+                            public void onSuccess(UpdateDailyFuelPolicy.ResponseValues response) {
                                 mView.showProgress(false);
                                 if (response.isSuccess()) {
                                     OwnerCarRepository.getInstance().refresh(OwnerCarRepository.currentCarId());

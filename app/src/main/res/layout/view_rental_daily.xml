@@ -208,6 +208,7 @@
                     android:paddingEnd="@dimen/small_margin"
                     android:paddingStart="@dimen/small_margin"
                     android:text="1 day"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sw_rentalInstant" />

@@ -12,8 +12,11 @@ import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 import com.cardee.data_source.remote.api.cars.response.entity.UploadImageResponseBody;
+import com.cardee.data_source.remote.api.common.entity.AcceptCashEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.CurbsideDeliveryEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
+import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
@@ -193,6 +196,108 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
         try {
             Response<BaseResponse> response = api.updateDescription(id,
                     new DescriptionBody(description)).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateInstantBookingDaily(id,
+                    new InstantBookingEntity(isInstantBooking))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateInstantBookingHourly(id,
+                    new InstantBookingEntity(isInstantBooking))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateCurbsideDeliveryDaily(id,
+                    new CurbsideDeliveryEntity(isCurbsideDelivery))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateCurbsideDeliveryHourly(Integer id, boolean isCurbsideDelivery, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateCurbsideDeliveryHourly(id,
+                    new CurbsideDeliveryEntity(isCurbsideDelivery))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateAcceptCashDaily(Integer id, boolean isAcceptCash, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateAcceptCashDaily(id,
+                    new AcceptCashEntity(isAcceptCash))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateAcceptCashHourly(Integer id, boolean isAcceptCash, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateAcceptCashHourly(id,
+                    new AcceptCashEntity(isAcceptCash))
+                    .execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;

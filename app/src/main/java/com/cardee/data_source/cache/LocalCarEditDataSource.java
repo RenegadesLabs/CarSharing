@@ -79,6 +79,36 @@ public class LocalCarEditDataSource implements CarEditDataSource {
     }
 
     @Override
+    public void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback) {
+
+    }
+
+    @Override
+    public void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback) {
+
+    }
+
+    @Override
+    public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
+
+    }
+
+    @Override
+    public void updateCurbsideDeliveryHourly(Integer id, boolean isCurbsideDelivery, Callback callback) {
+
+    }
+
+    @Override
+    public void updateAcceptCashDaily(Integer id, boolean isAcceptCash, Callback callback) {
+
+    }
+
+    @Override
+    public void updateAcceptCashHourly(Integer id, boolean isAcceptCash, Callback callback) {
+
+    }
+
+    @Override
     public void updateFuelPolicyDaily(Integer id, FuelPolicyEntity fuelPolicy, Callback callback) {
 
     }
