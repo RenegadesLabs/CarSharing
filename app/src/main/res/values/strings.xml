@@ -494,4 +494,5 @@
     <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
     and may result in account suspension or termination.</string>
     <string name="yesterday">Yesterday</string>
+    <string name="chat_notification_channel_id">cardee_chat_chanel</string>
 </resources>

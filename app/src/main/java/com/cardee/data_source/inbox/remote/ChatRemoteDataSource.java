@@ -1,7 +1,7 @@
 package com.cardee.data_source.inbox.remote;
 
 import com.cardee.CardeeApp;
-import com.cardee.data_source.inbox.ChatDataSource;
+import com.cardee.data_source.inbox.local.entity.Chat;
 import com.cardee.data_source.inbox.remote.api.InboxApi;
 import com.cardee.data_source.inbox.remote.api.model.ChatRemote;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ChatRemoteDataSource implements ChatDataSource {
+public class ChatRemoteDataSource implements RemoteDataSource {
 
     private static ChatRemoteDataSource INSTANCE;
     private final InboxApi mInboxApi;
@@ -40,8 +41,9 @@ public class ChatRemoteDataSource implements ChatDataSource {
                 .subscribeOn(Schedulers.io());
     }
 
+
     @Override
-    public Observable<List<InboxChat>> getLocalChats(String attachment) {
+    public Single<Chat> getChat(Chat chat) {
         return null;
     }
 
@@ -72,11 +74,5 @@ public class ChatRemoteDataSource implements ChatDataSource {
             }
             return mChats;
         }
-    }
-
-
-    @Override
-    public void saveDataToDb(List<com.cardee.data_source.inbox.local.entity.Chat> inboxChats) {
-
     }
 }

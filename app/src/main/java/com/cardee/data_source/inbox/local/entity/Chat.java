@@ -11,7 +11,7 @@ public class Chat {
     @ColumnInfo(name = "_id")
     private Integer id;
 
-    @ColumnInfo(name = "сhat_id")
+    @ColumnInfo(name = "chat_id")
     private Integer chatId;
 
     @ColumnInfo(name = "attachment")

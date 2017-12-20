@@ -20,7 +20,6 @@ public class InboxChat {
 
     private String mCarPhotoUrl;
 
-
     public InboxChat() {
     }
 
@@ -29,7 +28,7 @@ public class InboxChat {
     }
 
     public Integer getUnreadMessageCount() {
-        return mUnreadMessageCount;
+        return mUnreadMessageCount == null ? 0 : mUnreadMessageCount;
     }
 
     public String getRecipientName() {
@@ -116,5 +115,20 @@ public class InboxChat {
         public InboxChat build() {
             return mInboxChat;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InboxChat chat = (InboxChat) o;
+
+        return mChatId != null ? mChatId.equals(chat.mChatId) : chat.mChatId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return mChatId != null ? mChatId.hashCode() : 0;
     }
 }

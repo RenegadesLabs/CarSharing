@@ -1,5 +1,6 @@
 package com.cardee.domain.inbox.usecase;
 
+import com.cardee.data_source.Error;
 import com.cardee.data_source.inbox.InboxRepository;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
@@ -22,8 +23,7 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
         mDisposable = mRepository.getChats(values.getAttachment())
                 .subscribe(
                         inboxChats -> callback.onSuccess(new ResponseValues(inboxChats)),
-                        throwable -> {
-                        });
+                        throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
     }
 
     public void dispose() {

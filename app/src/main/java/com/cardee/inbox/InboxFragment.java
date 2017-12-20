@@ -38,7 +38,6 @@ public class InboxFragment extends Fragment implements InboxContract.View {
         mInboxPresenterImp.init(this);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);

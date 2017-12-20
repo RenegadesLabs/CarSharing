@@ -79,6 +79,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     void addItems(List<InboxChat> list) {
+        mInboxChats.clear();
         mInboxChats.addAll(list);
         notifyDataSetChanged();
     }

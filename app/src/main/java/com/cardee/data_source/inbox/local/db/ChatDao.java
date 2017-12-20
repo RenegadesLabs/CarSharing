@@ -11,15 +11,23 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public interface ChatDao {
 
     @Query("SELECT * FROM chats WHERE attachment IS :attachment")
-    Maybe<List<Chat>> getChats(String attachment);
+    Flowable<List<Chat>> getChats(String attachment);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addChat(Chat chat);
+
+    @Query("SELECT * FROM chats WHERE chat_id IS :chatId AND attachment IS :attachment")
+    Single<Chat> getChat(Integer chatId, String attachment);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addChats(List<Chat> chats);
 }
