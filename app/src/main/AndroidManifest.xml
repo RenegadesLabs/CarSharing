@@ -61,6 +61,8 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
+        <activity android:name=".owner_car_rental_info.delivery.RentalDeliveryRatesActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".owner_car_rental_info.fuel.RentalFuelPolicyActivity"/>
         <activity android:name=".owner_car_rental_info.rates.RentalRatesActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>

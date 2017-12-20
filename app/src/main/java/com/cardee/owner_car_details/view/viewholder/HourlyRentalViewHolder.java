@@ -32,6 +32,7 @@ import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.service.RentalStringDelegate;
+import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
@@ -169,6 +170,12 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 });
                 break;
             case R.id.tv_rentalCurbsideRatesEdit:
+                Intent iDelivery = new Intent(getActivity(), RentalDeliveryRatesActivity.class);
+                iDelivery.putExtra(RentalDeliveryRatesActivity.BASE_RATE, hourlyRental.getDeliveryRates().getBaseRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.DISTANCE_RATE, hourlyRental.getDeliveryRates().getDistanceRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.PROVIDE_FREE, hourlyRental.getDeliveryRates().getProvideFreeDelivery());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.RENTAL_DURATION, hourlyRental.getDeliveryRates().getRentalDuration());
+                getActivity().startActivity(iDelivery);
                 break;
             case R.id.tv_rentalRentalRatesEdit:
                 Intent iRates = new Intent(getActivity(), RentalRatesActivity.class);

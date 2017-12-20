@@ -15,6 +15,7 @@ import com.cardee.data_source.remote.api.cars.response.entity.UploadImageRespons
 import com.cardee.data_source.remote.api.common.entity.AcceptCashEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.CurbsideDeliveryEntity;
+import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
@@ -196,6 +197,21 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
         try {
             Response<BaseResponse> response = api.updateDescription(id,
                     new DescriptionBody(description)).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateDeliveryRates(Integer id, DeliveryRatesEntity deliveryRatesEntity, Callback callback) {
+        try {
+            Response<BaseResponse> response = api.updateDeliveryRates(id, deliveryRatesEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;

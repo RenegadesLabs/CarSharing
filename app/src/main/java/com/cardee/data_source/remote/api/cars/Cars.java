@@ -1,5 +1,7 @@
 package com.cardee.data_source.remote.api.cars;
 
+import android.content.Intent;
+
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
@@ -9,6 +11,7 @@ import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
 import com.cardee.data_source.remote.api.common.entity.AcceptCashEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.CurbsideDeliveryEntity;
+import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
@@ -51,6 +54,9 @@ public interface Cars {
 
     @PUT("cars/{id}/description")
     Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body DescriptionBody description);
+
+    @PUT("cars/{id}/delivery/rates")
+    Call<BaseResponse> updateDeliveryRates(@Path("id") Integer carId, @Body DeliveryRatesEntity requestBody);
 
     @PUT("cars/{id}/rental/terms")
     Call<BaseResponse> updateRentalRequirements(@Path("id") Integer carId, @Body RentalTermsRequirementsEntity requestBody);
