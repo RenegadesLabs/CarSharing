@@ -145,7 +145,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity" />
-        <activity android:name=".renter_notifications.view.RenterNotifActivity"></activity>
+        <activity android:name=".renter_notifications.view.RenterNotifActivity" />
+        <activity android:name=".inbox.chat.chat_message.view.ChatActivity"></activity>
     </application>
 
 </manifest>
