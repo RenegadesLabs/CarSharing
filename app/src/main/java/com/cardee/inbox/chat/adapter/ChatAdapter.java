@@ -1,6 +1,7 @@
-package com.cardee.inbox.chat;
+package com.cardee.inbox.chat.adapter;
 
 import android.content.Context;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private final PublishSubject<Integer> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
 
-    ChatAdapter(Context context) {
+    public ChatAdapter(Context context) {
         mInboxChats = new ArrayList<>();
         mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
@@ -78,29 +79,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         mUnreadSubject.onNext(unreadMessages);
     }
 
-    void addItems(List<InboxChat> list) {
-        mInboxChats.clear();
-        mInboxChats.addAll(list);
-        notifyDataSetChanged();
+    public void addItems(List<InboxChat> list) {
+        if (mInboxChats.isEmpty()) {
+            mInboxChats.addAll(list);
+            notifyDataSetChanged();
+        } else {
+            updateList(list);
+        }
     }
 
-    void updateItem(InboxChat newChat) {
-        int position = mInboxChats.indexOf(newChat);
-        if (isChatExist(position)) {
-            mInboxChats.add(position, newChat);
-            notifyItemChanged(position);
-        } else {
-            mInboxChats.add(0, newChat);
-            notifyDataSetChanged();
-        }
+    private void updateList(List<InboxChat> newChatList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ChatDiffCallback(mInboxChats, newChatList));
+        diffResult.dispatchUpdatesTo(this);
     }
 
     public void subscribe(Consumer<InboxChat> consumer) {
         mOnClickSubject.subscribe(consumer);
-    }
-
-    private boolean isChatExist(int position) {
-        return position != -1;
     }
 
     @Override

@@ -122,13 +122,20 @@ public class InboxChat {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        InboxChat chat = (InboxChat) o;
+        InboxChat inboxChat = (InboxChat) o;
 
-        return mChatId != null ? mChatId.equals(chat.mChatId) : chat.mChatId == null;
+        if (mChatId != null ? !mChatId.equals(inboxChat.mChatId) : inboxChat.mChatId != null)
+            return false;
+        if (mUnreadMessageCount != null ? !mUnreadMessageCount.equals(inboxChat.mUnreadMessageCount) : inboxChat.mUnreadMessageCount != null)
+            return false;
+        return mLastMessageText != null ? mLastMessageText.equals(inboxChat.mLastMessageText) : inboxChat.mLastMessageText == null;
     }
 
     @Override
     public int hashCode() {
-        return mChatId != null ? mChatId.hashCode() : 0;
+        int result = mChatId != null ? mChatId.hashCode() : 0;
+        result = 31 * result + (mUnreadMessageCount != null ? mUnreadMessageCount.hashCode() : 0);
+        result = 31 * result + (mLastMessageText != null ? mLastMessageText.hashCode() : 0);
+        return result;
     }
 }

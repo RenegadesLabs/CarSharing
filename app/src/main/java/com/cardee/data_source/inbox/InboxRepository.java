@@ -45,15 +45,15 @@ public class InboxRepository implements InboxRepositoryContract {
                 localObservable
                         .subscribeOn(Schedulers.io())
                         .subscribe(localChatList -> {
-                            if (!localChatList.isEmpty()) {
-                                emitter.onNext(localChatList);
-                            } else {
-                                remoteObservable.subscribe(remoteChatList -> {
+                            emitter.onNext(localChatList);
+                            remoteObservable.subscribe(remoteChatList -> {
+                                if (!localChatList.containsAll(remoteChatList)) {
                                     emitter.onNext(remoteChatList);
-                                    emitter.onComplete();
                                     mChatLocalSource.saveDataToDb(remoteChatList);
-                                }, emitter::onError);
-                            }
+                                }
+                                emitter.onComplete();
+                            }, emitter::onError);
+
                         }));
     }
 
