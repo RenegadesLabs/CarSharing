@@ -19,6 +19,7 @@ public class CarResponseToRentalDetailsMapper {
         Integer carId = response.getCarDetails().getCarId();
         RentalDetails rentalDetails = new RentalDetails(carId);
         rentalDetails.setDeliveryRates(response.getCarDetails().getDeliveryRates());
+        rentalDetails.setCarDetails(response.getCarDetails());
 
         rentalDetails.setAvailableDaily(response.getCarAvailableOrderDays());
         rentalDetails.setDailyCount(response.getCarAvailabilityDailyCount() == null

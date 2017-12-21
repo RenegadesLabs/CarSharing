@@ -3,6 +3,7 @@ package com.cardee.data_source.remote.api.cars;
 import android.content.Intent;
 
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponse;
@@ -24,6 +25,7 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -42,6 +44,12 @@ public interface Cars {
     @Multipart
     @PUT("cars/{id}/images")
     Call<UploadImageResponse> uploadImage(@Path("id") Integer carId, @Part MultipartBody.Part picture);
+
+    @DELETE("cars/{id}/images/{image_id}")
+    Call<NoDataResponse> deleteImage(@Path("id") Integer carId, @Path("image_id") Integer imageId);
+
+    @PUT("cars/{id}/images/{image_id}/primary")
+    Call<NoDataResponse> setPrimaryImage(@Path("id") Integer carId, @Path("image_id") Integer imageId);
 
     @PUT("cars/{id}/images/{img_id}/primary")
     Call<BaseResponse> makeImagePrimary(@Path("id") Integer carId, @Path("img_id") Integer imgId);

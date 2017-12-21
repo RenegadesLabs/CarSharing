@@ -136,7 +136,7 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         }
 
         final NumberPicker np = rootView.findViewById(R.id.np_dialogNumberPicker);
-        setDividerColor(np, getActivity().getResources().getColor(R.color.colorPrimary));
+        setDividerColor(np, getActivity().getResources().getColor(android.R.color.transparent));
         np.setDisplayedValues(mValues);
         np.setMaxValue(mValues.length - 1);
         np.setMinValue(0);

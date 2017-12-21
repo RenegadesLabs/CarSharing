@@ -147,7 +147,9 @@ public class CarDetailsEditActivity extends AppCompatActivity
             Bundle args = new Bundle();
             args.putSerializable(NewCarFormsContract.ACTION, NewCarFormsContract.Action.UPDATE);
             childBinder.push(args);
+            return;
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

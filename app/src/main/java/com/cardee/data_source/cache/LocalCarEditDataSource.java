@@ -128,4 +128,14 @@ public class LocalCarEditDataSource implements CarEditDataSource {
     public void uploadImage(Integer id, Uri uri, ImageCallback callback) {
 
     }
+
+    @Override
+    public void deleteImage(Integer id, Integer imageId, Callback callback) {
+
+    }
+
+    @Override
+    public void setPrimaryImage(Integer id, Integer imageId, Callback callback) {
+
+    }
 }

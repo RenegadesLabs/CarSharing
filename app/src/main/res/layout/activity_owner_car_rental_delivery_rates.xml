@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -78,6 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/large_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textStyle="bold"
                 android:text="60"
                 android:maxLength="5"
@@ -88,15 +91,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/colorPrimary"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="$"
                 android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/et_ratesValue1"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue1"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <View
@@ -140,6 +147,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/xsmall_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textStyle="bold"
                 android:text="70"
                 android:maxLength="5"
@@ -150,15 +159,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_ratesValue2Text"
                 android:textColor="@color/colorPrimary"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="$"
                 android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/et_ratesValue2"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue2"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
@@ -252,6 +265,8 @@
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/xsmall_margin"
                 android:textStyle="bold"
                 android:text="2"

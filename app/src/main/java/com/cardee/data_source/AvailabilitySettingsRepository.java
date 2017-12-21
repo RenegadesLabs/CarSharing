@@ -26,12 +26,12 @@ public class AvailabilitySettingsRepository implements AvailabilityDataSource {
     }
 
     @Override
-    public void saveDailyAvailability(final int id, String[] dates, final Callback callback) {
+    public void saveDailyAvailability(final int id, final String[] dates, final Callback callback) {
         remoteDataSource.saveDailyAvailability(id, dates, new Callback() {
             @Override
             public void onSuccess() {
                 OwnerCarRepository.getInstance().refresh(id);
-                OwnerCarsRepository.getInstance().refreshCars();
+                updateListCache(id, dates, null, null, null);
                 callback.onSuccess();
             }
 
@@ -43,13 +43,13 @@ public class AvailabilitySettingsRepository implements AvailabilityDataSource {
     }
 
     @Override
-    public void saveHourlyAvailability(final int id, String[] dates, String startTime, String endTime,
+    public void saveHourlyAvailability(final int id, final String[] dates, final String startTime, final String endTime,
                                        final Callback callback) {
         remoteDataSource.saveHourlyAvailability(id, dates, startTime, endTime, new Callback() {
             @Override
             public void onSuccess() {
                 OwnerCarRepository.getInstance().refresh(id);
-                OwnerCarsRepository.getInstance().refreshCars();
+                updateListCache(id, null, dates, startTime, endTime);
                 callback.onSuccess();
             }
 
@@ -88,6 +88,24 @@ public class AvailabilitySettingsRepository implements AvailabilityDataSource {
         if (car != null) {
             car.setCarAvailableOrderDays(availableDaily);
             car.setCarAvailableOrderHours(availableHourly);
+        }
+    }
+
+    private void updateListCache(int carId, String[] dailyDates, String[] hourlyDates, String startTime, String endTime) {
+        CarEntity carFromList = OwnerCarsRepository.getInstance().getCachedCar(carId);
+        if (carFromList != null) {
+            if (dailyDates != null) {
+                carFromList.setCarAvailabilityDailyDates(dailyDates);
+                carFromList.setCarAvailabilityDailyCount(dailyDates.length);
+            }
+            if (hourlyDates != null) {
+                carFromList.setCarAvailabilityHourlyDates(hourlyDates);
+                carFromList.setCarAvailabilityHourlyCount(hourlyDates.length);
+            }
+            if (startTime != null) {
+                carFromList.setCarAvailabilityTimeBegin(startTime);
+                carFromList.setCarAvailabilityTimeEnd(endTime);
+            }
         }
     }
 }

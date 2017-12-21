@@ -23,6 +23,7 @@ import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
 import com.cardee.custom.modal.BookingPickerMenuFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
+import com.cardee.domain.owner.entity.mapper.CarDetailsToRentalTermsMapper;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
@@ -134,7 +135,10 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         }
         switch (view.getId()) {
             case R.id.cl_rentalTermsContainer:
-                getActivity().startActivity(new Intent(getActivity(), RentalTermsActivity.class));
+                Intent iTerms = new Intent(getActivity(),
+                        RentalTermsActivity.class);
+                iTerms.putExtra(RentalTermsActivity.CAR_ID, hourlyRental.getCarId());
+                getActivity().startActivity(iTerms);
                 break;
             case R.id.tv_rentalFuelEdit:
                 Intent iFuel = new Intent(getActivity(), RentalFuelPolicyActivity.class);

@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="@dimen/item_icon_side_xlarge"
             android:layout_height="@dimen/item_icon_side_xlarge"
-            android:background="@drawable/bg_blue_circle" />
+            app:srcCompat="@drawable/ic_light" />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,8 +59,8 @@
         android:id="@+id/progress_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:clickable="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

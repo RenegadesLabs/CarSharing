@@ -7,6 +7,7 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.CarEditDataSource;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
@@ -393,8 +394,8 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
                         return;
                     }
                 }
-                if(response.code() == 400){
-                    callback.onError(new Error(Error.Type.INVALID_REQUEST, "File already exist. Please select choose photo."));
+                if (response.code() == 400) {
+                    callback.onError(new Error(Error.Type.INVALID_REQUEST, "File already exist. Please choose another photo."));
                     return;
                 }
                 handleErrorResponse(response.body(), callback);
@@ -403,6 +404,34 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
             }
         } else {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid File path: " + imageFile.getAbsolutePath()));
+        }
+    }
+
+    @Override
+    public void deleteImage(Integer id, Integer imageId, Callback callback) {
+        try {
+            Response<NoDataResponse> response = api.deleteImage(id, imageId).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void setPrimaryImage(Integer id, Integer imageId, Callback callback) {
+        try {
+            Response<NoDataResponse> response = api.setPrimaryImage(id, imageId).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
         }
     }
 

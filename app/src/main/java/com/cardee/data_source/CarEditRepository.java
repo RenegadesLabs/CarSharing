@@ -7,6 +7,7 @@ import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
+import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
@@ -15,6 +16,7 @@ import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEnti
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
+import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 
 public class CarEditRepository implements CarEditDataSource {
 
@@ -36,7 +38,7 @@ public class CarEditRepository implements CarEditDataSource {
     }
 
     @Override
-    public void updateLocation(final Integer id, NewCarData carData, final CarEditDataSource.Callback callback) {
+    public void updateLocation(final Integer id, final NewCarData carData, final CarEditDataSource.Callback callback) {
         if (id == null) {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
@@ -44,7 +46,20 @@ public class CarEditRepository implements CarEditDataSource {
         remoteDataSource.updateLocation(id, carData, new Callback() {
             @Override
             public void onSuccess() {
-                OwnerCarRepository.getInstance().refresh(id);
+                CarResponseBody car = OwnerCarRepository.getInstance().getCachedCar(id);
+                if (car != null && car.getCarDetails() != null) {
+                    car.getCarDetails().setAddress(carData.getAddress());
+                    car.getCarDetails().setTown(carData.getTown());
+                    car.getCarDetails().setLatitude(carData.getLatitude());
+                    car.getCarDetails().setLongitude(carData.getLongitude());
+                }
+                CarEntity carFromList = OwnerCarsRepository.getInstance().getCachedCar(id);
+                if (carFromList != null) {
+                    BaseCarEntity carDetails = carFromList.getCarDetails();
+                    if (carDetails != null) {
+                        carDetails.setAddress(carData.getAddress());
+                    }
+                }
                 callback.onSuccess();
             }
 
@@ -403,6 +418,48 @@ public class CarEditRepository implements CarEditDataSource {
                 OwnerCarRepository.getInstance().refresh(id);
                 OwnerCarsRepository.getInstance().refreshCars();
                 callback.onSuccess(imageId);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void deleteImage(final Integer id, Integer imageId, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.deleteImage(id, imageId, new Callback() {
+            @Override
+            public void onSuccess() {
+                OwnerCarRepository.getInstance().refresh(id);
+                OwnerCarsRepository.getInstance().refreshCars();
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void setPrimaryImage(final Integer id, final Integer imageId, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.setPrimaryImage(id, imageId, new Callback() {
+            @Override
+            public void onSuccess() {
+                OwnerCarRepository.getInstance().refresh(id);
+                OwnerCarsRepository.getInstance().refreshCars();
+                callback.onSuccess();
             }
 
             @Override

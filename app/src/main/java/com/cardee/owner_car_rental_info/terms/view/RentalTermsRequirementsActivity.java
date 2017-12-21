@@ -24,6 +24,10 @@ import butterknife.OnClick;
 public class RentalTermsRequirementsActivity extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
 
+    public final static String MIN_AGE = "key_min_required_age";
+    public final static String MAX_AGE = "key_max_required_age";
+    public final static String DRIVING_EXP = "key_driving_exp";
+
     @BindView(R.id.tv_requirementsAge)
     public TextView ageRangeTV;
 
@@ -98,9 +102,9 @@ public class RentalTermsRequirementsActivity extends AppCompatActivity implement
     }
 
     private void initViewsState() {
-        mRange[0] = "18";
-        mRange[1] = "98";
-        mExperience = "1";
+        mRange[0] = String.valueOf(getIntent().getIntExtra(MIN_AGE, 0));
+        mRange[1] = String.valueOf(getIntent().getIntExtra(MAX_AGE, 0));
+        mExperience = String.valueOf(getIntent().getIntExtra(DRIVING_EXP, 0));
         invalidateAgeRangeText();
         invalidateExperienceText();
     }

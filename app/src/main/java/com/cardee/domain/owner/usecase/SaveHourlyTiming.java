@@ -21,7 +21,9 @@ public class SaveHourlyTiming
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + id));
             return;
         }
-        repository.saveHourlyAvailability(id, request.getDates(), request.getBeginTime(), request.getEndTime(),
+        String begin = request.getDates().length == 0 ? null : request.getEndTime();
+        String end = request.getDates().length == 0 ? null : request.getBeginTime();
+        repository.saveHourlyAvailability(id, request.getDates(), begin, end,
                 new AvailabilityDataSource.Callback() {
                     @Override
                     public void onSuccess() {

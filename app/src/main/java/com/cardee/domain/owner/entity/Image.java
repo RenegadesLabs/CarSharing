@@ -26,7 +26,7 @@ public class Image {
         return mThumbnail;
     }
 
-    public Boolean getPrimary() {
+    public Boolean isPrimary() {
         return mPrimary != null && mPrimary;
     }
 }

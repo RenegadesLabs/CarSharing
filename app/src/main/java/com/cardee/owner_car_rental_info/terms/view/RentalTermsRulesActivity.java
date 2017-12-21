@@ -25,6 +25,8 @@ import butterknife.OnClick;
 public class RentalTermsRulesActivity extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
 
+    public final static String OTHER_RULES = "key_other_car_rules";
+
     @BindView(R.id.et_rulesOwnRules)
     public AppCompatEditText ownRulesET;
 
@@ -37,6 +39,7 @@ public class RentalTermsRulesActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_owner_car_rental_rules);
         ButterKnife.bind(this);
         initToolbar();
+        initViewState();
         mProgress = DialogHelper.getProgressDialog(this,
                 getString(R.string.loading), false);
         mPresenter = new RentalTermsRulesPresenter(this);
@@ -53,6 +56,10 @@ public class RentalTermsRulesActivity extends AppCompatActivity implements View.
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
+    }
+
+    private void initViewState() {
+        ownRulesET.setText(getIntent().getStringExtra(OTHER_RULES));
     }
 
     @Override

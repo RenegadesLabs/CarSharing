@@ -34,8 +34,8 @@ public class RentalStringDelegate {
         valueSuffixes = context.getResources().getStringArray(R.array.days_availability_suffixes);
         timeZone = TimeZone.getTimeZone("GMT+08:00");
         calendar = Calendar.getInstance();
-        timeFormatter = new SimpleDateFormat(TIME_PATTERN);
-        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN);
+        timeFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.US);
+        timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);

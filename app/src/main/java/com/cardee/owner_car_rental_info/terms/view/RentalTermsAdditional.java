@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 public class RentalTermsAdditional extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
 
+    public final static String ADD_ONS = "key_add_ons";
+    public final static String ADDITIONAL_TERMS = "key_additional_terms";
+
     @BindView(R.id.et_additionalTerms)
     public AppCompatEditText additionalTermsET;
 
@@ -34,6 +37,7 @@ public class RentalTermsAdditional extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_owner_car_rental_additional);
         ButterKnife.bind(this);
         initToolbar();
+        initViewState();
         mProgress = DialogHelper.getProgressDialog(this,
                 getString(R.string.loading), false);
         mPresenter = new RentalTermsAdditionalPresenter(this);
@@ -51,6 +55,10 @@ public class RentalTermsAdditional extends AppCompatActivity implements View.OnC
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
+    }
+
+    private void initViewState() {
+        additionalTermsET.setText(getIntent().getStringExtra(ADDITIONAL_TERMS));
     }
 
     @Override

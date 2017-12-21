@@ -9,7 +9,10 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 
+import java.io.IOException;
+
 import io.reactivex.functions.Consumer;
+import retrofit2.Response;
 
 public class RemoteOwnerCarsDataSource implements OwnerCarsDataSource {
 
@@ -32,32 +35,28 @@ public class RemoteOwnerCarsDataSource implements OwnerCarsDataSource {
 
     @Override
     public void obtainCars(final Callback callback) {
-        mApi.loadOwnersCarList().subscribe(new Consumer<CarsResponse>() {
-            @Override
-            public void accept(CarsResponse carsResponse) throws Exception {
-                if (carsResponse.isSuccessful()) {
-                    callback.onSuccess(carsResponse.getCars());
-                    return;
-                }
-                handleErrorResponse(callback, carsResponse);
+        try {
+            Response<CarsResponse> response = mApi.loadOwnersCarList().execute();
+            if (response.isSuccessful() && response.body() != null) {
+                callback.onSuccess(response.body().getCars());
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
-        });
+            handleErrorResponse(callback, response.body());
+        } catch (IOException e) {
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
     }
 
     private void handleErrorResponse(Callback callback, BaseResponse response) {
-        if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {
+        if (response == null) {
+            callback.onError(new Error(Error.Type.OTHER, "null response"));
+        } else if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {
             callback.onError(new Error(Error.Type.SERVER, "Server error"));
         } else if (response.getResponseCode() == BaseResponse.ERROR_CODE_UNAUTHORIZED) {
             callback.onError(new Error(Error.Type.AUTHORIZATION, "Unauthorized"));
         } else {
             callback.onError(new Error(Error.Type.OTHER, "Undefined error"));
-            throw new IllegalArgumentException("Unsupported response code: " + response.getResponseCode());
+//            throw new IllegalArgumentException("Unsupported response code: " + response.getResponseCode());
         }
     }
 }

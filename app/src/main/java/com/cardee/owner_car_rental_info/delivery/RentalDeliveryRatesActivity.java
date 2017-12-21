@@ -69,6 +69,7 @@ public class RentalDeliveryRatesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_rental_delivery_rates);
         ButterKnife.bind(this);
+        initToolbar();
         getIntentData();
         initViews();
         mProgress = DialogHelper.getProgressDialog(this,
