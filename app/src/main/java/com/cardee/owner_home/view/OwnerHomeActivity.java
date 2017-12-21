@@ -23,6 +23,7 @@ import com.cardee.R;
 import com.cardee.custom.modal.AvailabilityMenuFragment;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.inbox.InboxFragment;
+import com.cardee.owner_bookings.view.BookingListFragment;
 import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_add.view.CarAddActivity;
 import com.cardee.owner_car_details.AvailabilityContract;
@@ -66,7 +67,6 @@ public class OwnerHomeActivity extends AppCompatActivity
         BottomNavigationHelper.prepareForOwner(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(1);
-        bottomMenu.disableItemAtPosition(2); //Just for demo
     }
 
     @Override
@@ -106,6 +106,9 @@ public class OwnerHomeActivity extends AppCompatActivity
                 break;
             case 1:
                 fragmentClazz = OwnerCarsFragment.class;
+                break;
+            case 2:
+                fragmentClazz = BookingListFragment.class;
                 break;
             case 3:
                 fragmentClazz = OwnerProfileFragment.class;

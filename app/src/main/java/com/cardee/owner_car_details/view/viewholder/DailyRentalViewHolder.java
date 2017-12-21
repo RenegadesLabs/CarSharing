@@ -30,7 +30,7 @@ import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.eventbus.DailyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
-import com.cardee.owner_car_details.view.service.RentalStringDelegate;
+import com.cardee.util.DateStringDelegate;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
@@ -68,7 +68,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private RentalDetails dailyRental;
     private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
-    private RentalStringDelegate stringDelegate;
+    private DateStringDelegate stringDelegate;
     private Toast currentToast;
 
 
@@ -118,7 +118,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         setInstantViewsState(instantBookingSwitch.isChecked());
         setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
         setCashViewState(acceptCashSwitch.isChecked());
-        stringDelegate = new RentalStringDelegate(context);
+        stringDelegate = new DateStringDelegate(context);
     }
 
     @Override

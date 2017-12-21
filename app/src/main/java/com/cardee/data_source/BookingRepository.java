@@ -26,8 +26,8 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(Callback callback) {
-        remoteDataSource.obtainOwnerBookings(new Callback() {
+    public void obtainOwnerBookings(String filter, String sort, Callback callback) {
+        remoteDataSource.obtainOwnerBookings(filter, sort, new Callback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
                 callback.onSuccess(bookingEntities);
@@ -41,7 +41,7 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainRenterBookings(Callback callback) {
+    public void obtainRenterBookings(String filter, String sort, Callback callback) {
 
     }
 }

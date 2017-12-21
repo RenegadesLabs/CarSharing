@@ -1,10 +1,11 @@
-package com.cardee.owner_car_details.view.service;
+package com.cardee.util;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.entity.Booking;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,13 +14,16 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class RentalStringDelegate {
+public class DateStringDelegate {
 
     private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
     private static final String TIME_VIEW_PATTERN = "ha";
+    private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+    private static final String DATE_VIEW_PATTERN = "d MMM, ha";
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
-    private TimeZone timeZone;
+    private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat dateViewFormatter;
     private Calendar calendar;
     private String[] saveSuffixes;
     private String[] valueSuffixes;
@@ -29,16 +33,20 @@ public class RentalStringDelegate {
     private String availabilityReturnSuffix;
     private String availabilityHourlyPrefix;
 
-    public RentalStringDelegate(Context context) {
+    public DateStringDelegate(Context context) {
         saveSuffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
         valueSuffixes = context.getResources().getStringArray(R.array.days_availability_suffixes);
-        timeZone = TimeZone.getTimeZone("GMT+08:00");
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
         calendar = Calendar.getInstance();
         timeFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.US);
         timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
+        dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
+        dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
+        dateFormatter.setTimeZone(timeZone);
+        dateViewFormatter.setTimeZone(timeZone);
         availabilityPickupPrefix = context.getString(R.string.availability_pickup_prefix);
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix);
         availabilityReturnPrefix = context.getString(R.string.availability_return_prefix);
@@ -206,5 +214,18 @@ public class RentalStringDelegate {
                 + payAmountMileage + " per km" : "");
         tv.setVisibility(View.VISIBLE);
         tv.setText(val);
+    }
+
+    public String formatShortBookingDate(String rawDate) {
+        if (rawDate == null) {
+            return null;
+        }
+        try {
+            Date date = dateFormatter.parse(rawDate);
+            return dateViewFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

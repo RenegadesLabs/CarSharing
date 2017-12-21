@@ -10,6 +10,8 @@ import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 
 import java.io.IOException;
 
+import io.reactivex.Observable;
+import io.reactivex.subjects.Subject;
 import retrofit2.Response;
 
 public class RemoteBookingDataSource implements BookingDataSource {
@@ -30,9 +32,9 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(Callback callback) {
+    public void obtainOwnerBookings(String filter, String sort, Callback callback) {
         try {
-            Response<BookingResponse> response = api.getOwnerBookings().execute();
+            Response<BookingResponse> response = api.getOwnerBookings(filter, sort).execute();
             if (response.isSuccessful() && response.body() != null) {
                 callback.onSuccess(response.body().getBookings());
                 return;
@@ -44,7 +46,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainRenterBookings(Callback callback) {
+    public void obtainRenterBookings(String filter, String sort, Callback callback) {
 
     }
 

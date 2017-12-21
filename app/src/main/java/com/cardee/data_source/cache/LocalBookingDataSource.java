@@ -19,12 +19,12 @@ public class LocalBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(Callback callback) {
+    public void obtainOwnerBookings(String filter, String sort, Callback callback) {
 
     }
 
     @Override
-    public void obtainRenterBookings(Callback callback) {
+    public void obtainRenterBookings(String filter, String sort, Callback callback) {
 
     }
 }

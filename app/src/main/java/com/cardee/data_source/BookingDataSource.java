@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface BookingDataSource {
 
-    void obtainOwnerBookings(Callback callback);
+    void obtainOwnerBookings(String filter, String sort, Callback callback);
 
-    void obtainRenterBookings(Callback callback);
+    void obtainRenterBookings(String filter, String sort, Callback callback);
 
     interface Callback {
 
