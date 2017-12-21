@@ -1,5 +1,4 @@
-package com.cardee.owner_notifications.presenter;
-
+package com.cardee.renter_notifications.presenter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,18 +6,18 @@ import android.content.DialogInterface;
 
 import com.cardee.R;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.owner_notifications.view.OwnerNotifView;
+import com.cardee.renter_notifications.view.RenterNotifView;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class OwnerNotifPresenter {
+public class RenterNotifPresenter {
 
     private List<String> mRemindersList;
-    private OwnerNotifView mView;
+    private RenterNotifView mView;
     private UseCaseExecutor mExecutor;
 
-    public OwnerNotifPresenter(OwnerNotifView view) {
+    public RenterNotifPresenter(RenterNotifView view) {
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
         mRemindersList = Arrays.asList(((Context) view).getResources().getStringArray(R.array.reminders));

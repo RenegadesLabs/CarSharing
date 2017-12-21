@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
@@ -30,12 +31,14 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
     private final PublishSubject<Car> onClickSubject;
+    private Disposable mDisposable;
 
     public CarPreviewListAdapter(Context context) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mGlideRequestManager = Glide.with(context);
         mCarItems = new ArrayList<>();
         onClickSubject = PublishSubject.create();
+
     }
 
     @Override
@@ -66,6 +69,10 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
             }
         }
         notifyDataSetChanged();
+    }
+
+    public void destroy() {
+        unsubscribe();
     }
 
     public static class CarListViewHolder extends RecyclerView.ViewHolder {
@@ -124,9 +131,15 @@ public class CarPreviewListAdapter extends RecyclerView.Adapter<CarPreviewListAd
     }
 
     public void subscribe(Consumer<Car> consumer) {
-        onClickSubject.subscribe(consumer);
+        mDisposable = onClickSubject.subscribe(consumer);
         if (!mCarItems.isEmpty()) {
             notifyDataSetChanged();
+        }
+    }
+
+    private void unsubscribe() {
+        if (mDisposable != null) {
+            mDisposable.dispose();
         }
     }
 }

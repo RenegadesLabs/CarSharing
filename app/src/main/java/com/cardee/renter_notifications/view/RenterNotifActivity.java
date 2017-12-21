@@ -1,4 +1,4 @@
-package com.cardee.owner_notifications.view;
+package com.cardee.renter_notifications.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,16 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.owner_notifications.presenter.OwnerNotifPresenter;
+import com.cardee.renter_notifications.presenter.RenterNotifPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifView {
+public class RenterNotifActivity extends AppCompatActivity implements RenterNotifView {
 
-    private OwnerNotifPresenter mPresenter;
+    private RenterNotifPresenter mPresenter;
     private Toast mCurrentToast;
 
     @BindView(R.id.notif_container)
@@ -48,7 +48,7 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_notif);
+        setContentView(R.layout.activity_renter_notif);
         ButterKnife.bind(this);
 
         initToolbar();
@@ -56,7 +56,7 @@ public class OwnerNotifActivity extends AppCompatActivity implements OwnerNotifV
     }
 
     private void initPresenter() {
-        mPresenter = new OwnerNotifPresenter(this);
+        mPresenter = new RenterNotifPresenter(this);
     }
 
     private void initToolbar() {

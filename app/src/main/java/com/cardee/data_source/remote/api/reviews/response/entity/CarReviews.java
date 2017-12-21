@@ -34,7 +34,8 @@ public class CarReviews {
     private List<Review> reviews = null;
 
     public Integer getCarComfortPerformance() {
-        return carComfortPerformance;
+
+        return carComfortPerformance == null ? 0 : carComfortPerformance;
     }
 
     public void setCarComfortPerformance(Integer carComfortPerformance) {
@@ -42,7 +43,7 @@ public class CarReviews {
     }
 
     public Integer getCarConditionCleanliness() {
-        return carConditionCleanliness;
+        return carConditionCleanliness == null ? 0 : carComfortPerformance;
     }
 
     public void setCarConditionCleanliness(Integer carConditionCleanliness) {
@@ -50,7 +51,7 @@ public class CarReviews {
     }
 
     public Integer getOverallRentalExperience() {
-        return overallRentalExperience;
+        return overallRentalExperience == null ? 0 : overallRentalExperience;
     }
 
     public void setOverallRentalExperience(Integer overallRentalExperience) {
@@ -58,7 +59,7 @@ public class CarReviews {
     }
 
     public Integer getCarOwner() {
-        return carOwner;
+        return carOwner == null ? 0 : carOwner;
     }
 
     public void setCarOwner(Integer carOwner) {
@@ -66,7 +67,7 @@ public class CarReviews {
     }
 
     public Integer getReviewsCnt() {
-        return reviewsCnt;
+        return reviewsCnt == null ? 0 : reviewsCnt;
     }
 
     public void setReviewsCnt(Integer reviewsCnt) {
@@ -74,7 +75,7 @@ public class CarReviews {
     }
 
     public Integer getRatingCnt() {
-        return ratingCnt;
+        return ratingCnt == null ? 0 : ratingCnt;
     }
 
     public void setRatingCnt(Integer ratingCnt) {
