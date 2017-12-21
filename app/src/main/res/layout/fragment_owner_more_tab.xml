@@ -60,6 +60,8 @@
         android:layout_marginTop="20dp"
         android:paddingEnd="27dp"
         android:paddingStart="27dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
