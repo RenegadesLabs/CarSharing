@@ -80,12 +80,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     public void addItems(List<InboxChat> list) {
-        if (mInboxChats.isEmpty()) {
-            mInboxChats.addAll(list);
-            notifyDataSetChanged();
-        } else {
-            updateList(list);
-        }
+        mInboxChats.clear();
+        mInboxChats.addAll(list);
+        notifyDataSetChanged();
     }
 
     private void updateList(List<InboxChat> newChatList) {

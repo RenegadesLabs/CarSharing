@@ -8,6 +8,9 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import io.reactivex.observers.DisposableCompletableObserver;
 
+import static com.cardee.inbox.service.controller.FcmMessageMapper.INBOX_ALERT;
+import static com.cardee.inbox.service.controller.FcmMessageMapper.INBOX_CHAT;
+
 public class FcmRepositoryController implements RepositoryController {
 
     private static final String TAG = RepositoryController.class.getSimpleName();
@@ -21,7 +24,19 @@ public class FcmRepositoryController implements RepositoryController {
     }
 
     @Override
-    public void updateChat(RemoteMessage remoteMessage) {
+    public void updateInbox(RemoteMessage remoteMessage) {
+        if (remoteMessage.getData().get(FcmMessageMapper.Key.TAG) != null) {
+            switch (remoteMessage.getData().get(FcmMessageMapper.Key.TAG)) {
+                case INBOX_CHAT:
+                    updateChat(remoteMessage);
+                    break;
+                case INBOX_ALERT:
+                    break;
+            }
+        }
+    }
+
+    private void updateChat(RemoteMessage remoteMessage) {
         Chat newChatData = mMessageMapper.map(remoteMessage.getData());
         mInboxRepository.updateChat(newChatData).subscribe(new DisposableCompletableObserver() {
             @Override

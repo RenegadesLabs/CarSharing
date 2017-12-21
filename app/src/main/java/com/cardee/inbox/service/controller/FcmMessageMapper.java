@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
 
+    public static final String INBOX_CHAT = "CHAT";
+    public static final String INBOX_ALERT = "BOOKING";
+
     @Override
     public Chat map(Map<String, String> messageData) {
         Chat chat = new Chat();
@@ -21,9 +24,11 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
 
     public static class Key {
 
+        public static final String TAG = "tag";
+        public static final String BADGE = "badge";
+
         public static class Chat {
             public static final String SENDER = "sender";
-            public static final String TAG = "tag";
             public static final String MESSAGE = "message";
             public static final String MESSAGE_ID = "message_id";
 
@@ -35,6 +40,8 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
 
         public static class Booking {
             static final String OBJECT_ID = "object_id";
+            static final String MESSAGE_TITLE = "message_title";
+            static final String MESSAGE_BODY = "message_body";
         }
     }
 }

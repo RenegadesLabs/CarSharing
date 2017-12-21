@@ -7,10 +7,13 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface InboxRepositoryContract {
 
     Observable<List<InboxChat>> getChats(String attachment);
+
+    Observable<List<InboxChat>> getRemoteChats(String attachment);
 
     Completable addChat(Chat chat);
 

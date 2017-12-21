@@ -7,16 +7,20 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface LocalDataSource {
 
-    Flowable<List<InboxChat>> getLocalChats(String attachment);
+    Observable<List<InboxChat>> getLocalChats(String attachment);
 
     Completable addChat(Chat chat);
 
     Single<Chat> getChat(Chat chat);
 
-    void saveDataToDb(List<InboxChat> inboxChats);
+    void fetchUpdates(List<InboxChat> oldChatList, List<InboxChat> newChatList);
+
+    void saveChats(List<InboxChat> inboxChats);
+    Completable updateChats(List<InboxChat> chats);
 
 }

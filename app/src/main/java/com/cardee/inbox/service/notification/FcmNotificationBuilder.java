@@ -32,36 +32,39 @@ public class FcmNotificationBuilder implements NotificationBuilder {
 
     @Override
     public void createNotification(Context context, Map<String, String> messageData) {
-        String notificationTag = messageData.get(FcmMessageMapper.Key.Chat.TAG).toLowerCase();
-        switch (notificationTag) {
-            case CHAT:
-                String channelId = context.getString(R.string.chat_notification_channel_id);
+        if (messageData.get(FcmMessageMapper.Key.TAG) != null) {
+            String notificationTag = messageData.get(FcmMessageMapper.Key.TAG).toLowerCase();
+            switch (notificationTag) {
+                case CHAT:
+                    String channelId = context.getString(R.string.chat_notification_channel_id);
 //                Intent intent = new Intent(context, SplashActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                PendingIntent pendingIntent = PendingIntent.getActivity(context, FCM_NOTIFICATION_REQUEST_CODE, intent,
 //                        PendingIntent.FLAG_ONE_SHOT);
 
-                mNotificationBuilder =
-                        new NotificationCompat.Builder(context, channelId)
-                                .setSmallIcon(R.drawable.ic_cardee_icon)
-                                .setContentTitle(messageData.get(FcmMessageMapper.Key.Chat.SENDER))
-                                .setContentText(messageData.get(FcmMessageMapper.Key.Chat.MESSAGE))
-                                .setAutoCancel(true)
-                                .setSound(mChatNotifySound);
+                    mNotificationBuilder =
+                            new NotificationCompat.Builder(context, channelId)
+                                    .setSmallIcon(R.drawable.ic_cardee_icon)
+                                    .setContentTitle(messageData.get(FcmMessageMapper.Key.Chat.SENDER))
+                                    .setContentText(messageData.get(FcmMessageMapper.Key.Chat.MESSAGE))
+                                    .setAutoCancel(true)
+                                    .setSound(mChatNotifySound);
 //                        .setContentIntent(pendingIntent);
-                break;
-            case BOOKING:
+                    break;
+                case BOOKING:
 
-                break;
-        }
-        //debug
+                    break;
+            }
+            //debug
 //        logDebug(remoteMessage);
+        }
+
     }
 
     @Override
     public void showNotification(Context context) {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager != null) {
+        if (manager != null && mNotificationBuilder != null) {
             manager.notify(FCM_NOTIFICATION_NOTIFICATION_CODE, mNotificationBuilder.build());
         } else {
             Log.e(TAG, "Notification manager is null");

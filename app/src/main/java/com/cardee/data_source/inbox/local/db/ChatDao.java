@@ -19,15 +19,18 @@ import io.reactivex.Single;
 @Dao
 public interface ChatDao {
 
-    @Query("SELECT * FROM chats WHERE attachment IS :attachment")
-    Flowable<List<Chat>> getChats(String attachment);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addChat(Chat chat);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addChats(List<Chat> chats);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void updateCars(List<Chat> chats);
 
     @Query("SELECT * FROM chats WHERE chat_id IS :chatId AND attachment IS :attachment")
     Single<Chat> getChat(Integer chatId, String attachment);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addChats(List<Chat> chats);
+    @Query("SELECT * FROM chats WHERE attachment IS :attachment")
+    Flowable<List<Chat>> getChats(String attachment);
 }

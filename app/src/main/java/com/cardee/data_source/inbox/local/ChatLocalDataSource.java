@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class ChatLocalDataSource implements LocalDataSource {
@@ -40,9 +40,10 @@ public class ChatLocalDataSource implements LocalDataSource {
     }
 
     @Override
-    public Flowable<List<InboxChat>> getLocalChats(String attachment) {
+    public Observable<List<InboxChat>> getLocalChats(String attachment) {
         return mDataBase.getChatDao()
                 .getChats(attachment)
+                .toObservable()
                 .map(mInboxChatMapper::map);
     }
 
@@ -52,12 +53,31 @@ public class ChatLocalDataSource implements LocalDataSource {
     }
 
     @Override
-    public Single<Chat> getChat(Chat chat) {
-        return mDataBase.getChatDao().getChat(chat.getChatId(), chat.getChatAttachment());
+    public Completable updateChats(List<InboxChat> inboxChats) {
+        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateCars(mChatMapper.map(inboxChats)));
     }
 
     @Override
-    public void saveDataToDb(List<InboxChat> inboxChats) {
+    public Single<Chat> getChat(Chat chat) {
+        return mDataBase.getChatDao().
+                getChat(chat.getChatId(), chat.getChatAttachment());
+    }
+
+    @Override
+    public void fetchUpdates(List<InboxChat> oldChatList, List<InboxChat> newChatList) {
+        List<InboxChat> listToUpdate = new ArrayList<>();
+        for (InboxChat remoteChat : newChatList) {
+            if (!oldChatList.contains(remoteChat)) {
+                listToUpdate.add(remoteChat);
+            }
+        }
+        if (!listToUpdate.isEmpty()) {
+            saveChats(listToUpdate);
+        }
+    }
+
+    @Override
+    public void saveChats(List<InboxChat> inboxChats) {
         new Thread(() -> {
             mDataBase.getChatDao().addChats(mChatMapper.map(inboxChats));
             Log.e(TAG, "All chats persist");
