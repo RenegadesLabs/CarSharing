@@ -3,8 +3,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/bg_main"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/container"
@@ -32,10 +32,11 @@
 
                 <TextView
                     android:id="@+id/condition_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/car_reviews_condition"
                     android:theme="@style/TextTitle"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,11 +51,12 @@
 
                 <TextView
                     android:id="@+id/comfort_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/car_reviews_comfort"
                     android:theme="@style/TextTitle"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/condition_text" />
 
@@ -69,11 +71,12 @@
 
                 <TextView
                     android:id="@+id/owner_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/car_reviews_car_owner"
                     android:theme="@style/TextTitle"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/comfort_text" />
 
@@ -88,11 +91,12 @@
 
                 <TextView
                     android:id="@+id/experience_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/car_reviews_overall"
                     android:theme="@style/TextTitleBold"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/owner_text" />
 
