@@ -43,7 +43,7 @@ public class CarReviews {
     }
 
     public Integer getCarConditionCleanliness() {
-        return carConditionCleanliness == null ? 0 : carComfortPerformance;
+        return carConditionCleanliness == null ? 0 : carConditionCleanliness;
     }
 
     public void setCarConditionCleanliness(Integer carConditionCleanliness) {
