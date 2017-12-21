@@ -52,4 +52,13 @@
 
     <color name="modal_menu_title">#ffffff</color>
     <color name="bg_regular">#F2F2F2</color>
+
+    <color name="booking_state_new">#eab84f</color>
+    <color name="booking_state_canceled">#FF5040</color>
+    <color name="booking_state_confirmed">#55b6ad</color>
+    <color name="booking_state_collected">#569be7</color>
+    <color name="booking_state_collecting">#569be7</color>
+    <color name="booking_state_completed">#569be7</color>
+
+    <color name="booking_subtitle">#8c96a0</color>
 </resources>

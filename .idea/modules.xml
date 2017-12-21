@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://C:\Users\Developer\AndroidStudioProjects\cardee-android\Cardee.iml" filepath="C:\Users\Developer\AndroidStudioProjects\cardee-android\Cardee.iml" />
-      <module fileurl="file://C:\Users\Developer\AndroidStudioProjects\cardee-android\cardee-mobile-android.iml" filepath="C:\Users\Developer\AndroidStudioProjects\cardee-android\cardee-mobile-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cardee-android.iml" filepath="$PROJECT_DIR$/cardee-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cardee-mobile-android.iml" filepath="$PROJECT_DIR$/cardee-mobile-android.iml" />
+      <module fileurl="file://C:\Users\Developer\AndroidStudioProjects\cardee-android\cardee-mobile-android.iml" filepath="C:\Users\Developer\AndroidStudioProjects\cardee-android\cardee-mobile-android.iml" />
     </modules>
   </component>
 </project>

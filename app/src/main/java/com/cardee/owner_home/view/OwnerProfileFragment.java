@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
-import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.OwnerProfileContract;
@@ -32,6 +31,7 @@ import com.cardee.renter_home.view.RenterHomeActivity;
 import com.cardee.util.glide.CircleTransform;
 
 import static android.app.Activity.RESULT_OK;
+import static com.cardee.data_source.remote.service.AccountManager.RENTER_SESSION;
 
 public class OwnerProfileFragment extends Fragment implements OwnerProfileContract.View {
 
@@ -143,7 +143,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
 
     @Override
     public void openSwitchToRenter() {
-        mPresenter.setAccState(AccountManager.ACC_STATE.RENTER);
+        mPresenter.setAccState(RENTER_SESSION);
         Intent intent = new Intent(getActivity(), RenterHomeActivity.class);
         startActivity(intent);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

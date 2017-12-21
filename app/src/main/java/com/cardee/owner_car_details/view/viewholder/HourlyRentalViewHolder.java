@@ -23,6 +23,7 @@ import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
 import com.cardee.custom.modal.BookingPickerMenuFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
+import com.cardee.domain.owner.entity.mapper.CarDetailsToRentalTermsMapper;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
@@ -32,6 +33,7 @@ import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
 import com.cardee.owner_car_details.view.service.RentalStringDelegate;
+import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
@@ -40,7 +42,6 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, RentalDetailsContract.ControlView,
         HourlyTimingEventBus.Listener, CompoundButton.OnCheckedChangeListener {
 
-    private RentalDetails mHourlyRental;
 
     private TextView availabilityDays;
     private TextView timing;
@@ -125,7 +126,6 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void bind(RentalDetails model) {
         hourlyRental = model;
         presenter.onBind(model);
-        mHourlyRental = model;
     }
 
     @Override
@@ -135,12 +135,17 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         }
         switch (view.getId()) {
             case R.id.cl_rentalTermsContainer:
-                getActivity().startActivity(new Intent(getActivity(), RentalTermsActivity.class));
+                Intent iTerms = new Intent(getActivity(),
+                        RentalTermsActivity.class);
+                iTerms.putExtra(RentalTermsActivity.CAR_ID, hourlyRental.getCarId());
+                getActivity().startActivity(iTerms);
                 break;
             case R.id.tv_rentalFuelEdit:
-                Intent i = new Intent(getActivity(), RentalFuelPolicyActivity.class);
-                i.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
-                getActivity().startActivity(i);
+                Intent iFuel = new Intent(getActivity(), RentalFuelPolicyActivity.class);
+                iFuel.putExtra(RentalFuelPolicyActivity.POLICY_ID, hourlyRental.getHourlyFuelPolicyId());
+                iFuel.putExtra(RentalFuelPolicyActivity.AMOUNT_MILEAGE, hourlyRental.getHourlyAmountPayMileage());
+                iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iFuel);
                 break;
             case R.id.tv_rentalAvailabilityEdit:
                 Intent intent = new Intent(getActivity(), AvailabilityCalendarActivity.class);
@@ -169,11 +174,22 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 });
                 break;
             case R.id.tv_rentalCurbsideRatesEdit:
+                Intent iDelivery = new Intent(getActivity(), RentalDeliveryRatesActivity.class);
+                iDelivery.putExtra(RentalDeliveryRatesActivity.BASE_RATE, hourlyRental.getDeliveryRates().getBaseRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.DISTANCE_RATE, hourlyRental.getDeliveryRates().getDistanceRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.PROVIDE_FREE, hourlyRental.getDeliveryRates().getProvideFreeDelivery());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.RENTAL_DURATION, hourlyRental.getDeliveryRates().getRentalDuration());
+                getActivity().startActivity(iDelivery);
                 break;
             case R.id.tv_rentalRentalRatesEdit:
-                Intent ratesIntent = new Intent(getActivity(), RentalRatesActivity.class);
-                ratesIntent.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
-                getActivity().startActivity(ratesIntent);
+                Intent iRates = new Intent(getActivity(), RentalRatesActivity.class);
+                iRates.putExtra(RentalRatesActivity.RATE_FIRST, String.valueOf(hourlyRental.getHourlyAmountRateFirst()));
+                iRates.putExtra(RentalRatesActivity.RATE_SECOND, String.valueOf(hourlyRental.getHourlyAmountRateSecond()));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_FIRST, String.valueOf(Math.round(hourlyRental.getHourlyAmountDiscountFirst())));
+                iRates.putExtra(RentalRatesActivity.DISCOUNT_SECOND, String.valueOf(Math.round(hourlyRental.getHourlyAmountDiscountSecond())));
+                iRates.putExtra(RentalRatesActivity.MIN_RENTAL, hourlyRental.getHourlyMinRentalDuration());
+                iRates.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY);
+                getActivity().startActivity(iRates);
                 break;
             case R.id.iv_rentalHelp:
                 showInfoDialog();
@@ -202,12 +218,15 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         switch (compoundButton.getId()) {
             case R.id.sw_rentalInstant:
                 setInstantViewsState(b);
+                presenter.updateInstantBooking(b);
                 break;
             case R.id.sw_rentalDelivery:
                 setDeliveryViewsState(b);
+                presenter.updateCurbsideDelivery(b);
                 break;
             case R.id.sw_rentalCash:
                 setCashViewState(b);
+                presenter.updateAcceptCash(b);
                 break;
         }
     }
@@ -277,24 +296,34 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void setData(RentalDetails rentalDetails) {
         stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
         stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
-        stringDelegate.onSetRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateFirst());
-        stringDelegate.onSetRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateSecond());
+        stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateFirst());
         stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
+        stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
+        setInstantBookingState(rentalDetails);
+        setCurbsideDeliveryState(rentalDetails);
+        setAcceptCashState(rentalDetails);
     }
 
-    @Override
-    public void onInstantEnabled(boolean enabled) {
-
+    private void setInstantBookingState(RentalDetails rentalDetails) {
+        instantBookingSwitch.setOnCheckedChangeListener(null);
+        instantBookingSwitch.setChecked(rentalDetails.isHourlyInstantBooking());
+        setInstantViewsState(rentalDetails.isHourlyInstantBooking());
+        instantBookingSwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCurbsideEnabled(boolean enabled) {
-
+    private void setCurbsideDeliveryState(RentalDetails rentalDetails) {
+        curbsideDeliverySwitch.setOnCheckedChangeListener(null);
+        curbsideDeliverySwitch.setChecked(rentalDetails.isHourlyCurbsideDelivery());
+        setDeliveryViewsState(rentalDetails.isHourlyCurbsideDelivery());
+        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCashEnabled(boolean enabled) {
-
+    private void setAcceptCashState(RentalDetails rentalDetails) {
+        acceptCashSwitch.setOnCheckedChangeListener(null);
+        acceptCashSwitch.setChecked(rentalDetails.isHourlyAcceptCash());
+        setCashViewState(rentalDetails.isHourlyAcceptCash());
+        acceptCashSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

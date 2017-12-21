@@ -9,6 +9,7 @@ import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
 import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
@@ -198,7 +199,7 @@ public class CarEditRepository implements CarEditDataSource {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
             return;
         }
-        remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
+        remoteDataSource.updateRentalRatesHourly(id, ratesEntity, new Callback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
@@ -224,6 +225,139 @@ public class CarEditRepository implements CarEditDataSource {
                 if (car != null) {
                     car.getCarDetails().setDescription(description);
                 }
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateDeliveryRates(Integer id, DeliveryRatesEntity deliveryRatesEntity, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateDeliveryRates(id, deliveryRatesEntity, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateInstantBookingDaily(id, isInstantBooking, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateInstantBookingHourly(id, isInstantBooking, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateCurbsideDeliveryDaily(id, isCurbsideDelivery, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateCurbsideDeliveryHourly(Integer id, boolean isCurbsideDelivery, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateCurbsideDeliveryHourly(id, isCurbsideDelivery, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateAcceptCashDaily(Integer id, boolean isAcceptCash, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateAcceptCashDaily(id, isAcceptCash, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateAcceptCashHourly(Integer id, boolean isAcceptCash, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateAcceptCashHourly(id, isAcceptCash, new Callback() {
+            @Override
+            public void onSuccess() {
                 callback.onSuccess();
             }
 

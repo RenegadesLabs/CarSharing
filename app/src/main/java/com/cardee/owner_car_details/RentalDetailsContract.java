@@ -21,12 +21,6 @@ public interface RentalDetailsContract {
 
         void setData(RentalDetails rentalDetails);
 
-        void onInstantEnabled(boolean enabled);
-
-        void onCurbsideEnabled(boolean enabled);
-
-        void onCashEnabled(boolean enabled);
-
     }
 
     interface Presenter extends BasePresenter {

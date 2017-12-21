@@ -3,24 +3,21 @@ package com.cardee.domain.owner.usecase;
 import com.cardee.data_source.CarEditDataSource;
 import com.cardee.data_source.CarEditRepository;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.domain.UseCase;
 
-public class UpdateFuelPolicyDaily implements UseCase<UpdateFuelPolicyDaily.RequestValues, UpdateFuelPolicyDaily.ResponseValues>{
 
-    private final CarEditRepository mRepository;
+public class UpdateDailyInstantBookingState implements UseCase<UpdateDailyInstantBookingState.RequestValues,
+        UpdateDailyInstantBookingState.ResponseValues> {
 
-    public UpdateFuelPolicyDaily() {
+    private CarEditRepository mRepository;
+
+    public UpdateDailyInstantBookingState() {
         mRepository = CarEditRepository.getInstance();
     }
 
     @Override
-    public void execute(RequestValues values, final Callback<ResponseValues> callback) {
-        FuelPolicyEntity fuelPolicy = new FuelPolicyEntity();
-        fuelPolicy.setFuelPolicyId(values.getFuelPolicyId());
-        fuelPolicy.setFuelPolicyName("");
-        fuelPolicy.setAmountPayMileage(0.0F);
-        mRepository.updateFuelPolicyDaily(values.getCarId(), fuelPolicy,
+    public void execute(RequestValues values, Callback<ResponseValues> callback) {
+        mRepository.updateInstantBookingDaily(values.getId(), values.isInstantBooking(),
                 new CarEditDataSource.Callback() {
             @Override
             public void onSuccess() {
@@ -32,23 +29,24 @@ public class UpdateFuelPolicyDaily implements UseCase<UpdateFuelPolicyDaily.Requ
                 callback.onError(error);
             }
         });
+
     }
 
     public static class RequestValues implements UseCase.RequestValues {
-        private final int mCarId;
-        private final int mFuelPolicyId;
+        private final int mId;
+        private final boolean isInstantBooking;
 
-        public RequestValues(int carId, int fuelPolicyId) {
-            mCarId = carId;
-            mFuelPolicyId = fuelPolicyId;
+        public RequestValues(int id, boolean isInstantBooking) {
+            mId = id;
+            this.isInstantBooking = isInstantBooking;
         }
 
-        public int getCarId() {
-            return mCarId;
+        public int getId() {
+            return mId;
         }
 
-        public int getFuelPolicyId() {
-            return mFuelPolicyId;
+        public boolean isInstantBooking() {
+            return isInstantBooking;
         }
     }
 

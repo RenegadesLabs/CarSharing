@@ -1,6 +1,7 @@
 package com.cardee.owner_car_rental_info.fuel;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,9 @@ import butterknife.OnClick;
 
 public class RentalFuelPolicyActivity extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
+
+    public static final String POLICY_ID = "key_fuel_policy_name";
+    public static final String AMOUNT_MILEAGE = "key_fuel_amount_mileage";
 
     @BindView(R.id.tv_fuelSimilarLevel)
     public CheckedTextView similarTV;
@@ -58,16 +62,23 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
 
     private int mFuelPolicyId = -1;
 
+    private PickerFuelMenuFragment mPicker;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_car_rental_fuel);
         ButterKnife.bind(this);
-        mMode = getIntent().getIntExtra(OwnerCarRentalFragment.MODE, 0);
+        Intent i = getIntent();
+        mMode = i.getIntExtra(OwnerCarRentalFragment.MODE, 0);
+        mPickerSelectedVal = "$" + i.getStringExtra(AMOUNT_MILEAGE);
+        mFuelPolicyId = i.getIntExtra(POLICY_ID, 1);
         mPresenter = new RentalFuelPolicyPresenter(this);
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
         initToolbar();
+        initPickerDialogFragment();
         initViewsState();
+        initPolicy();
     }
 
     private void initToolbar() {
@@ -93,11 +104,13 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
     }
 
     private void initViewsState() {
-
         if (mMode == OwnerCarRentalFragment.HOURLY) {
             findViewById(R.id.ll_fuelMileageContainer)
                     .setVisibility(View.VISIBLE);
-            mPickerSelectedVal = "$0.16";
+            costValue.setText(mPickerSelectedVal);
+            String consumption = "Suitable for car average petrol consumption of " +
+                    mPicker.getCurrentConsumption(mPickerSelectedVal);
+            consumptionValue.setText(consumption);
             mileageSettingContainer.setVisibility(View.GONE);
             consumptionValue.setVisibility(View.GONE);
             return;
@@ -106,23 +119,37 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
                 .setVisibility(View.GONE);
     }
 
+    private void initPolicy() {
+        switch (mFuelPolicyId) {
+            case 0:
+                toggleTV(mileageTV, similarTV, mileageIV, similarIV);
+                break;
+            case 1:
+                toggleTV(similarTV, mileageTV, similarIV, mileageIV);
+                break;
+        }
+    }
+
+    private void initPickerDialogFragment() {
+        mPicker = PickerFuelMenuFragment.getInstance(mPickerSelectedVal);
+    }
+
     @OnClick(R.id.fl_fuelSimilarContainer)
     public void onReturnWithSimilarLevelClicked() {
-        mFuelPolicyId = 0;
+        mFuelPolicyId = 1;
         toggleTV(similarTV, mileageTV, similarIV, mileageIV);
     }
 
     @OnClick(R.id.fl_fuelMileageContainer)
     public void onPaymentByMileageClicked() {
-        mFuelPolicyId = 1;
+        mFuelPolicyId = 0;
         toggleTV(mileageTV, similarTV, mileageIV, similarIV);
     }
 
     @OnClick(R.id.tv_fuelPerKm)
     public void onFuelPerKmClicked() {
-        PickerFuelMenuFragment fm = PickerFuelMenuFragment.getInstance(mPickerSelectedVal);
-        fm.show(getSupportFragmentManager(), fm.getTag());
-        fm.setOnDoneClickListener(new PickerFuelMenuFragment.DialogOnClickListener() {
+        mPicker.show(getSupportFragmentManager(), mPicker.getTag());
+        mPicker.setOnDoneClickListener(new PickerFuelMenuFragment.DialogOnClickListener() {
             @Override
             public void onDoneClicked(String value1, String value2) {
                 mPickerSelectedVal = value1;

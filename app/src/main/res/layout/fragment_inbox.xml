@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/inbox_fragment_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/inbox_fragment_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/bg_widget"
+            app:tabTextAppearance="@style/InboxTabItemTextStyle"
+            app:tabTextColor="@color/bg_widget_pressed">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/inbox_fragment_tab_alerts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/item_tab_inbox_alerts" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/inbox_fragment_tab_chats"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/item_tab_inbox_chats" />
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/inbox_fragment_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inbox_fragment_appbar" />
+</android.support.constraint.ConstraintLayout>

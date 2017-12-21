@@ -23,6 +23,12 @@ public class OrderHourlyDetailsEntity {
     @SerializedName("amnt_rate_second")
     private Float amntRateSecond;
     @Expose
+    @SerializedName("amnt_discount_first")
+    private Float amntDiscountFirst;
+    @Expose
+    @SerializedName("amnt_discount_second")
+    private Float amntDiscountSecond;
+    @Expose
     @SerializedName("min_rental_duration")
     private Integer minRentalDuration;
     @Expose
@@ -70,6 +76,22 @@ public class OrderHourlyDetailsEntity {
 
     public Float getAmntRateSecond() {
         return amntRateSecond;
+    }
+
+    public Float getAmntDiscountFirst() {
+        return amntDiscountFirst;
+    }
+
+    public void setAmntDiscountFirst(Float amntDiscountFirst) {
+        this.amntDiscountFirst = amntDiscountFirst;
+    }
+
+    public Float getAmntDiscountSecond() {
+        return amntDiscountSecond;
+    }
+
+    public void setAmntDiscountSecond(Float amntDiscountSecond) {
+        this.amntDiscountSecond = amntDiscountSecond;
     }
 
     public void setAmntRateSecond(Float amntRateSecond) {

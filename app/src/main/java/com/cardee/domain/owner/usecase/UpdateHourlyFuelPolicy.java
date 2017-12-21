@@ -6,12 +6,12 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.domain.UseCase;
 
-public class UpdateFuelPolicyHourly implements UseCase<UpdateFuelPolicyHourly.RequestValues,
-        UpdateFuelPolicyHourly.ResponseValues> {
+public class UpdateHourlyFuelPolicy implements UseCase<UpdateHourlyFuelPolicy.RequestValues,
+        UpdateHourlyFuelPolicy.ResponseValues> {
 
     private final CarEditRepository mRepository;
 
-    public UpdateFuelPolicyHourly() {
+    public UpdateHourlyFuelPolicy() {
         mRepository = CarEditRepository.getInstance();
     }
 

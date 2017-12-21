@@ -21,6 +21,9 @@ public class CarDetailsEntity extends BaseCarEntity {
     @SerializedName("req_min_age")
     private Integer requiredMinAge;
     @Expose
+    @SerializedName("req_max_age")
+    private Integer requiredMaxAge;
+    @Expose
     @SerializedName("req_dr_exp")
     private Integer requiredDrivingExp;
     @Expose
@@ -85,6 +88,14 @@ public class CarDetailsEntity extends BaseCarEntity {
 
     public void setRequiredMinAge(Integer requiredMinAge) {
         this.requiredMinAge = requiredMinAge;
+    }
+
+    public Integer getRequiredMaxAge() {
+        return requiredMaxAge;
+    }
+
+    public void setRequiredMaxAge(Integer requiredMaxAge) {
+        this.requiredMaxAge = requiredMaxAge;
     }
 
     public Integer getRequiredDrivingExp() {

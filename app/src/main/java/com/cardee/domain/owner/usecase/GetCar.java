@@ -1,6 +1,5 @@
 package com.cardee.domain.owner.usecase;
 
-
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerCarDataSource;
 import com.cardee.data_source.OwnerCarRepository;
@@ -18,7 +17,6 @@ public class GetCar implements UseCase<GetCar.RequestValues, GetCar.ResponseValu
         mRepository = OwnerCarRepository.getInstance();
         mMapper = new CarResponseToCarMapper();
     }
-
 
     @Override
     public void execute(RequestValues values, final Callback<ResponseValues> callback) {

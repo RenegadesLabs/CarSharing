@@ -17,8 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="100dp">
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -209,6 +208,7 @@
                     android:paddingEnd="@dimen/small_margin"
                     android:paddingStart="@dimen/small_margin"
                     android:text="1 day"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sw_rentalInstant" />
@@ -472,6 +472,7 @@
                 android:id="@+id/cl_rentalTermsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="130dp"
                 android:background="@drawable/bg_item_transparent"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/div7">

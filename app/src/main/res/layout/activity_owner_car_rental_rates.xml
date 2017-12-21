@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -95,26 +96,34 @@
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="@dimen/xsmall_margin"
-                android:textStyle="bold"
-                android:text="60"
-                android:maxLength="4"
-                android:textSize="@dimen/text_large"
-                android:inputType="numberDecimal"
+                android:layout_marginTop="8dp"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
+                android:text="60"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_ratesValue1Text"
-                android:textColor="@color/colorPrimary"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="$"
                 android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/et_ratesValue1"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue1"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <View
@@ -157,9 +166,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/xsmall_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textStyle="bold"
                 android:text="70"
-                android:maxLength="4"
+                android:maxLength="5"
                 android:textSize="@dimen/text_large"
                 android:inputType="numberDecimal"
                 android:gravity="center"
@@ -167,15 +178,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_ratesValue2Text"
                 android:textColor="@color/colorPrimary"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="$"
                 android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/et_ratesValue2"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue2"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
@@ -221,22 +236,27 @@
                 android:id="@+id/percent1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginTop="8dp"
                 android:text="%"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginEnd="@dimen/large_margin"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue3"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_ratesValue3"
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textStyle="bold"
                 android:text="10"
-                android:maxLength="3"
+                android:maxLength="4"
                 android:textSize="@dimen/text_large"
                 android:inputType="numberDecimal"
                 android:gravity="center"
@@ -273,22 +293,27 @@
                 android:id="@+id/percent2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_large"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginTop="8dp"
                 android:text="%"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginEnd="@dimen/large_margin"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_ratesValue4"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_ratesValue4"
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textStyle="bold"
                 android:text="20"
-                android:maxLength="3"
+                android:maxLength="4"
                 android:textSize="@dimen/text_large"
                 android:inputType="numberDecimal"
                 android:gravity="center"
@@ -312,7 +337,7 @@
         app:layout_constraintTop_toBottomOf="@+id/discount_container"
         app:layout_constraintStart_toStartOf="parent"/>
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/minimum_container"
+        android:id="@+id/cl_ratesFreeDeliveryContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
@@ -347,10 +372,12 @@
             style="@style/CardeeEditTextWithoutUnderlineStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:layout_marginEnd="@dimen/xsmall_margin"
             android:textStyle="bold"
             android:text="2"
-            android:maxLength="1"
+            android:maxLength="3"
             android:textSize="@dimen/text_large"
             android:inputType="numberDecimal"
             android:gravity="center"

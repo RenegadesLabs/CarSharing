@@ -1,13 +1,18 @@
 package com.cardee.owner_car_details.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +40,7 @@ public class CarImagesFragment extends Fragment
         implements CarImagesEditContract.View, ImageViewListener {
 
     private static final int IMAGE_REQUEST_CODE = 102;
+    private static final int REQUEST_PERMISSION_CODE = 103;
 
     private DetailsChangedListener parentListener;
     private NewCarFormsContract.Action pendingAction;
@@ -170,9 +176,20 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void onAddNewClick() {
+        if (!hasPermission()) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION_CODE);
+            return;
+        }
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, IMAGE_REQUEST_CODE);
+    }
+
+    private boolean hasPermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -183,5 +200,16 @@ public class CarImagesFragment extends Fragment
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                onAddNewClick();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

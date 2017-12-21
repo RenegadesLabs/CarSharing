@@ -20,9 +20,7 @@
         <ImageView
             android:layout_width="@dimen/item_icon_side_xlarge"
             android:layout_height="@dimen/item_icon_side_xlarge"
-            android:background="@drawable/bg_blue_circle"
-            app:srcCompat="@drawable/ic_light_temp"
-            android:padding="@dimen/widget_padding_x_small"/>
+            app:srcCompat="@drawable/ic_light" />
 
         <TextView
             android:layout_width="match_parent"

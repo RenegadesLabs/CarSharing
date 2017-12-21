@@ -61,6 +61,8 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
+        <activity android:name=".owner_car_rental_info.delivery.RentalDeliveryRatesActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".owner_car_rental_info.fuel.RentalFuelPolicyActivity"/>
         <activity android:name=".owner_car_rental_info.rates.RentalRatesActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
@@ -109,6 +111,17 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <service android:name=".owner_car_details.service.FetchAddressService" />
+        <service android:name=".inbox.service.InboxIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".inbox.service.InboxMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".owner_profile_info.view.OwnerProfileInfoActivity"
@@ -130,7 +143,7 @@
             android:name=".owner_cardee.view.OwnerCardeeActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
-        <activity android:name=".renter_profile.view.RenterProfileActivity"></activity>
+        <activity android:name=".renter_profile.view.RenterProfileActivity" />
     </application>
 
 </manifest>

@@ -2,10 +2,13 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.cardee.data_source.remote.api.NoDataResponse;
+import com.cardee.data_source.remote.api.booking.deserializer.BookingDeserializer;
+import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 import com.cardee.data_source.remote.api.util.ResponseDeserializer;
 import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;
@@ -26,11 +29,16 @@ public class CardeeApp extends Application {
     public static Retrofit retrofit;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
 //                .baseUrl("http://192.168.88.113:5550/api/dev/")
@@ -51,8 +59,8 @@ public class CardeeApp extends Application {
 
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-
         // Adding custom deserializer
+        gsonBuilder.registerTypeAdapter(BookingResponse.class, new BookingDeserializer());
         gsonBuilder.registerTypeAdapter(NoDataResponse.class, new ResponseDeserializer());
         Gson myGson = gsonBuilder.create();
 
