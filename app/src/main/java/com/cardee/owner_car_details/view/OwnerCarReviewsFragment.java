@@ -114,10 +114,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setConditions(int conditions) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < conditions; i++) {
-            addStar(params);
+            addStar(mCondition, params);
         }
         for (int i = 0; i < (MAX_RATE - conditions); i++) {
-            addGreyStar(params);
+            addGreyStar(mCondition, params);
         }
     }
 
@@ -125,10 +125,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setComfort(int comfort) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < comfort; i++) {
-            addStar(params);
+            addStar(mComfort, params);
         }
         for (int i = 0; i < (MAX_RATE - comfort); i++) {
-            addGreyStar(params);
+            addGreyStar(mComfort, params);
         }
     }
 
@@ -136,10 +136,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setOwnerRate(int owner) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < owner; i++) {
-            addStar(params);
+            addStar(mOwner, params);
         }
         for (int i = 0; i < (MAX_RATE - owner); i++) {
-            addGreyStar(params);
+            addGreyStar(mOwner, params);
         }
     }
 
@@ -147,10 +147,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setExperience(int overall) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < overall; i++) {
-            addStar(params);
+            addStar(mExperience, params);
         }
         for (int i = 0; i < (MAX_RATE - overall); i++) {
-            addGreyStar(params);
+            addGreyStar(mExperience, params);
         }
     }
 
@@ -197,17 +197,17 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
         mCurrentToast.show();
     }
 
-    private void addStar(LinearLayout.LayoutParams params) {
+    private void addStar(LinearLayout layout, LinearLayout.LayoutParams params) {
         ImageView star = new ImageView(getActivity());
         star.setImageResource(R.drawable.ic_star_rate);
         star.setLayoutParams(params);
-        mCondition.addView(star);
+        layout.addView(star);
     }
 
-    private void addGreyStar(LinearLayout.LayoutParams params) {
+    private void addGreyStar(LinearLayout layout, LinearLayout.LayoutParams params) {
         ImageView greyStar = new ImageView(getActivity());
         greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
         greyStar.setLayoutParams(params);
-        mCondition.addView(greyStar);
+        layout.addView(greyStar);
     }
 }
