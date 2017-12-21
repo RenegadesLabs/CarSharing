@@ -1,4 +1,4 @@
-package com.cardee.data_source.inbox;
+package com.cardee.data_source.inbox.remote;
 
 import com.cardee.data_source.inbox.local.entity.Chat;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
@@ -6,13 +6,12 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
-public interface ChatDataSource {
+public interface RemoteDataSource {
 
     Observable<List<InboxChat>> getRemoteChats(String attachment);
 
-    Observable<List<InboxChat>> getLocalChats(String attachment);
-
-    void saveDataToDb(List<Chat> inboxChats);
+    Single<Chat> getChat(Chat chat);
 
 }

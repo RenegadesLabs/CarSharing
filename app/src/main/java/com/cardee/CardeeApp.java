@@ -2,7 +2,6 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -31,7 +30,7 @@ public class CardeeApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+//        MultiDex.install(this);
     }
 
     @Override
@@ -41,20 +40,10 @@ public class CardeeApp extends Application {
         context = this;
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-//                .baseUrl("http://192.168.88.113:5550/api/dev/")
                 .client(HttpClientProvider.newInstance().provide(this))
                 .addConverterFactory(buildGsonConverter())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .build();
-//        changeLocale();
-
-//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//            @Override
-//            public void uncaughtException(Thread thread, Throwable throwable) {
-//                FirebaseCrash.report(throwable);
-//            }
-//        });
     }
 
     private static GsonConverterFactory buildGsonConverter() {
@@ -63,7 +52,6 @@ public class CardeeApp extends Application {
         gsonBuilder.registerTypeAdapter(BookingResponse.class, new BookingDeserializer());
         gsonBuilder.registerTypeAdapter(NoDataResponse.class, new ResponseDeserializer());
         Gson myGson = gsonBuilder.create();
-
         return GsonConverterFactory.create(myGson);
     }
 
@@ -79,10 +67,4 @@ public class CardeeApp extends Application {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
-
-//    private void changeLocale(){
-//        Configuration configuration = new Configuration();
-//        configuration.setLocale(new Locale("ms-MY"));
-//        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
-//    }
 }

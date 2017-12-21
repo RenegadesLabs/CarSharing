@@ -531,4 +531,6 @@
     <string name="booking_state_collected">Collected</string>
     <string name="booking_state_collecting">Collecting</string>
     <string name="booking_state_completed">Completed</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="chat_notification_channel_id">cardee_chat_chanel</string>
 </resources>

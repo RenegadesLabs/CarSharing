@@ -33,6 +33,7 @@
     <ImageView
         android:id="@+id/tab_notification"
         style="@style/InboxTabItemDotStyle"
+        android:visibility="invisible"
         app:layout_constraintLeft_toRightOf="@id/tab_image"
         app:layout_constraintTop_toTopOf="@id/tab_image"
         app:srcCompat="@drawable/ic_inbox_notification" />

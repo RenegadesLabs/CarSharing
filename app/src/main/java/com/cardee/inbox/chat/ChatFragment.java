@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.cardee.R;
 import com.cardee.inbox.chat.chat_message.view.ChatActivity;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.inbox.chat.adapter.ChatAdapter;
 
 import java.util.List;
 
