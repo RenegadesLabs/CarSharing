@@ -221,6 +221,14 @@
     <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
         be confirmed automatically?</string>
 
+    <!--Car Delivery Rates-->
+    <string name="car_rental_delivery_rates_title">Delivery Rates</string>
+    <string name="car_rental_delivery_rates_base">Base Rate</string>
+    <string name="car_rental_delivery_rates_distance">Distance Rate</string>
+    <string name="car_rental_delivery_rates_airport">$20 to Changi Airport based on current rate</string>
+    <string name="car_rental_delivery_rates_free">Provide free delivery</string>
+    <string name="car_rental_delivery_rates_free_for">For rental of at least</string>
+
     <!--Car Rental Terms-->
     <string name="car_rental_terms_requirements">Basic Requirements</string>
     <string name="car_rental_terms_rules">Car Rules</string>
@@ -274,6 +282,7 @@
     <string name="car_rental_rates_daily">Daily rates</string>
     <string name="car_rental_rates_per_day">per day</string>
     <string name="car_rental_rates_per_hour">per hour</string>
+    <string name="car_rental_rates_per_km">per km</string>
     <string name="car_rental_rates_weekdays">Weekdays</string>
     <string name="car_rental_rates_weekends">Weekends and public holidays</string>
     <string name="car_rental_rates_discount">Discount</string>

@@ -197,6 +197,7 @@
                     android:background="@drawable/bg_item_transparent"
                     android:paddingEnd="@dimen/small_margin"
                     android:paddingStart="@dimen/small_margin"
+                    android:visibility="gone"
                     android:text="2 hours"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"

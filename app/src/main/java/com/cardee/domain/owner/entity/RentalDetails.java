@@ -2,6 +2,9 @@ package com.cardee.domain.owner.entity;
 
 import android.support.annotation.NonNull;
 
+import com.cardee.data_source.remote.api.cars.response.entity.CarDetailsEntity;
+import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
+
 public class RentalDetails {
 
     private final int carId;
@@ -38,6 +41,10 @@ public class RentalDetails {
     private String hourlyAmountPayMileage;
     private Integer hourlyFuelPolicyId;
     private String hourlyFuelPolicyName;
+
+    private DeliveryRatesEntity deliveryRates;
+
+    private CarDetailsEntity carDetails;
 
     public RentalDetails(int carId) {
         this.carId = carId;
@@ -295,8 +302,26 @@ public class RentalDetails {
         this.hourlyFuelPolicyName = hourlyFuelPolicyName;
     }
 
+    public DeliveryRatesEntity getDeliveryRates() {
+        return deliveryRates;
+    }
+
+    public void setDeliveryRates(DeliveryRatesEntity deliveryRates) {
+        this.deliveryRates = deliveryRates;
+    }
+
+    public CarDetailsEntity getCarDetails() {
+        return carDetails;
+    }
+
+    public void setCarDetails(CarDetailsEntity carDetails) {
+        this.carDetails = carDetails;
+    }
+
     public static RentalDetails from(@NonNull RentalDetails prototype) {
         RentalDetails copy = new RentalDetails(prototype.getCarId());
+        copy.setDeliveryRates(prototype.getDeliveryRates());
+        copy.setCarDetails(prototype.getCarDetails());
         copy.setAvailableHourly(prototype.isAvailableHourly());
         copy.setAvailableDaily(prototype.isAvailableDaily());
         copy.setDailyDates(prototype.getDailyDates());

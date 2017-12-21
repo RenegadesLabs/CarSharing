@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 public class RentalTermsInsuranceActivity extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
 
+    public final static String COMPENSATION_EXCESS = "key_compensation_excess";
+    public final static String COMPENSATION_OTHER = "key_compensation_other_guidelines";
+
     @BindView(R.id.et_insuranceText)
     public AppCompatEditText insuranceTextET;
 
@@ -35,6 +38,7 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
         setContentView(R.layout.activity_owner_car_rental_insurance_excess);
         initToolbar();
         ButterKnife.bind(this);
+        initViewState();
         mProgress = DialogHelper
                 .getProgressDialog(this, getString(R.string.loading), false);
         mPresenter = new RentalTermsInsurancePresenter(this);
@@ -51,6 +55,10 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
+    }
+
+    private void initViewState() {
+        insuranceTextET.setText(getIntent().getStringExtra(COMPENSATION_EXCESS));
     }
 
     @Override

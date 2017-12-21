@@ -35,6 +35,7 @@ public class FuelPolicyEntity {
     public void setFuelPolicyName(String fuelPolicyName) {
         this.fuelPolicyName = fuelPolicyName;
     }
+
     public Float getAmountPayMileage() {
         return amountPayMileage;
     }

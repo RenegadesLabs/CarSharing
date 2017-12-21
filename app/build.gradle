@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.cardee"
         minSdkVersion 19
@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        multiDexEnabled true
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary true
     }
     buildTypes {
@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -83,7 +83,7 @@ dependencies {
     //Room
     compile "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    compile 'android.arch.persistence.room:rxjava2:1.0.0'
+    implementation 'android.arch.persistence.room:rxjava2:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

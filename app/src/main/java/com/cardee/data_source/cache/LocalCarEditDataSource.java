@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.cardee.data_source.CarEditDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
+import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
@@ -75,6 +76,41 @@ public class LocalCarEditDataSource implements CarEditDataSource {
 
     @Override
     public void updateDescription(Integer id, String description, Callback callback) {
+
+    }
+
+    @Override
+    public void updateDeliveryRates(Integer id, DeliveryRatesEntity deliveryRatesEntity, Callback callback) {
+
+    }
+
+    @Override
+    public void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback) {
+
+    }
+
+    @Override
+    public void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback) {
+
+    }
+
+    @Override
+    public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
+
+    }
+
+    @Override
+    public void updateCurbsideDeliveryHourly(Integer id, boolean isCurbsideDelivery, Callback callback) {
+
+    }
+
+    @Override
+    public void updateAcceptCashDaily(Integer id, boolean isAcceptCash, Callback callback) {
+
+    }
+
+    @Override
+    public void updateAcceptCashHourly(Integer id, boolean isAcceptCash, Callback callback) {
 
     }
 

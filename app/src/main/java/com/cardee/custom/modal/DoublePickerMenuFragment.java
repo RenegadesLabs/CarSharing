@@ -79,7 +79,7 @@ public class DoublePickerMenuFragment extends BottomSheetDialogFragment {
         dialog.setContentView(rootView);
 
         final NumberPicker np1 = rootView.findViewById(R.id.np_dialogNumberPicker1);
-        setDividerColor(np1, getActivity().getResources().getColor(R.color.colorPrimary));
+        setDividerColor(np1, getActivity().getResources().getColor(android.R.color.transparent));
         np1.setDisplayedValues(mValues);
         np1.setMaxValue(mValues.length - 1);
         np1.setMinValue(0);
@@ -95,7 +95,7 @@ public class DoublePickerMenuFragment extends BottomSheetDialogFragment {
         }
 
         final NumberPicker np2 = rootView.findViewById(R.id.np_dialogNumberPicker2);
-        setDividerColor(np2, getActivity().getResources().getColor(R.color.colorPrimary));
+        setDividerColor(np2, getActivity().getResources().getColor(android.R.color.transparent));
         np2.setDisplayedValues(mValues);
         np2.setMaxValue(mValues.length - 1);
         np2.setMinValue(0);

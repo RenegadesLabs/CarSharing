@@ -100,8 +100,8 @@ public class PickerFuelMenuFragment extends BottomSheetDialogFragment {
             }
         });
 
-        setDividerColor(np1, getActivity().getResources().getColor(R.color.colorPrimary));
-        setDividerColor(np2, getActivity().getResources().getColor(R.color.colorPrimary));
+        setDividerColor(np1, getActivity().getResources().getColor(android.R.color.transparent));
+        setDividerColor(np2, getActivity().getResources().getColor(android.R.color.transparent));
 
         if (mSelectedValue != null && !mSelectedValue.equals("")) {
             for (int i = 0; i < COSTS.length; i++) {

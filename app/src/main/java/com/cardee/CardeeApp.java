@@ -31,7 +31,7 @@ public class CardeeApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override
@@ -39,7 +39,6 @@ public class CardeeApp extends Application {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
-        MultiDex.install(this);
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
 //                .baseUrl("http://192.168.88.113:5550/api/dev/")

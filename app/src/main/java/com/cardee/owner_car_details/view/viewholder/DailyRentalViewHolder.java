@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.custom.modal.BookingPickerMenuFragment;
-import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.custom.modal.DailyAvailabilityTimingFragment;
+import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
@@ -30,10 +30,11 @@ import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.eventbus.DailyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
-import com.cardee.util.DateStringDelegate;
+import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
+import com.cardee.util.DateStringDelegate;
 
 
 public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
@@ -131,8 +132,10 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cl_rentalTermsContainer:
-                getActivity().startActivity(new Intent(getActivity(),
-                        RentalTermsActivity.class));
+                Intent iTerms = new Intent(getActivity(),
+                        RentalTermsActivity.class);
+                iTerms.putExtra(RentalTermsActivity.CAR_ID, dailyRental.getCarId());
+                getActivity().startActivity(iTerms);
                 break;
             case R.id.tv_rentalFuelEdit:
                 Intent iFuel = new Intent(getActivity(),
@@ -167,6 +170,12 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 });
                 break;
             case R.id.tv_rentalCurbsideRatesEdit:
+                Intent iDelivery = new Intent(getActivity(), RentalDeliveryRatesActivity.class);
+                iDelivery.putExtra(RentalDeliveryRatesActivity.BASE_RATE, dailyRental.getDeliveryRates().getBaseRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.DISTANCE_RATE, dailyRental.getDeliveryRates().getDistanceRate());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.PROVIDE_FREE, dailyRental.getDeliveryRates().getProvideFreeDelivery());
+                iDelivery.putExtra(RentalDeliveryRatesActivity.RENTAL_DURATION, dailyRental.getDeliveryRates().getRentalDuration());
+                getActivity().startActivity(iDelivery);
                 break;
             case R.id.tv_rentalRentalRatesEdit:
                 Intent iRates = new Intent(getActivity(),
@@ -206,12 +215,15 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         switch (compoundButton.getId()) {
             case R.id.sw_rentalInstant:
                 setInstantViewsState(b);
+                presenter.updateInstantBooking(b);
                 break;
             case R.id.sw_rentalDelivery:
                 setDeliveryViewsState(b);
+                presenter.updateCurbsideDelivery(b);
                 break;
             case R.id.sw_rentalCash:
                 setCashViewState(b);
+                presenter.updateAcceptCash(b);
                 break;
         }
     }
@@ -286,27 +298,30 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getDailyAmountRateSecond());
         stringDelegate.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.getDailyAmountDiscountFirst());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getDailyFuelPolicyName(), "");
+        setInstantBookingState(rentalDetails);
+        setCurbsideDeliveryState(rentalDetails);
+        setAcceptCashState(rentalDetails);
     }
 
-    @Override
-    public void onInstantEnabled(boolean enabled) {
+    private void setInstantBookingState(RentalDetails rentalDetails) {
         instantBookingSwitch.setOnCheckedChangeListener(null);
-        instantBookingSwitch.setChecked(enabled);
-        instantBookingSwitch.setOnCheckedChangeListener(presenter);
+        instantBookingSwitch.setChecked(rentalDetails.isDailyInstantBooking());
+        setInstantViewsState(rentalDetails.isDailyInstantBooking());
+        instantBookingSwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCurbsideEnabled(boolean enabled) {
+    private void setCurbsideDeliveryState(RentalDetails rentalDetails) {
         curbsideDeliverySwitch.setOnCheckedChangeListener(null);
-        curbsideDeliverySwitch.setChecked(enabled);
-        curbsideDeliverySwitch.setOnCheckedChangeListener(presenter);
+        curbsideDeliverySwitch.setChecked(rentalDetails.isDailyCurbsideDelivery());
+        setDeliveryViewsState(rentalDetails.isDailyCurbsideDelivery());
+        curbsideDeliverySwitch.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCashEnabled(boolean enabled) {
+    private void setAcceptCashState(RentalDetails rentalDetails) {
         acceptCashSwitch.setOnCheckedChangeListener(null);
-        acceptCashSwitch.setChecked(enabled);
-        acceptCashSwitch.setOnCheckedChangeListener(presenter);
+        acceptCashSwitch.setChecked(rentalDetails.isDailyAcceptCash());
+        setCashViewState(rentalDetails.isDailyAcceptCash());
+        acceptCashSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

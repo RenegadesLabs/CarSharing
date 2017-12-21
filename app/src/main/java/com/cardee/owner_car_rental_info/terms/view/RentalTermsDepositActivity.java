@@ -23,6 +23,9 @@ import butterknife.ButterKnife;
 public class RentalTermsDepositActivity extends AppCompatActivity implements View.OnClickListener,
         RentalContract.View {
 
+    public final static String REQ_SECURITY_DEPOSIT = "key_required_security_deposit";
+    public final static String SECURITY_DEPOSIT_DESC = "key_security_deposit_description";
+
     @BindView(R.id.sw_depositRequire)
     public SwitchCompat depositRequireSW;
     @BindView(R.id.et_depositValue)
@@ -37,6 +40,7 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_owner_car_rental_security_deposit);
         ButterKnife.bind(this);
         initToolbar();
+        initViewState();
         mProgress = DialogHelper
                 .getProgressDialog(this, getString(R.string.loading), false);
         mPresenter = new RentalTermsDepositPresenter(this);
@@ -53,6 +57,11 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
+    }
+
+    private void initViewState() {
+        depositRequireSW.setChecked(getIntent().getBooleanExtra(REQ_SECURITY_DEPOSIT, false));
+        depositValueET.setText(getIntent().getStringExtra(SECURITY_DEPOSIT_DESC));
     }
 
     @Override

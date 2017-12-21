@@ -20,6 +20,7 @@
             <TextView
                 android:id="@+id/toolbar_title"
                 style="@style/ToolbarTitle"
+                android:text="@string/car_rental_delivery_rates_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginStart="@dimen/large_margin"
-        android:text="@string/car_rental_rates_daily"
+        android:text="@string/car_rental_delivery_rates_title"
         android:textSize="@dimen/text_small"
         android:textStyle="bold"
         android:textAllCaps="true"
@@ -65,30 +66,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/large_margin"
-                android:text="@string/car_rental_rates_weekdays"
+                android:layout_marginBottom="8dp"
+                android:text="@string/car_rental_delivery_rates_base"
                 android:textColor="@android:color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_ratesPeakDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_small"
-                android:layout_marginBottom="@dimen/small_margin"
-                app:layout_constraintStart_toStartOf="@+id/tv_ratesTitleValue1"
-                app:layout_constraintTop_toBottomOf="@+id/tv_ratesTitleValue1"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                android:id="@+id/tv_ratesValue1Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/large_margin"
-                android:text="@string/car_rental_rates_per_day"
-                android:textSize="@dimen/text_small"
-                android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -96,21 +78,19 @@
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="@dimen/xsmall_margin"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/large_margin"
                 android:paddingTop="@dimen/small_margin"
                 android:paddingBottom="@dimen/small_margin"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:maxLength="5"
-                android:text="60"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_large"
                 android:textStyle="bold"
+                android:text="60"
+                android:maxLength="5"
+                android:textSize="@dimen/text_large"
+                android:inputType="numberDecimal"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_ratesValue1Text"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,17 +123,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/large_margin"
-                android:text="@string/car_rental_rates_weekends"
+                android:text="@string/car_rental_delivery_rates_distance"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_ratesValue2Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/large_margin"
-                android:text="@string/car_rental_rates_per_day"
+                android:text="@string/car_rental_rates_per_km"
                 android:textSize="@dimen/text_small"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -176,7 +157,7 @@
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_ratesValue2Text"
+                app:layout_constraintEnd_toStartOf="@+id/tv_ratesValue2Text"
                 android:textColor="@color/colorPrimary"/>
 
             <TextView
@@ -195,15 +176,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_discountTitle"
+        android:id="@+id/airport_terms_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:text="@string/car_rental_rates_discount"
+        android:text="@string/car_rental_delivery_rates_airport"
         android:textSize="@dimen/text_small"
-        android:textStyle="bold"
-        android:textAllCaps="true"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginStart="@dimen/large_margin"
         app:layout_constraintTop_toBottomOf="@+id/rates_container"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -213,8 +192,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/colorAccent"
-        android:layout_marginTop="@dimen/small_margin"
-        app:layout_constraintTop_toBottomOf="@+id/tv_discountTitle">
+        android:layout_marginTop="@dimen/large_margin"
+        app:layout_constraintTop_toBottomOf="@+id/airport_terms_desc">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_requirementsAgeContainer"
@@ -226,44 +205,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/large_margin"
-                android:text="@string/car_rental_rates_discount_3_days"
+                android:text="@string/car_rental_delivery_rates_free"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/percent1"
+            <android.support.v7.widget.SwitchCompat
+                android:theme="@style/Switch"
+                android:id="@+id/sw_ratesDeliveryFree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="@dimen/large_margin"
-                android:layout_marginTop="8dp"
-                android:text="%"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_large"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_ratesValue3"
-                style="@style/CardeeEditTextWithoutUnderlineStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/small_margin"
-                android:paddingBottom="@dimen/small_margin"
-                android:textStyle="bold"
-                android:text="10"
-                android:maxLength="4"
-                android:textSize="@dimen/text_large"
-                android:inputType="numberDecimal"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/percent1"
-                android:textColor="@color/colorPrimary"/>
         </android.support.constraint.ConstraintLayout>
 
         <View
@@ -274,118 +230,55 @@
             android:background="@color/divider"/>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/cl_requirementsExpContainer"
+            android:id="@+id/cl_ratesFreeDeliveryContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_transparent">
+            android:visibility="gone"
+            android:background="@android:color/white"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tv_minimumTitle">
             <TextView
-                android:id="@+id/tv_ratesTitleValue4"
+                android:id="@+id/tv_ratesTitleValue5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/large_margin"
-                android:text="@string/car_rental_rates_discount_weekly"
+                android:text="@string/car_rental_delivery_rates_free_for"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/percent2"
+                android:id="@+id/tv_rentalValue5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="@dimen/large_margin"
-                android:layout_marginTop="8dp"
-                android:text="%"
-                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_ratesValue4"
+                android:id="@+id/et_ratesValue5"
                 style="@style/CardeeEditTextWithoutUnderlineStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/small_margin"
                 android:paddingBottom="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/xsmall_margin"
                 android:textStyle="bold"
-                android:text="20"
-                android:maxLength="4"
+                android:text="2"
+                android:maxLength="3"
                 android:textSize="@dimen/text_large"
                 android:inputType="numberDecimal"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/percent2"
+                app:layout_constraintEnd_toStartOf="@+id/tv_rentalValue5"
                 android:textColor="@color/colorPrimary"/>
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_minimumTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginStart="@dimen/large_margin"
-        android:text="@string/car_rental_rates_minimum"
-        android:textSize="@dimen/text_small"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        app:layout_constraintTop_toBottomOf="@+id/discount_container"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_ratesFreeDeliveryContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:layout_marginTop="@dimen/small_margin"
-        app:layout_constraintTop_toBottomOf="@+id/tv_minimumTitle">
-        <TextView
-            android:id="@+id/tv_ratesTitleValue5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
-            android:text="@string/car_rental_rates_minimum_duration"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_rentalValue5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/large_margin"
-            android:textSize="@dimen/text_large"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_ratesValue5"
-            style="@style/CardeeEditTextWithoutUnderlineStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin"
-            android:layout_marginEnd="@dimen/xsmall_margin"
-            android:textStyle="bold"
-            android:text="2"
-            android:maxLength="3"
-            android:textSize="@dimen/text_large"
-            android:inputType="numberDecimal"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_rentalValue5"
-            android:textColor="@color/colorPrimary"/>
-
-    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
