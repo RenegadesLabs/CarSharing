@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.FilterBookingDialog;
+import com.cardee.custom.modal.SortBookingDialog;
 import com.cardee.owner_bookings.BookingListAdapter;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;
@@ -60,8 +62,12 @@ public class BookingListFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_open_filter:
+                FilterBookingDialog filterDialog = FilterBookingDialog.getInstance(null);
+                filterDialog.show(getActivity().getSupportFragmentManager(), filterDialog.getTag());
                 break;
             case R.id.btn_open_sort:
+                SortBookingDialog sortDialog = SortBookingDialog.getInstance(null);
+                sortDialog.show(getActivity().getSupportFragmentManager(), sortDialog.getTag());
                 break;
         }
     }

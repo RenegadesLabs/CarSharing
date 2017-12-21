@@ -84,10 +84,12 @@ public class OwnerHomeActivity extends AppCompatActivity
                 case 1:
                     getSupportActionBar().show();
                     mTitle.setText(R.string.title_my_cars);
+                    mAddCarAction.setVisibility(View.VISIBLE);
                     break;
                 case 2:
                     getSupportActionBar().show();
                     mTitle.setText(R.string.title_my_bookings);
+                    mAddCarAction.setVisibility(View.GONE);
                     break;
                 case 3:
                     getSupportActionBar().hide();
