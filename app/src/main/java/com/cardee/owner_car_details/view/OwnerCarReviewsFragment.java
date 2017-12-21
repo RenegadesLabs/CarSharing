@@ -36,9 +36,6 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     private Presenter mPresenter;
     private CarReviewsAdapter mAdapter;
 
-    private ImageView star;
-    private ImageView greyStar;
-
     @BindView(R.id.container)
     View mContainer;
 
@@ -117,16 +114,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setConditions(int conditions) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < conditions; i++) {
-            star = new ImageView(getActivity());
-            star.setImageResource(R.drawable.ic_star_rate);
-            star.setLayoutParams(params);
-            mCondition.addView(star);
+            addStar(params);
         }
         for (int i = 0; i < (MAX_RATE - conditions); i++) {
-            greyStar = new ImageView(getActivity());
-            greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
-            greyStar.setLayoutParams(params);
-            mCondition.addView(greyStar);
+            addGreyStar(params);
         }
     }
 
@@ -134,16 +125,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setComfort(int comfort) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < comfort; i++) {
-            star = new ImageView(getActivity());
-            star.setImageResource(R.drawable.ic_star_rate);
-            star.setLayoutParams(params);
-            mComfort.addView(star);
+            addStar(params);
         }
         for (int i = 0; i < (MAX_RATE - comfort); i++) {
-            greyStar = new ImageView(getActivity());
-            greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
-            greyStar.setLayoutParams(params);
-            mComfort.addView(greyStar);
+            addGreyStar(params);
         }
     }
 
@@ -151,16 +136,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setOwnerRate(int owner) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < owner; i++) {
-            star = new ImageView(getActivity());
-            star.setImageResource(R.drawable.ic_star_rate);
-            star.setLayoutParams(params);
-            mOwner.addView(star);
+            addStar(params);
         }
         for (int i = 0; i < (MAX_RATE - owner); i++) {
-            greyStar = new ImageView(getActivity());
-            greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
-            greyStar.setLayoutParams(params);
-            mOwner.addView(greyStar);
+            addGreyStar(params);
         }
     }
 
@@ -168,16 +147,10 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
     public void setExperience(int overall) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < overall; i++) {
-            star = new ImageView(getActivity());
-            star.setImageResource(R.drawable.ic_star_rate);
-            star.setLayoutParams(params);
-            mExperience.addView(star);
+            addStar(params);
         }
         for (int i = 0; i < (MAX_RATE - overall); i++) {
-            greyStar = new ImageView(getActivity());
-            greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
-            greyStar.setLayoutParams(params);
-            mExperience.addView(greyStar);
+            addGreyStar(params);
         }
     }
 
@@ -224,4 +197,17 @@ public class OwnerCarReviewsFragment extends Fragment implements CarReviewsContr
         mCurrentToast.show();
     }
 
+    private void addStar(LinearLayout.LayoutParams params) {
+        ImageView star = new ImageView(getActivity());
+        star.setImageResource(R.drawable.ic_star_rate);
+        star.setLayoutParams(params);
+        mCondition.addView(star);
+    }
+
+    private void addGreyStar(LinearLayout.LayoutParams params) {
+        ImageView greyStar = new ImageView(getActivity());
+        greyStar.setImageResource(R.drawable.ic_star_rate_inactive);
+        greyStar.setLayoutParams(params);
+        mCondition.addView(greyStar);
+    }
 }
