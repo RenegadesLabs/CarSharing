@@ -438,6 +438,9 @@
     <string name="car_reviews_ratings">\u0020Rating</string>
     <string name="car_reviews">\u0020Review</string>
 
+    <!--Car returned-->
+    <string name="car_returned_title">Car Returned!</string>
+
 
     <!--Calendar-->
     <string-array name="days_of_week">

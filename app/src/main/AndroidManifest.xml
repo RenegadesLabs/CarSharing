@@ -61,22 +61,30 @@
         <activity android:name=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
-        <activity android:name=".owner_car_rental_info.delivery.RentalDeliveryRatesActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.fuel.RentalFuelPolicyActivity"/>
-        <activity android:name=".owner_car_rental_info.rates.RentalRatesActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsActivity"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsRequirementsActivity"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsRulesActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsDepositActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsInsuranceActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsAdditional"
+        <activity
+            android:name=".owner_car_rental_info.delivery.RentalDeliveryRatesActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".owner_car_details.view.CarImagesActivity" android:theme="@style/BlackTheme" />
+        <activity android:name=".owner_car_rental_info.fuel.RentalFuelPolicyActivity" />
+        <activity
+            android:name=".owner_car_rental_info.rates.RentalRatesActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsActivity" />
+        <activity android:name=".owner_car_rental_info.terms.view.RentalTermsRequirementsActivity" />
+        <activity
+            android:name=".owner_car_rental_info.terms.view.RentalTermsRulesActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".owner_car_rental_info.terms.view.RentalTermsDepositActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".owner_car_rental_info.terms.view.RentalTermsInsuranceActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".owner_car_rental_info.terms.view.RentalTermsAdditional"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".owner_car_details.view.CarImagesActivity"
+            android:theme="@style/BlackTheme" />
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
 
         <meta-data
@@ -144,7 +152,8 @@
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity" />
         <activity android:name=".renter_notifications.view.RenterNotifActivity" />
-        <activity android:name=".inbox.chat.chat_message.view.ChatActivity"></activity>
+        <activity android:name=".inbox.chat.chat_message.view.ChatActivity" />
+        <activity android:name=".owner_bookings.car_returned.view.CarReturnedActivity"></activity>
     </application>
 
 </manifest>
