@@ -94,6 +94,11 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
         }
     }
 
+    public void onDestroy() {
+        mView = null;
+        mGetInfoUseCase.unSubscribe();
+    }
+
     public void setAccState(String session) {
         AccountManager.getInstance(CardeeApp.context).setSession(session);
     }

@@ -22,6 +22,7 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
         String attachment = values.getAttachment();
         mDisposable = mRepository.getChats(attachment)
+                .distinct()
                 .subscribe(
                         inboxChats -> callback.onSuccess(new ResponseValues(inboxChats)),
                         throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));

@@ -13,6 +13,7 @@ import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxRepositoryContract {
@@ -57,7 +58,10 @@ public class InboxRepository implements InboxRepositoryContract {
                     }
                 });
 
-        return Observable.concat(localSource.toObservable(), remoteSource);
+        return Observable
+                .concat(localSource.toObservable(), remoteSource)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
