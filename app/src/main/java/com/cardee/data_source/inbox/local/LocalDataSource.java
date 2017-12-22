@@ -5,22 +5,23 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface LocalDataSource {
 
-    Observable<List<InboxChat>> getLocalChats(String attachment);
+    Single<List<InboxChat>> getLocalChats(String attachment);
 
-    Completable addChat(Chat chat);
+    Observable<InboxChat> subscribeToDb(String attachment);
 
     Single<Chat> getChat(Chat chat);
 
     void fetchUpdates(List<InboxChat> oldChatList, List<InboxChat> newChatList);
 
     void saveChats(List<InboxChat> inboxChats);
-    Completable updateChats(List<InboxChat> chats);
+
+    void updateChats(List<InboxChat> chats);
+
+    void addChat(Chat chat);
 
 }

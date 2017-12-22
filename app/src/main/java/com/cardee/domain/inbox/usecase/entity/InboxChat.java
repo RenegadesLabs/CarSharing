@@ -1,6 +1,8 @@
 package com.cardee.domain.inbox.usecase.entity;
 
-public class InboxChat {
+import android.support.annotation.NonNull;
+
+public class InboxChat implements Comparable<InboxChat> {
 
     private Integer databaseId;
 
@@ -25,6 +27,10 @@ public class InboxChat {
 
     public Integer getChatId() {
         return mChatId;
+    }
+
+    public void setDatabaseId(Integer databaseId) {
+        this.databaseId = databaseId;
     }
 
     public Integer getUnreadMessageCount() {
@@ -57,6 +63,12 @@ public class InboxChat {
 
     public String getChatAttachment() {
         return chatAttachment;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull InboxChat inboxChat) {
+        return inboxChat.getLastMessageTime().compareTo(mLastMessageTime);
     }
 
     public static class Builder {
@@ -122,20 +134,16 @@ public class InboxChat {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        InboxChat inboxChat = (InboxChat) o;
+        InboxChat chat = (InboxChat) o;
 
-        if (mChatId != null ? !mChatId.equals(inboxChat.mChatId) : inboxChat.mChatId != null)
-            return false;
-        if (mUnreadMessageCount != null ? !mUnreadMessageCount.equals(inboxChat.mUnreadMessageCount) : inboxChat.mUnreadMessageCount != null)
-            return false;
-        return mLastMessageText != null ? mLastMessageText.equals(inboxChat.mLastMessageText) : inboxChat.mLastMessageText == null;
+        if (!mChatId.equals(chat.mChatId)) return false;
+        return mLastMessageText.equals(chat.mLastMessageText);
     }
 
     @Override
     public int hashCode() {
-        int result = mChatId != null ? mChatId.hashCode() : 0;
-        result = 31 * result + (mUnreadMessageCount != null ? mUnreadMessageCount.hashCode() : 0);
-        result = 31 * result + (mLastMessageText != null ? mLastMessageText.hashCode() : 0);
+        int result = mChatId.hashCode();
+        result = 31 * result + mLastMessageText.hashCode();
         return result;
     }
 }

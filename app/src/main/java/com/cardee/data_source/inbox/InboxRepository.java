@@ -12,7 +12,8 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxRepositoryContract {
 
@@ -41,47 +42,37 @@ public class InboxRepository implements InboxRepositoryContract {
 
     @Override
     public Observable<List<InboxChat>> getChats(String attachment) {
-        Observable<List<InboxChat>> localSource = mChatLocalSource.getLocalChats(attachment);
+        Single<List<InboxChat>> localSource = mChatLocalSource
+                .getLocalChats(attachment)
+                .doOnSuccess(inboxChats -> mCacheLocalChats = inboxChats);
+
         Observable<List<InboxChat>> remoteSource = mChatRemoteSource
                 .getRemoteChats(attachment)
-                .filter(remoteChats -> remoteChats != null && !remoteChats.isEmpty());
+                .subscribeOn(Schedulers.computation())
+                .doOnNext(inboxChats -> {
+                    if (mCacheLocalChats.isEmpty()) {
+                        mChatLocalSource.saveChats(inboxChats);
+                    } else {
+                        mChatLocalSource.fetchUpdates(mCacheLocalChats, inboxChats);
+                    }
+                });
 
-        return Observable.create(emitter -> {
-            localSource.subscribe(localChats -> {
-                mCacheLocalChats = localChats;
-                emitter.onNext(localChats);
-            });
-            Disposable subscribe = remoteSource
-                    .subscribe(remoteChats -> {
-                        if (mCacheLocalChats.isEmpty()) {
-                            mChatLocalSource.saveChats(remoteChats);
-                        } else {
-                            mChatLocalSource.updateChats(remoteChats);
-                        }
-                    }, throwable -> {
-                        if (mCacheLocalChats == null) {
-                            emitter.onError(throwable);
-                        } else {
-                            emitter.onNext(mCacheLocalChats);
-                        }
-                    });
-            emitter.setCancellable(() -> {
-                mCacheLocalChats = null;
-                subscribe.dispose();
-            });
-        });
+        return Observable.concat(localSource.toObservable(), remoteSource);
+    }
+
+    @Override
+    public Observable<InboxChat> subscribe(String attachment) {
+        return null;
     }
 
     @Override
     public Observable<List<InboxChat>> getRemoteChats(String attachment) {
-        return mChatRemoteSource
-                .getRemoteChats(attachment)
-                .filter(remoteChats -> remoteChats != null && !remoteChats.isEmpty());
+        return null;
     }
 
     @Override
-    public Completable addChat(Chat chat) {
-        return mChatLocalSource.addChat(chat);
+    public void addChat(Chat chat) {
+        mChatLocalSource.addChat(chat);
     }
 
     @Override
@@ -92,10 +83,7 @@ public class InboxRepository implements InboxRepositoryContract {
                             persistChat.setLastMessageText(chat.getLastMessageText());
                             persistChat.setLastMessageTime(chat.getLastMessageTime());
                             persistChat.setUnreadMessageCount(chat.getUnreadMessageCount());
-                            addChat(persistChat)
-                                    .subscribe(
-                                            emitter::onComplete,
-                                            emitter::onError);
+                            addChat(persistChat);
                         }, throwable -> {
 //                            mChatRemoteSource.getChat(chat);
                         }));

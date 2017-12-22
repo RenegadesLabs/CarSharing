@@ -41,7 +41,6 @@ public class ChatRemoteDataSource implements RemoteDataSource {
                 .subscribeOn(Schedulers.io());
     }
 
-
     @Override
     public Single<Chat> getChat(Chat chat) {
         return null;

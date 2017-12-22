@@ -13,9 +13,11 @@ public interface InboxRepositoryContract {
 
     Observable<List<InboxChat>> getChats(String attachment);
 
+    Observable<InboxChat> subscribe(String attachment);
+
     Observable<List<InboxChat>> getRemoteChats(String attachment);
 
-    Completable addChat(Chat chat);
+    void addChat(Chat chat);
 
     Completable updateChat(Chat chat);
 }

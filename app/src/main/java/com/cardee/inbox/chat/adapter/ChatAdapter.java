@@ -18,6 +18,7 @@ import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
@@ -91,7 +92,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     public void subscribe(Consumer<InboxChat> consumer) {
-        mOnClickSubject.subscribe(consumer);
+        mOnClickSubject
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribe(consumer);
     }
 
     @Override
