@@ -6,62 +6,53 @@
     android:background="@android:color/transparent">
 
     <TextView
-        android:id="@+id/body_type_menu_title"
+        android:id="@+id/sort_menu_title"
         style="@style/ModalMenuTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_title_height"
         android:background="@android:color/transparent"
-        android:text="Bookings"
+        android:text="@string/booking_sort_title"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/body_sedan"
+        app:layout_constraintBottom_toTopOf="@+id/booking_sort_date"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_sedan"
+        android:id="@+id/booking_sort_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_top"
-        android:text="Status"
-        app:layout_constraintTop_toBottomOf="@+id/body_type_menu_title" />
+        android:text="@string/booking_sort_date"
+        app:layout_constraintTop_toBottomOf="@+id/sort_menu_title" />
 
     <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_hatchback"
+        android:id="@+id/booking_sort_pickup_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Booking Date"
-        app:layout_constraintTop_toBottomOf="@+id/body_sedan" />
+        android:text="@string/booking_sort_pickup_date"
+        app:layout_constraintTop_toBottomOf="@+id/booking_sort_date" />
 
 
     <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_suv"
+        android:id="@+id/booking_sort_return_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Pickup Date"
-        app:layout_constraintTop_toBottomOf="@+id/body_hatchback" />
+        android:text="@string/booking_sort_return_date"
+        app:layout_constraintTop_toBottomOf="@+id/booking_sort_pickup_date" />
 
     <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_sports"
-        style="@style/ModalMenuItem"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/modal_menu_item_height"
-        android:background="@drawable/bg_modal_menu_mid"
-        android:text="ReturnDate"
-        app:layout_constraintTop_toBottomOf="@+id/body_suv" />
-
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/booking_amount_sort"
+        android:id="@+id/booking_sort_amount"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_bottom"
-        android:text="Booking amount"
+        android:text="@string/booking_sort_amount"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/body_sports" />
+        app:layout_constraintTop_toBottomOf="@+id/booking_sort_return_date" />
 
 </android.support.constraint.ConstraintLayout>
