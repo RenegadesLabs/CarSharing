@@ -17,16 +17,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
+    <TextView
         android:id="@+id/booking_sort_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_top"
+        android:checked="true"
         android:text="@string/booking_sort_date"
         app:layout_constraintTop_toBottomOf="@+id/sort_menu_title" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
+    <ImageView
+        android:id="@+id/booking_sort_date_selected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_sort_date"
+        app:layout_constraintEnd_toEndOf="@id/booking_sort_date"
+        app:layout_constraintTop_toTopOf="@id/booking_sort_date"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
         android:id="@+id/booking_sort_pickup_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
@@ -35,8 +47,18 @@
         android:text="@string/booking_sort_pickup_date"
         app:layout_constraintTop_toBottomOf="@+id/booking_sort_date" />
 
+    <ImageView
+        android:id="@+id/booking_sort_pickup_date_selected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_sort_pickup_date"
+        app:layout_constraintEnd_toEndOf="@id/booking_sort_pickup_date"
+        app:layout_constraintTop_toTopOf="@id/booking_sort_pickup_date"
+        app:srcCompat="@drawable/ic_check" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
+    <TextView
         android:id="@+id/booking_sort_return_date"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
@@ -45,7 +67,18 @@
         android:text="@string/booking_sort_return_date"
         app:layout_constraintTop_toBottomOf="@+id/booking_sort_pickup_date" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
+    <ImageView
+        android:id="@+id/booking_sort_return_date_selected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_sort_return_date"
+        app:layout_constraintEnd_toEndOf="@id/booking_sort_return_date"
+        app:layout_constraintTop_toTopOf="@id/booking_sort_return_date"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
         android:id="@+id/booking_sort_amount"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
@@ -54,5 +87,16 @@
         android:text="@string/booking_sort_amount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/booking_sort_return_date" />
+
+    <ImageView
+        android:id="@+id/booking_sort_amount_selected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_sort_amount"
+        app:layout_constraintEnd_toEndOf="@id/booking_sort_amount"
+        app:layout_constraintTop_toTopOf="@id/booking_sort_amount"
+        app:srcCompat="@drawable/ic_check" />
 
 </android.support.constraint.ConstraintLayout>
