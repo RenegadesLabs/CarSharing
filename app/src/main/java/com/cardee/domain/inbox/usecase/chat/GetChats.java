@@ -3,8 +3,8 @@ package com.cardee.domain.inbox.usecase.chat;
 import android.content.SharedPreferences;
 
 import com.cardee.data_source.Error;
-import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.domain.UseCase;
 
 import java.util.List;
@@ -31,9 +31,11 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
                 .distinct()
                 .subscribe(inboxChats -> callback.onSuccess(new ResponseValues(inboxChats)));
 
-        Disposable remoteSubscribe = mRepository.getRemoteChats(attachment)
-                .doOnError(throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())))
-                .subscribe();
+        Disposable remoteSubscribe = mRepository
+                .getRemoteChats(attachment)
+                .filter(chats -> chats != null && !chats.isEmpty())
+                .subscribe(mRepository::fetchOrSaveData,
+                        throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
 
         mCompositeDisposable.addAll(localSubscribe, remoteSubscribe);
     }

@@ -36,6 +36,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
 
     @Override
     public void onGetChats() {
+        mView.showProgress(true);
         mExecutor.execute(mGetChats,
                 new GetChats.RequestValues(mAttachment),
                 new UseCase.Callback<GetChats.ResponseValues>() {
@@ -53,12 +54,14 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
 
     private void showError(Error error) {
         if (mView != null) {
+            mView.showProgress(false);
             mView.showMessage(error.getMessage());
         }
     }
 
     private void showAllChats(GetChats.ResponseValues response) {
         if (mView != null) {
+            mView.showProgress(false);
             mView.showAllChats(response.getChats());
         }
     }
@@ -69,7 +72,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         args.putInt(CHAT_DB_ID, chat.getChatLocalId());
         args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
         mView.showChat(args);
-        Log.e(TAG, "Chat selected: databaseId = " + chat.getChatLocalId() + " " + "serverId = " + chat.getChatServerId());
+        Log.d(TAG, "Chat selected: databaseId = " + chat.getChatLocalId() + " " + "serverId = " + chat.getChatServerId());
     }
 
     @Override

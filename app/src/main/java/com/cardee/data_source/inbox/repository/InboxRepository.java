@@ -49,19 +49,16 @@ public class InboxRepository implements InboxRepositoryContract {
     public Single<List<Chat>> getRemoteChats(String attachment) {
         return mChatRemoteSource
                 .getRemoteChats(attachment)
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess(remoteChats -> {
-                    if (mCacheLocalChats.isEmpty()) {
-                        mChatLocalSource.saveChats(remoteChats);
-                    } else {
-                        mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
-                    }
-                });
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
-    public void addChat(Chat chat) {
-        mChatLocalSource.addChat(chat);
+    public void fetchOrSaveData(List<Chat> remoteChats) {
+        if (mCacheLocalChats.isEmpty()) {
+            mChatLocalSource.saveChats(remoteChats);
+        } else {
+            mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
+        }
     }
 
     @Override
@@ -79,6 +76,10 @@ public class InboxRepository implements InboxRepositoryContract {
                                 getRemoteChats(chat.getChatAttachment());
                             }
                         }));
+    }
+
+    private void addChat(Chat chat) {
+        mChatLocalSource.addChat(chat);
     }
 
     @Override

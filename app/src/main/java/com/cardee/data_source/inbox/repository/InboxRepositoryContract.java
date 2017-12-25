@@ -13,11 +13,11 @@ public interface InboxRepositoryContract {
 
     Flowable<List<Chat>> getLocalChats(String attachment);
 
-    Observable<Chat> subscribe(String attachment);
-
     Single<List<Chat>> getRemoteChats(String attachment);
 
-    void addChat(Chat chat);
+    void fetchOrSaveData(List<Chat> remoteChats);
 
     Completable updateChat(Chat chat);
+
+    Observable<Chat> subscribe(String attachment);
 }
