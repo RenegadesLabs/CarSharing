@@ -6,6 +6,6 @@ public interface ActivityViewHolder {
 
     void setCarData(String carPhotoUrl, String carTitle, String licenseNumber);
 
-    void setCarBookingData(String mCarAvailability);
+    void setCarBookingData(String mStartDate, String mEndDate);
 
 }

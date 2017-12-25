@@ -49,6 +49,7 @@ public class ChatPresenter implements ChatContract.Presenter {
                 ChatInfo chatInfo = response.getChatInfo();
                 mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl());
                 mViewHolder.setCarData(chatInfo.getCarPhotoUrl(), chatInfo.getCarTitle(), chatInfo.getCarLicenseNumber());
+                mViewHolder.setCarBookingData(chatInfo.getBookingTimeBegin(), chatInfo.getBookingTimeEnd());
             }
 
             @Override

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.cardee.R;
-import com.cardee.inbox.chat.adapter.UtcDateFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,7 +24,7 @@ public class ChatDateFormatter implements UtcDateFormatter {
     private final String yesterday;
     private final Calendar mCalendar;
 
-    public ChatDateFormatter(Context context) {
+    ChatDateFormatter(Context context) {
         mDate = new Date();
         mCalendar = Calendar.getInstance();
         TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
@@ -59,6 +58,11 @@ public class ChatDateFormatter implements UtcDateFormatter {
         }
 
         return newDateString;
+    }
+
+    @Override
+    public String getDivider() {
+        return " ";
     }
 
     private int getDaysDifference(Date chatMessageDate) {
