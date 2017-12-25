@@ -37,21 +37,15 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
 
     @Override
     public void loadOwnerProfile(final ProfileCallback callback) {
-        mApi.loadOwnerProfile().subscribe(new Consumer<OwnerProfileResponse>() {
-            @Override
-            public void accept(OwnerProfileResponse ownerProfileResponse) throws Exception {
-                if (ownerProfileResponse.isSuccessful()) {
-                    callback.onSuccess(ownerProfileResponse.getOwnerProfile());
-                    return;
-                }
-                handleErrorResponse(callback, ownerProfileResponse);
+        mApi.loadOwnerProfile().subscribe(ownerProfileResponse -> {
+            if (ownerProfileResponse.isSuccessful()) {
+                callback.onSuccess(ownerProfileResponse.getOwnerProfile());
+                return;
             }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e(TAG, throwable.getMessage());
-                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
-            }
+            handleErrorResponse(callback, ownerProfileResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 

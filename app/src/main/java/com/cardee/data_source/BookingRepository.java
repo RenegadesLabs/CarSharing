@@ -26,11 +26,31 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(String filter, String sort, Callback callback) {
-        remoteDataSource.obtainOwnerBookings(filter, sort, new Callback() {
+    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+        remoteDataSource.obtainOwnerBookings(filter, sort, new BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
-                callback.onSuccess(bookingEntities);
+                bookingsCallback.onSuccess(bookingEntities);
+            }
+
+            @Override
+            public void onError(Error error) {
+                bookingsCallback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+
+    }
+
+    @Override
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+        remoteDataSource.sendReviewAsOwner(bookingId, rate, review, new ReviewCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
             }
 
             @Override
@@ -40,8 +60,4 @@ public class BookingRepository implements BookingDataSource {
         });
     }
 
-    @Override
-    public void obtainRenterBookings(String filter, String sort, Callback callback) {
-
-    }
 }

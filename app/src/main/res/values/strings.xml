@@ -440,7 +440,11 @@
 
     <!--Car returned-->
     <string name="car_returned_title">Car Returned!</string>
-
+    <string name="car_returned_rate">Rate\u0020</string>
+    <string name="car_returned_rental_period">Rental Period</string>
+    <string name="tell_us_more">Tell us more</string>
+    <string name="car_returned_comment_hint">Add a comment on Sharon’s profile..</string>
+    <string name="send_comment_success">Comment sent</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -536,4 +540,6 @@
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+
+
 </resources>

@@ -62,4 +62,7 @@
     <color name="booking_state_completed">#569be7</color>
 
     <color name="booking_subtitle">#8c96a0</color>
+
+    <color name="rate_star">#F2B632</color>
+    <color name="rate_star_inactive">#D8D8D8</color>
 </resources>

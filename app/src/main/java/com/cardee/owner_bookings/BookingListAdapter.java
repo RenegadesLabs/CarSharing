@@ -1,7 +1,7 @@
 package com.cardee.owner_bookings;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
-import com.cardee.util.DateStringDelegate;
+import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 
 public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.BookingItemHolder> {
 
@@ -38,6 +38,20 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     @Override
     public BookingItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = inflater.inflate(R.layout.item_owner_booking_list, parent, false);
+
+        //for debug
+        rootView.setOnClickListener(view -> {
+            Intent intent = new Intent(parent.getContext(), CarReturnedActivity.class);
+            intent.putExtra("booking_id", 430);
+            intent.putExtra("car_title", "Mazda 3");
+            intent.putExtra("car_year", "2006");
+            intent.putExtra("car_number", "AA7826BB");
+            intent.putExtra("current_date", "19 Mar, 7:45pm");
+            intent.putExtra("rental_period", "24 Mar, 9am  to  27 Mar, 8am");
+            intent.putExtra("renter_name", "Sharon Ng");
+            parent.getContext().startActivity(intent);
+        });
+
         return new BookingItemHolder(rootView, imageRequestManager);
     }
 
