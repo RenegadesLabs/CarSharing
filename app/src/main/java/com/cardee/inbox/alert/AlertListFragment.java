@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 
-public class AlertFragment extends Fragment {
+public class AlertListFragment extends Fragment {
 
-    public static AlertFragment newInstance() {
+    public static AlertListFragment newInstance() {
         Bundle args = new Bundle();
-        AlertFragment fragment = new AlertFragment();
+        AlertListFragment fragment = new AlertListFragment();
         fragment.setArguments(args);
         return fragment;
     }

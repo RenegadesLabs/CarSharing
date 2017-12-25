@@ -1,32 +1,36 @@
 package com.cardee.inbox.chat;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.cardee.data_source.Error;
+import com.cardee.data_source.inbox.local.entity.Chat;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.inbox.usecase.GetChats;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.domain.inbox.usecase.chat.GetChats;
 
-import io.reactivex.functions.Consumer;
+import static com.cardee.data_source.inbox.local.entity.Chat.CHAT_DB_ID;
+import static com.cardee.data_source.inbox.local.entity.Chat.CHAT_SERVER_ID;
 
-public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxChat> {
+public class ChatListPresenterImp implements ChatListContract.Presenter {
 
-    private ChatContract.View mView;
+    private static final String TAG = ChatListPresenterImp.class.getSimpleName();
+    private ChatListContract.View mView;
 
     private final GetChats mGetChats;
     private final UseCaseExecutor mExecutor;
     private final String mAttachment;
 
-    ChatPresenterImp(Context context) {
+    ChatListPresenterImp(Context context) {
         mGetChats = new GetChats();
         mExecutor = UseCaseExecutor.getInstance();
         mAttachment = AccountManager.getInstance(context).getSessionInfo();
     }
 
     @Override
-    public void onInit(ChatContract.View view) {
+    public void onInit(ChatListContract.View view) {
         mView = view;
     }
 
@@ -55,13 +59,22 @@ public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxC
 
     private void showAllChats(GetChats.ResponseValues response) {
         if (mView != null) {
-            mView.showAllChats(response.getInboxChats());
+            mView.showAllChats(response.getChats());
         }
     }
 
     @Override
-    public void accept(InboxChat inboxChat) throws Exception {
-        mView.showChat();
+    public void onChatClick(Chat chat) {
+        Bundle args = new Bundle();
+        args.putInt(CHAT_DB_ID, chat.getId());
+        args.putInt(CHAT_SERVER_ID, chat.getChatId());
+        mView.showChat(args);
+        Log.e(TAG, "Chat selected: databaseId = " + chat.getId() + " " + "serverId = " + chat.getChatId());
+    }
+
+    @Override
+    public void onUnreadMessageReceived(boolean isUnread) {
+
     }
 
     @Override

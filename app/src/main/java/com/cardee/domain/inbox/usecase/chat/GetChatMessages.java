@@ -1,4 +1,4 @@
-package com.cardee.domain.inbox.usecase;
+package com.cardee.domain.inbox.usecase.chat;
 
 import com.cardee.domain.UseCase;
 

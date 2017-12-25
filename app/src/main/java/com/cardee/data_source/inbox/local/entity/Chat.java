@@ -2,10 +2,15 @@ package com.cardee.data_source.inbox.local.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "chats")
-public class Chat {
+public class Chat implements Comparable<Chat> {
+
+    public static final String CHAT_DB_ID = "chat_database_id";
+    public static final String CHAT_SERVER_ID = "chat_id";
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
@@ -34,6 +39,21 @@ public class Chat {
 
     @ColumnInfo(name = "last_message_time")
     private String mLastMessageTime;
+
+    @ColumnInfo(name = "car_title")
+    private String mCarTitle;
+
+    @ColumnInfo(name = "license_plate_number")
+    private String mLicenseNumber;
+
+    @ColumnInfo(name = "time_end")
+    private String mBookingTimeEnd;
+
+    @ColumnInfo(name = "time_begin")
+    private String mBookingTimeBegin;
+
+    @Ignore
+    private ChatMessage mChatMessage;
 
     public Integer getId() {
         return id;
@@ -107,4 +127,149 @@ public class Chat {
         mLastMessageTime = lastMessageTime;
     }
 
+    public String getCarTitle() {
+        return mCarTitle;
+    }
+
+    public void setCarTitle(String carTitle) {
+        mCarTitle = carTitle;
+    }
+
+    public String getLicenseNumber() {
+        return mLicenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        mLicenseNumber = licenseNumber;
+    }
+
+    public String getBookingTimeEnd() {
+        return mBookingTimeEnd;
+    }
+
+    public void setBookingTimeEnd(String bookingTimeEnd) {
+        mBookingTimeEnd = bookingTimeEnd;
+    }
+
+    public String getBookingTimeBegin() {
+        return mBookingTimeBegin;
+    }
+
+    public void setBookingTimeBegin(String bookingTimeBegin) {
+        mBookingTimeBegin = bookingTimeBegin;
+    }
+
+    public ChatMessage getChatMessage() {
+        return mChatMessage;
+    }
+
+    public void setChatMessage(ChatMessage chatMessage) {
+        mChatMessage = chatMessage;
+    }
+
+    @Override
+    public int compareTo(@NonNull Chat chat) {
+        return chat.getLastMessageTime().compareTo(mLastMessageTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Chat chat = (Chat) o;
+
+        if (!chatId.equals(chat.chatId)) return false;
+        if (!recipientName.equals(chat.recipientName)) return false;
+        return mLastMessageText.equals(chat.mLastMessageText);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = chatId.hashCode();
+        result = 31 * result + recipientName.hashCode();
+        result = 31 * result + mLastMessageText.hashCode();
+        return result;
+    }
+
+    public static class Builder {
+
+        private Chat mChat;
+
+        public Builder() {
+            mChat = new Chat();
+        }
+
+        //base data
+        public Chat.Builder withDatabaseId(Integer databaseId) {
+            mChat.id = databaseId;
+            return this;
+        }
+
+        public Chat.Builder withChatId(Integer chatId) {
+            mChat.chatId = chatId;
+            return this;
+        }
+
+        public Chat.Builder withChatAttachment(String chatAttachment) {
+            mChat.chatAttachment = chatAttachment;
+            return this;
+        }
+
+        //inbox chat data
+        public Chat.Builder withName(String name) {
+            mChat.recipientName = name;
+            return this;
+        }
+
+        public Chat.Builder withPhotoUrl(String url) {
+            mChat.photoUrl = url;
+            return this;
+        }
+
+        public Chat.Builder withLastMessage(String message) {
+            mChat.mLastMessageText = message;
+            return this;
+        }
+
+        public Chat.Builder withLastMessageTime(String time) {
+            mChat.mLastMessageTime = time;
+            return this;
+        }
+
+        public Chat.Builder withUnreadMessageCount(Integer count) {
+            mChat.unreadMessageCount = count;
+            return this;
+        }
+
+        //car data
+        public Chat.Builder withCarTitle(String carTitle) {
+            mChat.mCarTitle = carTitle;
+            return this;
+        }
+
+        public Chat.Builder withCarPhoto(String url) {
+            mChat.mCarPhotoUrl = url;
+            return this;
+        }
+
+        public Chat.Builder withLicenseNumber(String licenseNumber) {
+            mChat.mLicenseNumber = licenseNumber;
+            return this;
+        }
+
+        public Chat.Builder withBookingBegin(String beginData) {
+            mChat.mBookingTimeBegin = beginData;
+            return this;
+        }
+
+        public Chat.Builder withBookingEnd(String endData) {
+            mChat.mBookingTimeEnd = endData;
+            return this;
+        }
+
+        public Chat build() {
+            return mChat;
+        }
+    }
 }

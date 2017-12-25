@@ -2,16 +2,16 @@ package com.cardee.inbox.chat.adapter;
 
 import android.support.v7.util.DiffUtil;
 
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.data_source.inbox.local.entity.Chat;
 
 import java.util.List;
 
 public class ChatDiffCallback extends DiffUtil.Callback {
 
-    private List<InboxChat> oldChatList;
-    private List<InboxChat> newChatList;
+    private List<Chat> oldChatList;
+    private List<Chat> newChatList;
 
-    public ChatDiffCallback(List<InboxChat> oldChatList, List<InboxChat> newChatList) {
+    public ChatDiffCallback(List<Chat> oldChatList, List<Chat> newChatList) {
         this.oldChatList = oldChatList;
         this.newChatList = newChatList;
     }

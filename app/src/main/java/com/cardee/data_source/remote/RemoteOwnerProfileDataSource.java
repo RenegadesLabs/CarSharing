@@ -36,7 +36,7 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
 
     @Override
     public void loadOwnerProfile(final ProfileCallback callback) {
-//        mApi.loadOwnerProfile().subscribe(ownerProfileResponse -> {
+//        mApi.loadOwnerProfile().subscribeToDb(ownerProfileResponse -> {
 //            if (ownerProfileResponse.isSuccessful()) {
 //                callback.onSuccess(ownerProfileResponse.getOwnerProfile());
 //                return;

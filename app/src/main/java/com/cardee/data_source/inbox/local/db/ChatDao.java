@@ -17,10 +17,10 @@ import io.reactivex.Single;
 public interface ChatDao {
 
     @Query("SELECT * FROM chats WHERE attachment IS :attachment")
-    Flowable<List<Chat>> subscribe(String attachment);
+    Flowable<List<Chat>> subscribeToDb(String attachment);
 
     @Query("SELECT * FROM chats WHERE attachment IS :attachment")
-    Single<List<Chat>> getChats(String attachment);
+    Flowable<List<Chat>> getChats(String attachment);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addChat(Chat chat);
@@ -31,7 +31,7 @@ public interface ChatDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateChats(List<Chat> chats);
 
-    @Query("SELECT * FROM chats WHERE chat_id IS :chatId AND attachment IS :attachment")
+    @Query("SELECT * FROM chats WHERE CHAT_SERVER_ID IS :chatId AND attachment IS :attachment")
     Single<Chat> getChat(Integer chatId, String attachment);
 
 }

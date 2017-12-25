@@ -1,8 +1,10 @@
-package com.cardee.domain.inbox.usecase;
+package com.cardee.domain.inbox.usecase.chat;
 
 import com.cardee.domain.UseCase;
 
-public class GetAlerts implements UseCase<GetAlerts.RequestValues,GetAlerts.ResponseValues> {
+public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatInfo.ResponseValues> {
+
+
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {

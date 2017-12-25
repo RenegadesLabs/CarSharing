@@ -7,13 +7,14 @@ import com.cardee.data_source.inbox.remote.ChatRemoteDataSource;
 import com.cardee.data_source.inbox.remote.RemoteDataSource;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxRepositoryContract {
@@ -24,7 +25,7 @@ public class InboxRepository implements InboxRepositoryContract {
     private final LocalDataSource mChatLocalSource;
     private final RemoteDataSource mChatRemoteSource;
 
-    private List<InboxChat> mCacheLocalChats;
+    private List<Chat> mCacheLocalChats;
 
 //    private final AlertDataSource mAlertLocalSource;
 //    private final AlertDataSource mAlertRemoteSource;
@@ -42,36 +43,27 @@ public class InboxRepository implements InboxRepositoryContract {
     }
 
     @Override
-    public Observable<List<InboxChat>> getChats(String attachment) {
-        Single<List<InboxChat>> localSource = mChatLocalSource
+    public Flowable<List<Chat>> getLocalChats(String attachment) {
+        return mChatLocalSource
                 .getLocalChats(attachment)
-                .doOnSuccess(inboxChats -> mCacheLocalChats = inboxChats);
+                .doOnNext(localChats -> {
+                    mCacheLocalChats = localChats;
+                    Collections.sort(localChats);
+                });
+    }
 
-        Observable<List<InboxChat>> remoteSource = mChatRemoteSource
+    @Override
+    public Single<List<Chat>> getRemoteChats(String attachment) {
+        return mChatRemoteSource
                 .getRemoteChats(attachment)
-                .subscribeOn(Schedulers.computation())
-                .doOnNext(inboxChats -> {
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(remoteChats -> {
                     if (mCacheLocalChats.isEmpty()) {
-                        mChatLocalSource.saveChats(inboxChats);
+                        mChatLocalSource.saveChats(remoteChats);
                     } else {
-                        mChatLocalSource.fetchUpdates(mCacheLocalChats, inboxChats);
+                        mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
                     }
                 });
-
-        return Observable
-                .concat(localSource.toObservable(), remoteSource)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public Observable<InboxChat> subscribe(String attachment) {
-        return null;
-    }
-
-    @Override
-    public Observable<List<InboxChat>> getRemoteChats(String attachment) {
-        return null;
     }
 
     @Override
@@ -83,13 +75,21 @@ public class InboxRepository implements InboxRepositoryContract {
     public Completable updateChat(Chat chat) {
         return Completable.create((CompletableEmitter emitter) ->
                 mChatLocalSource.getChat(chat)
+                        .subscribeOn(Schedulers.io())
                         .subscribe((Chat persistChat) -> {
                             persistChat.setLastMessageText(chat.getLastMessageText());
                             persistChat.setLastMessageTime(chat.getLastMessageTime());
                             persistChat.setUnreadMessageCount(chat.getUnreadMessageCount());
                             addChat(persistChat);
                         }, throwable -> {
-//                            mChatRemoteSource.getChat(chat);
+                            if (mCacheLocalChats != null) {
+                                getRemoteChats(chat.getChatAttachment());
+                            }
                         }));
+    }
+
+    @Override
+    public Observable<Chat> subscribe(String attachment) {
+        return null;
     }
 }

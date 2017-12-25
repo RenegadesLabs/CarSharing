@@ -11,26 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.inbox.chat.chat_message.view.ChatActivity;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
-import com.cardee.inbox.chat.adapter.ChatAdapter;
+import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.inbox.chat.adapter.ChatListAdapter;
+import com.cardee.inbox.chat.item.view.ChatActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChatFragment extends Fragment implements ChatContract.View {
+public class ChatListFragment extends Fragment implements ChatListContract.View {
 
     @BindView(R.id.chat_recycler)
     RecyclerView mChatRecycler;
 
-    private ChatPresenterImp mPresenterImp;
-    private ChatAdapter mChatAdapter;
+    private ChatListPresenterImp mPresenterImp;
+    private ChatListAdapter mChatAdapter;
 
-    public static ChatFragment newInstance() {
+    public static ChatListFragment newInstance() {
         Bundle args = new Bundle();
-        ChatFragment fragment = new ChatFragment();
+        ChatListFragment fragment = new ChatListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,10 +38,23 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenterImp = new ChatPresenterImp(getActivity());
+        mPresenterImp = new ChatListPresenterImp(getActivity());
         mPresenterImp.onInit(this);
-        mChatAdapter = new ChatAdapter(getActivity());
-        mChatAdapter.subscribe(mPresenterImp);
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        mChatAdapter = new ChatListAdapter(getActivity());
+        mChatAdapter.subscribeToChatClick(chat -> {
+            if (mPresenterImp != null) {
+                mPresenterImp.onChatClick(chat);
+            }
+        });
+        mChatAdapter.subscribeToUnreadMessage(isUnread -> {
+            if (mPresenterImp != null) {
+                mPresenterImp.onUnreadMessageReceived(isUnread);
+            }
+        });
     }
 
     @Nullable
@@ -60,13 +73,14 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     }
 
     @Override
-    public void showAllChats(List<InboxChat> chatList) {
+    public void showAllChats(List<Chat> chatList) {
         mChatAdapter.addItems(chatList);
     }
 
     @Override
-    public void showChat() {
+    public void showChat(Bundle bundle) {
         Intent intent = new Intent(getActivity(), ChatActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

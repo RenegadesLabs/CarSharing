@@ -10,7 +10,7 @@ import io.reactivex.Single;
 
 public interface RemoteDataSource {
 
-    Observable<List<InboxChat>> getRemoteChats(String attachment);
+    Single<List<Chat>> getRemoteChats(String attachment);
 
     Single<Chat> getChat(Chat chat);
 

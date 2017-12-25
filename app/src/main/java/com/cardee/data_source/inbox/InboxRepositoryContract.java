@@ -6,16 +6,17 @@ import com.cardee.domain.inbox.usecase.entity.InboxChat;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface InboxRepositoryContract {
 
-    Observable<List<InboxChat>> getChats(String attachment);
+    Flowable<List<Chat>> getLocalChats(String attachment);
 
-    Observable<InboxChat> subscribe(String attachment);
+    Observable<Chat> subscribe(String attachment);
 
-    Observable<List<InboxChat>> getRemoteChats(String attachment);
+    Single<List<Chat>> getRemoteChats(String attachment);
 
     void addChat(Chat chat);
 
