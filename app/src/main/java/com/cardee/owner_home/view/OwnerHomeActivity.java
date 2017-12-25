@@ -30,6 +30,8 @@ import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
+import com.cardee.owner_home.presenter.OwnerHomeContract;
+import com.cardee.owner_home.presenter.OwnerHomePresenterImp;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
@@ -38,11 +40,12 @@ import com.crashlytics.android.Crashlytics;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
-        CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener {
+        CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener, OwnerHomeContract.View {
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
     private static final int ADD_NEW_CAR_REQUEST_CODE = 101;
 
+    private OwnerHomeContract.Presenter mPresenter;
     private boolean mHasFragment;
     private TextView mTitle;
     private View mAddCarAction;
@@ -67,6 +70,12 @@ public class OwnerHomeActivity extends AppCompatActivity
         BottomNavigationHelper.prepareForOwner(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(1);
+        initPresenter(bottomMenu);
+    }
+
+    private void initPresenter(AHBottomNavigation bottomMenu) {
+        mPresenter = new OwnerHomePresenterImp();
+        mPresenter.init(this, bottomMenu);
     }
 
     @Override
