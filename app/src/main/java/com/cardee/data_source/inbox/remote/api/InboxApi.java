@@ -23,9 +23,8 @@ public interface InboxApi {
     Single<ChatListResponse> getChats(@Path(value = "attachment") String attachment);
 
     @GET("/api/dev/chats/{attachment}/{chat_id}")
-    Observable<ChatMessagesResponse> getMessages(@Path(value = "attachment") String attachment,
+    Single<ChatMessagesResponse> getMessages(@Path(value = "attachment") String attachment,
                                                  @Path("chat_id") int chatId);
-
     @POST
     @Headers("Content-Type: application/json")
     Single<MessageResponse> sendMessage(@Body NewChatMessage message);

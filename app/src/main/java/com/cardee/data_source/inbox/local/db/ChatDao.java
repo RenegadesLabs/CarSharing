@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
 import java.util.List;
 
@@ -31,7 +31,12 @@ public interface ChatDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateChats(List<Chat> chats);
 
-    @Query("SELECT * FROM chats WHERE CHAT_SERVER_ID IS :chatId AND attachment IS :attachment")
+    @Query("SELECT * FROM chats WHERE chat_id IS :chatId AND attachment IS :attachment")
     Single<Chat> getChat(Integer chatId, String attachment);
+
+
+
+    @Query("SELECT * FROM chats WHERE chat_id IS :serverId AND _id IS :databaseId ")
+    Single<Chat> getChatInfo(Integer databaseId, Integer serverId);
 
 }

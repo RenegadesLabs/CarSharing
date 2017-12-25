@@ -31,7 +31,7 @@ public class ChatInfo {
         return carTitle;
     }
 
-    public String getRecipientCarUrl() {
+    public String getCarPhotoUrl() {
         return recipientCarUrl;
     }
 
@@ -70,7 +70,7 @@ public class ChatInfo {
             return this;
         }
 
-        public ChatInfo.Builder withCarUrl(String recipientCarUrl) {
+        public ChatInfo.Builder withCarPhoto(String recipientCarUrl) {
             chatInfo.recipientCarUrl = recipientCarUrl;
             return this;
         }

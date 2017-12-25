@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.cardee.data_source.Error;
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.chat.GetChats;
 
-import static com.cardee.data_source.inbox.local.entity.Chat.CHAT_DB_ID;
-import static com.cardee.data_source.inbox.local.entity.Chat.CHAT_SERVER_ID;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_DB_ID;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 
 public class ChatListPresenterImp implements ChatListContract.Presenter {
 
@@ -66,10 +66,10 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     @Override
     public void onChatClick(Chat chat) {
         Bundle args = new Bundle();
-        args.putInt(CHAT_DB_ID, chat.getId());
-        args.putInt(CHAT_SERVER_ID, chat.getChatId());
+        args.putInt(CHAT_DB_ID, chat.getChatLocalId());
+        args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
         mView.showChat(args);
-        Log.e(TAG, "Chat selected: databaseId = " + chat.getId() + " " + "serverId = " + chat.getChatId());
+        Log.e(TAG, "Chat selected: databaseId = " + chat.getChatLocalId() + " " + "serverId = " + chat.getChatServerId());
     }
 
     @Override

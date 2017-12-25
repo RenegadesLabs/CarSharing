@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.inbox.chat.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.item.view.ChatActivity;
 

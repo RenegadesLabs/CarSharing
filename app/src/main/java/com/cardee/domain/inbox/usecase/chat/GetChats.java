@@ -3,8 +3,8 @@ package com.cardee.domain.inbox.usecase.chat;
 import android.content.SharedPreferences;
 
 import com.cardee.data_source.Error;
-import com.cardee.data_source.inbox.InboxRepository;
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.repository.InboxRepository;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.domain.UseCase;
 
 import java.util.List;

@@ -1,7 +1,6 @@
-package com.cardee.data_source.inbox;
+package com.cardee.data_source.inbox.repository;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
 import java.util.List;
 

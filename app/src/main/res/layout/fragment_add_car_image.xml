@@ -14,14 +14,14 @@
         android:text="@string/car_add_image_desc"/>
 
     <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/rv_addCarImage"-->
+        <!--andrchatLocalIdd:idchatLocalId@+id/rv_addCarImage"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:orientation="horizontal"-->
         <!--android:layout_marginStart="@dimen/medium_margin"-->
         <!--android:layout_marginEnd="@dimen/medium_margin"-->
         <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/car_image_desc">-->
+        <!--app:layout_constraintTop_toBottomOfchatLocalId@+id/car_image_desc">-->
 
     <!--</android.support.v7.widget.RecyclerView>-->
 

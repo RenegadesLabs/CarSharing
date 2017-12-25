@@ -1,11 +1,9 @@
-package com.cardee.data_source.inbox.remote;
+package com.cardee.data_source.inbox.remote.chat;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface RemoteDataSource {

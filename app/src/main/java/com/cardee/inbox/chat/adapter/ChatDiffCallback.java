@@ -2,7 +2,7 @@ package com.cardee.inbox.chat.adapter;
 
 import android.support.v7.util.DiffUtil;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class ChatDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldChatList.get(oldItemPosition).getChatId() == newChatList.get(newItemPosition).getChatId();
+        return oldChatList.get(oldItemPosition).getChatServerId() == newChatList.get(newItemPosition).getChatServerId();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.cardee.inbox.service.controller;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.domain.util.Mapper;
 
 import java.util.Map;
@@ -14,7 +14,7 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
     @Override
     public Chat map(Map<String, String> messageData) {
         Chat chat = new Chat();
-        chat.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
+        chat.setChatServerId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
         chat.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
         chat.setLastMessageText(messageData.get(Key.Chat.MESSAGE));
         chat.setLastMessageTime(messageData.get(Key.Chat.DATE_CREATED));

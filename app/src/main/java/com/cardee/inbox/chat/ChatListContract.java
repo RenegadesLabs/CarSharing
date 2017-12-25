@@ -2,7 +2,7 @@ package com.cardee.inbox.chat;
 
 import android.os.Bundle;
 
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.mvp.BaseView;
 
 import java.util.List;

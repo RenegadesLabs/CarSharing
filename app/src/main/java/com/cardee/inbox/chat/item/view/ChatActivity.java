@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.inbox.chat.item.presenter.ChatContract;
 import com.cardee.inbox.chat.item.presenter.ChatPresenter;
 
 public class ChatActivity extends AppCompatActivity implements ChatContract.View {
@@ -19,7 +20,13 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         initToolBar();
+        initPresenter();
+    }
+
+    private void initPresenter() {
         mPresenter = new ChatPresenter(this);
+        mPresenter.init(getIntent().getExtras(), findViewById(R.id.chat_root_view));
+        mPresenter.onChatDataRequest();
     }
 
     private void initToolBar() {

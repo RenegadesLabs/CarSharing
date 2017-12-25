@@ -2,8 +2,8 @@ package com.cardee.inbox.service.controller;
 
 import android.util.Log;
 
-import com.cardee.data_source.inbox.InboxRepository;
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.repository.InboxRepository;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.google.firebase.messaging.RemoteMessage;
 
 import io.reactivex.observers.DisposableCompletableObserver;

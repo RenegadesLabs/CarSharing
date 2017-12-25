@@ -1,8 +1,6 @@
-package com.cardee.data_source.inbox.remote;
+package com.cardee.data_source.inbox.remote.alert;
 
-import com.cardee.data_source.inbox.AlertDataSource;
-
-public class AlertRemoteDataSource implements AlertDataSource {
+public class AlertRemoteDataSource {
 
     private static AlertRemoteDataSource INSTANCE;
 

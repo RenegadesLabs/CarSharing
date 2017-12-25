@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.CardeeApp;
 import com.cardee.R;
-import com.cardee.data_source.inbox.local.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;

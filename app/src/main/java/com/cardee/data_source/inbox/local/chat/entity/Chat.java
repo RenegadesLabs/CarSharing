@@ -1,4 +1,4 @@
-package com.cardee.data_source.inbox.local.entity;
+package com.cardee.data_source.inbox.local.chat.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -14,10 +14,10 @@ public class Chat implements Comparable<Chat> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    private Integer id;
+    private Integer chatLocalId;
 
     @ColumnInfo(name = "chat_id")
-    private Integer chatId;
+    private Integer chatServerId;
 
     @ColumnInfo(name = "attachment")
     private String chatAttachment;
@@ -44,7 +44,7 @@ public class Chat implements Comparable<Chat> {
     private String mCarTitle;
 
     @ColumnInfo(name = "license_plate_number")
-    private String mLicenseNumber;
+    private String mCarLicenseNumber;
 
     @ColumnInfo(name = "time_end")
     private String mBookingTimeEnd;
@@ -55,20 +55,20 @@ public class Chat implements Comparable<Chat> {
     @Ignore
     private ChatMessage mChatMessage;
 
-    public Integer getId() {
-        return id;
+    public Integer getChatLocalId() {
+        return chatLocalId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setChatLocalId(Integer id) {
+        this.chatLocalId = id;
     }
 
-    public Integer getChatId() {
-        return chatId;
+    public Integer getChatServerId() {
+        return chatServerId;
     }
 
-    public void setChatId(Integer chatId) {
-        this.chatId = chatId;
+    public void setChatServerId(Integer chatServerId) {
+        this.chatServerId = chatServerId;
     }
 
     public String getChatAttachment() {
@@ -135,12 +135,12 @@ public class Chat implements Comparable<Chat> {
         mCarTitle = carTitle;
     }
 
-    public String getLicenseNumber() {
-        return mLicenseNumber;
+    public String getCarLicenseNumber() {
+        return mCarLicenseNumber;
     }
 
-    public void setLicenseNumber(String licenseNumber) {
-        mLicenseNumber = licenseNumber;
+    public void setCarLicenseNumber(String carLicenseNumber) {
+        mCarLicenseNumber = carLicenseNumber;
     }
 
     public String getBookingTimeEnd() {
@@ -179,14 +179,14 @@ public class Chat implements Comparable<Chat> {
 
         Chat chat = (Chat) o;
 
-        if (!chatId.equals(chat.chatId)) return false;
+        if (!chatServerId.equals(chat.chatServerId)) return false;
         if (!recipientName.equals(chat.recipientName)) return false;
         return mLastMessageText.equals(chat.mLastMessageText);
     }
 
     @Override
     public int hashCode() {
-        int result = chatId.hashCode();
+        int result = chatServerId.hashCode();
         result = 31 * result + recipientName.hashCode();
         result = 31 * result + mLastMessageText.hashCode();
         return result;
@@ -202,12 +202,12 @@ public class Chat implements Comparable<Chat> {
 
         //base data
         public Chat.Builder withDatabaseId(Integer databaseId) {
-            mChat.id = databaseId;
+            mChat.chatLocalId = databaseId;
             return this;
         }
 
         public Chat.Builder withChatId(Integer chatId) {
-            mChat.chatId = chatId;
+            mChat.chatServerId = chatId;
             return this;
         }
 
@@ -254,7 +254,7 @@ public class Chat implements Comparable<Chat> {
         }
 
         public Chat.Builder withLicenseNumber(String licenseNumber) {
-            mChat.mLicenseNumber = licenseNumber;
+            mChat.mCarLicenseNumber = licenseNumber;
             return this;
         }
 

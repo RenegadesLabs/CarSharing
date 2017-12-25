@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.cardee.data_source.inbox.local.entity.ChatMessage;
+import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 
 import java.util.List;
 

@@ -137,7 +137,7 @@
                     android:textColor="@color/colorPrimary" />
                 
                 <!--<android.support.v7.widget.AppCompatEditText-->
-                    <!--android:id="@+id/et_fuelPerKm"-->
+                    <!--andrchatLocalIdd:idchatLocalId@+id/et_fuelPerKm"-->
                     <!--style="@style/CardeeEditTextWithoutUnderlineStyle"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->

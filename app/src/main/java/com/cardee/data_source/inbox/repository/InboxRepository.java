@@ -1,11 +1,10 @@
-package com.cardee.data_source.inbox;
+package com.cardee.data_source.inbox.repository;
 
-import com.cardee.data_source.inbox.local.ChatLocalDataSource;
-import com.cardee.data_source.inbox.local.LocalDataSource;
-import com.cardee.data_source.inbox.local.entity.Chat;
-import com.cardee.data_source.inbox.remote.ChatRemoteDataSource;
-import com.cardee.data_source.inbox.remote.RemoteDataSource;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.data_source.inbox.local.chat.ChatListLocalSource;
+import com.cardee.data_source.inbox.local.chat.LocalData;
+import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
+import com.cardee.data_source.inbox.remote.chat.RemoteDataSource;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,16 +18,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxRepositoryContract {
 
-    private static final String TAG = InboxRepository.class.getSimpleName();
-
     private static InboxRepository INSTANCE;
-    private final LocalDataSource mChatLocalSource;
+    private final LocalData.ChatListSource mChatLocalSource;
     private final RemoteDataSource mChatRemoteSource;
-
     private List<Chat> mCacheLocalChats;
-
-//    private final AlertDataSource mAlertLocalSource;
-//    private final AlertDataSource mAlertRemoteSource;
 
     public static InboxRepository getInstance() {
         if (INSTANCE == null) {
@@ -38,8 +31,8 @@ public class InboxRepository implements InboxRepositoryContract {
     }
 
     private InboxRepository() {
-        mChatLocalSource = ChatLocalDataSource.getInstance();
-        mChatRemoteSource = ChatRemoteDataSource.getInstance();
+        mChatLocalSource = ChatListLocalSource.getInstance();
+        mChatRemoteSource = ChatListRemoteSource.getInstance();
     }
 
     @Override
