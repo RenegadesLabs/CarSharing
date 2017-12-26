@@ -33,6 +33,14 @@ public class HttpClientProvider {
                 .build();
     }
 
+    public OkHttpClient provideForMultipart(Context context) {
+        AccountManager accountManager = AccountManager.getInstance(context);
+        return new OkHttpClient.Builder()
+                .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .build();
+    }
+
     private class AuthHeaderRequestInterceptor implements Interceptor {
 
         private final AccountManager mAccountManager;

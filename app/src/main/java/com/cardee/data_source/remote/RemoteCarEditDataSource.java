@@ -9,6 +9,7 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
+import com.cardee.data_source.remote.api.cars.Upload;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
@@ -24,16 +25,12 @@ import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEnti
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
+import com.cardee.util.ImageProcessor;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
 
-import retrofit2.Call;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -45,10 +42,14 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     private static final String TAG = RemoteCarEditDataSource.class.getSimpleName();
     private static RemoteCarEditDataSource INSTANCE;
 
-    private final Cars api;
+    private final Cars carsApi;
+    private final Upload uploadApi;
+    private final ImageProcessor imageProcessor;
 
     private RemoteCarEditDataSource() {
-        api = CardeeApp.retrofit.create(Cars.class);
+        carsApi = CardeeApp.retrofit.create(Cars.class);
+        uploadApi = CardeeApp.retrofitMultipart.create(Upload.class);
+        imageProcessor = new ImageProcessor();
     }
 
     public static RemoteCarEditDataSource getInstance() {
@@ -61,7 +62,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateLocation(Integer id, NewCarData carData, CarEditDataSource.Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateLocation(id, carData).execute();
+            Response<BaseResponse> response = carsApi.updateLocation(id, carData).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -76,7 +77,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateInfo(Integer id, NewCarData carData, CarEditDataSource.Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateInfo(id, carData).execute();
+            Response<BaseResponse> response = carsApi.updateInfo(id, carData).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -91,7 +92,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalRequirements(Integer id, RentalTermsRequirementsEntity requirements, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalRequirements(id, requirements).execute();
+            Response<BaseResponse> response = carsApi.updateRentalRequirements(id, requirements).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -106,7 +107,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalRules(Integer id, CarRuleEntity rules, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalRules(id, rules).execute();
+            Response<BaseResponse> response = carsApi.updateRentalRules(id, rules).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -121,7 +122,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalSecurityDeposit(Integer id, RentalTermsSecurityDepositEntity securityDeposit, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalSecurityDeposit(id, securityDeposit).execute();
+            Response<BaseResponse> response = carsApi.updateRentalSecurityDeposit(id, securityDeposit).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -136,7 +137,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalInsuranceExcess(Integer id, RentalTermsInsuranceEntity insuranceExcess, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalInsuranceExcess(id, insuranceExcess).execute();
+            Response<BaseResponse> response = carsApi.updateRentalInsuranceExcess(id, insuranceExcess).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -151,7 +152,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalAdditionalTerms(Integer id, RentalTermsAdditionalEntity additionalEntity, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalAdditional(id, additionalEntity).execute();
+            Response<BaseResponse> response = carsApi.updateRentalAdditional(id, additionalEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -166,7 +167,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalRatesDaily(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalRatesDaily(id, ratesEntity).execute();
+            Response<BaseResponse> response = carsApi.updateRentalRatesDaily(id, ratesEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -181,7 +182,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateRentalRatesHourly(id, ratesEntity).execute();
+            Response<BaseResponse> response = carsApi.updateRentalRatesHourly(id, ratesEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -196,7 +197,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateDescription(Integer id, String description, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateDescription(id,
+            Response<BaseResponse> response = carsApi.updateDescription(id,
                     new DescriptionBody(description)).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
@@ -212,7 +213,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateDeliveryRates(Integer id, DeliveryRatesEntity deliveryRatesEntity, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateDeliveryRates(id, deliveryRatesEntity).execute();
+            Response<BaseResponse> response = carsApi.updateDeliveryRates(id, deliveryRatesEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -227,7 +228,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateInstantBookingDaily(id,
+            Response<BaseResponse> response = carsApi.updateInstantBookingDaily(id,
                     new InstantBookingEntity(isInstantBooking))
                     .execute();
             if (response.isSuccessful()) {
@@ -244,7 +245,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateInstantBookingHourly(id,
+            Response<BaseResponse> response = carsApi.updateInstantBookingHourly(id,
                     new InstantBookingEntity(isInstantBooking))
                     .execute();
             if (response.isSuccessful()) {
@@ -261,7 +262,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateCurbsideDeliveryDaily(id,
+            Response<BaseResponse> response = carsApi.updateCurbsideDeliveryDaily(id,
                     new CurbsideDeliveryEntity(isCurbsideDelivery))
                     .execute();
             if (response.isSuccessful()) {
@@ -278,7 +279,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateCurbsideDeliveryHourly(Integer id, boolean isCurbsideDelivery, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateCurbsideDeliveryHourly(id,
+            Response<BaseResponse> response = carsApi.updateCurbsideDeliveryHourly(id,
                     new CurbsideDeliveryEntity(isCurbsideDelivery))
                     .execute();
             if (response.isSuccessful()) {
@@ -295,7 +296,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateAcceptCashDaily(Integer id, boolean isAcceptCash, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateAcceptCashDaily(id,
+            Response<BaseResponse> response = carsApi.updateAcceptCashDaily(id,
                     new AcceptCashEntity(isAcceptCash))
                     .execute();
             if (response.isSuccessful()) {
@@ -312,7 +313,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateAcceptCashHourly(Integer id, boolean isAcceptCash, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateAcceptCashHourly(id,
+            Response<BaseResponse> response = carsApi.updateAcceptCashHourly(id,
                     new AcceptCashEntity(isAcceptCash))
                     .execute();
             if (response.isSuccessful()) {
@@ -329,7 +330,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateFuelPolicyDaily(Integer id, FuelPolicyEntity fuelPolicy, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateFuelPolicyDaily(id, fuelPolicy)
+            Response<BaseResponse> response = carsApi.updateFuelPolicyDaily(id, fuelPolicy)
                     .execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
@@ -345,7 +346,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void updateFuelPolicyHourly(Integer id, FuelPolicyEntity fuelPolicy, Callback callback) {
         try {
-            Response<BaseResponse> response = api.updateFuelPolicyHourly(id, fuelPolicy)
+            Response<BaseResponse> response = carsApi.updateFuelPolicyHourly(id, fuelPolicy)
                     .execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
@@ -367,16 +368,20 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
         String[] split = uri.getPath().split("/");
         File imageFile = new File(CardeeApp.context.getCacheDir(), split[split.length - 1]);
         try {
-            byte[] buffer = new byte[1024];
             InputStream in = CardeeApp.context.getContentResolver().openInputStream(uri);
-            OutputStream out = new FileOutputStream(imageFile);
-            int bytesRead;
-            while ((bytesRead = in.read(buffer)) > 0) {
-                out.write(Arrays.copyOfRange(buffer, 0, Math.max(0, bytesRead)));
+//            byte[] buffer = new byte[1024];
+//            OutputStream out = new FileOutputStream(imageFile);
+//            int bytesRead;
+//            while ((bytesRead = in.read(buffer)) > 0) {
+//                out.write(Arrays.copyOfRange(buffer, 0, Math.max(0, bytesRead)));
+//            }
+//            in.close();
+//            out.close();
+            boolean resized = imageProcessor.resize(in, imageFile);
+            if (!resized) {
+                throw new Exception("Failed to resize image");
             }
-            in.close();
-            out.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             callback.onError(new Error(Error.Type.INTERNAL, e.getMessage()));
             return;
@@ -385,7 +390,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
             MultipartBody.Part part = MultipartBody.Part.createFormData("car_image",
                     imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
             try {
-                Response<UploadImageResponse> response = api.uploadImage(id, part).execute();
+                Response<UploadImageResponse> response = uploadApi.uploadImage(id, part).execute();
                 imageFile.deleteOnExit();
                 if (response.isSuccessful() && response.body() != null) {
                     UploadImageResponseBody imageResponse = response.body().getBody();
@@ -410,7 +415,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void deleteImage(Integer id, Integer imageId, Callback callback) {
         try {
-            Response<NoDataResponse> response = api.deleteImage(id, imageId).execute();
+            Response<NoDataResponse> response = carsApi.deleteImage(id, imageId).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -424,7 +429,7 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     @Override
     public void setPrimaryImage(Integer id, Integer imageId, Callback callback) {
         try {
-            Response<NoDataResponse> response = api.setPrimaryImage(id, imageId).execute();
+            Response<NoDataResponse> response = carsApi.setPrimaryImage(id, imageId).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
