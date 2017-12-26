@@ -12,6 +12,8 @@ public class Settings {
 
     Settings(SettingManager manager) {
         this.manager = manager;
+        filter = manager.getFilter();
+        sort = manager.getSort();
     }
 
     public BookingState getFilter() {

@@ -99,6 +99,7 @@ public class FilterBookingDialog extends BottomSheetDialogFragment {
         super.setupDialog(dialog, style);
         View rootView = View.inflate(getContext(), R.layout.modal_dialog_booking_filter, null);
         unbinder = ButterKnife.bind(this, rootView);
+        changeSelection(currentFilter);
         dialog.setContentView(rootView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) rootView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
@@ -149,16 +150,17 @@ public class FilterBookingDialog extends BottomSheetDialogFragment {
                 filter = BookingState.CANCELED;
                 break;
         }
-        changeSelection(filter);
-        if (listener != null) {
-            listener.onFilterSelected(filter);
+        if ((currentFilter != null && !currentFilter.equals(filter)) ||
+                (filter != null && !filter.equals(currentFilter))) {
+//            changeSelection(filter);
+            if (listener != null) {
+                listener.onFilterSelected(filter);
+            }
+            dismiss();
         }
     }
 
     private void changeSelection(BookingState filter) {
-        if (filter.equals(currentFilter)) {
-            return;
-        }
         currentFilter = filter;
         filterAll.setTypeface(filter == null ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         filterNew.setTypeface(BookingState.NEW.equals(filter) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);

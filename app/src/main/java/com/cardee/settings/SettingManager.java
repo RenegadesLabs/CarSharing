@@ -31,20 +31,28 @@ public class SettingManager {
     }
 
     public void saveFilter(BookingState filter) {
-        settingPrefs.edit().putString(OWNER_BOOKING_FILTER, filter.name()).apply();
+        settingPrefs
+                .edit()
+                .putString(OWNER_BOOKING_FILTER, filter == null ? null : filter.name())
+                .apply();
     }
 
     public void saveSort(ObtainBookings.Sort sort) {
-        settingPrefs.edit().putString(OWNER_BOOKING_SORT, sort.name()).apply();
+        settingPrefs
+                .edit()
+                .putString(OWNER_BOOKING_SORT, sort == null ? null : sort.name())
+                .apply();
     }
 
     public BookingState getFilter() {
         String filterName = settingPrefs.getString(OWNER_BOOKING_FILTER, null);
         BookingState filter = null;
-        try {
-            filter = BookingState.valueOf(filterName);
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        if (filterName != null) {
+            try {
+                filter = BookingState.valueOf(filterName);
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+            }
         }
         return filter;
     }
@@ -52,10 +60,12 @@ public class SettingManager {
     public ObtainBookings.Sort getSort() {
         String sortName = settingPrefs.getString(OWNER_BOOKING_SORT, null);
         ObtainBookings.Sort sort = null;
-        try {
-            sort = ObtainBookings.Sort.valueOf(sortName);
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        if (sortName != null) {
+            try {
+                sort = ObtainBookings.Sort.valueOf(sortName);
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+            }
         }
         return sort;
     }

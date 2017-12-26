@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/booking_sort_date_selected"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="@dimen/widget_margin_mid"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/booking_sort_date"
@@ -49,8 +49,8 @@
 
     <ImageView
         android:id="@+id/booking_sort_pickup_date_selected"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="@dimen/widget_margin_mid"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/booking_sort_pickup_date"
@@ -69,8 +69,8 @@
 
     <ImageView
         android:id="@+id/booking_sort_return_date_selected"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="@dimen/widget_margin_mid"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/booking_sort_return_date"
@@ -90,8 +90,8 @@
 
     <ImageView
         android:id="@+id/booking_sort_amount_selected"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="@dimen/widget_margin_mid"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/booking_sort_amount"

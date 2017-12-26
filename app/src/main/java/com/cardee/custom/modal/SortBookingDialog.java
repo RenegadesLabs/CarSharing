@@ -110,33 +110,37 @@ public class SortBookingDialog extends BottomSheetDialogFragment {
             R.id.booking_sort_return_date,
             R.id.booking_sort_amount})
     public void onSortSelected(View sortView) {
+        ObtainBookings.Sort sort = null;
         switch (sortView.getId()) {
+            case R.id.booking_sort_date:
+                break;
             case R.id.booking_sort_pickup_date:
-                changeSelection(ObtainBookings.Sort.BOOKING);
+                sort = ObtainBookings.Sort.PICKUP;
                 break;
             case R.id.booking_sort_return_date:
-                changeSelection(ObtainBookings.Sort.PICKUP);
+                sort = ObtainBookings.Sort.RETURN;
                 break;
             case R.id.booking_sort_amount:
-                changeSelection(ObtainBookings.Sort.RETURN);
-                break;
-            case R.id.booking_sort_date:
-                changeSelection(ObtainBookings.Sort.AMOUNT);
+                sort = ObtainBookings.Sort.AMOUNT;
                 break;
         }
-        //TODO: implement listener invocation
+        if (currentSort != null && !currentSort.equals(sort) ||
+                (sort != null && !sort.equals(currentSort))) {
+//            changeSelection(sort);
+            if (listener != null) {
+                listener.onSortSelected(sort);
+            }
+            dismiss();
+        }
     }
 
     private void changeSelection(ObtainBookings.Sort sort) {
-        if (sort.equals(currentSort)) {
-            return;
-        }
         currentSort = sort;
-        sortDate.setTypeface(ObtainBookings.Sort.BOOKING.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        sortDate.setTypeface(sort == null ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortPickupDate.setTypeface(ObtainBookings.Sort.PICKUP.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortReturnDate.setTypeface(ObtainBookings.Sort.RETURN.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortAmount.setTypeface(ObtainBookings.Sort.AMOUNT.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        sortDateSelected.setVisibility(ObtainBookings.Sort.BOOKING.equals(sort) ? View.VISIBLE : View.GONE);
+        sortDateSelected.setVisibility(sort == null ? View.VISIBLE : View.GONE);
         sortPickupDateSelected.setVisibility(ObtainBookings.Sort.PICKUP.equals(sort) ? View.VISIBLE : View.GONE);
         sortReturnDateSelected.setVisibility(ObtainBookings.Sort.RETURN.equals(sort) ? View.VISIBLE : View.GONE);
         sortAmountSelected.setVisibility(ObtainBookings.Sort.AMOUNT.equals(sort) ? View.VISIBLE : View.GONE);

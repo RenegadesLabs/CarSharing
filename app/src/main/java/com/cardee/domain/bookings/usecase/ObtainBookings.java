@@ -67,7 +67,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
                 callback.onError(error);
             }
         };
-        String filter = values.getFilter() == null ? null : values.getFilter().name();
+        String filter = values.getFilter() == null ? null : values.getFilter().value;
         String sort = values.getSort() == null ? null : values.getSort().value;
         switch (strategy) {
             case OWNER:

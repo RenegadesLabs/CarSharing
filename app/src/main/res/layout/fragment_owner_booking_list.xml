@@ -84,7 +84,8 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/btn_open_sort"
             app:layout_constraintTop_toTopOf="@id/btn_open_sort"
-            app:srcCompat="@drawable/ic_bookings_dark" />
+            android:scaleX="0.8"
+            app:srcCompat="@drawable/ic_sort" />
 
         <TextView
             android:id="@+id/btn_open_sort_title"
