@@ -61,7 +61,7 @@ public class NotificationRepository implements NotificationContract {
         mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
         mNotificationData.setRenterBookingMessages(data.getRenterBookingMessages());
         mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
-        mAccountManager.saveNotifiticationData(mNotificationData);
+        saveSessionData();
         publishAllData();
     }
 
@@ -90,16 +90,34 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
-    public void subscribe(Consumer<Integer> consumer) {
+    public void subscribeToNotificationUpdates(Consumer<Integer> consumer) {
         mInboxSubject
-                .distinct()
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
     }
 
     @Override
-    public void invalidateSession() {
-        INSTANCE = null;
+    public void subscribeToAlertUpdates(Consumer<Boolean> consumer) {
+        mAlertSubject
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer);
+    }
+
+    @Override
+    public void subscribeToChatUpdates(Consumer<Boolean> consumer) {
+        mChatSubject
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer);
+    }
+
+    @Override
+    public void saveSessionData() {
+        mAccountManager.saveNotificationData(mNotificationData);
     }
 }

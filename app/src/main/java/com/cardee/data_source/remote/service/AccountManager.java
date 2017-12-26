@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.cardee.data_source.inbox.remote.api.model.entity.NotificationData;
 
+import io.reactivex.Completable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -80,13 +82,15 @@ public class AccountManager {
 
     }
 
-    public void saveNotifiticationData(NotificationData data) {
-        mPrefs.edit()
+    public void saveNotificationData(NotificationData data) {
+        Completable.fromRunnable(() -> mPrefs.edit()
                 .putInt(OWNER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
                 .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
                 .putInt(RENTER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
                 .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
-                .apply();
+                .apply())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public NotificationData getNotificationData() {

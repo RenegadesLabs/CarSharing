@@ -40,12 +40,11 @@ public class FcmRepositoryController implements RepositoryController {
 
     private void updateChat(RemoteMessage remoteMessage) {
         Chat newChatData = mMessageMapper.map(remoteMessage.getData());
-        String unreadChatCount = remoteMessage.getData().get(FcmMessageMapper.Key.CHAT_COUNT);
         mInboxRepository.updateChat(newChatData)
                 .subscribe(()
                         -> Log.e(TAG, "Chat updated"), throwable
                         -> Log.e(TAG, "Chat update ERROR : " + throwable.getMessage()));
-        mNotificationRepository.updateChatNotificationCount(Integer.parseInt(unreadChatCount));
+        mNotificationRepository.updateChatNotificationCount(mMessageMapper.getUnreadCountMessage());
     }
 
     private void updateBooking() {

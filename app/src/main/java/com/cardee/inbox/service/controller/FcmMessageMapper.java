@@ -11,17 +11,25 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
     static final String INBOX_CHAT = "CHAT";
     static final String INBOX_ALERT = "BOOKING";
 
+    private int unreadCountMessage;
+
     @Override
     public Chat map(Map<String, String> messageData) {
         Chat chat = new Chat();
-        String unreadCount = messageData.get(Key.CHAT_COUNT);
+
         chat.setChatServerId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
         chat.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
         chat.setLastMessageText(messageData.get(Key.Chat.MESSAGE));
         chat.setRecipientName(messageData.get(Key.Chat.SENDER));
         chat.setLastMessageTime(messageData.get(Key.Chat.DATE_CREATED));
         chat.setChatAttachment(messageData.get(Key.Chat.PROFILE_TYPE).toLowerCase());
+
+        unreadCountMessage = Integer.parseInt(messageData.get(Key.CHAT_COUNT));
         return chat;
+    }
+
+    int getUnreadCountMessage() {
+        return unreadCountMessage;
     }
 
     public static class Key {
