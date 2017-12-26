@@ -10,4 +10,18 @@ public interface CarReturnedView extends BaseView {
     void setCarTitle(Spannable text);
 
     void onSendCommentSuccess();
+
+    void setCarNumber(String plateNumber);
+
+    void setBookingDate(String dateCreated);
+
+    void setRentalPeriod(String period);
+
+    void setCarPhoto(String link);
+
+    void setRenterPhoto(String renterPhoto);
+
+    void setRenterName(String renterName);
+
+    void setCommentHint(String hint);
 }

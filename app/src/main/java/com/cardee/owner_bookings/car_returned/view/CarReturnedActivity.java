@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,16 +28,7 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
 
     private CarReturnedPresenter mPresenter;
     private Toast mCurrentToast;
-
-    private String carName;
-    private String carYear;
-    private String carNumber;
-    private String currentDate;
-    private String rentalPeriod;
-    private String carPhoto;
-    private String renterPhoto;
-    private String renterName;
-    private int mBookindId;
+    private int mBookingId;
 
     @BindView(R.id.car_title)
     TextView mCarTitle;
@@ -81,41 +73,38 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
         setContentView(R.layout.activity_car_returned);
         ButterKnife.bind(this);
 
+        initToolbar();
         mPresenter = new CarReturnedPresenter(this);
-        getData();
-        setFields();
+        getIntentData();
+        mPresenter.getData(mBookingId);
     }
 
-    private void getData() {
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+    }
+
+    private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            mBookindId = intent.getIntExtra("booking_id", -1);
-            carName = intent.getStringExtra("car_title");
-            carYear = intent.getStringExtra("car_year");
-            carNumber = intent.getStringExtra("car_number");
-            currentDate = intent.getStringExtra("current_date");
-            rentalPeriod = intent.getStringExtra("rental_period");
-            carPhoto = intent.getStringExtra("car_photo_link");
-            renterPhoto = intent.getStringExtra("renter_photo_link");
-            renterName = intent.getStringExtra("renter_name");
+            mBookingId = intent.getIntExtra("booking_id", -1);
         }
     }
 
-    private void setFields() {
-        mPresenter.setCarTitle(carName, carYear);
-        setCarNumber();
-        setCurrentDate();
-        setRentalPeriod();
-        setCarPhoto();
-        setRenterPhoto();
-        setRenterName();
+    @Override
+    public void setCommentHint(String hint) {
+        mEditText.setHint(hint);
     }
 
-    private void setRenterName() {
-        mRenterName.setText(String.format("%s%s", getResources().getString(R.string.car_returned_rate), renterName));
+    @Override
+    public void setRenterName(String renterName) {
+        mRenterName.setText(renterName);
     }
 
-    private void setRenterPhoto() {
+    @Override
+    public void setRenterPhoto(String renterPhoto) {
         Glide.with(this)
                 .load(renterPhoto)
                 .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
@@ -125,36 +114,38 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
                 .into(mRenterPhoto);
     }
 
-    private void setCarPhoto() {
+    @Override
+    public void setCarPhoto(String link) {
         Glide.with(this)
-                .load(carPhoto)
+                .load(link)
                 .placeholder(getResources().getDrawable(R.drawable.img_no_car))
                 .error(getResources().getDrawable(R.drawable.img_no_car))
                 .centerCrop()
                 .into(mCarPhoto);
     }
 
-    private void setRentalPeriod() {
-        mRentalPeriod.setText(rentalPeriod);
+    @Override
+    public void setBookingDate(String createdDate) {
+        mCurrentDate.setText(createdDate);
     }
 
-    private void setCurrentDate() {
-        mCurrentDate.setText(currentDate);
+    @Override
+    public void setRentalPeriod(String period) {
+        mRentalPeriod.setText(period);
     }
 
-    private void setCarNumber() {
-        mCarNumber.setText(carNumber);
+    @Override
+    public void setCarNumber(String number) {
+        mCarNumber.setText(number);
     }
 
     @OnClick(R.id.b_submit)
     public void onSubmitClicked() {
-//        String comment = mEditText.getText().toString();
-//        if (comment != null && !comment.isEmpty()) {
-//            byte rate = (byte) mRatingBar.getScore();
-//            mPresenter.omSubmitClicked(comment, rate, mBookindId);
-//        }
-
-        showMessage(String.valueOf(mRatingBar.getScore()));
+        String comment = mEditText.getText().toString();
+        if (comment != null && !comment.isEmpty()) {
+            byte rate = (byte) mRatingBar.getScore();
+            mPresenter.omSubmitClicked(comment, rate, mBookingId);
+        }
     }
 
     @Override
@@ -165,8 +156,8 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
     @Override
     public void onSendCommentSuccess() {
         showMessage(R.string.send_comment_success);
+        finish();
     }
-
 
     @Override
     public void showProgress(boolean show) {

@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.domain.bookings.entity.Booking;
 
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,11 +19,14 @@ public class DateStringDelegate {
     private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
     private static final String TIME_VIEW_PATTERN = "ha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-    private static final String DATE_VIEW_PATTERN = "d MMM, ha";
+    private static final String DATE_VIEW_PATTERN = "d\u00a0MMM,\u00a0ha";
+    private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM, h:mma";
+
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat dateViewFormatter;
+    private SimpleDateFormat creationDateViewFormatter;
     private Calendar calendar;
     private String[] saveSuffixes;
     private String[] valueSuffixes;
@@ -42,11 +45,19 @@ public class DateStringDelegate {
         timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN, Locale.US);
+        creationDateViewFormatter = new SimpleDateFormat(CREATION_DATE_VIEW_FORMATTER, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
         dateFormatter.setTimeZone(timeZone);
         dateViewFormatter.setTimeZone(timeZone);
+        creationDateViewFormatter.setTimeZone(timeZone);
+
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.US);
+        symbols.setAmPmStrings(new String[]{"am", "pm"});
+        dateViewFormatter.setDateFormatSymbols(symbols);
+        creationDateViewFormatter.setDateFormatSymbols(symbols);
+
         availabilityPickupPrefix = context.getString(R.string.availability_pickup_prefix);
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix);
         availabilityReturnPrefix = context.getString(R.string.availability_return_prefix);
@@ -223,6 +234,19 @@ public class DateStringDelegate {
         try {
             Date date = dateFormatter.parse(rawDate);
             return dateViewFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String formatCreationDate(String rawDate) {
+        if (rawDate == null) {
+            return null;
+        }
+        try {
+            Date date = dateFormatter.parse(rawDate);
+            return creationDateViewFormatter.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

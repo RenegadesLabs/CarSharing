@@ -4,7 +4,7 @@ package com.cardee.domain.bookings.usecase;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.BookingRepository;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;

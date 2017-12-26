@@ -2,7 +2,7 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 
 import java.util.List;
 
@@ -43,6 +43,21 @@ public class BookingRepository implements BookingDataSource {
     @Override
     public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
 
+    }
+
+    @Override
+    public void obtainBookingById(int id, BookingCallback callback) {
+        remoteDataSource.obtainBookingById(id, new BookingCallback() {
+            @Override
+            public void onSuccess(BookingEntity bookingEntity) {
+                callback.onSuccess(bookingEntity);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
 
     @Override

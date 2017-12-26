@@ -3,6 +3,7 @@ package com.cardee.data_source.remote.api.booking;
 
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
+import com.cardee.data_source.remote.api.booking.response.BookingByIdResponse;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 
 import io.reactivex.Single;
@@ -21,6 +22,9 @@ public interface Bookings {
 
     @GET("bookings/renter")
     Call<BookingResponse> getRenterBookings(@Query("state") String filter, @Query("order") String sort);
+
+    @GET("bookings/{id}")
+    Single<BookingByIdResponse> getBookingById(@Path("id") int id);
 
     @PUT("bookings/{id}/rating")
     @Headers("Content-Type: application/json")

@@ -43,12 +43,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         rootView.setOnClickListener(view -> {
             Intent intent = new Intent(parent.getContext(), CarReturnedActivity.class);
             intent.putExtra("booking_id", 430);
-            intent.putExtra("car_title", "Mazda 3");
-            intent.putExtra("car_year", "2006");
-            intent.putExtra("car_number", "AA7826BB");
-            intent.putExtra("current_date", "19 Mar, 7:45pm");
-            intent.putExtra("rental_period", "24 Mar, 9am  to  27 Mar, 8am");
-            intent.putExtra("renter_name", "Sharon Ng");
             parent.getContext().startActivity(intent);
         });
 
