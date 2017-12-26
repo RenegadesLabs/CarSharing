@@ -9,7 +9,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-public interface InboxRepositoryContract {
+public interface InboxContract {
 
     Flowable<List<Chat>> getLocalChats(String attachment);
 

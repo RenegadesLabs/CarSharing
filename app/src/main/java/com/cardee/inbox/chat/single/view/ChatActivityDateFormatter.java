@@ -1,9 +1,9 @@
-package com.cardee.inbox.chat.item.view;
+package com.cardee.inbox.chat.single.view;
 
 import android.content.Context;
 
 import com.cardee.R;
-import com.cardee.inbox.chat.adapter.UtcDateFormatter;
+import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

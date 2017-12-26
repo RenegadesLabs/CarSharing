@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat;
+package com.cardee.inbox.chat.list;
 
 import android.os.Bundle;
 

@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.cardee.data_source.inbox.remote.api.model.entity.NotificationData;
+
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class AccountManager {
+
+    private static AccountManager INSTANCE;
 
     private static final String AUTH_TOKEN_STORE = "_auth_token_store";
     private static final String AUTH_TOKEN = "_auth_token";
@@ -18,8 +22,10 @@ public class AccountManager {
     public static final String SESSION = "attachment";
     public static final String OWNER_SESSION = "owner";
     public static final String RENTER_SESSION = "renter";
-
-    private static AccountManager INSTANCE;
+    public static final String RENTER_CHAT_NOTIFICATIONS = "renter_chat_notify";
+    public static final String OWNER_CHAT_NOTIFICATIONS = "owner_chat_notify";
+    public static final String RENTER_ALERT_NOTIFICATIONS = "renter_alert_notify";
+    public static final String OWNER_ALERT_NOTIFICATIONS = "owner_alert_notify";
 
     public static AccountManager getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
@@ -64,6 +70,32 @@ public class AccountManager {
     public boolean isLogedIn() {
         String string = mPrefs.getString(AUTH_TOKEN, null);
         return string != null;
+    }
+
+    public void saveChatNotificationData(NotificationData data) {
+
+    }
+
+    public void saveAlertNotifiticationData(NotificationData data) {
+
+    }
+
+    public void saveNotifiticationData(NotificationData data) {
+        mPrefs.edit()
+                .putInt(OWNER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
+                .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .putInt(RENTER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
+                .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .apply();
+    }
+
+    public NotificationData getNotificationData() {
+        NotificationData data = new NotificationData(getSessionInfo());
+        data.setOwnerBookingMessages(mPrefs.getInt(OWNER_ALERT_NOTIFICATIONS, 0));
+        data.setOwnerChatMessages(mPrefs.getInt(OWNER_CHAT_NOTIFICATIONS, 0));
+        data.setRenterBookingMessages(mPrefs.getInt(RENTER_ALERT_NOTIFICATIONS, 0));
+        data.setRenterChatMessages(mPrefs.getInt(RENTER_CHAT_NOTIFICATIONS, 0));
+        return data;
     }
 
     public void onLogout() {

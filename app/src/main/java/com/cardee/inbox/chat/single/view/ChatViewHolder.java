@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat.item.view;
+package com.cardee.inbox.chat.single.view;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cardee.CardeeApp;
 import com.cardee.R;
-import com.cardee.inbox.chat.adapter.UtcDateFormatter;
+import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 import com.cardee.util.glide.CircleTransform;
 
 public class ChatViewHolder implements ActivityViewHolder {

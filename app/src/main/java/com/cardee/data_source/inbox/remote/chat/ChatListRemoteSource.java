@@ -2,7 +2,7 @@ package com.cardee.data_source.inbox.remote.chat;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
-import com.cardee.data_source.inbox.remote.api.InboxApi;
+import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.ChatRemote;
 import com.cardee.domain.util.Mapper;
 
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ChatListRemoteSource implements RemoteDataSource {
 
     private static ChatListRemoteSource INSTANCE;
-    private final InboxApi mInboxApi;
+    private final ChatApi mChatApi;
 
     public static ChatListRemoteSource getInstance() {
         if (INSTANCE == null) {
@@ -26,13 +26,13 @@ public class ChatListRemoteSource implements RemoteDataSource {
     }
 
     private ChatListRemoteSource() {
-        mInboxApi = CardeeApp.retrofit.create(InboxApi.class);
+        mChatApi = CardeeApp.retrofit.create(ChatApi.class);
     }
 
     @Override
     public Single<List<Chat>> getRemoteChats(String attachment) {
         ChatMapper mapper = new ChatMapper(attachment);
-        return mInboxApi.getChats(attachment)
+        return mChatApi.getChats(attachment)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(chatListResponse -> mapper.map(chatListResponse.getChatRemotes()))
                 .subscribeOn(Schedulers.io());

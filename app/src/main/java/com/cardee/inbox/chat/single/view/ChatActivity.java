@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat.item.view;
+package com.cardee.inbox.chat.single.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.inbox.chat.item.presenter.ChatContract;
-import com.cardee.inbox.chat.item.presenter.ChatPresenter;
+import com.cardee.inbox.chat.single.presenter.ChatContract;
+import com.cardee.inbox.chat.single.presenter.ChatPresenter;
 
 public class ChatActivity extends AppCompatActivity implements ChatContract.View {
 

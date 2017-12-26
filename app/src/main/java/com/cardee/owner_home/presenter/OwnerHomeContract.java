@@ -8,6 +8,9 @@ public interface OwnerHomeContract {
 
         void init(OwnerHomeContract.View view, AHBottomNavigation bottomView);
 
+        void onSubscribeToNotifications();
+
+        void onDestroy();
     }
 
     interface View {

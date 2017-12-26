@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat.adapter;
+package com.cardee.inbox.chat.list.adapter;
 
 import android.content.Context;
 import android.util.Log;

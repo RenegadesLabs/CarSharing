@@ -59,12 +59,7 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
     }
 
     public void setOnClickListenerToHeader(View header) {
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mView.openOwnerProfile();
-            }
-        });
+        header.setOnClickListener(view -> mView.openOwnerProfile());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat;
+package com.cardee.inbox.chat.list;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID
 
 public class ChatListPresenterImp implements ChatListContract.Presenter {
 
-    private static final String TAG = ChatListPresenterImp.class.getSimpleName();
     private ChatListContract.View mView;
 
     private final GetChats mGetChats;
@@ -72,7 +71,6 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         args.putInt(CHAT_DB_ID, chat.getChatLocalId());
         args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
         mView.showChat(args);
-        Log.d(TAG, "Chat selected: databaseId = " + chat.getChatLocalId() + " " + "serverId = " + chat.getChatServerId());
     }
 
     @Override

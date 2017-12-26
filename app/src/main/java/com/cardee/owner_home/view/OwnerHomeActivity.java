@@ -36,7 +36,6 @@ import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
 import com.cardee.owner_home.view.service.FragmentFactory;
-import com.crashlytics.android.Crashlytics;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
@@ -76,6 +75,7 @@ public class OwnerHomeActivity extends AppCompatActivity
     private void initPresenter(AHBottomNavigation bottomMenu) {
         mPresenter = new OwnerHomePresenterImp();
         mPresenter.init(this, bottomMenu);
+        mPresenter.onSubscribeToNotifications();
     }
 
     @Override
@@ -221,6 +221,12 @@ public class OwnerHomeActivity extends AppCompatActivity
         mProgress.setVisibility(View.VISIBLE);
         mHandler.postDelayed(() ->
                 mProgress.setVisibility(View.GONE), 5000); //hide progress bar if there is no response for 5 seconds
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override

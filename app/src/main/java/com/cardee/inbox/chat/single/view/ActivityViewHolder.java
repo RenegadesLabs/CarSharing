@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat.item.view;
+package com.cardee.inbox.chat.single.view;
 
 public interface ActivityViewHolder {
 

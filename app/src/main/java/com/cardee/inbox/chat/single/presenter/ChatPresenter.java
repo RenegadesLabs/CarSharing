@@ -1,7 +1,6 @@
-package com.cardee.inbox.chat.item.presenter;
+package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.view.View;
 
 import com.cardee.data_source.Error;
@@ -10,8 +9,8 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.chat.GetChatInfo;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
-import com.cardee.inbox.chat.item.view.ActivityViewHolder;
-import com.cardee.inbox.chat.item.view.ChatViewHolder;
+import com.cardee.inbox.chat.single.view.ActivityViewHolder;
+import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
 public class ChatPresenter implements ChatContract.Presenter {
 

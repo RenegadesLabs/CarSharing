@@ -4,7 +4,7 @@ import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import io.reactivex.Single;
 
-public interface ChatRepositoryContract {
+public interface ChatContract {
 
     Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId);
 }

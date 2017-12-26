@@ -7,7 +7,7 @@
     android:id="@+id/chat_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inbox.chat.item.view.ChatActivity">
+    tools:context=".inbox.chat.single.view.ChatActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_layout"

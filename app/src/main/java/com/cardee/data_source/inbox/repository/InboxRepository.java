@@ -16,11 +16,12 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class InboxRepository implements InboxRepositoryContract {
+public class InboxRepository implements InboxContract {
 
-    private static InboxRepository INSTANCE;
     private final LocalData.ChatListSource mChatLocalSource;
     private final RemoteDataSource mChatRemoteSource;
+
+    private static InboxRepository INSTANCE;
     private List<Chat> mCacheLocalChats;
 
     public static InboxRepository getInstance() {
@@ -69,17 +70,14 @@ public class InboxRepository implements InboxRepositoryContract {
                         .subscribe((Chat persistChat) -> {
                             persistChat.setLastMessageText(chat.getLastMessageText());
                             persistChat.setLastMessageTime(chat.getLastMessageTime());
+                            persistChat.setRecipientName(chat.getRecipientName());
                             persistChat.setUnreadMessageCount(chat.getUnreadMessageCount());
-                            addChat(persistChat);
+                            mChatLocalSource.addChat(persistChat);
                         }, throwable -> {
                             if (mCacheLocalChats != null) {
                                 getRemoteChats(chat.getChatAttachment());
                             }
                         }));
-    }
-
-    private void addChat(Chat chat) {
-        mChatLocalSource.addChat(chat);
     }
 
     @Override

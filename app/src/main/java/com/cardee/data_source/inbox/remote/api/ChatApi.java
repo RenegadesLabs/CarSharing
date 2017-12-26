@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface InboxApi {
+public interface ChatApi {
 
     @GET("/api/dev/chats/{attachment}")
     Single<ChatListResponse> getChats(@Path(value = "attachment") String attachment);
@@ -26,7 +26,6 @@ public interface InboxApi {
     Single<ChatMessagesResponse> getMessages(@Path(value = "attachment") String attachment,
                                                  @Path("chat_id") int chatId);
     @POST
-    @Headers("Content-Type: application/json")
     Single<MessageResponse> sendMessage(@Body NewChatMessage message);
 
     @PUT("/chats/{message_id}")
