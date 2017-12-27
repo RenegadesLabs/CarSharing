@@ -11,7 +11,7 @@ public class SettingManager {
     private static SettingManager INSTANCE;
     private static final String SETTING_PREF = "_setting_pref";
     private static final String OWNER_BOOKING_SORT = "_owner_booking_sort";
-    private static final String OWNER_BOOKING_FILTER = "_owner_booking_sort";
+    private static final String OWNER_BOOKING_FILTER = "_owner_booking_filter";
 
     private SharedPreferences settingPrefs;
 
