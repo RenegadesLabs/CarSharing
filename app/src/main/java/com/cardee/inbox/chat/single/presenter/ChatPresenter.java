@@ -36,11 +36,6 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     @Override
-    public void onDestroy() {
-        mView = null;
-    }
-
-    @Override
     public void onChatDataRequest() {
         mExecutor.execute(mGetInfoUseCase, new GetChatInfo.RequestValues(mChatDatabaseId, mChatServerId), new UseCase.Callback<GetChatInfo.ResponseValues>() {
             @Override
@@ -56,5 +51,10 @@ public class ChatPresenter implements ChatContract.Presenter {
 
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        mView = null;
     }
 }

@@ -50,6 +50,7 @@ public class ChatRepository implements ChatContract {
     public Flowable<List<ChatMessage>> getMessages(String attachment) {
         Flowable<List<ChatMessage>> localFlowable = mLocalSource.getMessages(databaseId);
         Single<List<ChatMessage>> remoteSingle = mRemoteSource.getMessages(attachment, databaseId, serverId);
+        //TODO: handle get message response
         return null;
     }
 

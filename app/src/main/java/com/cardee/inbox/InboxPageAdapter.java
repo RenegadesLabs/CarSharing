@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.cardee.inbox.alert.AlertListFragment;
-import com.cardee.inbox.chat.list.ChatListFragment;
+import com.cardee.inbox.chat.list.view.ChatListFragment;
 
 public class InboxPageAdapter extends FragmentPagerAdapter {
 

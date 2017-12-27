@@ -1,4 +1,4 @@
-package com.cardee.inbox.chat.list;
+package com.cardee.inbox.chat.list.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.inbox.chat.list.presenter.ChatListContract;
+import com.cardee.inbox.chat.list.presenter.ChatListPresenterImp;
 import com.cardee.inbox.chat.list.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 

@@ -1,8 +1,7 @@
-package com.cardee.inbox.chat.list;
+package com.cardee.inbox.chat.list.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.cardee.data_source.Error;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
@@ -22,7 +21,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     private final UseCaseExecutor mExecutor;
     private final String mAttachment;
 
-    ChatListPresenterImp(Context context) {
+   public ChatListPresenterImp(Context context) {
         mGetChats = new GetChats();
         mExecutor = UseCaseExecutor.getInstance();
         mAttachment = AccountManager.getInstance(context).getSessionInfo();
