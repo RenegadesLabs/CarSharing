@@ -18,11 +18,11 @@ public class ChatMessage {
     @ColumnInfo(name = "_id")
     private Integer id;
 
-    @ColumnInfo(name = "message_id")
-    private Integer messageId;
-
     @ColumnInfo(name = "chat_owner_id")
     private Integer chatId;
+
+    @ColumnInfo(name = "message_id")
+    private Integer messageId;
 
     @ColumnInfo(name = "message")
     private String message;

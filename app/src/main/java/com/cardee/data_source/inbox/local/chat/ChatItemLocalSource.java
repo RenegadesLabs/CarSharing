@@ -2,31 +2,57 @@ package com.cardee.data_source.inbox.local.chat;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import com.cardee.domain.util.Mapper;
 
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class ChatItemDataSource implements LocalData.ChatSingleSource {
+public class ChatItemLocalSource implements LocalData.ChatSingleSource {
 
     private final LocalInboxDatabase mDataBase;
+    private int serverId;
+    private int databaseId;
 
-    public ChatItemDataSource() {
+    public ChatItemLocalSource() {
         mDataBase = LocalInboxDatabase.getInstance(CardeeApp.context);
     }
 
     @Override
     public Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId) {
+        saveChatIds(serverId, databaseId);
         ToChatInfoMapper chatInfoMapper = new ToChatInfoMapper();
         return mDataBase.getChatDao()
                 .getChatInfo(databaseId, serverId)
                 .subscribeOn(Schedulers.io())
                 .flatMap(chat -> Single.just(chatInfoMapper.map(chat)));
 
+    }
+
+    @Override
+    public Flowable<List<ChatMessage>> getMessages() {
+        return mDataBase.getChatMassageDao()
+                .getMessages(String.valueOf(databaseId))
+                .distinct();
+    }
+
+    @Override
+    public void addNewMessage(ChatMessage chatMessage) {
+        Completable
+                .fromRunnable(() -> mDataBase.getChatMassageDao().addNewMessage(chatMessage)).subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
+    private void saveChatIds(Integer serverId, Integer databaseId) {
+        this.serverId = serverId;
+        this.databaseId = databaseId;
     }
 
     private static class ToChatInfoMapper implements Mapper<Chat, ChatInfo> {

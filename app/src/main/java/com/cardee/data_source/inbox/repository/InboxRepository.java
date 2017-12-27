@@ -4,7 +4,7 @@ import com.cardee.data_source.inbox.local.chat.ChatListLocalSource;
 import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
-import com.cardee.data_source.inbox.remote.chat.RemoteDataSource;
+import com.cardee.data_source.inbox.remote.chat.RemoteData;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 public class InboxRepository implements InboxContract {
 
     private final LocalData.ChatListSource mChatLocalSource;
-    private final RemoteDataSource mChatRemoteSource;
+    private final RemoteData.ChatListSource mChatRemoteSource;
 
     private static InboxRepository INSTANCE;
     private List<Chat> mCacheLocalChats;
@@ -32,8 +32,8 @@ public class InboxRepository implements InboxContract {
     }
 
     private InboxRepository() {
-        mChatLocalSource = ChatListLocalSource.getInstance();
-        mChatRemoteSource = ChatListRemoteSource.getInstance();
+        mChatLocalSource = new ChatListLocalSource();
+        mChatRemoteSource = new ChatListRemoteSource();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class InboxRepository implements InboxContract {
                 .getLocalChats(attachment)
                 .doOnNext(localChats -> {
                     mCacheLocalChats = localChats;
-                    Collections.sort(localChats);
+//                    Collections.sort(localChats);
                 });
     }
 
@@ -55,7 +55,7 @@ public class InboxRepository implements InboxContract {
 
     @Override
     public void fetchOrSaveData(List<Chat> remoteChats) {
-        if (mCacheLocalChats.isEmpty()) {
+        if (mCacheLocalChats == null || mCacheLocalChats.isEmpty()) {
             mChatLocalSource.saveChats(remoteChats);
         } else {
             mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);

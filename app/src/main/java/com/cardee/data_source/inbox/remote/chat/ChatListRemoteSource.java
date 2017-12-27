@@ -13,19 +13,11 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ChatListRemoteSource implements RemoteDataSource {
+public class ChatListRemoteSource implements RemoteData.ChatListSource {
 
-    private static ChatListRemoteSource INSTANCE;
     private final ChatApi mChatApi;
 
-    public static ChatListRemoteSource getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ChatListRemoteSource();
-        }
-        return INSTANCE;
-    }
-
-    private ChatListRemoteSource() {
+    public ChatListRemoteSource() {
         mChatApi = CardeeApp.retrofit.create(ChatApi.class);
     }
 
@@ -36,11 +28,6 @@ public class ChatListRemoteSource implements RemoteDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(chatListResponse -> mapper.map(chatListResponse.getChatRemotes()))
                 .subscribeOn(Schedulers.io());
-    }
-
-    @Override
-    public Single<Chat> getChat(Chat chat) {
-        return null;
     }
 
     private static class ChatMapper implements Mapper<ChatRemote[], List<Chat>> {

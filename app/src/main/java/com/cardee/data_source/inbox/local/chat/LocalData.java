@@ -1,6 +1,7 @@
 package com.cardee.data_source.inbox.local.chat;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
@@ -28,6 +29,10 @@ public interface LocalData {
     interface ChatSingleSource extends LocalData {
 
         Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId);
+
+        Flowable<List<ChatMessage>> getMessages();
+
+        void addNewMessage(ChatMessage chatMessage);
     }
 
     interface AlertListSource extends LocalData {

@@ -18,18 +18,9 @@ import io.reactivex.schedulers.Schedulers;
 public class ChatListLocalSource implements LocalData.ChatListSource {
 
     private static final String TAG = ChatListLocalSource.class.getSimpleName();
-    private static ChatListLocalSource INSTANCE;
-
     private final LocalInboxDatabase mDataBase;
 
-    public static ChatListLocalSource getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ChatListLocalSource();
-        }
-        return INSTANCE;
-    }
-
-    private ChatListLocalSource() {
+    public ChatListLocalSource() {
         mDataBase = LocalInboxDatabase.getInstance(CardeeApp.context);
     }
 

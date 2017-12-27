@@ -3,7 +3,7 @@ package com.cardee.data_source.inbox.remote.api.model.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChatMessage {
+public class ChatRemoteMessage {
 
     @Expose
     @SerializedName("message_id")
@@ -21,7 +21,7 @@ public class ChatMessage {
     @SerializedName("date_created")
     private String mDateCreated;
 
-    public ChatMessage() {
+    public ChatRemoteMessage() {
     }
 
     public Integer getMessageId() {
