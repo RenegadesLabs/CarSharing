@@ -447,6 +447,15 @@
     <string name="send_comment_success">Comment sent</string>
     <string name="car_returned_period_template">%s\u0020\u0020to\u0020\u0020%s</string>
 
+    <!--Rate rental experience-->
+    <string name="rental_exp_title">Thank you!</string>
+    <string name="rental_exp_car_photo">car_photo</string>
+    <string name="rental_exp_owner_photo">owner_photo</string>
+    <string name="car_condition_and_cleanliness">Car Condition &amp; Cleanliness</string>
+    <string name="car_comfort_and_performance">Car Comfort &amp; Performance</string>
+    <string name="rental_exp_car_owner">Car Owner</string>
+    <string name="overall_rental_experience">Overall Rental Experience</string>
+
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

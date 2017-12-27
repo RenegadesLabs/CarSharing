@@ -42,7 +42,6 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(3);
         bottomMenu.disableItemAtPosition(0); //Just for demo
-        bottomMenu.disableItemAtPosition(1); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
 
     }
@@ -68,6 +67,9 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
     private void showFragmentOnPosition(int position) {
         Class fragmentClazz = null;
         switch (position) {
+            case 1:
+                fragmentClazz = RenterBookingsFragment.class;
+                break;
             case 3:
                 fragmentClazz = RenterProfileFragment.class;
                 break;

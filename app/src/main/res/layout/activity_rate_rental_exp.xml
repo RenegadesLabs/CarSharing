@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    tools:context="com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/rental_exp_title" />
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_main"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <ImageView
+                android:id="@+id/car_photo"
+                android:layout_width="81dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@string/rental_exp_car_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_no_car" />
+
+            <ImageView
+                android:id="@+id/owner_photo"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="@string/rental_exp_owner_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_photo_placeholder" />
+
+            <TextView
+                android:id="@+id/car_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Range Rover SDK6635E"
+                android:textAlignment="textStart"
+                android:theme="@style/TextSettingsRegular"
+                app:layout_constraintEnd_toStartOf="@id/owner_photo"
+                app:layout_constraintStart_toEndOf="@id/car_photo"
+                app:layout_constraintTop_toTopOf="@id/car_photo" />
+
+            <TextView
+                android:id="@+id/rental_period"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="24 Mar, 9am  to  26 Mar, 10pm"
+                android:textAlignment="textStart"
+                android:theme="@style/TextSettingsSmall"
+                app:layout_constraintEnd_toStartOf="@id/owner_photo"
+                app:layout_constraintStart_toEndOf="@id/car_photo"
+                app:layout_constraintTop_toBottomOf="@id/car_title" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="14dp"
+        android:text="Please rate your rental experience!"
+        android:textAlignment="center"
+        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+
+    <FrameLayout
+        android:background="@android:color/holo_red_dark"
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is bottom!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
