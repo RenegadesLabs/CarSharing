@@ -22,9 +22,9 @@ public interface ChatApi {
     @GET("/api/dev/chats/{attachment}")
     Single<ChatListResponse> getChats(@Path(value = "attachment") String attachment);
 
-    @GET("/api/dev/chats/{attachment}/{chat_id}")
-    Single<ChatMessagesResponse> getMessages(@Path(value = "attachment") String attachment,
-                                                 @Path("chat_id") int chatId);
+    @GET("/api/dev/chats/{chat_id}")
+    Single<ChatMessagesResponse> getMessages(@Path("chat_id") int chatId);
+
     @POST
     Single<MessageResponse> sendMessage(@Body NewChatMessage message);
 

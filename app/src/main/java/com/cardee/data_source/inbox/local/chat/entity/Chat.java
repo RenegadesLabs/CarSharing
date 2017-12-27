@@ -11,6 +11,7 @@ public class Chat implements Comparable<Chat> {
 
     public static final String CHAT_DB_ID = "chat_database_id";
     public static final String CHAT_SERVER_ID = "chat_id";
+    public static final String CHAT_ATTACHMENT = "chat_attachment";
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")

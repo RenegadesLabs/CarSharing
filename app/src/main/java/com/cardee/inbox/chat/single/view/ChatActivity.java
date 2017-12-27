@@ -2,25 +2,52 @@ package com.cardee.inbox.chat.single.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
+import com.cardee.inbox.chat.single.adapter.SingleChatAdapter;
 import com.cardee.inbox.chat.single.presenter.ChatContract;
 import com.cardee.inbox.chat.single.presenter.ChatPresenter;
 
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChatActivity extends AppCompatActivity implements ChatContract.View {
 
+    @BindView(R.id.chat_list)
+    RecyclerView mRecyclerView;
+
     private ChatPresenter mPresenter;
+    private SingleChatAdapter mAdapter;
     private Toast mCurrentToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        ButterKnife.bind(this);
         initToolBar();
+        initAdapter();
         initPresenter();
+    }
+
+    private void initToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+    }
+
+    private void initAdapter() {
+        mAdapter = new SingleChatAdapter();
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initPresenter() {
@@ -29,11 +56,14 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         mPresenter.onChatDataRequest();
     }
 
-    private void initToolBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+    @Override
+    public void notifyAboutInboxDataObtained() {
+        mPresenter.onGetMessagesRequest();
+    }
+
+    @Override
+    public void setMessageList(List<ChatMessage> messageList) {
+        mAdapter.setMessageList(messageList);
     }
 
     @Override
@@ -63,5 +93,11 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mPresenter != null) mPresenter.onDestroy();
+        super.onDestroy();
     }
 }

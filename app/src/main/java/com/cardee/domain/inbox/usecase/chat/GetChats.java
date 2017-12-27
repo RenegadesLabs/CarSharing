@@ -1,7 +1,5 @@
 package com.cardee.domain.inbox.usecase.chat;
 
-import android.content.SharedPreferences;
-
 import com.cardee.data_source.Error;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.repository.InboxRepository;
@@ -15,8 +13,6 @@ import io.reactivex.disposables.Disposable;
 public class GetChats implements UseCase<GetChats.RequestValues, GetChats.ResponseValues> {
 
     private final InboxRepository mRepository;
-    private Disposable mDisposable;
-    private SharedPreferences mSharedPreferences;
     private CompositeDisposable mCompositeDisposable;
 
     public GetChats() {

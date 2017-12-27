@@ -2,7 +2,10 @@ package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
 
+import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.mvp.BaseView;
+
+import java.util.List;
 
 public interface ChatContract {
 
@@ -12,10 +15,16 @@ public interface ChatContract {
 
         void onChatDataRequest();
 
+        void onGetMessagesRequest();
+
         void onDestroy();
     }
 
     interface View extends BaseView {
+
+        void notifyAboutInboxDataObtained();
+
+        void setMessageList(List<ChatMessage> messageList);
 
     }
 }

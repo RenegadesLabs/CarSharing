@@ -15,9 +15,9 @@ public class ChatViewHolder implements ActivityViewHolder {
 
     private final RequestManager mRequestManager;
     private final UtcDateFormatter mDateFormatter;
+
     private TextView mRecipientName;
     private ImageView mRecipientPhoto;
-
     private ImageView mCarPhoto;
     private TextView mCarTitle;
     private TextView mCarLicenseNumber;

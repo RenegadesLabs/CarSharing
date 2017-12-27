@@ -11,11 +11,11 @@ import io.reactivex.Single;
 
 public interface ChatContract {
 
-    void sendChatIdentifier(Integer serverId, Integer databaseId);
+    void sendChatIdentifier(Integer serverId, Integer databaseId, String attachment);
 
-    Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId);
+    Single<ChatInfo> getChatInfo();
 
-    Flowable<List<ChatMessage>> getMessages(String attachment);
+    Flowable<List<ChatMessage>> getMessages();
 
     void addNewMessage(ChatMessage chatMessage);
 

@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ChatDateFormatter implements UtcDateFormatter {
 
     private static final String TAG = UtcDateFormatter.class.getSimpleName();
+
     private final Date mDate;
     private final DateFormat mUtcDateFormat;
     private final DateFormat mTimeFormat;
@@ -53,7 +54,7 @@ public class ChatDateFormatter implements UtcDateFormatter {
                     newDateString = mChatFormat.format(chatMessageDate);
             }
         } catch (ParseException e) {
-            Log.e(TAG, e.getMessage() + " " + utcDate);
+//            Log.e(TAG, e.getMessage() + " " + utcDate);
             newDateString = utcDate;
         }
 

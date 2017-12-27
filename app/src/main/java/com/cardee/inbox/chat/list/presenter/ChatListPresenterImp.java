@@ -10,6 +10,7 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.chat.GetChats;
 
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_DB_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 
@@ -21,7 +22,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     private final UseCaseExecutor mExecutor;
     private final String mAttachment;
 
-   public ChatListPresenterImp(Context context) {
+    public ChatListPresenterImp(Context context) {
         mGetChats = new GetChats();
         mExecutor = UseCaseExecutor.getInstance();
         mAttachment = AccountManager.getInstance(context).getSessionInfo();
@@ -69,6 +70,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         Bundle args = new Bundle();
         args.putInt(CHAT_DB_ID, chat.getChatLocalId());
         args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
+        args.putString(CHAT_ATTACHMENT, mAttachment);
         mView.showChat(args);
     }
 

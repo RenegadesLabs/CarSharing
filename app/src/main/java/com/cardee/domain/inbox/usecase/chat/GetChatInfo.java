@@ -14,8 +14,8 @@ public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatIn
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mRepository.sendChatIdentifier(values.getServerId(), values.getDatabaseId());
-        mRepository.getChatInfo(values.getDatabaseId(), values.getServerId())
+        mRepository.sendChatIdentifier(values.getServerId(), values.getDatabaseId(), values.getAttachment());
+        mRepository.getChatInfo()
                 .subscribe(chatInfo -> callback.onSuccess(new ResponseValues(chatInfo)));
     }
 
@@ -23,10 +23,12 @@ public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatIn
 
         private final int databaseId;
         private final int serverId;
+        private final String attachment;
 
-        public RequestValues(int databaseId, int serverId) {
+        public RequestValues(int databaseId, int serverId, String attachment) {
             this.databaseId = databaseId;
             this.serverId = serverId;
+            this.attachment = attachment;
         }
 
         int getDatabaseId() {
@@ -35,6 +37,10 @@ public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatIn
 
         int getServerId() {
             return serverId;
+        }
+
+        public String getAttachment() {
+            return attachment;
         }
     }
 

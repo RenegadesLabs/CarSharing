@@ -22,6 +22,7 @@ public class ChatRepository implements ChatContract {
 
     private int serverId;
     private int databaseId;
+    private String attachment;
 
     public static ChatRepository getInstance() {
         if (INSTANCE == null) {
@@ -36,22 +37,23 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public void sendChatIdentifier(Integer serverId, Integer databaseId) {
+    public void sendChatIdentifier(Integer serverId, Integer databaseId, String attachment) {
         this.serverId = serverId;
         this.databaseId = databaseId;
+        this.attachment = attachment;
     }
 
     @Override
-    public Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId) {
+    public Single<ChatInfo> getChatInfo() {
         return mLocalSource.getChatInfo(databaseId, serverId);
     }
 
     @Override
-    public Flowable<List<ChatMessage>> getMessages(String attachment) {
+    public Flowable<List<ChatMessage>> getMessages() {
         Flowable<List<ChatMessage>> localFlowable = mLocalSource.getMessages(databaseId);
-        Single<List<ChatMessage>> remoteSingle = mRemoteSource.getMessages(attachment, databaseId, serverId);
-        //TODO: handle get message response
-        return null;
+        Single<List<ChatMessage>> remoteSingle = mRemoteSource.getMessages(databaseId, serverId);
+        //test returning type
+        return remoteSingle.toFlowable();
     }
 
     @Override

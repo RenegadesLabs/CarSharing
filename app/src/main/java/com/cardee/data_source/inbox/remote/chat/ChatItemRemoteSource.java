@@ -25,9 +25,9 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<List<ChatMessage>> getMessages(String attachment, int chatDatabaseId, int chatServerId) {
+    public Single<List<ChatMessage>> getMessages(int chatDatabaseId, int chatServerId) {
         mMapper.setChatDatabaseId(chatDatabaseId);
-        return mChatApi.getMessages(attachment, chatServerId)
+        return mChatApi.getMessages(chatServerId)
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
 
