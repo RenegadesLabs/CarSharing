@@ -18,11 +18,11 @@ public interface RemoteData {
 
     interface ChatSingleSource extends RemoteData {
 
-        Single<List<ChatMessage>> getMessages(String attachment, int chatId);
+        Single<List<ChatMessage>> getMessages(String attachment, int chatDatabaseId, int chatServerId);
 
         Completable sendMessage(String newMessage);
 
-        Completable markAsRead();
+        Completable markAsRead(int messageId);
     }
 
     interface AlertListSource extends RemoteData {

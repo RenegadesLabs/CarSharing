@@ -25,8 +25,9 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<List<ChatMessage>> getMessages(String attachment, int chatId) {
-        return mChatApi.getMessages(attachment, chatId)
+    public Single<List<ChatMessage>> getMessages(String attachment, int chatDatabaseId, int chatServerId) {
+        mMapper.setChatDatabaseId(chatDatabaseId);
+        return mChatApi.getMessages(attachment, chatServerId)
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
 
@@ -40,19 +41,36 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Completable markAsRead() {
-        return null;
+    public Completable markAsRead(int messageId) {
+        return Completable.create(emitter -> mChatApi.markAsRead(messageId)
+                .subscribeOn(Schedulers.io())
+                .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
+                .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
     }
 
     private class ToChatMessageMapper implements Mapper<ChatRemoteMessage[], List<ChatMessage>> {
+
+        int chatDatabaseId;
 
         @Override
         public List<ChatMessage> map(ChatRemoteMessage[] response) {
             List<ChatMessage> chatMessageList = new ArrayList<>(15);
             for (ChatRemoteMessage chatRemote : response) {
-                //TODO: implement mapper from RemoteChat to ChatMessage
+                ChatMessage chatMessage = new ChatMessage.Builder()
+                        .withChatId(chatDatabaseId)
+                        .withMessageId(chatRemote.getMessageId())
+                        .withMessage(chatRemote.getMessage())
+                        .withIsInbox(chatRemote.getInbox())
+                        .withIsRead(chatRemote.getRead())
+                        .withDateCreated(chatRemote.getDateCreated())
+                        .build();
+                chatMessageList.add(chatMessage);
             }
             return chatMessageList;
+        }
+
+        void setChatDatabaseId(int chatDatabaseId) {
+            this.chatDatabaseId = chatDatabaseId;
         }
     }
 }

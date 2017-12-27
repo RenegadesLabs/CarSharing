@@ -17,16 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 public class ChatItemLocalSource implements LocalData.ChatSingleSource {
 
     private final LocalInboxDatabase mDataBase;
-    private int serverId;
-    private int databaseId;
 
     public ChatItemLocalSource() {
         mDataBase = LocalInboxDatabase.getInstance(CardeeApp.context);
     }
 
     @Override
-    public Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId) {
-        saveChatIds(serverId, databaseId);
+    public Single<ChatInfo> getChatInfo(int databaseId, int serverId) {
         ToChatInfoMapper chatInfoMapper = new ToChatInfoMapper();
         return mDataBase.getChatDao()
                 .getChatInfo(databaseId, serverId)
@@ -36,7 +33,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
-    public Flowable<List<ChatMessage>> getMessages() {
+    public Flowable<List<ChatMessage>> getMessages(int databaseId) {
         return mDataBase.getChatMassageDao()
                 .getMessages(String.valueOf(databaseId))
                 .distinct();
@@ -48,11 +45,6 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
                 .fromRunnable(() -> mDataBase.getChatMassageDao().addNewMessage(chatMessage)).subscribeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe();
-    }
-
-    private void saveChatIds(Integer serverId, Integer databaseId) {
-        this.serverId = serverId;
-        this.databaseId = databaseId;
     }
 
     private static class ToChatInfoMapper implements Mapper<Chat, ChatInfo> {

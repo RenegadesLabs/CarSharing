@@ -28,9 +28,9 @@ public interface LocalData {
 
     interface ChatSingleSource extends LocalData {
 
-        Single<ChatInfo> getChatInfo(Integer databaseId, Integer serverId);
+        Single<ChatInfo> getChatInfo(int databaseId, int serverId);
 
-        Flowable<List<ChatMessage>> getMessages();
+        Flowable<List<ChatMessage>> getMessages(int databaseId);
 
         void addNewMessage(ChatMessage chatMessage);
     }

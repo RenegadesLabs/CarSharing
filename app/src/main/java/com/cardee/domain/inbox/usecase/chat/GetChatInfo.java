@@ -1,22 +1,20 @@
 package com.cardee.domain.inbox.usecase.chat;
 
 import com.cardee.data_source.inbox.repository.ChatRepository;
-import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
-
-import io.reactivex.functions.Consumer;
 
 public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatInfo.ResponseValues> {
 
     private final ChatRepository mRepository;
 
     public GetChatInfo() {
-        mRepository = new ChatRepository();
+        mRepository = ChatRepository.getInstance();
     }
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
+        mRepository.sendChatIdentifier(values.getServerId(), values.getDatabaseId());
         mRepository.getChatInfo(values.getDatabaseId(), values.getServerId())
                 .subscribe(chatInfo -> callback.onSuccess(new ResponseValues(chatInfo)));
     }
@@ -31,11 +29,11 @@ public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatIn
             this.serverId = serverId;
         }
 
-        public int getDatabaseId() {
+        int getDatabaseId() {
             return databaseId;
         }
 
-        public int getServerId() {
+        int getServerId() {
             return serverId;
         }
     }

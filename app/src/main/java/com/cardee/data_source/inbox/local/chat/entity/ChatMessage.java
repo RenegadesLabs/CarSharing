@@ -28,7 +28,7 @@ public class ChatMessage {
     private String message;
 
     @ColumnInfo(name = "is_read") // is read - true, otherwise false
-    private Integer isRead;
+    private Boolean isRead;
 
     @ColumnInfo(name = "is_inbox")
     private Boolean isInbox; // is in box - true, otherwise false
@@ -68,11 +68,11 @@ public class ChatMessage {
         this.message = message;
     }
 
-    public Integer getIsRead() {
+    public Boolean getIsRead() {
         return isRead;
     }
 
-    public void setIsRead(Integer isRead) {
+    public void setIsRead(Boolean isRead) {
         this.isRead = isRead;
     }
 
@@ -90,5 +90,48 @@ public class ChatMessage {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public static class Builder {
+
+        private ChatMessage mChatMessage;
+
+        public Builder() {
+            mChatMessage = new ChatMessage();
+        }
+
+        public ChatMessage.Builder withChatId(Integer chatId) {
+            mChatMessage.chatId = chatId;
+            return this;
+        }
+
+        public ChatMessage.Builder withMessageId(Integer messageId) {
+            mChatMessage.messageId = messageId;
+            return this;
+        }
+
+        public ChatMessage.Builder withMessage(String message) {
+            mChatMessage.message = message;
+            return this;
+        }
+
+        public ChatMessage.Builder withIsRead(Boolean isRead) {
+            mChatMessage.isRead = isRead;
+            return this;
+        }
+
+        public ChatMessage.Builder withIsInbox(Boolean isInbox) {
+            mChatMessage.isInbox = isInbox;
+            return this;
+        }
+
+        public ChatMessage.Builder withDateCreated(String dateCreated) {
+            mChatMessage.dateCreated = dateCreated;
+            return this;
+        }
+
+        public ChatMessage build() {
+            return mChatMessage;
+        }
     }
 }
