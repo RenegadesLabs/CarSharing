@@ -6,13 +6,13 @@
     android:background="@android:color/transparent">
 
     <!--<TextView-->
-        <!--android:id="@+id/more_menu_title"-->
+        <!--andrchatLocalIdd:idchatLocalId@+id/more_menu_title"-->
         <!--style="@style/ModalMenuTitle"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/modal_menu_title_height"-->
         <!--android:background="@android:color/transparent"-->
         <!--android:text="@string/car_availability_title"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/more_view_listing"-->
+        <!--app:layout_constraintBottom_toTopOfchatLocalId@+id/more_view_listing"-->
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
@@ -31,9 +31,9 @@
         <!--android:layout_width="24dp"-->
         <!--android:layout_height="24dp"-->
         <!--android:layout_marginEnd="@dimen/widget_margin_x_small"-->
-        <!--app:layout_constraintBottom_toBottomOf="@id/more_view_listing"-->
-        <!--app:layout_constraintEnd_toEndOf="@id/more_view_listing"-->
-        <!--app:layout_constraintTop_toTopOf="@id/more_view_listing"-->
+        <!--app:layout_constraintBottom_toBottomOchatLocalId"@id/more_view_listing"-->
+        <!--app:layout_constraintEnd_toEndOchatLocalId"@id/more_view_listing"-->
+        <!--app:layout_constraintTop_toTopOchatLocalId"@id/more_view_listing"-->
         <!--app:srcCompat="@drawable/ic_arrow_right" />-->
 
 
@@ -54,9 +54,9 @@
         <!--android:layout_width="24dp"-->
         <!--android:layout_height="24dp"-->
         <!--android:layout_marginEnd="@dimen/widget_margin_x_small"-->
-        <!--app:layout_constraintBottom_toBottomOf="@id/availability_days_of_week"-->
-        <!--app:layout_constraintEnd_toEndOf="@id/availability_days_of_week"-->
-        <!--app:layout_constraintTop_toTopOf="@id/availability_days_of_week"-->
+        <!--app:layout_constraintBottom_toBottomOchatLocalId"@id/availability_days_of_week"-->
+        <!--app:layout_constraintEnd_toEndOchatLocalId"@id/availability_days_of_week"-->
+        <!--app:layout_constraintTop_toTopOchatLocalId"@id/availability_days_of_week"-->
         <!--app:srcCompat="@drawable/ic_arrow_right" />-->
 
 </android.support.constraint.ConstraintLayout>

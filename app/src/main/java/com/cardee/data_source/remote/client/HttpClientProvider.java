@@ -25,10 +25,18 @@ public class HttpClientProvider {
     public OkHttpClient provide(Context context) {
         AccountManager accountManager = AccountManager.getInstance(context);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         return new OkHttpClient.Builder()
                 .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
                 .addInterceptor(loggingInterceptor)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .build();
+    }
+
+    public OkHttpClient provideForMultipart(Context context) {
+        AccountManager accountManager = AccountManager.getInstance(context);
+        return new OkHttpClient.Builder()
+                .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .build();
     }

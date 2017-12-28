@@ -18,6 +18,7 @@ public class CarResponseToCarMapper {
         ImageEntity[] imageEntities = carDetails.getImages();
         Image[] images = new Image[imageEntities.length];
         String primaryImageLink = null;
+        String primaryImageThumbnail = null;
         for (int i = 0; i < images.length; i++) {
             ImageEntity imageEntity = imageEntities[i];
             images[i] = new Image(
@@ -26,14 +27,15 @@ public class CarResponseToCarMapper {
                     imageEntity.getThumbnail(),
                     imageEntity.isPrimary());
             if (imageEntity.isPrimary()) {
-                primaryImageLink = imageEntity.getLink();
+                primaryImageLink = imageEntity.getLink() == null ? "" : imageEntity.getLink();
+                primaryImageThumbnail = imageEntity.getThumbnail() == null ? "" : imageEntity.getThumbnail();
             }
         }
         return new Car(carDetails.getCarId(), carDetails.getMake(), carDetails.getTitle(),
                 carDetails.getModel(), carDetails.getVehicleTypeId(), carDetails.getVehicleType(),
                 carDetails.getManufactureYear(), carDetails.getLicencePlateNumber(), carDetails.getBodyType(),
                 carDetails.getEngineCapacity(), carDetails.getCarTransmission(), carDetails.getSeatingCapacity(),
-                primaryImageLink, carResponse.getCarAvailabilityHourlyCount(), carResponse.getCarAvailabilityDailyCount(),
+                primaryImageLink, primaryImageThumbnail, carResponse.getCarAvailabilityHourlyCount(), carResponse.getCarAvailabilityDailyCount(),
                 carResponse.getCarAvailabilityTimeBegin(), carResponse.getCarAvailabilityTimeEnd(),
                 carResponse.getCarAvailableOrderHours(), carResponse.getCarAvailableOrderDays(),
                 carResponse.getCarAvailabilityHourlyDates(), carResponse.getCarAvailabilityDailyDates(),

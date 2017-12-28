@@ -10,7 +10,11 @@ import com.cardee.data_source.remote.service.AccountManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class InboxIdService extends FirebaseInstanceIdService {
 
@@ -29,18 +33,11 @@ public class InboxIdService extends FirebaseInstanceIdService {
         Authentication authApi = CardeeApp.retrofit.create(Authentication.class);
         authApi.pushToken(pushRequest)
                 .retry(5)
-                .subscribe(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        AccountManager.getInstance(CardeeApp.context).saveFcmAuthAction();
-                        Toast.makeText(CardeeApp.context, "Token is delivered!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
-
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(() -> {
+                    AccountManager.getInstance(CardeeApp.context).saveFcmAuthAction();
+                    Toast.makeText(CardeeApp.context, "Token is delivered!", Toast.LENGTH_SHORT).show();
+                }, throwable -> Log.e(TAG, throwable.getMessage()));
     }
 }

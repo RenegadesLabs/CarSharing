@@ -6,6 +6,8 @@ public interface InboxContract {
 
         void init(InboxContract.View view);
 
+        void subscribeToNotificationUpdates();
+
         void onDestroy();
     }
 

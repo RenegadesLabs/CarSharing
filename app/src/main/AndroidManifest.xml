@@ -149,6 +149,9 @@
         <activity
             android:name=".owner_cardee.view.OwnerCardeeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".owner_bookings.view.BookingActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity
             android:name=".renter_profile.view.RenterProfileActivity"

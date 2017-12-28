@@ -6,71 +6,156 @@
     android:background="@android:color/transparent">
 
     <TextView
-        android:id="@+id/body_type_menu_title"
+        android:id="@+id/filter_menu_title"
         style="@style/ModalMenuTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_title_height"
         android:background="@android:color/transparent"
-        android:text="Bookings"
+        android:text="@string/booking_filter_title"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/body_sedan"
+        app:layout_constraintBottom_toTopOf="@+id/booking_filter_all"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_sedan"
+    <TextView
+        android:id="@+id/booking_filter_all"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_top"
-        android:text="All"
-        app:layout_constraintTop_toBottomOf="@+id/body_type_menu_title" />
+        android:text="@string/booking_state_all"
+        app:layout_constraintTop_toBottomOf="@+id/filter_menu_title" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_hatchback"
+    <ImageView
+        android:id="@+id/booking_filter_all_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_all"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_all"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_all"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/booking_filter_new"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Request"
-        app:layout_constraintTop_toBottomOf="@+id/body_sedan" />
+        android:text="@string/booking_state_new"
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_all" />
 
+    <ImageView
+        android:id="@+id/booking_filter_new_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_new"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_new"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_new"
+        app:srcCompat="@drawable/ic_check" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_suv"
+    <TextView
+        android:id="@+id/booking_filter_confirmed"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Confirmed"
-        app:layout_constraintTop_toBottomOf="@+id/body_hatchback" />
+        android:text="@string/booking_state_confirmed"
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_new" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/body_sports"
+    <ImageView
+        android:id="@+id/booking_filter_confirmed_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_confirmed"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_confirmed"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_confirmed"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/booking_filter_collecting"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Collecting"
-        app:layout_constraintTop_toBottomOf="@+id/body_suv" />
+        android:text="@string/booking_state_collecting"
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_confirmed" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/booking_amount_sort"
+    <ImageView
+        android:id="@+id/booking_filter_collecting_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_collecting"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_collecting"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_collecting"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/booking_filter_collected"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
-        android:text="Collected"
-        app:layout_constraintTop_toBottomOf="@+id/body_sports" />
+        android:text="@string/booking_state_collected"
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_collecting" />
 
-    <android.support.v7.widget.AppCompatCheckedTextView
-        android:id="@+id/booking_completed_filter"
+    <ImageView
+        android:id="@+id/booking_filter_collected_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_collected"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_collected"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_collected"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/booking_filter_completed"
+        style="@style/ModalMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_item_height"
+        android:background="@drawable/bg_modal_menu_mid"
+        android:text="@string/booking_state_completed"
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_collected" />
+
+    <ImageView
+        android:id="@+id/booking_filter_completed_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_completed"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_completed"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_completed"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/booking_filter_canceled"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_bottom"
-        android:text="Completed"
+        android:text="@string/booking_state_canceled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/booking_amount_sort" />
+        app:layout_constraintTop_toBottomOf="@+id/booking_filter_completed" />
+
+    <ImageView
+        android:id="@+id/booking_filter_canceled_selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/widget_margin_mid"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_filter_canceled"
+        app:layout_constraintEnd_toEndOf="@id/booking_filter_canceled"
+        app:layout_constraintTop_toTopOf="@id/booking_filter_canceled"
+        app:srcCompat="@drawable/ic_check" />
 
 </android.support.constraint.ConstraintLayout>

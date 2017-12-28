@@ -2,7 +2,7 @@ package com.cardee.data_source.inbox.remote.api.model;
 
 import com.cardee.data_source.inbox.remote.api.model.entity.Booking;
 import com.cardee.data_source.inbox.remote.api.model.entity.CarVersion;
-import com.cardee.data_source.inbox.remote.api.model.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.ChatRemoteMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.Recipient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -20,7 +20,7 @@ public class ChatRemote {
     private Booking mBooking;
     @Expose
     @SerializedName("last_message")
-    private ChatMessage mLastMessage;
+    private ChatRemoteMessage mLastMessage;
     @Expose
     @SerializedName("recipient")
     private Recipient mRecipient;
@@ -55,11 +55,11 @@ public class ChatRemote {
         mBooking = booking;
     }
 
-    public ChatMessage getLastMessage() {
+    public ChatRemoteMessage getLastMessage() {
         return mLastMessage;
     }
 
-    public void setLastMessage(ChatMessage lastMessage) {
+    public void setLastMessage(ChatRemoteMessage lastMessage) {
         mLastMessage = lastMessage;
     }
 

@@ -36,6 +36,7 @@ public class InboxFragment extends Fragment implements InboxContract.View {
         mPageAdapter = new InboxPageAdapter(getChildFragmentManager());
         mInboxPresenterImp = new InboxPresenterImp();
         mInboxPresenterImp.init(this);
+        mInboxPresenterImp.subscribeToNotificationUpdates();
     }
 
     @Override
