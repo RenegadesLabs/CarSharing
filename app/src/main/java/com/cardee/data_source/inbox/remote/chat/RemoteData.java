@@ -14,6 +14,8 @@ public interface RemoteData {
     interface ChatListSource extends RemoteData {
 
         Single<List<Chat>> getRemoteChats(String attachment);
+
+        Single<Chat> getSingleChat(int serverId, String attachment);
     }
 
     interface ChatSingleSource extends RemoteData {

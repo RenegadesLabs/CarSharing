@@ -1,12 +1,13 @@
 package com.cardee.data_source.inbox.repository;
 
+import android.util.Log;
+
 import com.cardee.data_source.inbox.local.chat.ChatListLocalSource;
 import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -18,6 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxContract {
 
+    private static final String TAG = InboxRepository.class.getSimpleName();
     private final LocalData.ChatListSource mChatLocalSource;
     private final RemoteData.ChatListSource mChatRemoteSource;
 
@@ -63,21 +65,32 @@ public class InboxRepository implements InboxContract {
     }
 
     @Override
-    public Completable updateChat(Chat chat) {
+    public Completable updateChat(Chat chatFromFcm) {
         return Completable.create((CompletableEmitter emitter) ->
-                mChatLocalSource.getChat(chat)
+                mChatLocalSource.getChat(chatFromFcm)
                         .subscribeOn(Schedulers.io())
-                        .subscribe((Chat persistChat) -> {
-                            persistChat.setLastMessageText(chat.getLastMessageText());
-                            persistChat.setLastMessageTime(chat.getLastMessageTime());
-                            persistChat.setRecipientName(chat.getRecipientName());
-                            persistChat.setUnreadMessageCount(chat.getUnreadMessageCount());
-                            mChatLocalSource.addChat(persistChat);
-                        }, throwable -> {
-                            if (mCacheLocalChats != null) {
-                                getRemoteChats(chat.getChatAttachment());
-                            }
-                        }));
+                        .subscribe((Chat persistChat) -> updateChatList(chatFromFcm, persistChat),
+                                throwable -> {
+                                    if (mCacheLocalChats != null) {
+                                        getNewChat(chatFromFcm);
+                                    }
+                                }));
+    }
+
+    private void updateChatList(Chat chatFromFcm, Chat persistChat) {
+        persistChat.setLastMessageText(chatFromFcm.getLastMessageText());
+        persistChat.setLastMessageTime(chatFromFcm.getLastMessageTime());
+        persistChat.setRecipientName(chatFromFcm.getRecipientName());
+        persistChat.setUnreadMessageCount(chatFromFcm.getUnreadMessageCount());
+        mChatLocalSource.addChat(persistChat);
+    }
+
+    private void getNewChat(Chat chatFromFcm) {
+        mChatRemoteSource.getSingleChat(chatFromFcm.getChatServerId(), chatFromFcm.getChatAttachment())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        newChat -> mChatLocalSource.addChat(chatFromFcm),
+                        responseError -> Log.d(TAG, "Error while obtaining chat information"));
     }
 
     @Override

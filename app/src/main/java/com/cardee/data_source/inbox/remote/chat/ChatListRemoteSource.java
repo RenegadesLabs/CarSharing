@@ -4,6 +4,7 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.ChatRemote;
+import com.cardee.data_source.inbox.remote.api.response.ChatSingleResponse;
 import com.cardee.domain.util.Mapper;
 
 import java.util.ArrayList;
@@ -23,19 +24,27 @@ public class ChatListRemoteSource implements RemoteData.ChatListSource {
 
     @Override
     public Single<List<Chat>> getRemoteChats(String attachment) {
-        ChatMapper mapper = new ChatMapper(attachment);
+        ChatListMapper mapper = new ChatListMapper(attachment);
         return mChatApi.getChats(attachment)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(chatListResponse -> mapper.map(chatListResponse.getChatRemotes()))
                 .subscribeOn(Schedulers.io());
     }
 
-    private static class ChatMapper implements Mapper<ChatRemote[], List<Chat>> {
+    @Override
+    public Single<Chat> getSingleChat(int serverId, String attachment) {
+        ChatSingleMapper mapper = new ChatSingleMapper(attachment);
+        return mChatApi.getSingleChat(serverId)
+                .subscribeOn(Schedulers.io())
+                .map(chatSingleResponse -> mapper.map(chatSingleResponse.getChatRemote()));
+    }
+
+    private static class ChatListMapper implements Mapper<ChatRemote[], List<Chat>> {
 
         private List<Chat> mChats;
         private String mAttachment;
 
-        ChatMapper(String attachment) {
+        ChatListMapper(String attachment) {
             mAttachment = attachment;
             mChats = new ArrayList<>();
         }
@@ -60,6 +69,33 @@ public class ChatListRemoteSource implements RemoteData.ChatListSource {
                 mChats.add(chat);
             }
             return mChats;
+        }
+    }
+
+    private static class ChatSingleMapper implements Mapper<ChatRemote, Chat> {
+
+        private String mAttachment;
+
+        ChatSingleMapper(String attachment) {
+            mAttachment = attachment;
+        }
+
+        @Override
+        public Chat map(ChatRemote chatRemote) {
+            return new Chat.Builder()
+                    .withChatId(chatRemote.getChatId())
+                    .withChatAttachment(mAttachment)
+                    .withName(chatRemote.getRecipient().getName())
+                    .withPhotoUrl(chatRemote.getRecipient().getPhoto())
+                    .withLastMessage(chatRemote.getLastMessage().getMessage())
+                    .withLastMessageTime(chatRemote.getLastMessage().getDateCreated())
+                    .withUnreadMessageCount(chatRemote.getNewCount())
+                    .withCarTitle(chatRemote.getCarVersion().getCarTitle())
+                    .withCarPhoto(chatRemote.getCarVersion().getImageUrl())
+                    .withLicenseNumber(chatRemote.getCarVersion().getCarNumber())
+                    .withBookingBegin(chatRemote.getBooking().getTimeBegin())
+                    .withBookingEnd(chatRemote.getBooking().getTimeEnd())
+                    .build();
         }
     }
 }

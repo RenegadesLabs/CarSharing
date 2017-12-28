@@ -3,6 +3,7 @@ package com.cardee.data_source.inbox.remote.api;
 import com.cardee.data_source.inbox.remote.api.request.NewChatMessage;
 import com.cardee.data_source.inbox.remote.api.response.ChatListResponse;
 import com.cardee.data_source.inbox.remote.api.response.ChatMessagesResponse;
+import com.cardee.data_source.inbox.remote.api.response.ChatSingleResponse;
 import com.cardee.data_source.inbox.remote.api.response.MessageResponse;
 import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
@@ -21,6 +22,9 @@ public interface ChatApi {
 
     @GET("/api/dev/chats/{attachment}")
     Single<ChatListResponse> getChats(@Path(value = "attachment") String attachment);
+
+    @GET("/api/dev/chats/{chat_id}/details")
+    Single<ChatSingleResponse> getSingleChat(@Path("chat_id") int chatId);
 
     @GET("/api/dev/chats/{chat_id}")
     Single<ChatMessagesResponse> getMessages(@Path("chat_id") int chatId);
