@@ -1,9 +1,11 @@
 package com.cardee.inbox.chat.single.adapter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +23,11 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
     private static final int RECIPIENT_MESSAGE_TYPE = 1;
 
     private List<ChatMessage> mMessageList;
-    private UtcDateFormatter mDateFormatter;
+    private UtcDateFormatter.ChatMessageFormatter mMessageFormatter;
 
     public SingleChatAdapter() {
         mMessageList = new ArrayList<>();
-        mDateFormatter = new MessageDateFormatter();
+        mMessageFormatter = new MessageDateFormatter();
     }
 
     @Override
@@ -50,12 +52,25 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatMessage chatMessage = mMessageList.get(position);
+        boolean isNewDay = false;
+
+        if (position < mMessageList.size() - 1) {
+            ChatMessage prevMessage = mMessageList.get(position + 1);
+            if (position == 0 && !mMessageFormatter.sameWithCurrentDate(chatMessage.getDateCreated())) {
+                isNewDay = true;
+            } else if (!mMessageFormatter.hasSameDate(chatMessage.getDateCreated(), prevMessage.getDateCreated())) {
+                isNewDay = true;
+            }
+        } else if (position == mMessageList.size() - 1) {
+            isNewDay = true;
+        }
+
         switch (holder.getItemViewType()) {
             case USER_MESSAGE_TYPE:
-                ((UserMessageHolder) holder).bind(chatMessage, mDateFormatter);
+                ((UserMessageHolder) holder).bind(chatMessage, mMessageFormatter, isNewDay);
                 break;
             case RECIPIENT_MESSAGE_TYPE:
-                ((RecipientMessageHolder) holder).bind(chatMessage, mDateFormatter);
+                ((RecipientMessageHolder) holder).bind(chatMessage, mMessageFormatter, isNewDay);
                 break;
         }
     }
@@ -77,37 +92,52 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
     public class UserMessageHolder extends RecyclerView.ViewHolder {
 
+        private ConstraintLayout messageTitle;
+        private AppCompatTextView dividerDate;
         private AppCompatTextView messageText;
         private AppCompatTextView messageTime;
         private AppCompatImageView messageStatus;
 
         UserMessageHolder(View itemView) {
             super(itemView);
+            messageTitle = itemView.findViewById(R.id.message_title);
+            dividerDate = itemView.findViewById(R.id.divider_date);
             messageText = itemView.findViewById(R.id.message_text);
             messageTime = itemView.findViewById(R.id.message_time);
             messageStatus = itemView.findViewById(R.id.message_status);
         }
 
-        public void bind(ChatMessage chatMessage, UtcDateFormatter dateFormatter) {
+        public void bind(ChatMessage chatMessage, UtcDateFormatter.ChatMessageFormatter dateFormatter, boolean isNewDay) {
+            messageTitle.setVisibility(isNewDay ? View.VISIBLE : View.GONE);
+            dividerDate.setText(dateFormatter.formatDividerDate(chatMessage.getDateCreated()));
+
             messageText.setText(chatMessage.getMessage());
             messageTime.setText(dateFormatter.formatDate(chatMessage.getDateCreated()));
+
         }
     }
 
     public class RecipientMessageHolder extends RecyclerView.ViewHolder {
 
+        private ConstraintLayout messageTitle;
+        private AppCompatTextView dividerDate;
         private AppCompatTextView messageText;
         private AppCompatTextView messageTime;
         private AppCompatImageView messageStatus;
 
         RecipientMessageHolder(View itemView) {
             super(itemView);
+            messageTitle = itemView.findViewById(R.id.message_title);
+            dividerDate = itemView.findViewById(R.id.divider_date);
             messageText = itemView.findViewById(R.id.message_text);
             messageTime = itemView.findViewById(R.id.message_time);
             messageStatus = itemView.findViewById(R.id.message_status);
         }
 
-        public void bind(ChatMessage chatMessage, UtcDateFormatter dateFormatter) {
+        public void bind(ChatMessage chatMessage, UtcDateFormatter.ChatMessageFormatter dateFormatter, boolean isNewDay) {
+            messageTitle.setVisibility(isNewDay ? View.VISIBLE : View.GONE);
+            dividerDate.setText(dateFormatter.formatDividerDate(chatMessage.getDateCreated()));
+
             messageText.setText(chatMessage.getMessage());
             messageTime.setText(dateFormatter.formatDate(chatMessage.getDateCreated()));
         }
