@@ -15,6 +15,8 @@ public interface BookingDataSource {
 
     void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback);
 
+    void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, ReviewCallback callback);
+
     interface BookingsCallback extends BaseCallback {
 
         void onSuccess(List<BookingEntity> bookingEntities);

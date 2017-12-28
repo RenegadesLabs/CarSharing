@@ -443,7 +443,7 @@
     <string name="car_returned_rate">Rate\u0020</string>
     <string name="car_returned_rental_period">Rental Period</string>
     <string name="tell_us_more">Tell us more</string>
-    <string name="car_returned_comment_hint">Add a comment on %s\’s profile..</string>
+    <string name="car_returned_comment_hint">Add a review on %s\’s profile..</string>
     <string name="send_comment_success">Comment sent</string>
     <string name="car_returned_period_template">%s\u0020\u0020to\u0020\u0020%s</string>
 
@@ -455,6 +455,11 @@
     <string name="car_comfort_and_performance">Car Comfort &amp; Performance</string>
     <string name="rental_exp_car_owner">Car Owner</string>
     <string name="overall_rental_experience">Overall Rental Experience</string>
+    <string name="rental_exp_header">Please rate your rental experience!</string>
+    <string name="rental_exp_edit_ratings">edit ratings</string>
+    <string name="rental_exp_tell_us_more">Tell us more :)</string>
+    <string name="rental_exp_review_hint">Write a short review about your rental experience here…</string>
+    <string name="rental_exp_review_sent">Review sent</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -550,6 +555,9 @@
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

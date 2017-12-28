@@ -9,6 +9,7 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
+import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 
 import java.io.IOException;
@@ -72,7 +73,28 @@ public class RemoteBookingDataSource implements BookingDataSource {
         reviewAsOwner.setRating((int) rate);
         reviewAsOwner.setReviewFromOwner(review);
 
-        api.sendBookingReview(bookingId, reviewAsOwner).subscribe(noDataResponse -> {
+        api.sendReviewAsOwner(bookingId, reviewAsOwner).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(noDataResponse, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    @Override
+    public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, ReviewCallback callback) {
+        ReviewAsRenter reviewAsRenter = new ReviewAsRenter();
+        reviewAsRenter.setCarConditionCleanliness((int) condition);
+        reviewAsRenter.setCarComfortPerformance((int) comfort);
+        reviewAsRenter.setCarOwner((int) owner);
+        reviewAsRenter.setOverallRentalExperience((int) overall);
+        reviewAsRenter.setReviewFromRenter(review);
+
+        api.sendReviewAsRenter(bookingId, reviewAsRenter).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
                 return;

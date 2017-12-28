@@ -40,6 +40,7 @@ public class RenterBookingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RateRentalExpActivity.class);
+                intent.putExtra("booking_id", 430);
                 startActivity(intent);
             }
         });

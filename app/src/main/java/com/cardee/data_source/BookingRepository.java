@@ -75,4 +75,19 @@ public class BookingRepository implements BookingDataSource {
         });
     }
 
+    @Override
+    public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, ReviewCallback callback) {
+        remoteDataSource.sendReviewAsRenter(bookingId, condition, comfort, owner, overall, review, new ReviewCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
 }
