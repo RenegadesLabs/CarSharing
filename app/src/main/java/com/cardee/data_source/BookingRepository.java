@@ -2,7 +2,7 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 
 import java.util.List;
 
@@ -26,11 +26,31 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(String filter, String sort, Callback callback) {
-        remoteDataSource.obtainOwnerBookings(filter, sort, new Callback() {
+    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+        remoteDataSource.obtainOwnerBookings(filter, sort, new BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
-                callback.onSuccess(bookingEntities);
+                bookingsCallback.onSuccess(bookingEntities);
+            }
+
+            @Override
+            public void onError(Error error) {
+                bookingsCallback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+
+    }
+
+    @Override
+    public void obtainBookingById(int id, BookingCallback callback) {
+        remoteDataSource.obtainBookingById(id, new BookingCallback() {
+            @Override
+            public void onSuccess(BookingEntity bookingEntity) {
+                callback.onSuccess(bookingEntity);
             }
 
             @Override
@@ -41,7 +61,18 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainRenterBookings(String filter, String sort, Callback callback) {
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+        remoteDataSource.sendReviewAsOwner(bookingId, rate, review, new ReviewCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
 
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
+
 }

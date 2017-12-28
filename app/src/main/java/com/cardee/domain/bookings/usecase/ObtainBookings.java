@@ -5,13 +5,12 @@ import com.cardee.R;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.BookingRepository;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.mapper.BookingEntityToBookingMapper;
 import com.cardee.domain.util.ListUtil;
-import com.cardee.domain.util.Mapper;
 
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid strategy: null"));
             return;
         }
-        BookingDataSource.Callback repositoryCallback = new BookingDataSource.Callback() {
+        BookingDataSource.BookingsCallback repositoryCallback = new BookingDataSource.BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
                 List<Booking> bookings = ListUtil.map(bookingEntities, mapper::transform);

@@ -66,4 +66,7 @@
     <color name="details_title">#6b727a</color>
     <color name="bg_additional_info">#e5edf4</color>
     <color name="text_additional_info">#8b95a0</color>
+
+    <color name="rate_star">#F2B632</color>
+    <color name="rate_star_inactive">#D8D8D8</color>
 </resources>

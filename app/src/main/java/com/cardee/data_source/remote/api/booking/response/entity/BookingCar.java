@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.booking.response;
+package com.cardee.data_source.remote.api.booking.response.entity;
 
 
 import com.cardee.data_source.remote.api.common.entity.ImageEntity;
