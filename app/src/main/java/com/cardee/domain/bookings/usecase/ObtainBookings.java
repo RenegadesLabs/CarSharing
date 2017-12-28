@@ -1,6 +1,7 @@
 package com.cardee.domain.bookings.usecase;
 
 
+import com.cardee.R;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.BookingRepository;
 import com.cardee.data_source.Error;
@@ -20,12 +21,21 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
     }
 
     public enum Sort {
-        BOOKING("booking"), PICKUP("pickup"), RETURN("return"), AMOUNT("amount");
+        BOOKING("booking", R.string.booking_sort_date),
+        PICKUP("pickup", R.string.booking_sort_pickup_date),
+        RETURN("return", R.string.booking_sort_return_date),
+        AMOUNT("amount", R.string.booking_sort_amount);
 
         public final String value;
+        private int titleId;
 
-        Sort(String value) {
+        Sort(String value, int titleId) {
             this.value = value;
+            this.titleId = titleId;
+        }
+
+        public int getTitleId() {
+            return titleId;
         }
     }
 
@@ -56,7 +66,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
                 callback.onError(error);
             }
         };
-        String filter = values.getFilter() == null ? null : values.getFilter().name();
+        String filter = values.getFilter() == null ? null : values.getFilter().value;
         String sort = values.getSort() == null ? null : values.getSort().value;
         switch (strategy) {
             case OWNER:

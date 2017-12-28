@@ -80,7 +80,7 @@
                     <!--app:layout_constraintTop_toTopOf="parent">-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_allowSmoking"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_allowSmoking"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -93,7 +93,7 @@
                         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_disallowSmoking"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_disallowSmoking"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -113,8 +113,8 @@
                         <!--android:background="@color/text_subtitle"-->
                         <!--app:layout_constraintTop_toTopOf="parent"-->
                         <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--app:layout_constraintEnd_toStartOf="@id/tv_disallowSmoking"-->
-                        <!--app:layout_constraintStart_toEndOf="@id/tv_allowSmoking" />-->
+                        <!--app:layout_constraintEnd_toStartOchatLocalId"@id/tv_disallowSmoking"-->
+                        <!--app:layout_constraintStart_toEndOchatLocalId"@id/tv_allowSmoking" />-->
 
                 <!--</android.support.constraint.ConstraintLayout>-->
 
@@ -151,7 +151,7 @@
                     <!--app:layout_constraintTop_toTopOf="parent">-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_allowMalaysia"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_allowMalaysia"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -164,7 +164,7 @@
                         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_disallowMalaysia"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_disallowMalaysia"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -184,8 +184,8 @@
                         <!--android:background="@color/text_subtitle"-->
                         <!--app:layout_constraintTop_toTopOf="parent"-->
                         <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--app:layout_constraintEnd_toStartOf="@id/tv_disallowMalaysia"-->
-                        <!--app:layout_constraintStart_toEndOf="@id/tv_allowMalaysia" />-->
+                        <!--app:layout_constraintEnd_toStartOchatLocalId"@id/tv_disallowMalaysia"-->
+                        <!--app:layout_constraintStart_toEndOchatLocalId"@id/tv_allowMalaysia" />-->
 
                 <!--</android.support.constraint.ConstraintLayout>-->
 
@@ -204,7 +204,7 @@
                 <!--android:background="@drawable/bg_item_transparent">-->
 
                 <!--<TextView-->
-                    <!--android:id="@+id/tv_ratesTitleValue4"-->
+                    <!--andrchatLocalIdd:idchatLocalId@+id/tv_ratesTitleValue4"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:layout_marginStart="@dimen/large_margin"-->
@@ -223,7 +223,7 @@
                     <!--app:layout_constraintTop_toTopOf="parent">-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_allowDogs"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_allowDogs"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -236,7 +236,7 @@
                         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
                     <!--<CheckedTextView-->
-                        <!--android:id="@+id/tv_disallowDogs"-->
+                        <!--andrchatLocalIdd:idchatLocalId@+id/tv_disallowDogs"-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
                         <!--android:padding="@dimen/small_margin"-->
@@ -256,8 +256,8 @@
                         <!--android:background="@color/text_subtitle"-->
                         <!--app:layout_constraintTop_toTopOf="parent"-->
                         <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--app:layout_constraintEnd_toStartOf="@id/tv_disallowDogs"-->
-                        <!--app:layout_constraintStart_toEndOf="@id/tv_allowDogs" />-->
+                        <!--app:layout_constraintEnd_toStartOchatLocalId"@id/tv_disallowDogs"-->
+                        <!--app:layout_constraintStart_toEndOchatLocalId"@id/tv_allowDogs" />-->
 
                 <!--</android.support.constraint.ConstraintLayout>-->
 

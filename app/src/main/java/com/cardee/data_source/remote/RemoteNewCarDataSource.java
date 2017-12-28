@@ -9,6 +9,7 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.NewCarDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
+import com.cardee.data_source.remote.api.cars.Upload;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CreateCarResponse;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
@@ -20,20 +21,20 @@ import java.io.IOException;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
 public class RemoteNewCarDataSource implements NewCarDataSource {
 
     private static final String TAG = RemoteNewCarDataSource.class.getSimpleName();
 
     private static RemoteNewCarDataSource INSTANCE;
-    private final Cars api;
+    private final Cars carsApi;
+    private final Upload uploadApi;
 
     private RemoteNewCarDataSource() {
-        api = CardeeApp.retrofit.create(Cars.class);
+        carsApi = CardeeApp.retrofit.create(Cars.class);
+        uploadApi = CardeeApp.retrofitMultipart.create(Upload.class);
     }
 
     public static RemoteNewCarDataSource getInstance() {
@@ -53,7 +54,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
         if (forcePush) {
             NewCarValidator validator = new NewCarValidator();
             if (validator.isValid(carData)) {
-                Call<CreateCarResponse> request = api.createCar(carData);
+                Call<CreateCarResponse> request = carsApi.createCar(carData);
                 try {
                     Response<CreateCarResponse> response = request.execute();
                     if (response.isSuccessful() && response.body() != null) {
@@ -82,7 +83,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
             MultipartBody.Part part = MultipartBody.Part.createFormData("car_image",
                     imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
             try {
-                Response<UploadImageResponse> response = api.uploadImage(carId, part).execute();
+                Response<UploadImageResponse> response = uploadApi.uploadImage(carId, part).execute();
                 if (!response.isSuccessful()) {
                     Log.e(TAG, "Image was not uploaded");
                 } else {
@@ -101,7 +102,7 @@ public class RemoteNewCarDataSource implements NewCarDataSource {
     private void makeImagePrimary(Integer carId, Integer imageId, Callback callback) {
         if (carId != null && imageId != null) {
             try {
-                api.makeImagePrimary(carId, imageId).execute();
+                carsApi.makeImagePrimary(carId, imageId).execute();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }

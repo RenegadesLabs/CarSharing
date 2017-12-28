@@ -7,6 +7,7 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.NewCarDataSource;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
+import com.cardee.util.ImageProcessor;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -32,9 +33,11 @@ public class LocalNewCarDataSource implements NewCarDataSource {
     private static LocalNewCarDataSource INSTANCE;
 
     private final File cacheDir;
+    private final ImageProcessor imageProcessor;
 
     private LocalNewCarDataSource() {
         cacheDir = CardeeApp.context.getCacheDir();
+        imageProcessor = new ImageProcessor();
     }
 
     public static LocalNewCarDataSource getInstance() {
@@ -114,21 +117,14 @@ public class LocalNewCarDataSource implements NewCarDataSource {
 
     private String saveImageToCache(Uri imgUri) {
         String path;
-        byte[] imageData = new byte[1024];
-        File f = new File(cacheDir, CAR_PIC_FILE);
+        File imageFile = new File(cacheDir, CAR_PIC_FILE);
         try {
             InputStream in = CardeeApp.context.getContentResolver().openInputStream(imgUri);
-            OutputStream out = new FileOutputStream(f);
-            int bytesRead;
-            while ((bytesRead = in.read(imageData)) > 0) {
-                out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
-            }
-            in.close();
-            out.close();
-        } catch (IOException e) {
+            imageProcessor.resize(in, imageFile);
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            path = f.getAbsolutePath();
+            path = imageFile.getAbsolutePath();
         }
         return path;
     }

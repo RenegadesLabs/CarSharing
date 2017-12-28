@@ -29,7 +29,6 @@ public class GetOwnerInfo implements UseCase<GetOwnerInfo.RequestValues, GetOwne
                 CarEntity[] carEntities = ownerProfile.getCars();
                 List<Car> cars = mMapper.transform(carEntities);
                 GetOwnerInfo.ResponseValues responseValues = new GetOwnerInfo.ResponseValues(ownerProfile, cars);
-
                 callback.onSuccess(responseValues);
             }
 
@@ -38,7 +37,6 @@ public class GetOwnerInfo implements UseCase<GetOwnerInfo.RequestValues, GetOwne
                 callback.onError(error);
             }
         });
-
     }
 
     public static class RequestValues implements UseCase.RequestValues {

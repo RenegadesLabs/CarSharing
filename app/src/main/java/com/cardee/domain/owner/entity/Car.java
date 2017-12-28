@@ -18,6 +18,7 @@ public class Car {
     private final String mTransmissionType;
     private final Integer mSeatingCapacity;
     private final String mPrimaryImageLink;
+    private final String mPrimaryImageThumbnail;
     private final Integer mCarAvailabilityHourlyCount;
     private final Integer mCarAvailabilityDailyCount;
     private final String mCarAvailabilityTimeBegin;
@@ -47,6 +48,7 @@ public class Car {
                String transmissionType,
                Integer seatingCapacity,
                String primaryImageLink,
+               String primaryImageThumbnail,
                Integer carAvailabilityHourlyCount,
                Integer carAvailabilityDailyCount,
                String carAvailabilityTimeBegin,
@@ -75,6 +77,7 @@ public class Car {
         mTransmissionType = transmissionType;
         mSeatingCapacity = seatingCapacity;
         mPrimaryImageLink = primaryImageLink;
+        mPrimaryImageThumbnail = primaryImageThumbnail;
         mCarAvailabilityHourlyCount = carAvailabilityHourlyCount;
         mCarAvailabilityDailyCount = carAvailabilityDailyCount;
         mCarAvailabilityTimeBegin = carAvailabilityTimeBegin;
@@ -107,6 +110,7 @@ public class Car {
         private String mBuilderTransmissionType;
         private Integer mBuilderSeatingCapacity;
         private String mBuilderPrimaryImageLink;
+        private String mBuilderPrimaryImageThumbnail;
         private Integer mBuilderCarAvailabilityHourlyCount;
         private Integer mBuilderCarAvailabilityDailyCount;
         private String mBuilderCarAvailabilityTimeBegin;
@@ -137,6 +141,7 @@ public class Car {
             mBuilderTransmissionType = car.getTransmissionType();
             mBuilderSeatingCapacity = car.getSeatingCapacity();
             mBuilderPrimaryImageLink = car.getPrimaryImageLink();
+            mBuilderPrimaryImageThumbnail = car.getPrimaryImageThumbnail();
             mBuilderCarAvailabilityHourlyCount = car.getCarAvailabilityHourlyCount();
             mBuilderCarAvailabilityDailyCount = car.getCarAvailabilityDailyCount();
             mBuilderCarAvailabilityTimeBegin = car.getCarAvailabilityTimeBegin();
@@ -255,6 +260,7 @@ public class Car {
                     mBuilderTransmissionType,
                     mBuilderSeatingCapacity,
                     mBuilderPrimaryImageLink,
+                    mBuilderPrimaryImageThumbnail,
                     mBuilderCarAvailabilityHourlyCount,
                     mBuilderCarAvailabilityDailyCount,
                     mBuilderCarAvailabilityTimeBegin,
@@ -327,6 +333,10 @@ public class Car {
 
     public String getPrimaryImageLink() {
         return mPrimaryImageLink;
+    }
+
+    public String getPrimaryImageThumbnail() {
+        return mPrimaryImageThumbnail;
     }
 
     public Integer getCarAvailabilityHourlyCount() {

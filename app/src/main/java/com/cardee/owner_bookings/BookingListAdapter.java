@@ -1,7 +1,6 @@
 package com.cardee.owner_bookings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
-import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 
 public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.BookingItemHolder> {
 
@@ -38,14 +36,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     @Override
     public BookingItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = inflater.inflate(R.layout.item_owner_booking_list, parent, false);
-
-        //for debug
-        rootView.setOnClickListener(view -> {
-            Intent intent = new Intent(parent.getContext(), CarReturnedActivity.class);
-            intent.putExtra("booking_id", 430);
-            parent.getContext().startActivity(intent);
-        });
-
         return new BookingItemHolder(rootView, imageRequestManager);
     }
 
@@ -53,6 +43,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     public void onBindViewHolder(BookingItemHolder holder, int position) {
         Booking booking = presenter.onItem(position);
         holder.bind(booking);
+        holder.itemView.setOnClickListener((v) -> presenter.onItemClick(booking));
     }
 
     @Override
@@ -65,7 +56,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         private RequestManager imageRequestManager;
 
         private TextView bookingStatus;
-        private TextView bookingPerion;
+        private TextView bookingPeriod;
         private ImageView bookingCarPicture;
         private TextView bookingCarTitle;
         private TextView bookingCarYear;
@@ -78,7 +69,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             super(itemView);
             this.imageRequestManager = imageRequestManager;
             bookingStatus = itemView.findViewById(R.id.booking_status);
-            bookingPerion = itemView.findViewById(R.id.booking_period);
+            bookingPeriod = itemView.findViewById(R.id.booking_period);
             bookingCarPicture = itemView.findViewById(R.id.booking_car_picture);
             bookingCarTitle = itemView.findViewById(R.id.booking_car_title);
             bookingCarYear = itemView.findViewById(R.id.booking_car_year);
@@ -98,7 +89,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             if (timeBegin != null && timeEnd != null) {
                 timePeriod = timeBegin + " to " + timeEnd;
             }
-            bookingPerion.setText(timePeriod);
+            bookingPeriod.setText(timePeriod);
             bookingCarTitle.setText(booking.getCarTitle());
             bookingCarYear.setText(booking.getManufactureYear());
             bookingCarPlateNumber.setText(booking.getPlateNumber());

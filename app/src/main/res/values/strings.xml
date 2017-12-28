@@ -533,14 +533,19 @@
     <string name="set_cover_image">Set As Cover Image</string>
 
     <!--Bookings-->
-    <string name="booking_state_new">New</string>
+    <string name="booking_state_all">All</string>
+    <string name="booking_state_new">Request</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
-    <string name="booking_state_collected">Collected</string>
-    <string name="booking_state_collecting">Collecting</string>
+    <string name="booking_state_collected">Handed over</string>
+    <string name="booking_state_collecting">Handing over</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
-
-
+    <string name="booking_filter_title">Bookings</string>
+    <string name="booking_sort_title">Sort by</string>
+    <string name="booking_sort_date">Booking date</string>
+    <string name="booking_sort_pickup_date">Pickup date</string>
+    <string name="booking_sort_return_date">Return date</string>
+    <string name="booking_sort_amount">Booking amount</string>
 </resources>
