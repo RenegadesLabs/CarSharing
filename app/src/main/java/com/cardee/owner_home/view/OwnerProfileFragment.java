@@ -212,4 +212,12 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     public void showMessage(@StringRes int messageId) {
         showMessage(getString(messageId));
     }
+
+    @Override
+    public void onDestroy() {
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
+        super.onDestroy();
+    }
 }

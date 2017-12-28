@@ -21,6 +21,8 @@ public interface OwnerProfileDataSource {
 
     void changePhone(ChangePhoneRequest request, NoResponseCallback callback);
 
+    void unSubscribe();
+
     interface ProfileCallback extends BaseCallback {
         void onSuccess(OwnerProfile ownerProfile);
     }

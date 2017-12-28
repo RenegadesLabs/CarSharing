@@ -12,6 +12,10 @@ public class NewChatMessage {
     public NewChatMessage() {
     }
 
+    public NewChatMessage(String message) {
+        mMessage = message;
+    }
+
     public String getMessage() {
         return mMessage;
     }

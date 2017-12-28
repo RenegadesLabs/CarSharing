@@ -25,7 +25,7 @@ public class HttpClientProvider {
     public OkHttpClient provide(Context context) {
         AccountManager accountManager = AccountManager.getInstance(context);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         return new OkHttpClient.Builder()
                 .addInterceptor(new AuthHeaderRequestInterceptor(accountManager))
                 .addInterceptor(loggingInterceptor)

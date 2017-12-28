@@ -4,21 +4,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.cardee.inbox.alert.AlertFragment;
-import com.cardee.inbox.chat.ChatFragment;
+import com.cardee.inbox.alert.AlertListFragment;
+import com.cardee.inbox.chat.list.view.ChatListFragment;
 
 public class InboxPageAdapter extends FragmentPagerAdapter {
 
-    public static final int ALERTS_FRAGMENT = 0;
-    public static final int CHATS_FRAGMENT = 1;
+    private static final int ALERTS_FRAGMENT = 0;
+    private static final int CHATS_FRAGMENT = 1;
 
-    private AlertFragment mAlertsFragment;
-    private ChatFragment mChatsFragment;
+    private AlertListFragment mAlertsFragment;
+    private ChatListFragment mChatsFragment;
 
     InboxPageAdapter(FragmentManager fm) {
         super(fm);
-        mAlertsFragment = AlertFragment.newInstance();
-        mChatsFragment = ChatFragment.newInstance();
+        mAlertsFragment = AlertListFragment.newInstance();
+        mChatsFragment = ChatListFragment.newInstance();
 
     }
 
