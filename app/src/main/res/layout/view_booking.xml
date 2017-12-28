@@ -82,7 +82,7 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_large"
             android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@color/red_error"
+            android:background="@android:color/holo_red_light"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintStart_toStartOf="parent"
@@ -233,10 +233,60 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/total_cost_title" />
 
+        <ImageView
+            android:id="@+id/renter_photo"
+            android:layout_width="@dimen/booking_renter_image"
+            android:layout_height="@dimen/booking_renter_image"
+            android:layout_marginTop="@dimen/widget_margin_regular"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:background="@android:color/holo_red_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/big_divider" />
+
+        <TextView
+            android:id="@+id/renter_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:text="Requested by"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/renter_name"
+            app:layout_constraintStart_toEndOf="@id/renter_photo"
+            app:layout_constraintTop_toTopOf="@id/renter_photo" />
+
+        <TextView
+            android:id="@id/renter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:text="Sharon Ng"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/renter_photo"
+            app:layout_constraintStart_toEndOf="@id/renter_photo"
+            app:layout_constraintTop_toBottomOf="@id/renter_name_title" />
+
+        <TextView
+            android:id="@+id/renter_message"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:layout_marginBottom="@dimen/widget_margin_mid"
+            android:background="@drawable/bg_rounded_widget"
+            app:layout_constraintTop_toBottomOf="@id/renter_photo"
+            app:layout_constraintBottom_toTopOf="@+id/booking_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <TextView
             android:id="@+id/btn_decline_request"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@drawable/bg_clickable_top_line"
             android:clickable="true"
             android:gravity="center"
@@ -250,7 +300,7 @@
         <TextView
             android:id="@id/btn_accept_request"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@drawable/bg_clickable_regular"
             android:clickable="true"
             android:gravity="center"
@@ -262,9 +312,9 @@
             app:layout_constraintStart_toEndOf="@id/btn_decline_request" />
 
         <TextView
-            android:id="@+id/booking_message"
+            android:id="@id/booking_message"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@color/bg_additional_info"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/widget_padding_regular"
