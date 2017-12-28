@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cardee.R;
@@ -22,6 +24,8 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
     @BindView(R.id.chat_list)
     RecyclerView mRecyclerView;
+    @BindView(R.id.chat_activity_progress_bar)
+    ProgressBar mProgressBar;
 
     private ChatPresenter mPresenter;
     private SingleChatAdapter mAdapter;
@@ -32,6 +36,7 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
+
         initToolBar();
         initAdapter();
         initPresenter();
@@ -57,18 +62,14 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     }
 
     @Override
-    public void notifyAboutInboxDataObtained() {
-        mPresenter.onGetMessagesRequest();
-    }
-
-    @Override
     public void setMessageList(List<ChatMessage> messageList) {
         mAdapter.setMessageList(messageList);
+        mRecyclerView.scrollToPosition(messageList.size() - 1);
     }
 
     @Override
     public void showProgress(boolean show) {
-
+        mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override

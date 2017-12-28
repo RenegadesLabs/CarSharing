@@ -32,6 +32,8 @@ public interface LocalData {
 
         Flowable<List<ChatMessage>> getMessages(int databaseId);
 
+        void persistMessages(List<ChatMessage> messageList, int databaseId);
+
         void addNewMessage(ChatMessage chatMessage);
     }
 

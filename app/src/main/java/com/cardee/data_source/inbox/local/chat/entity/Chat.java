@@ -23,6 +23,9 @@ public class Chat implements Comparable<Chat> {
     @ColumnInfo(name = "attachment")
     private String chatAttachment;
 
+    @ColumnInfo(name = "is_active")
+    private Boolean isActive;
+
     @ColumnInfo(name = "unread_count")
     private Integer unreadMessageCount;
 
@@ -168,6 +171,14 @@ public class Chat implements Comparable<Chat> {
         mChatMessage = chatMessage;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
     @Override
     public int compareTo(@NonNull Chat chat) {
         return chat.getLastMessageTime().compareTo(mLastMessageTime);
@@ -216,6 +227,12 @@ public class Chat implements Comparable<Chat> {
             mChat.chatAttachment = chatAttachment;
             return this;
         }
+
+        public Chat.Builder withActive(Boolean isActive) {
+            mChat.isActive = isActive;
+            return this;
+        }
+
 
         //inbox chat data
         public Chat.Builder withName(String name) {

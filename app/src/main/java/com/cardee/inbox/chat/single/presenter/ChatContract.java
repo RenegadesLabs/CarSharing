@@ -15,16 +15,11 @@ public interface ChatContract {
 
         void onChatDataRequest();
 
-        void onGetMessagesRequest();
-
         void onDestroy();
     }
 
     interface View extends BaseView {
 
-        void notifyAboutInboxDataObtained();
-
         void setMessageList(List<ChatMessage> messageList);
-
     }
 }

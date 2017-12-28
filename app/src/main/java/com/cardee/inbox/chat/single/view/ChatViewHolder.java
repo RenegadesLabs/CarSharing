@@ -1,5 +1,7 @@
 package com.cardee.inbox.chat.single.view;
 
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,29 +13,41 @@ import com.cardee.R;
 import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 import com.cardee.util.glide.CircleTransform;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.subjects.PublishSubject;
+
 public class ChatViewHolder implements ActivityViewHolder {
 
     private final RequestManager mRequestManager;
     private final UtcDateFormatter mDateFormatter;
+    private final PublishSubject<String> mPublishSubject;
+    private final VectorDrawableCompat userPhotoPlaceHolder;
 
-    private TextView mRecipientName;
-    private ImageView mRecipientPhoto;
-    private ImageView mCarPhoto;
-    private TextView mCarTitle;
-    private TextView mCarLicenseNumber;
-    private TextView mCarAvailability;
-
+    @BindView(R.id.chat_activity_toolbar_title)
+    TextView mRecipientName;
+    @BindView(R.id.toolbar_photo)
+    ImageView mRecipientPhoto;
+    @BindView(R.id.car_photo)
+    ImageView mCarPhoto;
+    @BindView(R.id.car_title)
+    TextView mCarTitle;
+    @BindView(R.id.car_licence_plate_number)
+    TextView mCarLicenseNumber;
+    @BindView(R.id.car_availability)
+    TextView mCarAvailability;
+    @BindView(R.id.chat_activity_message_field)
+    AppCompatEditText mMessageField;
+    @BindView(R.id.chat_activity_send)
+    TextView mSend;
 
     public ChatViewHolder(View rootView) {
+        ButterKnife.bind(this, rootView);
+        userPhotoPlaceHolder = VectorDrawableCompat.create(rootView.getContext().getResources(), R.drawable.ic_photo_placeholder, null);
         mRequestManager = Glide.with(rootView.getContext());
         mDateFormatter = new ChatActivityDateFormatter(rootView.getContext());
-
-        mRecipientName = rootView.findViewById(R.id.toolbar_title);
-        mRecipientPhoto = rootView.findViewById(R.id.toolbar_photo);
-        mCarPhoto = rootView.findViewById(R.id.car_photo);
-        mCarTitle = rootView.findViewById(R.id.car_title);
-        mCarLicenseNumber = rootView.findViewById(R.id.car_licence_plate_number);
-        mCarAvailability = rootView.findViewById(R.id.car_availability);
+        mPublishSubject = PublishSubject.create();
     }
 
     @Override
@@ -42,7 +56,7 @@ public class ChatViewHolder implements ActivityViewHolder {
         mRequestManager
                 .load(photoUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_photo_placeholder)
+                .placeholder(userPhotoPlaceHolder)
                 .transform(new CircleTransform(CardeeApp.context))
                 .into(mRecipientPhoto);
     }

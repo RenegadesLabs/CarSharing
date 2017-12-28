@@ -8,18 +8,18 @@ import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 @Dao
 public interface ChatMessageDao {
 
-    @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId")
+    @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId ORDER BY date ASC")
     Flowable<List<ChatMessage>> getMessages(String chatId);
 
     @Insert
     void addNewMessage(ChatMessage chatMessage);
 
     @Insert()
-    void persistMessage(ChatMessage chatMessage);
-
+    void persistMessages(List<ChatMessage> messageList);
 }

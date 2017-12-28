@@ -71,7 +71,9 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         args.putInt(CHAT_DB_ID, chat.getChatLocalId());
         args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
         args.putString(CHAT_ATTACHMENT, mAttachment);
-        mView.showChat(args);
+        if (mView != null) {
+            mView.showChat(args);
+        }
     }
 
     @Override

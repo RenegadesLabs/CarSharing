@@ -1,6 +1,8 @@
 package com.cardee.inbox.chat.list.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,12 +33,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     private final PublishSubject<Boolean> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
 
+    private final Drawable userPhotoPlaceHolder;
+
     public ChatListAdapter(Context context) {
         mInboxChats = new ArrayList<>();
         mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
         mUnreadSubject = PublishSubject.create();
+        userPhotoPlaceHolder = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_photo_placeholder, null);
     }
 
     @Override
@@ -51,7 +56,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         mRequestManager
                 .load(chat.getPhotoUrl())
                 .centerCrop()
-                .placeholder(R.drawable.ic_photo_placeholder)
+                .placeholder(userPhotoPlaceHolder)
                 .transform(new CircleTransform(CardeeApp.context))
                 .into(holder.mAvatar);
         mRequestManager

@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
@@ -28,6 +29,8 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     public Single<List<ChatMessage>> getMessages(int chatDatabaseId, int chatServerId) {
         mMapper.setChatDatabaseId(chatDatabaseId);
         return mChatApi.getMessages(chatServerId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
 

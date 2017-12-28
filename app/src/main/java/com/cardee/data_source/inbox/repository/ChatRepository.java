@@ -49,11 +49,23 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public Flowable<List<ChatMessage>> getMessages() {
-        Flowable<List<ChatMessage>> localFlowable = mLocalSource.getMessages(databaseId);
-        Single<List<ChatMessage>> remoteSingle = mRemoteSource.getMessages(databaseId, serverId);
-        //test returning type
-        return remoteSingle.toFlowable();
+    public Flowable<List<ChatMessage>> getLocalMessages() {
+        return mLocalSource.getMessages(databaseId);
+    }
+
+    @Override
+    public Completable getRemoteMessages() {
+        return Completable.create(emitter ->
+                mRemoteSource.getMessages(databaseId, serverId)
+                        .subscribe(messageList -> {
+                            mLocalSource.persistMessages(messageList, databaseId);
+                            emitter.onComplete();
+                        }, emitter::onError));
+    }
+
+    @Override
+    public Single<List<ChatMessage>> getNewChat() {
+        return null;
     }
 
     @Override

@@ -3,26 +3,25 @@ package com.cardee.inbox.chat.single.presenter;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cardee.data_source.Error;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
-import com.cardee.domain.UseCase;
-import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.inbox.usecase.chat.GetChatInfo;
-import com.cardee.domain.inbox.usecase.chat.GetChatMessages;
-import com.cardee.domain.inbox.usecase.entity.ChatInfo;
+import com.cardee.data_source.inbox.repository.ChatRepository;
 import com.cardee.inbox.chat.single.view.ActivityViewHolder;
 import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+
 public class ChatPresenter implements ChatContract.Presenter {
+
+    private static final int NEW_CHAT = 0;
+    private final ChatRepository mRepository;
 
     private ChatContract.View mView;
     private ActivityViewHolder mViewHolder;
-    private final GetChatInfo mGetInfoUseCase;
-    private final GetChatMessages mGetChatMessages;
-    private final UseCaseExecutor mExecutor;
+    private CompositeDisposable mCompositeDisposable;
 
     private int mChatDatabaseId;
     private int mChatServerId;
@@ -30,14 +29,12 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     public ChatPresenter(ChatContract.View view) {
         mView = view;
-        mGetInfoUseCase = new GetChatInfo();
-        mGetChatMessages = new GetChatMessages();
-        mExecutor = UseCaseExecutor.getInstance();
+        mRepository = ChatRepository.getInstance();
     }
 
     @Override
     public void init(Bundle bundle, View activityView) {
-        mChatDatabaseId = bundle.getInt(Chat.CHAT_DB_ID);
+        mChatDatabaseId = bundle.getInt(Chat.CHAT_DB_ID, 0);
         mChatServerId = bundle.getInt(Chat.CHAT_SERVER_ID);
         mAttachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         mViewHolder = new ChatViewHolder(activityView);
@@ -45,40 +42,45 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void onChatDataRequest() {
-        mExecutor.execute(mGetInfoUseCase,
-                new GetChatInfo.RequestValues(mChatDatabaseId, mChatServerId, mAttachment),
-                new UseCase.Callback<GetChatInfo.ResponseValues>() {
-                    @Override
-                    public void onSuccess(GetChatInfo.ResponseValues response) {
-                        mView.notifyAboutInboxDataObtained();
-                        ChatInfo chatInfo = response.getChatInfo();
-                        mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl());
-                        mViewHolder.setCarData(chatInfo.getCarPhotoUrl(), chatInfo.getCarTitle(), chatInfo.getCarLicenseNumber());
-                        mViewHolder.setCarBookingData(chatInfo.getBookingTimeBegin(), chatInfo.getBookingTimeEnd());
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-                        //TODO: implement error handling;
-                    }
-                });
+        switch (mChatDatabaseId) {
+            case NEW_CHAT:
+                getRemoteChatData();
+                break;
+            default:
+                getLocalChatData();
+        }
     }
 
-    @Override
-    public void onGetMessagesRequest() {
-        mExecutor.execute(mGetChatMessages,
-                new GetChatMessages.RequestValues(),
-                new UseCase.Callback<GetChatMessages.ResponseValues>() {
-                    @Override
-                    public void onSuccess(GetChatMessages.ResponseValues response) {
-                        showAllMessages(response.getMessageList());
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-                        //TODO: implement error handling;
-                    }
+    private void getLocalChatData() {
+        mRepository.sendChatIdentifier(mChatServerId, mChatDatabaseId, mAttachment);
+        mRepository.getChatInfo()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(chatInfo -> {
+                    mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl());
+                    mViewHolder.setCarData(chatInfo.getCarPhotoUrl(), chatInfo.getCarTitle(), chatInfo.getCarLicenseNumber());
+                    mViewHolder.setCarBookingData(chatInfo.getBookingTimeBegin(), chatInfo.getBookingTimeEnd());
                 });
+        mRepository.getLocalMessages()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(messageList -> {
+                    if (messageList.isEmpty()) getRemoteChatData();
+                })
+                .subscribe(this::showAllMessages);
+    }
+
+    private void getRemoteChatData() {
+        mRepository.getRemoteMessages()
+                .doOnSubscribe(disposable -> {
+                    showProgress(true);
+                })
+                .doOnEvent(throwable -> showProgress(false))
+                .subscribe();
+    }
+
+    private void showProgress(boolean isShown) {
+        if (mView != null) {
+            mView.showProgress(isShown);
+        }
     }
 
     private void showAllMessages(List<ChatMessage> messageList) {
@@ -89,7 +91,9 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void onDestroy() {
-        mGetChatMessages.dispose();
         mView = null;
+        if (mCompositeDisposable != null && !mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.dispose();
+        }
     }
 }
