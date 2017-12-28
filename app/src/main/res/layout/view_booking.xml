@@ -223,6 +223,16 @@
             app:layout_constraintBaseline_toBaselineOf="@id/total_cost_title"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <View
+            android:id="@+id/big_divider"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:background="@color/bg_window"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/total_cost_title" />
+
         <TextView
             android:id="@+id/btn_decline_request"
             android:layout_width="0dp"

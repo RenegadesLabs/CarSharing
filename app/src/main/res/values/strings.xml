@@ -534,11 +534,11 @@
 
     <!--Bookings-->
     <string name="booking_state_all">All</string>
-    <string name="booking_state_new">Request</string>
+    <string name="booking_state_new">New Request</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
-    <string name="booking_state_collected">Handed over</string>
-    <string name="booking_state_collecting">Handing over</string>
+    <string name="booking_state_collected">Handed Over</string>
+    <string name="booking_state_collecting">Handing Over</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
