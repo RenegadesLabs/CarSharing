@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,15 +53,13 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
         ChatMessage chatMessage = mMessageList.get(position);
         boolean isNewDay = false;
 
-        if (position < mMessageList.size() - 1) {
-            ChatMessage prevMessage = mMessageList.get(position + 1);
-            if (position == 0 && !mMessageFormatter.sameWithCurrentDate(chatMessage.getDateCreated())) {
-                isNewDay = true;
-            } else if (!mMessageFormatter.hasSameDate(chatMessage.getDateCreated(), prevMessage.getDateCreated())) {
+        if (position == 0 && !mMessageFormatter.sameWithCurrentDate(chatMessage.getDateCreated())) {
+            isNewDay = true;
+        } else if (position < mMessageList.size()) {
+            ChatMessage prevMessage = mMessageList.get(position - 1);
+            if (!mMessageFormatter.hasSameDate(chatMessage.getDateCreated(), prevMessage.getDateCreated())) {
                 isNewDay = true;
             }
-        } else if (position == mMessageList.size() - 1) {
-            isNewDay = true;
         }
 
         switch (holder.getItemViewType()) {
