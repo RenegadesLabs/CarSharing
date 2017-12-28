@@ -1,5 +1,6 @@
 package com.cardee.inbox.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.inbox.chat.chat_message.view.ChatActivity;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.inbox.chat.adapter.ChatAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 
 public class ChatFragment extends Fragment implements ChatContract.View {
 
@@ -61,6 +62,12 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void showAllChats(List<InboxChat> chatList) {
         mChatAdapter.addItems(chatList);
+    }
+
+    @Override
+    public void showChat() {
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        startActivity(intent);
     }
 
     @Override

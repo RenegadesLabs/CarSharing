@@ -4,12 +4,12 @@ package com.cardee.domain.bookings.usecase;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.BookingRepository;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.domain.UseCase;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.mapper.BookingEntityToBookingMapper;
 import com.cardee.domain.util.ListUtil;
-import com.cardee.domain.util.Mapper;
 
 import java.util.List;
 
@@ -17,6 +17,16 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
 
     public enum Strategy {
         OWNER, RENTER
+    }
+
+    public enum Sort {
+        BOOKING("booking"), PICKUP("pickup"), RETURN("return"), AMOUNT("amount");
+
+        public final String value;
+
+        Sort(String value) {
+            this.value = value;
+        }
     }
 
     private final BookingRepository repository;
@@ -34,7 +44,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid strategy: null"));
             return;
         }
-        BookingDataSource.Callback repositoryCallback = new BookingDataSource.Callback() {
+        BookingDataSource.BookingsCallback repositoryCallback = new BookingDataSource.BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
                 List<Booking> bookings = ListUtil.map(bookingEntities, mapper::transform);
@@ -46,25 +56,39 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
                 callback.onError(error);
             }
         };
+        String filter = values.getFilter() == null ? null : values.getFilter().name();
+        String sort = values.getSort() == null ? null : values.getSort().value;
         switch (strategy) {
             case OWNER:
-                repository.obtainOwnerBookings(repositoryCallback);
+                repository.obtainOwnerBookings(filter, sort, repositoryCallback);
                 break;
             case RENTER:
-                repository.obtainRenterBookings(repositoryCallback);
+                repository.obtainRenterBookings(filter, sort, repositoryCallback);
                 break;
         }
     }
 
     public static class RequestValues implements UseCase.RequestValues {
         private final Strategy strategy;
+        private final BookingState filter;
+        private final Sort sort;
 
-        public RequestValues(Strategy strategy) {
+        public RequestValues(Strategy strategy, BookingState filter, Sort sort) {
             this.strategy = strategy;
+            this.filter = filter;
+            this.sort = sort;
         }
 
         public Strategy getStrategy() {
             return strategy;
+        }
+
+        public BookingState getFilter() {
+            return filter;
+        }
+
+        public Sort getSort() {
+            return sort;
         }
     }
 

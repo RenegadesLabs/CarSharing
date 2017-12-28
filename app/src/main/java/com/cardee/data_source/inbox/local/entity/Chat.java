@@ -11,11 +11,11 @@ public class Chat {
     @ColumnInfo(name = "_id")
     private Integer id;
 
-    @ColumnInfo(name = "сhat_id")
+    @ColumnInfo(name = "chat_id")
     private Integer chatId;
 
     @ColumnInfo(name = "attachment")
-    private Integer chatAttachment;
+    private String chatAttachment;
 
     @ColumnInfo(name = "unread_count")
     private Integer unreadMessageCount;
@@ -51,11 +51,11 @@ public class Chat {
         this.chatId = chatId;
     }
 
-    public Integer getChatAttachment() {
+    public String getChatAttachment() {
         return chatAttachment;
     }
 
-    public void setChatAttachment(Integer chatAttachment) {
+    public void setChatAttachment(String chatAttachment) {
         this.chatAttachment = chatAttachment;
     }
 
@@ -106,4 +106,5 @@ public class Chat {
     public void setLastMessageTime(String lastMessageTime) {
         mLastMessageTime = lastMessageTime;
     }
+
 }

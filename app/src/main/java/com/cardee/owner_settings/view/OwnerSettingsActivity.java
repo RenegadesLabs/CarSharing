@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.owner_notifications.view.OwnerNotifActivity;
 import com.cardee.owner_settings.presenter.OwnerSettingsPresenter;
+import com.cardee.renter_notifications.view.RenterNotifActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,8 @@ public class OwnerSettingsActivity extends AppCompatActivity implements OwnerSet
 
     @OnClick(R.id.renter_card)
     public void onRenterNotifClicked() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(this, RenterNotifActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.owner_card)

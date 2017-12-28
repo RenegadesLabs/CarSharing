@@ -51,6 +51,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private ReviewListAdapter mReviewAdapter;
     private Toast mCurrentToast;
     private byte[] mPictureByteArray;
+    private boolean mEditable;
 
     @BindView(R.id.profile_info_container)
     View mContainer;
@@ -109,37 +110,42 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         setContentView(R.layout.activity_owner_profile_info);
         ButterKnife.bind(this);
 
+        getIntentExtras();
         initPresenter();
         initToolBar();
         initAdapters();
         initCarList(mCarsListView);
         initReviewList(mReviewsListView);
-        initListners();
+        initEditableState();
 
         mPresenter.getOwnerInfo();
     }
 
+    private void initEditableState() {
+        if (mEditable) {
+            mProfilePhotoEdit.setVisibility(View.VISIBLE);
+            mProfilePhotoEdit.setOnClickListener(view -> verifyPermissionAndChangeImage());
+            mNoteEdit.setVisibility(View.VISIBLE);
+            mNoteEdit.setOnClickListener(view -> mPresenter.changeNote(OwnerProfileInfoActivity.this));
+        } else {
+            mProfilePhotoEdit.setOnClickListener(null);
+            mProfilePhotoEdit.setVisibility(View.GONE);
+            mNoteEdit.setOnClickListener(null);
+            mNoteEdit.setVisibility(View.GONE);
+        }
+    }
+
+    private void getIntentExtras() {
+        Intent intent = getIntent();
+        mEditable = intent.getBooleanExtra("editable", false);
+    }
+
     private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
 
-    }
-
-    private void initListners() {
-        mNoteEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.changeNote(OwnerProfileInfoActivity.this);
-            }
-        });
-        mProfilePhotoEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verifyPermissionAndChangeImage();
-            }
-        });
     }
 
     private void verifyPermissionAndChangeImage() {
@@ -154,7 +160,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private void initAdapters() {
         mCarsAdapter = new CarPreviewListAdapter(this);
         mReviewAdapter = new ReviewListAdapter(this);
-        mCarsAdapter.subscribe(mPresenter);
+        if (mEditable) {
+            mCarsAdapter.subscribe(mPresenter);
+        }
     }
 
     private void initReviewList(RecyclerView mReviewsListView) {
@@ -229,21 +237,25 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
 
     @Override
     public void setProfileImage(String photoLink) {
-        Glide.with(this)
-                .load(photoLink)
-                .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
-                .error(getResources().getDrawable(R.drawable.ic_photo_placeholder))
-                .centerCrop()
-                .transform(new CircleTransform(this))
-                .into(mProfilePhoto);
+        if (!this.isDestroyed()) {
+            Glide.with(this)
+                    .load(photoLink)
+                    .placeholder(getResources().getDrawable(R.drawable.ic_photo_placeholder))
+                    .error(getResources().getDrawable(R.drawable.ic_photo_placeholder))
+                    .centerCrop()
+                    .transform(new CircleTransform(this))
+                    .into(mProfilePhoto);
+        }
     }
 
     public void setProfileImage(byte[] pictureByteArray) {
-        Glide.with(this)
-                .load(pictureByteArray)
-                .centerCrop()
-                .transform(new CircleTransform(this))
-                .into(mProfilePhoto);
+        if (!this.isDestroyed()) {
+            Glide.with(this)
+                    .load(pictureByteArray)
+                    .centerCrop()
+                    .transform(new CircleTransform(this))
+                    .into(mProfilePhoto);
+        }
     }
 
     @Override
@@ -353,6 +365,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     protected void onDestroy() {
         super.onDestroy();
         mReviewAdapter.destroy();
+        mCarsAdapter.destroy();
     }
 
     @Override

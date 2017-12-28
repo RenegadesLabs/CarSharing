@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/filter_sort_bar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@drawable/bg_underlined_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/filter_sort_divider"
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@color/divider"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sort_bar"
+            app:layout_constraintEnd_toEndOf="@id/filter_sort_bar"
+            app:layout_constraintStart_toStartOf="@id/filter_sort_bar"
+            app:layout_constraintTop_toTopOf="@id/filter_sort_bar" />
+
+        <FrameLayout
+            android:id="@+id/btn_open_filter"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sort_bar"
+            app:layout_constraintEnd_toEndOf="@id/filter_sort_divider"
+            app:layout_constraintStart_toStartOf="@id/filter_sort_bar"
+            app:layout_constraintTop_toTopOf="@id/filter_sort_bar" />
+
+        <ImageView
+            android:id="@+id/btn_open_filter_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/widget_margin_xx_small"
+            app:layout_constraintBottom_toBottomOf="@id/btn_open_filter"
+            app:layout_constraintEnd_toStartOf="@+id/btn_open_filter_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/btn_open_filter"
+            app:layout_constraintTop_toTopOf="@id/btn_open_filter"
+            app:srcCompat="@drawable/ic_bookings_dark" />
+
+        <TextView
+            android:id="@+id/btn_open_filter_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="All"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/widget_margin_xx_small"
+            app:layout_constraintBottom_toBottomOf="@id/btn_open_filter"
+            app:layout_constraintEnd_toEndOf="@id/btn_open_filter"
+            app:layout_constraintStart_toEndOf="@id/btn_open_filter_icon"
+            app:layout_constraintTop_toTopOf="@id/btn_open_filter" />
+
+        <FrameLayout
+            android:id="@+id/btn_open_sort"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/filter_sort_bar"
+            app:layout_constraintEnd_toEndOf="@id/filter_sort_bar"
+            app:layout_constraintStart_toStartOf="@id/filter_sort_divider"
+            app:layout_constraintTop_toTopOf="@id/filter_sort_bar" />
+
+        <ImageView
+            android:id="@+id/btn_open_sort_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/widget_margin_xx_small"
+            app:layout_constraintBottom_toBottomOf="@id/btn_open_sort"
+            app:layout_constraintEnd_toStartOf="@+id/btn_open_sort_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/btn_open_sort"
+            app:layout_constraintTop_toTopOf="@id/btn_open_sort"
+            app:srcCompat="@drawable/ic_bookings_dark" />
+
+        <TextView
+            android:id="@+id/btn_open_sort_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="Status"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/widget_margin_xx_small"
+            app:layout_constraintBottom_toBottomOf="@id/btn_open_sort"
+            app:layout_constraintEnd_toEndOf="@id/btn_open_sort"
+            app:layout_constraintStart_toEndOf="@id/btn_open_sort_icon"
+            app:layout_constraintTop_toTopOf="@id/btn_open_sort" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/booking_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/widget_padding_mid"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_sort_bar" />
+
+        <FrameLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/booking_list"
+            app:layout_constraintEnd_toEndOf="@id/booking_list"
+            app:layout_constraintStart_toStartOf="@id/booking_list"
+            app:layout_constraintTop_toTopOf="@id/booking_list">
+
+            <ProgressBar
+                android:id="@+id/home_progress"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:layout_gravity="center"
+                android:theme="@style/LoadingIndicator" />
+        </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>

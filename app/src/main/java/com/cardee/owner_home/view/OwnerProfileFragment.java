@@ -85,6 +85,10 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
         initMenuList(mMenuListView);
 
         mPresenter.setOnClickListenerToHeader(mHeaderContainer);
+
+        //show placeholder;
+        setProfileImage(null);
+
         mPresenter.loadProfile();
         return rootView;
     }
@@ -101,6 +105,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void openOwnerProfile() {
         Intent intent = new Intent(getActivity(), OwnerProfileInfoActivity.class);
+        intent.putExtra("editable", true);
         startActivityForResult(intent, GET_PICTURE_REQUEST);
     }
 

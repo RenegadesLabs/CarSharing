@@ -1,14 +1,14 @@
 package com.cardee.owner_car_details.view.viewholder;
 
 
-import android.content.Context;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
@@ -19,11 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
 import com.cardee.custom.modal.BookingPickerMenuFragment;
+import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
 import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
-import com.cardee.domain.owner.entity.mapper.CarDetailsToRentalTermsMapper;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter;
@@ -32,11 +31,11 @@ import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
 import com.cardee.owner_car_details.view.listener.ChildProgressListener;
-import com.cardee.owner_car_details.view.service.RentalStringDelegate;
 import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
+import com.cardee.util.DateStringDelegate;
 
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, RentalDetailsContract.ControlView,
@@ -68,7 +67,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private View rentalTermsEdit;
 
     private RentalDetails hourlyRental;
-    private RentalStringDelegate stringDelegate;
+    private DateStringDelegate stringDelegate;
     private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
     private Toast currentToast;
@@ -119,7 +118,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         setInstantViewsState(instantBookingSwitch.isChecked());
         setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
         setCashViewState(acceptCashSwitch.isChecked());
-        stringDelegate = new RentalStringDelegate(context);
+        stringDelegate = new DateStringDelegate(context);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Review {
     private Renter renter;
 
     public Float getRate() {
-        return rate;
+        return rate == null ? 0 : rate;
     }
 
     public void setRate(Float rate) {

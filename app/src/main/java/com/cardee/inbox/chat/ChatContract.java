@@ -20,5 +20,6 @@ public interface ChatContract {
 
         void showAllChats(List<InboxChat> chatList);
 
+        void showChat();
     }
 }

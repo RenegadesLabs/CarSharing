@@ -400,6 +400,9 @@
     <string name="two_days_before">2 days before</string>
     <string name="off">Off</string>
 
+    <!--Renter notifications-->
+    <string name="renter_notif_title">Renter Notifications</string>
+
     <!--Owner cardee-->
     <string name="owner_cardee_title">Cardee</string>
     <string name="mobile_one_text">Mobile 1</string>
@@ -427,6 +430,22 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
+    <!--Car Reviews-->
+    <string name="car_reviews_condition">Condition &amp; Cleanliness</string>
+    <string name="car_reviews_comfort">Comfort &amp; Performance</string>
+    <string name="car_reviews_car_owner">Car Owner</string>
+    <string name="car_reviews_overall">Overall Experience</string>
+    <string name="car_reviews_ratings">\u0020Rating</string>
+    <string name="car_reviews">\u0020Review</string>
+
+    <!--Car returned-->
+    <string name="car_returned_title">Car Returned!</string>
+    <string name="car_returned_rate">Rate\u0020</string>
+    <string name="car_returned_rental_period">Rental Period</string>
+    <string name="tell_us_more">Tell us more</string>
+    <string name="car_returned_comment_hint">Add a comment on %s\’s profile..</string>
+    <string name="send_comment_success">Comment sent</string>
+    <string name="car_returned_period_template">%s\u0020\u0020to\u0020\u0020%s</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -520,4 +539,8 @@
     <string name="booking_state_collected">Collected</string>
     <string name="booking_state_collecting">Collecting</string>
     <string name="booking_state_completed">Completed</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+
+
 </resources>

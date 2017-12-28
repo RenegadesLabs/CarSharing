@@ -1,11 +1,14 @@
 package com.cardee.data_source.remote;
 
 
+import android.util.Log;
+
 import com.cardee.CardeeApp;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
+import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 
 import java.io.IOException;
@@ -14,6 +17,7 @@ import retrofit2.Response;
 
 public class RemoteBookingDataSource implements BookingDataSource {
 
+    private static final String TAG = RemoteBookingDataSource.class.getSimpleName();
     private static RemoteBookingDataSource INSTANCE;
 
     private final Bookings api;
@@ -30,35 +34,67 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(Callback callback) {
+    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
         try {
-            Response<BookingResponse> response = api.getOwnerBookings().execute();
+            Response<BookingResponse> response = api.getOwnerBookings(filter, sort).execute();
             if (response.isSuccessful() && response.body() != null) {
-                callback.onSuccess(response.body().getBookings());
+                bookingsCallback.onSuccess(response.body().getBookings());
                 return;
             }
-            handleErrorResponse(response.body(), callback);
+            handleErrorResponse(response.body(), bookingsCallback);
         } catch (IOException ex) {
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
+            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
         }
     }
 
     @Override
-    public void obtainRenterBookings(Callback callback) {
+    public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
 
     }
 
-    private void handleErrorResponse(BookingResponse response, BookingDataSource.Callback callback) {
+    @Override
+    public void obtainBookingById(int id, BookingCallback callback) {
+        api.getBookingById(id).subscribe(response -> {
+            if (response.isSuccessful()) {
+                callback.onSuccess(response.getBooking());
+                return;
+            }
+            handleErrorResponse(response, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    @Override
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+        ReviewAsOwner reviewAsOwner = new ReviewAsOwner();
+        reviewAsOwner.setRating((int) rate);
+        reviewAsOwner.setReviewFromOwner(review);
+
+        api.sendBookingReview(bookingId, reviewAsOwner).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(noDataResponse, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    private void handleErrorResponse(BaseResponse response, BaseCallback bookingsCallback) {
         if (response == null) {
-            callback.onError(new Error(Error.Type.OTHER, "null"));
+            bookingsCallback.onError(new Error(Error.Type.OTHER, "null"));
             return;
         }
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {
-            callback.onError(new Error(Error.Type.SERVER, "Server error"));
+            bookingsCallback.onError(new Error(Error.Type.SERVER, "Server error"));
         } else if (response.getResponseCode() == BaseResponse.ERROR_CODE_UNAUTHORIZED) {
-            callback.onError(new Error(Error.Type.AUTHORIZATION, "Unauthorized"));
+            bookingsCallback.onError(new Error(Error.Type.AUTHORIZATION, "Unauthorized"));
         } else {
-            callback.onError(new Error(Error.Type.OTHER, "Undefined error"));
+            bookingsCallback.onError(new Error(Error.Type.OTHER, "Undefined error"));
             throw new IllegalArgumentException("Unsupported response code: " + response.getResponseCode());
         }
     }

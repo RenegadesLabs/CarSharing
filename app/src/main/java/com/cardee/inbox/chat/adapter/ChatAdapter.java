@@ -1,6 +1,7 @@
-package com.cardee.inbox.chat;
+package com.cardee.inbox.chat.adapter;
 
 import android.content.Context;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.domain.inbox.usecase.entity.InboxChat;
+import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private List<InboxChat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<InboxChat> mOnClickSubject;
+    private final PublishSubject<Integer> mUnreadSubject;
+    private final UtcDateFormatter mDateFormatter;
 
-    ChatAdapter(Context context) {
+    public ChatAdapter(Context context) {
         mInboxChats = new ArrayList<>();
+        mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
+        mUnreadSubject = PublishSubject.create();
     }
 
     @Override
@@ -40,38 +47,51 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         InboxChat chat = mInboxChats.get(position);
+        mRequestManager
+                .load(chat.getRecipientPhotoUrl())
+                .centerCrop()
+                .placeholder(R.drawable.ic_photo_placeholder)
+                .transform(new CircleTransform(CardeeApp.context))
+                .into(holder.mAvatar);
+        mRequestManager
+                .load(chat.getCarPhotoUrl())
+                .centerCrop()
+                .into(holder.mCarPreview);
 
-        mRequestManager.load(chat.getRecipientPhotoUrl()).into(holder.mAvatar);
-        mRequestManager.load(chat.getCarPhotoUrl()).into(holder.mCarPreview);
         holder.mCompanionName.setText(chat.getRecipientName());
         holder.mLastMessage.setText(chat.getLastMessageText());
-        holder.mLastMessageTime.setText(chat.getLastMessageTime());
-
+        holder.mLastMessageTime.setText(mDateFormatter.formatDate(chat.getLastMessageTime()));
+        setUnreadMessageCount(chat, holder);
         holder.mContainer.setOnClickListener(view -> mOnClickSubject.onNext(chat));
     }
 
-    void addItems(List<InboxChat> list) {
+    private void setUnreadMessageCount(InboxChat chat, ChatViewHolder holder) {
+        int unreadMessages = chat.getUnreadMessageCount();
+        if (unreadMessages == 0) {
+            holder.mUnreadCount.setText(null);
+            holder.mUnreadCount.setVisibility(View.GONE);
+            holder.mUnreadView.setVisibility(View.GONE);
+        } else {
+            holder.mUnreadCount.setText(String.valueOf(unreadMessages));
+            holder.mUnreadCount.setVisibility(View.VISIBLE);
+            holder.mUnreadView.setVisibility(View.VISIBLE);
+        }
+        mUnreadSubject.onNext(unreadMessages);
+    }
+
+    public void addItems(List<InboxChat> list) {
+        mInboxChats.clear();
         mInboxChats.addAll(list);
         notifyDataSetChanged();
     }
 
-    void updateItem(InboxChat newChat) {
-        int position = mInboxChats.indexOf(newChat);
-        if (isChatExist(position)) {
-            mInboxChats.add(position, newChat);
-            notifyItemChanged(position);
-        } else {
-            mInboxChats.add(0, newChat);
-            notifyDataSetChanged();
-        }
+    private void updateList(List<InboxChat> newChatList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ChatDiffCallback(mInboxChats, newChatList));
+        diffResult.dispatchUpdatesTo(this);
     }
 
     public void subscribe(Consumer<InboxChat> consumer) {
         mOnClickSubject.subscribe(consumer);
-    }
-
-    private boolean isChatExist(int position) {
-        return position != -1;
     }
 
     @Override
@@ -84,6 +104,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         View mContainer;
         ImageView mAvatar;
         ImageView mCarPreview;
+        ImageView mUnreadView;
+        TextView mUnreadCount;
 
         TextView mCompanionName;
         TextView mLastMessage;
@@ -94,6 +116,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             mContainer = itemView;
             mAvatar = itemView.findViewById(R.id.chat_avatar);
             mCarPreview = itemView.findViewById(R.id.chat_car_preview);
+            mUnreadView = itemView.findViewById(R.id.chat_unread_message);
+            mUnreadCount = itemView.findViewById(R.id.chat_unread_message_count);
+
             mCompanionName = itemView.findViewById(R.id.chat_companion_name);
             mLastMessage = itemView.findViewById(R.id.chat_last_message);
             mLastMessageTime = itemView.findViewById(R.id.chat_last_message_time);

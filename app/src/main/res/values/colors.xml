@@ -13,6 +13,7 @@
     <color name="main_disabled">#d8d8d8</color>
     <color name="divider">#e2e2e2</color>
     <color name="divider_light">#d0d0d0</color>
+    <color name="divider_dark">#BBBBBB</color>
     <color name="bg_main">#ffffff</color>
     <color name="bg_widget">#ffffff</color>
     <color name="bg_widget_pressed">#d6d6d6</color>
@@ -61,4 +62,7 @@
     <color name="booking_state_completed">#569be7</color>
 
     <color name="booking_subtitle">#8c96a0</color>
+
+    <color name="rate_star">#F2B632</color>
+    <color name="rate_star_inactive">#D8D8D8</color>
 </resources>

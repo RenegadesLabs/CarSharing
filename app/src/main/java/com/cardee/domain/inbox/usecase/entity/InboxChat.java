@@ -2,7 +2,11 @@ package com.cardee.domain.inbox.usecase.entity;
 
 public class InboxChat {
 
+    private Integer databaseId;
+
     private Integer mChatId;
+
+    private String chatAttachment;
 
     private Integer mUnreadMessageCount;
 
@@ -16,7 +20,6 @@ public class InboxChat {
 
     private String mCarPhotoUrl;
 
-
     public InboxChat() {
     }
 
@@ -25,7 +28,7 @@ public class InboxChat {
     }
 
     public Integer getUnreadMessageCount() {
-        return mUnreadMessageCount;
+        return mUnreadMessageCount == null ? 0 : mUnreadMessageCount;
     }
 
     public String getRecipientName() {
@@ -48,6 +51,14 @@ public class InboxChat {
         return mCarPhotoUrl;
     }
 
+    public Integer getDatabaseId() {
+        return databaseId;
+    }
+
+    public String getChatAttachment() {
+        return chatAttachment;
+    }
+
     public static class Builder {
 
         private InboxChat mInboxChat;
@@ -56,8 +67,18 @@ public class InboxChat {
             mInboxChat = new InboxChat();
         }
 
+        public Builder withDatabaseId(Integer databaseId) {
+            mInboxChat.databaseId = databaseId;
+            return this;
+        }
+
         public Builder withChatId(Integer chatId) {
             mInboxChat.mChatId = chatId;
+            return this;
+        }
+
+        public Builder withChatAttachment(String chatAttachment) {
+            mInboxChat.chatAttachment = chatAttachment;
             return this;
         }
 
@@ -94,5 +115,27 @@ public class InboxChat {
         public InboxChat build() {
             return mInboxChat;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InboxChat inboxChat = (InboxChat) o;
+
+        if (mChatId != null ? !mChatId.equals(inboxChat.mChatId) : inboxChat.mChatId != null)
+            return false;
+        if (mUnreadMessageCount != null ? !mUnreadMessageCount.equals(inboxChat.mUnreadMessageCount) : inboxChat.mUnreadMessageCount != null)
+            return false;
+        return mLastMessageText != null ? mLastMessageText.equals(inboxChat.mLastMessageText) : inboxChat.mLastMessageText == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mChatId != null ? mChatId.hashCode() : 0;
+        result = 31 * result + (mUnreadMessageCount != null ? mUnreadMessageCount.hashCode() : 0);
+        result = 31 * result + (mLastMessageText != null ? mLastMessageText.hashCode() : 0);
+        return result;
     }
 }

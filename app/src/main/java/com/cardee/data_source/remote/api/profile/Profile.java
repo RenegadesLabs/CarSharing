@@ -13,6 +13,7 @@ import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -22,7 +23,7 @@ public interface Profile {
 
     @GET("profiles/owner")
     @Headers("Content-Type: application/json")
-    Observable<OwnerProfileResponse> loadOwnerProfile();
+    Single<OwnerProfileResponse> loadOwnerProfile();
 
     @GET("profiles/owner/cars")
     @Headers("Content-Type: application/json")
@@ -30,7 +31,7 @@ public interface Profile {
 
     @GET("profiles/renter")
     @Headers("Content-Type: application/json")
-    Observable<RenterProfileResponse> loadRenterProfile();
+    Single<RenterProfileResponse> loadRenterProfile();
 
     //TODO: implement
     void uploadProfilePhoto();
@@ -38,29 +39,29 @@ public interface Profile {
 
     @PUT("profiles/owner/note")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> updateOwnerNote(@Body ChangeNoteRequest changeNoteRequest);
+    Single<NoDataResponse> updateOwnerNote(@Body ChangeNoteRequest changeNoteRequest);
 
     @PUT("profiles/renter/note")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> updateRenterNote(@Body ChangeNoteRequest changeNoteRequest);
+    Single<NoDataResponse> updateRenterNote(@Body ChangeNoteRequest changeNoteRequest);
 
     @PUT("profiles/settings")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> updateNotificationSettings();
+    Single<NoDataResponse> updateNotificationSettings();
 
     @PUT("profiles/password")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> changePassword(@Body PassChangeRequest request);
+    Single<NoDataResponse> changePassword(@Body PassChangeRequest request);
 
     @PUT("profiles/details")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> changeName(@Body ChangeNameRequest request);
+    Single<NoDataResponse> changeName(@Body ChangeNameRequest request);
 
     @PUT("profiles/details")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> changeEmail(@Body ChangeEmailRequest request);
+    Single<NoDataResponse> changeEmail(@Body ChangeEmailRequest request);
 
     @PUT("profiles/details")
     @Headers("Content-Type: application/json")
-    Observable<NoDataResponse> changePhone(@Body ChangePhoneRequest request);
+    Single<NoDataResponse> changePhone(@Body ChangePhoneRequest request);
 }

@@ -184,9 +184,19 @@
         <item name="android:textSize">@dimen/text_regular</item>
     </style>
 
+    <style name="TextSettingsLarge">
+        <item name="android:textColor">@color/text_owner_profile_name</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
     <style name="TextSettingsRegular">
         <item name="android:textColor">@color/text_owner_profile_name</item>
         <item name="android:textSize">@dimen/text_regular</item>
+    </style>
+
+    <style name="TextSettingsSmall">
+        <item name="android:textColor">@color/text_owner_profile_name</item>
+        <item name="android:textSize">@dimen/text_small</item>
     </style>
 
     <style name="TextClickableRed" parent="TextInfo">
@@ -198,6 +208,14 @@
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/text_account_settings</item>
+        <item name="colorControlActivated">@color/text_account_settings</item>
+    </style>
+
+    <style name="ChatEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/text_account_settings</item>
+        <item name="textColorError">@color/red_error</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
 
@@ -213,6 +231,7 @@
     <style name="Color1SwitchStyle">
         <item name="colorControlActivated">@color/blue</item>
     </style>
+
     <style name="InboxTabItemTextStyle">
         <item name="android:textColor">@color/bg_main</item>
         <item name="android:textStyle">bold</item>
@@ -231,5 +250,9 @@
         <item name="android:layout_width">8dp</item>
         <item name="android:layout_height">8dp</item>
         <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="RatingBar" parent="AppTheme">
+        <item name="colorControlActivated">@color/rate_star</item>
     </style>
 </resources>

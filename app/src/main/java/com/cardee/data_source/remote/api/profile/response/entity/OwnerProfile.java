@@ -25,7 +25,7 @@ public class OwnerProfile extends ErrorResponseBody {
     private String address;
     @Expose
     @SerializedName("acceptance")
-    private String acceptance;
+    private Float acceptance;
     @Expose
     @SerializedName("response_time")
     private String responseTime;
@@ -88,11 +88,11 @@ public class OwnerProfile extends ErrorResponseBody {
         this.name = name;
     }
 
-    public String getAcceptance() {
+    public Float getAcceptance() {
         return acceptance;
     }
 
-    public void setAcceptance(String acceptance) {
+    public void setAcceptance(Float acceptance) {
         this.acceptance = acceptance;
     }
 

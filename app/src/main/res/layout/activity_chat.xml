@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".inbox.chat.chat_message.view.ChatActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Renter Name" />
+
+            <ImageView
+                android:id="@+id/toolbar_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/white"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <ImageView
+                android:id="@+id/car_photo"
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_no_car" />
+
+            <TextView
+                android:id="@+id/car_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="Mazda 3"
+                android:textStyle="bold"
+                android:theme="@style/TextSettingsRegular"
+                app:layout_constraintBottom_toTopOf="@+id/car_availability"
+                app:layout_constraintStart_toEndOf="@id/car_photo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/car_licence_plate_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="SLE8938Y"
+                android:theme="@style/TextSettingsRegular"
+                app:layout_constraintBottom_toBottomOf="@id/car_title"
+                app:layout_constraintStart_toEndOf="@id/car_title" />
+
+            <TextView
+                android:id="@id/car_availability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="24 Mar, 9am  to  27 Mar, 8am"
+                android:theme="@style/TextSettingsSmall"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/car_photo"
+                app:layout_constraintTop_toBottomOf="@id/car_title" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/divider_dark"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@id/add"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginStart="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:background="@null"
+        android:backgroundTint="@null"
+        android:hint="Your message..."
+        android:theme="@style/ChatEditTextStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/send"
+        app:layout_constraintStart_toEndOf="@id/add" />
+
+    <TextView
+        android:id="@id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="14dp"
+        android:text="Send"
+        android:theme="@style/TextClickable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

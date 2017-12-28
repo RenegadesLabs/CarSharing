@@ -18,7 +18,7 @@ import com.cardee.owner_car_details.presenter.AvailabilityPresenter;
 import com.cardee.owner_car_details.view.adapter.AvailabilityCalendarAdapter;
 import com.cardee.owner_car_details.view.config.AvailabilityConfig;
 import com.cardee.owner_car_details.view.listener.AvailabilityCalendarListener;
-import com.cardee.owner_car_details.view.service.RentalStringDelegate;
+import com.cardee.util.DateStringDelegate;
 
 import java.util.Date;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     private AvailabilityCalendarAdapter adapter;
     private View progress;
     private AvailabilityPresenter presenter;
-    private RentalStringDelegate titleDelegate;
+    private DateStringDelegate titleDelegate;
 
     private Toast currentToast;
 
@@ -57,7 +57,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
         adapter = new AvailabilityCalendarAdapter();
         adapter.setListener(this);
         calendarView.setSelectionAdapter(adapter);
-        titleDelegate = new RentalStringDelegate(this);
+        titleDelegate = new DateStringDelegate(this);
         progress = findViewById(R.id.progress_layout);
         initState();
     }

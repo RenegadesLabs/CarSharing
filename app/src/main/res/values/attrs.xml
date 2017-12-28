@@ -27,4 +27,15 @@
         <attr name="body_text_color" format="color" />
         <attr name="current_date_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="CustomRatingBar">
+        <attr name="maxStars" format="integer"/>
+        <attr name="stars" format="float"/>
+        <attr name="starOff" format="reference|integer"/>
+        <attr name="starOn" format="reference|integer"/>
+        <attr name="starHalf" format="reference|integer"/>
+        <attr name="starPadding" format="dimension"/>
+        <attr name="onlyForDisplay" format="boolean"/>
+        <attr name="halfStars" format="boolean"/>
+    </declare-styleable>
 </resources>

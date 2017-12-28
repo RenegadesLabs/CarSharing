@@ -9,20 +9,19 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.cardee.R;
-import com.cardee.domain.inbox.usecase.entity.InboxAlert;
-import com.cardee.domain.inbox.usecase.entity.InboxChat;
-
-import java.util.List;
 
 public class InboxFragment extends Fragment implements InboxContract.View {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private InboxPageAdapter mPageAdapter;
-    private TabItem mAlertsTab;
-    private TabItem mChatsTab;
+    private ImageView mAlertDot;
+    private ImageView mChatDot;
+
+    private InboxContract.Presenter mInboxPresenterImp;
 
     public static InboxFragment newInstance() {
         Bundle args = new Bundle();
@@ -34,20 +33,23 @@ public class InboxFragment extends Fragment implements InboxContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPageAdapter = new InboxPageAdapter(getChildFragmentManager());
+        mInboxPresenterImp = new InboxPresenterImp();
+        mInboxPresenterImp.init(this);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
-        mPageAdapter = new InboxPageAdapter(getChildFragmentManager());
+
         mViewPager = rootView.findViewById(R.id.inbox_fragment_viewpager);
         mViewPager.setAdapter(mPageAdapter);
 
-        mAlertsTab = rootView.findViewById(R.id.inbox_fragment_tab_alerts);
-        mChatsTab = rootView.findViewById(R.id.inbox_fragment_tab_chats);
-
         mTabLayout = rootView.findViewById(R.id.inbox_fragment_tabs);
+
+        mAlertDot = mTabLayout.getTabAt(0).getCustomView().findViewById(R.id.tab_notification);
+        mChatDot = mTabLayout.getTabAt(1).getCustomView().findViewById(R.id.tab_notification);
+
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -75,17 +77,12 @@ public class InboxFragment extends Fragment implements InboxContract.View {
     }
 
     @Override
-    public void showProgress(boolean show) {
-
+    public void setAlertTabState(boolean isUnread) {
+        mAlertDot.setVisibility(isUnread ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
-    public void showMessage(String message) {
-
-    }
-
-    @Override
-    public void showMessage(int messageId) {
-
+    public void setChatTabState(boolean isUnread) {
+        mChatDot.setVisibility(isUnread ? View.VISIBLE : View.INVISIBLE);
     }
 }

@@ -1,8 +1,8 @@
 package com.cardee.domain.owner.usecase;
 
+import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerCarsDataSource;
 import com.cardee.data_source.OwnerCarsRepository;
-import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.owner.entity.Car;
@@ -40,6 +40,7 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
             }
         });
     }
+
 
     public static class RequestValues implements UseCase.RequestValues {
 

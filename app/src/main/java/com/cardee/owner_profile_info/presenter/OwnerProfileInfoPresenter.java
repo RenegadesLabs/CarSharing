@@ -67,11 +67,16 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                             mView.setProfileRating(String.format(Locale.getDefault(), "%.1f", rate));
                         }
 
-                        String acceptance = profile.getAcceptance();
-                        if (acceptance == null) {
-                            acceptance = "0";
+                        if (profile.getAcceptance() == null) {
+                            mView.setAcceptance("0");
+                        } else {
+                            float accept = profile.getAcceptance();
+                            if (accept == (long) accept) {
+                                mView.setAcceptance(String.format(Locale.getDefault(), "%d", (long) accept));
+                            } else {
+                                mView.setAcceptance(String.format(Locale.getDefault(), "%.1f", accept));
+                            }
                         }
-                        mView.setAcceptance(acceptance);
 
                         String responseTime = profile.getResponseTime();
                         if (responseTime == null) {

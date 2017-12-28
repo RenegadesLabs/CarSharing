@@ -61,12 +61,12 @@ public class ChatPresenterImp implements ChatContract.Presenter, Consumer<InboxC
 
     @Override
     public void accept(InboxChat inboxChat) throws Exception {
-
+        mView.showChat();
     }
 
     @Override
     public void onDestroy() {
         mView = null;
+        mGetChats.dispose();
     }
-
 }

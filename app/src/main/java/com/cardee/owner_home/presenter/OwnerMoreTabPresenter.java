@@ -31,12 +31,12 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
     }
 
     public void loadProfile() {
-        mView.showProgress(true);
+//        mView.showProgress(true);
         mExecutor.execute(mGetInfoUseCase, null, new UseCase.Callback<GetOwnerInfo.ResponseValues>() {
 
             @Override
             public void onSuccess(GetOwnerInfo.ResponseValues response) {
-                mView.showProgress(false);
+//                mView.showProgress(false);
                 if (mView != null) {
                     OwnerProfile profile = response.getOwnerProfile();
                     if (profile != null) {
@@ -52,7 +52,7 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
 
             @Override
             public void onError(Error error) {
-                mView.showProgress(false);
+//                mView.showProgress(false);
                 mView.showMessage(error.getMessage());
             }
         });
