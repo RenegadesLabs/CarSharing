@@ -3,7 +3,7 @@ package com.cardee.data_source.remote.api.booking.deserializer;
 import android.util.Log;
 
 import com.cardee.data_source.remote.api.ErrorResponseBody;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

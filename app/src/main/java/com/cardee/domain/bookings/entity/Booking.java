@@ -20,6 +20,8 @@ public class Booking {
     private final String carTitle;
     private final Image[] images;
     private final Image primaryImage;
+    private final String renterName;
+    private final String renterPhoto;
 
     private Booking(Integer totalAmount,
                     String timeBegin,
@@ -33,7 +35,8 @@ public class Booking {
                     String plateNumber,
                     String carTitle,
                     Image[] images,
-                    Image primaryImage) {
+                    Image primaryImage,
+                    String renterName, String renterPhoto) {
         this.totalAmount = totalAmount;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
@@ -47,6 +50,8 @@ public class Booking {
         this.carTitle = carTitle;
         this.images = images;
         this.primaryImage = primaryImage;
+        this.renterName = renterName;
+        this.renterPhoto = renterPhoto;
     }
 
     public static class Builder {
@@ -63,6 +68,8 @@ public class Booking {
         private String carTitle;
         private Image[] images;
         private Image primaryImage;
+        private String renterName;
+        private String renterPhoto;
 
         public Builder() {
 
@@ -133,10 +140,20 @@ public class Booking {
             return this;
         }
 
+        public Builder setRenterName(String renterName) {
+            this.renterName = renterName;
+            return this;
+        }
+
+        public Builder setRenterPhoto(String renterPhoto) {
+            this.renterPhoto = renterPhoto;
+            return this;
+        }
+
         public Booking build() {
             return new Booking(totalAmount, timeBegin, timeEnd, bookingId, dateCreated,
                     bookingStateName, bookingStateType, carId, manufactureYear, plateNumber,
-                    carTitle, images, primaryImage);
+                    carTitle, images, primaryImage, renterName, renterPhoto);
         }
     }
 
@@ -154,6 +171,8 @@ public class Booking {
         builder.setPlateNumber(plateNumber);
         builder.setCarTitle(carTitle);
         builder.setImages(Arrays.copyOf(images, images.length));
+        builder.setRenterName(renterName);
+        builder.setRenterPhoto(renterPhoto);
         return builder;
     }
 
@@ -207,5 +226,13 @@ public class Booking {
 
     public Image getPrimaryImage() {
         return primaryImage;
+    }
+
+    public String getRenterName() {
+        return renterName;
+    }
+
+    public String getRenterPhoto() {
+        return renterPhoto;
     }
 }

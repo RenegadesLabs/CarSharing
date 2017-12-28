@@ -91,7 +91,7 @@ public class OwnerMoreTabPresenter implements Consumer<OwnerProfileContract.Acti
 
     public void onDestroy() {
         mView = null;
-        mGetInfoUseCase.unSubscribe();
+//        mGetInfoUseCase.unSubscribe();
     }
 
     public void setAccState(String session) {

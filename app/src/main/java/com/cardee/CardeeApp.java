@@ -2,6 +2,7 @@ package com.cardee;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -26,11 +27,12 @@ public class CardeeApp extends Application {
 
     public static Context context;
     public static Retrofit retrofit;
+    public static Retrofit retrofitMultipart;
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override
@@ -38,10 +40,18 @@ public class CardeeApp extends Application {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
+        HttpClientProvider httpClientProvider = HttpClientProvider.newInstance();
+        GsonConverterFactory gsonConverterFactory = buildGsonConverter();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-                .client(HttpClientProvider.newInstance().provide(this))
-                .addConverterFactory(buildGsonConverter())
+                .client(httpClientProvider.provide(this))
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        retrofitMultipart = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .client(httpClientProvider.provideForMultipart(this))
+                .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }

@@ -184,6 +184,11 @@
         <item name="android:textSize">@dimen/text_regular</item>
     </style>
 
+    <style name="TextSettingsLarge">
+        <item name="android:textColor">@color/text_owner_profile_name</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
     <style name="TextSettingsRegular">
         <item name="android:textColor">@color/text_owner_profile_name</item>
         <item name="android:textSize">@dimen/text_regular</item>
@@ -245,5 +250,9 @@
         <item name="android:layout_width">8dp</item>
         <item name="android:layout_height">8dp</item>
         <item name="android:visibility">visible</item>
+    </style>
+
+    <style name="RatingBar" parent="AppTheme">
+        <item name="colorControlActivated">@color/rate_star</item>
     </style>
 </resources>

@@ -15,6 +15,7 @@
     <color name="divider_light">#d0d0d0</color>
     <color name="divider_dark">#BBBBBB</color>
     <color name="bg_main">#ffffff</color>
+    <color name="bg_window">#f2f2f2</color>
     <color name="bg_widget">#ffffff</color>
     <color name="bg_widget_pressed">#d6d6d6</color>
     <color name="bg_pressed_dim">#05000000</color>
@@ -58,8 +59,14 @@
     <color name="booking_state_canceled">#FF5040</color>
     <color name="booking_state_confirmed">#55b6ad</color>
     <color name="booking_state_collected">#569be7</color>
-    <color name="booking_state_collecting">#569be7</color>
+    <color name="booking_state_collecting">#7c8793</color>
     <color name="booking_state_completed">#569be7</color>
 
     <color name="booking_subtitle">#8c96a0</color>
+    <color name="details_title">#6b727a</color>
+    <color name="bg_additional_info">#e5edf4</color>
+    <color name="text_additional_info">#8b95a0</color>
+
+    <color name="rate_star">#F2B632</color>
+    <color name="rate_star_inactive">#D8D8D8</color>
 </resources>

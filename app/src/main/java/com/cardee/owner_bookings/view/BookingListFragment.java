@@ -1,22 +1,31 @@
 package com.cardee.owner_bookings.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.custom.modal.FilterBookingDialog;
 import com.cardee.custom.modal.SortBookingDialog;
+import com.cardee.domain.bookings.BookingState;
+import com.cardee.domain.bookings.usecase.ObtainBookings;
 import com.cardee.owner_bookings.BookingListAdapter;
+import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;
+import com.cardee.settings.SettingManager;
+import com.cardee.settings.Settings;
 
 public class BookingListFragment extends Fragment
         implements View.OnClickListener, OwnerBookingListContract.View {
@@ -26,6 +35,8 @@ public class BookingListFragment extends Fragment
     private RecyclerView bookingList;
     private View progressLayout;
     private Toast currentToast;
+    private TextView filterValue;
+    private TextView sortValue;
 
     public static Fragment newInstance() {
         return new BookingListFragment();
@@ -34,7 +45,8 @@ public class BookingListFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new OwnerBookingListPresenter(this);
+        Settings settings = SettingManager.getInstance(getActivity()).obtainSettings();
+        presenter = new OwnerBookingListPresenter(this, settings);
         adapter = new BookingListAdapter(presenter, getActivity());
     }
 
@@ -49,6 +61,8 @@ public class BookingListFragment extends Fragment
         progressLayout = rootView.findViewById(R.id.progress_layout);
         rootView.findViewById(R.id.btn_open_filter).setOnClickListener(this);
         rootView.findViewById(R.id.btn_open_sort).setOnClickListener(this);
+        filterValue = rootView.findViewById(R.id.btn_open_filter_title);
+        sortValue = rootView.findViewById(R.id.btn_open_sort_title);
         return rootView;
     }
 
@@ -62,12 +76,10 @@ public class BookingListFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_open_filter:
-                FilterBookingDialog filterDialog = FilterBookingDialog.getInstance(null);
-                filterDialog.show(getActivity().getSupportFragmentManager(), filterDialog.getTag());
+                presenter.showFilter(getActivity());
                 break;
             case R.id.btn_open_sort:
-                SortBookingDialog sortDialog = SortBookingDialog.getInstance(null);
-                sortDialog.show(getActivity().getSupportFragmentManager(), sortDialog.getTag());
+                presenter.showSort(getActivity());
                 break;
         }
     }
@@ -95,5 +107,23 @@ public class BookingListFragment extends Fragment
     @Override
     public void invalidate() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void displaySortType(ObtainBookings.Sort sort) {
+        sortValue.setText(sort == null ? R.string.booking_sort_date : sort.getTitleId());
+    }
+
+    @Override
+    public void displayFilterType(BookingState filter) {
+        filterValue.setText(filter == null ? R.string.booking_state_all : filter.getTitleId());
+    }
+
+    @Override
+    public void openBooking(Integer bookingId, BookingState state) {
+        Intent intent = new Intent(getActivity(), BookingActivity.class);
+        intent.putExtra(OwnerBookingContract.BOOKING_ID, bookingId);
+        intent.putExtra(OwnerBookingContract.BOOKING_STATE, state);
+        getActivity().startActivity(intent);
     }
 }

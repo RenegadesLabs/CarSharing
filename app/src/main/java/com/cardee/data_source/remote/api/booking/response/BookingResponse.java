@@ -3,6 +3,7 @@ package com.cardee.data_source.remote.api.booking.response;
 
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.ErrorResponseBody;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 
 import java.util.List;
 

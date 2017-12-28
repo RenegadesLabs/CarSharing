@@ -2,8 +2,9 @@ package com.cardee.domain.bookings.entity.mapper;
 
 
 import com.cardee.CardeeApp;
-import com.cardee.data_source.remote.api.booking.response.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.common.entity.ImageEntity;
+import com.cardee.data_source.remote.api.reviews.response.entity.Renter;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.owner.entity.Image;
@@ -28,12 +29,20 @@ public class BookingEntityToBookingMapper {
                 primary = images[i];
             }
         }
-        if(primary == null){
+        if (primary == null) {
             primary = new Image(0, "", "", true);
         }
         String beginTime = delegate.formatShortBookingDate(entity.getTimeBegin());
         String endTime = delegate.formatShortBookingDate(entity.getTimeEnd());
-        String createTime = delegate.formatShortBookingDate(entity.getDateCreated());
+        String createTime = delegate.formatCreationDate(entity.getDateCreated());
+
+        String renterName = null;
+        String renterPhoto = null;
+        Renter renter = entity.getRenter();
+        if (renter != null) {
+            renterName = entity.getRenter().getName();
+            renterPhoto = entity.getRenter().getProfilePhoto();
+        }
         return new Booking.Builder()
                 .setTotalAmount(entity.getTotalAmount())
                 .setTimeBegin(beginTime)
@@ -48,6 +57,8 @@ public class BookingEntityToBookingMapper {
                 .setPlateNumber(entity.getCar().getPlateNumber())
                 .setImages(images)
                 .setPrimaryImage(primary)
+                .setRenterName(renterName)
+                .setRenterPhoto(renterPhoto)
                 .build();
     }
 }

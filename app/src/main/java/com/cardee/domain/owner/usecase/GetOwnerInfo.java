@@ -39,10 +39,6 @@ public class GetOwnerInfo implements UseCase<GetOwnerInfo.RequestValues, GetOwne
         });
     }
 
-    public void unSubscribe(){
-        mRepository.unSubscribe();
-    }
-
     public static class RequestValues implements UseCase.RequestValues {
     }
 

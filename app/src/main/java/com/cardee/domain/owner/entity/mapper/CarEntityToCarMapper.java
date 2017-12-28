@@ -21,6 +21,7 @@ public class CarEntityToCarMapper {
         ImageEntity[] imageEntities = carDetails.getImages();
         Image[] images = new Image[imageEntities.length];
         String primaryImageLink = null;
+        String primaryImageThumbnail = null;
         for (int i = 0; i < images.length; i++) {
             ImageEntity imageEntity = imageEntities[i];
             images[i] = new Image(
@@ -29,18 +30,20 @@ public class CarEntityToCarMapper {
                     imageEntity.getThumbnail(),
                     imageEntity.isPrimary());
             if (imageEntity.isPrimary()) {
-                primaryImageLink = imageEntity.getLink();
+                primaryImageLink = imageEntity.getLink() == null ? "" : imageEntity.getLink();
+                primaryImageThumbnail = imageEntity.getThumbnail() == null ? "" : imageEntity.getThumbnail();
             }
         }
         return new Car(carDetails.getCarId(), carDetails.getMake(), carDetails.getTitle(),
                 carDetails.getModel(), carDetails.getVehicleTypeId(), carDetails.getVehicleType(),
                 carDetails.getManufactureYear(), carDetails.getLicencePlateNumber(), carDetails.getBodyType(),
                 carDetails.getEngineCapacity(), carDetails.getCarTransmission(), carDetails.getSeatingCapacity(),
-                primaryImageLink, carEntity.getCarAvailabilityHourlyCount(), carEntity.getCarAvailabilityDailyCount(),
-                carEntity.getCarAvailabilityTimeBegin(), carEntity.getCarAvailabilityTimeEnd(),
-                carEntity.getCarAvailableOrderHours(), carEntity.getCarAvailableOrderDays(),
-                carEntity.getCarAvailabilityHourlyDates(), carEntity.getCarAvailabilityDailyDates(),
-                carDetails.getDescription(), images, null, null, carDetails.getAddress(), null, carDetails.getCarRating());
+                primaryImageLink, primaryImageThumbnail, carEntity.getCarAvailabilityHourlyCount(),
+                carEntity.getCarAvailabilityDailyCount(), carEntity.getCarAvailabilityTimeBegin(),
+                carEntity.getCarAvailabilityTimeEnd(), carEntity.getCarAvailableOrderHours(),
+                carEntity.getCarAvailableOrderDays(), carEntity.getCarAvailabilityHourlyDates(),
+                carEntity.getCarAvailabilityDailyDates(), carDetails.getDescription(), images,
+                null, null, carDetails.getAddress(), null, carDetails.getCarRating());
     }
 
     public List<Car> transform(CarEntity[] carEntities) {
