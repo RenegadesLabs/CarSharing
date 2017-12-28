@@ -75,7 +75,195 @@
             app:layout_constraintStart_toEndOf="@id/booking_status"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/booking_car_picture"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/small_car_picture_height"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@color/red_error"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
 
+        <ProgressBar
+            android:id="@+id/booking_progress"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:theme="@style/LoadingIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/booking_car_picture"
+            app:layout_constraintEnd_toEndOf="@id/booking_car_picture"
+            app:layout_constraintStart_toStartOf="@id/booking_car_picture"
+            app:layout_constraintTop_toTopOf="@id/booking_car_picture" />
+
+        <TextView
+            android:id="@+id/booking_car_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_regular"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:ellipsize="end"
+            android:maxWidth="144dp"
+            android:text="Mazda 3"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/booking_car_picture"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/booking_car_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_regular"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:text="2016"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBaseline_toBaselineOf="@id/booking_car_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/booking_car_title" />
+
+        <TextView
+            android:id="@+id/booking_car_plate_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SLE8938Y"
+            android:textAllCaps="true"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="@id/booking_car_title"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_title" />
+
+        <TextView
+            android:id="@+id/booking_date_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_xx_small"
+            android:text="18 Mar, 5:00pm"
+            android:textColor="@color/booking_subtitle"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="@id/booking_car_plate_number"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_plate_number" />
+
+        <TextView
+            android:id="@+id/rental_period_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Rental Period"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_picture" />
+
+        <TextView
+            android:id="@+id/rental_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:text="24 Mar, 9am to 27 Mar, 8am"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBaseline_toBaselineOf="@id/rental_period_title"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/deliver_to_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Deliver to"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rental_period_title" />
+
+        <TextView
+            android:id="@+id/deliver_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:text="574 Hougang St 51"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBaseline_toBaselineOf="@id/deliver_to_title"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/total_cost_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Total Cost"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deliver_to_title" />
+
+        <TextView
+            android:id="@+id/total_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:text="$180.00"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/total_cost_title"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_decline_request"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_clickable_top_line"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Decline Request"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_accept_request"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@id/btn_accept_request"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_clickable_regular"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Accept Request"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_decline_request" />
+
+        <TextView
+            android:id="@+id/booking_message"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/bg_additional_info"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/widget_padding_regular"
+            android:paddingStart="@dimen/widget_padding_regular"
+            android:text="Accept request to confirm booking"
+            android:textColor="@color/text_additional_info"
+            app:layout_constraintBottom_toTopOf="@id/btn_decline_request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
