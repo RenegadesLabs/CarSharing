@@ -79,14 +79,14 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/message_status_sent"
-            android:layout_width="15dp"
+            android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginEnd="2dp"
             android:layout_marginStart="2dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_chatmark_sent"
-            app:layout_constraintTop_toBottomOf="@id/message_text" />
+            app:layout_constraintTop_toBottomOf="@id/message_text"
+            app:srcCompat="@drawable/ic_chatmark_sent" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/message_status_read"
@@ -98,7 +98,6 @@
             app:layout_constraintEnd_toStartOf="@id/message_status_sent"
             app:layout_constraintTop_toBottomOf="@id/message_text"
             app:srcCompat="@drawable/ic_chatmark_read" />
-
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.LinearLayoutCompat>
