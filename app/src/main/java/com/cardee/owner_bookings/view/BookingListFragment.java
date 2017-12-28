@@ -1,11 +1,14 @@
 package com.cardee.owner_bookings.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import com.cardee.custom.modal.SortBookingDialog;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.usecase.ObtainBookings;
 import com.cardee.owner_bookings.BookingListAdapter;
+import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;
 import com.cardee.settings.SettingManager;
@@ -113,5 +117,13 @@ public class BookingListFragment extends Fragment
     @Override
     public void displayFilterType(BookingState filter) {
         filterValue.setText(filter == null ? R.string.booking_state_all : filter.getTitleId());
+    }
+
+    @Override
+    public void openBooking(Integer bookingId, BookingState state) {
+        Intent intent = new Intent(getActivity(), BookingActivity.class);
+        intent.putExtra(OwnerBookingContract.BOOKING_ID, bookingId);
+        intent.putExtra(OwnerBookingContract.BOOKING_STATE, state);
+        getActivity().startActivity(intent);
     }
 }

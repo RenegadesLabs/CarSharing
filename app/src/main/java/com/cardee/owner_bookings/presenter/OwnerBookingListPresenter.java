@@ -115,6 +115,16 @@ public class OwnerBookingListPresenter
     }
 
     @Override
+    public void onItemClick(Booking item) {
+        Integer bookingId = item.getBookingId();
+        BookingState state = item.getBookingStateType();
+        if (bookingId == null || state == null) {
+            throw new IllegalArgumentException("Invalid bookingId: " + bookingId + " or state: " + state);
+        }
+        view.openBooking(bookingId, state);
+    }
+
+    @Override
     public int count() {
         return bookings.size();
     }

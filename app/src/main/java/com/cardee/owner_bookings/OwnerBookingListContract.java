@@ -19,6 +19,8 @@ public interface OwnerBookingListContract {
         void displaySortType(ObtainBookings.Sort sort);
 
         void displayFilterType(BookingState filter);
+
+        void openBooking(Integer bookingId, BookingState state);
     }
 
     interface Presenter extends BasePresenter {
@@ -32,6 +34,8 @@ public interface OwnerBookingListContract {
         void showFilter(FragmentActivity activity);
 
         Booking onItem(int position);
+
+        void onItemClick(Booking item);
 
         int count();
 
