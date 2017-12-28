@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_petrol_tank">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_handoverPetrolLvlMinus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="@dimen/medium_margin"
+        app:srcCompat="@drawable/ic_btn_minus"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_handoverPetrolLvlPlus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="@dimen/medium_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_btn_plus"/>
+
+    <TextView
+        android:id="@+id/tv_handoverValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@android:color/black"
+        android:text="1/2 Tank"
+        app:layout_constraintEnd_toStartOf="@+id/iv_handoverPetrolLvlPlus"
+        app:layout_constraintStart_toEndOf="@+id/iv_handoverPetrolLvlMinus"/>
+
+</android.support.constraint.ConstraintLayout>

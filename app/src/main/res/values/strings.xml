@@ -430,6 +430,17 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
+    <!--Owner Handover Checklist-->
+    <string name="owner_handover_checklist_title">Handover Checklist</string>
+    <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
+    <string name="owner_handover_checklist_petrol_tank">Tank</string>
+    <string name="owner_handover_checklist_photos_title">Photos / Remarks</string>
+    <string name="owner_handover_checklist_photos_desc">of existing damage, dent, scratches etc.</string>
+    <string name="owner_handover_checklist_photos_add">Add Photo</string>
+    <string name="owner_handover_checklist_photos_add_rem">Add remarks here…</string>
+    <string name="owner_handover_checklist_info">Renter must be present during handover. Ensure checklist information is accurate and complete at the time of handover.</string>
+    <string name="owner_handover_checklist_button">Handover Car</string>
+
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>
     <string name="car_reviews_comfort">Comfort &amp; Performance</string>
