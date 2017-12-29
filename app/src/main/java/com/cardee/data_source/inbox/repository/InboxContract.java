@@ -18,6 +18,4 @@ public interface InboxContract {
     void fetchOrSaveData(List<Chat> remoteChats);
 
     Completable updateChat(Chat chat);
-
-    Observable<Chat> subscribe(String attachment);
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
@@ -26,9 +25,9 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<List<ChatMessage>> getMessages(int chatDatabaseId, int chatServerId) {
-        mMapper.setChatDatabaseId(chatDatabaseId);
-        return mChatApi.getMessages(chatServerId)
+    public Single<List<ChatMessage>> getMessages(int chatId){
+        mMapper.setChatId(chatId);
+        return mChatApi.getMessages(chatId)
                 .subscribeOn(Schedulers.io())
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
@@ -53,14 +52,14 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
 
     private class ToChatMessageMapper implements Mapper<ChatRemoteMessage[], List<ChatMessage>> {
 
-        int chatDatabaseId;
+        int chatId;
 
         @Override
         public List<ChatMessage> map(ChatRemoteMessage[] response) {
             List<ChatMessage> chatMessageList = new ArrayList<>(15);
             for (ChatRemoteMessage chatRemote : response) {
                 ChatMessage chatMessage = new ChatMessage.Builder()
-                        .withChatId(chatDatabaseId)
+                        .withChatId(chatId)
                         .withMessageId(chatRemote.getMessageId())
                         .withMessage(chatRemote.getMessage())
                         .withIsInbox(chatRemote.getInbox())
@@ -72,8 +71,8 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
             return chatMessageList;
         }
 
-        void setChatDatabaseId(int chatDatabaseId) {
-            this.chatDatabaseId = chatDatabaseId;
+        void setChatId(int chatId) {
+            this.chatId = chatId;
         }
     }
 }

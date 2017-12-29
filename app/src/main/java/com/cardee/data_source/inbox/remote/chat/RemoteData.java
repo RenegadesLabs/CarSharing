@@ -20,7 +20,7 @@ public interface RemoteData {
 
     interface ChatSingleSource extends RemoteData {
 
-        Single<List<ChatMessage>> getMessages(int chatDatabaseId, int chatServerId);
+        Single<List<ChatMessage>> getMessages(int chatId);
 
         Completable sendMessage(String newMessage);
 

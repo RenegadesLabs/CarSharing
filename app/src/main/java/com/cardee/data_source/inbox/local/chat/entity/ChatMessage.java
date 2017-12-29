@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "chat_message",
         foreignKeys = @ForeignKey(
                 entity = Chat.class,
-                parentColumns = "_id",
+                parentColumns = "chat_id",
                 childColumns = "chat_owner_id",
                 onDelete = ForeignKey.CASCADE))
 

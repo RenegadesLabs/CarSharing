@@ -22,8 +22,7 @@ public class ChatRepository implements ChatContract {
     private final LocalData.ChatSingleSource mLocalSource;
     private final RemoteData.ChatSingleSource mRemoteSource;
 
-    private int serverId;
-    private int databaseId;
+    private int chatId;
     private String attachment;
 
     public static ChatRepository getInstance() {
@@ -39,29 +38,28 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public void sendChatIdentifier(Integer serverId, Integer databaseId, String attachment) {
-        this.serverId = serverId;
-        this.databaseId = databaseId;
+    public void sendChatIdentifier(Integer chatId, String attachment) {
+        this.chatId = chatId;
         this.attachment = attachment;
     }
 
     @Override
     public Single<ChatInfo> getChatInfo() {
-        return mLocalSource.getChatInfo(databaseId, serverId);
+        return mLocalSource.getChatInfo(chatId);
     }
 
     @Override
     public Flowable<List<ChatMessage>> getLocalMessages() {
-        return mLocalSource.getMessages(databaseId);
+        return mLocalSource.getMessages(chatId);
     }
 
     @Override
     public Completable getRemoteMessages() {
         return Completable.create(emitter ->
-                mRemoteSource.getMessages(databaseId, serverId)
+                mRemoteSource.getMessages(chatId)
                         .subscribeOn(Schedulers.io())
                         .subscribe(messageList -> {
-                            mLocalSource.persistMessages(messageList, databaseId);
+                            mLocalSource.persistMessages(messageList, chatId);
                             if (isLastMessageDidNotRead(messageList)) {
                                 markAsRead(getLastMessageId(messageList), emitter);
                             }
@@ -71,7 +69,7 @@ public class ChatRepository implements ChatContract {
     private void markAsRead(int lastMessageId, CompletableEmitter emitter) {
         mRemoteSource.markAsRead(lastMessageId)
                 .subscribe(() -> {
-                    mLocalSource.markAsRead(databaseId);
+                    mLocalSource.markAsRead(chatId);
                     emitter.onComplete();
                 }, emitter::onError);
     }

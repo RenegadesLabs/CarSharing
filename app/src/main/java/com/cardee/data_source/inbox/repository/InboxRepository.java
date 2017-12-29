@@ -67,34 +67,24 @@ public class InboxRepository implements InboxContract {
     @Override
     public Completable updateChat(Chat chatFromFcm) {
         return Completable.create((CompletableEmitter emitter) ->
-                mChatLocalSource.getChat(chatFromFcm)
+                mChatLocalSource.updateChat(chatFromFcm)
                         .subscribeOn(Schedulers.io())
-                        .subscribe((Chat persistChat) -> updateChatList(chatFromFcm, persistChat),
-                                throwable -> {
-                                    if (mCacheLocalChats != null) {
-                                        getNewChat(chatFromFcm);
-                                    }
-                                }));
+                        .subscribe(emitter::onComplete, throwable -> getNewChat(chatFromFcm)));
     }
 
-    private void updateChatList(Chat chatFromFcm, Chat persistChat) {
-        persistChat.setLastMessageText(chatFromFcm.getLastMessageText());
-        persistChat.setLastMessageTime(chatFromFcm.getLastMessageTime());
-        persistChat.setRecipientName(chatFromFcm.getRecipientName());
-        persistChat.setUnreadMessageCount(chatFromFcm.getUnreadMessageCount());
-        mChatLocalSource.addChat(persistChat);
-    }
+//    private void updateChatList(Chat chatFromFcm, Chat persistChat) {
+//        persistChat.setLastMessageText(chatFromFcm.getLastMessageText());
+//        persistChat.setLastMessageTime(chatFromFcm.getLastMessageTime());
+//        persistChat.setRecipientName(chatFromFcm.getRecipientName());
+//        persistChat.setUnreadMessageCount(chatFromFcm.getUnreadMessageCount());
+//        mChatLocalSource.addChat(persistChat);
+//    }
 
     private void getNewChat(Chat chatFromFcm) {
-        mChatRemoteSource.getSingleChat(chatFromFcm.getChatServerId(), chatFromFcm.getChatAttachment())
+        mChatRemoteSource.getSingleChat(chatFromFcm.getChatId(), chatFromFcm.getChatAttachment())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                         newChat -> mChatLocalSource.addChat(chatFromFcm),
                         responseError -> Log.d(TAG, "Error while obtaining chat information"));
-    }
-
-    @Override
-    public Observable<Chat> subscribe(String attachment) {
-        return null;
     }
 }

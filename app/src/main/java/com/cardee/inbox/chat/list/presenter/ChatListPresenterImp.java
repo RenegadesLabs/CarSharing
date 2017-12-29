@@ -11,7 +11,6 @@ import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.chat.GetChats;
 
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
-import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_DB_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 
 public class ChatListPresenterImp implements ChatListContract.Presenter {
@@ -68,8 +67,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     @Override
     public void onChatClick(Chat chat) {
         Bundle args = new Bundle();
-        args.putInt(CHAT_DB_ID, chat.getChatLocalId());
-        args.putInt(CHAT_SERVER_ID, chat.getChatServerId());
+        args.putInt(CHAT_SERVER_ID, chat.getChatId());
         args.putString(CHAT_ATTACHMENT, mAttachment);
         if (mView != null) {
             mView.showChat(args);

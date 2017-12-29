@@ -11,7 +11,7 @@ import io.reactivex.Single;
 
 public interface ChatContract {
 
-    void sendChatIdentifier(Integer serverId, Integer databaseId, String attachment);
+    void sendChatIdentifier(Integer chatId, String attachment);
 
     Single<ChatInfo> getChatInfo();
 

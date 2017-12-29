@@ -16,7 +16,6 @@ import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
 
-    private static final int NEW_CHAT = 0;
     private static final String TAG = ChatPresenter.class.getSimpleName();
     private final ChatRepository mRepository;
 
@@ -24,7 +23,6 @@ public class ChatPresenter implements ChatContract.Presenter {
     private ActivityViewHolder mViewHolder;
     private Disposable mDisposable;
 
-    private int mChatDatabaseId;
     private int mChatServerId;
     private String mAttachment;
     private boolean isFistChatEntering = true;
@@ -36,7 +34,6 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void init(Bundle bundle, View activityView) {
-        mChatDatabaseId = bundle.getInt(Chat.CHAT_DB_ID, 0);
         mChatServerId = bundle.getInt(Chat.CHAT_SERVER_ID);
         mAttachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         mViewHolder = new ChatViewHolder(activityView);
@@ -44,19 +41,14 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void onChatDataRequest() {
-        switch (mChatDatabaseId) {
-            case NEW_CHAT:
-                //TODO: handling new chat
-                break;
-            default:
-                getLocalChatData();
-                getLocalMessageList();
-                getRemoteChatList();
-        }
+        getLocalChatData();
+        getLocalMessageList();
+        getRemoteChatList();
+
     }
 
     private void getLocalChatData() {
-        mRepository.sendChatIdentifier(mChatServerId, mChatDatabaseId, mAttachment);
+        mRepository.sendChatIdentifier(mChatServerId, mAttachment);
         mRepository.getChatInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(chatInfo -> {

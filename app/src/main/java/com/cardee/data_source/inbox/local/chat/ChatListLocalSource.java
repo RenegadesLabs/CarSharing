@@ -41,9 +41,20 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
+    public Completable updateChat(Chat chat) {
+        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChat(
+                chat.getLastMessageText(),
+                chat.getLastMessageTime(),
+                chat.getRecipientName(),
+                String.valueOf(chat.getUnreadMessageCount()),
+                String.valueOf(chat.getChatId()),
+                chat.getChatAttachment()));
+    }
+
+    @Override
     public Single<Chat> getChat(Chat chat) {
         return mDataBase.getChatDao()
-                .getChat(chat.getChatServerId(), chat.getChatAttachment())
+                .getChat(chat.getChatId(), chat.getChatAttachment())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -54,10 +65,6 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
             List<Chat> listToUpdate = new ArrayList<>();
             for (Chat remoteChat : newChatList) {
                 if (!oldChatList.contains(remoteChat)) {
-                    int position = oldChatList.indexOf(remoteChat);
-                    if (isExistChat(position)) {
-                        remoteChat.setChatLocalId(oldChatList.get(position).getChatLocalId());
-                    }
                     listToUpdate.add(remoteChat);
                 }
             }
@@ -65,10 +72,6 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
                 saveChats(listToUpdate);
             }
         }).subscribeOn(Schedulers.io()).subscribe(() -> Log.e(TAG, "Starting fetch data..."), throwable -> Log.e(TAG, throwable.getMessage()));
-    }
-
-    private boolean isExistChat(int position) {
-        return position != -1;
     }
 
     @Override

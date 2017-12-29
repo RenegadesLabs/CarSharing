@@ -9,16 +9,12 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "chats")
 public class Chat implements Comparable<Chat> {
 
-    public static final String CHAT_DB_ID = "chat_database_id";
     public static final String CHAT_SERVER_ID = "chat_id";
     public static final String CHAT_ATTACHMENT = "chat_attachment";
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    private Integer chatLocalId;
-
+    @PrimaryKey
     @ColumnInfo(name = "chat_id")
-    private Integer chatServerId;
+    private Integer chatId;
 
     @ColumnInfo(name = "attachment")
     private String chatAttachment;
@@ -59,20 +55,12 @@ public class Chat implements Comparable<Chat> {
     @Ignore
     private ChatMessage mChatMessage;
 
-    public Integer getChatLocalId() {
-        return chatLocalId;
+    public Integer getChatId() {
+        return chatId;
     }
 
-    public void setChatLocalId(Integer id) {
-        this.chatLocalId = id;
-    }
-
-    public Integer getChatServerId() {
-        return chatServerId;
-    }
-
-    public void setChatServerId(Integer chatServerId) {
-        this.chatServerId = chatServerId;
+    public void setChatId(Integer chatId) {
+        this.chatId = chatId;
     }
 
     public String getChatAttachment() {
@@ -191,14 +179,14 @@ public class Chat implements Comparable<Chat> {
 
         Chat chat = (Chat) o;
 
-        if (!chatServerId.equals(chat.chatServerId)) return false;
+        if (!chatId.equals(chat.chatId)) return false;
         if (!recipientName.equals(chat.recipientName)) return false;
         return mLastMessageText.equals(chat.mLastMessageText);
     }
 
     @Override
     public int hashCode() {
-        int result = chatServerId.hashCode();
+        int result = chatId.hashCode();
         result = 31 * result + recipientName.hashCode();
         result = 31 * result + mLastMessageText.hashCode();
         return result;
@@ -213,13 +201,9 @@ public class Chat implements Comparable<Chat> {
         }
 
         //base data
-        public Chat.Builder withDatabaseId(Integer databaseId) {
-            mChat.chatLocalId = databaseId;
-            return this;
-        }
 
         public Chat.Builder withChatId(Integer chatId) {
-            mChat.chatServerId = chatId;
+            mChat.chatId = chatId;
             return this;
         }
 

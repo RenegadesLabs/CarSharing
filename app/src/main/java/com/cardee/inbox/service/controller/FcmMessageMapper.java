@@ -17,7 +17,7 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
     public Chat map(Map<String, String> messageData) {
         Chat chat = new Chat();
 
-        chat.setChatServerId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
+        chat.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
         chat.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
         chat.setLastMessageText(messageData.get(Key.Chat.MESSAGE));
         chat.setRecipientName(messageData.get(Key.Chat.SENDER));

@@ -10,6 +10,7 @@ import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -25,14 +26,19 @@ public interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addChats(List<Chat> chats);
 
+    @Query("UPDATE chats " +
+            "SET last_message = :messageText, last_message_time = :messageTime, name = :recipientName, unread_count = :unreadMessageCount " +
+            "WHERE chat_id IS :chatId AND attachment IS :attachment")
+    void updateChat(String messageText, String messageTime, String recipientName, String unreadMessageCount, String chatId, String attachment);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateChats(List<Chat> chats);
 
     @Query("SELECT * FROM chats WHERE chat_id IS :chatId AND attachment IS :attachment")
-    Single<Chat> getChat(Integer chatId, String attachment);
+    Single<Chat> getChat(int chatId, String attachment);
 
 
-    @Query("SELECT * FROM chats WHERE chat_id IS :serverId AND _id IS :databaseId ")
-    Single<Chat> getChatInfo(Integer databaseId, Integer serverId);
+    @Query("SELECT * FROM chats WHERE chat_id IS :chatId")
+    Single<Chat> getChatInfo(int chatId);
 
 }

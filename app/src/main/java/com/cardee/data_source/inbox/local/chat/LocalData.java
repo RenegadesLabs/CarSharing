@@ -6,6 +6,7 @@ import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -23,18 +24,20 @@ public interface LocalData {
 
         void addChat(Chat chat);
 
+        Completable updateChat(Chat chat);
+
         Single<Chat> getChat(Chat chat);
     }
 
     interface ChatSingleSource extends LocalData {
 
-        Single<ChatInfo> getChatInfo(int databaseId, int serverId);
+        Single<ChatInfo> getChatInfo(int chatId);
 
-        Flowable<List<ChatMessage>> getMessages(int databaseId);
+        Flowable<List<ChatMessage>> getMessages(int chatId);
 
         void markAsRead(int chatId);
 
-        void persistMessages(List<ChatMessage> messageList, int databaseId);
+        void persistMessages(List<ChatMessage> messageList, int chatId);
 
         void addNewMessage(ChatMessage chatMessage);
     }

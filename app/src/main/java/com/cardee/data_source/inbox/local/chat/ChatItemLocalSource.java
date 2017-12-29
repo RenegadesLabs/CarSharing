@@ -23,20 +23,20 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
-    public Single<ChatInfo> getChatInfo(int databaseId, int serverId) {
+    public Single<ChatInfo> getChatInfo(int chatId) {
         ToChatInfoMapper chatInfoMapper = new ToChatInfoMapper();
         return mDataBase.getChatDao()
-                .getChatInfo(databaseId, serverId)
+                .getChatInfo(chatId)
                 .subscribeOn(Schedulers.io())
                 .flatMap(chat -> Single.just(chatInfoMapper.map(chat)));
 
     }
 
     @Override
-    public void persistMessages(List<ChatMessage> messageList, int databaseId) {
+    public void persistMessages(List<ChatMessage> messageList, int chatId) {
         Completable.fromRunnable(() -> {
             for (ChatMessage chatMessage : messageList) {
-                chatMessage.setChatId(databaseId);
+                chatMessage.setChatId(chatId);
             }
             mDataBase.getChatMassageDao().persistMessages(messageList);
         }).subscribe();
