@@ -35,6 +35,7 @@ public class RateRentalExpPresenter implements BasePresenter {
     private byte comfortRate;
     private byte ownerRate;
     private byte overallRate;
+    private int mProfileId;
 
     public RateRentalExpPresenter(RateRentalExpView view, int bookingId) {
         mView = view;
@@ -65,6 +66,7 @@ public class RateRentalExpPresenter implements BasePresenter {
                             setRentalPeriod(booking);
                             setCarPhoto(booking);
                             mView.setOwnerPhoto(booking.getOwnerPhoto());
+                            mProfileId = booking.getOwnerId();
                         }
 
                         @Override
@@ -127,4 +129,7 @@ public class RateRentalExpPresenter implements BasePresenter {
         return SecondRateFragment.newInstance(listener, overallRate);
     }
 
+    public int getProfileId() {
+        return mProfileId;
+    }
 }

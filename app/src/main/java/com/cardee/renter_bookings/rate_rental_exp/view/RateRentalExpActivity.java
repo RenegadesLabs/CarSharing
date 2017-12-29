@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
+import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 import com.cardee.renter_bookings.rate_rental_exp.presenter.RateRentalExpPresenter;
 import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
 
@@ -55,6 +57,7 @@ public class RateRentalExpActivity extends AppCompatActivity implements RateRent
         mPresenter = new RateRentalExpPresenter(this, mBookingId);
         mPresenter.getBookingData();
         fragmentManager = getSupportFragmentManager();
+        showFirstFragment();
     }
 
     private void getIntentData() {
@@ -69,10 +72,17 @@ public class RateRentalExpActivity extends AppCompatActivity implements RateRent
         getSupportActionBar().setTitle(null);
     }
 
+    @OnClick(R.id.owner_photo)
+    public void onOwnerPhotoClicked() {
+        Intent intent = new Intent(this, OwnerProfileInfoActivity.class);
+        intent.putExtra("editable", false);
+        intent.putExtra("profile_id", mPresenter.getProfileId());
+        startActivity(intent);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        showFirstFragment();
     }
 
     @Override

@@ -46,9 +46,11 @@ public class BookingEntityToBookingMapper {
         }
 
         String ownerPhoto = null;
+        Integer ownerId = null;
         OwnerProfile owner = entity.getOwner();
         if (owner != null) {
             ownerPhoto = owner.getProfilePhotoLink();
+            ownerId = owner.getProfileId();
         }
 
         return new Booking.Builder()
@@ -68,6 +70,7 @@ public class BookingEntityToBookingMapper {
                 .setRenterName(renterName)
                 .setRenterPhoto(renterPhoto)
                 .setOwnerPhoto(ownerPhoto)
+                .setOwnerId(ownerId)
                 .build();
     }
 }
