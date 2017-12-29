@@ -1,23 +1,24 @@
 package com.cardee.data_source.inbox.remote.api.response;
 
+import com.cardee.data_source.inbox.remote.api.model.entity.ReadStatus;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MessageResponse extends BaseResponse{
+public class MessageResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("message")
-    private String mMessage;
+    @SerializedName("data")
+    private ReadStatus mReadStatus;
 
     public MessageResponse() {
     }
 
-    public String getMessage() {
-        return mMessage;
+    public ReadStatus getReadStatus() {
+        return mReadStatus;
     }
 
-    public void setMessage(String message) {
-        mMessage = message;
+    public void setReadStatus(ReadStatus readStatus) {
+        mReadStatus = readStatus;
     }
 }

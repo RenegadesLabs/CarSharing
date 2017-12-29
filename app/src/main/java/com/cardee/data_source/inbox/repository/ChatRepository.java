@@ -54,13 +54,15 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public Completable getRemoteMessages() {
-        return Completable.create(emitter ->
-                mRemoteSource.getMessages(databaseId, serverId)
-                        .subscribe(messageList -> {
-                            mLocalSource.persistMessages(messageList, databaseId);
-                            emitter.onComplete();
-                        }, emitter::onError));
+    public Single<List<ChatMessage>> getRemoteMessages() {
+        return mRemoteSource.getMessages(databaseId,serverId)
+                .doOnSuccess(messageList -> mLocalSource.persistMessages(messageList, databaseId));
+//        return Completable.create(emitter ->
+//                mRemoteSource.getMessages(databaseId, serverId)
+//                        .subscribe(messageList -> {
+//                            mLocalSource.persistMessages(messageList, databaseId);
+//                            emitter.onComplete();
+//                        }, emitter::onError));
     }
 
     @Override

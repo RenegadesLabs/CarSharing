@@ -17,7 +17,7 @@ public interface ChatContract {
 
     Flowable<List<ChatMessage>> getLocalMessages();
 
-    Completable getRemoteMessages();
+    Single<List<ChatMessage>> getRemoteMessages();
 
     Single<List<ChatMessage>> getNewChat();
 

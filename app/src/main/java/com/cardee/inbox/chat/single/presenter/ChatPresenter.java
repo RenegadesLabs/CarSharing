@@ -1,6 +1,7 @@
 package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
@@ -12,12 +13,12 @@ import com.cardee.inbox.chat.single.view.ChatViewHolder;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
 
     private static final int NEW_CHAT = 0;
+    private static final String TAG = ChatPresenter.class.getSimpleName();
     private final ChatRepository mRepository;
 
     private ChatContract.View mView;
@@ -69,7 +70,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void getLocalMessageList() {
         mRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
-                .distinct()
+                .distinctUntilChanged()
                 .filter(messageList -> !messageList.isEmpty())
                 .subscribe(this::proceedResponse);
     }
@@ -77,8 +78,23 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void getRemoteChatList() {
         mDisposable = mRepository.getRemoteMessages()
                 .doOnSubscribe(disposable -> showProgress(true))
-                .doOnEvent(throwable -> showProgress(false))
+                .doOnEvent((messageList, throwable) -> showProgress(false))
+                .doAfterSuccess(this::checkReadStatus)
                 .subscribe();
+    }
+
+    private void checkReadStatus(List<ChatMessage> messageList) {
+        int lastMessagePosition = messageList.size() - 1;
+        if (isLastMessageDidNotRead(messageList)) {
+            mRepository.markAsRead(messageList.get(lastMessagePosition).getMessageId())
+                    .subscribe(
+                            this::getRemoteChatList,
+                            throwable -> Log.e(TAG, throwable.getMessage()));
+        }
+    }
+
+    private boolean isLastMessageDidNotRead(List<ChatMessage> messageList) {
+        return !messageList.get(messageList.size() - 1).getIsRead();
     }
 
     private void proceedResponse(List<ChatMessage> messageList) {
