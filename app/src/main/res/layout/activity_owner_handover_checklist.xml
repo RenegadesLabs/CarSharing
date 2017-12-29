@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
     <android.support.design.widget.AppBarLayout
@@ -24,99 +24,159 @@
                 style="@style/ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/owner_handover_checklist_title"/>
+                android:text="@string/owner_handover_checklist_title" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_changed"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/rate_star"
+            app:titleTextColor="@color/bg_main">
+
+            <TextView
+                android:id="@+id/toolbar_title_changed"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/owner_handover_checklist_renter_changed" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
 
-    <TextView
-        android:id="@+id/title1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginTop="@dimen/xlarge_margin"
-        android:text="@string/owner_handover_checklist_petrol_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
-
-    <include
-        android:id="@+id/view1"
-        layout="@layout/view_petrol_tank"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title1"/>
-
-    <TextView
-        android:id="@+id/title2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/large_margin"
-        android:layout_marginTop="@dimen/large_margin"
-        android:text="@string/owner_handover_checklist_photos_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1" />
-
-    <TextView
-        android:id="@+id/title2desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/owner_handover_checklist_photos_desc"
-        android:textSize="@dimen/text_small"
-        app:layout_constraintStart_toStartOf="@id/title2"
-        app:layout_constraintTop_toBottomOf="@id/title2"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/bg_petrol_tank"
-        android:layout_margin="@dimen/medium_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title2desc">
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_handoverRemarks"
-            style="@style/CardeeEditTextWithoutUnderlineStyle"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin"
-            android:inputType="textMultiLine|textCapSentences"
-            android:gravity="top"
-            android:hint="@string/owner_handover_checklist_photos_add_rem"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_regular" />
-    </FrameLayout>
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/btn_handoverCar"
-        style="@style/RegularButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_regular_height"
-        android:layout_margin="@dimen/medium_margin"
-        android:background="@drawable/bg_button_regular"
-        android:clickable="true"
-        android:text="@string/owner_handover_checklist_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/xlarge_margin"
+                android:text="@string/owner_handover_checklist_petrol_title"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large_margin"
-        android:paddingStart="@dimen/large_margin"
-        android:paddingEnd="@dimen/large_margin"
-        android:text="@string/owner_handover_checklist_info"
-        android:textSize="@dimen/text_small"
-        app:layout_constraintBottom_toTopOf="@+id/btn_handoverCar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <include
+                android:id="@+id/view1"
+                layout="@layout/view_petrol_tank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title1" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/owner_handover_checklist_photos_title"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+            <TextView
+                android:id="@+id/title2desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/owner_handover_checklist_photos_desc"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintStart_toStartOf="@id/title2"
+                app:layout_constraintTop_toBottomOf="@id/title2" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/images_grid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/widget_margin_small"
+                android:layout_marginStart="@dimen/widget_margin_small"
+                android:layout_marginTop="@dimen/widget_margin_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title2desc" />
+
+            <FrameLayout
+                android:id="@+id/remarks_container"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/medium_margin"
+                android:background="@drawable/bg_petrol_tank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/images_grid">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_handoverRemarks"
+                    style="@style/CardeeEditTextWithoutUnderlineStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/small_margin"
+                    android:gravity="top"
+                    android:hint="@string/owner_handover_checklist_photos_add_rem"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_regular" />
+            </FrameLayout>
+
+            <include
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                layout="@layout/view_checklist_accurate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/remarks_container"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/remarks_container">
+
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/large_margin"
+                android:text="@string/owner_handover_checklist_info"
+                android:textSize="@dimen/text_small"
+                />
+
+            <TextView
+                android:id="@+id/btn_handoverCar"
+                style="@style/RegularButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_regular_height"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:background="@drawable/bg_button_regular"
+                android:clickable="true"
+                android:text="@string/owner_handover_checklist_button" />
+            </LinearLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

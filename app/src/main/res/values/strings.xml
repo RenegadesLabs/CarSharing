@@ -62,6 +62,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
 
+    <string name="yes">Yes</string>
+
     <string name="email_pass_empty_error">You must fill this field</string>
     <string name="auth_error">Authentication error!</string>
     <string name="auth_wrong_cred">Wrong credentials!</string>
@@ -433,6 +435,7 @@
     <!--Owner Handover Checklist-->
     <string name="owner_handover_checklist_title">Handover Checklist</string>
     <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
+    <string name="owner_handover_checklist_master_title">Master Mileage</string>
     <string name="owner_handover_checklist_petrol_tank">Tank</string>
     <string name="owner_handover_checklist_photos_title">Photos / Remarks</string>
     <string name="owner_handover_checklist_photos_desc">of existing damage, dent, scratches etc.</string>
@@ -440,6 +443,8 @@
     <string name="owner_handover_checklist_photos_add_rem">Add remarks here…</string>
     <string name="owner_handover_checklist_info">Renter must be present during handover. Ensure checklist information is accurate and complete at the time of handover.</string>
     <string name="owner_handover_checklist_button">Handover Car</string>
+    <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
+    <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
 
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>

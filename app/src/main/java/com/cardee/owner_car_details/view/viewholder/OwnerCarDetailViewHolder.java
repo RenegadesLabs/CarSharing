@@ -72,34 +72,11 @@ public class OwnerCarDetailViewHolder implements ViewPager.OnPageChangeListener 
 
 
     private void createEventObservable() {
-        mObservable = Observable.create(new ObservableOnSubscribe<OwnerCarDetailsContract.CarDetailEvent>() {
-            @Override
-            public void subscribe(@NonNull final ObservableEmitter<OwnerCarDetailsContract.CarDetailEvent> emitter) throws Exception {
-                mBtnImageEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_IMAGES));
-                    }
-                });
-                mBtnSpecsEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_SPECS));
-                    }
-                });
-                mBtnLocationEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_LOCATION));
-                    }
-                });
-                mBtnDescriptionEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_DESCRIPTION));
-                    }
-                });
-            }
+        mObservable = Observable.create(emitter -> {
+            mBtnImageEdit.setOnClickListener(view -> emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_IMAGES)));
+            mBtnSpecsEdit.setOnClickListener(view -> emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_SPECS)));
+            mBtnLocationEdit.setOnClickListener(view -> emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_LOCATION)));
+            mBtnDescriptionEdit.setOnClickListener(view -> emitter.onNext(new OwnerCarDetailsContract.CarDetailEvent(OwnerCarDetailsContract.Action.EDIT_DESCRIPTION)));
         });
     }
 
