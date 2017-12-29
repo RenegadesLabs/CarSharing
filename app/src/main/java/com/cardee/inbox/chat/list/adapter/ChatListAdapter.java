@@ -99,7 +99,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
 
     public void subscribeToChatClick(Consumer<Chat> clickConsumer) {
         mOnClickSubject
-                .debounce(300, TimeUnit.MILLISECONDS)
                 .subscribe(clickConsumer);
     }
 

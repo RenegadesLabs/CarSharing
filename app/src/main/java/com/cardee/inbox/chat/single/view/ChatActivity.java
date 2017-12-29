@@ -64,7 +64,17 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     @Override
     public void setMessageList(List<ChatMessage> messageList) {
         mAdapter.setMessageList(messageList);
-        mRecyclerView.scrollToPosition(messageList.size() - 1);
+        scrollRecycler(messageList.size() - 1);
+    }
+
+    @Override
+    public void updateAllMessages(List<ChatMessage> messageList) {
+        mAdapter.updateMessageList(messageList);
+        scrollRecycler(messageList.size() - 1);
+    }
+
+    private void scrollRecycler(int position) {
+        mRecyclerView.scrollToPosition(position);
     }
 
     @Override

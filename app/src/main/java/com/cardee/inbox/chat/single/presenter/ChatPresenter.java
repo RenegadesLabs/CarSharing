@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
 
@@ -21,11 +22,12 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     private ChatContract.View mView;
     private ActivityViewHolder mViewHolder;
-    private CompositeDisposable mCompositeDisposable;
+    private Disposable mDisposable;
 
     private int mChatDatabaseId;
     private int mChatServerId;
     private String mAttachment;
+    private boolean isFistChatEntering = true;
 
     public ChatPresenter(ChatContract.View view) {
         mView = view;
@@ -44,10 +46,12 @@ public class ChatPresenter implements ChatContract.Presenter {
     public void onChatDataRequest() {
         switch (mChatDatabaseId) {
             case NEW_CHAT:
-                getRemoteChatData();
+                //TODO: handling new chat
                 break;
             default:
                 getLocalChatData();
+                getLocalMessageList();
+                getRemoteChatList();
         }
     }
 
@@ -60,21 +64,30 @@ public class ChatPresenter implements ChatContract.Presenter {
                     mViewHolder.setCarData(chatInfo.getCarPhotoUrl(), chatInfo.getCarTitle(), chatInfo.getCarLicenseNumber());
                     mViewHolder.setCarBookingData(chatInfo.getBookingTimeBegin(), chatInfo.getBookingTimeEnd());
                 });
-        mRepository.getLocalMessages()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(messageList -> {
-                    if (messageList.isEmpty()) getRemoteChatData();
-                })
-                .subscribe(this::showAllMessages);
     }
 
-    private void getRemoteChatData() {
-        mRepository.getRemoteMessages()
-                .doOnSubscribe(disposable -> {
-                    showProgress(true);
-                })
+    private void getLocalMessageList() {
+        mRepository.getLocalMessages()
+                .observeOn(AndroidSchedulers.mainThread())
+                .distinct()
+                .filter(messageList -> !messageList.isEmpty())
+                .subscribe(this::proceedResponse);
+    }
+
+    private void getRemoteChatList() {
+        mDisposable = mRepository.getRemoteMessages()
+                .doOnSubscribe(disposable -> showProgress(true))
                 .doOnEvent(throwable -> showProgress(false))
                 .subscribe();
+    }
+
+    private void proceedResponse(List<ChatMessage> messageList) {
+        if (isFistChatEntering) {
+            showAllMessages(messageList);
+            isFistChatEntering = false;
+        } else {
+            updateAllMessages(messageList);
+        }
     }
 
     private void showProgress(boolean isShown) {
@@ -89,11 +102,17 @@ public class ChatPresenter implements ChatContract.Presenter {
         }
     }
 
+    private void updateAllMessages(List<ChatMessage> messageList) {
+        if (mView != null) {
+            mView.updateAllMessages(messageList);
+        }
+    }
+
     @Override
     public void onDestroy() {
         mView = null;
-        if (mCompositeDisposable != null && !mCompositeDisposable.isDisposed()) {
-            mCompositeDisposable.dispose();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
     }
 }

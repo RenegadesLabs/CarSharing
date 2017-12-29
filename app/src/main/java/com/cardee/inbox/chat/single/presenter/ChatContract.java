@@ -21,5 +21,7 @@ public interface ChatContract {
     interface View extends BaseView {
 
         void setMessageList(List<ChatMessage> messageList);
+
+        void updateAllMessages(List<ChatMessage> messageList);
     }
 }

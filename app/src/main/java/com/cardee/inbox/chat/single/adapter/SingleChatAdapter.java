@@ -2,6 +2,7 @@ package com.cardee.inbox.chat.single.adapter;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -83,6 +84,11 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void updateMessageList(List<ChatMessage> newList) {
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MessageDiffCallback(mMessageList, newList));
+        result.dispatchUpdatesTo(this);
+    }
+
     private LayoutInflater getLayoutInflater(Context context) {
         return LayoutInflater.from(context);
     }
@@ -93,7 +99,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
         private AppCompatTextView dividerDate;
         private AppCompatTextView messageText;
         private AppCompatTextView messageTime;
-        private AppCompatImageView messageStatus;
+        private AppCompatImageView messageStatusSent;
+        private AppCompatImageView messageStatusRead;
 
         UserMessageHolder(View itemView) {
             super(itemView);
@@ -101,7 +108,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
             dividerDate = itemView.findViewById(R.id.divider_date);
             messageText = itemView.findViewById(R.id.message_text);
             messageTime = itemView.findViewById(R.id.message_time);
-            messageStatus = itemView.findViewById(R.id.message_status_sent);
+            messageStatusSent = itemView.findViewById(R.id.message_status_sent);
+            messageStatusRead = itemView.findViewById(R.id.message_status_read);
         }
 
         public void bind(ChatMessage chatMessage, UtcDateFormatter.ChatMessageFormatter dateFormatter, boolean isNewDay) {
@@ -110,7 +118,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
             messageText.setText(chatMessage.getMessage());
             messageTime.setText(dateFormatter.formatDate(chatMessage.getDateCreated()));
-
+            messageStatusSent.setVisibility(chatMessage.getIsRead() ? View.GONE : View.VISIBLE);
+            messageStatusRead.setVisibility(chatMessage.getIsRead() ? View.VISIBLE : View.GONE);
         }
     }
 

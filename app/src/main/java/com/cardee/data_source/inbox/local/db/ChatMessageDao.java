@@ -2,6 +2,7 @@ package com.cardee.data_source.inbox.local.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
@@ -20,6 +21,6 @@ public interface ChatMessageDao {
     @Insert
     void addNewMessage(ChatMessage chatMessage);
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void persistMessages(List<ChatMessage> messageList);
 }
