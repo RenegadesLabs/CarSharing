@@ -11,6 +11,7 @@ public class Chat implements Comparable<Chat> {
 
     public static final String CHAT_SERVER_ID = "chat_id";
     public static final String CHAT_ATTACHMENT = "chat_attachment";
+    public static final String CHAT_UNREAD_COUNT = "chat_unread";
 
     @PrimaryKey
     @ColumnInfo(name = "chat_id")
@@ -180,15 +181,15 @@ public class Chat implements Comparable<Chat> {
         Chat chat = (Chat) o;
 
         if (!chatId.equals(chat.chatId)) return false;
-        if (!recipientName.equals(chat.recipientName)) return false;
-        return mLastMessageText.equals(chat.mLastMessageText);
+        if (!chatAttachment.equals(chat.chatAttachment)) return false;
+        return unreadMessageCount.equals(chat.unreadMessageCount);
     }
 
     @Override
     public int hashCode() {
         int result = chatId.hashCode();
-        result = 31 * result + recipientName.hashCode();
-        result = 31 * result + mLastMessageText.hashCode();
+        result = 31 * result + chatAttachment.hashCode();
+        result = 31 * result + unreadMessageCount.hashCode();
         return result;
     }
 

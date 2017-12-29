@@ -29,7 +29,7 @@
         android:maxLines="1"
         android:text="Sharong Ng"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_regular"
+        android:textSize="@dimen/text_large"
         app:layout_constraintStart_toEndOf="@id/chat_avatar"
         app:layout_constraintTop_toTopOf="@id/chat_avatar" />
 

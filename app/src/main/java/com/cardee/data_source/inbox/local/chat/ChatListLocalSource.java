@@ -62,15 +62,16 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     @Override
     public void fetchUpdates(List<Chat> oldChatList, List<Chat> newChatList) {
         Completable.fromRunnable(() -> {
-            List<Chat> listToUpdate = new ArrayList<>();
-            for (Chat remoteChat : newChatList) {
-                if (!oldChatList.contains(remoteChat)) {
-                    listToUpdate.add(remoteChat);
-                }
-            }
-            if (!listToUpdate.isEmpty()) {
-                saveChats(listToUpdate);
-            }
+//            List<Chat> listToUpdate = new ArrayList<>();
+//            for (Chat remoteChat : newChatList) {
+//                if (!oldChatList.contains(remoteChat)) {
+//                    listToUpdate.add(remoteChat);
+//                }
+//            }
+//            if (!listToUpdate.isEmpty()) {
+//                saveChats(listToUpdate);
+//            }
+            saveChats(newChatList);
         }).subscribeOn(Schedulers.io()).subscribe(() -> Log.e(TAG, "Starting fetch data..."), throwable -> Log.e(TAG, throwable.getMessage()));
     }
 

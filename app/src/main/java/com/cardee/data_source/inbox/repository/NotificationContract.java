@@ -10,6 +10,9 @@ public interface NotificationContract {
 
     void updateChatNotificationCount(Integer readCount);
 
+    void updateChatUnreadCount(Integer count);
+
+
     void subscribeToNotificationUpdates(Consumer<Integer> consumer);
 
     void subscribeToAlertUpdates(Consumer<Boolean> consumer);
@@ -17,5 +20,4 @@ public interface NotificationContract {
     void subscribeToChatUpdates(Consumer<Boolean> consumer);
 
     void saveSessionData();
-
 }

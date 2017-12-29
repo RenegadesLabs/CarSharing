@@ -15,7 +15,7 @@ public interface InboxContract {
 
     Single<List<Chat>> getRemoteChats(String attachment);
 
-    void fetchOrSaveData(List<Chat> remoteChats);
+    void fetchData(List<Chat> remoteChats);
 
     Completable updateChat(Chat chat);
 }

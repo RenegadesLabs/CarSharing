@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.inbox.chat.list.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.list.presenter.ChatListContract;
 import com.cardee.inbox.chat.list.presenter.ChatListPresenterImp;
-import com.cardee.inbox.chat.list.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 
 import java.util.List;
@@ -77,6 +77,11 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
     @Override
     public void showAllChats(List<Chat> chatList) {
         mChatAdapter.addItems(chatList);
+    }
+
+    @Override
+    public void updateAllChats(List<Chat> chatList) {
+        mChatAdapter.updateList(chatList);
     }
 
     @Override

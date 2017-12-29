@@ -85,6 +85,12 @@ public class NotificationRepository implements NotificationContract {
         mChatSubject.onNext(mNotificationData.isMissingChatsExist());
     }
 
+    @Override
+    public void updateChatUnreadCount(Integer count) {
+        mNotificationData.updateChatUnreadCount(count);
+        publishAllData();
+    }
+
     private void decreaseTotalNotifications(int decreaseCount) {
 
     }

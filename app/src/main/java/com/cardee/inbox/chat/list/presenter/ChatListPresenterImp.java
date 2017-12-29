@@ -10,8 +10,11 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.inbox.usecase.chat.GetChats;
 
+import java.util.List;
+
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
 
 public class ChatListPresenterImp implements ChatListContract.Presenter {
 
@@ -20,6 +23,8 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     private final GetChats mGetChats;
     private final UseCaseExecutor mExecutor;
     private final String mAttachment;
+
+    private boolean isFistChatEntering = true;
 
     public ChatListPresenterImp(Context context) {
         mGetChats = new GetChats();
@@ -40,7 +45,7 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
                 new UseCase.Callback<GetChats.ResponseValues>() {
                     @Override
                     public void onSuccess(GetChats.ResponseValues response) {
-                        showAllChats(response);
+                        showAllChats(response.getChats());
                     }
 
                     @Override
@@ -57,10 +62,15 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         }
     }
 
-    private void showAllChats(GetChats.ResponseValues response) {
+    private void showAllChats(List<Chat> chatList) {
         if (mView != null) {
-            mView.showProgress(false);
-            mView.showAllChats(response.getChats());
+            if (isFistChatEntering) {
+                mView.showProgress(false);
+                mView.showAllChats(chatList);
+                isFistChatEntering = false;
+            } else {
+                mView.updateAllChats(chatList);
+            }
         }
     }
 
@@ -69,6 +79,11 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         Bundle args = new Bundle();
         args.putInt(CHAT_SERVER_ID, chat.getChatId());
         args.putString(CHAT_ATTACHMENT, mAttachment);
+        args.putInt(CHAT_UNREAD_COUNT, chat.getUnreadMessageCount());
+        openChat(args);
+    }
+
+    private void openChat(Bundle args) {
         if (mView != null) {
             mView.showChat(args);
         }

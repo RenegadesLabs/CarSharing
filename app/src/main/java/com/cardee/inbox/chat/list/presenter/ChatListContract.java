@@ -26,6 +26,8 @@ public interface ChatListContract {
 
         void showAllChats(List<Chat> chatList);
 
+        void updateAllChats(List<Chat> chatList);
+
         void showChat(Bundle bundle);
     }
 }

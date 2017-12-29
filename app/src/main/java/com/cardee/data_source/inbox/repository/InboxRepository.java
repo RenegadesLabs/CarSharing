@@ -24,7 +24,6 @@ public class InboxRepository implements InboxContract {
     private final RemoteData.ChatListSource mChatRemoteSource;
 
     private static InboxRepository INSTANCE;
-    private List<Chat> mCacheLocalChats;
 
     public static InboxRepository getInstance() {
         if (INSTANCE == null) {
@@ -43,7 +42,7 @@ public class InboxRepository implements InboxContract {
         return mChatLocalSource
                 .getLocalChats(attachment)
                 .doOnNext(localChats -> {
-                    mCacheLocalChats = localChats;
+//                    mCacheLocalChats = localChats;
 //                    Collections.sort(localChats);
                 });
     }
@@ -56,12 +55,13 @@ public class InboxRepository implements InboxContract {
     }
 
     @Override
-    public void fetchOrSaveData(List<Chat> remoteChats) {
-        if (mCacheLocalChats == null || mCacheLocalChats.isEmpty()) {
-            mChatLocalSource.saveChats(remoteChats);
-        } else {
-            mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
-        }
+    public void fetchData(List<Chat> remoteChats) {
+        mChatLocalSource.saveChats(remoteChats);
+//        if (mCacheLocalChats == null || mCacheLocalChats.isEmpty()) {
+//            mChatLocalSource.saveChats(remoteChats);
+//        } else {
+//            mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
+//        }
     }
 
     @Override

@@ -86,6 +86,7 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
     public void updateMessageList(List<ChatMessage> newList) {
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MessageDiffCallback(mMessageList, newList));
+        mMessageList = newList;
         result.dispatchUpdatesTo(this);
     }
 

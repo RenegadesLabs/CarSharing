@@ -91,6 +91,11 @@ public class NotificationData {
         else renterChatMessages = chatCount;
     }
 
+    public void updateChatUnreadCount(Integer unreadCount) {
+        if (isOwnerSession()) ownerChatMessages = ownerChatMessages - unreadCount;
+        else renterChatMessages = renterChatMessages - unreadCount;
+    }
+
     private boolean isOwnerSession() {
         return currentSession.equals(OWNER_SESSION);
     }

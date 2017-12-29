@@ -19,8 +19,9 @@ import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
@@ -92,8 +93,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         notifyDataSetChanged();
     }
 
-    private void updateList(List<Chat> newChatList) {
+    public void updateList(List<Chat> newChatList) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ChatDiffCallback(mInboxChats, newChatList));
+        mInboxChats = newChatList;
         diffResult.dispatchUpdatesTo(this);
     }
 

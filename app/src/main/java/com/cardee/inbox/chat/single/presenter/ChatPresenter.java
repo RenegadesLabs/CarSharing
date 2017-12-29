@@ -6,6 +6,7 @@ import android.view.View;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.repository.ChatRepository;
+import com.cardee.data_source.inbox.repository.NotificationRepository;
 import com.cardee.inbox.chat.single.view.ActivityViewHolder;
 import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
@@ -17,6 +18,8 @@ import io.reactivex.disposables.Disposable;
 public class ChatPresenter implements ChatContract.Presenter {
 
     private static final String TAG = ChatPresenter.class.getSimpleName();
+
+    private final NotificationRepository mNotificationRepository;
     private final ChatRepository mRepository;
 
     private ChatContract.View mView;
@@ -24,18 +27,21 @@ public class ChatPresenter implements ChatContract.Presenter {
     private Disposable mDisposable;
 
     private int mChatServerId;
+    private int mChatUnreadCount;
     private String mAttachment;
     private boolean isFistChatEntering = true;
 
     public ChatPresenter(ChatContract.View view) {
         mView = view;
         mRepository = ChatRepository.getInstance();
+        mNotificationRepository = NotificationRepository.getInstance();
     }
 
     @Override
     public void init(Bundle bundle, View activityView) {
         mChatServerId = bundle.getInt(Chat.CHAT_SERVER_ID);
         mAttachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
+        mChatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
         mViewHolder = new ChatViewHolder(activityView);
     }
 
@@ -44,7 +50,6 @@ public class ChatPresenter implements ChatContract.Presenter {
         getLocalChatData();
         getLocalMessageList();
         getRemoteChatList();
-
     }
 
     private void getLocalChatData() {
@@ -71,7 +76,12 @@ public class ChatPresenter implements ChatContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> showProgress(true))
                 .doOnComplete(() -> showProgress(false))
-                .subscribe();
+                .subscribe(() -> {
+                            if (mChatUnreadCount != 0) {
+                                mNotificationRepository.updateChatNotificationCount(mChatUnreadCount);
+                            }
+                        }
+                        , throwable -> showProgress(false));
 
     }
 
@@ -80,7 +90,7 @@ public class ChatPresenter implements ChatContract.Presenter {
             showAllMessages(messageList);
             isFistChatEntering = false;
         } else {
-            showAllMessages(messageList);
+            updateAllMessages(messageList);
         }
     }
 
