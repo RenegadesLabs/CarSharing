@@ -10,8 +10,10 @@ import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class ChatRepository implements ChatContract {
 
@@ -54,15 +56,32 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public Single<List<ChatMessage>> getRemoteMessages() {
-        return mRemoteSource.getMessages(databaseId,serverId)
-                .doOnSuccess(messageList -> mLocalSource.persistMessages(messageList, databaseId));
-//        return Completable.create(emitter ->
-//                mRemoteSource.getMessages(databaseId, serverId)
-//                        .subscribe(messageList -> {
-//                            mLocalSource.persistMessages(messageList, databaseId);
-//                            emitter.onComplete();
-//                        }, emitter::onError));
+    public Completable getRemoteMessages() {
+        return Completable.create(emitter ->
+                mRemoteSource.getMessages(databaseId, serverId)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(messageList -> {
+                            mLocalSource.persistMessages(messageList, databaseId);
+                            if (isLastMessageDidNotRead(messageList)) {
+                                markAsRead(getLastMessageId(messageList), emitter);
+                            }
+                        }, emitter::onError));
+    }
+
+    private void markAsRead(int lastMessageId, CompletableEmitter emitter) {
+        mRemoteSource.markAsRead(lastMessageId)
+                .subscribe(() -> {
+                    mLocalSource.markAsRead(databaseId);
+                    emitter.onComplete();
+                }, emitter::onError);
+    }
+
+    private boolean isLastMessageDidNotRead(List<ChatMessage> messageList) {
+        return !messageList.get(messageList.size() - 1).getIsRead();
+    }
+
+    private int getLastMessageId(List<ChatMessage> messageList) {
+        return messageList.get(messageList.size() - 1).getMessageId();
     }
 
     @Override
@@ -80,8 +99,4 @@ public class ChatRepository implements ChatContract {
         return mRemoteSource.sendMessage(message);
     }
 
-    @Override
-    public Completable markAsRead(int messageId) {
-        return mRemoteSource.markAsRead(messageId);
-    }
 }

@@ -39,10 +39,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
                 chatMessage.setChatId(databaseId);
             }
             mDataBase.getChatMassageDao().persistMessages(messageList);
-        })
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-
+        }).subscribe();
     }
 
     @Override
@@ -50,6 +47,11 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
         return mDataBase.getChatMassageDao()
                 .getMessages(String.valueOf(databaseId))
                 .distinct();
+    }
+
+    @Override
+    public void markAsRead(int databaseId) {
+        mDataBase.getChatMassageDao().updateReadStatus(String.valueOf(databaseId));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.cardee.data_source.inbox.remote.api.response;
 
-import com.cardee.data_source.inbox.remote.api.model.entity.ReadStatus;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,16 +8,16 @@ public class MessageResponse extends BaseResponse {
 
     @Expose
     @SerializedName("data")
-    private ReadStatus mReadStatus;
+    private String mReadStatus;
 
     public MessageResponse() {
     }
 
-    public ReadStatus getReadStatus() {
+    public String getReadStatus() {
         return mReadStatus;
     }
 
-    public void setReadStatus(ReadStatus readStatus) {
+    public void setReadStatus(String readStatus) {
         mReadStatus = readStatus;
     }
 }

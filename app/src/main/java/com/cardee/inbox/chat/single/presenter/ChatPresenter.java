@@ -1,7 +1,6 @@
 package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
@@ -70,31 +69,18 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void getLocalMessageList() {
         mRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
-                .distinctUntilChanged()
+                .distinct()
                 .filter(messageList -> !messageList.isEmpty())
                 .subscribe(this::proceedResponse);
     }
 
     private void getRemoteChatList() {
         mDisposable = mRepository.getRemoteMessages()
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> showProgress(true))
-                .doOnEvent((messageList, throwable) -> showProgress(false))
-                .doAfterSuccess(this::checkReadStatus)
+                .doOnComplete(() -> showProgress(false))
                 .subscribe();
-    }
 
-    private void checkReadStatus(List<ChatMessage> messageList) {
-        int lastMessagePosition = messageList.size() - 1;
-        if (isLastMessageDidNotRead(messageList)) {
-            mRepository.markAsRead(messageList.get(lastMessagePosition).getMessageId())
-                    .subscribe(
-                            this::getRemoteChatList,
-                            throwable -> Log.e(TAG, throwable.getMessage()));
-        }
-    }
-
-    private boolean isLastMessageDidNotRead(List<ChatMessage> messageList) {
-        return !messageList.get(messageList.size() - 1).getIsRead();
     }
 
     private void proceedResponse(List<ChatMessage> messageList) {
@@ -102,7 +88,7 @@ public class ChatPresenter implements ChatContract.Presenter {
             showAllMessages(messageList);
             isFistChatEntering = false;
         } else {
-            updateAllMessages(messageList);
+            showAllMessages(messageList);
         }
     }
 

@@ -30,7 +30,6 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
         mMapper.setChatDatabaseId(chatDatabaseId);
         return mChatApi.getMessages(chatServerId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
 
@@ -46,9 +45,10 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     @Override
     public Completable markAsRead(int messageId) {
         return Completable.create(emitter -> mChatApi.markAsRead(messageId)
-                .subscribeOn(Schedulers.io())
                 .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
-                .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
+                .subscribe(messageResponse -> {
+                    emitter.onComplete();
+                }, emitter::onError));
     }
 
     private class ToChatMessageMapper implements Mapper<ChatRemoteMessage[], List<ChatMessage>> {

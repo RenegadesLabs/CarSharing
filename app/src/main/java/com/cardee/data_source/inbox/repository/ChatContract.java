@@ -17,14 +17,12 @@ public interface ChatContract {
 
     Flowable<List<ChatMessage>> getLocalMessages();
 
-    Single<List<ChatMessage>> getRemoteMessages();
+    Completable getRemoteMessages();
 
     Single<List<ChatMessage>> getNewChat();
 
     void addNewMessage(ChatMessage chatMessage);
 
     Completable sendMessage(String message);
-
-    Completable markAsRead(int messageId);
 
 }

@@ -88,15 +88,12 @@ public class ChatMessage {
 
         ChatMessage that = (ChatMessage) o;
 
-        if (!messageId.equals(that.messageId)) return false;
         return isRead.equals(that.isRead);
     }
 
     @Override
     public int hashCode() {
-        int result = messageId.hashCode();
-        result = 31 * result + isRead.hashCode();
-        return result;
+        return isRead.hashCode();
     }
 
     public static class Builder {
