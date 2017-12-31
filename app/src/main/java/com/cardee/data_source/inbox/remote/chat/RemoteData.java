@@ -22,7 +22,7 @@ public interface RemoteData {
 
         Single<List<ChatMessage>> getMessages(int chatId);
 
-        Completable sendMessage(String newMessage);
+        Single<Integer> sendMessage(String newMessage, int chatId);
 
         Completable markAsRead(int messageId);
     }

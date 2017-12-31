@@ -1,5 +1,7 @@
 package com.cardee.data_source.inbox.repository;
 
+import android.util.Log;
+
 import com.cardee.data_source.inbox.local.chat.ChatItemLocalSource;
 import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
@@ -12,18 +14,21 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 public class ChatRepository implements ChatContract {
 
+    private static final String TAG = ChatRepository.class.getSimpleName();
     private static ChatRepository INSTANCE;
 
     private final LocalData.ChatSingleSource mLocalSource;
     private final RemoteData.ChatSingleSource mRemoteSource;
 
     private int chatId;
-    private String attachment;
 
     public static ChatRepository getInstance() {
         if (INSTANCE == null) {
@@ -40,7 +45,6 @@ public class ChatRepository implements ChatContract {
     @Override
     public void sendChatIdentifier(Integer chatId, String attachment) {
         this.chatId = chatId;
-        this.attachment = attachment;
     }
 
     @Override
@@ -93,13 +97,17 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public void addNewMessage(ChatMessage chatMessage) {
-        mLocalSource.addNewMessage(chatMessage);
+    public void addNewMessage(String message) {
+
     }
 
     @Override
-    public Completable sendMessage(String message) {
-        return mRemoteSource.sendMessage(message);
+    public void sendMessage(String message) {
+        mRemoteSource.sendMessage(message, chatId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(messageId -> {
+                    getRemoteMessages().subscribe();
+                }, throwable -> Log.d(TAG, "Server connection lost"));
     }
 
 }

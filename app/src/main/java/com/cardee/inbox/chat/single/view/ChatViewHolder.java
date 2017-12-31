@@ -15,14 +15,14 @@ import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 public class ChatViewHolder implements ActivityViewHolder {
 
     private final RequestManager mRequestManager;
     private final UtcDateFormatter mDateFormatter;
-    private final PublishSubject<String> mPublishSubject;
+    private final Observable<String> mMessageStream;
     private final VectorDrawableCompat userPhotoPlaceHolder;
 
     @BindView(R.id.chat_activity_toolbar_title)
@@ -47,7 +47,7 @@ public class ChatViewHolder implements ActivityViewHolder {
         userPhotoPlaceHolder = VectorDrawableCompat.create(rootView.getContext().getResources(), R.drawable.ic_photo_placeholder, null);
         mRequestManager = Glide.with(rootView.getContext());
         mDateFormatter = new ChatActivityDateFormatter(rootView.getContext());
-        mPublishSubject = PublishSubject.create();
+        mMessageStream = Observable.create(emitter -> mSend.setOnClickListener(view -> emitter.onNext(mMessageField.getText().toString())));
     }
 
     @Override
@@ -77,5 +77,13 @@ public class ChatViewHolder implements ActivityViewHolder {
     public void setCarBookingData(String mStartDate, String mEndDate) {
         String availability = mDateFormatter.formatDate(mStartDate) + mDateFormatter.getDivider() + mDateFormatter.formatDate(mEndDate);
         mCarAvailability.setText(availability);
+    }
+
+    @Override
+    public void subscribeToInput(Consumer<String> consumer) {
+        mMessageStream
+                .filter(message -> !message.isEmpty())
+                .doAfterNext(s -> mMessageField.setText(null))
+                .subscribe(consumer);
     }
 }

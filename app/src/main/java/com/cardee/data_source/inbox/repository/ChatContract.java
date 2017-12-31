@@ -21,10 +21,10 @@ public interface ChatContract {
 
     void removeChatUnreadStatus(int chatId);
 
+    void sendMessage(String message);
+
     Single<List<ChatMessage>> getNewChat();
 
-    void addNewMessage(ChatMessage chatMessage);
-
-    Completable sendMessage(String message);
+    void addNewMessage(String message);
 
 }

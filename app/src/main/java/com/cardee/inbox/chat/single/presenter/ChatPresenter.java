@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable;
 public class ChatPresenter implements ChatContract.Presenter {
 
     private final NotificationRepository mNotificationRepository;
-    private final ChatRepository mRepository;
+    private final ChatRepository mChatRepository;
 
     private ChatContract.View mView;
     private ActivityViewHolder mViewHolder;
@@ -31,18 +31,20 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     public ChatPresenter(ChatContract.View view) {
         mView = view;
-        mRepository = ChatRepository.getInstance();
+        mChatRepository = ChatRepository.getInstance();
         mNotificationRepository = NotificationRepository.getInstance();
     }
 
     @Override
     public void init(Bundle bundle, View activityView) {
         mViewHolder = new ChatViewHolder(activityView);
+        mViewHolder.subscribeToInput(mChatRepository::sendMessage);
 
         chatId = bundle.getInt(Chat.CHAT_SERVER_ID);
         attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
     }
+
 
     @Override
     public void onChatDataRequest() {
@@ -52,8 +54,8 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void getLocalChatData() {
-        mRepository.sendChatIdentifier(chatId, attachment);
-        mRepository.getChatInfo()
+        mChatRepository.sendChatIdentifier(chatId, attachment);
+        mChatRepository.getChatInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(chatInfo -> {
                     mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl());
@@ -63,7 +65,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void getLocalMessageList() {
-        mRepository.getLocalMessages()
+        mChatRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
                 .filter(messageList -> messageList != null && !messageList.isEmpty())
@@ -71,9 +73,8 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void getRemoteChatList() {
-        mDisposable = mRepository.getRemoteMessages()
+        mDisposable = mChatRepository.getRemoteMessages()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> showProgress(true))
                 .subscribe(this::updateChatUnreadMarkerIfNeeded
                         , throwable -> showProgress(false));
 
@@ -82,11 +83,11 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void updateChatUnreadMarkerIfNeeded() {
         if (chatUnreadCount != 0) {
             mNotificationRepository.updateChatUnreadCount(chatUnreadCount);
-            mRepository.removeChatUnreadStatus(chatId);
+            mChatRepository.removeChatUnreadStatus(chatId);
         }
     }
 
-    private void proceedResponse(List<ChatMessage> messageList) {
+    private synchronized void proceedResponse(List<ChatMessage> messageList) {
         if (isFistChatEntering) {
             showAllMessages(messageList);
             isFistChatEntering = false;

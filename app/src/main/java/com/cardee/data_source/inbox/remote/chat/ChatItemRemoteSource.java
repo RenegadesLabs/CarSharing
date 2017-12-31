@@ -25,7 +25,7 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<List<ChatMessage>> getMessages(int chatId){
+    public Single<List<ChatMessage>> getMessages(int chatId) {
         mMapper.setChatId(chatId);
         return mChatApi.getMessages(chatId)
                 .subscribeOn(Schedulers.io())
@@ -33,21 +33,20 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Completable sendMessage(String newMessage) {
-        return Completable.create(emitter
-                -> mChatApi.sendMessage(new NewChatMessage(newMessage))
+    public Single<Integer> sendMessage(String newMessage, int chatId) {
+        return Single.create(emitter
+                -> mChatApi.sendMessage(chatId, new NewChatMessage(newMessage))
                 .subscribeOn(Schedulers.io())
-                .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
-                .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
+                .subscribe(messageResponse -> {
+                    emitter.onSuccess(22);
+                }, emitter::onError));
     }
 
     @Override
     public Completable markAsRead(int messageId) {
         return Completable.create(emitter -> mChatApi.markAsRead(messageId)
                 .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
-                .subscribe(messageResponse -> {
-                    emitter.onComplete();
-                }, emitter::onError));
+                .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
     }
 
     private class ToChatMessageMapper implements Mapper<ChatRemoteMessage[], List<ChatMessage>> {

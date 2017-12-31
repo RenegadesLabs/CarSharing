@@ -1,5 +1,7 @@
 package com.cardee.inbox.chat.single.view;
 
+import io.reactivex.functions.Consumer;
+
 public interface ActivityViewHolder {
 
     void setUserData(String recipientName, String photoUrl);
@@ -8,4 +10,5 @@ public interface ActivityViewHolder {
 
     void setCarBookingData(String mStartDate, String mEndDate);
 
+    void subscribeToInput(Consumer<String> consumer);
 }

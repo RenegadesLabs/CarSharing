@@ -7,17 +7,17 @@ import com.google.gson.annotations.SerializedName;
 public class MessageResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
-    private String mReadStatus;
+    @SerializedName("message_id")
+    private Integer messageId;
 
     public MessageResponse() {
     }
 
-    public String getReadStatus() {
-        return mReadStatus;
+    public Integer getMessageId() {
+        return messageId;
     }
 
-    public void setReadStatus(String readStatus) {
-        mReadStatus = readStatus;
+    public void setMessageId(Integer messageId) {
+        this.messageId = messageId;
     }
 }

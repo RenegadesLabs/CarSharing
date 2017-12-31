@@ -63,11 +63,8 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
-    public void addNewMessage(ChatMessage chatMessage) {
-        Completable
-                .fromRunnable(() -> mDataBase.getChatMassageDao().addNewMessage(chatMessage))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+    public void addNewMessage(String message, int messageId, int chatId) {
+    //TODO: implement addNewMessage
     }
 
     private static class ToChatInfoMapper implements Mapper<Chat, ChatInfo> {

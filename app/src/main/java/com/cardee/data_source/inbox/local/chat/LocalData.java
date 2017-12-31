@@ -39,7 +39,7 @@ public interface LocalData {
 
         void persistMessages(List<ChatMessage> messageList, int chatId);
 
-        void addNewMessage(ChatMessage chatMessage);
+        void addNewMessage(String message, int messageId, int chatId);
     }
 
     interface AlertListSource extends LocalData {

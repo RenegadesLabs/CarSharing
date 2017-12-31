@@ -64,7 +64,7 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
     private RecyclerView.LayoutManager getLayoutManager() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setStackFromEnd(true);
+        layoutManager.setStackFromEnd(true);
         return layoutManager;
     }
 

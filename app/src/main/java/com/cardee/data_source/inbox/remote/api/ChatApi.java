@@ -30,7 +30,7 @@ public interface ChatApi {
     Single<ChatMessagesResponse> getMessages(@Path("chat_id") int chatId);
 
     @POST("/api/dev/chats/{chat_id}")
-    Single<MessageResponse> sendMessage(@Body NewChatMessage message);
+    Single<MessageResponse> sendMessage(@Path("chat_id") int chatId, @Body NewChatMessage message);
 
     @PUT("/api/dev/chats/messages/{message_id}")
     Single<MessageResponse> markAsRead(@Path("message_id") int messageId);
