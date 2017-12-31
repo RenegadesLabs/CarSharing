@@ -19,6 +19,8 @@ public interface ChatContract {
 
     Completable getRemoteMessages();
 
+    void updateChatUnreadCount(int chatId);
+
     Single<List<ChatMessage>> getNewChat();
 
     void addNewMessage(ChatMessage chatMessage);

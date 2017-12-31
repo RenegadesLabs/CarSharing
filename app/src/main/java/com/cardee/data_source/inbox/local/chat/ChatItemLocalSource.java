@@ -55,9 +55,17 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
+    public void updateChatUnreadCount(int chatId) {
+        Completable.fromRunnable(()
+                -> mDataBase.getChatDao().updateChatUnreadCount(chatId))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
+    @Override
     public void addNewMessage(ChatMessage chatMessage) {
         Completable
-                .fromRunnable(() -> mDataBase.getChatMassageDao().addNewMessage(chatMessage)).subscribeOn(Schedulers.io())
+                .fromRunnable(() -> mDataBase.getChatMassageDao().addNewMessage(chatMessage))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

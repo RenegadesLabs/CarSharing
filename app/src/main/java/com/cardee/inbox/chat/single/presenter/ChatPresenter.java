@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
-    
+
     private final NotificationRepository mNotificationRepository;
     private final ChatRepository mRepository;
 
@@ -24,10 +24,10 @@ public class ChatPresenter implements ChatContract.Presenter {
     private ActivityViewHolder mViewHolder;
     private Disposable mDisposable;
 
-    private int mChatServerId;
-    private int mChatUnreadCount;
-    private String mAttachment;
+    private int chatId;
+    private int chatUnreadCount;
     private boolean isFistChatEntering = true;
+    private String attachment;
 
     public ChatPresenter(ChatContract.View view) {
         mView = view;
@@ -37,9 +37,9 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void init(Bundle bundle, View activityView) {
-        mChatServerId = bundle.getInt(Chat.CHAT_SERVER_ID);
-        mAttachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
-        mChatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
+        chatId = bundle.getInt(Chat.CHAT_SERVER_ID);
+        attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
+        chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
         mViewHolder = new ChatViewHolder(activityView);
     }
 
@@ -51,7 +51,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void getLocalChatData() {
-        mRepository.sendChatIdentifier(mChatServerId, mAttachment);
+        mRepository.sendChatIdentifier(chatId, attachment);
         mRepository.getChatInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(chatInfo -> {
@@ -73,15 +73,15 @@ public class ChatPresenter implements ChatContract.Presenter {
         mDisposable = mRepository.getRemoteMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> showProgress(true))
-                .doOnComplete(() -> showProgress(false))
                 .subscribe(this::updateChatUnreadMarkerIfNeeded
                         , throwable -> showProgress(false));
 
     }
 
     private void updateChatUnreadMarkerIfNeeded() {
-        if (mChatUnreadCount != 0) {
-            mNotificationRepository.updateChatUnreadCount(mChatUnreadCount);
+        if (chatUnreadCount != 0) {
+            mNotificationRepository.updateChatUnreadCount(chatUnreadCount);
+            mRepository.updateChatUnreadCount(chatId);
         }
     }
 

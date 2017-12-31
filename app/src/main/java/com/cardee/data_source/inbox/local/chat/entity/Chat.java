@@ -53,8 +53,6 @@ public class Chat implements Comparable<Chat> {
     @ColumnInfo(name = "time_begin")
     private String mBookingTimeBegin;
 
-    @Ignore
-    private ChatMessage mChatMessage;
 
     public Integer getChatId() {
         return chatId;
@@ -150,14 +148,6 @@ public class Chat implements Comparable<Chat> {
 
     public void setBookingTimeBegin(String bookingTimeBegin) {
         mBookingTimeBegin = bookingTimeBegin;
-    }
-
-    public ChatMessage getChatMessage() {
-        return mChatMessage;
-    }
-
-    public void setChatMessage(ChatMessage chatMessage) {
-        mChatMessage = chatMessage;
     }
 
     public Boolean getActive() {

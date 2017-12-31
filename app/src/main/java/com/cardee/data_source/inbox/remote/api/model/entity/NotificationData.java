@@ -25,6 +25,7 @@ public class NotificationData {
     public NotificationData() {
     }
 
+
     public NotificationData(String currentSession) {
         this.currentSession = currentSession;
     }

@@ -6,7 +6,6 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -42,13 +41,18 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
 
     @Override
     public Completable updateChat(Chat chat) {
-        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChat(
+        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatPresentation(
                 chat.getLastMessageText(),
                 chat.getLastMessageTime(),
                 chat.getRecipientName(),
                 String.valueOf(chat.getUnreadMessageCount()),
                 String.valueOf(chat.getChatId()),
                 chat.getChatAttachment()));
+    }
+
+    @Override
+    public Completable updateChatUnreadCount(int chatId) {
+        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatUnreadCount(chatId));
     }
 
     @Override
@@ -60,37 +64,11 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
-    public void fetchUpdates(List<Chat> oldChatList, List<Chat> newChatList) {
-        Completable.fromRunnable(() -> {
-//            List<Chat> listToUpdate = new ArrayList<>();
-//            for (Chat remoteChat : newChatList) {
-//                if (!oldChatList.contains(remoteChat)) {
-//                    listToUpdate.add(remoteChat);
-//                }
-//            }
-//            if (!listToUpdate.isEmpty()) {
-//                saveChats(listToUpdate);
-//            }
-            saveChats(newChatList);
-        }).subscribeOn(Schedulers.io()).subscribe(() -> Log.e(TAG, "Starting fetch data..."), throwable -> Log.e(TAG, throwable.getMessage()));
-    }
-
-    @Override
     public void saveChats(List<Chat> chats) {
         Completable
                 .fromRunnable(() -> mDataBase.getChatDao().addChats(chats))
                 .doOnError(throwable -> Log.e(TAG, throwable.getMessage()))
                 .doOnComplete(() -> Log.e(TAG, "All chats persist"))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
-
-    @Override
-    public void updateChats(List<Chat> chats) {
-        Completable
-                .fromRunnable(() -> mDataBase.getChatDao().updateChats(chats))
-                .doOnComplete(() -> Log.d(TAG, "Chat updated"))
-                .doOnError(throwable -> Log.e(TAG, throwable.toString()))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

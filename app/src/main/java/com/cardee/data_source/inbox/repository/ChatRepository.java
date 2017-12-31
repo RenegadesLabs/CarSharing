@@ -66,6 +66,11 @@ public class ChatRepository implements ChatContract {
                         }, emitter::onError));
     }
 
+    @Override
+    public void updateChatUnreadCount(int chatId) {
+        mLocalSource.updateChatUnreadCount(chatId);
+    }
+
     private void markAsRead(int lastMessageId, CompletableEmitter emitter) {
         mRemoteSource.markAsRead(lastMessageId)
                 .subscribe(() -> {

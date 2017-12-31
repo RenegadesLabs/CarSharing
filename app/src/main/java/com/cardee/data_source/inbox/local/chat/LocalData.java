@@ -16,15 +16,13 @@ public interface LocalData {
 
         Flowable<List<Chat>> getLocalChats(String attachment);
 
-        void fetchUpdates(List<Chat> oldChatList, List<Chat> newChatList);
-
         void saveChats(List<Chat> inboxChats);
-
-        void updateChats(List<Chat> chats);
 
         void addChat(Chat chat);
 
         Completable updateChat(Chat chat);
+
+        Completable updateChatUnreadCount(int chatId);
 
         Single<Chat> getChat(Chat chat);
     }
@@ -36,6 +34,8 @@ public interface LocalData {
         Flowable<List<ChatMessage>> getMessages(int chatId);
 
         void markAsRead(int chatId);
+
+        void updateChatUnreadCount(int chatId);
 
         void persistMessages(List<ChatMessage> messageList, int chatId);
 

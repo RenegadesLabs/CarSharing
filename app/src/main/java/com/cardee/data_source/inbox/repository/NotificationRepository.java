@@ -18,12 +18,12 @@ public class NotificationRepository implements NotificationContract {
     private String TAG = "Cardee " + NotificationRepository.class.getName();
     private static NotificationRepository INSTANCE;
 
-    private AccountManager mAccountManager;
     private BehaviorSubject<Integer> mInboxSubject;
     private BehaviorSubject<Boolean> mAlertSubject;
     private BehaviorSubject<Boolean> mChatSubject;
-    private NotificationApi mNotificationApi;
 
+    private AccountManager mAccountManager;
+    private NotificationApi mNotificationApi;
     private NotificationData mNotificationData;
 
     public static NotificationRepository getInstance() {
@@ -61,6 +61,7 @@ public class NotificationRepository implements NotificationContract {
         mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
         mNotificationData.setRenterAlertMessages(data.getRenterAlertMessages());
         mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
+
         saveSessionData();
         publishAllData();
     }
