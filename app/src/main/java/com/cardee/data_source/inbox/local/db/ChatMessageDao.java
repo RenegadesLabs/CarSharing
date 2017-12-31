@@ -17,7 +17,7 @@ import io.reactivex.Flowable;
 public interface ChatMessageDao {
 
     @Query("SELECT * FROM chat_message WHERE chat_owner_id IS :chatId ORDER BY date ASC")
-    Flowable<List<ChatMessage>> getMessages(String chatId);
+    Flowable<List<ChatMessage>> getMessages(int chatId);
 
     @Query("UPDATE chat_message SET is_read = 1 WHERE chat_owner_id IS :chatId")
     void updateReadStatus(String chatId);

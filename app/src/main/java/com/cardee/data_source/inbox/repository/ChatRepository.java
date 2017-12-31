@@ -67,7 +67,7 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public void updateChatUnreadCount(int chatId) {
+    public void removeChatUnreadStatus(int chatId) {
         mLocalSource.updateChatUnreadCount(chatId);
     }
 

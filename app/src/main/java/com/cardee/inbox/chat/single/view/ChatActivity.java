@@ -2,6 +2,7 @@ package com.cardee.inbox.chat.single.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -52,7 +53,14 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     private void initAdapter() {
         mAdapter = new SingleChatAdapter();
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(getLayoutManager());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private RecyclerView.LayoutManager getLayoutManager() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        return layoutManager;
     }
 
     private void initPresenter() {

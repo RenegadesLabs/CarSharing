@@ -37,10 +37,11 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void init(Bundle bundle, View activityView) {
+        mViewHolder = new ChatViewHolder(activityView);
+
         chatId = bundle.getInt(Chat.CHAT_SERVER_ID);
         attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
-        mViewHolder = new ChatViewHolder(activityView);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         mRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
-                .filter(messageList -> !messageList.isEmpty())
+                .filter(messageList -> messageList != null && !messageList.isEmpty())
                 .subscribe(this::proceedResponse);
     }
 
@@ -81,7 +82,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void updateChatUnreadMarkerIfNeeded() {
         if (chatUnreadCount != 0) {
             mNotificationRepository.updateChatUnreadCount(chatUnreadCount);
-            mRepository.updateChatUnreadCount(chatId);
+            mRepository.removeChatUnreadStatus(chatId);
         }
     }
 

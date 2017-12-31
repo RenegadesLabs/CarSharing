@@ -45,8 +45,8 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
                 chat.getLastMessageText(),
                 chat.getLastMessageTime(),
                 chat.getRecipientName(),
-                String.valueOf(chat.getUnreadMessageCount()),
-                String.valueOf(chat.getChatId()),
+                chat.getUnreadMessageCount(),
+                chat.getChatId(),
                 chat.getChatAttachment()));
     }
 

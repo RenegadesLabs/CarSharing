@@ -33,6 +33,13 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
+    public Flowable<List<ChatMessage>> getMessages(int databaseId) {
+        return mDataBase.getChatMassageDao()
+                .getMessages(databaseId)
+                .distinct();
+    }
+
+    @Override
     public void persistMessages(List<ChatMessage> messageList, int chatId) {
         Completable.fromRunnable(() -> {
             for (ChatMessage chatMessage : messageList) {
@@ -40,13 +47,6 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
             }
             mDataBase.getChatMassageDao().persistMessages(messageList);
         }).subscribe();
-    }
-
-    @Override
-    public Flowable<List<ChatMessage>> getMessages(int databaseId) {
-        return mDataBase.getChatMassageDao()
-                .getMessages(String.valueOf(databaseId))
-                .distinct();
     }
 
     @Override

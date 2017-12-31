@@ -19,7 +19,7 @@ public interface ChatContract {
 
     Completable getRemoteMessages();
 
-    void updateChatUnreadCount(int chatId);
+    void removeChatUnreadStatus(int chatId);
 
     Single<List<ChatMessage>> getNewChat();
 
