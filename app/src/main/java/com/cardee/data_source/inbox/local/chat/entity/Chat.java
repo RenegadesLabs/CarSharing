@@ -171,15 +171,15 @@ public class Chat implements Comparable<Chat> {
         Chat chat = (Chat) o;
 
         if (!chatId.equals(chat.chatId)) return false;
-        if (!chatAttachment.equals(chat.chatAttachment)) return false;
-        return unreadMessageCount.equals(chat.unreadMessageCount);
+        if (!unreadMessageCount.equals(chat.unreadMessageCount)) return false;
+        return mLastMessageTime.equals(chat.mLastMessageTime);
     }
 
     @Override
     public int hashCode() {
         int result = chatId.hashCode();
-        result = 31 * result + chatAttachment.hashCode();
         result = 31 * result + unreadMessageCount.hashCode();
+        result = 31 * result + mLastMessageTime.hashCode();
         return result;
     }
 

@@ -31,7 +31,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     private List<Chat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<Chat> mOnClickSubject;
-    private final PublishSubject<Boolean> mUnreadSubject;
+    private final PublishSubject<Integer> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
 
     private final Drawable userPhotoPlaceHolder;
@@ -70,7 +70,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         holder.mLastMessage.setText(chat.getLastMessageText());
         holder.mLastMessageTime.setText(mDateFormatter.formatDate(chat.getLastMessageTime()));
         setUnreadMessageCount(chat, holder);
-        holder.mContainer.setOnClickListener(view -> mOnClickSubject.onNext(chat));
+        holder.mContainer.setOnClickListener(view -> {
+            mOnClickSubject.onNext(chat);
+            mUnreadSubject.onNext(chat.getUnreadMessageCount());
+        });
     }
 
     private void setUnreadMessageCount(Chat chat, ChatViewHolder holder) {
@@ -84,7 +87,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
             holder.mUnreadCount.setVisibility(View.VISIBLE);
             holder.mUnreadView.setVisibility(View.VISIBLE);
         }
-        mUnreadSubject.onNext(unreadMessages > 0);
     }
 
     public void addItems(List<Chat> list) {
@@ -104,7 +106,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
                 .subscribe(clickConsumer);
     }
 
-    public void subscribeToUnreadMessage(Consumer<Boolean> isUnread) {
+    public void subscribeToUnreadMessage(Consumer<Integer> isUnread) {
         mUnreadSubject
                 .distinctUntilChanged()
                 .subscribe(isUnread);

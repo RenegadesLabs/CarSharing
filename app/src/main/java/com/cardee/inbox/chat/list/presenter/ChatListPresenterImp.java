@@ -63,6 +63,10 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     }
 
     private void showAllChats(List<Chat> chatList) {
+//        if (mView != null) {
+//            mView.showProgress(false);
+//            mView.showAllChats(chatList);
+//        }
         if (mView != null) {
             if (isFistChatEntering) {
                 mView.showProgress(false);
@@ -83,15 +87,15 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         openChat(args);
     }
 
+    @Override
+    public void onResetMessageCount(int isUnread) {
+
+    }
+
     private void openChat(Bundle args) {
         if (mView != null) {
             mView.showChat(args);
         }
-    }
-
-    @Override
-    public void onUnreadMessageReceived(boolean isUnread) {
-
     }
 
     @Override

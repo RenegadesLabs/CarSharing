@@ -27,7 +27,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
         ToChatInfoMapper chatInfoMapper = new ToChatInfoMapper();
         return mDataBase.getChatDao()
                 .getChatInfo(chatId)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .flatMap(chat -> Single.just(chatInfoMapper.map(chat)));
 
     }
@@ -58,7 +58,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     public void updateChatUnreadCount(int chatId) {
         Completable.fromRunnable(()
                 -> mDataBase.getChatDao().updateChatUnreadCount(chatId))
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .subscribe();
     }
 

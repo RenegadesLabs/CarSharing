@@ -15,7 +15,7 @@ public interface ChatListContract {
 
         void onChatClick(Chat chat);
 
-        void onUnreadMessageReceived(boolean isUnread);
+        void onResetMessageCount(int isUnread);
 
         void onGetChats();
 

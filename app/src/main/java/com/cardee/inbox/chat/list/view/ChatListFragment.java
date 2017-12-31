@@ -52,9 +52,9 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
                 mPresenterImp.onChatClick(chat);
             }
         });
-        mChatAdapter.subscribeToUnreadMessage(isUnread -> {
+        mChatAdapter.subscribeToUnreadMessage(count -> {
             if (mPresenterImp != null) {
-                mPresenterImp.onUnreadMessageReceived(isUnread);
+                mPresenterImp.onResetMessageCount(count);
             }
         });
     }

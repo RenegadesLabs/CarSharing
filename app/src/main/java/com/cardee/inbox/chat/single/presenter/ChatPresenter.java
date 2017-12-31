@@ -1,6 +1,7 @@
 package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
@@ -17,6 +18,7 @@ import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
 
+    private static final String TAG = ChatPresenter.class.getSimpleName();
     private final NotificationRepository mNotificationRepository;
     private final ChatRepository mChatRepository;
 
@@ -44,7 +46,6 @@ public class ChatPresenter implements ChatContract.Presenter {
         attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
     }
-
 
     @Override
     public void onChatDataRequest() {
@@ -81,6 +82,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void updateChatUnreadMarkerIfNeeded() {
+        Log.d(TAG, "Unread count = " + chatUnreadCount);
         if (chatUnreadCount != 0) {
             mNotificationRepository.updateChatUnreadCount(chatUnreadCount);
             mChatRepository.removeChatUnreadStatus(chatId);
