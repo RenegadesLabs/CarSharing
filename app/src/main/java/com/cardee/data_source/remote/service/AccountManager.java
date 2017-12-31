@@ -85,9 +85,9 @@ public class AccountManager {
     public void saveNotificationData(NotificationData data) {
         Completable.fromRunnable(() -> mPrefs.edit()
                 .putInt(OWNER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
-                .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerAlertMessages())
                 .putInt(RENTER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
-                .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerAlertMessages())
                 .apply())
                 .subscribeOn(Schedulers.io())
                 .subscribe();
@@ -95,9 +95,9 @@ public class AccountManager {
 
     public NotificationData getNotificationData() {
         NotificationData data = new NotificationData(getSessionInfo());
-        data.setOwnerBookingMessages(mPrefs.getInt(OWNER_ALERT_NOTIFICATIONS, 0));
+        data.setOwnerAlertMessages(mPrefs.getInt(OWNER_ALERT_NOTIFICATIONS, 0));
         data.setOwnerChatMessages(mPrefs.getInt(OWNER_CHAT_NOTIFICATIONS, 0));
-        data.setRenterBookingMessages(mPrefs.getInt(RENTER_ALERT_NOTIFICATIONS, 0));
+        data.setRenterAlertMessages(mPrefs.getInt(RENTER_ALERT_NOTIFICATIONS, 0));
         data.setRenterChatMessages(mPrefs.getInt(RENTER_CHAT_NOTIFICATIONS, 0));
         return data;
     }

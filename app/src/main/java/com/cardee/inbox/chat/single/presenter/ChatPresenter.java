@@ -16,9 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class ChatPresenter implements ChatContract.Presenter {
-
-    private static final String TAG = ChatPresenter.class.getSimpleName();
-
+    
     private final NotificationRepository mNotificationRepository;
     private final ChatRepository mRepository;
 
@@ -76,13 +74,15 @@ public class ChatPresenter implements ChatContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> showProgress(true))
                 .doOnComplete(() -> showProgress(false))
-                .subscribe(() -> {
-                            if (mChatUnreadCount != 0) {
-                                mNotificationRepository.updateChatNotificationCount(mChatUnreadCount);
-                            }
-                        }
+                .subscribe(this::updateChatUnreadMarkerIfNeeded
                         , throwable -> showProgress(false));
 
+    }
+
+    private void updateChatUnreadMarkerIfNeeded() {
+        if (mChatUnreadCount != 0) {
+            mNotificationRepository.updateChatUnreadCount(mChatUnreadCount);
+        }
     }
 
     private void proceedResponse(List<ChatMessage> messageList) {

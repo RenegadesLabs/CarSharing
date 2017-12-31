@@ -82,6 +82,7 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
     @Override
     public void updateAllChats(List<Chat> chatList) {
         mChatAdapter.updateList(chatList);
+        mChatRecycler.scrollToPosition(0);
     }
 
     @Override

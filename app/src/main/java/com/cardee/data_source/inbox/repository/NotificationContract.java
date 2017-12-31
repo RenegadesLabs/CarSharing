@@ -12,6 +12,8 @@ public interface NotificationContract {
 
     void updateChatUnreadCount(Integer count);
 
+    void updateInboxUnreadCount(Integer count);
+
 
     void subscribeToNotificationUpdates(Consumer<Integer> consumer);
 

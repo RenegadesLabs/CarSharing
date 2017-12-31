@@ -57,9 +57,9 @@ public class NotificationRepository implements NotificationContract {
 
     private void proceedResponse(NotificationResponse notificationResponse) {
         NotificationData data = notificationResponse.getNotificationData();
-        mNotificationData.setOwnerBookingMessages(data.getOwnerBookingMessages());
+        mNotificationData.setOwnerAlertMessages(data.getOwnerAlertMessages());
         mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
-        mNotificationData.setRenterBookingMessages(data.getRenterBookingMessages());
+        mNotificationData.setRenterAlertMessages(data.getRenterAlertMessages());
         mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
         saveSessionData();
         publishAllData();
@@ -91,8 +91,10 @@ public class NotificationRepository implements NotificationContract {
         publishAllData();
     }
 
-    private void decreaseTotalNotifications(int decreaseCount) {
-
+    @Override
+    public void updateInboxUnreadCount(Integer count) {
+        mNotificationData.updateAlertUnreadCount(count);
+        publishAllData();
     }
 
     @Override
