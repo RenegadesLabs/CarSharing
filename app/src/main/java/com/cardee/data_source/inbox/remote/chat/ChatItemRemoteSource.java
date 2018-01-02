@@ -4,7 +4,9 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.entity.ChatRemoteMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.data_source.inbox.remote.api.request.NewChatMessage;
+import com.cardee.data_source.inbox.remote.api.response.MessageResponse;
 import com.cardee.domain.util.Mapper;
 
 import java.util.ArrayList;
@@ -33,13 +35,9 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<Integer> sendMessage(String newMessage, int chatId) {
-        return Single.create(emitter
-                -> mChatApi.sendMessage(chatId, new NewChatMessage(newMessage))
-                .subscribeOn(Schedulers.io())
-                .subscribe(messageResponse -> {
-                    emitter.onSuccess(22);
-                }, emitter::onError));
+    public Single<NewMessage> sendMessage(String newMessage, int chatId) {
+        return mChatApi.sendMessage(chatId, new NewChatMessage(newMessage))
+                .map(MessageResponse::getNewMessage);
     }
 
     @Override

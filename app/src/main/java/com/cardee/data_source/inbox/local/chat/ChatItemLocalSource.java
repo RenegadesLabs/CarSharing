@@ -4,6 +4,7 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import com.cardee.domain.util.Mapper;
 
@@ -63,8 +64,18 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
-    public void addNewMessage(String message, int messageId, int chatId) {
-    //TODO: implement addNewMessage
+    public void addNewMessage(NewMessage newMessage) {
+        Completable.fromRunnable(() -> mDataBase.getChatMassageDao()
+                .addNewMessage(new ChatMessage.Builder()
+                        .withChatId(newMessage.getChatId())
+                        .withMessageId(newMessage.getMessageId())
+                        .withMessage(newMessage.getMessage())
+                        .withDateCreated(newMessage.getDateCreated())
+                        .withIsInbox(false)
+                        .withIsRead(true)
+                        .build()))
+                .subscribeOn(Schedulers.computation())
+                .subscribe();
     }
 
     private static class ToChatInfoMapper implements Mapper<Chat, ChatInfo> {

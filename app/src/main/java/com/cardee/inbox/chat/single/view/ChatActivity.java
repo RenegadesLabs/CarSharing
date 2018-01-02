@@ -39,7 +39,7 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         ButterKnife.bind(this);
 
         initToolBar();
-        initAdapter();
+//        initAdapter();
         initPresenter();
     }
 
@@ -50,23 +50,23 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         getSupportActionBar().setTitle(null);
     }
 
-    private void initAdapter() {
-        mAdapter = new SingleChatAdapter();
-        mRecyclerView.setHasFixedSize(true);
+//    private void initAdapter() {
+//        mAdapter = new SingleChatAdapter();
+//        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.addOnLayoutChangeListener((view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
 //            if (bottom < oldBottom) {
 //                mRecyclerView.post(() -> mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1));
 //            }
 //        });
-        mRecyclerView.setLayoutManager(getLayoutManager());
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private RecyclerView.LayoutManager getLayoutManager() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true);
-        return layoutManager;
-    }
+//        mRecyclerView.setLayoutManager(getLayoutManager());
+//        mRecyclerView.setAdapter(mAdapter);
+//    }
+//
+//    private RecyclerView.LayoutManager getLayoutManager() {
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setStackFromEnd(true);
+//        return layoutManager;
+//    }
 
     private void initPresenter() {
         mPresenter = new ChatPresenter(this);
@@ -74,21 +74,21 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         mPresenter.onChatDataRequest();
     }
 
-    @Override
-    public void setMessageList(List<ChatMessage> messageList) {
-        mAdapter.setMessageList(messageList);
-        scrollRecycler(messageList.size() - 1);
-    }
+//    @Override
+//    public void setMessageList(List<ChatMessage> messageList) {
+//        mAdapter.setMessageList(messageList);
+//        scrollRecycler(messageList.size() - 1);
+//    }
+//
+//    @Override
+//    public void updateAllMessages(List<ChatMessage> messageList) {
+//        mAdapter.updateMessageList(messageList);
+//        scrollRecycler(messageList.size() - 1);
+//    }
 
-    @Override
-    public void updateAllMessages(List<ChatMessage> messageList) {
-        mAdapter.updateMessageList(messageList);
-        scrollRecycler(messageList.size() - 1);
-    }
-
-    private void scrollRecycler(int position) {
-        mRecyclerView.scrollToPosition(position);
-    }
+//    private void scrollRecycler(int position) {
+//        mRecyclerView.scrollToPosition(position);
+//    }
 
     @Override
     public void showProgress(boolean show) {

@@ -90,8 +90,33 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
         result.dispatchUpdatesTo(this);
     }
 
+    public void addNewMessagePreview(String message) {
+        mMessageList.add(createPreview(message));
+        notifyItemInserted(getLastItemPosition());
+    }
+
+    public void updateNewMessagePreview(int realMessageId) {
+        mMessageList.get(getLastItemPosition()).setMessageId(realMessageId);
+        notifyItemChanged(getLastItemPosition());
+    }
+
+    public int getLastItemPosition() {
+        return mMessageList.size() - 1;
+    }
+
     private LayoutInflater getLayoutInflater(Context context) {
         return LayoutInflater.from(context);
+    }
+
+    private ChatMessage createPreview(String message) {
+        return new ChatMessage.Builder()
+                .withChatId(0)
+                .withMessageId(0)
+                .withDateCreated(mMessageFormatter.toISO8601())
+                .withIsInbox(false)
+                .withIsRead(false)
+                .withMessage(message)
+                .build();
     }
 
     public class UserMessageHolder extends RecyclerView.ViewHolder {

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.cardee.data_source.inbox.local.chat.ChatItemLocalSource;
 import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.data_source.inbox.remote.chat.ChatItemRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
@@ -97,17 +98,19 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public void addNewMessage(String message) {
-
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        mRemoteSource.sendMessage(message, chatId)
+    public Single<Integer> sendMessage(String message) {
+        return Single.create(emitter -> mRemoteSource.sendMessage(message, chatId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(messageId -> {
-                    getRemoteMessages().subscribe();
-                }, throwable -> Log.d(TAG, "Server connection lost"));
-    }
+                .doOnSuccess(newMessage -> emitter.onSuccess(newMessage.getMessageId()))
+                .subscribe(newMessage -> {
+                    newMessage.setChatId(chatId);
+                    newMessage.setMessage(message);
+                    mLocalSource.addNewMessage(newMessage);
+                }, throwable -> {
+                    emitter.onError(throwable);
+                    Log.d(TAG, "Server connection lost");
+                }));
 
+
+    }
 }

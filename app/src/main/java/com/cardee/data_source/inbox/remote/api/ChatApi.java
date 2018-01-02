@@ -5,6 +5,7 @@ import com.cardee.data_source.inbox.remote.api.response.ChatListResponse;
 import com.cardee.data_source.inbox.remote.api.response.ChatMessagesResponse;
 import com.cardee.data_source.inbox.remote.api.response.ChatSingleResponse;
 import com.cardee.data_source.inbox.remote.api.response.MessageResponse;
+import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.auth.request.PushRequest;
 import com.cardee.data_source.remote.api.auth.response.BaseAuthResponse;
 
@@ -33,5 +34,5 @@ public interface ChatApi {
     Single<MessageResponse> sendMessage(@Path("chat_id") int chatId, @Body NewChatMessage message);
 
     @PUT("/api/dev/chats/messages/{message_id}")
-    Single<MessageResponse> markAsRead(@Path("message_id") int messageId);
+    Single<BaseResponse> markAsRead(@Path("message_id") int messageId);
 }

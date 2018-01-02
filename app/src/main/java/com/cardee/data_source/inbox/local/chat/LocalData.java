@@ -2,6 +2,7 @@ package com.cardee.data_source.inbox.local.chat;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public interface LocalData {
 
         void persistMessages(List<ChatMessage> messageList, int chatId);
 
-        void addNewMessage(String message, int messageId, int chatId);
+        void addNewMessage(NewMessage newMessage);
     }
 
     interface AlertListSource extends LocalData {

@@ -40,11 +40,17 @@ public class ChatPresenter implements ChatContract.Presenter {
     @Override
     public void init(Bundle bundle, View activityView) {
         mViewHolder = new ChatViewHolder(activityView);
-        mViewHolder.subscribeToInput(mChatRepository::sendMessage);
+        mViewHolder.initAdapter(activityView.getContext());
+        subscribeToUserInput();
 
         chatId = bundle.getInt(Chat.CHAT_SERVER_ID);
         attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT);
+    }
+
+    private void subscribeToUserInput() {
+        mViewHolder.subscribeToInput(s -> mChatRepository.sendMessage(s).
+                subscribe(realMessageId -> mViewHolder.updateMessagePreview(realMessageId),throwable -> Log.e(TAG, "Connection error")));
     }
 
     @Override
@@ -105,20 +111,21 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void showAllMessages(List<ChatMessage> messageList) {
-        if (mView != null) {
-            mView.setMessageList(messageList);
+        if (mViewHolder != null) {
+            mViewHolder.setMessageList(messageList);
         }
     }
 
     private void updateAllMessages(List<ChatMessage> messageList) {
-        if (mView != null) {
-            mView.updateAllMessages(messageList);
+        if (mViewHolder != null) {
+            mViewHolder.updateAllMessages(messageList);
         }
     }
 
     @Override
     public void onDestroy() {
         mView = null;
+        mViewHolder = null;
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }

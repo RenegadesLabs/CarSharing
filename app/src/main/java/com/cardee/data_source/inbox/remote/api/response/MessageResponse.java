@@ -1,5 +1,6 @@
 package com.cardee.data_source.inbox.remote.api.response;
 
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,17 +8,17 @@ import com.google.gson.annotations.SerializedName;
 public class MessageResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("message_id")
-    private Integer messageId;
+    @SerializedName("data")
+    private NewMessage mNewMessage;
 
     public MessageResponse() {
     }
 
-    public Integer getMessageId() {
-        return messageId;
+    public NewMessage getNewMessage() {
+        return mNewMessage;
     }
 
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
+    public void setNewMessage(NewMessage newMessage) {
+        mNewMessage = newMessage;
     }
 }

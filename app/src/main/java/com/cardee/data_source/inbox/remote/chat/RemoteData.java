@@ -2,6 +2,7 @@ package com.cardee.data_source.inbox.remote.chat;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.data_source.inbox.remote.api.request.NewChatMessage;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface RemoteData {
 
         Single<List<ChatMessage>> getMessages(int chatId);
 
-        Single<Integer> sendMessage(String newMessage, int chatId);
+        Single<NewMessage> sendMessage(String newMessage, int chatId);
 
         Completable markAsRead(int messageId);
     }
