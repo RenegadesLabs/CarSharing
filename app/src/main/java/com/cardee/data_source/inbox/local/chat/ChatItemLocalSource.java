@@ -64,6 +64,18 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
+    public void updateChatLastMessage(NewMessage newMessage) {
+        Completable.fromRunnable(() -> mDataBase.getChatDao()
+                .updateChatLastMessage(
+                        newMessage.getMessage(),
+                        newMessage.getDateCreated(),
+                        newMessage.getChatId(),
+                        newMessage.getAttachment()))
+                .subscribeOn(Schedulers.computation())
+                .subscribe();
+    }
+
+    @Override
     public void addNewMessage(NewMessage newMessage) {
         Completable.fromRunnable(() -> mDataBase.getChatMassageDao()
                 .addNewMessage(new ChatMessage.Builder()

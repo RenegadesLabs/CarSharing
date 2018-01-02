@@ -111,13 +111,13 @@ public class ChatViewHolder implements ActivityViewHolder {
     @Override
     public void setMessageList(List<ChatMessage> messageList) {
         mAdapter.setMessageList(messageList);
-        scrollRecycler(messageList.size() - 1);
+        scrollRecycler(mAdapter.getLastItemPosition());
     }
 
     @Override
     public void updateAllMessages(List<ChatMessage> messageList) {
         mAdapter.updateMessageList(messageList);
-        scrollRecycler(messageList.size() - 1);
+        scrollRecycler(mAdapter.getLastItemPosition());
     }
 
     @Override
@@ -140,6 +140,4 @@ public class ChatViewHolder implements ActivityViewHolder {
                 .doAfterNext(message -> mMessageField.setText(null))
                 .subscribe(consumer);
     }
-
-
 }

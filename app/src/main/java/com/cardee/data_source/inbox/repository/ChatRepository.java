@@ -15,10 +15,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 public class ChatRepository implements ChatContract {
@@ -30,6 +27,7 @@ public class ChatRepository implements ChatContract {
     private final RemoteData.ChatSingleSource mRemoteSource;
 
     private int chatId;
+    private String attachment;
 
     public static ChatRepository getInstance() {
         if (INSTANCE == null) {
@@ -46,6 +44,7 @@ public class ChatRepository implements ChatContract {
     @Override
     public void sendChatIdentifier(Integer chatId, String attachment) {
         this.chatId = chatId;
+        this.attachment = attachment;
     }
 
     @Override
@@ -98,19 +97,25 @@ public class ChatRepository implements ChatContract {
     }
 
     @Override
-    public Single<Integer> sendMessage(String message) {
-        return Single.create(emitter -> mRemoteSource.sendMessage(message, chatId)
+    public Single<Integer> sendMessage(String messageText) {
+        return Single.create(emitter -> mRemoteSource.sendMessage(messageText, chatId)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(newMessage -> emitter.onSuccess(newMessage.getMessageId()))
                 .subscribe(newMessage -> {
-                    newMessage.setChatId(chatId);
-                    newMessage.setMessage(message);
+                    emitter.onSuccess(newMessage.getMessageId());
+                    fetchMessageData(messageText, newMessage);
                     mLocalSource.addNewMessage(newMessage);
+                    mLocalSource.updateChatLastMessage(newMessage);
                 }, throwable -> {
                     emitter.onError(throwable);
                     Log.d(TAG, "Server connection lost");
                 }));
 
 
+    }
+
+    private void fetchMessageData(String messageText, NewMessage newMessage) {
+        newMessage.setChatId(chatId);
+        newMessage.setAttachment(attachment);
+        newMessage.setMessage(messageText);
     }
 }

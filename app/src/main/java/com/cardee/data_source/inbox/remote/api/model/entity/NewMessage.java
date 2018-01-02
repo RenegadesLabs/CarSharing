@@ -15,6 +15,7 @@ public class NewMessage {
 
     private transient int chatId;
     private transient String message;
+    private transient String attachment;
 
     public NewMessage() {
     }
@@ -49,5 +50,13 @@ public class NewMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
     }
 }

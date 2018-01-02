@@ -51,11 +51,6 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
-    public Completable updateChatUnreadCount(int chatId) {
-        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatUnreadCount(chatId));
-    }
-
-    @Override
     public Single<Chat> getChat(Chat chat) {
         return mDataBase.getChatDao()
                 .getChat(chat.getChatId(), chat.getChatAttachment())

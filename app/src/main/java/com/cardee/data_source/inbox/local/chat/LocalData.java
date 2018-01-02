@@ -23,8 +23,6 @@ public interface LocalData {
 
         Completable updateChat(Chat chat);
 
-        Completable updateChatUnreadCount(int chatId);
-
         Single<Chat> getChat(Chat chat);
     }
 
@@ -37,6 +35,8 @@ public interface LocalData {
         void markAsRead(int chatId);
 
         void updateChatUnreadCount(int chatId);
+
+        void updateChatLastMessage(NewMessage newMessage);
 
         void persistMessages(List<ChatMessage> messageList, int chatId);
 
