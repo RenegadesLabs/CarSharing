@@ -5,6 +5,7 @@ import android.util.Log;
 import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 
 import java.util.List;
 
@@ -30,21 +31,18 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
-    public void addChat(Chat chat) {
-        Completable
+    public Completable addChat(Chat chat) {
+        return Completable
                 .fromRunnable(() -> mDataBase.getChatDao().addChat(chat))
                 .doOnComplete(() -> Log.d(TAG, "Chat added: " + chat.getRecipientName() + " " + chat.getLastMessageText()))
-                .doOnError(throwable -> Log.e(TAG, throwable.toString()))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+                .doOnError(throwable -> Log.e(TAG, throwable.toString()));
     }
 
     @Override
-    public Completable updateChat(Chat chat) {
+    public Completable updateChat(ChatNotification chat) {
         return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatPresentation(
-                chat.getLastMessageText(),
-                chat.getLastMessageTime(),
-                chat.getRecipientName(),
+                chat.getMessageText(),
+                chat.getMessageTime(),
                 chat.getUnreadMessageCount(),
                 chat.getChatId(),
                 chat.getChatAttachment()));

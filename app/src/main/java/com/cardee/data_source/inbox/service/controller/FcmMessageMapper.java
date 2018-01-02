@@ -1,35 +1,30 @@
-package com.cardee.inbox.service.controller;
+package com.cardee.data_source.inbox.service.controller;
 
-import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.util.Mapper;
 
 import java.util.Map;
 
-
-public class FcmMessageMapper implements Mapper<Map<String, String>, Chat> {
+public class FcmMessageMapper implements Mapper<Map<String, String>, ChatNotification> {
 
     static final String INBOX_CHAT = "CHAT";
     static final String INBOX_ALERT = "BOOKING";
 
-    private int unreadCountMessage;
-
     @Override
-    public Chat map(Map<String, String> messageData) {
-        Chat chat = new Chat();
+    public ChatNotification map(Map<String, String> messageData) {
+        ChatNotification chatNotification = new ChatNotification();
 
-        chat.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
-        chat.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
-        chat.setLastMessageText(messageData.get(Key.Chat.MESSAGE));
-        chat.setRecipientName(messageData.get(Key.Chat.SENDER));
-        chat.setLastMessageTime(messageData.get(Key.Chat.DATE_CREATED));
-        chat.setChatAttachment(messageData.get(Key.Chat.PROFILE_TYPE).toLowerCase());
+        chatNotification.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
+        chatNotification.setChatAttachment(messageData.get(Key.Chat.PROFILE_TYPE).toLowerCase());
+        chatNotification.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
+        chatNotification.setUnreadChatCount(Integer.parseInt(messageData.get(Key.CHAT_COUNT)));
 
-        unreadCountMessage = Integer.parseInt(messageData.get(Key.CHAT_COUNT));
-        return chat;
-    }
+        chatNotification.setMessageId(Integer.parseInt(messageData.get(Key.Chat.MESSAGE_ID)));
+        chatNotification.setMessageText(messageData.get(Key.Chat.MESSAGE));
+        chatNotification.setSenderName(messageData.get(Key.Chat.SENDER));
+        chatNotification.setMessageTime(messageData.get(Key.Chat.DATE_CREATED));
 
-    int getUnreadCountMessage() {
-        return unreadCountMessage;
+        return chatNotification;
     }
 
     public static class Key {

@@ -73,14 +73,14 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
-    public void updateBookingNotificationCount(Integer readCount) {
+    public void setRelevantChatUnreadCount(Integer readCount) {
         mNotificationData.setRelevantAlertCount(readCount);
         mInboxSubject.onNext(mNotificationData.getTotalNotifications());
         mAlertSubject.onNext(mNotificationData.isMissingAlertsExist());
     }
 
     @Override
-    public void updateChatNotificationCount(Integer readCount) {
+    public void setRelevantAlertUnreadCount(Integer readCount) {
         mNotificationData.setRelevantChatCount(readCount);
         mInboxSubject.onNext(mNotificationData.getTotalNotifications());
         mChatSubject.onNext(mNotificationData.isMissingChatsExist());

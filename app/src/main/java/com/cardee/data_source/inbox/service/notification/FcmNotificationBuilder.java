@@ -1,4 +1,4 @@
-package com.cardee.inbox.service.notification;
+package com.cardee.data_source.inbox.service.notification;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.cardee.R;
-import com.cardee.inbox.service.controller.FcmMessageMapper;
+import com.cardee.data_source.inbox.service.controller.FcmMessageMapper;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;

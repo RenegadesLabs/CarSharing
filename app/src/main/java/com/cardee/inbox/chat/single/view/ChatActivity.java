@@ -83,7 +83,10 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) mPresenter.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+            mPresenter = null;
+        }
         super.onDestroy();
     }
 }

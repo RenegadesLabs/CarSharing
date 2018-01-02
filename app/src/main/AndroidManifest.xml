@@ -119,12 +119,12 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <service android:name=".owner_car_details.service.FetchAddressService" />
-        <service android:name=".inbox.service.InboxIdService">
+        <service android:name=".data_source.inbox.service.InboxIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".inbox.service.InboxMessagingService">
+        <service android:name=".data_source.inbox.service.InboxMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

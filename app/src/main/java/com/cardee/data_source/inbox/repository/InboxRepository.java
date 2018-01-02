@@ -7,6 +7,7 @@ import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 
 import java.util.List;
 
@@ -54,16 +55,23 @@ public class InboxRepository implements InboxContract {
     }
 
     @Override
-    public Completable updateChat(Chat chatFromFcm) {
+    public Completable updateChat(ChatNotification chatNotification) {
         return Completable.create((CompletableEmitter emitter) ->
-                mChatLocalSource.updateChat(chatFromFcm)
+                mChatLocalSource.updateChat(chatNotification)
                         .subscribeOn(Schedulers.io())
-                        .subscribe(emitter::onComplete, throwable -> getNewChat(chatFromFcm)));
+                        .subscribe(() -> {
+                            Log.e(TAG, "Chat updated");
+                            emitter.onComplete();
+                        }, throwable -> getNewChat(chatNotification, emitter)));
     }
 
-    private void getNewChat(Chat chatFromFcm) {
-        mChatRemoteSource.getSingleChat(chatFromFcm.getChatId(), chatFromFcm.getChatAttachment())
-                .subscribeOn(Schedulers.io())
-                .subscribe(mChatLocalSource::addChat, responseError -> Log.d(TAG, "Error while obtaining chat information"));
+    private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {
+        mChatRemoteSource.getSingleChat(chatNotification.getChatId(), chatNotification.getChatAttachment())
+                .subscribe(chat -> mChatLocalSource.addChat(chat)
+                                .subscribe(emitter::onComplete, emitter::onError),
+                        responseError -> {
+                            emitter.onError(responseError);
+                            Log.d(TAG, "Error while obtaining chat information");
+                        });
     }
 }

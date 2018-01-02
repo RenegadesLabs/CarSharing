@@ -1,25 +1,30 @@
-package com.cardee.inbox.service.controller;
+package com.cardee.data_source.inbox.service.controller;
 
 import android.util.Log;
 
-import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.repository.ChatRepository;
 import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.google.firebase.messaging.RemoteMessage;
 
-import static com.cardee.inbox.service.controller.FcmMessageMapper.INBOX_ALERT;
-import static com.cardee.inbox.service.controller.FcmMessageMapper.INBOX_CHAT;
+import io.reactivex.Completable;
+
+import static com.cardee.data_source.inbox.service.controller.FcmMessageMapper.INBOX_ALERT;
+import static com.cardee.data_source.inbox.service.controller.FcmMessageMapper.INBOX_CHAT;
 
 public class FcmRepositoryController implements RepositoryController {
 
     private static final String TAG = RepositoryController.class.getSimpleName();
 
     private final InboxRepository mInboxRepository;
+    private final ChatRepository mChatRepository;
     private final NotificationRepository mNotificationRepository;
     private final FcmMessageMapper mMessageMapper;
 
     public FcmRepositoryController() {
         mInboxRepository = InboxRepository.getInstance();
+        mChatRepository = ChatRepository.getInstance();
         mNotificationRepository = NotificationRepository.getInstance();
         mMessageMapper = new FcmMessageMapper();
     }
@@ -39,12 +44,12 @@ public class FcmRepositoryController implements RepositoryController {
     }
 
     private void updateChat(RemoteMessage remoteMessage) {
-        Chat newChatData = mMessageMapper.map(remoteMessage.getData());
-        mInboxRepository.updateChat(newChatData)
-                .subscribe(()
-                        -> Log.e(TAG, "Chat updated"), throwable
-                        -> Log.e(TAG, "Chat update ERROR : " + throwable.getMessage()));
-        mNotificationRepository.updateChatNotificationCount(mMessageMapper.getUnreadCountMessage());
+        ChatNotification chatNotification = mMessageMapper.map(remoteMessage.getData());
+        mInboxRepository.updateChat(chatNotification)
+                .subscribe(() -> mChatRepository.addNewMessage(chatNotification),
+                        throwable -> Log.e(TAG, "Chat update ERROR : " + throwable.getMessage()));
+
+        mNotificationRepository.setRelevantAlertUnreadCount(chatNotification.getUnreadChatCount());
     }
 
     private void updateBooking() {

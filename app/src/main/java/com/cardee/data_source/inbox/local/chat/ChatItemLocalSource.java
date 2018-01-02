@@ -1,10 +1,13 @@
 package com.cardee.data_source.inbox.local.chat;
 
+import android.util.Log;
+
 import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import com.cardee.domain.util.Mapper;
 
@@ -17,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ChatItemLocalSource implements LocalData.ChatSingleSource {
 
+    private static final String TAG = ChatItemLocalSource.class.getSimpleName();
     private final LocalInboxDatabase mDataBase;
 
     public ChatItemLocalSource() {
@@ -76,7 +80,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
     }
 
     @Override
-    public void addNewMessage(NewMessage newMessage) {
+    public void addOutputMessage(NewMessage newMessage) {
         Completable.fromRunnable(() -> mDataBase.getChatMassageDao()
                 .addNewMessage(new ChatMessage.Builder()
                         .withChatId(newMessage.getChatId())
@@ -86,6 +90,22 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
                         .withIsInbox(false)
                         .withIsRead(true)
                         .build()))
+                .subscribeOn(Schedulers.computation())
+                .subscribe();
+    }
+
+    @Override
+    public void addInputMessage(ChatNotification newMessage) {
+        Completable.fromRunnable(() -> mDataBase.getChatMassageDao()
+                .addNewMessage(new ChatMessage.Builder()
+                        .withChatId(newMessage.getChatId())
+                        .withMessageId(newMessage.getMessageId())
+                        .withMessage(newMessage.getMessageText())
+                        .withDateCreated(newMessage.getMessageTime())
+                        .withIsInbox(true)
+                        .withIsRead(true)
+                        .build()))
+                .doOnComplete(() -> Log.e(TAG, "Message list updated"))
                 .subscribeOn(Schedulers.computation())
                 .subscribe();
     }

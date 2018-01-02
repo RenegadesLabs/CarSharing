@@ -2,6 +2,7 @@ package com.cardee.data_source.inbox.repository;
 
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface ChatContract {
     void removeChatUnreadStatus(int chatId);
 
     Single<Integer> sendMessage(String message);
+
+    void addNewMessage(ChatNotification chatNotification);
 
     Single<List<ChatMessage>> getNewChat();
 }

@@ -2,7 +2,6 @@ package com.cardee.inbox.chat.single.adapter;
 
 import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,7 +16,7 @@ public class MessageDateFormatter implements UtcDateFormatter.ChatMessageFormatt
     private final SimpleDateFormat mMessageFormatter;
     private final SimpleDateFormat mDateFormatter;
 
-    public MessageDateFormatter() {
+    MessageDateFormatter() {
         TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
         mUtcDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US);
         mUtcDateFormat.setTimeZone(timeZone);

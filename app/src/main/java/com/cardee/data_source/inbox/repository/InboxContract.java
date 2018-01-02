@@ -1,6 +1,7 @@
 package com.cardee.data_source.inbox.repository;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface InboxContract {
 
     void fetchData(List<Chat> remoteChats);
 
-    Completable updateChat(Chat chat);
+    Completable updateChat(ChatNotification chat);
 }

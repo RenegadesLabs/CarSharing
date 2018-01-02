@@ -8,6 +8,7 @@ import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
 import com.cardee.data_source.inbox.remote.chat.ChatItemRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
@@ -103,14 +104,17 @@ public class ChatRepository implements ChatContract {
                 .subscribe(newMessage -> {
                     emitter.onSuccess(newMessage.getMessageId());
                     fetchMessageData(messageText, newMessage);
-                    mLocalSource.addNewMessage(newMessage);
+                    mLocalSource.addOutputMessage(newMessage);
                     mLocalSource.updateChatLastMessage(newMessage);
                 }, throwable -> {
                     emitter.onError(throwable);
                     Log.d(TAG, "Server connection lost");
                 }));
+    }
 
-
+    @Override
+    public void addNewMessage(ChatNotification chatNotification) {
+         mLocalSource.addInputMessage(chatNotification);
     }
 
     private void fetchMessageData(String messageText, NewMessage newMessage) {

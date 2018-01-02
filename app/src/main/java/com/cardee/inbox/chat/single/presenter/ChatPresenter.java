@@ -19,6 +19,7 @@ import io.reactivex.disposables.Disposable;
 public class ChatPresenter implements ChatContract.Presenter {
 
     private static final String TAG = ChatPresenter.class.getSimpleName();
+
     private final NotificationRepository mNotificationRepository;
     private final ChatRepository mChatRepository;
 

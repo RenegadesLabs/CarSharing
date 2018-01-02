@@ -25,9 +25,9 @@ public interface ChatDao {
     void addChats(List<Chat> chats);
 
     @Query("UPDATE chats " +
-            "SET last_message = :messageText, last_message_time = :messageTime, name = :recipientName, unread_count = :unreadMessageCount " +
+            "SET last_message = :messageText, last_message_time = :messageTime, unread_count = :unreadMessageCount " +
             "WHERE chat_id IS :chatId AND attachment IS :attachment")
-    void updateChatPresentation(String messageText, String messageTime, String recipientName, int unreadMessageCount, int chatId, String attachment);
+    void updateChatPresentation(String messageText, String messageTime, int unreadMessageCount, int chatId, String attachment);
 
     @Query("UPDATE chats SET unread_count = 0 WHERE chat_id IS :chatId")
     void updateChatUnreadCount(int chatId);

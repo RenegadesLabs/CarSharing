@@ -1,8 +1,6 @@
-package com.cardee.inbox.service.notification;
+package com.cardee.data_source.inbox.service.notification;
 
 import android.content.Context;
-
-import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 

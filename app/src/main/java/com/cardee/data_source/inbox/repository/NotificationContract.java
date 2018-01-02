@@ -6,9 +6,9 @@ public interface NotificationContract {
 
     void fetchNotifications();
 
-    void updateBookingNotificationCount(Integer readCount);
+    void setRelevantChatUnreadCount(Integer readCount);
 
-    void updateChatNotificationCount(Integer readCount);
+    void setRelevantAlertUnreadCount(Integer readCount);
 
     void updateChatUnreadCount(Integer count);
 
