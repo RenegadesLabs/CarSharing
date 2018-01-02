@@ -77,7 +77,6 @@ public class ChatPresenter implements ChatContract.Presenter {
         mChatRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
-                .doOnNext(messageList -> showProgress(true))
                 .filter(messageList -> messageList != null && !messageList.isEmpty())
                 .subscribe(this::showAllMessages);
     }
@@ -85,7 +84,6 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void getRemoteChatList() {
         mDisposable = mChatRepository.getRemoteMessages()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnEvent(throwable -> showProgress(false))
                 .subscribe(this::updateChatUnreadMarkerIfNeeded
                         , throwable -> Log.e(TAG, "Connection error"));
 
