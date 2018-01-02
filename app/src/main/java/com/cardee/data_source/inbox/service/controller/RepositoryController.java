@@ -4,5 +4,5 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public interface RepositoryController {
 
-    void updateInbox(RemoteMessage remoteMessage);
+    void updateInbox(RemoteMessage remoteMessage, ControllerCallback callback);
 }

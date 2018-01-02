@@ -3,10 +3,12 @@ package com.cardee.inbox.chat.single.view;
 import android.content.Context;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +34,17 @@ public class ChatViewHolder implements ActivityViewHolder {
     private final Observable<String> mMessageStream;
     private final VectorDrawableCompat userPhotoPlaceHolder;
     private SingleChatAdapter mAdapter;
+    private LoadingType mCurrentLoadingType;
+    private boolean isFirstLoading = true;
 
+    private enum LoadingType {
+        PROGRESS_BAR, FETCHING_VIEW
+    }
+
+    @BindView(R.id.chat_activity_progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.chat_fetch_view)
+    CardView mFetchingView;
     @BindView(R.id.chat_list)
     RecyclerView mRecyclerView;
     @BindView(R.id.chat_activity_toolbar_title)
@@ -115,9 +127,21 @@ public class ChatViewHolder implements ActivityViewHolder {
     }
 
     @Override
-    public void updateAllMessages(List<ChatMessage> messageList) {
-        mAdapter.updateMessageList(messageList);
-        scrollRecycler(mAdapter.getLastItemPosition());
+    public void showProgress(boolean isLoading) {
+        if (isFirstLoading) initLoadingType();
+        switch (mCurrentLoadingType) {
+            case PROGRESS_BAR:
+                mProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                break;
+            case FETCHING_VIEW:
+                mFetchingView.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                break;
+        }
+    }
+
+    private void initLoadingType() {
+        mCurrentLoadingType = mAdapter.getItemCount() > 0 ? LoadingType.FETCHING_VIEW : LoadingType.PROGRESS_BAR;
+        isFirstLoading = false;
     }
 
     @Override

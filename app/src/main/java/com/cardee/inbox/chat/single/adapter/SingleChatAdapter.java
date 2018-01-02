@@ -79,12 +79,15 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
     }
 
     public void setMessageList(List<ChatMessage> messageList) {
-        mMessageList.clear();
-        mMessageList.addAll(messageList);
-        notifyDataSetChanged();
+        if (mMessageList.isEmpty()) {
+            mMessageList.addAll(messageList);
+            notifyDataSetChanged();
+        } else {
+            updateMessageList(messageList);
+        }
     }
 
-    public void updateMessageList(List<ChatMessage> newList) {
+    private void updateMessageList(List<ChatMessage> newList) {
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MessageDiffCallback(mMessageList, newList));
         mMessageList = newList;
         result.dispatchUpdatesTo(this);

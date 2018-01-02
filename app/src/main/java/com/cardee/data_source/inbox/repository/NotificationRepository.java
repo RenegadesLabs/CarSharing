@@ -26,6 +26,8 @@ public class NotificationRepository implements NotificationContract {
     private NotificationApi mNotificationApi;
     private NotificationData mNotificationData;
 
+    private Integer mCurrentChatId;
+
     public static NotificationRepository getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new NotificationRepository();
@@ -123,6 +125,21 @@ public class NotificationRepository implements NotificationContract {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
+    }
+
+    @Override
+    public void setCurrentChatSession(int chatId) {
+        mCurrentChatId = chatId;
+    }
+
+    @Override
+    public void resetCurrentChatSession() {
+        mCurrentChatId = null;
+    }
+
+    @Override
+    public boolean isCurrentChatSession(int chatId) {
+        return mCurrentChatId == chatId;
     }
 
     @Override

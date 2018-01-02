@@ -6,6 +6,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 @Entity(tableName = "chats")
 public class Chat implements Comparable<Chat> {
 
@@ -52,6 +54,9 @@ public class Chat implements Comparable<Chat> {
 
     @ColumnInfo(name = "time_begin")
     private String mBookingTimeBegin;
+
+    @Ignore
+    private List<ChatMessage> mChatMessageList;
 
 
     public Integer getChatId() {
@@ -156,6 +161,14 @@ public class Chat implements Comparable<Chat> {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public List<ChatMessage> getChatMessageList() {
+        return mChatMessageList;
+    }
+
+    public void setChatMessageList(List<ChatMessage> chatMessageList) {
+        mChatMessageList = chatMessageList;
     }
 
     @Override

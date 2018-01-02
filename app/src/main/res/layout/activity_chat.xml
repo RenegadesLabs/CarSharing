@@ -104,7 +104,30 @@
                 app:layout_constraintStart_toEndOf="@id/car_photo"
                 app:layout_constraintTop_toBottomOf="@id/car_title" />
         </android.support.constraint.ConstraintLayout>
+
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/chat_fetch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/divider_dark"
+        android:visibility="gone"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="updating chat..."
+            android:textAlignment="center"
+            android:textSize="10dp" />
+
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_list"

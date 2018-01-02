@@ -20,7 +20,7 @@ public interface ActivityViewHolder {
 
     void setMessageList(List<ChatMessage> messageList);
 
-    void updateAllMessages(List<ChatMessage> messageList);
+    void showProgress(boolean isLoading);
 
     void updateMessagePreview(int messageId);
 

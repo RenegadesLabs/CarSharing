@@ -15,6 +15,12 @@ public interface NotificationContract {
     void updateInboxUnreadCount(Integer count);
 
 
+    void setCurrentChatSession(int chatId);
+
+    void resetCurrentChatSession();
+
+    boolean isCurrentChatSession(int chatId);
+
     void subscribeToNotificationUpdates(Consumer<Integer> consumer);
 
     void subscribeToAlertUpdates(Consumer<Boolean> consumer);

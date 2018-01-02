@@ -4,7 +4,6 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.ChatRemote;
-import com.cardee.data_source.inbox.remote.api.response.ChatSingleResponse;
 import com.cardee.domain.util.Mapper;
 
 import java.util.ArrayList;

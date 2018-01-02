@@ -13,6 +13,7 @@ import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -20,8 +21,8 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     private static final String TAG = ChatPresenter.class.getSimpleName();
 
-    private final NotificationRepository mNotificationRepository;
-    private final ChatRepository mChatRepository;
+    private NotificationRepository mNotificationRepository;
+    private ChatRepository mChatRepository;
 
     private ChatContract.View mView;
     private ActivityViewHolder mViewHolder;
@@ -29,7 +30,6 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     private int chatId;
     private int chatUnreadCount;
-    private boolean isFistChatEntering = true;
     private String attachment;
 
     public ChatPresenter(ChatContract.View view) {
@@ -51,11 +51,12 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     private void subscribeToUserInput() {
         mViewHolder.subscribeToInput(s -> mChatRepository.sendMessage(s).
-                subscribe(realMessageId -> mViewHolder.updateMessagePreview(realMessageId),throwable -> Log.e(TAG, "Connection error")));
+                subscribe(realMessageId -> mViewHolder.updateMessagePreview(realMessageId), throwable -> Log.e(TAG, "Connection error")));
     }
 
     @Override
     public void onChatDataRequest() {
+        mNotificationRepository.setCurrentChatSession(chatId);
         getLocalChatData();
         getLocalMessageList();
         getRemoteChatList();
@@ -76,15 +77,17 @@ public class ChatPresenter implements ChatContract.Presenter {
         mChatRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
+                .doOnNext(messageList -> showProgress(true))
                 .filter(messageList -> messageList != null && !messageList.isEmpty())
-                .subscribe(this::proceedResponse);
+                .subscribe(this::showAllMessages);
     }
 
     private void getRemoteChatList() {
         mDisposable = mChatRepository.getRemoteMessages()
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnEvent(throwable -> showProgress(false))
                 .subscribe(this::updateChatUnreadMarkerIfNeeded
-                        , throwable -> showProgress(false));
+                        , throwable -> Log.e(TAG, "Connection error"));
 
     }
 
@@ -96,30 +99,15 @@ public class ChatPresenter implements ChatContract.Presenter {
         }
     }
 
-    private synchronized void proceedResponse(List<ChatMessage> messageList) {
-        if (isFistChatEntering) {
-            showAllMessages(messageList);
-            isFistChatEntering = false;
-        } else {
-            updateAllMessages(messageList);
-        }
-    }
-
     private void showProgress(boolean isShown) {
         if (mView != null) {
-            mView.showProgress(isShown);
+            mViewHolder.showProgress(isShown);
         }
     }
 
-    private void showAllMessages(List<ChatMessage> messageList) {
+    private synchronized void showAllMessages(List<ChatMessage> messageList) {
         if (mViewHolder != null) {
             mViewHolder.setMessageList(messageList);
-        }
-    }
-
-    private void updateAllMessages(List<ChatMessage> messageList) {
-        if (mViewHolder != null) {
-            mViewHolder.updateAllMessages(messageList);
         }
     }
 
@@ -127,6 +115,10 @@ public class ChatPresenter implements ChatContract.Presenter {
     public void onDestroy() {
         mView = null;
         mViewHolder = null;
+        mNotificationRepository.resetCurrentChatSession();
+        mNotificationRepository = null;
+        mChatRepository = null;
+
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }

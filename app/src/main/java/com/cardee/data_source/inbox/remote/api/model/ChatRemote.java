@@ -34,8 +34,10 @@ public class ChatRemote {
     @SerializedName("new_messages")
     private Integer mNewCount;
 
+
     public ChatRemote() {
     }
+
 
     public Integer getChatId() {
         return mChatId;
@@ -91,5 +93,13 @@ public class ChatRemote {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public ChatRemoteMessage[] getMessages() {
+        return mMessages;
+    }
+
+    public void setMessages(ChatRemoteMessage[] messages) {
+        mMessages = messages;
     }
 }

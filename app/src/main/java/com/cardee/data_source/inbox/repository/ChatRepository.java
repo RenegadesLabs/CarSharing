@@ -67,6 +67,8 @@ public class ChatRepository implements ChatContract {
                             mLocalSource.persistMessages(messageList, chatId);
                             if (isLastMessageDidNotRead(messageList)) {
                                 markAsRead(getLastMessageId(messageList), emitter);
+                            } else {
+                                emitter.onComplete();
                             }
                         }, emitter::onError));
     }
@@ -85,11 +87,15 @@ public class ChatRepository implements ChatContract {
     }
 
     private boolean isLastMessageDidNotRead(List<ChatMessage> messageList) {
-        return !messageList.get(messageList.size() - 1).getIsRead();
+        return !getLastMessage(messageList).getIsRead();
     }
 
     private int getLastMessageId(List<ChatMessage> messageList) {
-        return messageList.get(messageList.size() - 1).getMessageId();
+        return getLastMessage(messageList).getMessageId();
+    }
+
+    private ChatMessage getLastMessage(List<ChatMessage> chatMessages) {
+        return chatMessages.get(chatMessages.size() - 1);
     }
 
     @Override
@@ -112,14 +118,14 @@ public class ChatRepository implements ChatContract {
                 }));
     }
 
-    @Override
-    public void addNewMessage(ChatNotification chatNotification) {
-         mLocalSource.addInputMessage(chatNotification);
-    }
-
     private void fetchMessageData(String messageText, NewMessage newMessage) {
         newMessage.setChatId(chatId);
         newMessage.setAttachment(attachment);
         newMessage.setMessage(messageText);
+    }
+
+    @Override
+    public void addNewMessage(ChatNotification chatNotification) {
+        mLocalSource.addInputMessage(chatNotification);
     }
 }

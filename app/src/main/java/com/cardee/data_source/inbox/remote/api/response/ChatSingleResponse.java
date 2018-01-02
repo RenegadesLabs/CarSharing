@@ -22,5 +22,4 @@ public class ChatSingleResponse extends BaseResponse {
         mChatRemote = chatRemote;
     }
 
-
 }
