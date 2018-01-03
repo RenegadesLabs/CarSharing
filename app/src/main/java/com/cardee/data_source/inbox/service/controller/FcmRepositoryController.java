@@ -51,11 +51,10 @@ public class FcmRepositoryController implements RepositoryController {
         mNotificationRepository.setRelevantChatUnreadCount(chatNotification.getUnreadChatCount());
 
         if (!chatNotification.isCurrentSession()) {
-            controllerCallback.notifyUser();
+            controllerCallback.notifyUser(chatNotification);
         }
     }
 
     private void updateBooking() {
-
     }
 }

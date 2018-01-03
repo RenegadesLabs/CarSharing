@@ -1,6 +1,6 @@
 package com.cardee.data_source.inbox.service.model;
 
-public class ChatNotification {
+public class ChatNotification implements BaseNotification {
 
     //chat info
     private Integer chatId;
@@ -18,6 +18,21 @@ public class ChatNotification {
     private Boolean isCurrentSession;
 
     public ChatNotification() {
+    }
+
+    @Override
+    public NotificationType getNotificationType() {
+        return NotificationType.CHAT;
+    }
+
+    @Override
+    public String getContentTitle() {
+        return senderName;
+    }
+
+    @Override
+    public String getContentText() {
+        return messageText;
     }
 
     public Integer getChatId() {
@@ -74,10 +89,6 @@ public class ChatNotification {
 
     public void setMessageTime(String messageTime) {
         this.messageTime = messageTime;
-    }
-
-    public String getSenderName() {
-        return senderName;
     }
 
     public void setSenderName(String senderName) {

@@ -9,9 +9,8 @@ import android.util.Log;
 
 import com.cardee.R;
 import com.cardee.data_source.inbox.service.controller.FcmMessageMapper;
+import com.cardee.data_source.inbox.service.model.BaseNotification;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.Map;
 
 public class FcmNotificationBuilder implements NotificationBuilder {
 
@@ -31,34 +30,28 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     }
 
     @Override
-    public void createNotification(Context context, Map<String, String> messageData) {
-        if (messageData.get(FcmMessageMapper.Key.TAG) != null) {
-            String notificationTag = messageData.get(FcmMessageMapper.Key.TAG).toLowerCase();
-            switch (notificationTag) {
-                case CHAT:
-                    String channelId = context.getString(R.string.chat_notification_channel_id);
+    public void createNotification(Context context, BaseNotification baseNotification) {
+        switch (baseNotification.getNotificationType()) {
+            case CHAT:
+                String channelId = context.getString(R.string.chat_notification_channel_id);
 //                Intent intent = new Intent(context, SplashActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                PendingIntent pendingIntent = PendingIntent.getActivity(context, FCM_NOTIFICATION_REQUEST_CODE, intent,
 //                        PendingIntent.FLAG_ONE_SHOT);
 
-                    mNotificationBuilder =
-                            new NotificationCompat.Builder(context, channelId)
-                                    .setSmallIcon(R.drawable.ic_cardee_icon)
-                                    .setContentTitle(messageData.get(FcmMessageMapper.Key.Chat.SENDER))
-                                    .setContentText(messageData.get(FcmMessageMapper.Key.Chat.MESSAGE))
-                                    .setAutoCancel(true)
-                                    .setSound(mChatNotifySound);
+                mNotificationBuilder =
+                        new NotificationCompat.Builder(context, channelId)
+                                .setSmallIcon(R.drawable.ic_cardee_icon)
+                                .setContentTitle(baseNotification.getContentTitle())
+                                .setContentText(baseNotification.getContentText())
+                                .setAutoCancel(true)
+                                .setSound(mChatNotifySound);
 //                        .setContentIntent(pendingIntent);
-                    break;
-                case BOOKING:
+                break;
+            case ALERT:
 
-                    break;
-            }
-            //debug
-//        logDebug(remoteMessage);
+                break;
         }
-
     }
 
     @Override
@@ -71,9 +64,5 @@ public class FcmNotificationBuilder implements NotificationBuilder {
         }
     }
 
-    private void logDebug(RemoteMessage remoteMessage) {
-        Log.e(TAG, "Body: " + remoteMessage.getNotification().getBody());
-        Log.e(TAG, "Title: " + remoteMessage.getNotification().getTitle());
-        Log.e(TAG, "Tag: " + remoteMessage.getNotification().getTag());
-    }
+
 }

@@ -56,7 +56,7 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
         if (position == 0 && !mMessageFormatter.sameWithCurrentDate(chatMessage.getDateCreated())) {
             isNewDay = true;
-        } else if (position < mMessageList.size()) {
+        } else if (position < mMessageList.size() && mMessageList.size() != 1) {
             ChatMessage prevMessage = mMessageList.get(position - 1);
             if (!mMessageFormatter.hasSameDate(chatMessage.getDateCreated(), prevMessage.getDateCreated())) {
                 isNewDay = true;

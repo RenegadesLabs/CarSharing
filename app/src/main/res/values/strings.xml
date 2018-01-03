@@ -542,6 +542,7 @@
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+    <string name="alert_notification_channel_id">cardee_alert_chanel</string>
     <string name="booking_filter_title">Bookings</string>
     <string name="booking_sort_title">Sort by</string>
     <string name="booking_sort_date">Booking date</string>
