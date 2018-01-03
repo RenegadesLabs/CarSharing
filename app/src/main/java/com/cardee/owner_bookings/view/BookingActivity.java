@@ -11,6 +11,9 @@ import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
+import com.cardee.owner_bookings.strategy.ConfirmedStrategy;
+import com.cardee.owner_bookings.strategy.HandedOverStrategy;
+import com.cardee.owner_bookings.strategy.HandingOverStrategy;
 import com.cardee.owner_bookings.strategy.NewBookingStrategy;
 
 public class BookingActivity extends AppCompatActivity {
@@ -26,8 +29,9 @@ public class BookingActivity extends AppCompatActivity {
         BookingState state = (BookingState) args.getSerializable(OwnerBookingContract.BOOKING_STATE);
         presenter = new OwnerBookingPresenter(bookingId);
         BookingView bookingView = (BookingView) LayoutInflater
-                .from(this).inflate(R.layout.view_booking, null);
-        presenter.setStrategy(new NewBookingStrategy(bookingView, presenter));//Temporary
+                .from(this)
+                .inflate(R.layout.view_booking, null);
+        presenter.setStrategy(new HandedOverStrategy(bookingView, presenter));//Temporary
         setContentView(bookingView);
         view = bookingView;
         view.setPresenter(presenter);

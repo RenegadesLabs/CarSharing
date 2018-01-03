@@ -14,7 +14,7 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
 
     private final BookingView bookingView;
 
-    protected HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
         super(view, listener);
         bookingView = (BookingView) view;
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_collecting);

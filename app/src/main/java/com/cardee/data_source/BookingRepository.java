@@ -1,5 +1,7 @@
 package com.cardee.data_source;
 
+import android.util.LruCache;
+
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
@@ -13,9 +15,13 @@ public class BookingRepository implements BookingDataSource {
     private final BookingDataSource localDataSource;
     private final BookingDataSource remoteDataSource;
 
+    private LruCache<Integer, BookingEntity> bookingCache;
+    private boolean dirtyCache = false;
+
     private BookingRepository() {
         localDataSource = LocalBookingDataSource.getInstance();
         remoteDataSource = RemoteBookingDataSource.getInstance();
+        bookingCache = new LruCache<>(25);
     }
 
     public static BookingRepository getInstance() {
@@ -30,6 +36,14 @@ public class BookingRepository implements BookingDataSource {
         remoteDataSource.obtainOwnerBookings(filter, sort, new BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
+                int counter = 0;
+                for (BookingEntity booking : bookingEntities) {
+                    if (++counter >= 25) {
+                        break;
+                    }
+                    bookingCache.put(booking.getBookingId(), booking);
+                }
+                dirtyCache = false;
                 bookingsCallback.onSuccess(bookingEntities);
             }
 
@@ -47,6 +61,12 @@ public class BookingRepository implements BookingDataSource {
 
     @Override
     public void obtainBookingById(int id, BookingCallback callback) {
+        if (!dirtyCache) {
+            BookingEntity cachedBooking = bookingCache.get(id);
+            if (cachedBooking != null) {
+                callback.onSuccess(cachedBooking);
+            }
+        }
         remoteDataSource.obtainBookingById(id, new BookingCallback() {
             @Override
             public void onSuccess(BookingEntity bookingEntity) {
@@ -75,4 +95,8 @@ public class BookingRepository implements BookingDataSource {
         });
     }
 
+    void clearCache() {
+        bookingCache.evictAll();
+        dirtyCache = true;
+    }
 }

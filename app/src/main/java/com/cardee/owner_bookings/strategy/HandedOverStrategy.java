@@ -14,7 +14,7 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
 
     private final BookingView bookingView;
 
-    protected HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
         super(view, listener);
         bookingView = (BookingView) view;
 

@@ -2,6 +2,7 @@ package com.cardee.data_source.remote;
 
 
 import android.util.Log;
+import android.util.LruCache;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.BookingDataSource;
@@ -10,8 +11,10 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -54,6 +57,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
 
     @Override
     public void obtainBookingById(int id, BookingCallback callback) {
+
         api.getBookingById(id).subscribe(response -> {
             if (response.isSuccessful()) {
                 callback.onSuccess(response.getBooking());
