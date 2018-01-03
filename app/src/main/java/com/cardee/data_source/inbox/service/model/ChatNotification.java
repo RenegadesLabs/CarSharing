@@ -13,6 +13,9 @@ public class ChatNotification {
     private String messageText;
     private String messageTime;
     private String senderName;
+    private Boolean isRead;
+
+    private Boolean isCurrentSession;
 
     public ChatNotification() {
     }
@@ -42,7 +45,7 @@ public class ChatNotification {
     }
 
     public Integer getUnreadChatCount() {
-        return unreadChatCount;
+        return isCurrentSession ? unreadChatCount - unreadMessageCount : unreadChatCount;
     }
 
     public void setUnreadChatCount(Integer unreadChatCount) {
@@ -79,5 +82,18 @@ public class ChatNotification {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    public Boolean getRead() {
+        return isRead;
+    }
+
+    public Boolean isCurrentSession() {
+        return isCurrentSession;
+    }
+
+    public void setCurrentSession(Boolean currentSession) {
+        isRead = currentSession;
+        isCurrentSession = currentSession;
     }
 }

@@ -76,16 +76,16 @@ public class NotificationRepository implements NotificationContract {
 
     @Override
     public void setRelevantChatUnreadCount(Integer readCount) {
-        mNotificationData.setRelevantAlertCount(readCount);
+        mNotificationData.setRelevantChatCount(readCount);
         mInboxSubject.onNext(mNotificationData.getTotalNotifications());
-        mAlertSubject.onNext(mNotificationData.isMissingAlertsExist());
+        mChatSubject.onNext(mNotificationData.isMissingChatsExist());
     }
 
     @Override
     public void setRelevantAlertUnreadCount(Integer readCount) {
-        mNotificationData.setRelevantChatCount(readCount);
+        mNotificationData.setRelevantAlertCount(readCount);
         mInboxSubject.onNext(mNotificationData.getTotalNotifications());
-        mChatSubject.onNext(mNotificationData.isMissingChatsExist());
+        mAlertSubject.onNext(mNotificationData.isMissingAlertsExist());
     }
 
     @Override
@@ -139,7 +139,7 @@ public class NotificationRepository implements NotificationContract {
 
     @Override
     public boolean isCurrentChatSession(int chatId) {
-        return mCurrentChatId == chatId;
+        return mCurrentChatId != null && mCurrentChatId == chatId;
     }
 
     @Override

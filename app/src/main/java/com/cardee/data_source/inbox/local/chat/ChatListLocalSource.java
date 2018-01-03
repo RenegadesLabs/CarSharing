@@ -39,13 +39,14 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
-    public Completable updateChat(ChatNotification chat) {
+    public Completable updateChat(ChatNotification chatNotification) {
+        int unreadMessages = chatNotification.isCurrentSession() ? 0 : chatNotification.getUnreadMessageCount();
         return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatPresentation(
-                chat.getMessageText(),
-                chat.getMessageTime(),
-                chat.getUnreadMessageCount(),
-                chat.getChatId(),
-                chat.getChatAttachment()));
+                chatNotification.getMessageText(),
+                chatNotification.getMessageTime(),
+                unreadMessages,
+                chatNotification.getChatId(),
+                chatNotification.getChatAttachment()));
     }
 
     @Override

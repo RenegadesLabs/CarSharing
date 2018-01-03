@@ -20,7 +20,7 @@ public interface ChatMessageDao {
     Flowable<List<ChatMessage>> getMessages(int chatId);
 
     @Query("UPDATE chat_message SET is_read = 1 WHERE chat_owner_id IS :chatId")
-    void updateReadStatus(String chatId);
+    void updateReadStatus(int chatId);
 
     @Insert
     void addNewMessage(ChatMessage chatMessage);

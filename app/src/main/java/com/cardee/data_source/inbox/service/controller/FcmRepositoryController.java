@@ -29,26 +29,29 @@ public class FcmRepositoryController implements RepositoryController {
 
     @Override
     public void updateInbox(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
-        if (remoteMessage.getData().get(FcmMessageMapper.Key.TAG) != null) {
-            switch (remoteMessage.getData().get(FcmMessageMapper.Key.TAG)) {
-                case INBOX_CHAT:
-                    updateChat(remoteMessage, controllerCallback);
-                    break;
-                case INBOX_ALERT:
-                    updateBooking();
-                    break;
-            }
+        if (remoteMessage.getData().get(FcmMessageMapper.Key.TAG) == null) return;
+
+        switch (remoteMessage.getData().get(FcmMessageMapper.Key.TAG)) {
+            case INBOX_CHAT:
+                updateChat(remoteMessage, controllerCallback);
+                break;
+            case INBOX_ALERT:
+                updateBooking();
+                break;
         }
     }
 
     private void updateChat(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
         ChatNotification chatNotification = mMessageMapper.map(remoteMessage.getData());
+        chatNotification.setCurrentSession(mNotificationRepository.isCurrentChatSession(chatNotification.getChatId()));
+
         mInboxRepository.updateChat(chatNotification)
                 .subscribe(() -> mChatRepository.addNewMessage(chatNotification),
                         throwable -> Log.e(TAG, "Chat update ERROR : " + throwable.getMessage()));
         mNotificationRepository.setRelevantChatUnreadCount(chatNotification.getUnreadChatCount());
-        if (mNotificationRepository.isCurrentChatSession(chatNotification.getChatId())) {
-            controllerCallback.currentChatIsActive();
+
+        if (!chatNotification.isCurrentSession()) {
+            controllerCallback.notifyUser();
         }
     }
 

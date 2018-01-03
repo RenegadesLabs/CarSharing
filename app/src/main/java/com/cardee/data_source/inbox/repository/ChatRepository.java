@@ -14,7 +14,6 @@ import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -64,11 +63,10 @@ public class ChatRepository implements ChatContract {
                 mRemoteSource.getMessages(chatId)
                         .subscribeOn(Schedulers.io())
                         .subscribe(messageList -> {
+                            emitter.onComplete();
                             mLocalSource.persistMessages(messageList, chatId);
-                            if (isLastMessageDidNotRead(messageList)) {
-                                markAsRead(getLastMessageId(messageList), emitter);
-                            } else {
-                                emitter.onComplete();
+                            if (isLastInboxMessageDidNotRead(messageList)) {
+                                markAsRead(getLastMessageId(messageList));
                             }
                         }, emitter::onError));
     }
@@ -78,16 +76,14 @@ public class ChatRepository implements ChatContract {
         mLocalSource.updateChatUnreadCount(chatId);
     }
 
-    private void markAsRead(int lastMessageId, CompletableEmitter emitter) {
+    private void markAsRead(int lastMessageId) {
         mRemoteSource.markAsRead(lastMessageId)
-                .subscribe(() -> {
-                    mLocalSource.markAsRead(chatId);
-                    emitter.onComplete();
-                }, emitter::onError);
+                .subscribe(() -> mLocalSource.markAsRead(chatId),
+                        throwable -> Log.d(TAG, "Connection lost"));
     }
 
-    private boolean isLastMessageDidNotRead(List<ChatMessage> messageList) {
-        return !getLastMessage(messageList).getIsRead();
+    private boolean isLastInboxMessageDidNotRead(List<ChatMessage> messageList) {
+        return getLastMessage(messageList).getInbox() && !getLastMessage(messageList).getIsRead();
     }
 
     private int getLastMessageId(List<ChatMessage> messageList) {
@@ -127,5 +123,14 @@ public class ChatRepository implements ChatContract {
     @Override
     public void addNewMessage(ChatNotification chatNotification) {
         mLocalSource.addInputMessage(chatNotification);
+        if (chatNotification.isCurrentSession()) {
+            markAsReadIncomingMessage(chatNotification.getMessageId());
+        }
+    }
+
+    private void markAsReadIncomingMessage(int messageId) {
+        mRemoteSource.markAsRead(messageId).subscribe(
+                () -> Log.d(TAG, "Message " + messageId + " marked"),
+                throwable -> Log.d(TAG, "Connection lost"));
     }
 }

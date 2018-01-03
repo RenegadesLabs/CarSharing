@@ -56,7 +56,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
 
     @Override
     public void markAsRead(int databaseId) {
-        mDataBase.getChatMassageDao().updateReadStatus(String.valueOf(databaseId));
+        mDataBase.getChatMassageDao().updateReadStatus(databaseId);
     }
 
     @Override
@@ -88,22 +88,22 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
                         .withMessage(newMessage.getMessage())
                         .withDateCreated(newMessage.getDateCreated())
                         .withIsInbox(false)
-                        .withIsRead(true)
+                        .withIsRead(false)
                         .build()))
                 .subscribeOn(Schedulers.computation())
                 .subscribe();
     }
 
     @Override
-    public void addInputMessage(ChatNotification newMessage) {
+    public void addInputMessage(ChatNotification chatNotification) {
         Completable.fromRunnable(() -> mDataBase.getChatMassageDao()
                 .addNewMessage(new ChatMessage.Builder()
-                        .withChatId(newMessage.getChatId())
-                        .withMessageId(newMessage.getMessageId())
-                        .withMessage(newMessage.getMessageText())
-                        .withDateCreated(newMessage.getMessageTime())
+                        .withChatId(chatNotification.getChatId())
+                        .withMessageId(chatNotification.getMessageId())
+                        .withMessage(chatNotification.getMessageText())
+                        .withDateCreated(chatNotification.getMessageTime())
                         .withIsInbox(true)
-                        .withIsRead(true)
+                        .withIsRead(chatNotification.getRead())
                         .build()))
                 .doOnComplete(() -> Log.e(TAG, "Message list updated"))
                 .subscribeOn(Schedulers.computation())

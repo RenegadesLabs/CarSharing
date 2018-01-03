@@ -94,6 +94,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         if (chatUnreadCount != 0) {
             mNotificationRepository.updateChatUnreadCount(chatUnreadCount);
             mChatRepository.removeChatUnreadStatus(chatId);
+            chatUnreadCount = 0;
         }
     }
 
