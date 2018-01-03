@@ -158,8 +158,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
         private AppCompatTextView dividerDate;
         private AppCompatTextView messageText;
         private AppCompatTextView messageTime;
-        private AppCompatImageView messageStatusSent;
-        private AppCompatImageView messageStatusRead;
+//        private AppCompatImageView messageStatusSent;
+//        private AppCompatImageView messageStatusRead;
 
         RecipientMessageHolder(View itemView) {
             super(itemView);
@@ -167,8 +167,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
             dividerDate = itemView.findViewById(R.id.divider_date);
             messageText = itemView.findViewById(R.id.message_text);
             messageTime = itemView.findViewById(R.id.message_time);
-            messageStatusSent = itemView.findViewById(R.id.message_status_sent);
-            messageStatusRead = itemView.findViewById(R.id.message_status_read);
+//            messageStatusSent = itemView.findViewById(R.id.message_status_sent);
+//            messageStatusRead = itemView.findViewById(R.id.message_status_read);
         }
 
         public void bind(ChatMessage chatMessage, UtcDateFormatter.ChatMessageFormatter dateFormatter, boolean isNewDay) {
@@ -177,8 +177,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
             messageText.setText(chatMessage.getMessage());
             messageTime.setText(dateFormatter.formatDate(chatMessage.getDateCreated()));
-            messageStatusSent.setVisibility(chatMessage.getIsRead() ? View.GONE : View.VISIBLE);
-            messageStatusRead.setVisibility(chatMessage.getIsRead() ? View.VISIBLE : View.GONE);
+//            messageStatusSent.setVisibility(chatMessage.getIsRead() ? View.GONE : View.VISIBLE);
+//            messageStatusRead.setVisibility(chatMessage.getIsRead() ? View.VISIBLE : View.GONE);
         }
     }
 }

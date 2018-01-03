@@ -20,7 +20,7 @@ public class MessageDateFormatter implements UtcDateFormatter.ChatMessageFormatt
         TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
         mUtcDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US);
         mUtcDateFormat.setTimeZone(timeZone);
-        mMessageFormatter = new SimpleDateFormat("HH:mm", Locale.US);
+        mMessageFormatter = new SimpleDateFormat("h:mm aaa", Locale.US);
         mDateFormatter = new SimpleDateFormat("E, d MMM", Locale.US);
     }
 
