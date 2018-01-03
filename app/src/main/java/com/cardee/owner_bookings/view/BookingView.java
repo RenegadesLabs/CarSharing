@@ -70,9 +70,17 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     public TextView renterName;
     @BindView(R.id.renter_message)
     public TextView renterMessage;
-    @BindView(R.id.btn_decline_request)
+    @BindView(R.id.renter_call_title)
+    public TextView renterCallTitle;
+    @BindView(R.id.renter_call)
+    public ImageView renterCall;
+    @BindView(R.id.renter_chat_title)
+    public TextView renterChatTitle;
+    @BindView(R.id.renter_chat)
+    public ImageView renterChat;
+    @BindView(R.id.btn_cancel)
     public TextView btnCancel;
-    @BindView(R.id.btn_accept_request)
+    @BindView(R.id.btn_accept)
     public TextView btnAccept;
     @BindView(R.id.booking_accept_message)
     public TextView acceptMessage;
