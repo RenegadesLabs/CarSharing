@@ -11,6 +11,7 @@ import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
+import com.cardee.owner_bookings.strategy.NewBookingStrategy;
 
 public class BookingActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class BookingActivity extends AppCompatActivity {
         presenter = new OwnerBookingPresenter(bookingId);
         BookingView bookingView = (BookingView) LayoutInflater
                 .from(this).inflate(R.layout.view_booking, null);
+        presenter.setStrategy(new NewBookingStrategy(bookingView, presenter));//Temporary
         setContentView(bookingView);
         view = bookingView;
         view.setPresenter(presenter);

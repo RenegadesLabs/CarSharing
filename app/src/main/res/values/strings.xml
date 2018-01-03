@@ -550,11 +550,11 @@
 
     <!--Bookings-->
     <string name="booking_state_all">All</string>
-    <string name="booking_state_new">Request</string>
+    <string name="booking_state_new">New Request</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
-    <string name="booking_state_collected">Handed over</string>
-    <string name="booking_state_collecting">Handing over</string>
+    <string name="booking_state_collected">Handed Over</string>
+    <string name="booking_state_collecting">Handing Over</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
@@ -564,4 +564,20 @@
     <string name="booking_sort_pickup_date">Pickup date</string>
     <string name="booking_sort_return_date">Return date</string>
     <string name="booking_sort_amount">Booking amount</string>
+
+    <string name="booking_message_accept">Accept request to confirm booking</string>
+    <string name="booking_message_handover">Hangover car to fill checklist upon car collection</string>
+    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist...</string>
+    <string name="booking_message_handover_complete">Tap "Car returned" to complete booking</string>
+
+    <string name="booking_payment_card">Card</string>
+    <string name="booking_payment_cash">Cash</string>
+    
+    <string name="booking_title_decline">Decline Request</string>
+    <string name="booking_title_accept">Accept Request</string>
+    <string name="booking_title_cancel">Cancel Booking</string>
+    <string name="booking_title_handover">Handover Car</string>
+    <string name="booking_title_cancel_handover">Cancel Handover</string>
+    <string name="booking_title_complete">Car Returned</string>
+
 </resources>
