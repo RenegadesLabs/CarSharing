@@ -1,5 +1,7 @@
 package com.cardee.data_source.inbox.service.model;
 
+import com.cardee.data_source.remote.service.AccountManager;
+
 public class ChatNotification implements BaseNotification {
 
     //chat info
@@ -15,9 +17,27 @@ public class ChatNotification implements BaseNotification {
     private String senderName;
     private Boolean isRead;
 
-    private Boolean isCurrentSession;
+    private Boolean isCurrentMessagingSession;
+    private Boolean isCurrentSessionNeedToNotify;
 
     public ChatNotification() {
+    }
+
+
+
+    @Override
+    public int getId() {
+        return chatId;
+    }
+
+    @Override
+    public String getAttachment() {
+        return chatAttachment.toLowerCase();
+    }
+
+    @Override
+    public int getUnreadCount() {
+        return unreadMessageCount;
     }
 
     @Override
@@ -34,6 +54,18 @@ public class ChatNotification implements BaseNotification {
     public String getContentText() {
         return messageText;
     }
+
+    @Override
+    public boolean isCurrentSessionNeedToNotify() {
+        return isCurrentSessionNeedToNotify;
+    }
+
+    @Override
+    public boolean isOwnerSession() {
+        return chatAttachment.equals(AccountManager.OWNER_SESSION);
+    }
+
+
 
     public Integer getChatId() {
         return chatId;
@@ -60,7 +92,7 @@ public class ChatNotification implements BaseNotification {
     }
 
     public Integer getUnreadChatCount() {
-        return isCurrentSession ? unreadChatCount - unreadMessageCount : unreadChatCount;
+        return isCurrentMessagingSession ? unreadChatCount - unreadMessageCount : unreadChatCount;
     }
 
     public void setUnreadChatCount(Integer unreadChatCount) {
@@ -100,11 +132,15 @@ public class ChatNotification implements BaseNotification {
     }
 
     public Boolean isCurrentSession() {
-        return isCurrentSession;
+        return isCurrentMessagingSession;
     }
 
     public void setCurrentSession(Boolean currentSession) {
         isRead = currentSession;
-        isCurrentSession = currentSession;
+        isCurrentMessagingSession = currentSession;
+    }
+
+    public void setCurrentSessionNeedToNotify(Boolean currentSessionNeedToNotify) {
+        isCurrentSessionNeedToNotify = currentSessionNeedToNotify;
     }
 }

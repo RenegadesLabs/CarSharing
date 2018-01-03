@@ -14,6 +14,7 @@ public class Chat implements Comparable<Chat> {
     public static final String CHAT_SERVER_ID = "chat_id";
     public static final String CHAT_ATTACHMENT = "chat_attachment";
     public static final String CHAT_UNREAD_COUNT = "chat_unread";
+    public static final String IS_NEW_CHAT = "chat_status";
 
     @PrimaryKey
     @ColumnInfo(name = "chat_id")

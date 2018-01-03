@@ -13,7 +13,6 @@ import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 

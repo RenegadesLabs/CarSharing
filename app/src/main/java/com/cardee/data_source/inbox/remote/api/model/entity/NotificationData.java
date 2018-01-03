@@ -20,14 +20,14 @@ public class NotificationData {
     @SerializedName("renter_alerts_cnt")
     private Integer renterAlertMessages;
 
-    private transient String currentSession;
+    private transient String currentAttachment;
 
     public NotificationData() {
     }
 
 
-    public NotificationData(String currentSession) {
-        this.currentSession = currentSession;
+    public NotificationData(String currentAttachment) {
+        this.currentAttachment = currentAttachment;
     }
 
     public Integer getOwnerChatMessages() {
@@ -62,8 +62,8 @@ public class NotificationData {
         this.renterAlertMessages = renterAlertMessages;
     }
 
-    public String getCurrentSession() {
-        return currentSession;
+    public String getCurrentAttachment() {
+        return currentAttachment;
     }
 
     public boolean isMissingAlertsExist() {
@@ -102,7 +102,7 @@ public class NotificationData {
     }
 
     private boolean isOwnerSession() {
-        return currentSession.equals(OWNER_SESSION);
+        return currentAttachment.equals(OWNER_SESSION);
     }
 
     private int getTotalOwnerNotifications() {

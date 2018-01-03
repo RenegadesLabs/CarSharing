@@ -14,12 +14,14 @@ public interface NotificationContract {
 
     void updateInboxUnreadCount(Integer count);
 
+    boolean isCurrentSessionNeedToNotify(String attachment);
+
 
     void setCurrentChatSession(int chatId);
 
     void resetCurrentChatSession();
 
-    boolean isCurrentChatSession(int chatId);
+    boolean isCurrentMessagingSession(int chatId);
 
     void subscribeToNotificationUpdates(Consumer<Integer> consumer);
 

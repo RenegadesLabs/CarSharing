@@ -43,7 +43,8 @@ public class FcmRepositoryController implements RepositoryController {
 
     private void updateChat(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
         ChatNotification chatNotification = mMessageMapper.map(remoteMessage.getData());
-        chatNotification.setCurrentSession(mNotificationRepository.isCurrentChatSession(chatNotification.getChatId()));
+        chatNotification.setCurrentSession(mNotificationRepository.isCurrentMessagingSession(chatNotification.getChatId()));
+        chatNotification.setCurrentSessionNeedToNotify(mNotificationRepository.isCurrentSessionNeedToNotify(chatNotification.getAttachment()));
 
         mInboxRepository.updateChat(chatNotification)
                 .subscribe(() -> mChatRepository.addNewMessage(chatNotification),

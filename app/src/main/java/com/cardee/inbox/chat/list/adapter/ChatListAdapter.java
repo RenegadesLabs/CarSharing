@@ -19,8 +19,6 @@ import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
@@ -31,7 +29,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     private List<Chat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<Chat> mOnClickSubject;
-    private final PublishSubject<Integer> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
 
     private final Drawable userPhotoPlaceHolder;
@@ -41,7 +38,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
-        mUnreadSubject = PublishSubject.create();
         userPhotoPlaceHolder = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_photo_placeholder, null);
     }
 
@@ -70,10 +66,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         holder.mLastMessage.setText(chat.getLastMessageText());
         holder.mLastMessageTime.setText(mDateFormatter.formatDate(chat.getLastMessageTime()));
         setUnreadMessageCount(chat, holder);
-        holder.mContainer.setOnClickListener(view -> {
-            mOnClickSubject.onNext(chat);
-            mUnreadSubject.onNext(chat.getUnreadMessageCount());
-        });
+        holder.mContainer.setOnClickListener(view -> mOnClickSubject.onNext(chat));
     }
 
     private void setUnreadMessageCount(Chat chat, ChatViewHolder holder) {
@@ -104,12 +97,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     public void subscribeToChatClick(Consumer<Chat> clickConsumer) {
         mOnClickSubject
                 .subscribe(clickConsumer);
-    }
-
-    public void subscribeToUnreadMessage(Consumer<Integer> isUnread) {
-        mUnreadSubject
-                .distinctUntilChanged()
-                .subscribe(isUnread);
     }
 
     @Override

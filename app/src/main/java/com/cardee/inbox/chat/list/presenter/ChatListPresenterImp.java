@@ -13,6 +13,7 @@ import com.cardee.domain.inbox.usecase.chat.GetChats;
 import java.util.List;
 
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.IS_NEW_CHAT;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
 
@@ -63,10 +64,6 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
     }
 
     private void showAllChats(List<Chat> chatList) {
-//        if (mView != null) {
-//            mView.showProgress(false);
-//            mView.showAllChats(chatList);
-//        }
         if (mView != null) {
             if (isFistChatEntering) {
                 mView.showProgress(false);
@@ -85,11 +82,6 @@ public class ChatListPresenterImp implements ChatListContract.Presenter {
         args.putString(CHAT_ATTACHMENT, mAttachment);
         args.putInt(CHAT_UNREAD_COUNT, chat.getUnreadMessageCount());
         openChat(args);
-    }
-
-    @Override
-    public void onResetMessageCount(int isUnread) {
-
     }
 
     private void openChat(Bundle args) {

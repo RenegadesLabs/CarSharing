@@ -101,6 +101,11 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
+    public boolean isCurrentSessionNeedToNotify(String attachment) {
+        return mNotificationData.getCurrentAttachment().equals(attachment);
+    }
+
+    @Override
     public void subscribeToNotificationUpdates(Consumer<Integer> consumer) {
         mInboxSubject
                 .distinctUntilChanged()
@@ -138,7 +143,7 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
-    public boolean isCurrentChatSession(int chatId) {
+    public boolean isCurrentMessagingSession(int chatId) {
         return mCurrentChatId != null && mCurrentChatId == chatId;
     }
 

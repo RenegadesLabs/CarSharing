@@ -6,9 +6,19 @@ public interface BaseNotification {
         CHAT, ALERT
     }
 
+    int getId();
+
+    String getAttachment();
+
+    int getUnreadCount();
+
     NotificationType getNotificationType();
 
     String getContentTitle();
 
     String getContentText();
+
+    boolean isCurrentSessionNeedToNotify();
+
+    boolean isOwnerSession();
 }
