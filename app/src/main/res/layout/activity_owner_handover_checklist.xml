@@ -31,9 +31,9 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_changed"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="@dimen/toolbar_height"
             android:background="@color/rate_star"
+            android:visibility="gone"
             app:titleTextColor="@color/bg_main">
 
             <TextView
@@ -67,8 +67,8 @@
                 android:text="@string/owner_handover_checklist_petrol_title"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include
                 android:id="@+id/view1"
@@ -116,6 +116,7 @@
                 android:id="@+id/remarks_container"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:visibility="visible"
                 android:layout_margin="@dimen/medium_margin"
                 android:background="@drawable/bg_petrol_tank"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,42 +137,44 @@
             </FrameLayout>
 
             <include
+                android:id="@+id/l_viewAccurateContainer"
+                layout="@layout/view_checklist_accurate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                layout="@layout/view_checklist_accurate"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/remarks_container"/>
+                app:layout_constraintTop_toBottomOf="@+id/remarks_container" />
 
             <LinearLayout
+                android:id="@+id/l_handoverContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/remarks_container">
 
-            <TextView
-                android:id="@+id/info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/large_margin"
-                android:text="@string/owner_handover_checklist_info"
-                android:textSize="@dimen/text_small"
-                />
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/large_margin"
+                    android:text="@string/owner_handover_checklist_info"
+                    android:textSize="@dimen/text_small" />
 
-            <TextView
-                android:id="@+id/btn_handoverCar"
-                style="@style/RegularButton"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_regular_height"
-                android:layout_marginBottom="@dimen/large_margin"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:background="@drawable/bg_button_regular"
-                android:clickable="true"
-                android:text="@string/owner_handover_checklist_button" />
+                <TextView
+                    android:id="@+id/btn_handoverCar"
+                    style="@style/RegularButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_regular_height"
+                    android:layout_marginBottom="@dimen/large_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:background="@drawable/bg_button_regular"
+                    android:clickable="true"
+                    android:text="@string/owner_handover_checklist_button" />
             </LinearLayout>
 
 
