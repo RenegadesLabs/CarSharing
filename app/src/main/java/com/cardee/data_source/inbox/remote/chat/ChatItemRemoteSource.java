@@ -5,7 +5,7 @@ import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.entity.ChatRemoteMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
-import com.cardee.data_source.inbox.remote.api.request.NewChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewChatMessage;
 import com.cardee.data_source.inbox.remote.api.response.MessageResponse;
 import com.cardee.domain.util.Mapper;
 

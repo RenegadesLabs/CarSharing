@@ -54,6 +54,5 @@ public interface LocalData {
         void saveAlerts(List<Alert> inboxAlerts);
 
         Completable addAlert(Alert alert);
-
     }
 }

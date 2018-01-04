@@ -1,5 +1,7 @@
 package com.cardee.inbox.alert.list.presenter;
 
+import android.os.Bundle;
+
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.mvp.BaseView;
 
@@ -23,5 +25,6 @@ public interface AlertListContract {
 
         void showAllAlerts(List<Alert> alertList);
 
+        void showAlert(Bundle bundle);
     }
 }

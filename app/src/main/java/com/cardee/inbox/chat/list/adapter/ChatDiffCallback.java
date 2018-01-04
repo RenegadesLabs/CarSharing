@@ -11,7 +11,7 @@ public class ChatDiffCallback extends DiffUtil.Callback {
     private List<Chat> oldChatList;
     private List<Chat> newChatList;
 
-    public ChatDiffCallback(List<Chat> oldChatList, List<Chat> newChatList) {
+    ChatDiffCallback(List<Chat> oldChatList, List<Chat> newChatList) {
         this.oldChatList = oldChatList;
         this.newChatList = newChatList;
     }

@@ -69,6 +69,7 @@
             android:maxWidth="240dp"
             android:text="asdadsasdasdasd"
             android:textAlignment="viewStart"
+            android:textSize="@dimen/text_regular"
             android:textColor="@color/text_owner_profile_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

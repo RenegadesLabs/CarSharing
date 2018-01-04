@@ -1,6 +1,7 @@
 package com.cardee.inbox.alert.list.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
@@ -9,9 +10,10 @@ import com.cardee.data_source.remote.service.AccountManager;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class AlertListPresenterImp implements AlertListContract.Presenter {
 
@@ -37,8 +39,11 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
     public void onGetAlerts() {
         Disposable localSub = mInboxRepository
                 .getLocalAlerts(mAttachment)
+                .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
+                .filter(alerts -> alerts != null && !alerts.isEmpty())
                 .subscribe(this::showAllAlerts);
+
         Disposable remoteSub = mInboxRepository.getRemoteAlerts(mAttachment)
                 .filter(alerts -> alerts != null && !alerts.isEmpty())
                 .subscribe(mInboxRepository::fetchAlertData, throwable -> Log.d(TAG, "Connection lost"));
@@ -54,7 +59,12 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
     @Override
     public void onAlertClick(Alert alert) {
-
+        Bundle bundle = new Bundle();
+        bundle.putInt(Alert.ALERT_SERVER_ID, alert.getAlertId());
+        bundle.putString(Alert.ALERT_ATTACHMENT, alert.getAttachment());
+        if (mView != null) {
+            mView.showAlert(bundle);
+        }
     }
 
     @Override

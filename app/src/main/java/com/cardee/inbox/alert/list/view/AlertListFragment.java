@@ -44,7 +44,7 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
     }
 
     private void initAdapter() {
-        mAlertAdapter = new AlertListAdapter();
+        mAlertAdapter = new AlertListAdapter(getActivity());
         mAlertAdapter.subscribeToAlertClick(alert -> {
             if (mPresenter != null) {
                 mPresenter.onAlertClick(alert);
@@ -58,6 +58,7 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
         View root = inflater.inflate(R.layout.fragment_inbox_alerts, container, false);
         ButterKnife.bind(this, root);
         initRecycler();
+        mPresenter.onGetAlerts();
         return root;
     }
 
@@ -68,11 +69,15 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
     }
 
     @Override
-    public void onDestroyView() {
-        if (mPresenter != null) {
-            mPresenter.onDestroy();
+    public void showAllAlerts(List<Alert> alertList) {
+        if (mAlertAdapter != null) {
+            mAlertAdapter.setAlertList(alertList);
         }
-        super.onDestroyView();
+    }
+
+    @Override
+    public void showAlert(Bundle bundle) {
+        //TODO: add Single Alert Activity
     }
 
     @Override
@@ -91,7 +96,10 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
     }
 
     @Override
-    public void showAllAlerts(List<Alert> alertList) {
-        
+    public void onDestroyView() {
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
+        super.onDestroyView();
     }
 }

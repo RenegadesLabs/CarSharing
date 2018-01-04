@@ -20,16 +20,19 @@ public class Alert {
     @ColumnInfo(name = "alert_id")
     private Integer alertId;
 
+    @ColumnInfo(name = "alert_type")
+    private Integer alertType;
+
     @ColumnInfo(name = "attachment")
     private String attachment;
 
     @ColumnInfo(name = "date_created")
     private String dateCreated;
 
-    @ColumnInfo(name = "notification_type")
-    private Integer notificationType;
+    @ColumnInfo(name = "alert_title")
+    private String notificationTitle;
 
-    @ColumnInfo(name = "notification_text")
+    @ColumnInfo(name = "alert_text")
     private String notificationText;
 
     @ColumnInfo(name = "state")
@@ -52,12 +55,20 @@ public class Alert {
         this.dateCreated = dateCreated;
     }
 
-    public Integer getNotificationType() {
-        return notificationType;
+    public Integer getAlertType() {
+        return alertType;
     }
 
-    public void setNotificationType(Integer notificationType) {
-        this.notificationType = notificationType;
+    public void setAlertType(Integer alertType) {
+        this.alertType = alertType;
+    }
+
+    public String getNotificationTitle() {
+        return notificationTitle;
+    }
+
+    public void setNotificationTitle(String notificationTitle) {
+        this.notificationTitle = notificationTitle;
     }
 
     public String getNotificationText() {
@@ -82,5 +93,54 @@ public class Alert {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+
+    public static class Builder {
+
+        private Alert mAlert;
+
+        public Builder() {
+            mAlert = new Alert();
+        }
+
+        public Builder withId(int alertId) {
+            mAlert.alertId = alertId;
+            return this;
+        }
+
+        public Builder withAttachment(String attachment) {
+            mAlert.attachment = attachment;
+            return this;
+        }
+
+        public Builder withDateCreated(String dateCreated) {
+            mAlert.dateCreated = dateCreated;
+            return this;
+        }
+
+        public Builder withNotificationType(int notificationType) {
+            mAlert.alertType = notificationType;
+            return this;
+        }
+
+        public Builder withNotificationTitle(String notificationTitle) {
+            mAlert.notificationTitle = notificationTitle;
+            return this;
+        }
+
+        public Builder withNotificationText(String notificationText) {
+            mAlert.notificationText = notificationText;
+            return this;
+        }
+
+        public Builder withStatus(Boolean isNewBooking) {
+            mAlert.isNewBooking = isNewBooking;
+            return this;
+        }
+
+        public Alert build() {
+            return mAlert;
+        }
     }
 }
