@@ -95,8 +95,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     }
 
     public void subscribeToChatClick(Consumer<Chat> clickConsumer) {
-        mOnClickSubject
-                .subscribe(clickConsumer);
+        mOnClickSubject.subscribe(clickConsumer);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.cardee.data_source.inbox.repository;
 
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 
@@ -12,11 +13,17 @@ import io.reactivex.Single;
 
 public interface InboxContract {
 
+    Flowable<List<Alert>> getLocalAlerts(String attachment);
+
+    Single<List<Alert>> getRemoteAlerts(String attachment);
+
     Flowable<List<Chat>> getLocalChats(String attachment);
 
     Single<List<Chat>> getRemoteChats(String attachment);
 
-    void fetchData(List<Chat> remoteChats);
+    void fetchChatData(List<Chat> remoteChats);
+
+    void fetchAlertData(List<Alert> remoteChats);
 
     Completable updateChat(ChatNotification chat);
 }

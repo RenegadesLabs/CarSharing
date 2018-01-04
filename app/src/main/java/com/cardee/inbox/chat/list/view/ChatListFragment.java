@@ -27,7 +27,7 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
     @BindView(R.id.chat_recycler)
     RecyclerView mChatRecycler;
 
-    private ChatListPresenterImp mPresenterImp;
+    private ChatListContract.Presenter mPresenterImp;
     private ChatListAdapter mChatAdapter;
 
     public static ChatListFragment newInstance() {
@@ -66,6 +66,7 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
 
     private void initRecycler() {
         mChatRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mChatRecycler.setHasFixedSize(true);
         mChatRecycler.setAdapter(mChatAdapter);
     }
 

@@ -1,5 +1,6 @@
 package com.cardee.data_source.inbox.local.chat;
 
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
@@ -48,9 +49,11 @@ public interface LocalData {
 
     interface AlertListSource extends LocalData {
 
-    }
+        Flowable<List<Alert>> getLocalAlerts(String attachment);
 
-    interface AlertSingleSource extends LocalData {
+        void saveAlerts(List<Alert> inboxAlerts);
+
+        Completable addAlert(Alert alert);
 
     }
 }

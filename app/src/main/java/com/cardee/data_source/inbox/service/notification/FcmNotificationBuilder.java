@@ -24,14 +24,11 @@ import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_CO
 public class FcmNotificationBuilder implements NotificationBuilder {
 
     private static final String TAG = NotificationBuilder.class.getSimpleName();
-    private static final String BOOKING = "booking";
-    private static final String CHAT = "chat";
 
     private final static int FCM_NOTIFICATION_REQUEST_CODE = 3341;
     private final static int FCM_NOTIFICATION_NOTIFICATION_CODE = 3342;
 
     private NotificationCompat.Builder mNotificationBuilder;
-
     private final Uri mChatNotifySound;
 
     public FcmNotificationBuilder() {
@@ -40,33 +37,25 @@ public class FcmNotificationBuilder implements NotificationBuilder {
 
     @Override
     public void createNotification(Context context, BaseNotification baseNotification) {
+        PendingIntent pendingIntent = null;
+        if (baseNotification.isCurrentSessionNeedToNotify()) {
+            pendingIntent = createPendingIntent(context, baseNotification);
+        }
         switch (baseNotification.getNotificationType()) {
             case CHAT:
-                String channelId = context.getString(R.string.chat_notification_channel_id);
-//                Intent intent = new Intent(context, ChatActivity.class);
-//                intent.putExtras(createBundle(baseNotification));
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                PendingIntent pendingIntent = null;
-                if (baseNotification.isCurrentSessionNeedToNotify()) {
-                    pendingIntent = createPendingIntent(context, baseNotification);
-                }
-
-//                PendingIntent pendingIntent = PendingIntent.getActivity(context, FCM_NOTIFICATION_REQUEST_CODE, intent,
-//                        PendingIntent.FLAG_ONE_SHOT);
-
-                mNotificationBuilder =
-                        new NotificationCompat.Builder(context, channelId)
-                                .setSmallIcon(R.drawable.ic_cardee_icon)
-                                .setContentTitle(baseNotification.getContentTitle())
-                                .setContentText(baseNotification.getContentText())
-                                .setAutoCancel(true)
-                                .setSound(mChatNotifySound);
+                String channelChatId = context.getString(R.string.chat_notification_channel_id);
+                mNotificationBuilder = new NotificationCompat.Builder(context, channelChatId)
+                        .setSmallIcon(R.drawable.ic_cardee_icon)
+                        .setContentTitle(baseNotification.getContentTitle())
+                        .setContentText(baseNotification.getContentText())
+                        .setAutoCancel(true)
+                        .setSound(mChatNotifySound);
                 if (pendingIntent != null) {
                     mNotificationBuilder.setContentIntent(pendingIntent);
                 }
                 break;
             case ALERT:
-
+                String channeAlertlId = context.getString(R.string.alert_notification_channel_id);
                 break;
         }
     }
@@ -79,9 +68,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
 
         Intent previousIntent = new Intent(context, baseNotification.isOwnerSession() ? OwnerHomeActivity.class : RenterHomeActivity.class);
         previousIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         stackBuilder.addNextIntent(previousIntent);
         stackBuilder.addNextIntent(topIntent);
+
         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
     }
 
@@ -102,6 +91,4 @@ public class FcmNotificationBuilder implements NotificationBuilder {
             Log.e(TAG, "Notification manager is null");
         }
     }
-
-
 }

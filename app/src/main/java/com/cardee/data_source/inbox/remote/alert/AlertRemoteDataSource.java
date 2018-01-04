@@ -1,17 +1,24 @@
 package com.cardee.data_source.inbox.remote.alert;
 
-public class AlertRemoteDataSource {
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
+import com.cardee.data_source.inbox.remote.chat.RemoteData;
 
-    private static AlertRemoteDataSource INSTANCE;
+import java.util.List;
 
-    public static AlertRemoteDataSource getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new AlertRemoteDataSource();
-        }
-        return INSTANCE;
+import io.reactivex.Single;
+
+public class AlertRemoteDataSource implements RemoteData.AlertListSource {
+
+    public AlertRemoteDataSource() {
     }
 
-    private AlertRemoteDataSource() {
+    @Override
+    public Single<List<Alert>> getRemoteAlerts(String attachment) {
+        return null;
     }
 
+    @Override
+    public Single<Alert> getSingleAlert(int serverId, String attachment) {
+        return null;
+    }
 }

@@ -21,13 +21,14 @@ public class AccountManager {
     private static final String DEFAULT_AUTH_TOKEN = "";
     private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
 
-    public static final String SESSION = "attachment";
     public static final String OWNER_SESSION = "owner";
     public static final String RENTER_SESSION = "renter";
-    public static final String RENTER_CHAT_NOTIFICATIONS = "renter_chat_notify";
-    public static final String OWNER_CHAT_NOTIFICATIONS = "owner_chat_notify";
-    public static final String RENTER_ALERT_NOTIFICATIONS = "renter_alert_notify";
-    public static final String OWNER_ALERT_NOTIFICATIONS = "owner_alert_notify";
+
+    private static final String SESSION = "attachment";
+    private static final String RENTER_CHAT_NOTIFICATIONS = "renter_chat_notify";
+    private static final String OWNER_CHAT_NOTIFICATIONS = "owner_chat_notify";
+    private static final String RENTER_ALERT_NOTIFICATIONS = "renter_alert_notify";
+    private static final String OWNER_ALERT_NOTIFICATIONS = "owner_alert_notify";
 
     public static AccountManager getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
@@ -72,14 +73,6 @@ public class AccountManager {
     public boolean isLogedIn() {
         String string = mPrefs.getString(AUTH_TOKEN, null);
         return string != null;
-    }
-
-    public void saveChatNotificationData(NotificationData data) {
-
-    }
-
-    public void saveAlertNotifiticationData(NotificationData data) {
-
     }
 
     public void saveNotificationData(NotificationData data) {
