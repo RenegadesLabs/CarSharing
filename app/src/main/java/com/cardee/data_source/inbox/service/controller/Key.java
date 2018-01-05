@@ -14,9 +14,7 @@ final class Key {
         static final String SENDER = "sender";
         static final String MESSAGE = "message";
         static final String MESSAGE_ID = "message_id";
-
         static final String CHAT_ID = "chat_id";
-
         static final String NEW_MESSAGES = "new_messages";
     }
 

@@ -61,55 +61,9 @@ public class AlertListLocalSource implements LocalData.AlertListSource {
                     .withAttachment(notification.getAttachment())
                     .withNotificationText(notification.getAlertMessage())
                     .withDateCreated(notification.getDateCreated())
-                    .withStatus(convertState(notification.getAlertState()))
-                    .withNotificationType(convertNotificationType(notification.getAlertType()))
+                    .withStatus(notification.getAlertStatus())
+                    .withNotificationType(notification.getAlertType())
                     .build();
-        }
-
-        private boolean convertState(String remoteStatus) {
-            return remoteStatus.equals(RemoteData.NotificationType.NEW);
-        }
-
-        private int convertNotificationType(String remoteType) {
-            int notificationType;
-
-            switch (remoteType) {
-                case RemoteData.NotificationType.NEW_REQUEST:
-                case RemoteData.NotificationType.ACCEPTED:
-                case RemoteData.NotificationType.BOOKING_EXT:
-                case RemoteData.NotificationType.OWNER_CHECKLIST_UPD:
-                case RemoteData.NotificationType.RENTER_CHECKLIST_UPD:
-                case RemoteData.NotificationType.INIT_CHECKLIST:
-                    notificationType = Alert.TYPE_BOOKING;
-                    break;
-                case RemoteData.NotificationType.HANDOVER_REMINDER:
-                case RemoteData.NotificationType.RETURN_REMINDER:
-                case RemoteData.NotificationType.RENTER_REVIEW_REMINDER:
-                case RemoteData.NotificationType.OWNER_REVIEW_REMINDER:
-                    notificationType = Alert.TYPE_REMINDER;
-                    break;
-                case RemoteData.NotificationType.RETURN_OVERDUE:
-                case RemoteData.NotificationType.REQUEST_EXPIRED:
-                case RemoteData.NotificationType.BOOKING_CANCELLATION:
-                    notificationType = Alert.TYPE_OVERDUE;
-                    break;
-                case RemoteData.NotificationType.OWNER_REVIEW:
-                case RemoteData.NotificationType.RENTER_REVIEW:
-                    notificationType = Alert.TYPE_REVIEWS;
-                    break;
-                case RemoteData.NotificationType.SYSTEM_MESSAGES:
-                case RemoteData.NotificationType.CAR_VERIFICATION:
-                case RemoteData.NotificationType.USER_VERIFICATION:
-                case RemoteData.NotificationType.RENTER_STATE_CHANGE:
-                case RemoteData.NotificationType.OWNER_STATE_CHANGE:
-                case RemoteData.NotificationType.CAR_STATE_CHANGE:
-                case RemoteData.NotificationType.BROADCAST:
-                    notificationType = Alert.TYPE_SYSTEM;
-                    break;
-                default:
-                    notificationType = Alert.TYPE_SYSTEM;
-            }
-            return notificationType;
         }
     }
 }

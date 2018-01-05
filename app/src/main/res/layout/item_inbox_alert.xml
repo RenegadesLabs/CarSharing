@@ -58,6 +58,7 @@
         android:maxLines="1"
         android:text="You have a booking request"
         android:textAlignment="viewStart"
+        android:textSize="12sp"
         android:textColor="@color/text_more_tab_item"
         app:layout_constraintEnd_toStartOf="@id/alert_click_image"
         app:layout_constraintStart_toEndOf="@id/alert_image"

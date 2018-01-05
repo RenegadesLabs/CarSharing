@@ -46,7 +46,8 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
         Disposable remoteSub = mInboxRepository.getRemoteAlerts(mAttachment)
                 .filter(alerts -> alerts != null && !alerts.isEmpty())
-                .subscribe(mInboxRepository::fetchAlertData, throwable -> Log.d(TAG, "Connection lost"));
+                .subscribeOn(Schedulers.io())
+                .subscribe(mInboxRepository::fetchAlertData, throwable -> Log.e(TAG, throwable.getMessage()));
 
         mCompositeDisposable.addAll(localSub, remoteSub);
     }

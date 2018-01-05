@@ -18,6 +18,8 @@ public interface Notification {
 
     String getContentText();
 
+    int getType();
+
     boolean isCurrentSessionNeedToNotify();
 
     boolean isOwnerSession();

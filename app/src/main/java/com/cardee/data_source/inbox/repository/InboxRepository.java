@@ -98,7 +98,10 @@ public class InboxRepository implements InboxContract {
     private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {
         mChatRemoteSource.getSingleChat(chatNotification.getChatId(), chatNotification.getChatAttachment())
                 .subscribe(chat -> mChatLocalSource.addChat(chat)
-                                .subscribe(emitter::onComplete, emitter::onError),
+                                .subscribe(() -> {
+                                    Log.e(TAG, "New chat obtained");
+                                    emitter.onComplete();
+                                }, emitter::onError),
                         responseError -> {
                             emitter.onError(responseError);
                             Log.d(TAG, "Error while obtaining chat information");

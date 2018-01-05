@@ -107,7 +107,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
                         .build()))
                 .doOnComplete(() -> Log.e(TAG, "Message list updated"))
                 .subscribeOn(Schedulers.computation())
-                .subscribe();
+                .subscribe(() -> Log.e(TAG, "Message added"), throwable -> Log.e(TAG, throwable.getMessage()));
     }
 
     private static class ToChatInfoMapper implements Mapper<Chat, ChatInfo> {

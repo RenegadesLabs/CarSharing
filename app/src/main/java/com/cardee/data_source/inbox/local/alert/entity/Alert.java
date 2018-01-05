@@ -159,4 +159,24 @@ public class Alert {
             return mAlert;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alert alert = (Alert) o;
+
+        if (!dateCreated.equals(alert.dateCreated)) return false;
+        if (!notificationText.equals(alert.notificationText)) return false;
+        return isNewBooking.equals(alert.isNewBooking);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dateCreated.hashCode();
+        result = 31 * result + notificationText.hashCode();
+        result = 31 * result + isNewBooking.hashCode();
+        return result;
+    }
 }

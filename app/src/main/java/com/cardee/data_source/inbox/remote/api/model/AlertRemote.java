@@ -78,8 +78,9 @@ public class AlertRemote {
         this.notificationTitle = notificationTitle;
     }
 
+    // object id = null means that alert was send from admin
     public Integer getObjectId() {
-        return objectId;
+        return objectId == null ? -1 : objectId;
     }
 
     public void setObjectId(Integer objectId) {

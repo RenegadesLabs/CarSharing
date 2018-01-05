@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 
+import org.reactivestreams.Publisher;
+
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -27,7 +29,7 @@ public interface ChatDao {
     @Query("UPDATE chats " +
             "SET last_message = :messageText, last_message_time = :messageTime, unread_count = :unreadMessageCount " +
             "WHERE chat_id IS :chatId AND attachment IS :attachment")
-    void updateChatPresentation(String messageText, String messageTime, int unreadMessageCount, int chatId, String attachment);
+    long updateChatPresentation(String messageText, String messageTime, int unreadMessageCount, int chatId, String attachment);
 
     @Query("UPDATE chats SET unread_count = 0 WHERE chat_id IS :chatId")
     void updateChatUnreadCount(int chatId);

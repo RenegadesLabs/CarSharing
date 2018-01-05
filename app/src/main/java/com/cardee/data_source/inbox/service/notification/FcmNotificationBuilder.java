@@ -12,6 +12,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cardee.R;
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.service.model.Notification;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 import com.cardee.owner_home.view.OwnerHomeActivity;
@@ -64,7 +65,7 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                 }
 
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelAlertId)
-                        .setSmallIcon(R.drawable.ic_cardee_icon)
+                        .setSmallIcon(getValidAlertImage(notification.getType()))
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
@@ -102,6 +103,29 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     private PendingIntent createAlertPendingIntent(Context context, Notification notification) {
         //TODO: implement pending intent destination based on alert type
         return null;
+    }
+
+
+    private int getValidAlertImage(int alertType) {
+        int drawableResource = R.drawable.ic_alert_system;
+        switch (alertType) {
+            case Alert.TYPE_BOOKING:
+                drawableResource = R.drawable.ic_alert_booking;
+                break;
+            case Alert.TYPE_OVERDUE:
+                drawableResource = R.drawable.ic_alert_overdue;
+                break;
+            case Alert.TYPE_REMINDER:
+                drawableResource = R.drawable.ic_alert_reminder;
+                break;
+            case Alert.TYPE_REVIEWS:
+                drawableResource = R.drawable.ic_alert_review;
+                break;
+            case Alert.TYPE_SYSTEM:
+                drawableResource = R.drawable.ic_alert_system;
+                break;
+        }
+        return drawableResource;
     }
 
     @Override

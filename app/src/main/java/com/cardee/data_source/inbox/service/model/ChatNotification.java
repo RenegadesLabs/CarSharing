@@ -50,6 +50,13 @@ public class ChatNotification implements Notification {
         return messageText;
     }
 
+
+    //not needed for chat type
+    @Override
+    public int getType() {
+        return 0;
+    }
+
     @Override
     public boolean isCurrentSessionNeedToNotify() {
         return isCurrentSessionNeedToNotify;

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class AlertRemoteDataSource implements RemoteData.AlertListSource {
 
@@ -24,6 +25,7 @@ public class AlertRemoteDataSource implements RemoteData.AlertListSource {
     public Single<List<Alert>> getRemoteAlerts(String attachment) {
         ToAlertMapper mapper = new ToAlertMapper(attachment);
         return mAlertApi.getAlerts(attachment)
+                .subscribeOn(Schedulers.io())
                 .map(alertListResponse -> mapper.map(alertListResponse.getRemoteList()));
     }
 

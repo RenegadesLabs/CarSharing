@@ -41,12 +41,20 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     @Override
     public Completable updateChat(ChatNotification chatNotification) {
         int unreadMessages = chatNotification.isCurrentSession() ? 0 : chatNotification.getUnreadMessageCount();
-        return Completable.fromRunnable(() -> mDataBase.getChatDao().updateChatPresentation(
-                chatNotification.getMessageText(),
-                chatNotification.getMessageTime(),
-                unreadMessages,
-                chatNotification.getChatId(),
-                chatNotification.getChatAttachment()));
+        return Completable.create(emitter -> {
+            long result = mDataBase.getChatDao()
+                    .updateChatPresentation(
+                            chatNotification.getMessageText(),
+                            chatNotification.getMessageTime(),
+                            unreadMessages,
+                            chatNotification.getChatId(),
+                            chatNotification.getChatAttachment());
+            if (result != 0) {
+                emitter.onComplete();
+            } else {
+                emitter.onError(new Throwable("Local chat doesn't exist"));
+            }
+        });
     }
 
     @Override

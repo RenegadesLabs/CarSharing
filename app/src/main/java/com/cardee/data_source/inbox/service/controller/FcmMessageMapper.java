@@ -34,9 +34,9 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Notificatio
                 alertNotify.setAlertAttachment(messageData.get(Key.PROFILE_TYPE).toLowerCase());
 //                alertNotify.setAlertTitle(messageData.get(Key.Alert.MESSAGE_TITLE));
                 alertNotify.setAlertType(messageData.get(Key.Alert.TYPE_NOTIFICATION));
-                alertNotify.setUnreadAlertCount(Integer.parseInt(Key.ALERT_COUNT));
+                alertNotify.setUnreadAlertCount(Integer.valueOf(messageData.get(Key.ALERT_COUNT)));
                 alertNotify.setAlertMessage(messageData.get(Key.Alert.MESSAGE_BODY));
-                alertNotify.setAlertState(RemoteData.NotificationType.NEW);
+                alertNotify.setAlertStatus(RemoteData.NotificationType.NEW);
                 alertNotify.setDateCreated(messageData.get(Key.DATE_CREATED));
                 return alertNotify;
         }
