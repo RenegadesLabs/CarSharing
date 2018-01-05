@@ -12,7 +12,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cardee.R;
-import com.cardee.data_source.inbox.service.model.BaseNotification;
+import com.cardee.data_source.inbox.service.model.Notification;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
@@ -36,18 +36,20 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     }
 
     @Override
-    public void createNotification(Context context, BaseNotification baseNotification) {
+    public void createNotification(Context context, Notification notification) {
         PendingIntent pendingIntent = null;
-        if (baseNotification.isCurrentSessionNeedToNotify()) {
-            pendingIntent = createPendingIntent(context, baseNotification);
-        }
-        switch (baseNotification.getNotificationType()) {
+
+        switch (notification.getNotificationType()) {
             case CHAT:
                 String channelChatId = context.getString(R.string.chat_notification_channel_id);
+
+                if (notification.isCurrentSessionNeedToNotify()) {
+                    pendingIntent = createChatPendingIntent(context, notification);
+                }
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelChatId)
                         .setSmallIcon(R.drawable.ic_cardee_icon)
-                        .setContentTitle(baseNotification.getContentTitle())
-                        .setContentText(baseNotification.getContentText())
+                        .setContentTitle(notification.getContentTitle())
+                        .setContentText(notification.getContentText())
                         .setAutoCancel(true)
                         .setSound(mChatNotifySound);
                 if (pendingIntent != null) {
@@ -55,18 +57,33 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                 }
                 break;
             case ALERT:
-                String channeAlertlId = context.getString(R.string.alert_notification_channel_id);
+                String channelAlertId = context.getString(R.string.alert_notification_channel_id);
+
+                if (notification.isCurrentSessionNeedToNotify()) {
+                    pendingIntent = createAlertPendingIntent(context, notification);
+                }
+
+                mNotificationBuilder = new NotificationCompat.Builder(context, channelAlertId)
+                        .setSmallIcon(R.drawable.ic_cardee_icon)
+                        .setContentTitle(notification.getContentTitle())
+                        .setContentText(notification.getContentText())
+                        .setAutoCancel(true)
+                        .setSound(mChatNotifySound);
+
+                if (pendingIntent != null) {
+                    mNotificationBuilder.setContentIntent(pendingIntent);
+                }
                 break;
         }
     }
 
-    private PendingIntent createPendingIntent(Context context, BaseNotification baseNotification) {
+    private PendingIntent createChatPendingIntent(Context context, Notification notification) {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         Intent topIntent = new Intent(context, ChatActivity.class);
-        topIntent.putExtras(createBundle(baseNotification));
+        topIntent.putExtras(createChatBundle(notification));
         topIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        Intent previousIntent = new Intent(context, baseNotification.isOwnerSession() ? OwnerHomeActivity.class : RenterHomeActivity.class);
+        Intent previousIntent = new Intent(context, notification.isOwnerSession() ? OwnerHomeActivity.class : RenterHomeActivity.class);
         previousIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         stackBuilder.addNextIntent(previousIntent);
         stackBuilder.addNextIntent(topIntent);
@@ -74,12 +91,17 @@ public class FcmNotificationBuilder implements NotificationBuilder {
         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
     }
 
-    private Bundle createBundle(BaseNotification baseNotification) {
+    private Bundle createChatBundle(Notification notification) {
         Bundle args = new Bundle();
-        args.putInt(CHAT_SERVER_ID, baseNotification.getId());
-        args.putString(CHAT_ATTACHMENT, baseNotification.getAttachment());
-        args.putInt(CHAT_UNREAD_COUNT, baseNotification.getUnreadCount());
+        args.putInt(CHAT_SERVER_ID, notification.getId());
+        args.putString(CHAT_ATTACHMENT, notification.getAttachment());
+        args.putInt(CHAT_UNREAD_COUNT, notification.getUnreadCount());
         return args;
+    }
+
+    private PendingIntent createAlertPendingIntent(Context context, Notification notification) {
+        //TODO: implement pending intent destination based on alert type
+        return null;
     }
 
     @Override

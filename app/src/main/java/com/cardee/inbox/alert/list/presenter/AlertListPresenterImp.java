@@ -62,6 +62,7 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
         Bundle bundle = new Bundle();
         bundle.putInt(Alert.ALERT_SERVER_ID, alert.getAlertId());
         bundle.putString(Alert.ALERT_ATTACHMENT, alert.getAttachment());
+        bundle.putInt(Alert.ALERT_DESTINATION_ID, alert.getObjectId());
         if (mView != null) {
             mView.showAlert(bundle);
         }

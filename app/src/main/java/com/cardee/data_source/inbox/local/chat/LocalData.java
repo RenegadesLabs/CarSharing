@@ -4,6 +4,7 @@ import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
@@ -53,6 +54,6 @@ public interface LocalData {
 
         void saveAlerts(List<Alert> inboxAlerts);
 
-        Completable addAlert(Alert alert);
+        void addAlert(AlertNotification alert);
     }
 }

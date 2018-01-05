@@ -10,6 +10,7 @@ import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.remote.alert.AlertRemoteDataSource;
 import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 
 import java.util.List;
@@ -87,6 +88,11 @@ public class InboxRepository implements InboxContract {
                             Log.e(TAG, "Chat updated");
                             emitter.onComplete();
                         }, throwable -> getNewChat(chatNotification, emitter)));
+    }
+
+    @Override
+    public void addAlert(AlertNotification alert) {
+        mAlertLocalSource.addAlert(alert);
     }
 
     private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {

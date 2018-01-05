@@ -2,6 +2,7 @@ package com.cardee.data_source.inbox.repository;
 
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 
 import java.util.List;
@@ -25,5 +26,8 @@ public interface InboxContract {
 
     void fetchAlertData(List<Alert> remoteChats);
 
+
     Completable updateChat(ChatNotification chat);
+
+    void addAlert(AlertNotification alert);
 }

@@ -1,6 +1,6 @@
 package com.cardee.data_source.inbox.service.model;
 
-public interface BaseNotification {
+public interface Notification {
 
     enum NotificationType {
         CHAT, ALERT
@@ -21,4 +21,12 @@ public interface BaseNotification {
     boolean isCurrentSessionNeedToNotify();
 
     boolean isOwnerSession();
+
+    interface ChatNotification extends Notification {
+
+    }
+
+    interface AlertNotification extends Notification {
+
+    }
 }

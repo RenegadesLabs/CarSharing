@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Alert {
 
     public static final String ALERT_SERVER_ID = "alert_id";
+    public static final String ALERT_DESTINATION_ID = "destination_id";
     public static final String ALERT_ATTACHMENT = "alert_attachment";
 
     public static final int TYPE_BOOKING = 20; // bookings, checklist, request accepted,  extension request
@@ -19,6 +20,9 @@ public class Alert {
     @PrimaryKey
     @ColumnInfo(name = "alert_id")
     private Integer alertId;
+
+    @ColumnInfo(name = "object_id")
+    private Integer objectId;
 
     @ColumnInfo(name = "alert_type")
     private Integer alertType;
@@ -95,6 +99,13 @@ public class Alert {
         this.attachment = attachment;
     }
 
+    public Integer getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
+    }
 
     public static class Builder {
 
@@ -106,6 +117,11 @@ public class Alert {
 
         public Builder withId(int alertId) {
             mAlert.alertId = alertId;
+            return this;
+        }
+
+        public Builder withObject(int objectId) {
+            mAlert.objectId = objectId;
             return this;
         }
 

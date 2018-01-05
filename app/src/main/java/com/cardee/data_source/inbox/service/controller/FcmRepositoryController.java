@@ -5,13 +5,14 @@ import android.util.Log;
 import com.cardee.data_source.inbox.repository.ChatRepository;
 import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.google.firebase.messaging.RemoteMessage;
 
-import static com.cardee.data_source.inbox.service.controller.FcmMessageMapper.INBOX_ALERT;
-import static com.cardee.data_source.inbox.service.controller.FcmMessageMapper.INBOX_CHAT;
-
 public class FcmRepositoryController implements RepositoryController {
+
+    static final String INBOX_CHAT = "CHAT";
+    static final String INBOX_ALERT = "BOOKING";
 
     private static final String TAG = RepositoryController.class.getSimpleName();
 
@@ -29,20 +30,20 @@ public class FcmRepositoryController implements RepositoryController {
 
     @Override
     public void updateInbox(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
-        if (remoteMessage.getData().get(FcmMessageMapper.Key.TAG) == null) return;
+        if (remoteMessage.getData().get(Key.TAG) == null) return;
 
-        switch (remoteMessage.getData().get(FcmMessageMapper.Key.TAG)) {
+        switch (remoteMessage.getData().get(Key.TAG)) {
             case INBOX_CHAT:
                 updateChat(remoteMessage, controllerCallback);
                 break;
             case INBOX_ALERT:
-                updateBooking();
+                updateBooking(remoteMessage, controllerCallback);
                 break;
         }
     }
 
     private void updateChat(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
-        ChatNotification chatNotification = mMessageMapper.map(remoteMessage.getData());
+        ChatNotification chatNotification = (ChatNotification) mMessageMapper.map(remoteMessage.getData());
         chatNotification.setCurrentSession(mNotificationRepository.isCurrentMessagingSession(chatNotification.getChatId()));
         chatNotification.setCurrentSessionNeedToNotify(mNotificationRepository.isCurrentSessionNeedToNotify(chatNotification.getAttachment()));
 
@@ -56,6 +57,12 @@ public class FcmRepositoryController implements RepositoryController {
         }
     }
 
-    private void updateBooking() {
+    private void updateBooking(RemoteMessage remoteMessage, ControllerCallback controllerCallback) {
+        AlertNotification alertNotification = (AlertNotification) mMessageMapper.map(remoteMessage.getData());
+        alertNotification.setCurrentSessionNeedToNotify(mNotificationRepository.isCurrentSessionNeedToNotify(alertNotification.getAttachment()));
+
+        mInboxRepository.addAlert(alertNotification);
+        mNotificationRepository.setRelevantAlertUnreadCount(alertNotification.getUnreadCount());
+        controllerCallback.notifyUser(alertNotification);
     }
 }

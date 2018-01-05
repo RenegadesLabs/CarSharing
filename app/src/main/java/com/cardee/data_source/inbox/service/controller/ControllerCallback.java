@@ -1,8 +1,8 @@
 package com.cardee.data_source.inbox.service.controller;
 
-import com.cardee.data_source.inbox.service.model.BaseNotification;
+import com.cardee.data_source.inbox.service.model.Notification;
 
 public interface ControllerCallback {
 
-    void notifyUser(BaseNotification baseNotification);
+    void notifyUser(Notification notification);
 }

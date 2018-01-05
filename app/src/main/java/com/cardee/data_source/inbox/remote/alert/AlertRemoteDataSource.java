@@ -42,6 +42,7 @@ public class AlertRemoteDataSource implements RemoteData.AlertListSource {
                 Alert alert = new Alert.Builder()
                         .withId(alertRemote.getAlertId())
                         .withAttachment(attachment)
+                        .withObject(alertRemote.getObjectId())
                         .withDateCreated(alertRemote.getDateCreated())
                         .withNotificationText(alertRemote.getNotificationText())
                         .withNotificationType(convertNotificationType(alertRemote.getNotificationType()))

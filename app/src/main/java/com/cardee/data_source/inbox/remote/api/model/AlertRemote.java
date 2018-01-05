@@ -9,6 +9,9 @@ public class AlertRemote {
     @SerializedName("user_alert_id")
     private Integer alertId;
     @Expose
+    @SerializedName("object_id")
+    private Integer objectId;
+    @Expose
     @SerializedName("date_created")
     private String dateCreated;
     @Expose
@@ -73,5 +76,13 @@ public class AlertRemote {
 
     public void setNotificationTitle(String notificationTitle) {
         this.notificationTitle = notificationTitle;
+    }
+
+    public Integer getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
     }
 }

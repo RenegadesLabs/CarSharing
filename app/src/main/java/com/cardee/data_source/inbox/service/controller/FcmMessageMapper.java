@@ -1,54 +1,45 @@
 package com.cardee.data_source.inbox.service.controller;
 
+import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
+import com.cardee.data_source.inbox.service.model.Notification;
 import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.util.Mapper;
 
 import java.util.Map;
 
-public class FcmMessageMapper implements Mapper<Map<String, String>, ChatNotification> {
+import static com.cardee.data_source.inbox.service.controller.FcmRepositoryController.INBOX_ALERT;
+import static com.cardee.data_source.inbox.service.controller.FcmRepositoryController.INBOX_CHAT;
 
-    static final String INBOX_CHAT = "CHAT";
-    static final String INBOX_ALERT = "BOOKING";
+public class FcmMessageMapper implements Mapper<Map<String, String>, Notification> {
 
     @Override
-    public ChatNotification map(Map<String, String> messageData) {
-        ChatNotification chatNotification = new ChatNotification();
-
-        chatNotification.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
-        chatNotification.setChatAttachment(messageData.get(Key.Chat.PROFILE_TYPE).toLowerCase());
-        chatNotification.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
-        chatNotification.setUnreadChatCount(Integer.parseInt(messageData.get(Key.CHAT_COUNT)));
-
-        chatNotification.setMessageId(Integer.parseInt(messageData.get(Key.Chat.MESSAGE_ID)));
-        chatNotification.setMessageText(messageData.get(Key.Chat.MESSAGE));
-        chatNotification.setSenderName(messageData.get(Key.Chat.SENDER));
-        chatNotification.setMessageTime(messageData.get(Key.Chat.DATE_CREATED));
-
-        return chatNotification;
-    }
-
-    public static class Key {
-
-        public static final String TAG = "tag";
-        public static final String BADGE = "badge";
-        public static final String CHAT_COUNT = "chat_cnt";
-        public static final String ALERT_COUNT = "alert_cnt";
-
-        public static class Chat {
-            public static final String SENDER = "sender";
-            public static final String MESSAGE = "message";
-            public static final String MESSAGE_ID = "message_id";
-
-            static final String CHAT_ID = "chat_id";
-            static final String DATE_CREATED = "date_created";
-            static final String NEW_MESSAGES = "new_messages";
-            static final String PROFILE_TYPE = "profile_type";
+    public Notification map(Map<String, String> messageData) {
+        switch (messageData.get(Key.TAG)) {
+            case INBOX_CHAT:
+                ChatNotification chatNotify = new ChatNotification();
+                chatNotify.setChatId(Integer.valueOf(messageData.get(Key.Chat.CHAT_ID)));
+                chatNotify.setChatAttachment(messageData.get(Key.PROFILE_TYPE).toLowerCase());
+                chatNotify.setUnreadMessageCount(Integer.valueOf(messageData.get(Key.Chat.NEW_MESSAGES)));
+                chatNotify.setUnreadChatCount(Integer.parseInt(messageData.get(Key.CHAT_COUNT)));
+                chatNotify.setMessageId(Integer.parseInt(messageData.get(Key.Chat.MESSAGE_ID)));
+                chatNotify.setMessageText(messageData.get(Key.Chat.MESSAGE));
+                chatNotify.setSenderName(messageData.get(Key.Chat.SENDER));
+                chatNotify.setMessageTime(messageData.get(Key.DATE_CREATED));
+                return chatNotify;
+            case INBOX_ALERT:
+                AlertNotification alertNotify = new AlertNotification();
+                alertNotify.setAlertId(Integer.valueOf(messageData.get(Key.Alert.USER_ALERT_ID)));
+                alertNotify.setObjectId(Integer.valueOf(messageData.get(Key.Alert.OBJECT_ID)));
+                alertNotify.setAlertAttachment(messageData.get(Key.PROFILE_TYPE).toLowerCase());
+//                alertNotify.setAlertTitle(messageData.get(Key.Alert.MESSAGE_TITLE));
+                alertNotify.setAlertType(messageData.get(Key.Alert.TYPE_NOTIFICATION));
+                alertNotify.setUnreadAlertCount(Integer.parseInt(Key.ALERT_COUNT));
+                alertNotify.setAlertMessage(messageData.get(Key.Alert.MESSAGE_BODY));
+                alertNotify.setAlertState(RemoteData.NotificationType.NEW);
+                alertNotify.setDateCreated(messageData.get(Key.DATE_CREATED));
+                return alertNotify;
         }
-
-        public static class Booking {
-            static final String OBJECT_ID = "object_id";
-            static final String MESSAGE_TITLE = "message_title";
-            static final String MESSAGE_BODY = "message_body";
-        }
+        return null;
     }
 }

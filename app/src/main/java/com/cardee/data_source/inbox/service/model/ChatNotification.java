@@ -2,7 +2,7 @@ package com.cardee.data_source.inbox.service.model;
 
 import com.cardee.data_source.remote.service.AccountManager;
 
-public class ChatNotification implements BaseNotification {
+public class ChatNotification implements Notification {
 
     //chat info
     private Integer chatId;
@@ -20,10 +20,10 @@ public class ChatNotification implements BaseNotification {
     private Boolean isCurrentMessagingSession;
     private Boolean isCurrentSessionNeedToNotify;
 
-    public ChatNotification() {
+    @Override
+    public NotificationType getNotificationType() {
+        return NotificationType.CHAT;
     }
-
-
 
     @Override
     public int getId() {
@@ -38,11 +38,6 @@ public class ChatNotification implements BaseNotification {
     @Override
     public int getUnreadCount() {
         return unreadMessageCount;
-    }
-
-    @Override
-    public NotificationType getNotificationType() {
-        return NotificationType.CHAT;
     }
 
     @Override
