@@ -104,22 +104,22 @@ public class FcmNotificationBuilder implements NotificationBuilder {
 
 
     private int getValidAlertImage(int alertType) {
-        int drawableResource = R.drawable.ic_alert_system;
+        int drawableResource = R.drawable.ic_notification_system;
         switch (alertType) {
             case Alert.TYPE_BOOKING:
-                drawableResource = R.drawable.ic_alert_booking;
+                drawableResource = R.drawable.ic_notification_booking;
                 break;
             case Alert.TYPE_OVERDUE:
-                drawableResource = R.drawable.ic_alert_overdue;
+                drawableResource = R.drawable.ic_notification_overdue;
                 break;
             case Alert.TYPE_REMINDER:
-                drawableResource = R.drawable.ic_alert_reminder;
+                drawableResource = R.drawable.ic_notification_reminder;
                 break;
             case Alert.TYPE_REVIEWS:
-                drawableResource = R.drawable.ic_alert_review;
+                drawableResource = R.drawable.ic_notification_review;
                 break;
             case Alert.TYPE_SYSTEM:
-                drawableResource = R.drawable.ic_alert_system;
+                drawableResource = R.drawable.ic_notification_system;
                 break;
         }
         return drawableResource;
