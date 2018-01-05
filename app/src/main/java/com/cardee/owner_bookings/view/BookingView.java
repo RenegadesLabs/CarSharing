@@ -4,12 +4,22 @@ import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.DrawableRequestBuilder;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
+import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +28,9 @@ import butterknife.Unbinder;
 public class BookingView extends CoordinatorLayout implements OwnerBookingContract.View {
 
     private OwnerBookingContract.Presenter presenter;
+    private Toast currentToast;
     private Unbinder unbinder;
+    private RequestManager imageManager;
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
@@ -86,6 +98,8 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     public TextView acceptMessage;
     @BindView(R.id.booking_cancel_message)
     public TextView cancelMessage;
+    @BindView(R.id.booking_loading_indicator)
+    public View progressView;
 
     public BookingView(Context context) {
         super(context);
@@ -103,26 +117,88 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     protected void onFinishInflate() {
         super.onFinishInflate();
         unbinder = ButterKnife.bind(this, this);
+        imageManager = Glide.with(getContext());
     }
 
     @Override
     public void showProgress(boolean show) {
-
+        progressView.setVisibility(show ? VISIBLE : GONE);
     }
 
     @Override
     public void showMessage(String message) {
-
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        currentToast.show();
     }
 
     @Override
     public void showMessage(int messageId) {
-
+        showMessage(getContext().getString(messageId));
     }
 
     @Override
     public void setPresenter(OwnerBookingContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void bind(Booking booking) {
+        toolbarTitle.setText(booking.getBookingNum());
+        loadImageIntoView(booking.getPrimaryImage().getLink(),
+                R.drawable.img_no_car, carPhotoView, imgProgress, false);
+        carTitle.setText(booking.getCarTitle());
+        carYear.setText(booking.getManufactureYear());
+        carPlateNumber.setText(booking.getPlateNumber());
+        String timeBegin = booking.getTimeBegin();
+        String timeEnd = booking.getTimeEnd();
+        String timePeriod = null;
+        bookingCreated.setText(booking.getDateCreated());
+        if (timeBegin != null && timeEnd != null) {
+            timePeriod = timeBegin + " to " + timeEnd;
+        }
+        rentalPeriod.setText(timePeriod);
+        String amountString = booking.getTotalAmount() == null ? "$0" : "$" + booking.getTotalAmount();
+        totalCost.setText(amountString);
+        handoverOn.setText(timeBegin);
+        returnBy.setText(timeEnd);
+        handoverAt.setText(booking.getDeliveryAddress());
+        renterMessage.setText(booking.getNote());
+        renterName.setText(booking.getRenterName());
+        loadImageIntoView(booking.getRenterPhoto(),
+                R.drawable.placeholder_user_img, renterPhoto, null, true);
+    }
+
+    private void loadImageIntoView(String imgUrl, int placeholderRes, ImageView view, ProgressBar progress, boolean circle) {
+        imgUrl = imgUrl == null ? "" : imgUrl;
+        if (progress != null) {
+            progress.setVisibility(VISIBLE);
+        }
+        DrawableRequestBuilder<String> builder = imageManager
+                .load(imgUrl).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                                               boolean isFirstResource) {
+                        if (progress != null) {
+                            progress.setVisibility(GONE);
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (progress != null) {
+                            progress.setVisibility(GONE);
+                        }
+                        return false;
+                    }
+                }).error(placeholderRes);
+        if (circle) {
+            builder.transform(new CircleTransform(getContext()));
+        }
+        builder.into(view);
     }
 
     public Toolbar getToolbar() {

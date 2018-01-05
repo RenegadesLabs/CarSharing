@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.view.BookingView;
 
 public class ConfirmedStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -21,7 +22,7 @@ public class ConfirmedStrategy extends PresentationStrategy implements View.OnCl
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_confirmed);
 
         bookingView.bookingStatus.setBackgroundColor(statusColor);
-        bookingView.bookingStatus.setText(R.string.booking_state_new);
+        bookingView.bookingStatus.setText(R.string.booking_state_confirmed);
         bookingView.bookingPayment.setVisibility(View.VISIBLE);
         bookingView.rentalPeriodTitle.setVisibility(View.GONE);
         bookingView.rentalPeriod.setVisibility(View.GONE);
@@ -79,5 +80,10 @@ public class ConfirmedStrategy extends PresentationStrategy implements View.OnCl
                 listener.onChat();
                 break;
         }
+    }
+
+    @Override
+    public BookingState getType() {
+        return BookingState.CONFIRMED;
     }
 }

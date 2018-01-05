@@ -26,6 +26,9 @@ public interface Bookings {
     @GET("bookings/{id}")
     Single<BookingByIdResponse> getBookingById(@Path("id") int id);
 
+    @PUT("bookings/{id}/{state}")
+    Single<NoDataResponse> changeBookingState(@Path("id") int id, @Path("state") String state);
+
     @PUT("bookings/{id}/rating")
     @Headers("Content-Type: application/json")
     Single<NoDataResponse> sendBookingReview(@Path("id") int id, @Body ReviewAsOwner reviewAsOwner);

@@ -31,7 +31,6 @@ public class BookingActivity extends AppCompatActivity {
         BookingView bookingView = (BookingView) LayoutInflater
                 .from(this)
                 .inflate(R.layout.view_booking, null);
-        presenter.setStrategy(new HandedOverStrategy(bookingView, presenter));//Temporary
         setContentView(bookingView);
         view = bookingView;
         view.setPresenter(presenter);

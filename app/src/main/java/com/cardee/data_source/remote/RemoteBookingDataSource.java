@@ -2,7 +2,6 @@ package com.cardee.data_source.remote;
 
 
 import android.util.Log;
-import android.util.LruCache;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.BookingDataSource;
@@ -11,11 +10,11 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
-import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.domain.bookings.BookingState;
 
 import java.io.IOException;
-import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
 public class RemoteBookingDataSource implements BookingDataSource {
@@ -71,7 +70,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
         ReviewAsOwner reviewAsOwner = new ReviewAsOwner();
         reviewAsOwner.setRating((int) rate);
         reviewAsOwner.setReviewFromOwner(review);
@@ -86,6 +85,17 @@ public class RemoteBookingDataSource implements BookingDataSource {
             Log.e(TAG, throwable.getMessage());
             callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
+    }
+
+    @Override
+    public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
+        api.changeBookingState(bookingId, state).subscribe(response -> {
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response, callback);
+        }, throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
     }
 
     private void handleErrorResponse(BaseResponse response, BaseCallback bookingsCallback) {

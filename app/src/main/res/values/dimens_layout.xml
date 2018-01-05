@@ -43,6 +43,6 @@
     <dimen name="scroll_bottom_padding">56dp</dimen>
 
     <dimen name="booking_renter_image">48dp</dimen>
-    <dimen name="booking_action_image">40dp</dimen>
+    <dimen name="booking_action_image">36dp</dimen>
     <dimen name="clickable_bg_view">56dp</dimen>
 </resources>

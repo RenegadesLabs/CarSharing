@@ -58,7 +58,10 @@
                     android:scheme="cardee" />
             </intent-filter>
         </activity>
-        <activity android:name=".owner_home.view.OwnerHomeActivity" />
+        <activity
+            android:name=".owner_home.view.OwnerHomeActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=""/>
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
         <activity

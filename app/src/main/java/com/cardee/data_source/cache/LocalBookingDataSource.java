@@ -34,7 +34,12 @@ public class LocalBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
+
+    }
+
+    @Override
+    public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
 
     }
 }

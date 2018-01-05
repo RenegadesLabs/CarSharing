@@ -13,7 +13,7 @@ public class BookingEntity {
 
     @Expose
     @SerializedName("amnt_total")
-    private Integer totalAmount;
+    private Float totalAmount;
     @Expose
     @SerializedName("time_begin")
     private String timeBegin;
@@ -80,11 +80,11 @@ public class BookingEntity {
 
     }
 
-    public Integer getTotalAmount() {
+    public Float getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(Float totalAmount) {
         this.totalAmount = totalAmount;
     }
 

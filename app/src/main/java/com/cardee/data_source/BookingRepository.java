@@ -5,6 +5,7 @@ import android.util.LruCache;
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.domain.bookings.BookingState;
 
 import java.util.List;
 
@@ -81,10 +82,33 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
-        remoteDataSource.sendReviewAsOwner(bookingId, rate, review, new ReviewCallback() {
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
+        remoteDataSource.sendReviewAsOwner(bookingId, rate, review, new SimpleCallback() {
             @Override
             public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
+        remoteDataSource.changeBookingState(bookingId, state, new SimpleCallback() {
+            @Override
+            public void onSuccess() {
+                BookingEntity cachedBooking = bookingCache.get(bookingId);
+                if (cachedBooking != null) {
+                    BookingState bookingState = BookingState.fromRequest(state);
+                    if (bookingState != null) {
+                        cachedBooking.setBookingStateName(bookingState.getValue());
+                        cachedBooking.setBookingStateType(bookingState.toString());
+                    }
+                }
                 callback.onSuccess();
             }
 

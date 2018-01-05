@@ -1,4 +1,4 @@
-package com.cardee.owner_bookings;
+package com.cardee.owner_bookings.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
+import com.cardee.owner_bookings.OwnerBookingListContract;
 
 public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.BookingItemHolder> {
 

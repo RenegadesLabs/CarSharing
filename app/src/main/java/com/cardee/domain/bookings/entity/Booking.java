@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Booking {
 
-    private final Integer totalAmount;
+    private final Float totalAmount;
     private final String timeBegin;
     private final String timeEnd;
     private final Integer bookingId;
@@ -39,7 +39,7 @@ public class Booking {
     private final String deliveryAddress;
 
 
-    private Booking(Integer totalAmount,
+    private Booking(Float totalAmount,
                     String timeBegin,
                     String timeEnd,
                     Integer bookingId,
@@ -102,7 +102,7 @@ public class Booking {
     }
 
     public static class Builder {
-        private Integer totalAmount;
+        private Float totalAmount;
         private String timeBegin;
         private String timeEnd;
         private Integer bookingId;
@@ -137,7 +137,7 @@ public class Booking {
 
         }
 
-        public Builder setTotalAmount(Integer totalAmount) {
+        public Builder setTotalAmount(Float totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
@@ -331,7 +331,7 @@ public class Booking {
         return builder;
     }
 
-    public Integer getTotalAmount() {
+    public Float getTotalAmount() {
         return totalAmount;
     }
 

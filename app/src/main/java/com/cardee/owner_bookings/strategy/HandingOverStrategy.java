@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.view.BookingView;
 
 public class HandingOverStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -73,5 +74,10 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
                 listener.onChat();
                 break;
         }
+    }
+
+    @Override
+    public BookingState getType() {
+        return BookingState.COLLECTING;
     }
 }

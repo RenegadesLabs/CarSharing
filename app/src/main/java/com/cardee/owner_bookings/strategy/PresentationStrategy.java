@@ -3,6 +3,8 @@ package com.cardee.owner_bookings.strategy;
 
 import android.view.View;
 
+import com.cardee.domain.bookings.BookingState;
+
 public abstract class PresentationStrategy {
 
     protected final View view;
@@ -42,4 +44,6 @@ public abstract class PresentationStrategy {
     public void finish() {
         finished = true;
     }
+
+    public abstract BookingState getType();
 }

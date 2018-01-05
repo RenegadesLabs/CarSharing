@@ -2,6 +2,7 @@ package com.cardee.data_source;
 
 
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.domain.bookings.BookingState;
 
 import java.util.List;
 
@@ -13,7 +14,9 @@ public interface BookingDataSource {
 
     void obtainBookingById(int id, BookingCallback callback);
 
-    void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback);
+    void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback);
+
+    void changeBookingState(int bookingId, String state, SimpleCallback callback);
 
     interface BookingsCallback extends BaseCallback {
 
@@ -24,7 +27,7 @@ public interface BookingDataSource {
         void onSuccess(BookingEntity bookingEntity);
     }
 
-    interface ReviewCallback extends BaseCallback {
+    interface SimpleCallback extends BaseCallback {
         void onSuccess();
     }
 
