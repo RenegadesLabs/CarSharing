@@ -60,8 +60,7 @@
         </activity>
         <activity
             android:name=".owner_home.view.OwnerHomeActivity"
-            android:launchMode="singleTask"
-            android:taskAffinity=""/>
+            android:launchMode="singleTask" />
         <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
         <activity

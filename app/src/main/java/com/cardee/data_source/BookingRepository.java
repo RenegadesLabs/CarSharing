@@ -7,7 +7,11 @@ import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.domain.bookings.BookingState;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class BookingRepository implements BookingDataSource {
 
@@ -34,6 +38,15 @@ public class BookingRepository implements BookingDataSource {
 
     @Override
     public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+        if (!dirtyCache) {
+            Map<Integer, BookingEntity> snapshot = bookingCache.snapshot();
+            if (!snapshot.isEmpty()) {
+                Collection<BookingEntity> values = snapshot.values();
+                List<BookingEntity> cachedBookings = new ArrayList<>();
+                cachedBookings.addAll(values);
+                bookingsCallback.onSuccess(cachedBookings);
+            }
+        }
         remoteDataSource.obtainOwnerBookings(filter, sort, new BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
