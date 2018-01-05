@@ -56,7 +56,7 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
         if (position == 0 && !mMessageFormatter.sameWithCurrentDate(chatMessage.getDateCreated())) {
             isNewDay = true;
-        } else if (position < mMessageList.size() && mMessageList.size() != 1) {
+        } else if (position < mMessageList.size() && position != 0) {
             ChatMessage prevMessage = mMessageList.get(position - 1);
             if (!mMessageFormatter.hasSameDate(chatMessage.getDateCreated(), prevMessage.getDateCreated())) {
                 isNewDay = true;
@@ -89,7 +89,8 @@ public class SingleChatAdapter extends RecyclerView.Adapter {
 
     private void updateMessageList(List<ChatMessage> newList) {
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MessageDiffCallback(mMessageList, newList));
-        mMessageList = newList;
+        mMessageList.clear();
+        mMessageList.addAll(newList);
         result.dispatchUpdatesTo(this);
     }
 

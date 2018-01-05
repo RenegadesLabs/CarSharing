@@ -103,7 +103,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         }
     }
 
-    private synchronized void showAllMessages(List<ChatMessage> messageList) {
+    private void showAllMessages(List<ChatMessage> messageList) {
         if (mViewHolder != null) {
             mViewHolder.setMessageList(messageList);
         }

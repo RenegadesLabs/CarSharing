@@ -43,7 +43,6 @@ public class FcmNotificationBuilder implements NotificationBuilder {
         switch (notification.getNotificationType()) {
             case CHAT:
                 String channelChatId = context.getString(R.string.chat_notification_channel_id);
-
                 if (notification.isCurrentSessionNeedToNotify()) {
                     pendingIntent = createChatPendingIntent(context, notification);
                 }
@@ -59,11 +58,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                 break;
             case ALERT:
                 String channelAlertId = context.getString(R.string.alert_notification_channel_id);
-
                 if (notification.isCurrentSessionNeedToNotify()) {
                     pendingIntent = createAlertPendingIntent(context, notification);
                 }
-
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelAlertId)
                         .setSmallIcon(getValidAlertImage(notification.getType()))
                         .setContentTitle(notification.getContentTitle())
