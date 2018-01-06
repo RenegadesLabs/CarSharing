@@ -20,10 +20,12 @@ import com.cardee.domain.owner.entity.mapper.OwnerReviewToCarReviewMapper;
 import com.cardee.domain.owner.usecase.ChangeImage;
 import com.cardee.domain.owner.usecase.ChangeNote;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
+import com.cardee.domain.owner.usecase.GetOwnerInfoById;
 import com.cardee.owner_profile_info.view.ProfileInfoView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +37,7 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
     private final String TAG = this.getClass().getSimpleName();
 
     private final GetOwnerInfo mGetInfoUseCase;
+    private final GetOwnerInfoById mGetInfoById;
     private final ChangeNote mChangeNote;
     private final ChangeImage mChangeImage;
     private UseCaseExecutor mExecutor;
@@ -42,6 +45,7 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
     public OwnerProfileInfoPresenter(ProfileInfoView view) {
         mGetInfoUseCase = new GetOwnerInfo();
+        mGetInfoById = new GetOwnerInfoById();
         mChangeNote = new ChangeNote();
         mChangeImage = new ChangeImage();
         mExecutor = UseCaseExecutor.getInstance();
@@ -50,111 +54,11 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
 
     public void getOwnerInfo() {
         mView.showProgress(true);
-
         mExecutor.execute(mGetInfoUseCase, null, new UseCase.Callback<GetOwnerInfo.ResponseValues>() {
             @Override
             public void onSuccess(GetOwnerInfo.ResponseValues response) {
                 if (mView != null) {
-                    OwnerProfile profile = response.getOwnerProfile();
-                    if (profile != null) {
-                        mView.setProfileImage(profile.getProfilePhotoLink());
-
-                        mView.setProfileName(profile.getName());
-                        float rate = profile.getRating();
-                        if (rate == (long) rate) {
-                            mView.setProfileRating(String.format(Locale.getDefault(), "%d", (long) rate));
-                        } else {
-                            mView.setProfileRating(String.format(Locale.getDefault(), "%.1f", rate));
-                        }
-
-                        if (profile.getAcceptance() == null) {
-                            mView.setAcceptance("0");
-                        } else {
-                            float accept = profile.getAcceptance();
-                            if (accept == (long) accept) {
-                                mView.setAcceptance(String.format(Locale.getDefault(), "%d", (long) accept));
-                            } else {
-                                mView.setAcceptance(String.format(Locale.getDefault(), "%.1f", accept));
-                            }
-                        }
-
-                        String responseTime = profile.getResponseTime();
-                        if (responseTime == null) {
-                            responseTime = "0";
-                        }
-                        mView.setResponseText(responseTime);
-
-                        String minutes = ((Context) mView).getResources().getString(R.string.owner_profile_info_minutes);
-                        if (Integer.valueOf(responseTime) != 1) {
-                            minutes = minutes + "s";
-                        }
-                        mView.setMinutes(minutes);
-
-                        mView.setBookings(profile.getBookingsCount().toString());
-
-                        String note = profile.getNote();
-                        if (note == null || note.isEmpty()) {
-                            note = ((Context) mView).getResources().getString(R.string.profile_default_note);
-                        }
-                        mView.setNote(note);
-
-                        String city = null;
-                        String address = profile.getAddress();
-                        if (address != null && !address.isEmpty()) {
-                            Geocoder geocoder = new Geocoder((Context) mView, Locale.getDefault());
-                            try {
-                                List<Address> addressList = geocoder.getFromLocationName(address, 1);
-                                if (addressList != null && !addressList.isEmpty()) {
-                                    city = addressList.get(0).getLocality();
-                                }
-                            } catch (IOException e) {
-                                Log.d(TAG, e.getMessage());
-                            }
-                        }
-
-                        if (city == null) {
-                            city = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_city);
-                        }
-                        mView.setNoteTitle(city);
-
-                        int carsCount = profile.getCarCount();
-                        StringBuilder builder = new StringBuilder(String.valueOf(carsCount));
-                        builder.append(((Context) mView).getResources().getString(R.string.owner_profile_info_car));
-                        if (carsCount != 1) {
-                            builder.append("s");
-                        }
-                        mView.setCarsCount(builder.toString());
-
-                        int reviewsCount = profile.getReviewCount();
-                        builder = new StringBuilder(String.valueOf(reviewsCount));
-                        builder.append(((Context) mView).getResources().getString(R.string.owner_profile_info_car_review));
-                        if (reviewsCount != 1) {
-                            builder.append("s");
-                        }
-
-                        mView.setReviewsCount(builder.toString());
-
-                        List<Car> cars = response.getCars();
-                        if (cars != null && !cars.isEmpty()) {
-                            mView.setCars(cars);
-                        }
-
-                        OwnerReview[] reviews = profile.getReviews();
-                        if (reviews != null && reviews.length > 0) {
-                            OwnerReviewToCarReviewMapper mapper = new OwnerReviewToCarReviewMapper();
-                            List<CarReview> carReviewList = mapper.transform(reviews);
-                            Iterator<CarReview> iterator = carReviewList.iterator();
-                            while (iterator.hasNext()) {
-                                CarReview review = iterator.next();
-                                String text = review.getReviewText();
-                                if (text == null || text.isEmpty()) {
-                                    iterator.remove();
-                                }
-                                review.setReviewText(review.getReviewText().trim());
-                            }
-                            mView.setCarReviews(carReviewList);
-                        }
-                    }
+                    setProfileFields(response);
                     mView.showProgress(false);
                 }
             }
@@ -165,6 +69,129 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                 mView.showMessage(error.getMessage());
             }
         });
+    }
+
+    public void getOwnerById(int profileId) {
+        mView.showProgress(true);
+        mExecutor.execute(mGetInfoById, new GetOwnerInfoById.RequestValues(profileId), new UseCase.Callback<GetOwnerInfoById.ResponseValues>() {
+            @Override
+            public void onSuccess(GetOwnerInfoById.ResponseValues response) {
+                if (mView != null) {
+                    setProfileFields(response);
+                    mView.showProgress(false);
+                }
+            }
+
+            @Override
+            public void onError(Error error) {
+                mView.showProgress(false);
+                mView.showMessage(error.getMessage());
+            }
+        });
+    }
+
+    private void setProfileFields(GetOwnerInfo.ResponseValues response) {
+        OwnerProfile profile = response.getOwnerProfile();
+        if (profile != null) {
+            mView.setProfileImage(profile.getProfilePhotoLink());
+
+            mView.setProfileName(profile.getName());
+            float rate = profile.getRating();
+            if (rate == (long) rate) {
+                mView.setProfileRating(String.format(Locale.getDefault(), "%d", (long) rate));
+            } else {
+                mView.setProfileRating(String.format(Locale.getDefault(), "%.1f", rate));
+            }
+
+            if (profile.getAcceptance() == null) {
+                mView.setAcceptance("0");
+            } else {
+                float accept = profile.getAcceptance();
+                if (accept == (long) accept) {
+                    mView.setAcceptance(String.format(Locale.getDefault(), "%d", (long) accept));
+                } else {
+                    mView.setAcceptance(String.format(Locale.getDefault(), "%.1f", accept));
+                }
+            }
+
+            String responseTime = profile.getResponseTime();
+            if (responseTime == null) {
+                responseTime = "0";
+            }
+            mView.setResponseText(responseTime);
+
+            String minutes = ((Context) mView).getResources().getString(R.string.owner_profile_info_minutes);
+            if (Integer.valueOf(responseTime) != 1) {
+                minutes = minutes + "s";
+            }
+            mView.setMinutes(minutes);
+
+            mView.setBookings(profile.getBookingsCount().toString());
+
+            String note = profile.getNote();
+            if (note == null || note.isEmpty()) {
+                note = ((Context) mView).getResources().getString(R.string.profile_default_note);
+            }
+            mView.setNote(note);
+
+            String city = null;
+            String address = profile.getAddress();
+            if (address != null && !address.isEmpty()) {
+                Geocoder geocoder = new Geocoder((Context) mView, Locale.getDefault());
+                try {
+                    List<Address> addressList = geocoder.getFromLocationName(address, 1);
+                    if (addressList != null && !addressList.isEmpty()) {
+                        city = addressList.get(0).getLocality();
+                    }
+                } catch (IOException e) {
+                    Log.d(TAG, e.getMessage());
+                }
+            }
+
+            if (city == null) {
+                city = ((Context) mView).getResources().getString(R.string.owner_profile_info_default_city);
+            }
+            mView.setNoteTitle(city);
+
+            int carsCount = profile.getCarCount();
+            StringBuilder builder = new StringBuilder(String.valueOf(carsCount));
+            builder.append(((Context) mView).getResources().getString(R.string.owner_profile_info_car));
+            if (carsCount != 1) {
+                builder.append("s");
+            }
+            mView.setCarsCount(builder.toString());
+
+            int reviewsCount = profile.getReviewCount();
+            builder = new StringBuilder(String.valueOf(reviewsCount));
+            builder.append(((Context) mView).getResources().getString(R.string.owner_profile_info_car_review));
+            if (reviewsCount != 1) {
+                builder.append("s");
+            }
+
+            mView.setReviewsCount(builder.toString());
+
+            List<Car> cars = response.getCars();
+            if (cars != null && !cars.isEmpty()) {
+                mView.setCars(cars);
+            }
+
+            OwnerReview[] reviews = profile.getReviews();
+            if (reviews != null && reviews.length > 0) {
+                OwnerReviewToCarReviewMapper mapper = new OwnerReviewToCarReviewMapper();
+                List<CarReview> carReviewList = mapper.transform(reviews);
+                Iterator<CarReview> iterator = carReviewList.iterator();
+                while (iterator.hasNext()) {
+                    CarReview review = iterator.next();
+                    String text = review.getReviewText();
+                    if (text == null || text.isEmpty()) {
+                        iterator.remove();
+                    }
+                    review.setReviewText(review.getReviewText().trim());
+                }
+                Collections.sort(carReviewList, (first, second) -> second.getReviewDate().compareTo(first.getReviewDate()));
+                mView.setCarReviews(carReviewList);
+            }
+        }
     }
 
     @Override
@@ -223,5 +250,4 @@ public class OwnerProfileInfoPresenter implements Consumer<Car> {
                     }
                 });
     }
-
 }

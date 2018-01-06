@@ -52,7 +52,7 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
         bookingView.renterPhoto.setOnClickListener(this);
         bookingView.renterCall.setOnClickListener(this);
         bookingView.renterChat.setOnClickListener(this);
-        bookingView.btnCancel.setOnClickListener(this);
+        bookingView.btnAccept.setOnClickListener(this);
     }
 
     @Override

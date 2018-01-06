@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,6 +53,7 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     private Toast mCurrentToast;
     private byte[] mPictureByteArray;
     private boolean mEditable;
+    private int mProfileId;
 
     @BindView(R.id.profile_info_container)
     View mContainer;
@@ -98,6 +100,9 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @BindView(R.id.cars_list)
     RecyclerView mCarsListView;
 
+    @BindView(R.id.cars_layout)
+    CardView mCarsCard;
+
     @BindView(R.id.reviews_list)
     RecyclerView mReviewsListView;
 
@@ -118,7 +123,13 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         initReviewList(mReviewsListView);
         initEditableState();
 
-        mPresenter.getOwnerInfo();
+        if (mEditable) {
+            mPresenter.getOwnerInfo();
+        } else {
+            if (mProfileId != -1) {
+                mPresenter.getOwnerById(mProfileId);
+            }
+        }
     }
 
     private void initEditableState() {
@@ -127,17 +138,20 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
             mProfilePhotoEdit.setOnClickListener(view -> verifyPermissionAndChangeImage());
             mNoteEdit.setVisibility(View.VISIBLE);
             mNoteEdit.setOnClickListener(view -> mPresenter.changeNote(OwnerProfileInfoActivity.this));
+            mCarsCard.setVisibility(View.VISIBLE);
         } else {
             mProfilePhotoEdit.setOnClickListener(null);
             mProfilePhotoEdit.setVisibility(View.GONE);
             mNoteEdit.setOnClickListener(null);
             mNoteEdit.setVisibility(View.GONE);
+            mCarsCard.setVisibility(View.GONE);
         }
     }
 
     private void getIntentExtras() {
         Intent intent = getIntent();
         mEditable = intent.getBooleanExtra("editable", false);
+        mProfileId = intent.getIntExtra("profile_id", -1);
     }
 
     private void initToolBar() {

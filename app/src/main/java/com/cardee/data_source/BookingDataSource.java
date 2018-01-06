@@ -18,6 +18,8 @@ public interface BookingDataSource {
 
     void changeBookingState(int bookingId, String state, SimpleCallback callback);
 
+    void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, SimpleCallback callback);
+
     interface BookingsCallback extends BaseCallback {
 
         void onSuccess(List<BookingEntity> bookingEntities);

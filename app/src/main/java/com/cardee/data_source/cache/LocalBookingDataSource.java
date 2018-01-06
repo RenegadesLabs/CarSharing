@@ -42,4 +42,10 @@ public class LocalBookingDataSource implements BookingDataSource {
     public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
 
     }
+
+    @Override
+    public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner,
+                                   byte overall, String review, SimpleCallback callback) {
+
+    }
 }

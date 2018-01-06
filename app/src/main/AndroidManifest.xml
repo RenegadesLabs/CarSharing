@@ -155,10 +155,19 @@
             android:name=".owner_bookings.view.BookingActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
-        <activity android:name=".renter_profile.view.RenterProfileActivity" />
-        <activity android:name=".renter_notifications.view.RenterNotifActivity" />
-        <activity android:name=".inbox.chat.single.view.ChatActivity"></activity>
-        <activity android:name=".owner_bookings.car_returned.view.CarReturnedActivity"></activity>
+        <activity
+            android:name=".renter_profile.view.RenterProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".renter_notifications.view.RenterNotifActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".inbox.chat.chat_message.view.ChatActivity" />
+        <activity
+            android:name=".owner_bookings.car_returned.view.CarReturnedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".renter_bookings.rate_rental_exp.view.RateRentalExpActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
