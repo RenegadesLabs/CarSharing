@@ -2,6 +2,7 @@ package com.cardee.owner_bookings.view;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
@@ -149,6 +150,8 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         toolbarTitle.setText(booking.getBookingNum());
         loadImageIntoView(booking.getPrimaryImage().getLink(),
                 R.drawable.img_no_car, carPhotoView, imgProgress, false);
+        bookingPayment.setBackgroundColor(ContextCompat.getColor(getContext(), booking.getPaymentType().getBgId()));
+        bookingPayment.setText(booking.getPaymentType().getTitleId());
         carTitle.setText(booking.getCarTitle());
         carYear.setText(booking.getManufactureYear());
         carPlateNumber.setText(booking.getPlateNumber());

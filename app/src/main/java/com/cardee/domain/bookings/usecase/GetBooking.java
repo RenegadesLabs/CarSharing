@@ -5,6 +5,7 @@ import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.BookingRepository;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.mapper.BookingEntityToBookingMapper;
@@ -24,8 +25,19 @@ public class GetBooking implements UseCase<GetBooking.RequestValues, GetBooking.
         repository.obtainBookingById(values.getBookingId(), new BookingDataSource.BookingCallback() {
             @Override
             public void onSuccess(BookingEntity bookingEntity) {
-                Booking booking = mapper.transform(bookingEntity);
-                callback.onSuccess(new ResponseValues(booking));
+                repository.obtainBookingRentalTerms(values.getBookingId(),
+                        new BookingDataSource.RentalTermsCallback() {
+                            @Override
+                            public void onSuccess(BookingRentalTerms rentalTerms) {
+                                Booking booking = mapper.transform(bookingEntity, rentalTerms);
+                                callback.onSuccess(new ResponseValues(booking));
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                callback.onError(error);
+                            }
+                        });
             }
 
             @Override

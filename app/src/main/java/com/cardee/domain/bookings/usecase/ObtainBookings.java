@@ -57,7 +57,8 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
         BookingDataSource.BookingsCallback repositoryCallback = new BookingDataSource.BookingsCallback() {
             @Override
             public void onSuccess(List<BookingEntity> bookingEntities) {
-                List<Booking> bookings = ListUtil.map(bookingEntities, mapper::transform);
+                List<Booking> bookings = ListUtil.map(bookingEntities, entity ->
+                        mapper.transform(entity, null));
                 callback.onSuccess(new ResponseValues(bookings));
             }
 

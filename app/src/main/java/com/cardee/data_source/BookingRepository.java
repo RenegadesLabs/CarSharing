@@ -5,6 +5,7 @@ import android.util.LruCache;
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.domain.bookings.BookingState;
 
 import java.util.ArrayList;
@@ -21,12 +22,14 @@ public class BookingRepository implements BookingDataSource {
     private final BookingDataSource remoteDataSource;
 
     private LruCache<Integer, BookingEntity> bookingCache;
+    //    private LruCache<Integer, BookingRentalTerms> rentalCache;
     private boolean dirtyCache = false;
 
     private BookingRepository() {
         localDataSource = LocalBookingDataSource.getInstance();
         remoteDataSource = RemoteBookingDataSource.getInstance();
         bookingCache = new LruCache<>(25);
+//        rentalCache = new LruCache<>(10);
     }
 
     public static BookingRepository getInstance() {
@@ -95,6 +98,22 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
+    public void obtainBookingRentalTerms(int id, RentalTermsCallback callback) {
+        remoteDataSource.obtainBookingRentalTerms(id, new RentalTermsCallback() {
+            @Override
+            public void onSuccess(BookingRentalTerms rentalTerms) {
+                callback.onSuccess(rentalTerms);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+
+    @Override
     public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
         remoteDataSource.sendReviewAsOwner(bookingId, rate, review, new SimpleCallback() {
             @Override
@@ -136,6 +155,7 @@ public class BookingRepository implements BookingDataSource {
         bookingCache.evictAll();
         dirtyCache = true;
     }
+
     @Override
     public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, SimpleCallback callback) {
         remoteDataSource.sendReviewAsRenter(bookingId, condition, comfort, owner, overall, review, new SimpleCallback() {

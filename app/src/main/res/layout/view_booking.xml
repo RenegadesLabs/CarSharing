@@ -63,7 +63,6 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_regular"
             android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@color/black"
             android:gravity="center"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_regular"

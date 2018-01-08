@@ -3,6 +3,7 @@ package com.cardee.domain.bookings.entity.mapper;
 
 import com.cardee.CardeeApp;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.data_source.remote.api.booking.response.entity.OwnerRateEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.RenterRateEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
@@ -10,6 +11,7 @@ import com.cardee.data_source.remote.api.common.entity.ImageEntity;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 import com.cardee.data_source.remote.api.reviews.response.entity.Renter;
 import com.cardee.domain.bookings.BookingState;
+import com.cardee.domain.bookings.PaymentType;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.Rate;
 import com.cardee.domain.owner.entity.Image;
@@ -25,7 +27,7 @@ public class BookingEntityToBookingMapper {
         delegate = new DateStringDelegate(CardeeApp.context);
     }
 
-    public Booking transform(BookingEntity entity) {
+    public Booking transform(BookingEntity entity, BookingRentalTerms rentalTerms) {
         ImageEntity[] imageEntities = entity.getCar().getImages();
         Image[] images = new Image[imageEntities.length];
         Image primary = null;
@@ -88,7 +90,15 @@ public class BookingEntityToBookingMapper {
             fuelPolicyId = fuelPolicy.getFuelPolicyId();
             fuelPolicyName = fuelPolicy.getFuelPolicyName();
         }
-
+        PaymentType paymentType = null;
+        if (rentalTerms != null) {
+            Boolean acceptCash = rentalTerms.getAcceptCash();
+            if (acceptCash != null && acceptCash) {
+                paymentType = PaymentType.CASH;
+            } else {
+                paymentType = PaymentType.CARD;
+            }
+        }
         return new Booking.Builder()
                 .setTotalAmount(entity.getTotalAmount())
                 .setTimeBegin(beginTime)
@@ -122,6 +132,7 @@ public class BookingEntityToBookingMapper {
                 .setTankPartRentingOut(entity.getTankPartRentingOut())
                 .setFuelPolicyId(fuelPolicyId)
                 .setFuelPolicyName(fuelPolicyName)
+                .setPaymentType(paymentType)
                 .build();
     }
 }

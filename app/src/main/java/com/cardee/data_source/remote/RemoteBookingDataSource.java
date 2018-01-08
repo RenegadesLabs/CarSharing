@@ -71,6 +71,20 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
+    public void obtainBookingRentalTerms(int id, RentalTermsCallback callback) {
+        api.getBookingRentalTerms(id).subscribe(response -> {
+            if (response.isSuccessful()) {
+                callback.onSuccess(response.getRentalTerms());
+                return;
+            }
+            handleErrorResponse(response, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    @Override
     public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
         ReviewAsOwner reviewAsOwner = new ReviewAsOwner();
         reviewAsOwner.setRating((int) rate);
