@@ -165,7 +165,7 @@
                     android:textSize="@dimen/text_small" />
 
                 <TextView
-                    android:id="@+id/btn_handoverCar"
+                    android:id="@+id/b_handoverCar"
                     style="@style/RegularButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_regular_height"
