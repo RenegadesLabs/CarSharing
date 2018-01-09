@@ -2,6 +2,8 @@ package com.cardee.owner_profile_info.presenter
 
 import android.content.Context
 import android.content.res.Resources
+import android.location.Geocoder
+import com.cardee.CardeeApp
 import com.cardee.R
 import com.cardee.data_source.Error
 import com.cardee.domain.UseCase
@@ -84,6 +86,20 @@ class KotlinPresenter(val mView: ProfileInfoView) : Consumer<Car> {
             var minutes = mResources.getString(R.string.owner_profile_info_minutes)
             if (responseTime.toInt() != 1) {
                 minutes += "s"
+            }
+            mView.setMinutes(minutes)
+
+            mView.setBookings(profile.bookingsCount.toString())
+
+            var note = profile.note
+            if (note.isNullOrEmpty()) {
+                note = mResources.getString(R.string.profile_default_note)
+            }
+            mView.setNote(note)
+
+            val address = profile.address
+            if (!address.isNullOrEmpty()){
+                val geocoder = Geocoder(CardeeApp.context, Locale.getDefault())
             }
 
         }

@@ -25,6 +25,7 @@ import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
 import com.cardee.owner_home.view.adapter.OwnerMoreTabAdapter;
 import com.cardee.owner_home.view.listener.MoreTabItemEventListener;
+import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
 import com.cardee.owner_settings.view.OwnerSettingsActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
 import com.cardee.util.glide.CircleTransform;
