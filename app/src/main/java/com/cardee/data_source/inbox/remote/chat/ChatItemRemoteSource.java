@@ -4,7 +4,9 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.ChatApi;
 import com.cardee.data_source.inbox.remote.api.model.entity.ChatRemoteMessage;
-import com.cardee.data_source.inbox.remote.api.request.NewChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewChatMessage;
+import com.cardee.data_source.inbox.remote.api.response.MessageResponse;
 import com.cardee.domain.util.Mapper;
 
 import java.util.ArrayList;
@@ -25,39 +27,36 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
     }
 
     @Override
-    public Single<List<ChatMessage>> getMessages(int chatDatabaseId, int chatServerId) {
-        mMapper.setChatDatabaseId(chatDatabaseId);
-        return mChatApi.getMessages(chatServerId)
+    public Single<List<ChatMessage>> getMessages(int chatId) {
+        mMapper.setChatId(chatId);
+        return mChatApi.getMessages(chatId)
+                .subscribeOn(Schedulers.io())
                 .map(chatMessagesResponse -> mMapper.map(chatMessagesResponse.getMessages()));
     }
 
     @Override
-    public Completable sendMessage(String newMessage) {
-        return Completable.create(emitter
-                -> mChatApi.sendMessage(new NewChatMessage(newMessage))
-                .subscribeOn(Schedulers.io())
-                .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
-                .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
+    public Single<NewMessage> sendMessage(String newMessage, int chatId) {
+        return mChatApi.sendMessage(chatId, new NewChatMessage(newMessage))
+                .map(MessageResponse::getNewMessage);
     }
 
     @Override
     public Completable markAsRead(int messageId) {
         return Completable.create(emitter -> mChatApi.markAsRead(messageId)
-                .subscribeOn(Schedulers.io())
                 .filter(messageResponse -> messageResponse != null && messageResponse.isSuccessful())
                 .subscribe(messageResponse -> emitter.onComplete(), emitter::onError));
     }
 
     private class ToChatMessageMapper implements Mapper<ChatRemoteMessage[], List<ChatMessage>> {
 
-        int chatDatabaseId;
+        int chatId;
 
         @Override
         public List<ChatMessage> map(ChatRemoteMessage[] response) {
             List<ChatMessage> chatMessageList = new ArrayList<>(15);
             for (ChatRemoteMessage chatRemote : response) {
                 ChatMessage chatMessage = new ChatMessage.Builder()
-                        .withChatId(chatDatabaseId)
+                        .withChatId(chatId)
                         .withMessageId(chatRemote.getMessageId())
                         .withMessage(chatRemote.getMessage())
                         .withIsInbox(chatRemote.getInbox())
@@ -69,8 +68,8 @@ public class ChatItemRemoteSource implements RemoteData.ChatSingleSource {
             return chatMessageList;
         }
 
-        void setChatDatabaseId(int chatDatabaseId) {
-            this.chatDatabaseId = chatDatabaseId;
+        void setChatId(int chatId) {
+            this.chatId = chatId;
         }
     }
 }

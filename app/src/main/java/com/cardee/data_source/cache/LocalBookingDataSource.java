@@ -19,7 +19,7 @@ public class LocalBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+    public void obtainOwnerBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
 
     }
 
@@ -34,12 +34,23 @@ public class LocalBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void sendReviewAsOwner(int bookingId, byte rate, String review, ReviewCallback callback) {
+    public void obtainBookingRentalTerms(int id, RentalTermsCallback callback) {
 
     }
 
     @Override
-    public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, ReviewCallback callback) {
+    public void sendReviewAsOwner(int bookingId, byte rate, String review, SimpleCallback callback) {
+
+    }
+
+    @Override
+    public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
+
+    }
+
+    @Override
+    public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner,
+                                   byte overall, String review, SimpleCallback callback) {
 
     }
 }

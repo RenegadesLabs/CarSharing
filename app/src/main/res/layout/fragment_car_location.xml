@@ -49,4 +49,21 @@
         android:layout_margin="@dimen/medium_margin"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_my_location" />
+
+    <View
+        android:id="@+id/location_marker_target"
+        android:layout_width="@dimen/map_marker_size"
+        android:layout_height="@dimen/map_marker_size"
+        android:background="@drawable/ic_map_marker_shadow"
+        android:layout_centerInParent="true"/>
+
+    <View
+        android:id="@+id/location_marker"
+        android:layout_width="@dimen/map_marker_size"
+        android:layout_height="@dimen/map_marker_size"
+        android:layout_alignBottom="@id/location_marker_target"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/widget_padding_xx_small"
+        android:background="@drawable/ic_car_marker" />
+
 </RelativeLayout>

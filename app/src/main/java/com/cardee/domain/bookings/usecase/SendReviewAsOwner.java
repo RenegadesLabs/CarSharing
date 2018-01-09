@@ -16,7 +16,7 @@ public class SendReviewAsOwner implements UseCase<SendReviewAsOwner.RequestValue
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        repository.sendReviewAsOwner(values.getBookingId(), values.getRate(), values.getComment(), new BookingDataSource.ReviewCallback() {
+        repository.sendReviewAsOwner(values.getBookingId(), values.getRate(), values.getComment(), new BookingDataSource.SimpleCallback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess(new ResponseValues());

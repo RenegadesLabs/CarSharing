@@ -142,30 +142,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                     observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_SWITCHED));
                 }
             });
-            mPrimaryImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.OPEN));
-                }
-            });
-            mLocationView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.LOCATION_CLICKED));
-                }
-            });
-            mDailyView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_CLICKED));
-                }
-            });
-            mHourlyView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED));
-                }
-            });
+            mPrimaryImage.setOnClickListener(view -> observable.onNext(
+                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.OPEN)));
+            mLocationView.setOnClickListener(view -> observable.onNext(
+                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.LOCATION_CLICKED)));
+            mDailyView.setOnClickListener(view -> observable.onNext(
+                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_CLICKED)));
+            mHourlyView.setOnClickListener(view -> observable.onNext(
+                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED)));
             mHourlyView.setEnabled(model.isAvailableHourly());
             if (!model.isAvailableHourly() ||
                     (model.getCarAvailabilityHourlyDates() == null ||

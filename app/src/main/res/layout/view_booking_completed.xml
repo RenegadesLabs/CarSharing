@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cardee.owner_bookings.view.CompletedBookingView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/toolbar_height"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/booking_status"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@color/booking_state_completed"
+            android:gravity="center"
+            android:text="@string/booking_state_completed"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintDimensionRatio="4.5:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/booking_payment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_regular"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:gravity="center"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintDimensionRatio="4.5:1"
+            app:layout_constraintStart_toEndOf="@id/booking_status"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/booking_car_picture"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/small_car_picture_height"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <ProgressBar
+            android:id="@+id/booking_progress"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:theme="@style/LoadingIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/booking_car_picture"
+            app:layout_constraintEnd_toEndOf="@id/booking_car_picture"
+            app:layout_constraintStart_toStartOf="@id/booking_car_picture"
+            app:layout_constraintTop_toTopOf="@id/booking_car_picture" />
+
+        <TextView
+            android:id="@+id/booking_car_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_regular"
+            android:layout_marginTop="@dimen/widget_margin_x_small"
+            android:ellipsize="end"
+            android:maxWidth="144dp"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/booking_car_picture"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/booking_car_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_regular"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBaseline_toBaselineOf="@id/booking_car_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/booking_car_title" />
+
+        <TextView
+            android:id="@+id/booking_car_plate_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="@id/booking_car_title"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_title" />
+
+        <TextView
+            android:id="@+id/booking_date_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_xx_small"
+            android:textColor="@color/booking_subtitle"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toStartOf="@id/booking_car_plate_number"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_plate_number" />
+
+        <TextView
+            android:id="@+id/rental_period_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_large"
+            android:text="Rental Period"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_picture" />
+
+        <TextView
+            android:id="@+id/rental_period"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBaseline_toBaselineOf="@id/rental_period_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/rental_period_title" />
+
+        <ImageView
+            android:id="@+id/renter_photo"
+            android:layout_width="@dimen/booking_renter_image"
+            android:layout_height="@dimen/booking_renter_image"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            app:layout_constraintBottom_toBottomOf="@id/booking_car_picture"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/rating_block"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:background="@color/bg_window"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rental_period_title" />
+
+        <TextView
+            android:id="@+id/rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_x_large"
+            android:text="@string/booking_rating_title"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rating_block" />
+
+        <com.cardee.custom.CustomRatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            app:halfStars="true"
+            app:layout_constraintDimensionRatio="5:1"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintStart_toEndOf="@id/rating_title"
+            app:layout_constraintTop_toTopOf="@id/rating_block"
+            app:maxStars="5"
+            app:onlyForDisplay="false"
+            app:stars="0" />
+
+        <TextView
+            android:id="@+id/rating_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_x_large"
+            android:text="@string/booking_rating_edit"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rating_block" />
+
+        <FrameLayout
+            android:id="@+id/booking_loading_indicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#50ffffff"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:layout_gravity="center"
+                android:theme="@style/LoadingIndicator" />
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</com.cardee.owner_bookings.view.CompletedBookingView>

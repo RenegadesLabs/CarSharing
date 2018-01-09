@@ -32,6 +32,8 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
 
     private RentalTermsInsurancePresenter mPresenter;
 
+    private String mDefText;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,8 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
     }
 
     private void initViewState() {
-        insuranceTextET.setText(getIntent().getStringExtra(COMPENSATION_EXCESS));
+        mDefText = getIntent().getStringExtra(COMPENSATION_EXCESS);
+        insuranceTextET.setText(mDefText);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class RentalTermsInsuranceActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                if (insuranceTextET.getText().toString().isEmpty()) {
+                if (insuranceTextET.getText().toString().equals(mDefText)) {
                     showMessage(R.string.nothing_to_save);
                     return;
                 }

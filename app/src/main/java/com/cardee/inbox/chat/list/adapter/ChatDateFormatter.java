@@ -54,7 +54,6 @@ public class ChatDateFormatter implements UtcDateFormatter {
                     newDateString = mChatFormat.format(chatMessageDate);
             }
         } catch (ParseException e) {
-//            Log.e(TAG, e.getMessage() + " " + utcDate);
             newDateString = utcDate;
         }
 

@@ -18,13 +18,15 @@ public class NotificationRepository implements NotificationContract {
     private String TAG = "Cardee " + NotificationRepository.class.getName();
     private static NotificationRepository INSTANCE;
 
-    private AccountManager mAccountManager;
     private BehaviorSubject<Integer> mInboxSubject;
     private BehaviorSubject<Boolean> mAlertSubject;
     private BehaviorSubject<Boolean> mChatSubject;
-    private NotificationApi mNotificationApi;
 
+    private AccountManager mAccountManager;
+    private NotificationApi mNotificationApi;
     private NotificationData mNotificationData;
+
+    private Integer mCurrentChatId;
 
     public static NotificationRepository getInstance() {
         if (INSTANCE == null) {
@@ -57,10 +59,11 @@ public class NotificationRepository implements NotificationContract {
 
     private void proceedResponse(NotificationResponse notificationResponse) {
         NotificationData data = notificationResponse.getNotificationData();
-        mNotificationData.setOwnerBookingMessages(data.getOwnerBookingMessages());
+        mNotificationData.setOwnerAlertMessages(data.getOwnerAlertMessages());
         mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
-        mNotificationData.setRenterBookingMessages(data.getRenterBookingMessages());
+        mNotificationData.setRenterAlertMessages(data.getRenterAlertMessages());
         mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
+
         saveSessionData();
         publishAllData();
     }
@@ -72,21 +75,34 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
-    public void updateBookingNotificationCount(Integer readCount) {
+    public void setRelevantChatUnreadCount(Integer readCount) {
+        mNotificationData.setRelevantChatCount(readCount);
+        mInboxSubject.onNext(mNotificationData.getTotalNotifications());
+        mChatSubject.onNext(mNotificationData.isMissingChatsExist());
+    }
+
+    @Override
+    public void setRelevantAlertUnreadCount(Integer readCount) {
         mNotificationData.setRelevantAlertCount(readCount);
         mInboxSubject.onNext(mNotificationData.getTotalNotifications());
         mAlertSubject.onNext(mNotificationData.isMissingAlertsExist());
     }
 
     @Override
-    public void updateChatNotificationCount(Integer readCount) {
-        mNotificationData.setRelevantChatCount(readCount);
-        mInboxSubject.onNext(mNotificationData.getTotalNotifications());
-        mChatSubject.onNext(mNotificationData.isMissingChatsExist());
+    public void updateChatUnreadCount(Integer count) {
+        mNotificationData.updateChatUnreadCount(count);
+        publishAllData();
     }
 
-    private void decreaseTotalNotifications(int decreaseCount) {
+    @Override
+    public void updateInboxUnreadCount(Integer count) {
+        mNotificationData.updateAlertUnreadCount(count);
+        publishAllData();
+    }
 
+    @Override
+    public boolean isCurrentSessionNeedToNotify(String attachment) {
+        return mNotificationData.getCurrentAttachment().equals(attachment);
     }
 
     @Override
@@ -114,6 +130,21 @@ public class NotificationRepository implements NotificationContract {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
+    }
+
+    @Override
+    public void setCurrentChatSession(int chatId) {
+        mCurrentChatId = chatId;
+    }
+
+    @Override
+    public void resetCurrentChatSession() {
+        mCurrentChatId = null;
+    }
+
+    @Override
+    public boolean isCurrentMessagingSession(int chatId) {
+        return mCurrentChatId != null && mCurrentChatId == chatId;
     }
 
     @Override

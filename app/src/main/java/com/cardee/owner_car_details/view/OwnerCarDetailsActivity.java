@@ -54,7 +54,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
 
     private void initContent(String title, String[] tabTitles) {
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
@@ -68,12 +68,12 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
     }
 
     private void initPages(String[] tabTitles) {
-        mTabs = (TabLayout) findViewById(R.id.tab_layout);
-        mPager = (ViewPager) findViewById(R.id.car_details_pager);
+        mTabs = findViewById(R.id.tab_layout);
+        mPager = findViewById(R.id.car_details_pager);
         mPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabTitles));
         mPager.setOffscreenPageLimit(2);
         mTabs.setupWithViewPager(mPager);
-        mTabs.getTabAt(1).select();
+//        mTabs.getTabAt(1).select();
         mTabs.addOnTabSelectedListener(this);
     }
 

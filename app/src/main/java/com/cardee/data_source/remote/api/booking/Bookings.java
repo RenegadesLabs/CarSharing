@@ -5,6 +5,7 @@ import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingByIdResponse;
+import com.cardee.data_source.remote.api.booking.response.BookingRentalResponse;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 
 import io.reactivex.Single;
@@ -27,6 +28,9 @@ public interface Bookings {
     @GET("bookings/{id}")
     Single<BookingByIdResponse> getBookingById(@Path("id") int id);
 
+    @PUT("bookings/{id}/{state}")
+    Single<NoDataResponse> changeBookingState(@Path("id") int id, @Path("state") String state);
+
     @PUT("bookings/{id}/rating")
     @Headers("Content-Type: application/json")
     Single<NoDataResponse> sendReviewAsOwner(@Path("id") int id, @Body ReviewAsOwner reviewAsOwner);
@@ -34,4 +38,7 @@ public interface Bookings {
     @PUT("bookings/{id}/rating")
     @Headers("Content-Type: application/json")
     Single<NoDataResponse> sendReviewAsRenter(@Path("id") int id, @Body ReviewAsRenter reviewAsRenter);
+
+    @GET("bookings/{id}/terms")
+    Single<BookingRentalResponse> getBookingRentalTerms(@Path("id") int id);
 }

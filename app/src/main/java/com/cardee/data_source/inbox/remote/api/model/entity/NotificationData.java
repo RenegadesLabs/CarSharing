@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
-import static com.cardee.data_source.remote.service.AccountManager.RENTER_SESSION;
 
 public class NotificationData {
 
@@ -16,18 +15,19 @@ public class NotificationData {
     private Integer renterChatMessages;
     @Expose
     @SerializedName("owner_alerts_cnt")
-    private Integer ownerBookingMessages;
+    private Integer ownerAlertMessages;
     @Expose
     @SerializedName("renter_alerts_cnt")
-    private Integer renterBookingMessages;
+    private Integer renterAlertMessages;
 
-    private transient String currentSession;
+    private transient String currentAttachment;
 
     public NotificationData() {
     }
 
-    public NotificationData(String currentSession) {
-        this.currentSession = currentSession;
+
+    public NotificationData(String currentAttachment) {
+        this.currentAttachment = currentAttachment;
     }
 
     public Integer getOwnerChatMessages() {
@@ -46,29 +46,29 @@ public class NotificationData {
         this.renterChatMessages = renterChatMessages;
     }
 
-    public Integer getOwnerBookingMessages() {
-        return ownerBookingMessages == null ? 0 : ownerBookingMessages;
+    public Integer getOwnerAlertMessages() {
+        return ownerAlertMessages == null ? 0 : ownerAlertMessages;
     }
 
-    public void setOwnerBookingMessages(Integer ownerBookingMessages) {
-        this.ownerBookingMessages = ownerBookingMessages;
+    public void setOwnerAlertMessages(Integer ownerAlertMessages) {
+        this.ownerAlertMessages = ownerAlertMessages;
     }
 
-    public Integer getRenterBookingMessages() {
-        return renterBookingMessages == null ? 0 : renterBookingMessages;
+    public Integer getRenterAlertMessages() {
+        return renterAlertMessages == null ? 0 : renterAlertMessages;
     }
 
-    public void setRenterBookingMessages(Integer renterBookingMessages) {
-        this.renterBookingMessages = renterBookingMessages;
+    public void setRenterAlertMessages(Integer renterAlertMessages) {
+        this.renterAlertMessages = renterAlertMessages;
     }
 
-    public String getCurrentSession() {
-        return currentSession;
+    public String getCurrentAttachment() {
+        return currentAttachment;
     }
 
     public boolean isMissingAlertsExist() {
-        if (isOwnerSession()) return ownerBookingMessages > 0;
-        else return renterBookingMessages > 0;
+        if (isOwnerSession()) return ownerAlertMessages > 0;
+        else return renterAlertMessages > 0;
     }
 
     public boolean isMissingChatsExist() {
@@ -82,8 +82,8 @@ public class NotificationData {
     }
 
     public void setRelevantAlertCount(Integer bookingCount) {
-        if (isOwnerSession()) ownerBookingMessages = bookingCount;
-        else renterBookingMessages = bookingCount;
+        if (isOwnerSession()) ownerAlertMessages = bookingCount;
+        else renterAlertMessages = bookingCount;
     }
 
     public void setRelevantChatCount(Integer chatCount) {
@@ -91,15 +91,25 @@ public class NotificationData {
         else renterChatMessages = chatCount;
     }
 
+    public void updateChatUnreadCount(Integer unreadCount) {
+        if (isOwnerSession()) ownerChatMessages = ownerChatMessages - unreadCount;
+        else renterChatMessages = renterChatMessages - unreadCount;
+    }
+
+    public void updateAlertUnreadCount(Integer unreadCount) {
+        if (isOwnerSession()) ownerAlertMessages = ownerAlertMessages - unreadCount;
+        else renterAlertMessages = renterAlertMessages - unreadCount;
+    }
+
     private boolean isOwnerSession() {
-        return currentSession.equals(OWNER_SESSION);
+        return currentAttachment.equals(OWNER_SESSION);
     }
 
     private int getTotalOwnerNotifications() {
-        return ownerChatMessages + ownerBookingMessages;
+        return ownerChatMessages + ownerAlertMessages;
     }
 
     private int getTotalRenterNotifications() {
-        return renterChatMessages + renterBookingMessages;
+        return renterChatMessages + renterAlertMessages;
     }
 }

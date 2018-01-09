@@ -1,12 +1,12 @@
 package com.cardee.owner_car_add.view.items;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.cardee.R;
@@ -47,11 +49,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CarLocationFragment extends Fragment
         implements OnMapReadyCallback,
@@ -65,14 +64,22 @@ public class CarLocationFragment extends Fragment
     private static final int SEARCH_ADDRESS_REQUEST_CODE = 101;
     private static final int RESULT_OK = -1;
     private static final String CAR_ID = "_car_id";
+    private static final int MARKER_ANIMATION_FULL_DURATION = 250;
+    private static final int MARKER_ANIMATION_SHORT_DURATION = 150;
 
     private TextView carLocationAddress;
     private MapView mapView;
     private HideAnimationDelegate hideDelegate;
     private GoogleApiClient apiClient;
     private GoogleMap map;
-    private Marker currentLocationMarker;
+    private View locationMarker;
+    private View targetMarker;
     private Address currentAddress;
+
+    private Point center;
+    private float markerStartY;
+    private float markerFinishY;
+    private ObjectAnimator markerAnimator;
 
     private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
@@ -148,6 +155,8 @@ public class CarLocationFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_car_location, container, false);
         parentListener.showProgress(true);
         carLocationAddress = rootView.findViewById(R.id.car_location_address);
+        locationMarker = rootView.findViewById(R.id.location_marker);
+        targetMarker = rootView.findViewById(R.id.location_marker_target);
         carLocationAddress.setOnClickListener(this);
         hideDelegate = new HideAnimationDelegate(rootView.findViewById(R.id.address_view));
         FloatingActionButton btnMyLocation = rootView.findViewById(R.id.btn_my_location);
@@ -155,7 +164,28 @@ public class CarLocationFragment extends Fragment
         mapView = rootView.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+        initAnimationValues(rootView);
         return rootView;
+    }
+
+    private void initAnimationValues(View rootView) {
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        int top = targetMarker.getTop();
+                        int bottom = targetMarker.getBottom();
+                        int left = targetMarker.getLeft();
+                        int right = targetMarker.getRight();
+                        center = new Point(left + (right - left) / 2, top + (bottom - top) / 2);
+                        markerStartY = locationMarker.getY();
+                        markerFinishY = markerStartY - (float) locationMarker.getHeight() * 1.2f;
+                        markerAnimator = ObjectAnimator.ofFloat(locationMarker, "y", markerStartY, markerFinishY);
+                        markerAnimator.setInterpolator(new DecelerateInterpolator());
+                    }
+                }
+        );
     }
 
     @Override
@@ -163,13 +193,51 @@ public class CarLocationFragment extends Fragment
         map = googleMap;
         parentListener.showProgress(false);
         presenter.init();
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
+        googleMap.setOnCameraIdleListener(() -> {
+            if (center != null) {
+                if (markerMoved()) {
+                    markerMoveDown();
+                }
+                LatLng latLng = googleMap.getProjection().fromScreenLocation(center);
                 fetchLocationAddress(latLng);
-                moveMapToLocation(latLng);
             }
         });
+        googleMap.setOnCameraMoveStartedListener(i -> {
+            if (markerAnimator != null) {
+                markerMoveUp();
+            }
+        });
+    }
+
+    private boolean markerMoved() {
+        float y = locationMarker.getY();
+        return Math.abs(y - markerStartY) > 0;
+    }
+
+    private void markerMoveUp() {
+        if (markerAnimator.isRunning()) {
+            markerAnimator.cancel();
+            float y = locationMarker.getY();
+            markerAnimator.setFloatValues(y, markerFinishY);
+            markerAnimator.setDuration(MARKER_ANIMATION_SHORT_DURATION);
+        } else {
+            markerAnimator.setFloatValues(markerStartY, markerFinishY);
+            markerAnimator.setDuration(MARKER_ANIMATION_FULL_DURATION);
+        }
+        markerAnimator.start();
+    }
+
+    private void markerMoveDown() {
+        if (markerAnimator.isRunning()) {
+            markerAnimator.cancel();
+            float y = locationMarker.getY();
+            markerAnimator.setFloatValues(y, markerStartY);
+            markerAnimator.setDuration(MARKER_ANIMATION_SHORT_DURATION);
+        } else {
+            markerAnimator.setFloatValues(markerFinishY, markerStartY);
+            markerAnimator.setDuration(MARKER_ANIMATION_FULL_DURATION);
+        }
+        markerAnimator.start();
     }
 
     public void showCurrentLocationIfPermitted() {
@@ -194,27 +262,12 @@ public class CarLocationFragment extends Fragment
             Log.e(TAG, "GoogleMap is not instantiated");
             return;
         }
-        if (currentLocationMarker != null) {
-            currentLocationMarker.remove();
-        }
-        MarkerOptions markerOptions = new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmap()))
-                .position(location);
-        currentLocationMarker = map.addMarker(markerOptions);
         CameraPosition position = new CameraPosition.Builder()
                 .target(location)
                 .zoom(15)
                 .build();
         CameraUpdate focus = CameraUpdateFactory.newCameraPosition(position);
         map.animateCamera(focus);
-    }
-
-    private Bitmap getMarkerBitmap() {
-        int height = 108;
-        int width = 108;
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_car_marker);
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        return Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
 
     private void fetchLocationAddress(LatLng location) {

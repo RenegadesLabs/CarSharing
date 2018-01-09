@@ -48,9 +48,7 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_large"
             android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@color/booking_state_new"
             android:gravity="center"
-            android:text="Request"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_regular"
             app:layout_constraintBottom_toBottomOf="@id/divider"
@@ -65,11 +63,10 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_regular"
             android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@color/black"
             android:gravity="center"
-            android:text="Card"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_regular"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/divider"
             app:layout_constraintDimensionRatio="4.5:1"
             app:layout_constraintStart_toEndOf="@id/booking_status"
@@ -82,7 +79,6 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_large"
             android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@color/red_error"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +103,6 @@
             android:layout_marginTop="@dimen/widget_margin_small"
             android:ellipsize="end"
             android:maxWidth="144dp"
-            android:text="Mazda 3"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             android:textStyle="bold"
@@ -120,7 +115,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/widget_margin_regular"
             android:layout_marginStart="@dimen/widget_margin_small"
-            android:text="2016"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             app:layout_constraintBaseline_toBaselineOf="@id/booking_car_title"
@@ -132,7 +126,6 @@
             android:id="@+id/booking_car_plate_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SLE8938Y"
             android:textAllCaps="true"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
@@ -144,7 +137,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/widget_margin_xx_small"
-            android:text="18 Mar, 5:00pm"
             android:textColor="@color/booking_subtitle"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toStartOf="@id/booking_car_plate_number"
@@ -160,19 +152,23 @@
             android:textColor="@color/details_title"
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/booking_car_picture" />
 
         <TextView
             android:id="@+id/rental_period"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/widget_margin_large"
-            android:text="24 Mar, 9am to 27 Mar, 8am"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/rental_period_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/rental_period_title" />
 
         <TextView
             android:id="@+id/deliver_to_title"
@@ -184,19 +180,107 @@
             android:textColor="@color/details_title"
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rental_period_title" />
 
         <TextView
             android:id="@+id/deliver_to"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/widget_margin_large"
-            android:text="574 Hougang St 51"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/deliver_to_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/deliver_to_title" />
+
+        <TextView
+            android:id="@+id/handover_on_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Handover on"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deliver_to_title" />
+
+        <TextView
+            android:id="@+id/handover_on"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/handover_on_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/handover_on_title" />
+
+        <TextView
+            android:id="@+id/return_by_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Return by"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/handover_on_title" />
+
+        <TextView
+            android:id="@+id/return_by"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/return_by_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/return_by_title" />
+
+        <TextView
+            android:id="@+id/handover_at_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="Handover at"
+            android:textColor="@color/details_title"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/return_by_title" />
+
+        <TextView
+            android:id="@+id/handover_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/handover_at_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/handover_at_title" />
 
         <TextView
             android:id="@+id/total_cost_title"
@@ -208,62 +292,220 @@
             android:textColor="@color/details_title"
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/deliver_to_title" />
+            app:layout_constraintTop_toBottomOf="@id/handover_at_title" />
 
         <TextView
             android:id="@+id/total_cost"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/widget_margin_large"
-            android:text="$180.00"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:gravity="end"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/total_cost_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/total_cost_title" />
+
+        <View
+            android:id="@+id/big_divider"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:background="@color/bg_window"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/total_cost_title" />
+
+        <ImageView
+            android:id="@+id/renter_photo"
+            android:layout_width="@dimen/booking_renter_image"
+            android:layout_height="@dimen/booking_renter_image"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/big_divider" />
 
         <TextView
-            android:id="@+id/btn_decline_request"
+            android:id="@+id/renter_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:text="Requested by"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toTopOf="@+id/renter_name"
+            app:layout_constraintStart_toEndOf="@id/renter_photo"
+            app:layout_constraintTop_toTopOf="@id/renter_photo"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@id/renter_name"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/renter_photo"
+            app:layout_constraintEnd_toStartOf="@+id/renter_call"
+            app:layout_constraintStart_toEndOf="@id/renter_photo"
+            app:layout_constraintTop_toBottomOf="@id/renter_name_title" />
+
+        <ImageView
+            android:id="@id/renter_call"
+            android:layout_width="@dimen/booking_action_image"
+            android:layout_height="@dimen/booking_action_image"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:background="@drawable/bg_btn_round"
+            android:clickable="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/renter_chat"
+            app:layout_constraintTop_toTopOf="@id/renter_photo"
+            app:srcCompat="@drawable/ic_call_to_renter" />
+
+        <TextView
+            android:id="@+id/renter_call_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_xx_small"
+            android:text="Call"
+            android:textAllCaps="true"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/renter_call"
+            app:layout_constraintStart_toStartOf="@id/renter_call"
+            app:layout_constraintTop_toBottomOf="@id/renter_call" />
+
+        <ImageView
+            android:id="@id/renter_chat"
+            android:layout_width="@dimen/booking_action_image"
+            android:layout_height="@dimen/booking_action_image"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:background="@drawable/bg_btn_round"
+            android:clickable="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/renter_photo"
+            app:srcCompat="@drawable/ic_chat_to_renter" />
+
+        <TextView
+            android:id="@+id/renter_chat_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_xx_small"
+            android:text="Chat"
+            android:textAllCaps="true"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/renter_chat"
+            app:layout_constraintStart_toStartOf="@id/renter_chat"
+            app:layout_constraintTop_toBottomOf="@id/renter_chat" />
+
+        <TextView
+            android:id="@+id/renter_message"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_mid"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@drawable/bg_rounded_widget"
+            android:padding="@dimen/widget_margin_small"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/booking_accept_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/renter_photo" />
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@drawable/bg_clickable_top_line"
             android:clickable="true"
             android:gravity="center"
-            android:text="Decline Request"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_accept_request"
+            app:layout_constraintEnd_toStartOf="@+id/btn_accept"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@id/btn_accept_request"
+            android:id="@id/btn_accept"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@drawable/bg_clickable_regular"
             android:clickable="true"
             android:gravity="center"
-            android:text="Accept Request"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_regular"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_decline_request" />
+            app:layout_constraintStart_toEndOf="@id/btn_cancel" />
 
         <TextView
-            android:id="@+id/booking_message"
+            android:id="@+id/booking_cancel_message"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/clickable_bg_view"
             android:background="@color/bg_additional_info"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/widget_padding_regular"
             android:paddingStart="@dimen/widget_padding_regular"
-            android:text="Accept request to confirm booking"
             android:textColor="@color/text_additional_info"
-            app:layout_constraintBottom_toTopOf="@id/btn_decline_request"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@id/booking_accept_message"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/clickable_bg_view"
+            android:background="@color/bg_additional_info"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/widget_padding_regular"
+            android:paddingStart="@dimen/widget_padding_regular"
+            android:textColor="@color/text_additional_info"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_accept"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/booking_loading_indicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#50ffffff"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:layout_gravity="center"
+                android:theme="@style/LoadingIndicator" />
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 

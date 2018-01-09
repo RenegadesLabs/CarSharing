@@ -13,6 +13,9 @@ public class ChatRemote {
     @SerializedName("chat_id")
     private Integer mChatId;
     @Expose
+    @SerializedName("is_active")
+    private Boolean isActive;
+    @Expose
     @SerializedName("car_version")
     private CarVersion mCarVersion;
     @Expose
@@ -22,14 +25,19 @@ public class ChatRemote {
     @SerializedName("last_message")
     private ChatRemoteMessage mLastMessage;
     @Expose
+    @SerializedName("messages")
+    private ChatRemoteMessage[] mMessages;
+    @Expose
     @SerializedName("recipient")
     private Recipient mRecipient;
     @Expose
     @SerializedName("new_messages")
     private Integer mNewCount;
 
+
     public ChatRemote() {
     }
+
 
     public Integer getChatId() {
         return mChatId;
@@ -77,5 +85,21 @@ public class ChatRemote {
 
     public void setNewCount(Integer newCount) {
         mNewCount = newCount;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public ChatRemoteMessage[] getMessages() {
+        return mMessages;
+    }
+
+    public void setMessages(ChatRemoteMessage[] messages) {
+        mMessages = messages;
     }
 }
