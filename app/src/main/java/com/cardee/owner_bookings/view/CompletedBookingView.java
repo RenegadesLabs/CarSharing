@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
+import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.util.glide.CircleTransform;
@@ -59,6 +60,12 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
     public TextView rentalPeriod;
     @BindView(R.id.booking_loading_indicator)
     public View progressView;
+    @BindView(R.id.renter_photo)
+    public ImageView renterPhoto;
+    @BindView(R.id.rating_edit)
+    public TextView ratingEdit;
+    @BindView(R.id.rating_bar)
+    public CustomRatingBar ratingBar;
 
     public CompletedBookingView(Context context) {
         super(context);
@@ -91,6 +98,9 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
         }
         currentToast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
         currentToast.show();
+        ratingEdit.setOnClickListener(view -> {
+
+        });
     }
 
     @Override
@@ -121,7 +131,12 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
             timePeriod = timeBegin + " to " + timeEnd;
         }
         rentalPeriod.setText(timePeriod);
-
+        loadImageIntoView(booking.getRenterPhoto(),
+                R.drawable.placeholder_user_img, renterPhoto, null, true);
+        Integer rating = booking.getRenterRating();
+        if (rating != null) {
+            ratingBar.setScore(rating);
+        }
         String amountString = booking.getTotalAmount() == null ? "$0" : "$" + booking.getTotalAmount();
     }
 

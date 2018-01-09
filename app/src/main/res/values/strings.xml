@@ -595,4 +595,6 @@
     <string name="booking_title_cancel_handover">Cancel Handover</string>
     <string name="booking_title_complete">Car Returned</string>
 
+    <string name="booking_rating_title">You rated</string>
+    <string name="booking_rating_edit">edit</string>
 </resources>

@@ -11,6 +11,7 @@
     <dimen name="button_horizontal_padding">24dp</dimen>
 
     <dimen name="widget_margin_xx_large">36dp</dimen>
+    <dimen name="widget_margin_x_large">32dp</dimen>
     <dimen name="widget_margin_large">24dp</dimen>
     <dimen name="widget_margin_mid">18dp</dimen>
     <dimen name="widget_margin_regular">16dp</dimen>
@@ -43,7 +44,7 @@
     <dimen name="scroll_bottom_padding">56dp</dimen>
     <dimen name="map_marker_size">36dp</dimen>
 
-    <dimen name="booking_renter_image">48dp</dimen>
+    <dimen name="booking_renter_image">44dp</dimen>
     <dimen name="booking_action_image">36dp</dimen>
     <dimen name="clickable_bg_view">56dp</dimen>
 </resources>

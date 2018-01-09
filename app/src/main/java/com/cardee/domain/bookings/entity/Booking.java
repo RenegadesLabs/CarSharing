@@ -1,5 +1,7 @@
 package com.cardee.domain.bookings.entity;
 
+import android.util.Log;
+
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.PaymentType;
 import com.cardee.domain.owner.entity.Image;
@@ -464,5 +466,25 @@ public class Booking {
 
     public PaymentType getPaymentType() {
         return paymentType;
+    }
+
+    public Integer getRenterRating() {
+        if (renterRates == null || renterRates.length == 0) {
+            return null;
+        }
+        for (Rate rate : renterRates) {
+            Log.e("RATE", String.valueOf(rate.getRating()));
+            if (rate.getRateId() == 0) {
+                return rate.getRating();
+            }
+        }
+        return null;
+    }
+
+    public Integer getOwnerRating() {
+        if (ownerRates == null || ownerRates.length == 0) {
+            return null;
+        }
+        return ownerRates[0].getRating();
     }
 }
