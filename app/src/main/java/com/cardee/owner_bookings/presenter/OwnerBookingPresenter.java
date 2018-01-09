@@ -41,7 +41,9 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     @Override
     public void setView(OwnerBookingContract.View view) {
         this.view = view;
-        this.bookingView = (BookingView) view;
+        if (view instanceof BookingView) {
+            this.bookingView = (BookingView) view;
+        }
     }
 
     @Override
@@ -95,8 +97,6 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                 case CANCELED:
                     strategy = new CanceledStrategy(bookingView, this);
                     break;
-                default:
-                    throw new IllegalArgumentException("Invalid booking state: " + state);
             }
         }
     }
@@ -186,6 +186,11 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onChat() {
+
+    }
+
+    @Override
+    public void onRatioEdit() {
 
     }
 }

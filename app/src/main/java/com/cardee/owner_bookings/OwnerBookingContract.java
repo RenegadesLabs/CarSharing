@@ -30,5 +30,4 @@ public interface OwnerBookingContract {
         void onDestroy();
 
     }
-
 }

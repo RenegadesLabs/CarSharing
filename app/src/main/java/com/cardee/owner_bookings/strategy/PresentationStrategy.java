@@ -35,6 +35,8 @@ public abstract class PresentationStrategy {
         void onCall();
 
         void onChat();
+
+        void onRatioEdit();
     }
 
     public boolean isFinished() {
