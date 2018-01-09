@@ -1,6 +1,8 @@
 package com.cardee.data_source.inbox.repository;
 
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
+import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 
 import java.util.List;
@@ -11,16 +13,19 @@ import io.reactivex.Single;
 
 public interface ChatContract {
 
-    void sendChatIdentifier(Integer serverId, Integer databaseId, String attachment);
+    void sendChatIdentifier(Integer chatId, String attachment);
 
     Single<ChatInfo> getChatInfo();
 
-    Flowable<List<ChatMessage>> getMessages();
+    Flowable<List<ChatMessage>> getLocalMessages();
 
-    void addNewMessage(ChatMessage chatMessage);
+    Completable getRemoteMessages();
 
-    Completable sendMessage(String message);
+    void removeChatUnreadStatus(int chatId);
 
-    Completable markAsRead(int messageId);
+    Single<Integer> sendMessage(String message);
 
+    void addNewMessage(ChatNotification chatNotification);
+
+    Single<List<ChatMessage>> getNewChat();
 }

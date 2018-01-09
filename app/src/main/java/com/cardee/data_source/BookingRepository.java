@@ -9,7 +9,6 @@ import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTe
 import com.cardee.domain.bookings.BookingState;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BookingRepository implements BookingDataSource {

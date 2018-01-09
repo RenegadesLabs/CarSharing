@@ -5,12 +5,11 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.cardee.data_source.inbox.local.alert.entity.AlertOwner;
-import com.cardee.data_source.inbox.local.alert.entity.AlertRenter;
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 
-@Database(entities = {Chat.class, ChatMessage.class, AlertRenter.class, AlertOwner.class}, version = 1)
+@Database(entities = {Chat.class, ChatMessage.class, Alert.class}, version = 1)
 public abstract class LocalInboxDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "inbox_db";
