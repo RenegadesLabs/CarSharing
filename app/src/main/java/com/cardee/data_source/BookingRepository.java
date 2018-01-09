@@ -1,6 +1,6 @@
 package com.cardee.data_source;
 
-import android.util.LruCache;
+import android.util.SparseArray;
 
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
@@ -9,10 +9,8 @@ import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTe
 import com.cardee.domain.bookings.BookingState;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class BookingRepository implements BookingDataSource {
 
@@ -20,16 +18,12 @@ public class BookingRepository implements BookingDataSource {
 
     private final BookingDataSource localDataSource;
     private final BookingDataSource remoteDataSource;
-
-    private LruCache<Integer, BookingEntity> bookingCache;
-    //    private LruCache<Integer, BookingRentalTerms> rentalCache;
-    private boolean dirtyCache = false;
+    private final Cache cache;
 
     private BookingRepository() {
         localDataSource = LocalBookingDataSource.getInstance();
         remoteDataSource = RemoteBookingDataSource.getInstance();
-        bookingCache = new LruCache<>(25);
-//        rentalCache = new LruCache<>(10);
+        cache = new Cache();
     }
 
     public static BookingRepository getInstance() {
@@ -40,28 +34,19 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
-        if (!dirtyCache) {
-            Map<Integer, BookingEntity> snapshot = bookingCache.snapshot();
-            if (!snapshot.isEmpty()) {
-                Collection<BookingEntity> values = snapshot.values();
-                List<BookingEntity> cachedBookings = new ArrayList<>();
-                cachedBookings.addAll(values);
-                bookingsCallback.onSuccess(cachedBookings);
-            }
+    public void obtainOwnerBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
+        if (!forceUpdate && !cache.isDirty()) {
+            bookingsCallback.onSuccess(cache.obtainAll(), false);
+            return;
         }
-        remoteDataSource.obtainOwnerBookings(filter, sort, new BookingsCallback() {
+        if (!cache.isDirty()) {
+            bookingsCallback.onSuccess(cache.obtainAll(), false);
+        }
+        remoteDataSource.obtainOwnerBookings(filter, sort, forceUpdate, new BookingsCallback() {
             @Override
-            public void onSuccess(List<BookingEntity> bookingEntities) {
-                int counter = 0;
-                for (BookingEntity booking : bookingEntities) {
-                    if (++counter >= 25) {
-                        break;
-                    }
-                    bookingCache.put(booking.getBookingId(), booking);
-                }
-                dirtyCache = false;
-                bookingsCallback.onSuccess(bookingEntities);
+            public void onSuccess(List<BookingEntity> bookingEntities, boolean updated) {
+                cache.updateCache(bookingEntities);
+                bookingsCallback.onSuccess(bookingEntities, updated);
             }
 
             @Override
@@ -78,8 +63,8 @@ public class BookingRepository implements BookingDataSource {
 
     @Override
     public void obtainBookingById(int id, BookingCallback callback) {
-        if (!dirtyCache) {
-            BookingEntity cachedBooking = bookingCache.get(id);
+        if (!cache.isDirty()) {
+            BookingEntity cachedBooking = cache.obtain(id);
             if (cachedBooking != null) {
                 callback.onSuccess(cachedBooking);
             }
@@ -133,7 +118,8 @@ public class BookingRepository implements BookingDataSource {
         remoteDataSource.changeBookingState(bookingId, state, new SimpleCallback() {
             @Override
             public void onSuccess() {
-                BookingEntity cachedBooking = bookingCache.get(bookingId);
+                cache.invalidate();
+                BookingEntity cachedBooking = cache.obtain(bookingId);
                 if (cachedBooking != null) {
                     BookingState bookingState = BookingState.fromRequest(state);
                     if (bookingState != null) {
@@ -151,11 +137,6 @@ public class BookingRepository implements BookingDataSource {
         });
     }
 
-    void clearCache() {
-        bookingCache.evictAll();
-        dirtyCache = true;
-    }
-
     @Override
     public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner, byte overall, String review, SimpleCallback callback) {
         remoteDataSource.sendReviewAsRenter(bookingId, condition, comfort, owner, overall, review, new SimpleCallback() {
@@ -171,4 +152,49 @@ public class BookingRepository implements BookingDataSource {
         });
     }
 
+    private class Cache {
+        private static final int CACHE_SIZE = 25;
+
+        private final SparseArray<BookingEntity> cachedEntries;
+        private final List<BookingEntity> cachedBookings;
+
+        boolean dirty = true;
+
+        Cache() {
+            cachedEntries = new SparseArray<>();
+            cachedBookings = new ArrayList<>();
+        }
+
+        void updateCache(List<BookingEntity> bookings) {
+            clear();
+            int limit = Math.min(CACHE_SIZE, bookings.size());
+            for (int i = 0; i < limit; i++) {
+                BookingEntity bookingEntity = bookings.get(i);
+                cachedBookings.add(bookingEntity);
+                cachedEntries.put(bookingEntity.getBookingId(), bookingEntity);
+            }
+            dirty = false;
+        }
+
+        BookingEntity obtain(Integer id) {
+            return cachedEntries.get(id);
+        }
+
+        List<BookingEntity> obtainAll() {
+            return cachedBookings;
+        }
+
+        void invalidate() {
+            dirty = true;
+        }
+
+        void clear() {
+            cachedEntries.clear();
+            cachedBookings.clear();
+        }
+
+        public boolean isDirty() {
+            return dirty;
+        }
+    }
 }

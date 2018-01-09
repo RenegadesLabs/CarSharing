@@ -54,12 +54,13 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid strategy: null"));
             return;
         }
+        boolean forceUpdate = values.isForceUpdate();
         BookingDataSource.BookingsCallback repositoryCallback = new BookingDataSource.BookingsCallback() {
             @Override
-            public void onSuccess(List<BookingEntity> bookingEntities) {
+            public void onSuccess(List<BookingEntity> bookingEntities, boolean updated) {
                 List<Booking> bookings = ListUtil.map(bookingEntities, entity ->
                         mapper.transform(entity, null));
-                callback.onSuccess(new ResponseValues(bookings));
+                callback.onSuccess(new ResponseValues(bookings, updated));
             }
 
             @Override
@@ -71,7 +72,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
         String sort = values.getSort() == null ? null : values.getSort().value;
         switch (strategy) {
             case OWNER:
-                repository.obtainOwnerBookings(filter, sort, repositoryCallback);
+                repository.obtainOwnerBookings(filter, sort, forceUpdate, repositoryCallback);
                 break;
             case RENTER:
                 repository.obtainRenterBookings(filter, sort, repositoryCallback);
@@ -83,11 +84,13 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
         private final Strategy strategy;
         private final BookingState filter;
         private final Sort sort;
+        private final boolean forceUpdate;
 
-        public RequestValues(Strategy strategy, BookingState filter, Sort sort) {
+        public RequestValues(Strategy strategy, BookingState filter, Sort sort, boolean forceUpdate) {
             this.strategy = strategy;
             this.filter = filter;
             this.sort = sort;
+            this.forceUpdate = forceUpdate;
         }
 
         public Strategy getStrategy() {
@@ -101,18 +104,28 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
         public Sort getSort() {
             return sort;
         }
+
+        public boolean isForceUpdate() {
+            return forceUpdate;
+        }
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {
 
         private final List<Booking> bookings;
+        private final boolean updated;
 
-        public ResponseValues(List<Booking> bookings) {
+        public ResponseValues(List<Booking> bookings, boolean updated) {
             this.bookings = bookings;
+            this.updated = updated;
         }
 
         public List<Booking> getBookings() {
             return bookings;
+        }
+
+        public boolean isUpdated() {
+            return updated;
         }
     }
 }

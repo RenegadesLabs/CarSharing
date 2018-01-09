@@ -37,11 +37,11 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainOwnerBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+    public void obtainOwnerBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
         try {
             Response<BookingResponse> response = api.getOwnerBookings(filter, sort).execute();
             if (response.isSuccessful() && response.body() != null) {
-                bookingsCallback.onSuccess(response.body().getBookings());
+                bookingsCallback.onSuccess(response.body().getBookings(), true);
                 return;
             }
             handleErrorResponse(response.body(), bookingsCallback);

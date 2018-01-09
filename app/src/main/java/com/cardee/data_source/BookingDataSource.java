@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookingDataSource {
 
-    void obtainOwnerBookings(String filter, String sort, BookingsCallback callback);
+    void obtainOwnerBookings(String filter, String sort, boolean forceUpdate, BookingsCallback callback);
 
     void obtainRenterBookings(String filter, String sort, BookingsCallback callback);
 
@@ -25,7 +25,7 @@ public interface BookingDataSource {
 
     interface BookingsCallback extends BaseCallback {
 
-        void onSuccess(List<BookingEntity> bookingEntities);
+        void onSuccess(List<BookingEntity> bookingEntities, boolean updated);
     }
 
     interface BookingCallback extends BaseCallback {
