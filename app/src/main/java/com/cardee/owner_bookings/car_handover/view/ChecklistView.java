@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_handover.HandoverContract;
+import com.cardee.owner_bookings.car_handover.OwnerChecklistPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +59,8 @@ public class ChecklistView extends ConstraintLayout implements HandoverContract.
 
     private Unbinder mUnbinder;
 
+    private HandoverContract.Presenter mPresenter;
+
     public ChecklistView(Context context) {
         super(context);
     }
@@ -82,11 +85,12 @@ public class ChecklistView extends ConstraintLayout implements HandoverContract.
 
     @Override
     public void setPresenter(HandoverContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 
     @Override
     public void onDestroy() {
+        mPresenter = null;
         mUnbinder.unbind();
     }
 

@@ -9,13 +9,13 @@ import com.cardee.R;
 import com.cardee.owner_bookings.car_handover.adapter.CarImagesAdapter;
 import com.cardee.owner_bookings.car_handover.view.ChecklistView;
 
-public class HandoverChecklistStrategy extends PresentationStrategy implements View.OnClickListener {
+public class HandoverChecklistByMileageStrategy extends PresentationStrategy implements View.OnClickListener {
 
     private ChecklistView mChecklistView;
     private ActionListener mActionListener;
 
 
-    public HandoverChecklistStrategy(View view, ActionListener listener) {
+    public HandoverChecklistByMileageStrategy(View view, ActionListener listener) {
         super(view, listener);
 
         mChecklistView = (ChecklistView) view;
@@ -23,7 +23,7 @@ public class HandoverChecklistStrategy extends PresentationStrategy implements V
 
         mChecklistView.toolbarTitle.setText(R.string.owner_handover_checklist_title);
         mChecklistView.title1.setText(R.string.owner_handover_checklist_master_title);
-//        mChecklistView.petrolMileageView.setButtonsVisibility(View.INVISIBLE);
+        mChecklistView.petrolMileageView.setButtonsVisibility(View.INVISIBLE);
         mChecklistView.imagesGrid.setLayoutManager(new GridLayoutManager(mChecklistView.getContext(), 2,
                 GridLayoutManager.VERTICAL, false));
         mChecklistView.imagesGrid.setItemAnimator(new DefaultItemAnimator());

@@ -10,14 +10,14 @@ import com.cardee.owner_bookings.car_handover.adapter.CarImagesAdapter;
 import com.cardee.owner_bookings.car_handover.view.ChecklistView;
 
 
-public class MadeChangesChecklistStrategy extends PresentationStrategy implements View.OnClickListener {
+public class RenterUpdatedChecklistStrategy extends PresentationStrategy implements View.OnClickListener {
 
     private ChecklistView mChecklistView;
 
     private ActionListener mActionListener;
 
 
-    protected MadeChangesChecklistStrategy(View view, ActionListener listener) {
+    public RenterUpdatedChecklistStrategy(View view, ActionListener listener) {
         super(view, listener);
 
         mChecklistView = (ChecklistView) view;
