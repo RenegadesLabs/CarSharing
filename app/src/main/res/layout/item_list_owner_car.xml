@@ -84,6 +84,7 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/daily_pseudo_view"/>
+
         <View
             android:id="@id/daily_pseudo_view"
             android:layout_width="0dp"
@@ -156,6 +157,7 @@
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:clickable="true"
             android:text="6 available days"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/car_daily_title"
             app:layout_constraintTop_toBottomOf="@id/car_daily_title" />
@@ -165,7 +167,10 @@
             style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
-            android:layout_margin="@dimen/widget_margin_mid"
+            android:layout_marginTop="@dimen/widget_margin_x_small"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginBottom="@dimen/widget_margin_mid"
             android:clickable="true"
             android:text="454 Hougang Ave 10"
             app:layout_constraintBottom_toBottomOf="parent"
