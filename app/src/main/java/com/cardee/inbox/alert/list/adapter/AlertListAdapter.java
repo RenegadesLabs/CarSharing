@@ -1,8 +1,6 @@
 package com.cardee.inbox.alert.list.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.cardee.R;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 
@@ -92,22 +88,39 @@ public class AlertListAdapter extends RecyclerView.Adapter<AlertListAdapter.Aler
             mAlertMessage.setText(alert.getNotificationText());
         }
 
-        private int getValidAlertImage(int alertType) {
+        private int getValidAlertImage(Alert.Type alertType) {
             int drawableResource = R.drawable.ic_alert_system;
             switch (alertType) {
-                case Alert.TYPE_BOOKING:
+                case NEW_REQUEST:
+                case ACCEPTED:
+                case BOOKING_EXT:
+                case OWNER_CHECKLIST_UPD:
+                case RENTER_CHECKLIST_UPD:
+                case INIT_CHECKLIST:
                     drawableResource = R.drawable.ic_alert_booking;
                     break;
-                case Alert.TYPE_OVERDUE:
+                case RETURN_OVERDUE:
+                case REQUEST_EXPIRED:
+                case BOOKING_CANCELLATION:
                     drawableResource = R.drawable.ic_alert_overdue;
                     break;
-                case Alert.TYPE_REMINDER:
+                case HANDOVER_REMINDER:
+                case RETURN_REMINDER:
+                case RENTER_REVIEW_REMINDER:
+                case OWNER_REVIEW_REMINDER:
                     drawableResource = R.drawable.ic_alert_reminder;
                     break;
-                case Alert.TYPE_REVIEWS:
+                case OWNER_REVIEW:
+                case RENTER_REVIEW:
                     drawableResource = R.drawable.ic_alert_review;
                     break;
-                case Alert.TYPE_SYSTEM:
+                case SYSTEM_MESSAGES:
+                case CAR_VERIFICATION:
+                case USER_VERIFICATION:
+                case RENTER_STATE_CHANGE:
+                case OWNER_STATE_CHANGE:
+                case CAR_STATE_CHANGE:
+                case BROADCAST:
                     drawableResource = R.drawable.ic_alert_system;
                     break;
             }

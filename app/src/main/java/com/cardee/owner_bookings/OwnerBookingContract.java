@@ -18,7 +18,6 @@ public interface OwnerBookingContract {
         void bind(Booking booking);
 
         void onDestroy();
-
     }
 
     interface Presenter extends BasePresenter, PresentationStrategy.ActionListener {

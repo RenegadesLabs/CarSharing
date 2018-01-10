@@ -205,12 +205,12 @@
             android:layout_height="20dp"
             android:layout_marginStart="@dimen/widget_margin_mid"
             app:halfStars="true"
-            app:layout_constraintDimensionRatio="5:1"
             app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintDimensionRatio="5:1"
             app:layout_constraintStart_toEndOf="@id/rating_title"
             app:layout_constraintTop_toTopOf="@id/rating_block"
             app:maxStars="5"
-            app:onlyForDisplay="false"
+            app:onlyForDisplay="true"
             app:stars="0" />
 
         <TextView

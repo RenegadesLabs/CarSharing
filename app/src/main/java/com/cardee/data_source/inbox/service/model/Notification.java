@@ -1,5 +1,7 @@
 package com.cardee.data_source.inbox.service.model;
 
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
+
 public interface Notification {
 
     enum NotificationType {
@@ -18,7 +20,7 @@ public interface Notification {
 
     String getContentText();
 
-    int getType();
+    Alert.Type getType();
 
     boolean isCurrentSessionNeedToNotify();
 

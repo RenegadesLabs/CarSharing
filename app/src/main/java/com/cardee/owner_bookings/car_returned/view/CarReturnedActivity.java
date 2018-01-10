@@ -3,7 +3,6 @@ package com.cardee.owner_bookings.car_returned.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -18,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
 import com.cardee.owner_bookings.car_returned.presenter.CarReturnedPresenter;
+import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
@@ -142,10 +142,11 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
     @OnClick(R.id.b_submit)
     public void onSubmitClicked() {
         String comment = mEditText.getText().toString();
-        if (comment != null && !comment.isEmpty()) {
-            byte rate = (byte) mRatingBar.getScore();
-            mPresenter.omSubmitClicked(comment, rate, mBookingId);
+        if (comment == null || comment.isEmpty()) {
+            comment = "";
         }
+        byte rate = (byte) mRatingBar.getScore();
+        mPresenter.omSubmitClicked(comment, rate, mBookingId);
     }
 
     @Override
@@ -155,8 +156,10 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
 
     @Override
     public void onSendCommentSuccess() {
-        showMessage(R.string.send_comment_success);
+        showMessage(R.string.rental_exp_review_sent);
         finish();
+        Intent homeIntent = new Intent(this, OwnerHomeActivity.class);
+        startActivity(homeIntent);
     }
 
     @Override

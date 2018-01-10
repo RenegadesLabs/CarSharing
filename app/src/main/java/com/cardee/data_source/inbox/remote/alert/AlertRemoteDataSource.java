@@ -59,47 +59,80 @@ public class AlertRemoteDataSource implements RemoteData.AlertListSource {
             return remoteStatus.equals(NotificationType.NEW);
         }
 
-        private int convertNotificationType(String remoteType) {
-            int notificationType;
+        private String convertNotificationType(String remoteType) {
+            String notificationType;
 
             switch (remoteType) {
                 case NotificationType.NEW_REQUEST:
+                    notificationType = Alert.Type.NEW_REQUEST.toString();
+                    break;
                 case NotificationType.ACCEPTED:
+                    notificationType = Alert.Type.ACCEPTED.toString();
+                    break;
                 case NotificationType.BOOKING_EXT:
+                    notificationType = Alert.Type.BOOKING_EXT.toString();
+                    break;
                 case NotificationType.OWNER_CHECKLIST_UPD:
+                    notificationType = Alert.Type.OWNER_CHECKLIST_UPD.toString();
+                    break;
                 case NotificationType.RENTER_CHECKLIST_UPD:
+                    notificationType = Alert.Type.RENTER_CHECKLIST_UPD.toString();
+                    break;
                 case NotificationType.INIT_CHECKLIST:
-                    notificationType = Alert.TYPE_BOOKING;
+                    notificationType = Alert.Type.INIT_CHECKLIST.toString();
                     break;
                 case NotificationType.HANDOVER_REMINDER:
+                    notificationType = Alert.Type.HANDOVER_REMINDER.toString();
+                    break;
                 case NotificationType.RETURN_REMINDER:
+                    notificationType = Alert.Type.RETURN_REMINDER.toString();
+                    break;
                 case NotificationType.RENTER_REVIEW_REMINDER:
+                    notificationType = Alert.Type.RENTER_REVIEW_REMINDER.toString();
+                    break;
                 case NotificationType.OWNER_REVIEW_REMINDER:
-                    notificationType = Alert.TYPE_REMINDER;
+                    notificationType = Alert.Type.OWNER_REVIEW_REMINDER.toString();
                     break;
                 case NotificationType.RETURN_OVERDUE:
+                    notificationType = Alert.Type.RETURN_OVERDUE.toString();
+                    break;
                 case NotificationType.REQUEST_EXPIRED:
+                    notificationType = Alert.Type.REQUEST_EXPIRED.toString();
+                    break;
                 case NotificationType.BOOKING_CANCELLATION:
-                    notificationType = Alert.TYPE_OVERDUE;
+                    notificationType = Alert.Type.BOOKING_CANCELLATION.toString();
                     break;
                 case NotificationType.OWNER_REVIEW:
+                    notificationType = Alert.Type.OWNER_REVIEW.toString();
+                    break;
                 case NotificationType.RENTER_REVIEW:
-                    notificationType = Alert.TYPE_REVIEWS;
+                    notificationType = Alert.Type.RENTER_REVIEW.toString();
                     break;
                 case NotificationType.SYSTEM_MESSAGES:
+                    notificationType = Alert.Type.SYSTEM_MESSAGES.toString();
+                    break;
                 case NotificationType.CAR_VERIFICATION:
+                    notificationType = Alert.Type.CAR_VERIFICATION.toString();
+                    break;
                 case NotificationType.USER_VERIFICATION:
+                    notificationType = Alert.Type.USER_VERIFICATION.toString();
+                    break;
                 case NotificationType.RENTER_STATE_CHANGE:
+                    notificationType = Alert.Type.RENTER_STATE_CHANGE.toString();
+                    break;
                 case NotificationType.OWNER_STATE_CHANGE:
+                    notificationType = Alert.Type.OWNER_STATE_CHANGE.toString();
+                    break;
                 case NotificationType.CAR_STATE_CHANGE:
+                    notificationType = Alert.Type.CAR_STATE_CHANGE.toString();
+                    break;
                 case NotificationType.BROADCAST:
-                    notificationType = Alert.TYPE_SYSTEM;
+                    notificationType = Alert.Type.BROADCAST.toString();
                     break;
                 default:
-                    notificationType = Alert.TYPE_SYSTEM;
+                    notificationType = Alert.Type.SYSTEM_MESSAGES.toString();
             }
             return notificationType;
         }
     }
-
 }
