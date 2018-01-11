@@ -96,6 +96,7 @@ public class CarLocationFragment extends Fragment
     private Address currentAddress;
     private String currentAddressString;
     private String myCurrentAddressString;
+    private boolean markerMoving;
 
     private SimpleBinder binder = new SimpleBinder() {
         @Override
@@ -213,14 +214,17 @@ public class CarLocationFragment extends Fragment
         presenter.init();
         googleMap.setOnCameraIdleListener(() -> {
             if (center != null) {
-                if (markerMoved()) {
+                if (markerMoving) {
                     markerMoveDown();
                 }
-                LatLng latLng = googleMap.getProjection().fromScreenLocation(center);
-                requestAddressByLocation(latLng, ADDRESS_BY_LOCATION_CODE);
+                if (currentAddress != null) {
+                    LatLng latLng = googleMap.getProjection().fromScreenLocation(center);
+                    requestAddressByLocation(latLng, ADDRESS_BY_LOCATION_CODE);
+                }
             }
         });
         googleMap.setOnCameraMoveStartedListener(i -> {
+            btnMyLocation.setImageResource(anyOtherLocationIcon);
             if (markerAnimator != null) {
                 markerMoveUp();
             }
@@ -251,12 +255,8 @@ public class CarLocationFragment extends Fragment
         requestAddressByLocation(location, addressRequestCode);
     }
 
-    private boolean markerMoved() {
-        float y = locationMarker.getY();
-        return Math.abs(y - markerStartY) > 0;
-    }
-
     private void markerMoveUp() {
+        markerMoving = true;
         if (markerAnimator.isRunning()) {
             markerAnimator.cancel();
             float y = locationMarker.getY();
@@ -270,6 +270,7 @@ public class CarLocationFragment extends Fragment
     }
 
     private void markerMoveDown() {
+        markerMoving = false;
         if (markerAnimator.isRunning()) {
             markerAnimator.cancel();
             float y = locationMarker.getY();
@@ -317,9 +318,10 @@ public class CarLocationFragment extends Fragment
             Log.e(TAG, "GoogleMap is not instantiated");
             return;
         }
+        float currentZoom = map.getCameraPosition().zoom;
         CameraPosition position = new CameraPosition.Builder()
                 .target(location)
-                .zoom(15)
+                .zoom(currentZoom < 15 ? 15 : currentZoom)
                 .build();
         CameraUpdate focus = CameraUpdateFactory.newCameraPosition(position);
         map.animateCamera(focus);
