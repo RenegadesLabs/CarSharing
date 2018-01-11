@@ -110,10 +110,10 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             mYearView.setText(model.getManufactureYear());
             mLicenceNumberView.setText(model.getLicenceNumber());
 
-            if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-            }
             if (imageRequestManager != null) {
+                if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
+                }
                 imageRequestManager
                         .load(model.getPrimaryImageThumbnail())
                         .listener(new RequestListener<String, GlideDrawable>() {
