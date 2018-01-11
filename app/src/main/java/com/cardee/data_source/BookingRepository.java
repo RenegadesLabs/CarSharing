@@ -164,7 +164,7 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void uploadImage(int bookingId, Uri uri, ImageCallback callback) {
+    public void uploadImage(Integer bookingId, Uri uri, ImageCallback callback) {
 
     }
 

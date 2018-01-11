@@ -7,8 +7,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_handoverPetrolLvlMinus"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_margin="@dimen/medium_margin"
         app:srcCompat="@drawable/ic_btn_minus"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,8 +17,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_handoverPetrolLvlPlus"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_margin="@dimen/medium_margin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

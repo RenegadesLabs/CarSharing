@@ -54,7 +54,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @BindView(R.id.l_handoverContainer)
     public LinearLayout handoverContainer;
     @BindView(R.id.b_handoverCar)
-    public AppCompatButton handoverB;
+    public TextView handoverB; //changed from AppCompatButton
 
     private Unbinder mUnbinder;
 
