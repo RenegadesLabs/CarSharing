@@ -1,6 +1,7 @@
 package com.cardee.data_source.remote;
 
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.cardee.CardeeApp;
@@ -8,14 +9,25 @@ import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
+import com.cardee.data_source.remote.api.booking.Upload;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
+import com.cardee.data_source.remote.api.booking.response.ChecklistResponse;
+import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
+import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
+import com.cardee.data_source.remote.api.cars.response.entity.UploadImageResponseBody;
 import com.cardee.domain.bookings.BookingState;
+import com.cardee.util.ImageProcessor;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 public class RemoteBookingDataSource implements BookingDataSource {
@@ -24,9 +36,13 @@ public class RemoteBookingDataSource implements BookingDataSource {
     private static RemoteBookingDataSource INSTANCE;
 
     private final Bookings api;
+    private final Upload uploadApi;
+    private final ImageProcessor imageProcessor;
 
     private RemoteBookingDataSource() {
         api = CardeeApp.retrofit.create(Bookings.class);
+        uploadApi = CardeeApp.retrofit.create(Upload.class);
+        imageProcessor = new ImageProcessor();
     }
 
     public static RemoteBookingDataSource getInstance() {
@@ -122,6 +138,86 @@ public class RemoteBookingDataSource implements BookingDataSource {
             Log.e(TAG, throwable.getMessage());
             callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
+    }
+
+    @Override
+    public void getChecklist(int bookingId, ChecklistCallback callback) {
+        api.getChecklist(bookingId).subscribe(checklistResponse -> {
+            if (checklistResponse.isSuccessful()) {
+                callback.onSuccess(checklistResponse.getChecklist());
+                return;
+            }
+            handleErrorResponse(checklistResponse, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    @Override
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imageIds, SimpleCallback callback) {
+        ChecklistEntity checklist = new ChecklistEntity();
+        checklist.setRemarks(remarks);
+        checklist.setTank(tank);
+        checklist.setMileage(masterMileage);
+        checklist.setImageIds(imageIds);
+
+        api.saveChecklist(bookingId, checklist).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(noDataResponse, callback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+
+    @Override
+    public void uploadImage(Integer bookingId, Uri uri, ImageCallback callback) {
+        if (uri == null || bookingId == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: " + bookingId + " or URI: " + uri));
+            return;
+        }
+        String[] split = uri.getPath().split("/");
+        File imageFile = new File(CardeeApp.context.getCacheDir(), split[split.length - 1]);
+        try {
+            InputStream in = CardeeApp.context.getContentResolver().openInputStream(uri);
+            boolean resized = imageProcessor.resize(in, imageFile);
+            if (!resized) {
+                throw new Exception("Failed to resize image");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.INTERNAL, e.getMessage()));
+            return;
+        }
+        if (imageFile.exists()) {
+            MultipartBody.Part part = MultipartBody.Part.createFormData("car_image",
+                    imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
+            try {
+                Response<UploadImageResponse> response = uploadApi.uploadImage(bookingId, part).execute();
+                imageFile.deleteOnExit();
+                if (response.isSuccessful() && response.body() != null) {
+                    UploadImageResponseBody imageResponse = response.body().getBody();
+                    if (imageResponse != null && imageResponse.getClass() != null) {
+                        callback.onSuccess(imageResponse.getImageId());
+                        return;
+                    }
+                }
+                if (response.code() == 400) {
+                    callback.onError(new Error(Error.Type.INVALID_REQUEST, "File already exist. Please choose another photo."));
+                    return;
+                }
+                handleErrorResponse(response.body(), callback);
+            } catch (IOException e) {
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+            }
+        } else {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid File path: " + imageFile.getAbsolutePath()));
+        }
     }
 
     @Override

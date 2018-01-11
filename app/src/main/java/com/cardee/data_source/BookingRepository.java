@@ -1,11 +1,13 @@
 package com.cardee.data_source;
 
+import android.net.Uri;
 import android.util.SparseArray;
 
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
+import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
 import com.cardee.domain.bookings.BookingState;
 
 import java.util.ArrayList;
@@ -149,6 +151,21 @@ public class BookingRepository implements BookingDataSource {
                 callback.onError(error);
             }
         });
+    }
+
+    @Override
+    public void getChecklist(int bookingId, ChecklistCallback callback) {
+
+    }
+
+    @Override
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imagesIds, SimpleCallback callback) {
+
+    }
+
+    @Override
+    public void uploadImage(int bookingId, Uri uri, ImageCallback callback) {
+
     }
 
     private class Cache {

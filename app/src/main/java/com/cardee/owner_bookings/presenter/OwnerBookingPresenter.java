@@ -10,6 +10,7 @@ import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetBooking;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_checklist.view.OwnerChecklistActivity;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.owner_bookings.strategy.CanceledStrategy;
 import com.cardee.owner_bookings.strategy.CompletedStrategy;
@@ -127,7 +128,9 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onHandOver() {
-
+        Intent i = new Intent(bookingView.getContext(), OwnerChecklistActivity.class);
+        i.putExtra(OwnerChecklistActivity.KEY_BOOKING_ID, bookingId);
+        bookingView.getContext().startActivity(i);
     }
 
     @Override

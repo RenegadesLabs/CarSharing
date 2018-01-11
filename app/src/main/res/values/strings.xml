@@ -308,7 +308,7 @@
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
-    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by masterMileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
     <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
     <string name="car_rental_fuel_modal_title">Petrol cost</string>
@@ -433,7 +433,7 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
-    <!--Owner Handover Checklist-->
+    <!--Owner Handover ChecklistEntity-->
     <string name="owner_handover_checklist_title">Handover Checklist</string>
     <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
     <string name="owner_handover_checklist_master_title">Master Mileage</string>

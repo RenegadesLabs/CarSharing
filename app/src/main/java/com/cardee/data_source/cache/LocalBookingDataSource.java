@@ -1,7 +1,10 @@
 package com.cardee.data_source.cache;
 
 
+import android.net.Uri;
+
 import com.cardee.data_source.BookingDataSource;
+import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
 
 public class LocalBookingDataSource implements BookingDataSource {
 
@@ -51,6 +54,22 @@ public class LocalBookingDataSource implements BookingDataSource {
     @Override
     public void sendReviewAsRenter(int bookingId, byte condition, byte comfort, byte owner,
                                    byte overall, String review, SimpleCallback callback) {
+
+    }
+
+    @Override
+    public void getChecklist(int bookingId, ChecklistCallback callback) {
+
+    }
+
+    @Override
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imagesIds, SimpleCallback callback) {
+
+    }
+
+
+    @Override
+    public void uploadImage(Integer bookingId, Uri uri, ImageCallback callback) {
 
     }
 }
