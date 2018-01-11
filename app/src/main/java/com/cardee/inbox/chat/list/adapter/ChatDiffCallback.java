@@ -11,7 +11,7 @@ public class ChatDiffCallback extends DiffUtil.Callback {
     private List<Chat> oldChatList;
     private List<Chat> newChatList;
 
-    public ChatDiffCallback(List<Chat> oldChatList, List<Chat> newChatList) {
+    ChatDiffCallback(List<Chat> oldChatList, List<Chat> newChatList) {
         this.oldChatList = oldChatList;
         this.newChatList = newChatList;
     }
@@ -28,7 +28,7 @@ public class ChatDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldChatList.get(oldItemPosition).getChatServerId() == newChatList.get(newItemPosition).getChatServerId();
+        return oldChatList.get(oldItemPosition).getChatId().intValue() == newChatList.get(newItemPosition).getChatId().intValue();
     }
 
     @Override

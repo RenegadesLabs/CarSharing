@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.view.BookingView;
 
 public class HandedOverStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -14,7 +15,7 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
 
     private final BookingView bookingView;
 
-    protected HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
         super(view, listener);
         bookingView = (BookingView) view;
 
@@ -51,7 +52,7 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
         bookingView.renterPhoto.setOnClickListener(this);
         bookingView.renterCall.setOnClickListener(this);
         bookingView.renterChat.setOnClickListener(this);
-        bookingView.btnCancel.setOnClickListener(this);
+        bookingView.btnAccept.setOnClickListener(this);
     }
 
     @Override
@@ -74,5 +75,10 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
                 listener.onChat();
                 break;
         }
+    }
+
+    @Override
+    public BookingState getType() {
+        return BookingState.COLLECTED;
     }
 }

@@ -1,6 +1,8 @@
 package com.cardee.inbox.chat.list.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +20,6 @@ import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
@@ -28,15 +29,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
     private List<Chat> mInboxChats;
     private final RequestManager mRequestManager;
     private final PublishSubject<Chat> mOnClickSubject;
-    private final PublishSubject<Boolean> mUnreadSubject;
     private final UtcDateFormatter mDateFormatter;
+
+    private final Drawable userPhotoPlaceHolder;
 
     public ChatListAdapter(Context context) {
         mInboxChats = new ArrayList<>();
         mDateFormatter = new ChatDateFormatter(context);
         mRequestManager = Glide.with(context);
         mOnClickSubject = PublishSubject.create();
-        mUnreadSubject = PublishSubject.create();
+        userPhotoPlaceHolder = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_photo_placeholder, null);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         mRequestManager
                 .load(chat.getPhotoUrl())
                 .centerCrop()
-                .placeholder(R.drawable.ic_photo_placeholder)
+                .placeholder(userPhotoPlaceHolder)
                 .transform(new CircleTransform(CardeeApp.context))
                 .into(holder.mAvatar);
         mRequestManager
@@ -78,7 +80,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
             holder.mUnreadCount.setVisibility(View.VISIBLE);
             holder.mUnreadView.setVisibility(View.VISIBLE);
         }
-        mUnreadSubject.onNext(unreadMessages > 0);
     }
 
     public void addItems(List<Chat> list) {
@@ -87,21 +88,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatVi
         notifyDataSetChanged();
     }
 
-    private void updateList(List<Chat> newChatList) {
+    public void updateList(List<Chat> newChatList) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ChatDiffCallback(mInboxChats, newChatList));
+        mInboxChats = newChatList;
         diffResult.dispatchUpdatesTo(this);
     }
 
     public void subscribeToChatClick(Consumer<Chat> clickConsumer) {
-        mOnClickSubject
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribe(clickConsumer);
-    }
-
-    public void subscribeToUnreadMessage(Consumer<Boolean> isUnread) {
-        mUnreadSubject
-                .distinctUntilChanged()
-                .subscribe(isUnread);
+        mOnClickSubject.subscribe(clickConsumer);
     }
 
     @Override

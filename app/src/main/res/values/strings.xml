@@ -88,8 +88,8 @@
     <string name="car_availability_calendar">Calendar</string>
     <string name="car_availability_days_of_week">Days Of Week</string>
 
-    <string name="car_details_tab_rental">Rental</string>
-    <string name="car_details_tab_car">Car</string>
+    <string name="car_details_tab_rental">Rental Info</string>
+    <string name="car_details_tab_car">Car Info</string>
     <string name="car_details_tab_reviews">Reviews</string>
 
     <string name="car_details_more_listing">View listing</string>
@@ -116,6 +116,7 @@
     <!--Add Car-->
     <string name="car_add_title">Add Car</string>
     <string name="car_add_submit">Submit</string>
+    <string name="car_add_submit_caps">SUBMIT</string>
     <string name="car_add_vehicle">1. Vehicle Type</string>
     <string name="car_add_info">2. Car Info</string>
     <string name="car_add_image">3. Car Image</string>
@@ -307,7 +308,7 @@
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
-    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by masterMileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
     <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
     <string name="car_rental_fuel_modal_title">Petrol cost</string>
@@ -432,7 +433,7 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
-    <!--Owner Handover Checklist-->
+    <!--Owner Handover ChecklistEntity-->
     <string name="owner_handover_checklist_title">Handover Checklist</string>
     <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
     <string name="owner_handover_checklist_master_title">Master Mileage</string>
@@ -462,6 +463,20 @@
     <string name="car_returned_comment_hint">Add a comment on %s\’s profile..</string>
     <string name="send_comment_success">Comment sent</string>
     <string name="car_returned_period_template">%s\u0020\u0020to\u0020\u0020%s</string>
+
+    <!--Rate rental experience-->
+    <string name="rental_exp_title">Thank you!</string>
+    <string name="rental_exp_car_photo">car_photo</string>
+    <string name="rental_exp_owner_photo">owner_photo</string>
+    <string name="car_condition_and_cleanliness">Car Condition &amp; Cleanliness</string>
+    <string name="car_comfort_and_performance">Car Comfort &amp; Performance</string>
+    <string name="rental_exp_car_owner">Car Owner</string>
+    <string name="overall_rental_experience">Overall Rental Experience</string>
+    <string name="rental_exp_header">Please rate your rental experience!</string>
+    <string name="rental_exp_edit_ratings">edit ratings</string>
+    <string name="rental_exp_tell_us_more">Tell us more :)</string>
+    <string name="rental_exp_review_hint">Write a short review about your rental experience here…</string>
+    <string name="rental_exp_review_sent">Review sent</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -558,6 +573,7 @@
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+    <string name="alert_notification_channel_id">cardee_alert_chanel</string>
     <string name="booking_filter_title">Bookings</string>
     <string name="booking_sort_title">Sort by</string>
     <string name="booking_sort_date">Booking date</string>
@@ -580,4 +596,6 @@
     <string name="booking_title_cancel_handover">Cancel Handover</string>
     <string name="booking_title_complete">Car Returned</string>
 
+    <string name="booking_rating_title">You rated</string>
+    <string name="booking_rating_edit">edit</string>
 </resources>

@@ -15,8 +15,6 @@ public interface ChatListContract {
 
         void onChatClick(Chat chat);
 
-        void onUnreadMessageReceived(boolean isUnread);
-
         void onGetChats();
 
         void onDestroy();
@@ -25,6 +23,8 @@ public interface ChatListContract {
     interface View extends BaseView {
 
         void showAllChats(List<Chat> chatList);
+
+        void updateAllChats(List<Chat> chatList);
 
         void showChat(Bundle bundle);
     }

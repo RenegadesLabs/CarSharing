@@ -32,12 +32,15 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/toolbar_title"
+                    android:id="@+id/chat_activity_toolbar_title"
                     style="@style/ToolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
-                    android:text="Renter Name" />
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Renter Name"
+                    android:textAlignment="center" />
 
                 <ImageView
                     android:id="@+id/toolbar_photo"
@@ -101,7 +104,30 @@
                 app:layout_constraintStart_toEndOf="@id/car_photo"
                 app:layout_constraintTop_toBottomOf="@id/car_title" />
         </android.support.constraint.ConstraintLayout>
+
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/chat_fetch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/divider_dark"
+        android:visibility="gone"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="updating chat..."
+            android:textAlignment="center"
+            android:textSize="10dp" />
+
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_list"
@@ -128,11 +154,13 @@
         android:layout_height="24dp"
         android:layout_marginBottom="19dp"
         android:layout_marginStart="14dp"
+        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_add" />
 
     <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/chat_activity_message_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -140,20 +168,35 @@
         android:layout_marginStart="14dp"
         android:background="@null"
         android:backgroundTint="@null"
+        android:fitsSystemWindows="true"
         android:hint="Your message..."
         android:theme="@style/ChatEditTextStyle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/send"
+        app:layout_constraintEnd_toStartOf="@+id/chat_activity_send"
         app:layout_constraintStart_toEndOf="@id/add" />
 
     <TextView
-        android:id="@id/send"
+        android:id="@+id/chat_activity_send"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="4dp"
+        android:fitsSystemWindows="true"
         android:text="Send"
         android:theme="@style/TextClickable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/chat_activity_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -38,8 +38,8 @@ public interface OwnerCarListContract {
     }
 
     class CarEvent {
-        private Car mCar;
-        private Action mAction;
+        private final Car mCar;
+        private final Action mAction;
 
         public CarEvent(Car car, Action action) {
             mCar = car;

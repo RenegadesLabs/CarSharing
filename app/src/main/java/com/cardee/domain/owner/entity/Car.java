@@ -243,6 +243,16 @@ public class Car {
             mRating = rating;
         }
 
+        public Builder setAvailableDaily(Boolean availableDaily) {
+            this.mBuilderCarAvailableOrderDays = availableDaily;
+            return this;
+        }
+
+        public Builder setAvailableHourly(Boolean availableHourly){
+            this.mBuilderCarAvailableOrderHours = availableHourly;
+            return this;
+        }
+
         //TODO implement Availability setting
 
         public Car build() {

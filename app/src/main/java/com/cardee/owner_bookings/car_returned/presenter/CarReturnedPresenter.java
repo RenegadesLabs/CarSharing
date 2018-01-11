@@ -62,6 +62,9 @@ public class CarReturnedPresenter implements BasePresenter {
                     }
 
                     private void setCommentHint(String renterName) {
+                        if (renterName == null) {
+                            return;
+                        }
                         String[] parts = renterName.split(" ");
                         String hint = String.format(mResources.getString(
                                 R.string.car_returned_comment_hint), parts[0]);

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.usecase.ObtainBookings;
-import com.cardee.owner_bookings.adapter.BookingListAdapter;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;

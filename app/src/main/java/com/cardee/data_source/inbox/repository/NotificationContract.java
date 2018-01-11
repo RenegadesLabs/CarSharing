@@ -6,9 +6,22 @@ public interface NotificationContract {
 
     void fetchNotifications();
 
-    void updateBookingNotificationCount(Integer readCount);
+    void setRelevantChatUnreadCount(Integer readCount);
 
-    void updateChatNotificationCount(Integer readCount);
+    void setRelevantAlertUnreadCount(Integer readCount);
+
+    void updateChatUnreadCount(Integer count);
+
+    void updateInboxUnreadCount(Integer count);
+
+    boolean isCurrentSessionNeedToNotify(String attachment);
+
+
+    void setCurrentChatSession(int chatId);
+
+    void resetCurrentChatSession();
+
+    boolean isCurrentMessagingSession(int chatId);
 
     void subscribeToNotificationUpdates(Consumer<Integer> consumer);
 
@@ -17,5 +30,4 @@ public interface NotificationContract {
     void subscribeToChatUpdates(Consumer<Boolean> consumer);
 
     void saveSessionData();
-
 }

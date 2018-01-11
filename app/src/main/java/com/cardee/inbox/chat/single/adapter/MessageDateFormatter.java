@@ -16,11 +16,11 @@ public class MessageDateFormatter implements UtcDateFormatter.ChatMessageFormatt
     private final SimpleDateFormat mMessageFormatter;
     private final SimpleDateFormat mDateFormatter;
 
-    public MessageDateFormatter() {
+    MessageDateFormatter() {
         TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
         mUtcDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US);
         mUtcDateFormat.setTimeZone(timeZone);
-        mMessageFormatter = new SimpleDateFormat("HH:mm", Locale.US);
+        mMessageFormatter = new SimpleDateFormat("h:mm aaa", Locale.US);
         mDateFormatter = new SimpleDateFormat("E, d MMM", Locale.US);
     }
 
@@ -51,6 +51,12 @@ public class MessageDateFormatter implements UtcDateFormatter.ChatMessageFormatt
             date = utcDate;
         }
         return date;
+    }
+
+    @Override
+    public String toISO8601() {
+        Date date = new Date();
+        return mUtcDateFormat.format(date);
     }
 
     @Override

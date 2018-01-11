@@ -52,7 +52,7 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
     TextView mRenterName;
 
     @BindView(R.id.b_submit)
-    AppCompatButton mSubmit;
+    TextView mSubmit;
 
     @BindView(R.id.et_comment)
     AppCompatEditText mEditText;

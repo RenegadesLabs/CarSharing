@@ -2,9 +2,12 @@ package com.cardee.inbox.chat.single.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cardee.R;
@@ -20,11 +23,10 @@ import butterknife.ButterKnife;
 
 public class ChatActivity extends AppCompatActivity implements ChatContract.View {
 
-    @BindView(R.id.chat_list)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.chat_activity_progress_bar)
+    ProgressBar mProgressBar;
 
     private ChatPresenter mPresenter;
-    private SingleChatAdapter mAdapter;
     private Toast mCurrentToast;
 
     @Override
@@ -32,8 +34,8 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
+
         initToolBar();
-        initAdapter();
         initPresenter();
     }
 
@@ -44,12 +46,6 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         getSupportActionBar().setTitle(null);
     }
 
-    private void initAdapter() {
-        mAdapter = new SingleChatAdapter();
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
     private void initPresenter() {
         mPresenter = new ChatPresenter(this);
         mPresenter.init(getIntent().getExtras(), findViewById(R.id.chat_root_view));
@@ -57,18 +53,8 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
     }
 
     @Override
-    public void notifyAboutInboxDataObtained() {
-        mPresenter.onGetMessagesRequest();
-    }
-
-    @Override
-    public void setMessageList(List<ChatMessage> messageList) {
-        mAdapter.setMessageList(messageList);
-    }
-
-    @Override
     public void showProgress(boolean show) {
-
+        mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -97,7 +83,10 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) mPresenter.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+            mPresenter = null;
+        }
         super.onDestroy();
     }
 }

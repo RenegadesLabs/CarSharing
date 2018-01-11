@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.view.BookingView;
 
 public class HandingOverStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -14,7 +15,7 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
 
     private final BookingView bookingView;
 
-    protected HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
         super(view, listener);
         bookingView = (BookingView) view;
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_collecting);
@@ -73,5 +74,10 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
                 listener.onChat();
                 break;
         }
+    }
+
+    @Override
+    public BookingState getType() {
+        return BookingState.COLLECTING;
     }
 }

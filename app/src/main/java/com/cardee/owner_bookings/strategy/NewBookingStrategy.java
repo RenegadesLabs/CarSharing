@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cardee.R;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.owner_bookings.view.BookingView;
 
 public class NewBookingStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -71,5 +72,10 @@ public class NewBookingStrategy extends PresentationStrategy implements View.OnC
                 listener.onDecline();
                 break;
         }
+    }
+
+    @Override
+    public BookingState getType() {
+        return BookingState.NEW;
     }
 }
