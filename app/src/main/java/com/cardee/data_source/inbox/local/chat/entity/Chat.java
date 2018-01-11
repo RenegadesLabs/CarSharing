@@ -29,6 +29,9 @@ public class Chat implements Comparable<Chat> {
     @ColumnInfo(name = "unread_count")
     private Integer unreadMessageCount;
 
+    @ColumnInfo(name = "recipient_id")
+    private Integer recipientId;
+
     @ColumnInfo(name = "name")
     private String recipientName;
 
@@ -59,6 +62,14 @@ public class Chat implements Comparable<Chat> {
     @Ignore
     private List<ChatMessage> mChatMessageList;
 
+
+    public Integer getRecipientId() {
+        return recipientId;
+    }
+
+    public void setRecipientId(Integer recipientId) {
+        this.recipientId = recipientId;
+    }
 
     public Integer getChatId() {
         return chatId;
@@ -222,6 +233,10 @@ public class Chat implements Comparable<Chat> {
             return this;
         }
 
+        public Chat.Builder withRecipientId(Integer id) {
+            mChat.recipientId = id;
+            return this;
+        }
 
         //inbox chat data
         public Chat.Builder withName(String name) {

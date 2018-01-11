@@ -22,11 +22,16 @@ public class CompletedStrategy extends PresentationStrategy {
         bookingView.bookingPayment.setVisibility(View.VISIBLE);
         bookingView.rentalPeriodTitle.setVisibility(View.VISIBLE);
         bookingView.rentalPeriod.setVisibility(View.VISIBLE);
+
+        bookingView.renterPhotoCompleted.setVisibility(View.VISIBLE);
         bookingView.ratingBlock.setVisibility(View.VISIBLE);
         bookingView.ratingTitle.setVisibility(View.VISIBLE);
         bookingView.ratingBar.setVisibility(View.VISIBLE);
         bookingView.ratingEdit.setVisibility(View.VISIBLE);
 
+        bookingView.renterNameTitle.setVisibility(View.GONE);
+        bookingView.renterName.setVisibility(View.GONE);
+        bookingView.renterPhoto.setVisibility(View.GONE);
         bookingView.deliverToTitle.setVisibility(View.GONE);
         bookingView.deliverTo.setVisibility(View.GONE);
         bookingView.handoverOnTitle.setVisibility(View.GONE);

@@ -3,11 +3,15 @@ package com.cardee.inbox.chat.single.presenter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.repository.ChatRepository;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
+import com.cardee.data_source.remote.service.AccountManager;
+import com.cardee.domain.inbox.usecase.entity.ChatInfo;
 import com.cardee.inbox.chat.single.view.ActivityViewHolder;
 import com.cardee.inbox.chat.single.view.ChatViewHolder;
 
@@ -39,7 +43,7 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void init(Bundle bundle, View activityView) {
-        mViewHolder = new ChatViewHolder(activityView);
+        mViewHolder = new ChatViewHolder(activityView, this);
         mViewHolder.initAdapter(activityView.getContext());
         subscribeToUserInput();
 
@@ -65,8 +69,8 @@ public class ChatPresenter implements ChatContract.Presenter {
         mChatRepository.sendChatIdentifier(chatId, attachment);
         mChatRepository.getChatInfo()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(chatInfo -> {
-                    mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl());
+                .subscribe((ChatInfo chatInfo) -> {
+                    mViewHolder.setUserData(chatInfo.getRecipientName(), chatInfo.getRecipientPhotoUrl(), chatInfo.getRecipientId());
                     mViewHolder.setCarData(chatInfo.getCarPhotoUrl(), chatInfo.getCarTitle(), chatInfo.getCarLicenseNumber());
                     mViewHolder.setCarBookingData(chatInfo.getBookingTimeBegin(), chatInfo.getBookingTimeEnd());
                 });
@@ -110,6 +114,21 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     @Override
+    public void setOnClickListener(ImageView recipientPhoto, Integer recipientId) {
+        recipientPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String currentSession = AccountManager.getInstance(CardeeApp.context).getSessionInfo();
+                if (currentSession.equals(AccountManager.RENTER_SESSION)) {
+                    mView.openOwnerAccount(recipientId);
+                } else if (currentSession.equals(AccountManager.OWNER_SESSION)) {
+                    mView.openRenterAccount(recipientId);
+                }
+            }
+        });
+    }
+
+    @Override
     public void onDestroy() {
         mView = null;
         mViewHolder = null;
@@ -121,4 +140,5 @@ public class ChatPresenter implements ChatContract.Presenter {
             mDisposable.dispose();
         }
     }
+
 }

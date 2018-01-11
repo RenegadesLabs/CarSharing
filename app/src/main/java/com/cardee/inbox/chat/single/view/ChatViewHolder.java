@@ -18,6 +18,7 @@ import com.cardee.R;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 import com.cardee.inbox.chat.single.adapter.SingleChatAdapter;
+import com.cardee.inbox.chat.single.presenter.ChatContract;
 import com.cardee.util.glide.CircleTransform;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ChatViewHolder implements ActivityViewHolder {
     private final Observable<String> mMessageStream;
     private final VectorDrawableCompat userPhotoPlaceHolder;
     private SingleChatAdapter mAdapter;
+    private ChatContract.Presenter mPresenter;
     private LoadingType mCurrentLoadingType;
     private boolean isFirstLoading = true;
 
@@ -64,12 +66,13 @@ public class ChatViewHolder implements ActivityViewHolder {
     @BindView(R.id.chat_activity_send)
     TextView mSend;
 
-    public ChatViewHolder(View rootView) {
+    public ChatViewHolder(View rootView, ChatContract.Presenter presenter) {
         ButterKnife.bind(this, rootView);
         userPhotoPlaceHolder = VectorDrawableCompat.create(rootView.getContext().getResources(), R.drawable.ic_photo_placeholder, null);
         mRequestManager = Glide.with(rootView.getContext());
         mDateFormatter = new ChatActivityDateFormatter(rootView.getContext());
         mMessageStream = Observable.create(emitter -> mSend.setOnClickListener(view -> emitter.onNext(mMessageField.getText().toString())));
+        mPresenter = presenter;
     }
 
     @Override
@@ -92,7 +95,7 @@ public class ChatViewHolder implements ActivityViewHolder {
     }
 
     @Override
-    public void setUserData(String recipientName, String photoUrl) {
+    public void setUserData(String recipientName, String photoUrl, Integer recipientId) {
         mRecipientName.setText(recipientName);
         mRequestManager
                 .load(photoUrl)
@@ -100,6 +103,8 @@ public class ChatViewHolder implements ActivityViewHolder {
                 .placeholder(userPhotoPlaceHolder)
                 .transform(new CircleTransform(CardeeApp.context))
                 .into(mRecipientPhoto);
+
+        mPresenter.setOnClickListener(mRecipientPhoto, recipientId);
     }
 
     @Override

@@ -21,26 +21,14 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle args = getIntent().getExtras();
         int bookingId = args.getInt(OwnerBookingContract.BOOKING_ID);
-//        BookingState state = (BookingState) args.getSerializable(OwnerBookingContract.BOOKING_STATE);
         presenter = new OwnerBookingPresenter(bookingId);
         Toolbar toolbar;
-//        switch (state) {
-//            case COMPLETED:
-//                CompletedBookingView completedBookingView = (CompletedBookingView) LayoutInflater
-//                        .from(this)
-//                        .inflate(R.layout.view_booking_completed, null);
-//                setContentView(completedBookingView);
-//                view = completedBookingView;
-//                toolbar = completedBookingView.getToolbar();
-//                break;
-//            default:
         BookingView bookingView = (BookingView) LayoutInflater
                 .from(this)
                 .inflate(R.layout.view_booking, null);
         setContentView(bookingView);
         view = bookingView;
         toolbar = bookingView.getToolbar();
-//        }
         view.setPresenter(presenter);
         presenter.setView(view);
         setSupportActionBar(toolbar);

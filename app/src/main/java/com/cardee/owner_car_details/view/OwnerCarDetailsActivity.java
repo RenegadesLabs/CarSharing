@@ -10,17 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.custom.modal.DetailsMoreMenuFragment;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
 public class OwnerCarDetailsActivity extends AppCompatActivity
-        implements TabLayout.OnTabSelectedListener, View.OnClickListener {
+        implements TabLayout.OnTabSelectedListener, View.OnClickListener, OwnerCarDetailsFragment.OnCarFetchedListener {
 
     private static final String TAG = OwnerCarDetailsActivity.class.getSimpleName();
 
@@ -77,6 +77,10 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
         mTabs.addOnTabSelectedListener(this);
     }
 
+    private void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
@@ -110,6 +114,12 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onCarFetched(Car car) {
+        String title = car.getLicenceNumber();
+        setTitle(title);
+    }
+
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -130,7 +140,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
                     fragment = OwnerCarRentalFragment.newInstance(mCarId);
                     break;
                 case 1:
-                    fragment = OwnerCarDetailsFragment.newInstance(mCarId);
+                    fragment = OwnerCarDetailsFragment.newInstance(mCarId, OwnerCarDetailsActivity.this);
                     break;
                 case 2:
                     fragment = OwnerCarReviewsFragment.newInstance(mCarId);

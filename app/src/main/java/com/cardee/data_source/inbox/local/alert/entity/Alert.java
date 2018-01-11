@@ -40,12 +40,6 @@ public class Alert {
         EXTENSION_APPROVED
     }
 
-    public static final int TYPE_BOOKING = 20; // bookings, checklist, request accepted,  extension request
-    public static final int TYPE_OVERDUE = 21; // cancel, request expired
-    public static final int TYPE_REMINDER = 22;
-    public static final int TYPE_SYSTEM = 23; // admin, broadcast, state, verification
-    public static final int TYPE_REVIEWS = 24; //
-
     @PrimaryKey
     @ColumnInfo(name = "alert_id")
     private Integer alertId;

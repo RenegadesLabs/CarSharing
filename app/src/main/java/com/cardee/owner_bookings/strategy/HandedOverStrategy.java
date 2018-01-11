@@ -23,6 +23,9 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
 
         bookingView.bookingStatus.setBackgroundColor(statusColor);
         bookingView.bookingStatus.setText(R.string.booking_state_collected);
+        bookingView.renterNameTitle.setVisibility(View.VISIBLE);
+        bookingView.renterName.setVisibility(View.VISIBLE);
+        bookingView.renterPhoto.setVisibility(View.VISIBLE);
         bookingView.bookingPayment.setVisibility(View.VISIBLE);
         bookingView.rentalPeriodTitle.setVisibility(View.GONE);
         bookingView.rentalPeriod.setVisibility(View.GONE);
@@ -45,6 +48,11 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
         bookingView.acceptMessage.setVisibility(View.VISIBLE);
         bookingView.btnCancel.setVisibility(View.GONE);
         bookingView.btnAccept.setVisibility(View.VISIBLE);
+        bookingView.renterPhotoCompleted.setVisibility(View.GONE);
+        bookingView.ratingBlock.setVisibility(View.GONE);
+        bookingView.ratingTitle.setVisibility(View.GONE);
+        bookingView.ratingBar.setVisibility(View.GONE);
+        bookingView.ratingEdit.setVisibility(View.GONE);
 
         bookingView.acceptMessage.setText(R.string.booking_message_handover_complete);
         bookingView.btnAccept.setText(R.string.booking_title_complete);

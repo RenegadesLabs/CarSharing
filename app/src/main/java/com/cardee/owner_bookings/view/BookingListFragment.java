@@ -115,10 +115,9 @@ public class BookingListFragment extends Fragment
     }
 
     @Override
-    public void openBooking(Integer bookingId, BookingState state) {
+    public void openBooking(Integer bookingId) {
         Intent intent = new Intent(getActivity(), BookingActivity.class);
         intent.putExtra(OwnerBookingContract.BOOKING_ID, bookingId);
-        intent.putExtra(OwnerBookingContract.BOOKING_STATE, state);
         getActivity().startActivity(intent);
     }
 }

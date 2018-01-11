@@ -83,6 +83,10 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     public TextView totalCost;
     @BindView(R.id.renter_photo)
     public ImageView renterPhoto;
+    @BindView(R.id.renter_photo_completed)
+    public ImageView renterPhotoCompleted;
+    @BindView(R.id.renter_name_title)
+    public TextView renterNameTitle;
     @BindView(R.id.renter_name)
     public TextView renterName;
     @BindView(R.id.renter_message)
@@ -187,6 +191,8 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         renterName.setText(booking.getRenterName());
         loadImageIntoView(booking.getRenterPhoto(),
                 R.drawable.placeholder_user_img, renterPhoto, null, true);
+        loadImageIntoView(booking.getRenterPhoto(),
+                R.drawable.placeholder_user_img, renterPhotoCompleted, null, true);
         Integer rating = booking.getRenterRating();
         if (rating != null) {
             ratingBar.setScore(rating);

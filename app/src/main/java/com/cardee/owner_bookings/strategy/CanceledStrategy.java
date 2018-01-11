@@ -22,6 +22,9 @@ public class CanceledStrategy extends PresentationStrategy implements View.OnCli
 
         bookingView.bookingStatus.setBackgroundColor(statusColor);
         bookingView.bookingStatus.setText(R.string.booking_state_canceled);
+        bookingView.renterNameTitle.setVisibility(View.VISIBLE);
+        bookingView.renterName.setVisibility(View.VISIBLE);
+        bookingView.renterPhoto.setVisibility(View.VISIBLE);
         bookingView.bookingPayment.setVisibility(View.GONE);
         bookingView.rentalPeriodTitle.setVisibility(View.GONE);
         bookingView.rentalPeriod.setVisibility(View.GONE);
@@ -44,6 +47,11 @@ public class CanceledStrategy extends PresentationStrategy implements View.OnCli
         bookingView.acceptMessage.setVisibility(View.GONE);
         bookingView.btnCancel.setVisibility(View.GONE);
         bookingView.btnAccept.setVisibility(View.GONE);
+        bookingView.renterPhotoCompleted.setVisibility(View.GONE);
+        bookingView.ratingBlock.setVisibility(View.GONE);
+        bookingView.ratingTitle.setVisibility(View.GONE);
+        bookingView.ratingBar.setVisibility(View.GONE);
+        bookingView.ratingEdit.setVisibility(View.GONE);
         bookingView.renterPhoto.setOnClickListener(this);
     }
 

@@ -115,6 +115,7 @@ public class ChatItemLocalSource implements LocalData.ChatSingleSource {
         @Override
         public ChatInfo map(Chat localChat) {
             return new ChatInfo.Builder()
+                    .withRecipientId(localChat.getRecipientId())
                     .withRecipientName(localChat.getRecipientName())
                     .withRecipientPhoto(localChat.getPhotoUrl())
                     .withCarTitle(localChat.getCarTitle())

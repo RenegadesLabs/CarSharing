@@ -25,6 +25,6 @@ public interface AlertListContract {
 
         void showAllAlerts(List<Alert> alertList);
 
-        void showAlert(Bundle bundle);
+        void showAlert(Alert alert);
     }
 }
