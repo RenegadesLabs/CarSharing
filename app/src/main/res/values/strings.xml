@@ -537,7 +537,7 @@
         <item>9am</item>
         <item>10am</item>
         <item>11am</item>
-        <item>12am</item>
+        <item>12pm</item>
         <item>1pm</item>
         <item>2pm</item>
         <item>3pm</item>
@@ -549,7 +549,39 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
+        <item>12am</item>
+    </string-array>
+    <string-array name="daily_timing_pickup_values">
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
         <item>12pm</item>
+        <item>1pm</item>
+    </string-array>
+    <string-array name="daily_timing_return_values">
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+        <item>12am (next day)</item>
+        <item>1am (next day)</item>
+        <item>2am (next day)</item>
+        <item>3am (next day)</item>
+        <item>4am (next day)</item>
+        <item>5am (next day)</item>
+        <item>6am (next day)</item>
+        <item>7am (next day)</item>
+        <item>8am (next day)</item>
+        <item>9am (next day)</item>
+        <item>10am (next day)</item>
+        <item>11am (next day)</item>
+        <item>12pm (next day)</item>
+        <item>1pm (next day)</item>
     </string-array>
     <string name="car_description_hint">Please enter your car description</string>
     <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
@@ -588,7 +620,7 @@
 
     <string name="booking_payment_card">Card</string>
     <string name="booking_payment_cash">Cash</string>
-    
+
     <string name="booking_title_decline">Decline Request</string>
     <string name="booking_title_accept">Accept Request</string>
     <string name="booking_title_cancel">Cancel Booking</string>
