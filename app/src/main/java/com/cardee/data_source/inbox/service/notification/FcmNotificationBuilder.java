@@ -103,23 +103,40 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     }
 
 
-    private int getValidAlertImage(int alertType) {
+    private int getValidAlertImage(Alert.Type alertType) {
         int drawableResource = R.drawable.ic_notification_system;
         switch (alertType) {
-            case Alert.TYPE_BOOKING:
-                drawableResource = R.drawable.ic_notification_booking;
+            case NEW_REQUEST:
+            case ACCEPTED:
+            case BOOKING_EXT:
+            case OWNER_CHECKLIST_UPD:
+            case RENTER_CHECKLIST_UPD:
+            case INIT_CHECKLIST:
+                drawableResource = R.drawable.ic_alert_booking;
                 break;
-            case Alert.TYPE_OVERDUE:
-                drawableResource = R.drawable.ic_notification_overdue;
+            case RETURN_OVERDUE:
+            case REQUEST_EXPIRED:
+            case BOOKING_CANCELLATION:
+                drawableResource = R.drawable.ic_alert_overdue;
                 break;
-            case Alert.TYPE_REMINDER:
-                drawableResource = R.drawable.ic_notification_reminder;
+            case HANDOVER_REMINDER:
+            case RETURN_REMINDER:
+            case RENTER_REVIEW_REMINDER:
+            case OWNER_REVIEW_REMINDER:
+                drawableResource = R.drawable.ic_alert_reminder;
                 break;
-            case Alert.TYPE_REVIEWS:
-                drawableResource = R.drawable.ic_notification_review;
+            case OWNER_REVIEW:
+            case RENTER_REVIEW:
+                drawableResource = R.drawable.ic_alert_review;
                 break;
-            case Alert.TYPE_SYSTEM:
-                drawableResource = R.drawable.ic_notification_system;
+            case SYSTEM_MESSAGES:
+            case CAR_VERIFICATION:
+            case USER_VERIFICATION:
+            case RENTER_STATE_CHANGE:
+            case OWNER_STATE_CHANGE:
+            case CAR_STATE_CHANGE:
+            case BROADCAST:
+                drawableResource = R.drawable.ic_alert_system;
                 break;
         }
         return drawableResource;

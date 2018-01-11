@@ -12,7 +12,7 @@ public interface ActivityViewHolder {
 
     void initAdapter(Context context);
 
-    void setUserData(String recipientName, String photoUrl);
+    void setUserData(String recipientName, String photoUrl, Integer recipientId);
 
     void setCarData(String carPhotoUrl, String carTitle, String licenseNumber);
 

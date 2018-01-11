@@ -1,9 +1,8 @@
 package com.cardee.inbox.chat.single.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,12 +10,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
-import com.cardee.inbox.chat.single.adapter.SingleChatAdapter;
 import com.cardee.inbox.chat.single.presenter.ChatContract;
 import com.cardee.inbox.chat.single.presenter.ChatPresenter;
-
-import java.util.List;
+import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity;
+import com.cardee.renter_profile.view.RenterProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +47,22 @@ public class ChatActivity extends AppCompatActivity implements ChatContract.View
         mPresenter = new ChatPresenter(this);
         mPresenter.init(getIntent().getExtras(), findViewById(R.id.chat_root_view));
         mPresenter.onChatDataRequest();
+    }
+
+    @Override
+    public void openOwnerAccount(Integer recipientId) {
+        Intent intent = new Intent(this, OwnerProfileInfoActivity.class);
+        intent.putExtra("editable", false);
+        intent.putExtra("profile_id", recipientId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void openRenterAccount(Integer recipientId) {
+        Intent intent = new Intent(this, RenterProfileActivity.class);
+        intent.putExtra("editable", false);
+        intent.putExtra("profile_id", recipientId);
+        startActivity(intent);
     }
 
     @Override

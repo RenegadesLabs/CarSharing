@@ -1,5 +1,6 @@
 package com.cardee.inbox.alert.list.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.inbox.alert.list.adapter.AlertListAdapter;
 import com.cardee.inbox.alert.list.presenter.AlertListContract;
 import com.cardee.inbox.alert.list.presenter.AlertListPresenterImp;
+import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
+import com.cardee.owner_bookings.view.BookingActivity;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
+import com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity;
 
 import java.util.List;
 
@@ -76,8 +85,69 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
     }
 
     @Override
-    public void showAlert(Bundle bundle) {
-        //TODO: add Single Alert Activity
+    public void showAlert(Alert alert) {
+        if (alert != null) {
+            Alert.Type type = alert.getAlertType();
+            if (type != null) {
+                String session = AccountManager.getInstance(getContext()).getSessionInfo();
+                int objectId = alert.getObjectId();
+                switch (type) {
+                    case ACCEPTED:
+                    case REQUEST_EXPIRED:
+                    case HANDOVER_REMINDER:
+                    case RETURN_OVERDUE:
+                    case NEW_REQUEST:
+                    case BOOKING_CANCELLATION:
+                    case BOOKING_EXT:
+                    case RETURN_REMINDER:
+                        if (session.equals(AccountManager.OWNER_SESSION)) {
+                            Intent intent = new Intent(getActivity(), BookingActivity.class);
+                            intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                            startActivity(intent);
+                        } else if (session.equals(AccountManager.RENTER_SESSION)) {
+                            //TODO: implement for Renter
+                        }
+                        break;
+                    case USER_VERIFICATION:
+                    case RENTER_STATE_CHANGE:
+                    case OWNER_STATE_CHANGE:
+                        Intent accountIntent = new Intent(getActivity(), AccountDetailsActivity.class);
+                        startActivity(accountIntent);
+                        break;
+                    case BROADCAST:
+                        //TODO: different UI every time.
+                        break;
+                    case RENTER_REVIEW_REMINDER:
+                    case RENTER_REVIEW:
+                        Intent renterRateIntent = new Intent(getActivity(), RateRentalExpActivity.class);
+                        renterRateIntent.putExtra("booking_id", objectId);
+                        startActivity(renterRateIntent);
+                        break;
+                    case OWNER_CHECKLIST_UPD:
+                    case RENTER_CHECKLIST_UPD:
+                        //TODO:  editedCheckList();
+                        break;
+                    case INIT_CHECKLIST:
+                        //TODO: checkList();
+                        break;
+                    case OWNER_REVIEW:
+                    case OWNER_REVIEW_REMINDER:
+                        Intent ownerRateIntent = new Intent(getContext(), CarReturnedActivity.class);
+                        ownerRateIntent.putExtra("booking_id", objectId);
+                        startActivity(ownerRateIntent);
+                        break;
+                    case CAR_VERIFICATION:
+                    case CAR_STATE_CHANGE:
+                        Intent ownerCarIntent = new Intent(getContext(), OwnerCarDetailsActivity.class);
+                        ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
+                        startActivity(ownerCarIntent);
+                        break;
+                    case SYSTEM_MESSAGES:
+                        // ignore;
+                        break;
+                }
+            }
+        }
     }
 
     @Override

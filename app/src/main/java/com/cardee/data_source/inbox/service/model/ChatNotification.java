@@ -1,5 +1,6 @@
 package com.cardee.data_source.inbox.service.model;
 
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.remote.service.AccountManager;
 
 public class ChatNotification implements Notification {
@@ -53,8 +54,8 @@ public class ChatNotification implements Notification {
 
     //not needed for chat type
     @Override
-    public int getType() {
-        return 0;
+    public Alert.Type getType() {
+        return null;
     }
 
     @Override
@@ -66,7 +67,6 @@ public class ChatNotification implements Notification {
     public boolean isOwnerSession() {
         return chatAttachment.equals(AccountManager.OWNER_SESSION);
     }
-
 
 
     public Integer getChatId() {

@@ -486,6 +486,75 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/renter_photo_completed"
+            android:layout_width="@dimen/booking_renter_image"
+            android:layout_height="@dimen/booking_renter_image"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/booking_car_picture"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/rating_block"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:background="@color/bg_window"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rental_period_title" />
+
+        <TextView
+            android:id="@+id/rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_x_large"
+            android:text="@string/booking_rating_title"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rating_block" />
+
+        <com.cardee.custom.CustomRatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:visibility="gone"
+            app:halfStars="true"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintDimensionRatio="5:1"
+            app:layout_constraintStart_toEndOf="@id/rating_title"
+            app:layout_constraintTop_toTopOf="@id/rating_block"
+            app:maxStars="5"
+            app:onlyForDisplay="true"
+            app:stars="0" />
+
+        <TextView
+            android:id="@+id/rating_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/widget_margin_x_large"
+            android:text="@string/booking_rating_edit"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_regular"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rating_block" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/earnings_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating_block" />
+
         <FrameLayout
             android:id="@+id/booking_loading_indicator"
             android:layout_width="0dp"

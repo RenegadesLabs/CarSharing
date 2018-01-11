@@ -51,6 +51,26 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
     }
 
     @Override
+    public void loadRenterById(int id, ProfileCallback profileCallback) {
+        mApi.getRenterById(id).subscribe(new Consumer<RenterProfileResponse>() {
+            @Override
+            public void accept(RenterProfileResponse renterProfileResponse) throws Exception {
+                if (renterProfileResponse.isSuccessful()) {
+                    profileCallback.onSuccess(renterProfileResponse.getRenterProfile());
+                    return;
+                }
+                handleErrorResponse(profileCallback, renterProfileResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, throwable.getMessage());
+                profileCallback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            }
+        });
+    }
+
+    @Override
     public void changeRenterNote(ChangeNoteRequest changeNoteRequest, final NoResponseCallback callback) {
         mApi.updateRenterNote(changeNoteRequest).subscribe(new Consumer<NoDataResponse>() {
             @Override
@@ -69,7 +89,6 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
             }
         });
     }
-
 
     private void handleErrorResponse(BaseCallback callback, BaseResponse response) {
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {

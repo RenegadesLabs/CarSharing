@@ -8,14 +8,37 @@ import android.arch.persistence.room.PrimaryKey;
 public class Alert {
 
     public static final String ALERT_SERVER_ID = "alert_id";
-    public static final String ALERT_DESTINATION_ID = "destination_id";
+    public static final String ALERT_OBJECT_ID = "object_id";
     public static final String ALERT_ATTACHMENT = "alert_attachment";
+    public static final String ALERT_TYPE = "alert_type";
 
-    public static final int TYPE_BOOKING = 20; // bookings, checklist, request accepted,  extension request
-    public static final int TYPE_OVERDUE = 21; // cancel, request expired
-    public static final int TYPE_REMINDER = 22;
-    public static final int TYPE_SYSTEM = 23; // admin, broadcast, state, verification
-    public static final int TYPE_REVIEWS = 24; //
+    public enum Type {
+        NEW_REQUEST,
+        HANDOVER_REMINDER,
+        RETURN_REMINDER,
+        RETURN_OVERDUE,
+        REQUEST_EXPIRED,
+        SYSTEM_MESSAGES,
+        ACCEPTED,
+        CAR_VERIFICATION,
+        USER_VERIFICATION,
+        RENTER_STATE_CHANGE,
+        OWNER_STATE_CHANGE,
+        CAR_STATE_CHANGE,
+        BOOKING_EXT,
+        BOOKING_CANCELLATION,
+        RENTER_REVIEW_REMINDER,
+        OWNER_CHECKLIST_UPD,
+        RENTER_CHECKLIST_UPD,
+        BROADCAST,
+        INIT_CHECKLIST,
+        OWNER_REVIEW_REMINDER,
+        RENTER_REVIEW,
+        OWNER_REVIEW,
+        EXTENSION_REQUEST,
+        EXTENSION_CANCELED,
+        EXTENSION_APPROVED
+    }
 
     @PrimaryKey
     @ColumnInfo(name = "alert_id")
@@ -25,7 +48,7 @@ public class Alert {
     private Integer objectId;
 
     @ColumnInfo(name = "alert_type")
-    private Integer alertType;
+    private String stringAlertType;
 
     @ColumnInfo(name = "attachment")
     private String attachment;
@@ -59,12 +82,16 @@ public class Alert {
         this.dateCreated = dateCreated;
     }
 
-    public Integer getAlertType() {
-        return alertType;
+    public String getStringAlertType() {
+        return stringAlertType;
     }
 
-    public void setAlertType(Integer alertType) {
-        this.alertType = alertType;
+    public void setStringAlertType(String stringAlertType) {
+        this.stringAlertType = stringAlertType;
+    }
+
+    public Alert.Type getAlertType() {
+        return Alert.Type.valueOf(getStringAlertType());
     }
 
     public String getNotificationTitle() {
@@ -135,8 +162,8 @@ public class Alert {
             return this;
         }
 
-        public Builder withNotificationType(int notificationType) {
-            mAlert.alertType = notificationType;
+        public Builder withNotificationType(String notificationType) {
+            mAlert.stringAlertType = notificationType;
             return this;
         }
 

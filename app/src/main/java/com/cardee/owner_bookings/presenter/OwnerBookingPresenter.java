@@ -12,6 +12,7 @@ import com.cardee.domain.bookings.usecase.GetBooking;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.owner_bookings.strategy.CanceledStrategy;
+import com.cardee.owner_bookings.strategy.CompletedStrategy;
 import com.cardee.owner_bookings.strategy.ConfirmedStrategy;
 import com.cardee.owner_bookings.strategy.HandedOverStrategy;
 import com.cardee.owner_bookings.strategy.HandingOverStrategy;
@@ -97,6 +98,8 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                 case CANCELED:
                     strategy = new CanceledStrategy(bookingView, this);
                     break;
+                case COMPLETED:
+                    strategy = new CompletedStrategy(bookingView, this);
             }
         }
     }
@@ -190,7 +193,6 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     }
 
     @Override
-    public void onRatioEdit() {
-
+    public void onRatingEdit() {
     }
 }

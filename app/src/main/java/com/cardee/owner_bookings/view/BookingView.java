@@ -1,6 +1,8 @@
 package com.cardee.owner_bookings.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -18,8 +20,10 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
+import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
@@ -79,6 +83,10 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     public TextView totalCost;
     @BindView(R.id.renter_photo)
     public ImageView renterPhoto;
+    @BindView(R.id.renter_photo_completed)
+    public ImageView renterPhotoCompleted;
+    @BindView(R.id.renter_name_title)
+    public TextView renterNameTitle;
     @BindView(R.id.renter_name)
     public TextView renterName;
     @BindView(R.id.renter_message)
@@ -101,6 +109,17 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     public TextView cancelMessage;
     @BindView(R.id.booking_loading_indicator)
     public View progressView;
+    @BindView(R.id.rating_edit)
+    public TextView ratingEdit;
+    @BindView(R.id.rating_bar)
+    public CustomRatingBar ratingBar;
+    @BindView(R.id.rating_block)
+    public View ratingBlock;
+    @BindView(R.id.rating_title)
+    public TextView ratingTitle;
+    @BindView(R.id.earnings_container)
+    public ConstraintLayout earningsContainer;
+
 
     public BookingView(Context context) {
         super(context);
@@ -172,6 +191,17 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         renterName.setText(booking.getRenterName());
         loadImageIntoView(booking.getRenterPhoto(),
                 R.drawable.placeholder_user_img, renterPhoto, null, true);
+        loadImageIntoView(booking.getRenterPhoto(),
+                R.drawable.placeholder_user_img, renterPhotoCompleted, null, true);
+        Integer rating = booking.getRenterRating();
+        if (rating != null) {
+            ratingBar.setScore(rating);
+        }
+        ratingEdit.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), CarReturnedActivity.class);
+            intent.putExtra("booking_id", booking.getBookingId());
+            getContext().startActivity(intent);
+        });
     }
 
     private void loadImageIntoView(String imgUrl, int placeholderRes, ImageView view, ProgressBar progress, boolean circle) {
@@ -213,4 +243,6 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         unbinder.unbind();
         presenter = null;
     }
+
+
 }

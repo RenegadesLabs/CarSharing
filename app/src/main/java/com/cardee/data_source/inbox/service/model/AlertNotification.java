@@ -8,7 +8,7 @@ public class AlertNotification implements Notification {
 
     private Integer alertId;
     private Integer objectId;
-    private Integer alertType;
+    private String alertType;
     private String alertTitle;
     private String alertMessage;
     private String alertDate;
@@ -51,8 +51,8 @@ public class AlertNotification implements Notification {
     }
 
     @Override
-    public int getType() {
-        return alertType;
+    public Alert.Type getType() {
+        return Alert.Type.valueOf(getAlertType());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class AlertNotification implements Notification {
         this.objectId = objectId;
     }
 
-    public Integer getAlertType() {
+    public String getAlertType() {
         return alertType;
     }
 
@@ -154,44 +154,78 @@ public class AlertNotification implements Notification {
         return remoteStatus.equals(RemoteData.NotificationType.NEW);
     }
 
-    private int convertNotificationType(String remoteType) {
-        int notificationType;
+    private String convertNotificationType(String remoteType) {
+        String notificationType;
 
         switch (remoteType) {
             case RemoteData.NotificationType.NEW_REQUEST:
+                notificationType = Alert.Type.NEW_REQUEST.toString();
+                break;
             case RemoteData.NotificationType.ACCEPTED:
+                notificationType = Alert.Type.ACCEPTED.toString();
+                break;
             case RemoteData.NotificationType.BOOKING_EXT:
+                notificationType = Alert.Type.BOOKING_EXT.toString();
+                break;
             case RemoteData.NotificationType.OWNER_CHECKLIST_UPD:
+                notificationType = Alert.Type.OWNER_CHECKLIST_UPD.toString();
+                break;
             case RemoteData.NotificationType.RENTER_CHECKLIST_UPD:
+                notificationType = Alert.Type.RENTER_CHECKLIST_UPD.toString();
+                break;
             case RemoteData.NotificationType.INIT_CHECKLIST:
-                notificationType = Alert.TYPE_BOOKING;
+                notificationType = Alert.Type.INIT_CHECKLIST.toString();
                 break;
             case RemoteData.NotificationType.HANDOVER_REMINDER:
+                notificationType = Alert.Type.HANDOVER_REMINDER.toString();
+                break;
             case RemoteData.NotificationType.RETURN_REMINDER:
+                notificationType = Alert.Type.RETURN_REMINDER.toString();
+                break;
             case RemoteData.NotificationType.RENTER_REVIEW_REMINDER:
+                notificationType = Alert.Type.RENTER_REVIEW_REMINDER.toString();
+                break;
             case RemoteData.NotificationType.OWNER_REVIEW_REMINDER:
-                notificationType = Alert.TYPE_REMINDER;
+                notificationType = Alert.Type.OWNER_REVIEW_REMINDER.toString();
                 break;
             case RemoteData.NotificationType.RETURN_OVERDUE:
+                notificationType = Alert.Type.RETURN_OVERDUE.toString();
+                break;
             case RemoteData.NotificationType.REQUEST_EXPIRED:
+                notificationType = Alert.Type.REQUEST_EXPIRED.toString();
+                break;
             case RemoteData.NotificationType.BOOKING_CANCELLATION:
-                notificationType = Alert.TYPE_OVERDUE;
+                notificationType = Alert.Type.BOOKING_CANCELLATION.toString();
                 break;
             case RemoteData.NotificationType.OWNER_REVIEW:
+                notificationType = Alert.Type.OWNER_REVIEW.toString();
+                break;
             case RemoteData.NotificationType.RENTER_REVIEW:
-                notificationType = Alert.TYPE_REVIEWS;
+                notificationType = Alert.Type.RENTER_REVIEW.toString();
                 break;
             case RemoteData.NotificationType.SYSTEM_MESSAGES:
+                notificationType = Alert.Type.SYSTEM_MESSAGES.toString();
+                break;
             case RemoteData.NotificationType.CAR_VERIFICATION:
+                notificationType = Alert.Type.CAR_VERIFICATION.toString();
+                break;
             case RemoteData.NotificationType.USER_VERIFICATION:
+                notificationType = Alert.Type.USER_VERIFICATION.toString();
+                break;
             case RemoteData.NotificationType.RENTER_STATE_CHANGE:
+                notificationType = Alert.Type.RENTER_STATE_CHANGE.toString();
+                break;
             case RemoteData.NotificationType.OWNER_STATE_CHANGE:
+                notificationType = Alert.Type.OWNER_STATE_CHANGE.toString();
+                break;
             case RemoteData.NotificationType.CAR_STATE_CHANGE:
+                notificationType = Alert.Type.CAR_STATE_CHANGE.toString();
+                break;
             case RemoteData.NotificationType.BROADCAST:
-                notificationType = Alert.TYPE_SYSTEM;
+                notificationType = Alert.Type.BROADCAST.toString();
                 break;
             default:
-                notificationType = Alert.TYPE_SYSTEM;
+                notificationType = Alert.Type.SYSTEM_MESSAGES.toString();
         }
         return notificationType;
     }

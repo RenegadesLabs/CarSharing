@@ -20,7 +20,7 @@ public interface OwnerBookingListContract {
 
         void displayFilterType(BookingState filter);
 
-        void openBooking(Integer bookingId, BookingState state);
+        void openBooking(Integer bookingId);
     }
 
     interface Presenter extends BasePresenter {
