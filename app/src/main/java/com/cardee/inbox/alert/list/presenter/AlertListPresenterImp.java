@@ -8,11 +8,13 @@ import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.data_source.remote.service.AccountManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class AlertListPresenterImp implements AlertListContract.Presenter {
@@ -47,7 +49,12 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
         Disposable remoteSub = mInboxRepository.getRemoteAlerts(mAttachment)
                 .filter(alerts -> alerts != null && !alerts.isEmpty())
                 .subscribeOn(Schedulers.io())
-                .subscribe(mInboxRepository::fetchAlertData, throwable -> Log.e(TAG, throwable.getMessage()));
+                .subscribe(mInboxRepository::fetchAlertData, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG, throwable.getMessage());
+                    }
+                });
 
         mCompositeDisposable.addAll(localSub, remoteSub);
     }
@@ -60,6 +67,18 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
     @Override
     public void onAlertClick(Alert alert) {
+        alert.setNewBooking(false);
+        List<Integer> alerts = new ArrayList<>();
+        alerts.add(alert.getAlertId());
+        mInboxRepository.markAsRead(alerts).subscribe(o -> {
+            // updates local database
+            List<Alert> alertList = new ArrayList<>();
+            alertList.add(alert);
+            mInboxRepository.fetchAlertData(alertList);
+
+        }, throwable
+                -> Log.e(TAG, throwable.getMessage()));
+
         Bundle bundle = new Bundle();
         bundle.putSerializable(Alert.ALERT_TYPE, alert.getAlertType());
         bundle.putInt(Alert.ALERT_SERVER_ID, alert.getAlertId());

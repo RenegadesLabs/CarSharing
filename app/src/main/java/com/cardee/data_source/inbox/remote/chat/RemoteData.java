@@ -4,6 +4,7 @@ import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.data_source.inbox.remote.api.model.entity.NewMessage;
+import com.cardee.data_source.remote.api.NoDataResponse;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public interface RemoteData {
     interface AlertListSource extends RemoteData {
 
         Single<List<Alert>> getRemoteAlerts(String attachment);
+
+        Single<NoDataResponse> markAlertsAsRead(List<Integer> alerts);
     }
 
     interface NotificationType {

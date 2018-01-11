@@ -89,6 +89,7 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
         if (alert != null) {
             Alert.Type type = alert.getAlertType();
             if (type != null) {
+                mAlertAdapter.notifyDataSetChanged();
                 String session = AccountManager.getInstance(getContext()).getSessionInfo();
                 int objectId = alert.getObjectId();
                 switch (type) {
