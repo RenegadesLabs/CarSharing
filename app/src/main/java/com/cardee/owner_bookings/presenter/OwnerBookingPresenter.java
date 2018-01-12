@@ -135,7 +135,7 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onCancelHandOver() {
-        changeState(BookingState.CONFIRMED);
+        changeState(BookingState.CANCELED);
     }
 
     @Override

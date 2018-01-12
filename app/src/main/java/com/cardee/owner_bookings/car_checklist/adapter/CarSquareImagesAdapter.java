@@ -136,7 +136,7 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         public void bind(Image image, RequestManager imageRequestManager) {
-            primaryImageSign.setVisibility(image.isPrimary() ? View.VISIBLE : View.GONE);
+//            primaryImageSign.setVisibility(image.isPrimary() ? View.VISIBLE : View.GONE);
             imageRequestManager
                     .load(image.getLink())
                     .listener(new RequestListener<String, GlideDrawable>() {
