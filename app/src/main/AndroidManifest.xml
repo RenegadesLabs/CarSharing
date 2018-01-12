@@ -162,7 +162,9 @@
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity" />
         <activity android:name=".renter_notifications.view.RenterNotifActivity" />
-        <activity android:name=".inbox.chat.single.view.ChatActivity" />
+        <activity
+            android:name=".inbox.chat.single.view.ChatActivity"
+            android:theme="@style/ChatStyle" />
 
         <activity android:name=".owner_bookings.car_returned.view.CarReturnedActivity" />
     </application>

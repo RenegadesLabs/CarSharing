@@ -9,7 +9,6 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface InboxContract {
@@ -30,4 +29,6 @@ public interface InboxContract {
     Completable updateChat(ChatNotification chat);
 
     void addAlert(AlertNotification alert);
+
+    Single markAsRead(List<Integer> alerts);
 }

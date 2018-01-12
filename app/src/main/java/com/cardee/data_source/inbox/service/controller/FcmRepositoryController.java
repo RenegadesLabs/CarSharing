@@ -13,6 +13,7 @@ public class FcmRepositoryController implements RepositoryController {
 
     static final String INBOX_CHAT = "CHAT";
     static final String INBOX_ALERT = "BOOKING";
+    static final String INBOX_GENERAL = "GENERAL";
 
     private static final String TAG = RepositoryController.class.getSimpleName();
 
@@ -37,6 +38,7 @@ public class FcmRepositoryController implements RepositoryController {
                 updateChat(remoteMessage, controllerCallback);
                 break;
             case INBOX_ALERT:
+            case INBOX_GENERAL:
                 updateBooking(remoteMessage, controllerCallback);
                 break;
         }

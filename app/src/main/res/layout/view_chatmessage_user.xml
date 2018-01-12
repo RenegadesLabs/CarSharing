@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="240dp"
             android:text="asdasdasdasd"
+            android:textIsSelectable="true"
             android:textAlignment="viewStart"
             android:textColor="@color/text_owner_profile_name"
             android:textSize="@dimen/text_regular"

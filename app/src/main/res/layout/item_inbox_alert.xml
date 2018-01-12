@@ -55,11 +55,11 @@
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="You have a booking request"
         android:textAlignment="viewStart"
-        android:textSize="12sp"
         android:textColor="@color/text_more_tab_item"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@id/alert_click_image"
         app:layout_constraintStart_toEndOf="@id/alert_image"
         app:layout_constraintTop_toBottomOf="@id/alert_title" />

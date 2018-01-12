@@ -146,6 +146,7 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
                         // ignore;
                         break;
                 }
+                mAlertAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -4,7 +4,9 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.remote.api.AlertApi;
 import com.cardee.data_source.inbox.remote.api.model.AlertRemote;
+import com.cardee.data_source.inbox.remote.api.request.AlertsRequest;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.domain.util.Mapper;
 
 import java.util.ArrayList;
@@ -27,6 +29,13 @@ public class AlertRemoteDataSource implements RemoteData.AlertListSource {
         return mAlertApi.getAlerts(attachment)
                 .subscribeOn(Schedulers.io())
                 .map(alertListResponse -> mapper.map(alertListResponse.getRemoteList()));
+    }
+
+    @Override
+    public Single<NoDataResponse> markAlertsAsRead(List<Integer> alerts) {
+        AlertsRequest request = new AlertsRequest();
+        request.setAlerts(alerts);
+        return mAlertApi.markAsRead(request).subscribeOn(Schedulers.io());
     }
 
     private class ToAlertMapper implements Mapper<List<AlertRemote>, List<Alert>> {

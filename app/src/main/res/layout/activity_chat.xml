@@ -162,27 +162,29 @@
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/chat_activity_message_field"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="14dp"
+        android:layout_marginBottom="5dp"
         android:background="@null"
         android:backgroundTint="@null"
         android:fitsSystemWindows="true"
+        android:maxLines="2"
         android:hint="Your message..."
         android:theme="@style/ChatEditTextStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chat_activity_send"
-        app:layout_constraintStart_toEndOf="@id/add" />
+        app:layout_constraintStart_toEndOf="@id/add"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <TextView
         android:id="@+id/chat_activity_send"
-        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="4dp"
         android:fitsSystemWindows="true"
+        android:padding="10dp"
         android:text="Send"
         android:theme="@style/TextClickable"
         app:layout_constraintBottom_toBottomOf="parent"
