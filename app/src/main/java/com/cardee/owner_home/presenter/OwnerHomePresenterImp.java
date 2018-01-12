@@ -5,6 +5,8 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
 import com.cardee.data_source.remote.service.AccountManager;
 
+import io.reactivex.functions.Consumer;
+
 public class OwnerHomePresenterImp implements OwnerHomeContract.Presenter {
 
     private final NotificationRepository mRepository;
@@ -27,8 +29,7 @@ public class OwnerHomePresenterImp implements OwnerHomeContract.Presenter {
     @Override
     public void onSubscribeToNotifications() {
         mRepository.fetchNotifications();
-        mRepository.subscribeToNotificationUpdates(inboxCount
-                -> mBottomView.setNotification(inboxCount == 0 ? "" : String.valueOf(inboxCount), barPosition));
+        mRepository.subscribeToNotificationUpdates(inboxCount -> mBottomView.setNotification(inboxCount == 0 ? "" : String.valueOf(inboxCount), barPosition));
     }
 
     @Override
