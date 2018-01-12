@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.ChecklistContract;
-import com.cardee.owner_bookings.car_checklist.adapter.CarImagesAdapter;
+import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +37,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
 //    public AppCompatImageView petrolLvlPlus;
 //    @BindView(R.id.tv_handoverValue)
 //    public TextView petrolValue;
-    @BindView(R.id.images_grid)
+    @BindView(R.id.rv_checklistPhotos)
     public RecyclerView imagesGrid;
     @BindView(R.id.remarks_container)
     public View remarksContainer;
@@ -111,7 +111,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
         petrolMileageView.setValue(txt);
     }
 
-    public void setImagesAdapter(CarImagesAdapter adapter) {
+    public void setImagesAdapter(CarSquareImagesAdapter adapter) {
         imagesGrid.setAdapter(adapter);
     }
 

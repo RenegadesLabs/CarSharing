@@ -155,7 +155,17 @@ public class BookingRepository implements BookingDataSource {
 
     @Override
     public void getChecklist(int bookingId, ChecklistCallback callback) {
+        remoteDataSource.getChecklist(bookingId, new ChecklistCallback() {
+            @Override
+            public void onSuccess(ChecklistEntity checklist) {
+                callback.onSuccess(checklist);
+            }
 
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
 
     @Override

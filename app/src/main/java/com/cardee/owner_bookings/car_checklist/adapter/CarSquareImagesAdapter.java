@@ -1,4 +1,4 @@
-package com.cardee.owner_bookings.adapter;
+package com.cardee.owner_bookings.car_checklist.adapter;
 
 
 import android.content.Context;
