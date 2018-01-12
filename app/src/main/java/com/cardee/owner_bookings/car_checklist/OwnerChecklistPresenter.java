@@ -6,16 +6,18 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.bookings.entity.Checklist;
 import com.cardee.domain.bookings.usecase.GetChecklist;
-import com.cardee.owner_bookings.car_checklist.adapter.CarImagesAdapter;
+import com.cardee.domain.owner.entity.Image;
+import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
 import com.cardee.owner_bookings.car_checklist.strategy.ChecklistByMileageStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.ChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
+import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
 import java.util.Arrays;
 
 
-public class OwnerChecklistPresenter implements ChecklistContract.Presenter {
+public class OwnerChecklistPresenter implements ChecklistContract.Presenter, ImageViewListener {
 
     private ChecklistContract.View mView;
     private ChecklistView mChecklistView;
@@ -101,11 +103,22 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter {
             mStrategy = new ChecklistByMileageStrategy(mChecklistView, this);
             mChecklistView.setMasterMileageValue(String.valueOf(checklist.getMasterMileage()) + " km");
         } else {
-        mStrategy = new ChecklistStrategy(mChecklistView, this);
-        mChecklistView.setMasterMileageValue(checklist.getTank());
+            mStrategy = new ChecklistStrategy(mChecklistView, this);
+            mChecklistView.setMasterMileageValue(checklist.getTank());
         }
-        CarImagesAdapter adapter = new CarImagesAdapter(mChecklistView.getContext());
-        mChecklistView.setImagesAdapter(new CarImagesAdapter(mChecklistView.getContext()));
+        CarSquareImagesAdapter adapter = new CarSquareImagesAdapter(mChecklistView.getContext());
         adapter.setItems(Arrays.asList(checklist.getImages()));
+        mChecklistView.setImagesAdapter(adapter);
+    }
+
+    @Override
+    public void onImageClick(Image image) {
+
+
+    }
+
+    @Override
+    public void onAddNewClick() {
+
     }
 }

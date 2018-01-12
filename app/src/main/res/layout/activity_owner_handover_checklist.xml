@@ -96,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@id/title2" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/images_grid"
+                android:id="@+id/rv_checklistPhotos"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/widget_margin_small"
@@ -115,7 +115,7 @@
                 android:background="@drawable/bg_petrol_tank"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/images_grid">
+                app:layout_constraintTop_toBottomOf="@+id/rv_checklistPhotos">
 
                 <TextView
                     android:id="@+id/tv_remarksText"
