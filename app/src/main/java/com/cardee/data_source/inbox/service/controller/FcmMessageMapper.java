@@ -10,6 +10,7 @@ import java.util.Map;
 
 import static com.cardee.data_source.inbox.service.controller.FcmRepositoryController.INBOX_ALERT;
 import static com.cardee.data_source.inbox.service.controller.FcmRepositoryController.INBOX_CHAT;
+import static com.cardee.data_source.inbox.service.controller.FcmRepositoryController.INBOX_GENERAL;
 
 public class FcmMessageMapper implements Mapper<Map<String, String>, Notification> {
 
@@ -28,6 +29,7 @@ public class FcmMessageMapper implements Mapper<Map<String, String>, Notificatio
                 chatNotify.setMessageTime(messageData.get(Key.DATE_CREATED));
                 return chatNotify;
             case INBOX_ALERT:
+            case INBOX_GENERAL:
                 AlertNotification alertNotify = new AlertNotification();
                 alertNotify.setAlertId(Integer.valueOf(messageData.get(Key.Alert.USER_ALERT_ID)));
                 alertNotify.setObjectId(Integer.valueOf(messageData.get(Key.Alert.OBJECT_ID)));

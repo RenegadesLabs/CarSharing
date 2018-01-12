@@ -1,7 +1,6 @@
 package com.cardee.inbox.alert.list.presenter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
@@ -68,6 +67,9 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
     @Override
     public void onAlertClick(Alert alert) {
         alert.setNewBooking(false);
+        if (mView != null) {
+            mView.showAlert(alert);
+        }
         List<Integer> alerts = new ArrayList<>();
         alerts.add(alert.getAlertId());
         mInboxRepository.markAsRead(alerts).subscribe(o -> {
@@ -78,15 +80,6 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
         }, throwable
                 -> Log.e(TAG, throwable.getMessage()));
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Alert.ALERT_TYPE, alert.getAlertType());
-        bundle.putInt(Alert.ALERT_SERVER_ID, alert.getAlertId());
-        bundle.putString(Alert.ALERT_ATTACHMENT, alert.getAttachment());
-        bundle.putInt(Alert.ALERT_OBJECT_ID, alert.getObjectId());
-        if (mView != null) {
-            mView.showAlert(alert);
-        }
     }
 
     @Override

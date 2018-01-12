@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
-    android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="4dp"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
@@ -69,8 +69,9 @@
             android:maxWidth="240dp"
             android:text="asdadsasdasdasd"
             android:textAlignment="viewStart"
-            android:textSize="@dimen/text_regular"
             android:textColor="@color/text_owner_profile_name"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/text_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,28 +85,6 @@
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/message_text" />
-
-        <!--<android.support.v7.widget.AppCompatImageView-->
-        <!--android:id="@+id/message_status_sent"-->
-        <!--android:layout_width="10dp"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:layout_marginEnd="2dp"-->
-        <!--android:layout_marginStart="2dp"-->
-        <!--android:visibility="gone"-->
-        <!--app:layout_constraintStart_toEndOf="@id/message_time"-->
-        <!--app:layout_constraintTop_toBottomOf="@id/message_text"-->
-        <!--app:srcCompat="@drawable/ic_chatmark_sent" />-->
-
-        <!--<android.support.v7.widget.AppCompatImageView-->
-        <!--android:id="@+id/message_status_read"-->
-        <!--android:layout_width="15dp"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:layout_marginEnd="2dp"-->
-        <!--android:layout_marginStart="2dp"-->
-        <!--android:visibility="gone"-->
-        <!--app:layout_constraintStart_toEndOf="@id/message_status_sent"-->
-        <!--app:layout_constraintTop_toBottomOf="@id/message_text"-->
-        <!--app:srcCompat="@drawable/ic_chatmark_read" />-->
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.LinearLayoutCompat>

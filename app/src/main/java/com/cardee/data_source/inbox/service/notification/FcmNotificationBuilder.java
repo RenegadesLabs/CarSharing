@@ -1,9 +1,11 @@
 package com.cardee.data_source.inbox.service.notification;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,10 +14,18 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cardee.R;
+import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.Notification;
 import com.cardee.inbox.chat.single.view.ChatActivity;
+import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
+import com.cardee.owner_bookings.view.BookingActivity;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
+import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
 import com.cardee.owner_home.view.OwnerHomeActivity;
+import com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
 
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
@@ -62,7 +72,8 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     pendingIntent = createAlertPendingIntent(context, notification);
                 }
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelAlertId)
-                        .setSmallIcon(getValidAlertImage(notification.getType()))
+//                        .setSmallIcon(getValidAlertImage(notification.getType()))
+                        .setSmallIcon(R.drawable.ic_cardee_icon)
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
@@ -98,11 +109,93 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     }
 
     private PendingIntent createAlertPendingIntent(Context context, Notification notification) {
-        //TODO: implement pending intent destination based on alert type
+        AlertNotification alertNotification = (AlertNotification) notification;
+        if (alertNotification != null) {
+            Alert.Type type = alertNotification.getType();
+            if (type != null) {
+                int objectId = alertNotification.getObjectId();
+                switch (type) {
+                    case ACCEPTED:
+                    case REQUEST_EXPIRED:
+                    case HANDOVER_REMINDER:
+                    case RETURN_OVERDUE:
+                    case NEW_REQUEST:
+                    case BOOKING_CANCELLATION:
+                    case BOOKING_EXT:
+                    case RETURN_REMINDER:
+                        if (alertNotification.isOwnerSession()) {
+                            Intent intent = new Intent(context, BookingActivity.class);
+                            intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                            return PendingIntent.getActivity(
+                                    context,
+                                    FCM_NOTIFICATION_REQUEST_CODE,
+                                    intent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                            );
+                        } else {
+                            //TODO: implement for Renter
+                        }
+                        break;
+                    case USER_VERIFICATION:
+                    case RENTER_STATE_CHANGE:
+                    case OWNER_STATE_CHANGE:
+                        Intent accountIntent = new Intent(context, AccountDetailsActivity.class);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                accountIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                    case BROADCAST:
+                        //TODO: different UI every time.
+                        break;
+                    case RENTER_REVIEW_REMINDER:
+                    case RENTER_REVIEW:
+                        Intent renterRateIntent = new Intent(context, RateRentalExpActivity.class);
+                        renterRateIntent.putExtra("booking_id", objectId);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                renterRateIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                    case OWNER_CHECKLIST_UPD:
+                    case RENTER_CHECKLIST_UPD:
+                        //TODO:  editedCheckList();
+                        break;
+                    case INIT_CHECKLIST:
+                        //TODO: checkList();
+                        break;
+                    case OWNER_REVIEW:
+                    case OWNER_REVIEW_REMINDER:
+                        Intent ownerRateIntent = new Intent(context, CarReturnedActivity.class);
+                        ownerRateIntent.putExtra("booking_id", objectId);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                ownerRateIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                    case CAR_VERIFICATION:
+                    case CAR_STATE_CHANGE:
+                        Intent ownerCarIntent = new Intent(context, OwnerCarDetailsActivity.class);
+                        ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                ownerCarIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                    case SYSTEM_MESSAGES:
+                        // ignore;
+                        break;
+                }
+            }
+        }
         return null;
     }
 
-
+    // do not use colored images!
     private int getValidAlertImage(Alert.Type alertType) {
         int drawableResource = R.drawable.ic_notification_system;
         switch (alertType) {
@@ -143,9 +236,31 @@ public class FcmNotificationBuilder implements NotificationBuilder {
     }
 
     @Override
-    public void showNotification(Context context) {
+    public void showNotification(Context context, Notification notification) {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (manager != null && mNotificationBuilder != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                String channelId = null;
+                CharSequence channelName = null;
+                switch (notification.getNotificationType()) {
+                    case CHAT:
+                        channelId = context.getString(R.string.chat_notification_channel_id);
+                        channelName = context.getString(R.string.chat_notification_channel_name);
+                        break;
+                    case ALERT:
+                        channelId = context.getString(R.string.alert_notification_channel_id);
+                        channelName = context.getString(R.string.alert_notification_channel_name);
+                        break;
+                }
+                int importance = NotificationManager.IMPORTANCE_LOW;
+                NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                manager.createNotificationChannel(notificationChannel);
+            }
+
             manager.notify(FCM_NOTIFICATION_NOTIFICATION_CODE, mNotificationBuilder.build());
         } else {
             Log.e(TAG, "Notification manager is null");

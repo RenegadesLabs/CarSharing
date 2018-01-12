@@ -8,6 +8,6 @@ public interface NotificationBuilder {
 
     void createNotification(Context context, Notification notification);
 
-    void showNotification(Context context);
+    void showNotification(Context context, Notification notification);
 
 }
