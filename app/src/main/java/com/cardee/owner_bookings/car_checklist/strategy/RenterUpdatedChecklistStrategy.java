@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
+import com.cardee.owner_car_details.view.adapter.CarImagesAdapter;
 
 
 public class RenterUpdatedChecklistStrategy extends PresentationStrategy implements View.OnClickListener {
