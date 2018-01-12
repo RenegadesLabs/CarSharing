@@ -12,7 +12,7 @@ public class Checklist {
     private boolean byMileage;
     private String driverName;
     private Image[] images;
-    private int[] imageIds;
+    private Integer[] imageIds;
 
     public Checklist(String remarks,
                      int bookingId,
@@ -21,7 +21,7 @@ public class Checklist {
                      boolean byMileage,
                      String driver,
                      Image[] images,
-                     int[] imageIds) {
+                     Integer[] imageIds) {
         this.remarks = remarks;
         this.bookingId = bookingId;
         this.tank = tank;
@@ -40,7 +40,7 @@ public class Checklist {
         private boolean byMileage;
         private String driver;
         private Image[] images;
-        private int[] imageIds;
+        private Integer[] imageIds;
 
         public Builder() {}
 
@@ -79,7 +79,7 @@ public class Checklist {
             return this;
         }
 
-        public Builder setImageIds(int[] imageIds) {
+        public Builder setImageIds(Integer[] imageIds) {
             this.imageIds = imageIds;
             return this;
         }
@@ -118,7 +118,7 @@ public class Checklist {
         return images;
     }
 
-    public int[] getImageIds() {
+    public Integer[] getImageIds() {
         return imageIds;
     }
 }

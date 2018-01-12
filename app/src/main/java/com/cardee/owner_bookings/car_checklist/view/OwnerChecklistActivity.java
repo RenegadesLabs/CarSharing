@@ -22,13 +22,10 @@ import com.cardee.owner_bookings.car_checklist.OwnerChecklistPresenter;
 import com.cardee.owner_bookings.car_checklist.strategy.ChecklistByMileageStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.ChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.RenterUpdatedChecklistStrategy;
+import com.cardee.owner_bookings.view.BookingActivity;
 
 
 public class OwnerChecklistActivity extends AppCompatActivity implements OwnerChecklistPresenter.View {
-
-    public final static int HANDOVER_CHECKLIST = 0;
-    public final static int HANDOVER_CHECKLIST_MILEAGE = 1;
-    public final static int RENTER_UPDATED_CHECKLIST = 2;
 
     private static final int IMAGE_REQUEST_CODE = 102;
     private static final int REQUEST_PERMISSION_CODE = 103;
@@ -109,6 +106,11 @@ public class OwnerChecklistActivity extends AppCompatActivity implements OwnerCh
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onHandover(int bookingId) {
+        finish();
     }
 
     private boolean hasPermission() {

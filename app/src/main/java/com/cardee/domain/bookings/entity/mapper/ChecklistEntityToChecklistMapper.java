@@ -10,7 +10,7 @@ public class ChecklistEntityToChecklistMapper {
     public static Checklist transform(ChecklistEntity entity) {
         ImageEntity[] imageEntities = entity.getImages();
         Image[] images = new Image[imageEntities.length];
-        int[] imageIds = new int[imageEntities.length];
+        Integer[] imageIds = new Integer[imageEntities.length];
         for (int i = 0; i < images.length; i++) {
             ImageEntity target = imageEntities[i];
             images[i] = new Image(target.getImageId(), target.getLink(), target.getThumbnail(), target.isPrimary());
@@ -26,7 +26,7 @@ public class ChecklistEntityToChecklistMapper {
         String tank = getTankFullness(entity.getTank());
         String driverName = entity.getDriver().getName();
 
-        boolean byMileage = entity.getFuelPolicy().getFuelPolicyId() == 0;
+        boolean byMileage = entity.getFuelPolicy().getFuelPolicyId() == 1;
 
         return new Checklist.Builder()
                 .setBookingId(bookingId)

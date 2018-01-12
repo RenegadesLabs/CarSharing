@@ -36,9 +36,9 @@ public class SaveChecklist implements UseCase<SaveChecklist.RequestValues, SaveC
         private final String remarks;
         private final float tank;
         private final int masterMileage;
-        private final int[] imageIds;
+        private final Integer[] imageIds;
 
-        public RequestValues(int bookingId, String remarks, float tank, int masterMileage, int[] imageIds) {
+        public RequestValues(int bookingId, String remarks, float tank, int masterMileage, Integer[] imageIds) {
             this.bookingId = bookingId;
             this.remarks = remarks;
             this.tank = tank;
@@ -62,7 +62,7 @@ public class SaveChecklist implements UseCase<SaveChecklist.RequestValues, SaveC
             return masterMileage;
         }
 
-        public int[] getImageIds() {
+        public Integer[] getImageIds() {
             return imageIds;
         }
     }

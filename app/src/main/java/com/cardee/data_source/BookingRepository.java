@@ -169,7 +169,7 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imagesIds, SimpleCallback callback) {
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imagesIds, SimpleCallback callback) {
         remoteDataSource.saveChecklist(bookingId, remarks, tank, masterMileage, imagesIds, new SimpleCallback() {
             @Override
             public void onSuccess() {

@@ -1,7 +1,7 @@
-package com.cardee.data_source.remote.api.cars.response;
+package com.cardee.data_source.remote.api.booking.response;
 
 import com.cardee.data_source.remote.api.BaseResponse;
-import com.cardee.data_source.remote.api.cars.response.entity.UploadImageResponseBody;
+import com.cardee.data_source.remote.api.booking.response.entity.UploadImageResponseBody;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

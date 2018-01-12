@@ -1,6 +1,6 @@
 package com.cardee.data_source.remote.api.booking;
 
-import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
+import com.cardee.data_source.remote.api.booking.response.UploadImageResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;

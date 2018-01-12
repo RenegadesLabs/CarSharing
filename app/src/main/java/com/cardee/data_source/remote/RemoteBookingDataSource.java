@@ -14,9 +14,9 @@ import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
 import com.cardee.data_source.remote.api.booking.response.ChecklistResponse;
+import com.cardee.data_source.remote.api.booking.response.UploadImageResponse;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
-import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
-import com.cardee.data_source.remote.api.cars.response.entity.UploadImageResponseBody;
+import com.cardee.data_source.remote.api.booking.response.entity.UploadImageResponseBody;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.util.ImageProcessor;
 
@@ -155,12 +155,18 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imageIds, SimpleCallback callback) {
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imageIds, SimpleCallback callback) {
+
+        int[] temp = new int[imageIds.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = Integer.parseInt(imageIds[i].toString());
+        }
+
         ChecklistEntity checklist = new ChecklistEntity();
         checklist.setRemarks(remarks);
         checklist.setTank(tank);
         checklist.setMileage(masterMileage);
-        checklist.setImageIds(imageIds);
+        checklist.setImageIds(temp);
 
         api.saveChecklist(bookingId, checklist).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
@@ -195,7 +201,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
             return;
         }
         if (imageFile.exists()) {
-            MultipartBody.Part part = MultipartBody.Part.createFormData("car_image",
+            MultipartBody.Part part = MultipartBody.Part.createFormData("photo",
                     imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
             try {
                 Response<UploadImageResponse> response = uploadApi.uploadImage(bookingId, part).execute();

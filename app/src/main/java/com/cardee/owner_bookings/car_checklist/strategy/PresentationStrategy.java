@@ -17,6 +17,12 @@ public abstract class PresentationStrategy {
     public interface ActionListener {
 
         void onHandover();
+
+        void onAccurateCancel();
+
+        void onAccurateConfirm();
+
+
     }
 
     public boolean isFinished() {

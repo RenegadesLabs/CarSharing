@@ -18,7 +18,9 @@ import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
 import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class OwnerChecklistPresenter implements ChecklistContract.Presenter, ImageViewListener {
@@ -32,12 +34,14 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
     private PresentationStrategy mStrategy;
 
     private Checklist mChecklistObj;
+    private List<Integer> mImageIdsList;
 
     private View mCallbacks;
 
     public OwnerChecklistPresenter(int bookingId) {
         mBookingId = bookingId;
         mExecutor = UseCaseExecutor.getInstance();
+        mImageIdsList = new ArrayList<>();
     }
 
     @Override
@@ -68,6 +72,7 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
                             isNotFetched = false;
                             mView.showProgress(isNotFetched);
                             mChecklistObj = response.getChecklist();
+                            mImageIdsList.addAll(Arrays.asList(mChecklistObj.getImageIds()));
                             chooseStrategy();
                         }
                     }
@@ -88,16 +93,17 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
         mExecutor.execute(new AddImageToChecklist(), new AddImageToChecklist.RequestValues(mBookingId, uri),
                 new UseCase.Callback<AddImageToChecklist.ResponseValues>() {
-            @Override
-            public void onSuccess(AddImageToChecklist.ResponseValues response) {
-                init();
-            }
+                    @Override
+                    public void onSuccess(AddImageToChecklist.ResponseValues response) {
+                        mImageIdsList.add(response.getImageId());
+                        saveChecklist(false);
+                    }
 
-            @Override
-            public void onError(Error error) {
-                mView.showMessage(R.string.error_occurred);
-            }
-        });
+                    @Override
+                    public void onError(Error error) {
+                        mView.showMessage(R.string.error_occurred);
+                    }
+                });
     }
 
     @Override
@@ -114,22 +120,17 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
     @Override
     public void onHandover() {
-        mExecutor.execute(new SaveChecklist(),
-                new SaveChecklist.RequestValues(mBookingId, mChecklistView.getRemarksText(),
-                        mChecklistView.getTankFullness(), mChecklistView.getMileage(), mChecklistObj.getImageIds()),
-                new UseCase.Callback<SaveChecklist.ResponseValues>() {
-                    @Override
-                    public void onSuccess(SaveChecklist.ResponseValues response) {
-                        if (response.isSuccess()) {
-                            mCallbacks.onHandover(mBookingId);
-                        }
-                    }
+        saveChecklist(true);
+    }
 
-                    @Override
-                    public void onError(Error error) {
+    @Override
+    public void onAccurateCancel() {
 
-                    }
-                });
+    }
+
+    @Override
+    public void onAccurateConfirm() {
+
     }
 
     private void chooseStrategy() {
@@ -144,6 +145,31 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
         adapter.setImageViewListener(this);
         adapter.setItems(Arrays.asList(mChecklistObj.getImages()));
         mChecklistView.setImagesAdapter(adapter);
+    }
+
+    private void saveChecklist(boolean finalSave) {
+        Integer[] ids = new Integer[mImageIdsList.size()];
+        mImageIdsList.toArray(ids);
+        mExecutor.execute(new SaveChecklist(),
+                new SaveChecklist.RequestValues(mBookingId, mChecklistView.getRemarksText(),
+                        mChecklistView.getTankFullness(), mChecklistView.getMileage(), ids),
+                new UseCase.Callback<SaveChecklist.ResponseValues>() {
+                    @Override
+                    public void onSuccess(SaveChecklist.ResponseValues response) {
+                        if (response.isSuccess()) {
+                            if (finalSave) {
+                                mCallbacks.onHandover(mBookingId);
+                                return;
+                            }
+                            getChecklist();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+
+                    }
+                });
     }
 
     @Override
@@ -167,6 +193,7 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
     public interface View {
         void onPickPhoto();
+
         void onHandover(int bookingId);
     }
 

@@ -1,4 +1,4 @@
-package com.cardee.data_source.remote.api.cars.response.entity;
+package com.cardee.data_source.remote.api.booking.response.entity;
 
 import com.cardee.data_source.remote.api.ErrorResponseBody;
 import com.google.gson.annotations.Expose;
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class UploadImageResponseBody extends ErrorResponseBody {
 
     @Expose
-    @SerializedName("image_id")
+    @SerializedName("id")
     private Integer imageId;
 
     public UploadImageResponseBody() {
