@@ -163,9 +163,7 @@ public class DateStringDelegate {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date time = calendar.getTime();
-        String formattedTime = timeFormatter.format(time);
-        System.out.println(formattedTime);
-        return formattedTime;
+        return timeFormatter.format(time);
     }
 
     public void onSetDailyRentalRateFirst(TextView tv, Float amount) {
