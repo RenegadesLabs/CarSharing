@@ -19,8 +19,8 @@ public class DateStringDelegate {
     private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
     private static final String TIME_VIEW_PATTERN = "ha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-    private static final String DATE_VIEW_PATTERN = "d\u00a0MMM,\u00a0ha";
-    private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM, h:mma";
+    private static final String DATE_VIEW_PATTERN = "d\u00a0MMM yyyy,\u00a0ha";
+    private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM yyyy, h:mma";
 
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
