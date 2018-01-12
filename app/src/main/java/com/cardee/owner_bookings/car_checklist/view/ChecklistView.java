@@ -118,4 +118,11 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     public String getRemarksText() {
         return remarksET.getText().toString();
     }
+
+    public float getTankFullness() {
+        return petrolMileageView.getTankFullness();
+    }
+    public int getMileage() {
+        return petrolMileageView.getMileage();
+    }
 }

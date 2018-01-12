@@ -16,6 +16,8 @@ public class PetrolView extends ConstraintLayout implements View.OnClickListener
 
     private TextView mValue;
 
+    private boolean isByMileage;
+
     public PetrolView(Context context) {
         super(context);
     }
@@ -85,5 +87,44 @@ public class PetrolView extends ConstraintLayout implements View.OnClickListener
                 break;
             }
         }
+    }
+
+    public float getTankFullness() {
+        float fullness = 0;
+        if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[0])) {
+            fullness = 0.125f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[1])) {
+            fullness = 0.25f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[2])) {
+            fullness = 0.375f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[3])) {
+            fullness = 0.5f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[4])) {
+            fullness = 0.625f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[5])) {
+            fullness = 0.75f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[6])) {
+            fullness = 0.875f;
+        } else if (mValue.getText().toString().split(" ")[0]
+                .equals(LEVELS[7])) {
+            fullness = 1.f;
+        } else {
+            isByMileage = true;
+        }
+        return fullness;
+    }
+
+    public int getMileage() {
+        if (!isByMileage) {
+            return 0;
+        }
+        return Integer.parseInt(mValue.getText().toString().split(" ")[0]);
     }
 }

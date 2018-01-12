@@ -1,5 +1,7 @@
 package com.cardee.owner_bookings.car_checklist;
 
+import android.net.Uri;
+
 import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
@@ -18,9 +20,13 @@ public interface ChecklistContract {
 
         void setView(View view);
 
+        void setViewCallbacks(OwnerChecklistPresenter.View callbacks);
+
         void setStrategy(PresentationStrategy strategy);
 
         void getChecklist();
+
+        void onAddNewImage(Uri uri);
 
         void onDestroy();
 
