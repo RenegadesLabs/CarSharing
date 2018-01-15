@@ -60,8 +60,10 @@ public class TimeFrameDelegate {
     }
 
     private void initPickerWithValues(NumberPicker picker, String[] values, Integer selected) {
+        picker.setDisplayedValues(null);
         picker.setMinValue(0);
         picker.setMaxValue(values.length - 1);
+        picker.setWrapSelectorWheel(false);
         picker.setDisplayedValues(values);
         if (selected != null) {
             picker.setValue(selected);

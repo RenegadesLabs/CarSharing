@@ -77,8 +77,8 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
         timeValues = getContext().getResources().getStringArray(R.array.availability_time_titles);
         pickupTimePicker = parent.findViewById(R.id.time_pickup_picker);
         returnTimePicker = parent.findViewById(R.id.time_return_picker);
-        pickupTimePicker.setWrapSelectorWheel(false);
-        returnTimePicker.setWrapSelectorWheel(false);
+//        pickupTimePicker.setWrapSelectorWheel(false);
+//        returnTimePicker.setWrapSelectorWheel(false);
 //        pickupTimePicker.setDisplayedValues(timeValues);
 //        pickupTimePicker.setMinValue(0);
 //        pickupTimePicker.setMaxValue(timeValues.length - 1);
