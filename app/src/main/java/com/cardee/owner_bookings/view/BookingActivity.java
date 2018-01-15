@@ -15,6 +15,7 @@ import com.cardee.R;
 import com.cardee.owner_bookings.ChecklistActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
+import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
 
 public class BookingActivity extends AppCompatActivity {
@@ -25,12 +26,13 @@ public class BookingActivity extends AppCompatActivity {
     OwnerBookingContract.View view;
     private ChecklistReceiver checklistReceiver;
     private PendingChecklistStorage pendingChecklists;
+    private int bookingId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getIntent().getExtras();
-        int bookingId = args.getInt(OwnerBookingContract.BOOKING_ID);
+        bookingId = args.getInt(OwnerBookingContract.BOOKING_ID);
         presenter = new OwnerBookingPresenter(bookingId);
         Toolbar toolbar;
         BookingView bookingView = (BookingView) LayoutInflater
@@ -45,11 +47,15 @@ public class BookingActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pendingChecklists = new PendingChecklistStorage();
-        if(pendingChecklists.containsChecklist(this, bookingId)){
-            Intent checklistIntent = new Intent(this, ChecklistActivity.class);
-            checklistIntent.putExtras(args);
-            startActivity(checklistIntent);
+        if (pendingChecklists.containsChecklist(this, bookingId)) {
+            openCheckListActivity();
         }
+    }
+
+    private void openCheckListActivity() {
+        Intent intent = new Intent(this, OwnerRenterUpdatedChecklistActivity.class);
+        intent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, bookingId);
+        startActivity(intent);
     }
 
     @Override
@@ -86,8 +92,11 @@ public class BookingActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (ACTION_CHECKLIST.equals(intent.getAction())) {
-                Intent checklistIntent = new Intent(context, ChecklistActivity.class);
-                context.startActivity(checklistIntent);
+                int alertBookingId = intent.getIntExtra(OwnerBookingContract.BOOKING_ID, 0);
+//                if (alertBookingId != bookingId) {
+//                    return;
+//                }
+                openCheckListActivity();
             }
         }
     }

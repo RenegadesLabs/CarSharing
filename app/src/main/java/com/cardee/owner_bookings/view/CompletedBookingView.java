@@ -140,6 +140,11 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
         String amountString = booking.getTotalAmount() == null ? "$0" : "$" + booking.getTotalAmount();
     }
 
+    @Override
+    public void bind() {
+
+    }
+
     private void loadImageIntoView(String imgUrl, int placeholderRes, ImageView view, ProgressBar progress, boolean circle) {
         imgUrl = imgUrl == null ? "" : imgUrl;
         if (progress != null) {
