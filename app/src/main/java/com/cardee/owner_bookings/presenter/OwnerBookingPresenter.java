@@ -64,6 +64,9 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                     view.showProgress(false);
                     Booking booking = response.getBooking();
                     changeStrategyFrom(booking.getBookingStateType());
+                    if (BookingState.COMPLETED.equals(strategy.getType())) {
+                        requestAdditionalState();
+                    }
                     view.bind(booking);
                 }
             }
@@ -103,6 +106,10 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                     strategy = new CompletedStrategy(bookingView, this);
             }
         }
+    }
+
+    private void requestAdditionalState() {
+
     }
 
     @Override

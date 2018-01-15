@@ -17,6 +17,8 @@ public interface OwnerBookingContract {
 
         void bind(Booking booking);
 
+        void bind();
+
         void onDestroy();
     }
 
