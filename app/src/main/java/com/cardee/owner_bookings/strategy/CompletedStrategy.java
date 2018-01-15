@@ -28,6 +28,7 @@ public class CompletedStrategy extends PresentationStrategy {
         bookingView.ratingTitle.setVisibility(View.VISIBLE);
         bookingView.ratingBar.setVisibility(View.VISIBLE);
         bookingView.ratingEdit.setVisibility(View.VISIBLE);
+        bookingView.earningsContainer.setVisibility(View.VISIBLE);
 
         bookingView.renterNameTitle.setVisibility(View.GONE);
         bookingView.renterName.setVisibility(View.GONE);

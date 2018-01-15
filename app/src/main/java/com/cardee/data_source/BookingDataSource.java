@@ -28,7 +28,7 @@ public interface BookingDataSource {
 
     void getChecklist(int bookingId, ChecklistCallback callback);
 
-    void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imagesIds, SimpleCallback callback);
+    void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imagesIds, SimpleCallback callback);
 
     void uploadImage(Integer bookingId, Uri uri, ImageCallback callback);
 

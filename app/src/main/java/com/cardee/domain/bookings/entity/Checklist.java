@@ -1,30 +1,31 @@
 package com.cardee.domain.bookings.entity;
 
-import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.domain.owner.entity.Image;
 
 public class Checklist {
 
     private String remarks;
     private int bookingId;
-    private String tank;
+    private String tankText;
+    private float tank;
     private int masterMileage;
     private boolean byMileage;
     private String driverName;
     private Image[] images;
-    private int[] imageIds;
+    private Integer[] imageIds;
 
     public Checklist(String remarks,
                      int bookingId,
-                     String tank,
+                     String tankText,
+                     float tank,
                      int masterMileage,
                      boolean byMileage,
                      String driver,
                      Image[] images,
-                     int[] imageIds) {
+                     Integer[] imageIds) {
         this.remarks = remarks;
         this.bookingId = bookingId;
-        this.tank = tank;
+        this.tankText = tankText;
         this.masterMileage = masterMileage;
         this.byMileage = byMileage;
         this.driverName = driver;
@@ -35,12 +36,13 @@ public class Checklist {
     public static class Builder {
         private String remarks;
         private int bookingId;
-        private String tank;
+        private String tankText;
+        private float tank;
         private int masterMileage;
         private boolean byMileage;
         private String driver;
         private Image[] images;
-        private int[] imageIds;
+        private Integer[] imageIds;
 
         public Builder() {}
 
@@ -54,7 +56,12 @@ public class Checklist {
             return this;
         }
 
-        public Builder setTank(String tank) {
+        public Builder setTankText(String tank) {
+            this.tankText = tank;
+            return this;
+        }
+
+        public Builder setTank(float tank) {
             this.tank = tank;
             return this;
         }
@@ -79,13 +86,13 @@ public class Checklist {
             return this;
         }
 
-        public Builder setImageIds(int[] imageIds) {
+        public Builder setImageIds(Integer[] imageIds) {
             this.imageIds = imageIds;
             return this;
         }
 
         public Checklist build() {
-            return new Checklist(remarks, bookingId, tank, masterMileage, byMileage,
+            return new Checklist(remarks, bookingId, tankText, tank, masterMileage, byMileage,
                      driver, images, imageIds);
         }
     }
@@ -98,7 +105,11 @@ public class Checklist {
         return bookingId;
     }
 
-    public String getTank() {
+    public String getTankText() {
+        return tankText;
+    }
+
+    public float getTank() {
         return tank;
     }
 
@@ -118,7 +129,7 @@ public class Checklist {
         return images;
     }
 
-    public int[] getImageIds() {
+    public Integer[] getImageIds() {
         return imageIds;
     }
 }

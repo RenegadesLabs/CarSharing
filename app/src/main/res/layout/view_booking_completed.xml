@@ -225,6 +225,119 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rating_block" />
 
+        <TextView
+            android:id="@+id/earnings_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Earnings"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating_block" />
+
+        <TextView
+            android:id="@+id/earning_rental_off_peak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Rental 1 days (weekday)"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earnings_title" />
+
+        <TextView
+            android:id="@+id/earning_rental_peak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Rental 1 days (weekday and P.H.)"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_rental_off_peak" />
+
+        <TextView
+            android:id="@+id/earning_rental_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Weekly discount 10%"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_rental_peak" />
+
+        <TextView
+            android:id="@+id/earning_rental_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Delivery (3 days or more)"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_rental_discount" />
+
+        <View
+            android:id="@+id/div1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_rental_delivery" />
+
+        <TextView
+            android:id="@+id/earning_booking_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Booking Cost"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div1" />
+
+        <TextView
+            android:id="@+id/earning_service_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Service Fee"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_booking_cost" />
+
+        <View
+            android:id="@+id/div2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earning_service_fee" />
+
+        <TextView
+            android:id="@+id/earning_nett"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_margin_large"
+            android:text="Net Earnings"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div2" />
+
+
         <FrameLayout
             android:id="@+id/booking_loading_indicator"
             android:layout_width="0dp"

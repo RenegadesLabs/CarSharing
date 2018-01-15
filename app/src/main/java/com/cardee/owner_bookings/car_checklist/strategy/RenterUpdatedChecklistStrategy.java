@@ -28,7 +28,7 @@ public class RenterUpdatedChecklistStrategy extends PresentationStrategy impleme
 
         mChecklistView.petrolMileageView.setVisibility(View.GONE);
         mChecklistView.petrolDescTV.setVisibility(View.VISIBLE);
-        mChecklistView.imagesGrid.setLayoutManager(new GridLayoutManager(mChecklistView.getContext(), 2,
+        mChecklistView.imagesGrid.setLayoutManager(new GridLayoutManager(mChecklistView.getContext(), 4,
                 GridLayoutManager.VERTICAL, false));
         mChecklistView.imagesGrid.setItemAnimator(new DefaultItemAnimator());
         mChecklistView.remarksContainer.setBackground(null);
@@ -39,20 +39,6 @@ public class RenterUpdatedChecklistStrategy extends PresentationStrategy impleme
         mChecklistView.completeYesB.setOnClickListener(this);
         mChecklistView.completeNoB.setOnClickListener(this);
 
-    }
-
-    public void setPetrolDescription(String txt) {
-        if (mChecklistView == null) {
-            return;
-        }
-        mChecklistView.petrolDescTV.setText(txt);
-    }
-
-    public void setImagesAdapter(CarImagesAdapter adapter) {
-        if (mChecklistView == null) {
-            return;
-        }
-        mChecklistView.imagesGrid.setAdapter(adapter);
     }
 
     public void setRemarksText(String txt) {

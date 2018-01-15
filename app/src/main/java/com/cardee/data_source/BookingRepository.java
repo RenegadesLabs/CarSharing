@@ -169,13 +169,33 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, int[] imagesIds, SimpleCallback callback) {
+    public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imagesIds, SimpleCallback callback) {
+        remoteDataSource.saveChecklist(bookingId, remarks, tank, masterMileage, imagesIds, new SimpleCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
 
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
 
     @Override
     public void uploadImage(Integer bookingId, Uri uri, ImageCallback callback) {
+        remoteDataSource.uploadImage(bookingId, uri, new ImageCallback() {
+            @Override
+            public void onSuccess(int imageId) {
+                callback.onSuccess(imageId);
+            }
 
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     }
 
     private class Cache {

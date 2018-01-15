@@ -2,6 +2,7 @@ package com.cardee.owner_bookings.car_checklist.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.StringRes;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,9 @@ public class PendingChecklistStorage {
     }
 
     public static boolean containsChecklist(Context context, int bookingId) {
+        SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
+        return pref.getStringSet(CHECKLISTS, new HashSet<>()).contains(String.valueOf(bookingId));
+    public boolean containsChecklist(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
         return pref.getStringSet(CHECKLISTS, new HashSet<>()).contains(String.valueOf(bookingId));
     }

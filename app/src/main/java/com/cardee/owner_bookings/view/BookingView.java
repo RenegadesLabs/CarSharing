@@ -204,6 +204,11 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         });
     }
 
+    @Override
+    public void bind() {
+
+    }
+
     private void loadImageIntoView(String imgUrl, int placeholderRes, ImageView view, ProgressBar progress, boolean circle) {
         imgUrl = imgUrl == null ? "" : imgUrl;
         if (progress != null) {
