@@ -13,16 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 
 import com.cardee.R;
-import com.cardee.owner_bookings.car_checklist.ChecklistContract;
-import com.cardee.owner_bookings.car_checklist.OwnerChecklistPresenter;
-import com.cardee.owner_bookings.car_checklist.strategy.ChecklistByMileageStrategy;
-import com.cardee.owner_bookings.car_checklist.strategy.ChecklistStrategy;
-import com.cardee.owner_bookings.car_checklist.strategy.RenterUpdatedChecklistStrategy;
-import com.cardee.owner_bookings.view.BookingActivity;
+import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
+import com.cardee.owner_bookings.car_checklist.presenter.OwnerChecklistPresenter;
 
 
 public class OwnerChecklistActivity extends AppCompatActivity implements OwnerChecklistPresenter.View {

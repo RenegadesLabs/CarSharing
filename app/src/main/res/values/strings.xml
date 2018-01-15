@@ -448,6 +448,7 @@
     <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
     <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
     <string name="owner_handover_progress">Handing over…</string>
+    <string name="owner_handover_tank_filled">tank filled.</string>
 
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>

@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_bookings.car_checklist.ChecklistContract;
+import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
 
 import butterknife.BindView;
@@ -37,7 +37,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     public TextView petrolDescTV;
     @BindView(R.id.pb_petrolMileage)
     public ProgressBar petrolMileageProgress;
-//    @BindView(R.id.iv_handoverPetrolLvlMinus)
+    //    @BindView(R.id.iv_handoverPetrolLvlMinus)
 //    public AppCompatImageView petrolLvlMinus;
 //    @BindView(R.id.iv_handoverPetrolLvlPlus)
 //    public AppCompatImageView petrolLvlPlus;
@@ -130,6 +130,22 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @Override
     public void showMessage(int messageId) {
         Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
+    }
+
+    public void setFirstTitle(boolean isByMileage) {
+        if (isByMileage) {
+            title1.setText(R.string.owner_handover_checklist_master_title);
+            return;
+        }
+        title1.setText(R.string.owner_handover_checklist_petrol_title);
+    }
+
+    public void setMileagePetrolDesc(String desc) {
+        petrolDescTV.setText(desc);
+    }
+
+    public void setRemarksText(String text) {
+        remarksText.setText(text);
     }
 
     public void setMasterMileageValue(String txt) {

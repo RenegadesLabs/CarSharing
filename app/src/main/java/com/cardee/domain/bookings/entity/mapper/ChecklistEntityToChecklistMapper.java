@@ -26,7 +26,7 @@ public class ChecklistEntityToChecklistMapper {
         String tank = getTankFullness(entity.getTank());
         String driverName = entity.getDriver().getName();
 
-        boolean byMileage = entity.getFuelPolicy().getFuelPolicyId() == 1;
+        boolean byMileage = entity.getFuelPolicy().getFuelPolicyId() == 0;
 
         return new Checklist.Builder()
                 .setBookingId(bookingId)

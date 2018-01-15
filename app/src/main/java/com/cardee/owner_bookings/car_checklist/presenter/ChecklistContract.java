@@ -1,4 +1,4 @@
-package com.cardee.owner_bookings.car_checklist;
+package com.cardee.owner_bookings.car_checklist.presenter;
 
 import android.net.Uri;
 

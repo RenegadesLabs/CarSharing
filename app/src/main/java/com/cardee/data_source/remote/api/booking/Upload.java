@@ -1,6 +1,6 @@
 package com.cardee.data_source.remote.api.booking;
 
-import com.cardee.data_source.remote.api.booking.response.UploadImageResponse;
+import com.cardee.data_source.remote.api.booking.response.UploadBookingImageResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -13,5 +13,5 @@ public interface Upload {
 
     @Multipart
     @PUT("bookings/{id}/checklist")
-    Call<UploadImageResponse> uploadImage(@Path("id") int id, @Part MultipartBody.Part picture);
+    Call<UploadBookingImageResponse> uploadImage(@Path("id") int id, @Part MultipartBody.Part picture);
 }

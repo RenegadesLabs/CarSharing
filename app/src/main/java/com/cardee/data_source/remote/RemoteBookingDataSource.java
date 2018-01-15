@@ -13,18 +13,15 @@ import com.cardee.data_source.remote.api.booking.Upload;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
-import com.cardee.data_source.remote.api.booking.response.ChecklistResponse;
-import com.cardee.data_source.remote.api.booking.response.UploadImageResponse;
+import com.cardee.data_source.remote.api.booking.response.UploadBookingImageResponse;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
-import com.cardee.data_source.remote.api.booking.response.entity.UploadImageResponseBody;
-import com.cardee.domain.bookings.BookingState;
+import com.cardee.data_source.remote.api.booking.response.entity.UploadBookingImageResponseBody;
 import com.cardee.util.ImageProcessor;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -199,10 +196,10 @@ public class RemoteBookingDataSource implements BookingDataSource {
             MultipartBody.Part part = MultipartBody.Part.createFormData("photo",
                     imageFile.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), imageFile));
             try {
-                Response<UploadImageResponse> response = uploadApi.uploadImage(bookingId, part).execute();
+                Response<UploadBookingImageResponse> response = uploadApi.uploadImage(bookingId, part).execute();
                 imageFile.deleteOnExit();
                 if (response.isSuccessful() && response.body() != null) {
-                    UploadImageResponseBody imageResponse = response.body().getBody();
+                    UploadBookingImageResponseBody imageResponse = response.body().getBody();
                     if (imageResponse != null && imageResponse.getClass() != null) {
                         callback.onSuccess(imageResponse.getImageId());
                         return;

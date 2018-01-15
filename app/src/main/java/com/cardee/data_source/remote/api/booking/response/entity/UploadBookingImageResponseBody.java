@@ -5,13 +5,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class UploadImageResponseBody extends ErrorResponseBody {
+public class UploadBookingImageResponseBody extends ErrorResponseBody {
 
     @Expose
     @SerializedName("id")
     private Integer imageId;
 
-    public UploadImageResponseBody() {
+    public UploadBookingImageResponseBody() {
 
     }
 
