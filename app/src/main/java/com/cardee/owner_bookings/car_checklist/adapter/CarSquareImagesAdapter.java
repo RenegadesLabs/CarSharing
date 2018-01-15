@@ -1,4 +1,4 @@
-package com.cardee.owner_bookings.adapter;
+package com.cardee.owner_bookings.car_checklist.adapter;
 
 
 import android.content.Context;
@@ -98,22 +98,16 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (holder instanceof ImageHolder) {
             final Image image = items.get(position).getImage();
             ((ImageHolder) holder).bind(image, glideRequestManager);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        listener.onImageClick(image);
-                    }
+            holder.itemView.setOnClickListener(view -> {
+                if (listener != null) {
+                    listener.onImageClick(image);
                 }
             });
             return;
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onAddNewClick();
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onAddNewClick();
             }
         });
     }
@@ -142,7 +136,7 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         public void bind(Image image, RequestManager imageRequestManager) {
-            primaryImageSign.setVisibility(image.isPrimary() ? View.VISIBLE : View.GONE);
+//            primaryImageSign.setVisibility(image.isPrimary() ? View.VISIBLE : View.GONE);
             imageRequestManager
                     .load(image.getLink())
                     .listener(new RequestListener<String, GlideDrawable>() {

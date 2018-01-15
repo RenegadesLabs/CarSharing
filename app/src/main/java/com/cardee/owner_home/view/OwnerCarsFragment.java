@@ -102,7 +102,7 @@ public class OwnerCarsFragment extends Fragment implements OwnerCarListContract.
 
     @Override
     public void updateItem(Car car) {
-
+        mAdapter.update(car);
     }
 
     @Override

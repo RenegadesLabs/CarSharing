@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/widget_margin_xx_small"
             android:textColor="@color/booking_subtitle"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_x_small"
             app:layout_constraintStart_toStartOf="@id/booking_car_plate_number"
             app:layout_constraintTop_toBottomOf="@id/booking_car_plate_number" />
 

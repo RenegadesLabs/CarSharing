@@ -179,7 +179,7 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         String timePeriod = null;
         bookingCreated.setText(booking.getDateCreated());
         if (timeBegin != null && timeEnd != null) {
-            timePeriod = timeBegin + " to " + timeEnd;
+            timePeriod = timeBegin + " - " + timeEnd; //'to' changed to '-' for better UX
         }
         rentalPeriod.setText(timePeriod);
         String amountString = booking.getTotalAmount() == null ? "$0" : "$" + booking.getTotalAmount();

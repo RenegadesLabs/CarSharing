@@ -308,7 +308,7 @@
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
-    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by masterMileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
     <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
     <string name="car_rental_fuel_modal_title">Petrol cost</string>
@@ -433,7 +433,7 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
-    <!--Owner Handover Checklist-->
+    <!--Owner Handover ChecklistEntity-->
     <string name="owner_handover_checklist_title">Handover Checklist</string>
     <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
     <string name="owner_handover_checklist_master_title">Master Mileage</string>
@@ -537,7 +537,7 @@
         <item>9am</item>
         <item>10am</item>
         <item>11am</item>
-        <item>12am</item>
+        <item>12pm</item>
         <item>1pm</item>
         <item>2pm</item>
         <item>3pm</item>
@@ -549,8 +549,41 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
-        <item>12pm</item>
+        <item>12am</item>
     </string-array>
+    <string-array name="daily_timing_pickup_values">
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
+        <item>12pm</item>
+        <item>1pm</item>
+    </string-array>
+    <string-array name="daily_timing_return_values">
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+        <item>12am (next day)</item>
+        <item>1am (next day)</item>
+        <item>2am (next day)</item>
+        <item>3am (next day)</item>
+        <item>4am (next day)</item>
+        <item>5am (next day)</item>
+        <item>6am (next day)</item>
+        <item>7am (next day)</item>
+        <item>8am (next day)</item>
+        <item>9am (next day)</item>
+        <item>10am (next day)</item>
+        <item>11am (next day)</item>
+        <item>12pm (next day)</item>
+        <item>1pm (next day)</item>
+    </string-array>
+
     <string name="car_description_hint">Please enter your car description</string>
     <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
     and may result in account suspension or termination.</string>

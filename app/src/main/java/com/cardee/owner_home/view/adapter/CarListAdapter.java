@@ -3,6 +3,7 @@ package com.cardee.owner_home.view.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListItemViewHolder> {
+
+    private static final String TAG = CarListAdapter.class.getSimpleName();
 
     private final List<Car> mCarViewItems;
 
@@ -86,6 +89,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         public CarListItemViewHolder(View itemView, DateStringDelegate delegate) {
             super(itemView);
             this.delegate = delegate;
+
             mTitleView = itemView.findViewById(R.id.car_title);
             mPrimaryImage = itemView.findViewById(R.id.car_primary_image);
             mYearView = itemView.findViewById(R.id.car_year);
@@ -99,57 +103,56 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
             notAvailable = itemView.getContext().getString(R.string.not_available);
         }
 
-        private void bind(final Car model, RequestManager imageRequestManager, final PublishSubject<OwnerCarListContract.CarEvent> observable) {
+        private void bind(final Car model,
+                          RequestManager imageRequestManager,
+                          PublishSubject<OwnerCarListContract.CarEvent> observable) {
             mTitleView.setText(model.getCarTitle());
             mYearView.setText(model.getManufactureYear());
             mLicenceNumberView.setText(model.getLicenceNumber());
 
-            if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-            }
-            imageRequestManager
-                    .load(model.getPrimaryImageThumbnail())
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            mLoadingIndicator.setVisibility(View.GONE);
-                            return false;
-                        }
+            if (imageRequestManager != null) {
+                if (mLoadingIndicator.getVisibility() != View.VISIBLE) {
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
+                }
+                imageRequestManager
+                        .load(model.getPrimaryImageThumbnail())
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                mLoadingIndicator.setVisibility(View.GONE);
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            mLoadingIndicator.setVisibility(View.GONE);
-                            return false;
-                        }
-                    })
-                    .error(R.drawable.img_no_car)
-                    .into(mPrimaryImage);
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                mLoadingIndicator.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .error(R.drawable.img_no_car)
+                        .into(mPrimaryImage);
+            }
 
             mHourlySwitch.setOnCheckedChangeListener(null);
             mHourlySwitch.setChecked(model.isAvailableHourly());
-            mHourlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_SWITCHED));
-                }
-            });
-
+            mHourlySwitch.setOnCheckedChangeListener((compoundButton, b) -> observable.onNext(new OwnerCarListContract
+                    .CarEvent(model, OwnerCarListContract.Action.HOURLY_SWITCHED)));
             mDailySwitch.setOnCheckedChangeListener(null);
             mDailySwitch.setChecked(model.isAvailableDaily());
-            mDailySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    observable.onNext(new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_SWITCHED));
-                }
-            });
+            mDailySwitch.setOnCheckedChangeListener((compoundButton, b) -> observable.onNext(new OwnerCarListContract
+                    .CarEvent(model, OwnerCarListContract.Action.DAILY_SWITCHED)));
             mPrimaryImage.setOnClickListener(view -> observable.onNext(
-                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.OPEN)));
+                    new OwnerCarListContract
+                            .CarEvent(model, OwnerCarListContract.Action.OPEN)));
             mLocationView.setOnClickListener(view -> observable.onNext(
-                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.LOCATION_CLICKED)));
+                    new OwnerCarListContract
+                            .CarEvent(model, OwnerCarListContract.Action.LOCATION_CLICKED)));
             mDailyView.setOnClickListener(view -> observable.onNext(
-                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.DAILY_CLICKED)));
+                    new OwnerCarListContract
+                            .CarEvent(model, OwnerCarListContract.Action.DAILY_CLICKED)));
             mHourlyView.setOnClickListener(view -> observable.onNext(
-                    new OwnerCarListContract.CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED)));
+                    new OwnerCarListContract
+                            .CarEvent(model, OwnerCarListContract.Action.HOURLY_CLICKED)));
             mHourlyView.setEnabled(model.isAvailableHourly());
             if (!model.isAvailableHourly() ||
                     (model.getCarAvailabilityHourlyDates() == null ||
@@ -187,14 +190,10 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         mCarViewItems.set(index, car);
         CarListItemViewHolder holder = mHolders.get(car.getCarId());
         if (holder != null) {
-            update(car, holder);
+            holder.bind(car, null, mEventObservable);
             return;
         }
         notifyItemChanged(index);
-    }
-
-    private void update(Car car, CarListItemViewHolder holder) {
-
     }
 
     public void remove(Car car) {

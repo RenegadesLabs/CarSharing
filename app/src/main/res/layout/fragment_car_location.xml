@@ -48,7 +48,7 @@
         android:layout_below="@+id/address_view"
         android:layout_margin="@dimen/medium_margin"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_my_location" />
+        app:srcCompat="@drawable/ic_other_location" />
 
     <View
         android:id="@+id/location_marker_target"

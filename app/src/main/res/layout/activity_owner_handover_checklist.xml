@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cardee.owner_bookings.car_checklist.view.ChecklistView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,22 +28,6 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_changed"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            android:background="@color/rate_star"
-            android:visibility="gone"
-            app:titleTextColor="@color/bg_main">
-
-            <TextView
-                android:id="@+id/toolbar_title_changed"
-                style="@style/ToolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/owner_handover_checklist_renter_changed" />
-
-        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
 
@@ -59,7 +43,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/title1"
+                android:id="@+id/tv_checklistTitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/large_margin"
@@ -70,15 +54,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tv_checklistPetrolDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_checklistTitle1"/>
+
             <include
-                android:id="@+id/view1"
+                android:id="@+id/v_checklistPetrolMileageView"
                 layout="@layout/view_petrol_tank"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/toolbar_height"
                 android:layout_margin="@dimen/medium_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title1" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_checklistTitle1" />
 
             <TextView
                 android:id="@+id/title2"
@@ -90,7 +84,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view1" />
+                app:layout_constraintTop_toBottomOf="@+id/v_checklistPetrolMileageView" />
 
             <TextView
                 android:id="@+id/title2desc"
@@ -102,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@id/title2" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/images_grid"
+                android:id="@+id/rv_checklistPhotos"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/widget_margin_small"
@@ -115,20 +109,28 @@
             <FrameLayout
                 android:id="@+id/remarks_container"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:layout_margin="@dimen/medium_margin"
                 android:background="@drawable/bg_petrol_tank"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/images_grid">
+                app:layout_constraintTop_toBottomOf="@+id/rv_checklistPhotos">
+
+                <TextView
+                    android:id="@+id/tv_remarksText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textColor="@android:color/black" />
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_handoverRemarks"
                     style="@style/CardeeEditTextWithoutUnderlineStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/small_margin"
+                    android:visibility="visible"
                     android:gravity="top"
                     android:hint="@string/owner_handover_checklist_photos_add_rem"
                     android:inputType="textMultiLine|textCapSentences"
@@ -165,7 +167,7 @@
                     android:textSize="@dimen/text_small" />
 
                 <TextView
-                    android:id="@+id/btn_handoverCar"
+                    android:id="@+id/b_handoverCar"
                     style="@style/RegularButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_regular_height"
@@ -176,10 +178,7 @@
                     android:clickable="true"
                     android:text="@string/owner_handover_checklist_button" />
             </LinearLayout>
-
-
         </android.support.constraint.ConstraintLayout>
-
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</com.cardee.owner_bookings.car_checklist.view.ChecklistView>

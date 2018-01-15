@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -61,7 +62,17 @@ public class CarLocationFragment extends Fragment
 
     private static final String TAG = CarLocationFragment.class.getSimpleName();
 
+    @DrawableRes
+    private final int myCurrentLocationIcon = R.drawable.ic_my_location;
+    @DrawableRes
+    private final int anyOtherLocationIcon = R.drawable.ic_other_location;
+
     private static final int SEARCH_ADDRESS_REQUEST_CODE = 101;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 105;
+    private static final int LOCATION_PERMISSION_MOVE_REQUEST_CODE = 106;
+    private static final int ADDRESS_BY_LOCATION_CODE = 201;
+    private static final int MY_ADDRESS_BY_LOCATION_CODE = 202;
+    private static final int MY_ADDRESS_BY_LOCATION_UPDATE_CODE = 203;
     private static final int RESULT_OK = -1;
     private static final String CAR_ID = "_car_id";
     private static final int MARKER_ANIMATION_FULL_DURATION = 250;
@@ -69,21 +80,24 @@ public class CarLocationFragment extends Fragment
 
     private TextView carLocationAddress;
     private MapView mapView;
+    private FloatingActionButton btnMyLocation;
     private HideAnimationDelegate hideDelegate;
     private GoogleApiClient apiClient;
     private GoogleMap map;
     private View locationMarker;
     private View targetMarker;
-    private Address currentAddress;
-
     private Point center;
     private float markerStartY;
     private float markerFinishY;
     private ObjectAnimator markerAnimator;
-
     private CarLocationPresenter presenter;
     private DetailsChangedListener parentListener;
     private NewCarFormsContract.Action pendingAction;
+    private Address currentAddress;
+    private String currentAddressString;
+    private String myCurrentAddressString;
+    private boolean markerMoving;
+
     private SimpleBinder binder = new SimpleBinder() {
         @Override
         public void push(Bundle args) {
@@ -97,9 +111,6 @@ public class CarLocationFragment extends Fragment
                 case SAVE:
                 case FINISH:
                     presenter.saveLocation(currentAddress);
-                    break;
-                case UPDATE:
-                    showCurrentLocationIfPermitted();
                     break;
             }
         }
@@ -159,7 +170,7 @@ public class CarLocationFragment extends Fragment
         targetMarker = rootView.findViewById(R.id.location_marker_target);
         carLocationAddress.setOnClickListener(this);
         hideDelegate = new HideAnimationDelegate(rootView.findViewById(R.id.address_view));
-        FloatingActionButton btnMyLocation = rootView.findViewById(R.id.btn_my_location);
+        btnMyLocation = rootView.findViewById(R.id.btn_my_location);
         btnMyLocation.setOnClickListener(this);
         mapView = rootView.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -192,29 +203,60 @@ public class CarLocationFragment extends Fragment
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
         parentListener.showProgress(false);
+        LatLng myCurrentLocation = obtainMyCurrentLocation();
+        if (myCurrentLocation == null) {
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            requestAddressByLocation(myCurrentLocation, MY_ADDRESS_BY_LOCATION_CODE);
+        }
         presenter.init();
         googleMap.setOnCameraIdleListener(() -> {
             if (center != null) {
-                if (markerMoved()) {
+                if (markerMoving) {
                     markerMoveDown();
                 }
-                LatLng latLng = googleMap.getProjection().fromScreenLocation(center);
-                fetchLocationAddress(latLng);
+                if (currentAddress != null) {
+                    LatLng latLng = googleMap.getProjection().fromScreenLocation(center);
+                    requestAddressByLocation(latLng, ADDRESS_BY_LOCATION_CODE);
+                }
             }
         });
         googleMap.setOnCameraMoveStartedListener(i -> {
+            btnMyLocation.setImageResource(anyOtherLocationIcon);
             if (markerAnimator != null) {
                 markerMoveUp();
             }
         });
     }
 
-    private boolean markerMoved() {
-        float y = locationMarker.getY();
-        return Math.abs(y - markerStartY) > 0;
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (grantResults.length > 1 &&
+                (grantResults[0] == PackageManager.PERMISSION_GRANTED ||
+                        grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+            LatLng myCurrentLocation = obtainMyCurrentLocation();
+            if (myCurrentLocation == null) {
+                return;
+            }
+            if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+                requestAddressByLocation(myCurrentLocation, MY_ADDRESS_BY_LOCATION_CODE);
+            } else if (requestCode == LOCATION_PERMISSION_MOVE_REQUEST_CODE) {
+                updateCurrent(myCurrentLocation, MY_ADDRESS_BY_LOCATION_UPDATE_CODE);
+            }
+        }
+    }
+
+    private void updateCurrent(LatLng location, int addressRequestCode) {
+        moveMapToLocation(location);
+        requestAddressByLocation(location, addressRequestCode);
     }
 
     private void markerMoveUp() {
+        markerMoving = true;
         if (markerAnimator.isRunning()) {
             markerAnimator.cancel();
             float y = locationMarker.getY();
@@ -228,6 +270,7 @@ public class CarLocationFragment extends Fragment
     }
 
     private void markerMoveDown() {
+        markerMoving = false;
         if (markerAnimator.isRunning()) {
             markerAnimator.cancel();
             float y = locationMarker.getY();
@@ -240,21 +283,34 @@ public class CarLocationFragment extends Fragment
         markerAnimator.start();
     }
 
-    public void showCurrentLocationIfPermitted() {
+    private void moveToMyCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            parentListener.onNeedPermission(Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION);
-            return;
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (apiClient.isConnected()) {
+                Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                updateCurrent(latLng, MY_ADDRESS_BY_LOCATION_UPDATE_CODE);
+            }
+        } else {
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_MOVE_REQUEST_CODE);
         }
-        if (apiClient.isConnected()) {
-            Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            fetchLocationAddress(latLng);
-            moveMapToLocation(latLng);
+    }
+
+    private LatLng obtainMyCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (apiClient.isConnected()) {
+                Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+                return new LatLng(location.getLatitude(), location.getLongitude());
+            }
         }
+        return null;
     }
 
     private void moveMapToLocation(final LatLng location) {
@@ -262,19 +318,21 @@ public class CarLocationFragment extends Fragment
             Log.e(TAG, "GoogleMap is not instantiated");
             return;
         }
+        float currentZoom = map.getCameraPosition().zoom;
         CameraPosition position = new CameraPosition.Builder()
                 .target(location)
-                .zoom(15)
+                .zoom(currentZoom < 15 ? 15 : currentZoom)
                 .build();
         CameraUpdate focus = CameraUpdateFactory.newCameraPosition(position);
         map.animateCamera(focus);
     }
 
-    private void fetchLocationAddress(LatLng location) {
-        Intent fetchLocationIntent = new Intent(getActivity(), FetchAddressService.class);
-        fetchLocationIntent.putExtra(FetchAddressService.LOCATION, location);
-        fetchLocationIntent.putExtra(FetchAddressService.RECEIVER, addressReceiver);
-        getActivity().startService(fetchLocationIntent);
+    private void requestAddressByLocation(LatLng location, int requestCode) {
+        Intent requestLocationIntent = new Intent(getActivity(), FetchAddressService.class);
+        requestLocationIntent.putExtra(FetchAddressService.LOCATION, location);
+        requestLocationIntent.putExtra(FetchAddressService.RECEIVER, addressReceiver);
+        requestLocationIntent.putExtra(FetchAddressService.REQUEST_CODE, requestCode);
+        getActivity().startService(requestLocationIntent);
     }
 
     @Override
@@ -329,7 +387,7 @@ public class CarLocationFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_my_location:
-                showCurrentLocationIfPermitted();
+                moveToMyCurrentLocation();
                 break;
             case R.id.car_location_address:
                 if (hideDelegate.isAnimating()) {
@@ -358,7 +416,7 @@ public class CarLocationFragment extends Fragment
             }
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-                renderLocation(place.getLatLng());
+                updateCurrent(place.getLatLng(), ADDRESS_BY_LOCATION_CODE);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Log.e(TAG, status.getStatusMessage());
@@ -384,12 +442,17 @@ public class CarLocationFragment extends Fragment
     @Override
     public void setCarData(CarData carData) {
         LatLng location = new LatLng(carData.getLatitude(), carData.getLongitude());
-        renderLocation(location);
+        updateCurrent(location, ADDRESS_BY_LOCATION_CODE);
     }
 
-    private void renderLocation(LatLng location) {
-        moveMapToLocation(location);
-        fetchLocationAddress(location);
+    private void markAsMyCurrentLocation(boolean myCurrentLocation) {
+        btnMyLocation.setImageResource(myCurrentLocation ? myCurrentLocationIcon : anyOtherLocationIcon);
+    }
+
+    private boolean isMyCurrentLocation() {
+        return currentAddressString != null &&
+                myCurrentAddressString != null &&
+                currentAddressString.equalsIgnoreCase(myCurrentAddressString);
     }
 
     @Override
@@ -409,6 +472,7 @@ public class CarLocationFragment extends Fragment
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             if (resultCode == FetchAddressService.CODE_SUCCESS) {
                 Address address = resultData.getParcelable(FetchAddressService.ADDRESS);
+                int requestCode = resultData.getInt(FetchAddressService.REQUEST_CODE);
                 currentAddress = address;
                 StringBuilder addressBuilder = new StringBuilder();
                 for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
@@ -417,8 +481,20 @@ public class CarLocationFragment extends Fragment
                         addressBuilder.append(" ");
                     }
                 }
-                carLocationAddress.setText(addressBuilder.toString());
+                String addressString = addressBuilder.toString();
+                switch (requestCode) {
+                    case MY_ADDRESS_BY_LOCATION_UPDATE_CODE:
+                        myCurrentAddressString = addressString;
+                    case ADDRESS_BY_LOCATION_CODE:
+                        carLocationAddress.setText(addressString);
+                        currentAddressString = addressString;
+                        break;
+                    case MY_ADDRESS_BY_LOCATION_CODE:
+                        myCurrentAddressString = addressString;
+                        break;
+                }
             }
+            markAsMyCurrentLocation(isMyCurrentLocation());
         }
     }
 }

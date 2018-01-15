@@ -88,7 +88,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             String timeEnd = booking.getTimeEnd();
             String timePeriod = null;
             if (timeBegin != null && timeEnd != null) {
-                timePeriod = timeBegin + " to " + timeEnd;
+                timePeriod = timeBegin + " - " + timeEnd; //'to' changed to '-' for better UX
             }
             bookingPeriod.setText(timePeriod);
             bookingCarTitle.setText(booking.getCarTitle());
