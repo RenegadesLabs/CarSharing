@@ -150,7 +150,7 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
             mChecklistView.setMasterMileageValue(String.valueOf(mChecklistObj.getMasterMileage()));
         } else {
             mStrategy = new ChecklistStrategy(mChecklistView, this);
-            mChecklistView.setPetrolValue(mChecklistObj.getTank());
+            mChecklistView.setPetrolValue(mChecklistObj.getTankText());
         }
         mImages.addAll(Arrays.asList(mChecklistObj.getImages()));
         mAdapter.setItems(mImages);
@@ -199,6 +199,11 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
     @Override
     public void setViewCallbacks(View view) {
         mCallbacks = view;
+    }
+
+    @Override
+    public void setViewRenterUpdatedCallbacks(OwnerRenterUpdatedChecklistPresenter.View callbacks) {
+
     }
 
     public interface View {

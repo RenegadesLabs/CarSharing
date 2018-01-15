@@ -23,7 +23,8 @@ public class ChecklistEntityToChecklistMapper {
         String remarks = entity.getRemarks();
         int bookingId = entity.getBookingId();
         int masterMileage = entity.getMileage();
-        String tank = getTankFullness(entity.getTank());
+        float tank = entity.getTank();
+        String tankText = getTankFullness(tank);
         String driverName = entity.getDriver().getName();
 
         boolean byMileage = entity.getFuelPolicy().getFuelPolicyId() == 0;
@@ -34,6 +35,7 @@ public class ChecklistEntityToChecklistMapper {
                 .setMasterMileage(masterMileage)
                 .setDriver(driverName)
                 .setByMileage(byMileage)
+                .setTankText(tankText)
                 .setTank(tank)
                 .setImages(images)
                 .setImageIds(imageIds)

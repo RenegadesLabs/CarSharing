@@ -24,6 +24,8 @@ public interface ChecklistContract {
 
         void setViewCallbacks(OwnerChecklistPresenter.View callbacks);
 
+        void setViewRenterUpdatedCallbacks(OwnerRenterUpdatedChecklistPresenter.View callbacks);
+
         void setStrategy(PresentationStrategy strategy);
 
         void getChecklist();

@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
 import com.cardee.owner_bookings.car_checklist.presenter.OwnerRenterUpdatedChecklistPresenter;
 
 
-public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity {
+public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity implements OwnerRenterUpdatedChecklistPresenter.View {
 
     private ChecklistContract.Presenter mPresenter;
 
@@ -30,6 +29,7 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity {
         int bookingId = getIntent().getIntExtra(KEY_BOOKING_ID, -1);
         mPresenter = new OwnerRenterUpdatedChecklistPresenter(bookingId);
         mPresenter.setView(mView);
+        mPresenter.setViewRenterUpdatedCallbacks(this);
         setContentView(view);
         setSupportActionBar(view.getToolbar());
         getSupportActionBar().setTitle(null);
@@ -50,10 +50,12 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
+    public void onConfirmed() {
+        finish();
+    }
+
+    @Override
+    public void onCancelled() {
+        finish();
     }
 }
