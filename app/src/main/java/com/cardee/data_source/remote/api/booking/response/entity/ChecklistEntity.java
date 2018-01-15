@@ -93,7 +93,16 @@ public class ChecklistEntity {
         return imageIds;
     }
 
-    public void setImageIds(int[] imageIds) {
-        this.imageIds = imageIds;
+    public void setImageIds(Integer[] imageIds) {
+        this.imageIds = convertIntegerArrayToInt(imageIds);
+    }
+
+    //TEMP ISSUE
+    private int[] convertIntegerArrayToInt(Integer[] arr) {
+        int[] temp = new int[arr.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = Integer.parseInt(arr[i].toString());
+        }
+        return temp;
     }
 }

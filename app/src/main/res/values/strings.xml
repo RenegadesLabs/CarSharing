@@ -55,6 +55,7 @@
     <string name="error_occurred">An error has occurred!</string>
     <string name="saved_successfully">Saved successfully!</string>
     <string name="nothing_to_save">Nothing to save</string>
+    <string name="only_one_image">You able to add only unique image!</string>
 
     <!--Loading-->
     <string name="loading">Loading…</string>
@@ -446,6 +447,8 @@
     <string name="owner_handover_checklist_button">Handover Car</string>
     <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
     <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
+    <string name="owner_handover_progress">Handing over…</string>
+    <string name="owner_handover_tank_filled">tankText filled.</string>
 
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>

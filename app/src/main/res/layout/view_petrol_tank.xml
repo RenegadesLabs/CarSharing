@@ -5,35 +5,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_petrol_tank">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_handoverPetrolLvlMinus"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_margin="@dimen/medium_margin"
-        app:srcCompat="@drawable/ic_btn_minus"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_handoverPetrolLvlPlus"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_btn_plus"/>
-
-    <TextView
-        android:id="@+id/tv_handoverValue"
+    <ProgressBar
+        android:id="@+id/pb_petrolMileage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="@android:color/black"
-        android:text="1/2 Tank"
-        app:layout_constraintEnd_toStartOf="@+id/iv_handoverPetrolLvlPlus"
-        app:layout_constraintStart_toEndOf="@+id/iv_handoverPetrolLvlMinus"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_mileagePetrolContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_handoverPetrolLvlMinus"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_margin="@dimen/medium_margin"
+            app:srcCompat="@drawable/ic_btn_minus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_handoverPetrolLvlPlus"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_btn_plus"/>
+
+        <TextView
+            android:id="@+id/tv_handoverValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@android:color/black"
+            android:text="1/2 Tank"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/iv_handoverPetrolLvlPlus"
+            app:layout_constraintStart_toEndOf="@+id/iv_handoverPetrolLvlMinus"/>
+
+        <LinearLayout
+            android:id="@+id/ll_mileageTextContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_handoverPetrolLvlPlus"
+            app:layout_constraintStart_toEndOf="@+id/iv_handoverPetrolLvlMinus">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_mileage"
+                style="@style/CardeeEditTextWithoutUnderlineStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/xsmall_margin"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="@dimen/text_regular" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="km"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </com.cardee.owner_bookings.car_checklist.view.PetrolView>

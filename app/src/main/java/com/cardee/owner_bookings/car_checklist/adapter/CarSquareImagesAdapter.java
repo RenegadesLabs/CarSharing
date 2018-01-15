@@ -70,7 +70,13 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void setItem(Image image) {
+        items.add(ImageItemWrapper.newImageItem(image));
+        notifyDataSetChanged();
+    }
 
+    public void removeItem(Image image) {
+        items.remove(ImageItemWrapper.newImageItem(image));
+        notifyDataSetChanged();
     }
 
     public void setImageViewListener(ImageViewListener listener) {
@@ -132,7 +138,7 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
             loadingIndicator = itemView.findViewById(R.id.item_progress_layout);
-            primaryImageSign = itemView.findViewById(R.id.primary_image_sign);
+//            primaryImageSign = itemView.findViewById(R.id.primary_image_sign);
         }
 
         public void bind(Image image, RequestManager imageRequestManager) {
