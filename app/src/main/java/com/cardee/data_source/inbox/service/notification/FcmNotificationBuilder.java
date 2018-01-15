@@ -171,8 +171,15 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         Intent showCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST);
                         showCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(showCheckListIntent);
-                        //TODO:  editedCheckList();
-                        break;
+
+                        Intent bookingIntent = new Intent(context, BookingActivity.class);
+                        bookingIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                bookingIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
                     case INIT_CHECKLIST:
                         //TODO: checkList();
                         break;
