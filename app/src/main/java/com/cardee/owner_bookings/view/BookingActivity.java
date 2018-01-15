@@ -1,5 +1,9 @@
 package com.cardee.owner_bookings.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +12,19 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import com.cardee.R;
+import com.cardee.owner_bookings.ChecklistActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
 
 public class BookingActivity extends AppCompatActivity {
 
+    public static final String ACTION_CHECKLIST = "action_cardee_checklist_changed_by_owner";
+
     OwnerBookingContract.Presenter presenter;
     OwnerBookingContract.View view;
+    private ChecklistReceiver checklistReceiver;
+    private PendingChecklistStorage pendingChecklists;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,12 +44,26 @@ public class BookingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        pendingChecklists = new PendingChecklistStorage();
+        if(pendingChecklists.containsChecklist(this, bookingId)){
+            Intent checklistIntent = new Intent(this, ChecklistActivity.class);
+            checklistIntent.putExtras(args);
+            startActivity(checklistIntent);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        checklistReceiver = new ChecklistReceiver();
+        registerReceiver(checklistReceiver, new IntentFilter(ACTION_CHECKLIST));
         presenter.init();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(checklistReceiver);
     }
 
     @Override
@@ -55,5 +79,16 @@ public class BookingActivity extends AppCompatActivity {
         super.onDestroy();
         presenter.onDestroy();
         view.onDestroy();
+    }
+
+    public class ChecklistReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_CHECKLIST.equals(intent.getAction())) {
+                Intent checklistIntent = new Intent(context, ChecklistActivity.class);
+                context.startActivity(checklistIntent);
+            }
+        }
     }
 }
