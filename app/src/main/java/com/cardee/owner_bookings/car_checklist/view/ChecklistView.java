@@ -1,5 +1,6 @@
 package com.cardee.owner_bookings.car_checklist.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatButton;
@@ -9,9 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_bookings.car_checklist.ChecklistContract;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
 
@@ -31,6 +35,8 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     public PetrolView petrolMileageView;
     @BindView(R.id.tv_checklistPetrolDesc)
     public TextView petrolDescTV;
+    @BindView(R.id.pb_petrolMileage)
+    public ProgressBar petrolMileageProgress;
 //    @BindView(R.id.iv_handoverPetrolLvlMinus)
 //    public AppCompatImageView petrolLvlMinus;
 //    @BindView(R.id.iv_handoverPetrolLvlPlus)
@@ -56,6 +62,8 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @BindView(R.id.b_handoverCar)
     public TextView handoverB; //changed from AppCompatButton
 
+    private ProgressDialog mProgress;
+
     private Unbinder mUnbinder;
 
     private ChecklistContract.Presenter mPresenter;
@@ -76,6 +84,8 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     protected void onFinishInflate() {
         super.onFinishInflate();
         mUnbinder = ButterKnife.bind(this, this);
+        mProgress = DialogHelper.getProgressDialog(getContext(),
+                getContext().getResources().getString(R.string.owner_handover_progress), false);
     }
 
     public Toolbar getToolbar() {
@@ -85,6 +95,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @Override
     public void setPresenter(ChecklistContract.Presenter presenter) {
         mPresenter = presenter;
+        mPresenter.setView(this);
     }
 
     @Override
@@ -94,7 +105,21 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     }
 
     @Override
+    public void onHandingOverProcessing(boolean showProgress) {
+        if (showProgress) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
+    }
+
+    @Override
     public void showProgress(boolean show) {
+        if (show) {
+            petrolMileageProgress.setVisibility(VISIBLE);
+            return;
+        }
+        petrolMileageProgress.setVisibility(GONE);
     }
 
     @Override
@@ -104,11 +129,15 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
 
     @Override
     public void showMessage(int messageId) {
-
+        Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
     }
 
     public void setMasterMileageValue(String txt) {
-        petrolMileageView.setValue(txt);
+        petrolMileageView.setMileageValue(txt);
+    }
+
+    public void setPetrolValue(String txt) {
+        petrolMileageView.setPetrolValue(txt);
     }
 
     public void setImagesAdapter(CarSquareImagesAdapter adapter) {
@@ -122,6 +151,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     public float getTankFullness() {
         return petrolMileageView.getTankFullness();
     }
+
     public int getMileage() {
         return petrolMileageView.getMileage();
     }

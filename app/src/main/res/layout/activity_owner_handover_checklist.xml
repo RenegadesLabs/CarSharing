@@ -176,7 +176,8 @@
                     android:layout_marginBottom="@dimen/large_margin"
                     android:background="@drawable/bg_button_regular"
                     android:clickable="true"
-                    android:text="@string/owner_handover_checklist_button" />
+                    android:text="@string/owner_handover_checklist_button">
+                </TextView>
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

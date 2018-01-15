@@ -14,6 +14,8 @@ public interface ChecklistContract {
 
         void onDestroy();
 
+        void onHandingOverProcessing(boolean showProgress);
+
     }
 
     interface Presenter extends BasePresenter, PresentationStrategy.ActionListener {

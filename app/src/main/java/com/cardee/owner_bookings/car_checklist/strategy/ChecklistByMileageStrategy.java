@@ -23,6 +23,7 @@ public class ChecklistByMileageStrategy extends PresentationStrategy implements 
         mChecklistView.toolbarTitle.setText(R.string.owner_handover_checklist_title);
         mChecklistView.title1.setText(R.string.owner_handover_checklist_master_title);
         mChecklistView.petrolMileageView.setButtonsVisibility(View.INVISIBLE);
+        mChecklistView.petrolMileageView.switchMileageVisibility(true);
         mChecklistView.imagesGrid.setLayoutManager(new GridLayoutManager(mChecklistView.getContext(), 4,
                 GridLayoutManager.VERTICAL, false));
         mChecklistView.imagesGrid.setItemAnimator(new DefaultItemAnimator());

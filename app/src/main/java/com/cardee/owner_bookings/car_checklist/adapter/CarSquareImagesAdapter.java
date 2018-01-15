@@ -74,6 +74,11 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         notifyDataSetChanged();
     }
 
+    public void removeItem(Image image) {
+        items.remove(ImageItemWrapper.newImageItem(image));
+        notifyDataSetChanged();
+    }
+
     public void setImageViewListener(ImageViewListener listener) {
         this.listener = listener;
     }

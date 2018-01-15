@@ -158,7 +158,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".owner_bookings.car_checklist.view.OwnerChecklistActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".renter_home.view.RenterHomeActivity" />
         <activity android:name=".renter_profile.view.RenterProfileActivity" />
         <activity android:name=".renter_notifications.view.RenterNotifActivity" />

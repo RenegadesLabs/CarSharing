@@ -157,16 +157,11 @@ public class RemoteBookingDataSource implements BookingDataSource {
     @Override
     public void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imageIds, SimpleCallback callback) {
 
-        int[] temp = new int[imageIds.length];
-        for (int i = 0; i < temp.length; i++) {
-            temp[i] = Integer.parseInt(imageIds[i].toString());
-        }
-
         ChecklistEntity checklist = new ChecklistEntity();
         checklist.setRemarks(remarks);
         checklist.setTank(tank);
         checklist.setMileage(masterMileage);
-        checklist.setImageIds(temp);
+        checklist.setImageIds(imageIds);
 
         api.saveChecklist(bookingId, checklist).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
