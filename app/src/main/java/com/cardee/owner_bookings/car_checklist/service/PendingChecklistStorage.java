@@ -26,10 +26,6 @@ public class PendingChecklistStorage {
     public static boolean containsChecklist(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
         return pref.getStringSet(CHECKLISTS, new HashSet<>()).contains(String.valueOf(bookingId));
-    public boolean containsChecklist(Context context, int bookingId) {
-        SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
-        return pref.getStringSet(CHECKLISTS, new HashSet<>()).contains(String.valueOf(bookingId));
-    }
 
     public static void remove(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
