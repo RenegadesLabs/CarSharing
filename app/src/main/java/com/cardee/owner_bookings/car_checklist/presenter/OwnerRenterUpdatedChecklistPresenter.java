@@ -12,6 +12,7 @@ import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetChecklist;
 import com.cardee.domain.bookings.usecase.SaveChecklist;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
+import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.RenterUpdatedChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
@@ -128,6 +129,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
                         if (mView != null && response.isSuccess()) {
                             mView.showProgress(false);
                             mView.showMessage(R.string.saved_successfully);
+                            PendingChecklistStorage.remove(mChecklistView.getContext(), mBookingId);
                             mCallbacks.onCancelled();
                         }
                     }
@@ -156,6 +158,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
             public void onSuccess(ChangeBookingState.ResponseValues response) {
                 if (mView != null && response.isSuccessful()) {
                     mView.showProgress(false);
+                    PendingChecklistStorage.remove(mChecklistView.getContext(), mBookingId);
                     mCallbacks.onConfirmed();
                 }
             }
