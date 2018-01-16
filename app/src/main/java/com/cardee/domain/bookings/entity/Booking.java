@@ -22,6 +22,8 @@ public class Booking {
     private final Image primaryImage;
     private final String renterName;
     private final String renterPhoto;
+    private final String ownerPhoto;
+    private final Integer ownerId;
 
     private Booking(Integer totalAmount,
                     String timeBegin,
@@ -36,7 +38,10 @@ public class Booking {
                     String carTitle,
                     Image[] images,
                     Image primaryImage,
-                    String renterName, String renterPhoto) {
+                    String renterName,
+                    String renterPhoto,
+                    String ownerPhoto,
+                    Integer ownerId) {
         this.totalAmount = totalAmount;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
@@ -52,6 +57,8 @@ public class Booking {
         this.primaryImage = primaryImage;
         this.renterName = renterName;
         this.renterPhoto = renterPhoto;
+        this.ownerPhoto = ownerPhoto;
+        this.ownerId = ownerId;
     }
 
     public static class Builder {
@@ -70,6 +77,8 @@ public class Booking {
         private Image primaryImage;
         private String renterName;
         private String renterPhoto;
+        private String ownerPhoto;
+        private Integer ownerId;
 
         public Builder() {
 
@@ -150,10 +159,20 @@ public class Booking {
             return this;
         }
 
+        public Builder setOwnerPhoto(String ownerPhoto) {
+            this.ownerPhoto = ownerPhoto;
+            return this;
+        }
+
+        public Builder setOwnerId(Integer ownerId) {
+            this.ownerId = ownerId;
+            return this;
+        }
+
         public Booking build() {
             return new Booking(totalAmount, timeBegin, timeEnd, bookingId, dateCreated,
                     bookingStateName, bookingStateType, carId, manufactureYear, plateNumber,
-                    carTitle, images, primaryImage, renterName, renterPhoto);
+                    carTitle, images, primaryImage, renterName, renterPhoto, ownerPhoto, ownerId);
         }
     }
 
@@ -173,6 +192,8 @@ public class Booking {
         builder.setImages(Arrays.copyOf(images, images.length));
         builder.setRenterName(renterName);
         builder.setRenterPhoto(renterPhoto);
+        builder.setOwnerPhoto(ownerPhoto);
+        builder.setOwnerId(ownerId);
         return builder;
     }
 
@@ -234,5 +255,13 @@ public class Booking {
 
     public String getRenterPhoto() {
         return renterPhoto;
+    }
+
+    public String getOwnerPhoto() {
+        return ownerPhoto;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
     }
 }

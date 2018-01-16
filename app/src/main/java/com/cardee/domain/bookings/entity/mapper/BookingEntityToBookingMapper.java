@@ -4,6 +4,7 @@ package com.cardee.domain.bookings.entity.mapper;
 import com.cardee.CardeeApp;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.common.entity.ImageEntity;
+import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 import com.cardee.data_source.remote.api.reviews.response.entity.Renter;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
@@ -43,6 +44,15 @@ public class BookingEntityToBookingMapper {
             renterName = entity.getRenter().getName();
             renterPhoto = entity.getRenter().getProfilePhoto();
         }
+
+        String ownerPhoto = null;
+        Integer ownerId = null;
+        OwnerProfile owner = entity.getOwner();
+        if (owner != null) {
+            ownerPhoto = owner.getProfilePhotoLink();
+            ownerId = owner.getProfileId();
+        }
+
         return new Booking.Builder()
                 .setTotalAmount(entity.getTotalAmount())
                 .setTimeBegin(beginTime)
@@ -59,6 +69,8 @@ public class BookingEntityToBookingMapper {
                 .setPrimaryImage(primary)
                 .setRenterName(renterName)
                 .setRenterPhoto(renterPhoto)
+                .setOwnerPhoto(ownerPhoto)
+                .setOwnerId(ownerId)
                 .build();
     }
 }

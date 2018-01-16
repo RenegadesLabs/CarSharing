@@ -38,7 +38,7 @@ public class CustomRatingBar extends LinearLayout {
     private int mLastStarId;
     private boolean mOnlyForDisplay;
     private double mLastX;
-    private boolean mHalfStars = true;
+    private boolean mHalfStars = false;
 
     public CustomRatingBar(Context context) {
         super(context);
