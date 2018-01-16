@@ -63,12 +63,13 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
-                        .setSound(mChatNotifySound);
+                        .setSound(mChatNotifySound)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(notification.getContentText()));
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon);
                 } else {
-                    mNotificationBuilder.setSmallIcon(getValidAlertImage(notification.getType()));
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon_png);
                 }
 
                 if (pendingIntent != null) {
@@ -84,12 +85,13 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
-                        .setSound(mChatNotifySound);
+                        .setSound(mChatNotifySound)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(notification.getContentText()));
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon);
                 } else {
-                    mNotificationBuilder.setSmallIcon(getValidAlertImage(notification.getType()));
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon_png);
                 }
 
                 if (pendingIntent != null) {
