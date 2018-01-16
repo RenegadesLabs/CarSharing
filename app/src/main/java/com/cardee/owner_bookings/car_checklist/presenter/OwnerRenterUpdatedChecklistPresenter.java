@@ -76,17 +76,19 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
                 new UseCase.Callback<GetChecklist.ResponseValues>() {
                     @Override
                     public void onSuccess(GetChecklist.ResponseValues response) {
-                        mView.showProgress(false);
-                        if (response.isSuccess()) {
+                        if (mView != null && response.isSuccess()) {
                             mChecklist = response.getChecklist();
                             fillData();
+                            mView.showProgress(false);
                         }
                     }
 
                     @Override
                     public void onError(Error error) {
-                        mView.showProgress(false);
-                        mView.showMessage(R.string.error_occurred);
+                        if (mView != null) {
+                            mView.showProgress(false);
+                            mView.showMessage(R.string.error_occurred);
+                        }
                     }
                 });
 
@@ -195,6 +197,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
 
     public interface View {
         void onConfirmed();
+
         void onCancelled();
     }
 }

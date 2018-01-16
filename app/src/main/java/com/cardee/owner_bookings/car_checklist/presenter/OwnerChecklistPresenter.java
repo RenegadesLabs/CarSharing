@@ -69,14 +69,14 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
             return;
         }
 
-        mView.showProgress(isNotFetched);
+        mView.showProgressPetrolMileage(isNotFetched);
         mExecutor.execute(new GetChecklist(), new GetChecklist.RequestValues(mBookingId),
                 new UseCase.Callback<GetChecklist.ResponseValues>() {
                     @Override
                     public void onSuccess(GetChecklist.ResponseValues response) {
                         if (response.isSuccess()) {
                             isNotFetched = false;
-                            mView.showProgress(isNotFetched);
+                            mView.showProgressPetrolMileage(isNotFetched);
                             mChecklistObj = response.getChecklist();
                             mImageIdsList.addAll(Arrays.asList(mChecklistObj.getImageIds()));
                             chooseStrategy();
@@ -85,7 +85,7 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
                     @Override
                     public void onError(Error error) {
-                        mView.showProgress(false);
+                        mView.showProgressPetrolMileage(false);
                         mView.showMessage(R.string.error_occurred);
                     }
                 });

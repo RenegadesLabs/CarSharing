@@ -16,6 +16,8 @@ public interface ChecklistContract {
 
         void onHandingOverProcessing(boolean showProgress);
 
+        void showProgressPetrolMileage(boolean show);
+
     }
 
     interface Presenter extends BasePresenter, PresentationStrategy.ActionListener {
