@@ -234,17 +234,47 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
             getContext().startActivity(intent);
         });
         if (booking.getCost() != null) {
+            bindCostTitles(booking.getCost(), booking.isBookingByDays());
             bindCost(booking.getCost());
         }
+    }
+
+    private void bindCostTitles(BookingCost cost, boolean bookingByDays) {
+        String rentalOrdinary = getContext().getString(R.string.cost_rental_prefix);
+        String rentalSpecial = getContext().getString(R.string.cost_rental_prefix);
+        String rentalDiscount = getContext().getString(R.string.cost_discount_prefix);
+        String rentalOrdinarySuffix;
+        String rentalSpecialSuffix;
+        if (bookingByDays) {
+            rentalOrdinarySuffix = getContext().getString(R.string.cost_rental_weekdays_suffix);
+            rentalSpecialSuffix = getContext().getString(R.string.cost_rental_weekends_suffix);
+        } else {
+            rentalOrdinarySuffix = getContext().getString(R.string.cost_rental_off_peak_suffix);
+            rentalSpecialSuffix = getContext().getString(R.string.cost_rental_peak_suffix);
+        }
+        rentalOrdinary = rentalOrdinary.concat(" ")
+                .concat(String.valueOf(cost.getNonPeakCount()))
+                .concat(" ").concat(rentalOrdinarySuffix);
+        rentalSpecial = rentalSpecial.concat(" ")
+                .concat(String.valueOf(cost.getPeakCount())).concat(" ")
+                .concat(rentalSpecialSuffix);
+        if (cost.getDiscount() != null && cost.getDiscount() != 0) {
+            rentalDiscount = rentalDiscount.concat(" " + String.valueOf(cost.getDiscount()) + "%");
+        }
+        discountTitle.setText(rentalDiscount);
+        offPeakTitle.setText(rentalOrdinary);
+        peakTitle.setText(rentalSpecial);
     }
 
     private void bindCost(BookingCost cost) {
         float peak = cost.getPeakCost() == null ? 0 : cost.getPeakCost();
         float nonPeak = cost.getNonPeakCost() == null ? 0 : cost.getNonPeakCost();
-        float discount = cost.getDiscount() == null ? 0 : -cost.getDiscount();
+        float discountRate = cost.getDiscount() == null ? 0 : -cost.getDiscount();
+        float discount = peak + nonPeak * discountRate / 100;
         float delivery = cost.getDelivery() == null ? 0 : cost.getDelivery();
         float nettCost = peak + nonPeak + discount + delivery;
-        float fee = cost.getFee() == null ? 0 : -cost.getFee();
+        float feeRate = cost.getFee() == null ? 0 : -cost.getFee();
+        float fee = nettCost * feeRate / 100;
         float nettEarnings = nettCost + fee;
         onBindCostValue(peakValue, peak);
         onBindCostValue(offPeakValue, nonPeak);

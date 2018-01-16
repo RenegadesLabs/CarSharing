@@ -43,6 +43,7 @@ public class Booking {
     private final String deliveryAddress;
     private final PaymentType paymentType;
     private final BookingCost cost;
+    private final boolean bookingByDays;
 
 
     private Booking(Float totalAmount,
@@ -76,7 +77,8 @@ public class Booking {
                     String reviewFromOwner,
                     String deliveryAddress,
                     PaymentType paymentType,
-                    BookingCost cost) {
+                    BookingCost cost,
+                    boolean bookingByDays) {
         this.totalAmount = totalAmount;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
@@ -109,6 +111,7 @@ public class Booking {
         this.deliveryAddress = deliveryAddress;
         this.paymentType = paymentType;
         this.cost = cost;
+        this.bookingByDays = bookingByDays;
     }
 
     public static class Builder {
@@ -144,6 +147,7 @@ public class Booking {
         private String deliveryAddress;
         private PaymentType paymentType;
         private BookingCost cost;
+        private boolean bookingByDays;
 
         public Builder() {
 
@@ -309,13 +313,18 @@ public class Booking {
             return this;
         }
 
+        public Builder setBookingByDays(boolean bookingByDays) {
+            this.bookingByDays = bookingByDays;
+            return this;
+        }
+
         public Booking build() {
             return new Booking(totalAmount, timeBegin, timeEnd, bookingId, bookingNum, note,
                     tankPart, tankPartRentingOut, fuelPolicyId, fuelPolicyName, dateCreated,
                     bookingStateName, bookingStateType, carId, manufactureYear, plateNumber,
                     carTitle, images, primaryImage, renterId, renterName, renterPhoto, renterRates,
                     ownerId, ownerName, ownerPhoto, ownerRates, reviewFromRenter, reviewFromOwner,
-                    deliveryAddress, paymentType, cost);
+                    deliveryAddress, paymentType, cost, bookingByDays);
         }
     }
 
@@ -352,6 +361,7 @@ public class Booking {
         builder.setDeliveryAddress(deliveryAddress);
         builder.setPaymentType(paymentType);
         builder.setCost(cost);
+        builder.setBookingByDays(bookingByDays);
         return builder;
     }
 
@@ -481,6 +491,10 @@ public class Booking {
 
     public BookingCost getCost() {
         return cost;
+    }
+
+    public boolean isBookingByDays() {
+        return bookingByDays;
     }
 
     public Integer getRenterRating() {

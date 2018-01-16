@@ -99,6 +99,7 @@ public class BookingEntityToBookingMapper {
                 paymentType = PaymentType.CARD;
             }
         }
+        boolean bookingByDays = entity.getBookingByDay() == null ? false : entity.getBookingByDay();
         return new Booking.Builder()
                 .setTotalAmount(entity.getTotalAmount())
                 .setTimeBegin(beginTime)
@@ -134,6 +135,7 @@ public class BookingEntityToBookingMapper {
                 .setFuelPolicyName(fuelPolicyName)
                 .setPaymentType(paymentType)
                 .setCost(entity.getCost())
+                .setBookingByDays(bookingByDays)
                 .build();
     }
 }

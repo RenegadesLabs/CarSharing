@@ -636,4 +636,17 @@
 
     <string name="booking_rating_title">You rated</string>
     <string name="booking_rating_edit">edit</string>
+
+    <string name="cost_title">Earnings</string>
+
+    <string name="cost_rental_prefix">Rental</string>
+    <string name="cost_rental_peak_suffix">hours (peak)</string>
+    <string name="cost_rental_off_peak_suffix">hours (non peak)</string>
+    <string name="cost_rental_weekends_suffix">days (weekend and P.H.)</string>
+    <string name="cost_rental_weekdays_suffix">days (weekday)</string>
+    <string name="cost_discount_prefix">Weekly discount</string>
+    <string name="cost_delivery_prefix">Delivery (3 days or more)</string>
+    <string name="cost_nett">Booking Cost</string>
+    <string name="cost_service_fee">Service Fee</string>
+    <string name="cost_nett_earnings">Nett Earnings</string>
 </resources>
