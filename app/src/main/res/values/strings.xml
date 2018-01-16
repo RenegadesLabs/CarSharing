@@ -649,4 +649,10 @@
     <string name="cost_nett">Booking Cost</string>
     <string name="cost_service_fee">Service Fee</string>
     <string name="cost_nett_earnings">Nett Earnings</string>
+
+    <!-- Browse Cars Filters-->
+    <string name="filters">Filters</string>
+    <string name="reset">Reset</string>
+
+
 </resources>
