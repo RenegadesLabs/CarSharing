@@ -6,25 +6,31 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 @Entity(tableName = "chats")
 public class Chat implements Comparable<Chat> {
 
-    public static final String CHAT_DB_ID = "chat_database_id";
     public static final String CHAT_SERVER_ID = "chat_id";
     public static final String CHAT_ATTACHMENT = "chat_attachment";
+    public static final String CHAT_UNREAD_COUNT = "chat_unread";
+    public static final String IS_NEW_CHAT = "chat_status";
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    private Integer chatLocalId;
-
+    @PrimaryKey
     @ColumnInfo(name = "chat_id")
-    private Integer chatServerId;
+    private Integer chatId;
 
     @ColumnInfo(name = "attachment")
     private String chatAttachment;
 
+    @ColumnInfo(name = "is_active")
+    private Boolean isActive;
+
     @ColumnInfo(name = "unread_count")
     private Integer unreadMessageCount;
+
+    @ColumnInfo(name = "recipient_id")
+    private Integer recipientId;
 
     @ColumnInfo(name = "name")
     private String recipientName;
@@ -54,22 +60,23 @@ public class Chat implements Comparable<Chat> {
     private String mBookingTimeBegin;
 
     @Ignore
-    private ChatMessage mChatMessage;
+    private List<ChatMessage> mChatMessageList;
 
-    public Integer getChatLocalId() {
-        return chatLocalId;
+
+    public Integer getRecipientId() {
+        return recipientId;
     }
 
-    public void setChatLocalId(Integer id) {
-        this.chatLocalId = id;
+    public void setRecipientId(Integer recipientId) {
+        this.recipientId = recipientId;
     }
 
-    public Integer getChatServerId() {
-        return chatServerId;
+    public Integer getChatId() {
+        return chatId;
     }
 
-    public void setChatServerId(Integer chatServerId) {
-        this.chatServerId = chatServerId;
+    public void setChatId(Integer chatId) {
+        this.chatId = chatId;
     }
 
     public String getChatAttachment() {
@@ -160,12 +167,20 @@ public class Chat implements Comparable<Chat> {
         mBookingTimeBegin = bookingTimeBegin;
     }
 
-    public ChatMessage getChatMessage() {
-        return mChatMessage;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setChatMessage(ChatMessage chatMessage) {
-        mChatMessage = chatMessage;
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<ChatMessage> getChatMessageList() {
+        return mChatMessageList;
+    }
+
+    public void setChatMessageList(List<ChatMessage> chatMessageList) {
+        mChatMessageList = chatMessageList;
     }
 
     @Override
@@ -180,16 +195,16 @@ public class Chat implements Comparable<Chat> {
 
         Chat chat = (Chat) o;
 
-        if (!chatServerId.equals(chat.chatServerId)) return false;
-        if (!recipientName.equals(chat.recipientName)) return false;
-        return mLastMessageText.equals(chat.mLastMessageText);
+        if (!chatId.equals(chat.chatId)) return false;
+        if (!unreadMessageCount.equals(chat.unreadMessageCount)) return false;
+        return mLastMessageTime.equals(chat.mLastMessageTime);
     }
 
     @Override
     public int hashCode() {
-        int result = chatServerId.hashCode();
-        result = 31 * result + recipientName.hashCode();
-        result = 31 * result + mLastMessageText.hashCode();
+        int result = chatId.hashCode();
+        result = 31 * result + unreadMessageCount.hashCode();
+        result = 31 * result + mLastMessageTime.hashCode();
         return result;
     }
 
@@ -202,18 +217,24 @@ public class Chat implements Comparable<Chat> {
         }
 
         //base data
-        public Chat.Builder withDatabaseId(Integer databaseId) {
-            mChat.chatLocalId = databaseId;
-            return this;
-        }
 
         public Chat.Builder withChatId(Integer chatId) {
-            mChat.chatServerId = chatId;
+            mChat.chatId = chatId;
             return this;
         }
 
         public Chat.Builder withChatAttachment(String chatAttachment) {
             mChat.chatAttachment = chatAttachment;
+            return this;
+        }
+
+        public Chat.Builder withActive(Boolean isActive) {
+            mChat.isActive = isActive;
+            return this;
+        }
+
+        public Chat.Builder withRecipientId(Integer id) {
+            mChat.recipientId = id;
             return this;
         }
 

@@ -17,7 +17,7 @@ public class SendReviewAsRenter implements UseCase<SendReviewAsRenter.RequestVal
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
         repository.sendReviewAsRenter(values.getBookingId(), values.getCondition(), values.getComfort(),
-                values.getOwner(), values.getOverall(), values.getReview(), new BookingDataSource.ReviewCallback() {
+                values.getOwner(), values.getOverall(), values.getReview(), new BookingDataSource.SimpleCallback() {
                     @Override
                     public void onSuccess() {
                         callback.onSuccess(new ResponseValues());

@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.cardee.R;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.inbox.chat.list.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.list.presenter.ChatListContract;
 import com.cardee.inbox.chat.list.presenter.ChatListPresenterImp;
-import com.cardee.inbox.chat.list.adapter.ChatListAdapter;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
     @BindView(R.id.chat_recycler)
     RecyclerView mChatRecycler;
 
-    private ChatListPresenterImp mPresenterImp;
+    private ChatListContract.Presenter mPresenterImp;
     private ChatListAdapter mChatAdapter;
 
     public static ChatListFragment newInstance() {
@@ -52,11 +52,6 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
                 mPresenterImp.onChatClick(chat);
             }
         });
-        mChatAdapter.subscribeToUnreadMessage(isUnread -> {
-            if (mPresenterImp != null) {
-                mPresenterImp.onUnreadMessageReceived(isUnread);
-            }
-        });
     }
 
     @Nullable
@@ -71,12 +66,19 @@ public class ChatListFragment extends Fragment implements ChatListContract.View 
 
     private void initRecycler() {
         mChatRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mChatRecycler.setHasFixedSize(true);
         mChatRecycler.setAdapter(mChatAdapter);
     }
 
     @Override
     public void showAllChats(List<Chat> chatList) {
         mChatAdapter.addItems(chatList);
+    }
+
+    @Override
+    public void updateAllChats(List<Chat> chatList) {
+        mChatAdapter.updateList(chatList);
+        mChatRecycler.scrollToPosition(0);
     }
 
     @Override

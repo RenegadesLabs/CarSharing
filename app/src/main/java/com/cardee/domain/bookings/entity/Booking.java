@@ -1,16 +1,26 @@
 package com.cardee.domain.bookings.entity;
 
+import android.util.Log;
+
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.domain.bookings.BookingState;
+import com.cardee.domain.bookings.PaymentType;
 import com.cardee.domain.owner.entity.Image;
 
 import java.util.Arrays;
 
 public class Booking {
 
-    private final Integer totalAmount;
+    private final Float totalAmount;
     private final String timeBegin;
     private final String timeEnd;
     private final Integer bookingId;
+    private final String bookingNum;
+    private final String note;
+    private final Integer tankPart;
+    private final Integer tankPartRentingOut;
+    private final Integer fuelPolicyId;
+    private final String fuelPolicyName;
     private final String dateCreated;
     private final String bookingStateName;
     private final BookingState bookingStateType;
@@ -20,15 +30,32 @@ public class Booking {
     private final String carTitle;
     private final Image[] images;
     private final Image primaryImage;
+    private final Integer renterId;
     private final String renterName;
     private final String renterPhoto;
-    private final String ownerPhoto;
+    private final Rate[] renterRates;
     private final Integer ownerId;
+    private final String ownerName;
+    private final String ownerPhoto;
+    private final Rate[] ownerRates;
+    private final String reviewFromRenter;
+    private final String reviewFromOwner;
+    private final String deliveryAddress;
+    private final PaymentType paymentType;
+    private final BookingCost cost;
+    private final boolean bookingByDays;
 
-    private Booking(Integer totalAmount,
+
+    private Booking(Float totalAmount,
                     String timeBegin,
                     String timeEnd,
                     Integer bookingId,
+                    String bookingNum,
+                    String note,
+                    Integer tankPart,
+                    Integer tankPartRentingOut,
+                    Integer fuelPolicyId,
+                    String fuelPolicyName,
                     String dateCreated,
                     String bookingStateName,
                     BookingState bookingStateType,
@@ -38,14 +65,30 @@ public class Booking {
                     String carTitle,
                     Image[] images,
                     Image primaryImage,
+                    Integer renterId,
                     String renterName,
                     String renterPhoto,
+                    Rate[] renterRates,
+                    Integer ownerId,
+                    String ownerName,
                     String ownerPhoto,
-                    Integer ownerId) {
+                    Rate[] ownerRates,
+                    String reviewFromRenter,
+                    String reviewFromOwner,
+                    String deliveryAddress,
+                    PaymentType paymentType,
+                    BookingCost cost,
+                    boolean bookingByDays) {
         this.totalAmount = totalAmount;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
         this.bookingId = bookingId;
+        this.bookingNum = bookingNum;
+        this.note = note;
+        this.tankPart = tankPart;
+        this.tankPartRentingOut = tankPartRentingOut;
+        this.fuelPolicyId = fuelPolicyId;
+        this.fuelPolicyName = fuelPolicyName;
         this.dateCreated = dateCreated;
         this.bookingStateName = bookingStateName;
         this.bookingStateType = bookingStateType;
@@ -55,17 +98,33 @@ public class Booking {
         this.carTitle = carTitle;
         this.images = images;
         this.primaryImage = primaryImage;
+        this.renterId = renterId;
         this.renterName = renterName;
         this.renterPhoto = renterPhoto;
-        this.ownerPhoto = ownerPhoto;
+        this.renterRates = renterRates;
         this.ownerId = ownerId;
+        this.ownerName = ownerName;
+        this.ownerPhoto = ownerPhoto;
+        this.ownerRates = ownerRates;
+        this.reviewFromRenter = reviewFromRenter;
+        this.reviewFromOwner = reviewFromOwner;
+        this.deliveryAddress = deliveryAddress;
+        this.paymentType = paymentType;
+        this.cost = cost;
+        this.bookingByDays = bookingByDays;
     }
 
     public static class Builder {
-        private Integer totalAmount;
+        private Float totalAmount;
         private String timeBegin;
         private String timeEnd;
         private Integer bookingId;
+        private String bookingNum;
+        private String note;
+        private Integer tankPart;
+        private Integer tankPartRentingOut;
+        private Integer fuelPolicyId;
+        private String fuelPolicyName;
         private String dateCreated;
         private String bookingStateName;
         private BookingState bookingStateType;
@@ -75,16 +134,26 @@ public class Booking {
         private String carTitle;
         private Image[] images;
         private Image primaryImage;
+        private Integer renterId;
         private String renterName;
         private String renterPhoto;
-        private String ownerPhoto;
+        private Rate[] renterRates;
         private Integer ownerId;
+        private String ownerName;
+        private String ownerPhoto;
+        private Rate[] ownerRates;
+        private String reviewFromRenter;
+        private String reviewFromOwner;
+        private String deliveryAddress;
+        private PaymentType paymentType;
+        private BookingCost cost;
+        private boolean bookingByDays;
 
         public Builder() {
 
         }
 
-        public Builder setTotalAmount(Integer totalAmount) {
+        public Builder setTotalAmount(Float totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
@@ -159,8 +228,43 @@ public class Booking {
             return this;
         }
 
-        public Builder setOwnerPhoto(String ownerPhoto) {
-            this.ownerPhoto = ownerPhoto;
+        public Builder setBookingNum(String bookingNum) {
+            this.bookingNum = bookingNum;
+            return this;
+        }
+
+        public Builder setNote(String note) {
+            this.note = note;
+            return this;
+        }
+
+        public Builder setTankPart(Integer tankPart) {
+            this.tankPart = tankPart;
+            return this;
+        }
+
+        public Builder setTankPartRentingOut(Integer tankPartRentingOut) {
+            this.tankPartRentingOut = tankPartRentingOut;
+            return this;
+        }
+
+        public Builder setFuelPolicyId(Integer fuelPolicyId) {
+            this.fuelPolicyId = fuelPolicyId;
+            return this;
+        }
+
+        public Builder setFuelPolicyName(String fuelPolicyName) {
+            this.fuelPolicyName = fuelPolicyName;
+            return this;
+        }
+
+        public Builder setRenterId(Integer renterId) {
+            this.renterId = renterId;
+            return this;
+        }
+
+        public Builder setRenterRates(Rate[] renterRates) {
+            this.renterRates = renterRates;
             return this;
         }
 
@@ -169,10 +273,58 @@ public class Booking {
             return this;
         }
 
+        public Builder setOwnerName(String ownerName) {
+            this.ownerName = ownerName;
+            return this;
+        }
+
+        public Builder setOwnerPhoto(String ownerPhoto) {
+            this.ownerPhoto = ownerPhoto;
+            return this;
+        }
+
+        public Builder setOwnerRates(Rate[] ownerRates) {
+            this.ownerRates = ownerRates;
+            return this;
+        }
+
+        public Builder setReviewFromRenter(String reviewFromRenter) {
+            this.reviewFromRenter = reviewFromRenter;
+            return this;
+        }
+
+        public Builder setReviewFromOwner(String reviewFromOwner) {
+            this.reviewFromOwner = reviewFromOwner;
+            return this;
+        }
+
+        public Builder setDeliveryAddress(String deliveryAddress) {
+            this.deliveryAddress = deliveryAddress;
+            return this;
+        }
+
+        public Builder setPaymentType(PaymentType paymentType) {
+            this.paymentType = paymentType;
+            return this;
+        }
+
+        public Builder setCost(BookingCost cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        public Builder setBookingByDays(boolean bookingByDays) {
+            this.bookingByDays = bookingByDays;
+            return this;
+        }
+
         public Booking build() {
-            return new Booking(totalAmount, timeBegin, timeEnd, bookingId, dateCreated,
+            return new Booking(totalAmount, timeBegin, timeEnd, bookingId, bookingNum, note,
+                    tankPart, tankPartRentingOut, fuelPolicyId, fuelPolicyName, dateCreated,
                     bookingStateName, bookingStateType, carId, manufactureYear, plateNumber,
-                    carTitle, images, primaryImage, renterName, renterPhoto, ownerPhoto, ownerId);
+                    carTitle, images, primaryImage, renterId, renterName, renterPhoto, renterRates,
+                    ownerId, ownerName, ownerPhoto, ownerRates, reviewFromRenter, reviewFromOwner,
+                    deliveryAddress, paymentType, cost, bookingByDays);
         }
     }
 
@@ -182,6 +334,12 @@ public class Booking {
         builder.setTimeBegin(timeBegin);
         builder.setTimeEnd(timeEnd);
         builder.setBookingId(bookingId);
+        builder.setBookingNum(bookingNum);
+        builder.setNote(note);
+        builder.setTankPart(tankPart);
+        builder.setTankPartRentingOut(tankPartRentingOut);
+        builder.setFuelPolicyId(fuelPolicyId);
+        builder.setFuelPolicyName(fuelPolicyName);
         builder.setDateCreated(dateCreated);
         builder.setBookingStateName(bookingStateName);
         builder.setBookingStateType(bookingStateType);
@@ -190,14 +348,24 @@ public class Booking {
         builder.setPlateNumber(plateNumber);
         builder.setCarTitle(carTitle);
         builder.setImages(Arrays.copyOf(images, images.length));
+        builder.setRenterId(renterId);
         builder.setRenterName(renterName);
         builder.setRenterPhoto(renterPhoto);
-        builder.setOwnerPhoto(ownerPhoto);
+        builder.setRenterRates(renterRates);
         builder.setOwnerId(ownerId);
+        builder.setOwnerName(ownerName);
+        builder.setOwnerPhoto(ownerPhoto);
+        builder.setOwnerRates(ownerRates);
+        builder.setReviewFromRenter(reviewFromRenter);
+        builder.setReviewFromOwner(reviewFromOwner);
+        builder.setDeliveryAddress(deliveryAddress);
+        builder.setPaymentType(paymentType);
+        builder.setCost(cost);
+        builder.setBookingByDays(bookingByDays);
         return builder;
     }
 
-    public Integer getTotalAmount() {
+    public Float getTotalAmount() {
         return totalAmount;
     }
 
@@ -257,11 +425,95 @@ public class Booking {
         return renterPhoto;
     }
 
-    public String getOwnerPhoto() {
-        return ownerPhoto;
+    public String getBookingNum() {
+        return bookingNum;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public Integer getTankPart() {
+        return tankPart;
+    }
+
+    public Integer getTankPartRentingOut() {
+        return tankPartRentingOut;
+    }
+
+    public Integer getFuelPolicyId() {
+        return fuelPolicyId;
+    }
+
+    public String getFuelPolicyName() {
+        return fuelPolicyName;
+    }
+
+    public Integer getRenterId() {
+        return renterId;
+    }
+
+    public Rate[] getRenterRates() {
+        return renterRates;
     }
 
     public Integer getOwnerId() {
         return ownerId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getOwnerPhoto() {
+        return ownerPhoto;
+    }
+
+    public Rate[] getOwnerRates() {
+        return ownerRates;
+    }
+
+    public String getReviewFromRenter() {
+        return reviewFromRenter;
+    }
+
+    public String getReviewFromOwner() {
+        return reviewFromOwner;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public BookingCost getCost() {
+        return cost;
+    }
+
+    public boolean isBookingByDays() {
+        return bookingByDays;
+    }
+
+    public Integer getRenterRating() {
+        if (renterRates == null || renterRates.length == 0) {
+            return null;
+        }
+        for (Rate rate : renterRates) {
+            Log.e("RATE", String.valueOf(rate.getRating()));
+            if (rate.getRateId() == 0) {
+                return rate.getRating();
+            }
+        }
+        return null;
+    }
+
+    public Integer getOwnerRating() {
+        if (ownerRates == null || ownerRates.length == 0) {
+            return null;
+        }
+        return ownerRates[0].getRating();
     }
 }

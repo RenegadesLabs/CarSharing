@@ -1,8 +1,10 @@
 package com.cardee.owner_bookings;
 
 
+import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
+import com.cardee.owner_bookings.strategy.PresentationStrategy;
 
 public interface OwnerBookingContract {
 
@@ -13,16 +15,20 @@ public interface OwnerBookingContract {
 
         void setPresenter(Presenter presenter);
 
-        void onDestroy();
+        void bind(Booking booking);
 
+        void bind();
+
+        void onDestroy();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter, PresentationStrategy.ActionListener {
 
         void setView(View view);
 
+        void setStrategy(PresentationStrategy strategy);
+
         void onDestroy();
 
     }
-
 }

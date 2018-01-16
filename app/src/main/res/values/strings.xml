@@ -55,12 +55,15 @@
     <string name="error_occurred">An error has occurred!</string>
     <string name="saved_successfully">Saved successfully!</string>
     <string name="nothing_to_save">Nothing to save</string>
+    <string name="only_one_image">You able to add only unique image!</string>
 
     <!--Loading-->
     <string name="loading">Loading…</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
+
+    <string name="yes">Yes</string>
 
     <string name="email_pass_empty_error">You must fill this field</string>
     <string name="auth_error">Authentication error!</string>
@@ -86,8 +89,8 @@
     <string name="car_availability_calendar">Calendar</string>
     <string name="car_availability_days_of_week">Days Of Week</string>
 
-    <string name="car_details_tab_rental">Rental</string>
-    <string name="car_details_tab_car">Car</string>
+    <string name="car_details_tab_rental">Rental Info</string>
+    <string name="car_details_tab_car">Car Info</string>
     <string name="car_details_tab_reviews">Reviews</string>
 
     <string name="car_details_more_listing">View listing</string>
@@ -114,6 +117,7 @@
     <!--Add Car-->
     <string name="car_add_title">Add Car</string>
     <string name="car_add_submit">Submit</string>
+    <string name="car_add_submit_caps">SUBMIT</string>
     <string name="car_add_vehicle">1. Vehicle Type</string>
     <string name="car_add_info">2. Car Info</string>
     <string name="car_add_image">3. Car Image</string>
@@ -305,7 +309,7 @@
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
-    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by masterMileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
     <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
     <string name="car_rental_fuel_modal_title">Petrol cost</string>
@@ -430,6 +434,22 @@
     <string name="profile_default_note">Add some info about yourself :)</string>
     <string name="comment">\u0020Comment</string>
 
+    <!--Owner Handover ChecklistEntity-->
+    <string name="owner_handover_checklist_title">Handover Checklist</string>
+    <string name="owner_handover_checklist_petrol_title">Petrol Level</string>
+    <string name="owner_handover_checklist_master_title">Master Mileage</string>
+    <string name="owner_handover_checklist_petrol_tank">Tank</string>
+    <string name="owner_handover_checklist_photos_title">Photos / Remarks</string>
+    <string name="owner_handover_checklist_photos_desc">of existing damage, dent, scratches etc.</string>
+    <string name="owner_handover_checklist_photos_add">Add Photo</string>
+    <string name="owner_handover_checklist_photos_add_rem">Add remarks here…</string>
+    <string name="owner_handover_checklist_info">Renter must be present during handover. Ensure checklist information is accurate and complete at the time of handover.</string>
+    <string name="owner_handover_checklist_button">Handover Car</string>
+    <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
+    <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
+    <string name="owner_handover_progress">Handing over…</string>
+    <string name="owner_handover_tank_filled">tankText filled.</string>
+
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>
     <string name="car_reviews_comfort">Comfort &amp; Performance</string>
@@ -520,7 +540,7 @@
         <item>9am</item>
         <item>10am</item>
         <item>11am</item>
-        <item>12am</item>
+        <item>12pm</item>
         <item>1pm</item>
         <item>2pm</item>
         <item>3pm</item>
@@ -532,8 +552,41 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
-        <item>12pm</item>
+        <item>12am</item>
     </string-array>
+    <string-array name="daily_timing_pickup_values">
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
+        <item>12pm</item>
+        <item>1pm</item>
+    </string-array>
+    <string-array name="daily_timing_return_values">
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+        <item>12am (next day)</item>
+        <item>1am (next day)</item>
+        <item>2am (next day)</item>
+        <item>3am (next day)</item>
+        <item>4am (next day)</item>
+        <item>5am (next day)</item>
+        <item>6am (next day)</item>
+        <item>7am (next day)</item>
+        <item>8am (next day)</item>
+        <item>9am (next day)</item>
+        <item>10am (next day)</item>
+        <item>11am (next day)</item>
+        <item>12pm (next day)</item>
+        <item>1pm (next day)</item>
+    </string-array>
+
     <string name="car_description_hint">Please enter your car description</string>
     <string name="car_description_caution">Adding your contact information of any form is against Cardee\'s policy
     and may result in account suspension or termination.</string>
@@ -548,18 +601,52 @@
 
     <!--Bookings-->
     <string name="booking_state_all">All</string>
-    <string name="booking_state_new">Request</string>
+    <string name="booking_state_new">New Request</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
-    <string name="booking_state_collected">Handed over</string>
-    <string name="booking_state_collecting">Handing over</string>
+    <string name="booking_state_collected">Handed Over</string>
+    <string name="booking_state_collecting">Handing Over</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
+    <string name="chat_notification_channel_name">Cardee Chats</string>
+    <string name="alert_notification_channel_id">cardee_alert_chanel</string>
+    <string name="alert_notification_channel_name">Cardee Alerts</string>
     <string name="booking_filter_title">Bookings</string>
     <string name="booking_sort_title">Sort by</string>
     <string name="booking_sort_date">Booking date</string>
     <string name="booking_sort_pickup_date">Pickup date</string>
     <string name="booking_sort_return_date">Return date</string>
     <string name="booking_sort_amount">Booking amount</string>
+
+    <string name="booking_message_accept">Accept request to confirm booking</string>
+    <string name="booking_message_handover">Hangover car to fill checklist upon car collection</string>
+    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist...</string>
+    <string name="booking_message_handover_complete">Tap "Car returned" to complete booking</string>
+
+    <string name="booking_payment_card">Card</string>
+    <string name="booking_payment_cash">Cash</string>
+
+    <string name="booking_title_decline">Decline Request</string>
+    <string name="booking_title_accept">Accept Request</string>
+    <string name="booking_title_cancel">Cancel Booking</string>
+    <string name="booking_title_handover">Handover Car</string>
+    <string name="booking_title_cancel_handover">Cancel Handover</string>
+    <string name="booking_title_complete">Car Returned</string>
+
+    <string name="booking_rating_title">You rated</string>
+    <string name="booking_rating_edit">edit</string>
+
+    <string name="cost_title">Earnings</string>
+
+    <string name="cost_rental_prefix">Rental</string>
+    <string name="cost_rental_peak_suffix">hours (peak)</string>
+    <string name="cost_rental_off_peak_suffix">hours (non peak)</string>
+    <string name="cost_rental_weekends_suffix">days (weekend and P.H.)</string>
+    <string name="cost_rental_weekdays_suffix">days (weekday)</string>
+    <string name="cost_discount_prefix">Weekly discount</string>
+    <string name="cost_delivery_prefix">Delivery (3 days or more)</string>
+    <string name="cost_nett">Booking Cost</string>
+    <string name="cost_service_fee">Service Fee</string>
+    <string name="cost_nett_earnings">Nett Earnings</string>
 </resources>

@@ -9,6 +9,8 @@ public interface RenterProfileDataSource {
 
     void changeRenterNote(ChangeNoteRequest changeNoteRequest, NoResponseCallback callback);
 
+    void loadRenterById(int id, ProfileCallback profileCallback);
+
     interface ProfileCallback extends RenterProfileDataSource.BaseCallback {
         void onSuccess(RenterProfile renterProfile);
     }

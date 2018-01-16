@@ -26,10 +26,9 @@
         android:layout_marginBottom="@dimen/widget_margin_small"
         android:layout_marginStart="@dimen/widget_margin_regular"
         android:layout_marginTop="@dimen/widget_margin_small"
-        android:background="@color/booking_state_new"
         android:gravity="center"
         android:textColor="@color/bg_main"
-        android:textSize="@dimen/text_regular"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintDimensionRatio="4.5:1"
@@ -41,9 +40,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/widget_margin_small"
         android:gravity="center_vertical"
-        android:text="24 Mar, 9am to 27 Mar, 8am"
         android:textColor="@color/text_regular"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_x_small"
         app:layout_constraintBottom_toBottomOf="@id/booking_status"
         app:layout_constraintStart_toEndOf="@id/booking_status"
         app:layout_constraintTop_toTopOf="@id/booking_status" />
@@ -116,7 +114,7 @@
         android:layout_marginTop="@dimen/widget_margin_xx_small"
         android:text="18 Mar, 5:00pm"
         android:textColor="@color/booking_subtitle"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_x_small"
         app:layout_constraintStart_toStartOf="@id/booking_car_plate_number"
         app:layout_constraintTop_toBottomOf="@id/booking_car_plate_number" />
 

@@ -31,6 +31,7 @@ public class OwnerBookingListPresenter
 
     private final ObtainBookings obtainBookings;
     private final UseCaseExecutor executor;
+    private boolean initialized = false;
 
     public OwnerBookingListPresenter(OwnerBookingListContract.View view, Settings settings) {
         this.view = view;
@@ -54,18 +55,21 @@ public class OwnerBookingListPresenter
             view.showProgress(true);
         }
         ObtainBookings.RequestValues request = new ObtainBookings
-                .RequestValues(ObtainBookings.Strategy.OWNER, filter, sort);
+                .RequestValues(ObtainBookings.Strategy.OWNER, filter, sort, !initialized);
         executor.execute(obtainBookings,
                 request, new UseCase.Callback<ObtainBookings.ResponseValues>() {
                     @Override
                     public void onSuccess(ObtainBookings.ResponseValues response) {
-                        bookings = response.getBookings();
-                        if (view != null) {
-                            view.showProgress(false);
-                            view.displayFilterType(filter);
-                            view.displaySortType(sort);
-                            view.invalidate();
+                        if (bookings.isEmpty() || response.isUpdated()) {
+                            bookings = response.getBookings();
+                            if (view != null) {
+                                view.showProgress(false);
+                                view.displayFilterType(filter);
+                                view.displaySortType(sort);
+                                view.invalidate();
+                            }
                         }
+                        initialized = true;
                     }
 
                     @Override
@@ -117,11 +121,11 @@ public class OwnerBookingListPresenter
     @Override
     public void onItemClick(Booking item) {
         Integer bookingId = item.getBookingId();
-        BookingState state = item.getBookingStateType();
-        if (bookingId == null || state == null) {
-            throw new IllegalArgumentException("Invalid bookingId: " + bookingId + " or state: " + state);
+
+        if (bookingId == null) {
+            throw new IllegalArgumentException("Invalid bookingId: " + bookingId);
         }
-        view.openBooking(bookingId, state);
+        view.openBooking(bookingId);
     }
 
     @Override
@@ -133,6 +137,7 @@ public class OwnerBookingListPresenter
     public void onSortSelected(ObtainBookings.Sort sort) {
         this.sort = sort;
         settings.setSort(sort);
+        initialized = false;
         obtainBookings(true);
     }
 
@@ -140,6 +145,7 @@ public class OwnerBookingListPresenter
     public void onFilterSelected(BookingState filter) {
         this.filter = filter;
         settings.setFilter(filter);
+        initialized = false;
         obtainBookings(true);
     }
 }

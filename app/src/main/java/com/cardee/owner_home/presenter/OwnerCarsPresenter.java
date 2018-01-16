@@ -5,8 +5,7 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.usecase.GetCars;
-import com.cardee.domain.owner.usecase.SwitchDaily;
-import com.cardee.domain.owner.usecase.SwitchHourly;
+import com.cardee.domain.owner.usecase.SaveAvailability;
 import com.cardee.owner_home.OwnerCarListContract;
 import com.crashlytics.android.Crashlytics;
 
@@ -17,11 +16,8 @@ import io.reactivex.functions.Consumer;
 public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEvent> {
 
     private OwnerCarListContract.View mView;
-
     private final GetCars mGetCars;
-    private final SwitchDaily mSwitchDaily;
-    private final SwitchHourly mSwitchHourly;
-
+    private final SaveAvailability saveAvailability;
     private final UseCaseExecutor mExecutor;
 
     private boolean firstStart = true;
@@ -29,10 +25,8 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
     public OwnerCarsPresenter(OwnerCarListContract.View view) {
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
-
         mGetCars = new GetCars();
-        mSwitchDaily = new SwitchDaily();
-        mSwitchHourly = new SwitchHourly();
+        saveAvailability = new SaveAvailability();
     }
 
     public void loadItems() {
@@ -102,9 +96,42 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
                 mView.openItem(carEvent.getCar());
                 break;
             case HOURLY_SWITCHED:
+                changeAvailability(carEvent.getCar(), carEvent.getAction());
+                break;
             case DAILY_SWITCHED:
-                mView.showMessage("Coming soon"); //PLUG
+                changeAvailability(carEvent.getCar(), carEvent.getAction());
                 break;
         }
+    }
+
+    private void changeAvailability(Car car, OwnerCarListContract.Action action) {
+        boolean availableHourly = (OwnerCarListContract.Action.HOURLY_SWITCHED == action) != car.isAvailableHourly();
+        boolean availableDaily = (OwnerCarListContract.Action.DAILY_SWITCHED == action) != car.isAvailableDaily();
+        SaveAvailability.RequestValues request =
+                new SaveAvailability.RequestValues(car.getCarId(), availableDaily, availableHourly);
+        mExecutor.execute(saveAvailability, request, new UseCase.Callback<SaveAvailability.ResponseValues>() {
+            @Override
+            public void onSuccess(SaveAvailability.ResponseValues response) {
+                Car updated = car.newBuilder()
+                        .setAvailableHourly(availableHourly)
+                        .setAvailableDaily(availableDaily)
+                        .build();
+                if (mView != null) {
+                    onChangeAvailability(updated);
+                }
+            }
+
+            @Override
+            public void onError(Error error) {
+                if (mView != null) {
+                    mView.showMessage(error.getMessage());
+                    onChangeAvailability(car);
+                }
+            }
+        });
+    }
+
+    private void onChangeAvailability(Car car) {
+        mView.updateItem(car);
     }
 }

@@ -3,19 +3,19 @@ package com.cardee.owner_car_details.view.eventbus;
 
 public class TimingSaveEvent {
 
-    private final int hourBegin;
-    private final int hourEnd;
+    private final String timeBegin;
+    private final String timeEnd;
 
-    public TimingSaveEvent(int hourBegin, int hourEnd){
-        this.hourBegin = hourBegin;
-        this.hourEnd = hourEnd;
+    public TimingSaveEvent(String timeBegin, String timeEnd){
+        this.timeBegin = timeBegin;
+        this.timeEnd = timeEnd;
     }
 
-    public int getHourBegin() {
-        return hourBegin;
+    public String getTimeBegin() {
+        return timeBegin;
     }
 
-    public int getHourEnd() {
-        return hourEnd;
+    public String getTimeEnd() {
+        return timeEnd;
     }
 }

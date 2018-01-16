@@ -20,7 +20,7 @@ public class GetChatMessages implements UseCase<GetChatMessages.RequestValues, G
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mDisposable = mRepository.getMessages()
+        mDisposable = mRepository.getLocalMessages()
                 .distinct()
                 .subscribe(
                         chatMessages -> callback.onSuccess(new ResponseValues(chatMessages)),

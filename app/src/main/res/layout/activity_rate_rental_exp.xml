@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_main"
+    android:orientation="vertical"
     tools:context="com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -65,7 +65,6 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Range Rover SDK6635E"
                 android:textAlignment="textStart"
                 android:theme="@style/TextSettingsRegular"
                 app:layout_constraintEnd_toStartOf="@id/owner_photo"
@@ -76,10 +75,11 @@
                 android:id="@+id/rental_period"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="24 Mar, 9am  to  26 Mar, 10pm"
                 android:textAlignment="textStart"
                 android:theme="@style/TextSettingsSmall"
                 app:layout_constraintEnd_toStartOf="@id/owner_photo"
@@ -104,5 +104,5 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

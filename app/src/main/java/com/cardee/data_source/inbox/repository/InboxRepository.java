@@ -1,28 +1,36 @@
 package com.cardee.data_source.inbox.repository;
 
+import android.util.Log;
+
+import com.cardee.data_source.inbox.local.alert.AlertListLocalSource;
+import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.local.chat.ChatListLocalSource;
 import com.cardee.data_source.inbox.local.chat.LocalData;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
+import com.cardee.data_source.inbox.remote.alert.AlertRemoteDataSource;
 import com.cardee.data_source.inbox.remote.chat.ChatListRemoteSource;
 import com.cardee.data_source.inbox.remote.chat.RemoteData;
+import com.cardee.data_source.inbox.service.model.AlertNotification;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
+import com.cardee.data_source.remote.api.NoDataResponse;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class InboxRepository implements InboxContract {
 
-    private final LocalData.ChatListSource mChatLocalSource;
-    private final RemoteData.ChatListSource mChatRemoteSource;
-
+    private static final String TAG = InboxRepository.class.getSimpleName();
     private static InboxRepository INSTANCE;
-    private List<Chat> mCacheLocalChats;
+
+    private final LocalData.ChatListSource mChatLocalSource;
+    private final LocalData.AlertListSource mAlertLocalSource;
+    private final RemoteData.ChatListSource mChatRemoteSource;
+    private final RemoteData.AlertListSource mAlertRemoteSource;
 
     public static InboxRepository getInstance() {
         if (INSTANCE == null) {
@@ -34,16 +42,25 @@ public class InboxRepository implements InboxContract {
     private InboxRepository() {
         mChatLocalSource = new ChatListLocalSource();
         mChatRemoteSource = new ChatListRemoteSource();
+        mAlertLocalSource = new AlertListLocalSource();
+        mAlertRemoteSource = new AlertRemoteDataSource();
+    }
+
+    @Override
+    public Flowable<List<Alert>> getLocalAlerts(String attachment) {
+        return mAlertLocalSource.getLocalAlerts(attachment);
     }
 
     @Override
     public Flowable<List<Chat>> getLocalChats(String attachment) {
-        return mChatLocalSource
-                .getLocalChats(attachment)
-                .doOnNext(localChats -> {
-                    mCacheLocalChats = localChats;
-//                    Collections.sort(localChats);
-                });
+        return mChatLocalSource.getLocalChats(attachment);
+    }
+
+    @Override
+    public Single<List<Alert>> getRemoteAlerts(String attachment) {
+        return mAlertRemoteSource
+                .getRemoteAlerts(attachment)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -54,34 +71,47 @@ public class InboxRepository implements InboxContract {
     }
 
     @Override
-    public void fetchOrSaveData(List<Chat> remoteChats) {
-        if (mCacheLocalChats == null || mCacheLocalChats.isEmpty()) {
-            mChatLocalSource.saveChats(remoteChats);
-        } else {
-            mChatLocalSource.fetchUpdates(mCacheLocalChats, remoteChats);
-        }
+    public void fetchChatData(List<Chat> remoteChats) {
+        mChatLocalSource.saveChats(remoteChats);
     }
 
     @Override
-    public Completable updateChat(Chat chat) {
+    public void fetchAlertData(List<Alert> remoteAlerts) {
+        mAlertLocalSource.saveAlerts(remoteAlerts);
+    }
+
+    @Override
+    public Completable updateChat(ChatNotification chatNotification) {
         return Completable.create((CompletableEmitter emitter) ->
-                mChatLocalSource.getChat(chat)
+                mChatLocalSource.updateChat(chatNotification)
                         .subscribeOn(Schedulers.io())
-                        .subscribe((Chat persistChat) -> {
-                            persistChat.setLastMessageText(chat.getLastMessageText());
-                            persistChat.setLastMessageTime(chat.getLastMessageTime());
-                            persistChat.setRecipientName(chat.getRecipientName());
-                            persistChat.setUnreadMessageCount(chat.getUnreadMessageCount());
-                            mChatLocalSource.addChat(persistChat);
-                        }, throwable -> {
-                            if (mCacheLocalChats != null) {
-                                getRemoteChats(chat.getChatAttachment());
-                            }
-                        }));
+                        .subscribe(() -> {
+                            Log.e(TAG, "Chat updated");
+                            emitter.onComplete();
+                        }, throwable -> getNewChat(chatNotification, emitter)));
     }
 
     @Override
-    public Observable<Chat> subscribe(String attachment) {
-        return null;
+    public void addAlert(AlertNotification alert) {
+        mAlertLocalSource.addAlert(alert);
+    }
+
+    @Override
+    public Single<NoDataResponse> markAsRead(List<Integer> alerts) {
+        return mAlertRemoteSource
+                .markAlertsAsRead(alerts);
+    }
+
+    private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {
+        mChatRemoteSource.getSingleChat(chatNotification.getChatId(), chatNotification.getChatAttachment())
+                .subscribe(chat -> mChatLocalSource.addChat(chat)
+                                .subscribe(() -> {
+                                    Log.e(TAG, "New chat obtained");
+                                    emitter.onComplete();
+                                }, emitter::onError),
+                        responseError -> {
+                            emitter.onError(responseError);
+                            Log.d(TAG, "Error while obtaining chat information");
+                        });
     }
 }

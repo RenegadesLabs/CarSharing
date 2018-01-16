@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@drawable/bg_underlined"
+    android:paddingLeft="@dimen/small_margin"
+    android:paddingRight="@dimen/small_margin">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/alert_image"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="14dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/alert_unread_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginEnd="2dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/alert_image"
+        app:layout_constraintTop_toTopOf="@id/alert_image"
+        app:srcCompat="@drawable/ic_inbox_notification" />
+
+    <TextView
+        android:id="@+id/alert_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="New instant booking!"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_more_tab_item"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/alert_click_image"
+        app:layout_constraintStart_toEndOf="@id/alert_image"
+        app:layout_constraintTop_toTopOf="@id/alert_image" />
+
+    <TextView
+        android:id="@+id/alert_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="You have a booking request"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_more_tab_item"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/alert_click_image"
+        app:layout_constraintStart_toEndOf="@id/alert_image"
+        app:layout_constraintTop_toBottomOf="@id/alert_title" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/alert_click_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_right" />
+
+</android.support.constraint.ConstraintLayout>

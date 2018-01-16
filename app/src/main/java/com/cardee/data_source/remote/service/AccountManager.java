@@ -21,13 +21,14 @@ public class AccountManager {
     private static final String DEFAULT_AUTH_TOKEN = "";
     private static final String FCM_TOKEN_AUTH = "fcm_token_auth";
 
-    public static final String SESSION = "attachment";
     public static final String OWNER_SESSION = "owner";
     public static final String RENTER_SESSION = "renter";
-    public static final String RENTER_CHAT_NOTIFICATIONS = "renter_chat_notify";
-    public static final String OWNER_CHAT_NOTIFICATIONS = "owner_chat_notify";
-    public static final String RENTER_ALERT_NOTIFICATIONS = "renter_alert_notify";
-    public static final String OWNER_ALERT_NOTIFICATIONS = "owner_alert_notify";
+
+    private static final String SESSION = "attachment";
+    private static final String RENTER_CHAT_NOTIFICATIONS = "renter_chat_notify";
+    private static final String OWNER_CHAT_NOTIFICATIONS = "owner_chat_notify";
+    private static final String RENTER_ALERT_NOTIFICATIONS = "renter_alert_notify";
+    private static final String OWNER_ALERT_NOTIFICATIONS = "owner_alert_notify";
 
     public static AccountManager getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
@@ -74,20 +75,12 @@ public class AccountManager {
         return string != null;
     }
 
-    public void saveChatNotificationData(NotificationData data) {
-
-    }
-
-    public void saveAlertNotifiticationData(NotificationData data) {
-
-    }
-
     public void saveNotificationData(NotificationData data) {
         Completable.fromRunnable(() -> mPrefs.edit()
                 .putInt(OWNER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
-                .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .putInt(OWNER_ALERT_NOTIFICATIONS, data.getOwnerAlertMessages())
                 .putInt(RENTER_CHAT_NOTIFICATIONS, data.getOwnerChatMessages())
-                .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerBookingMessages())
+                .putInt(RENTER_ALERT_NOTIFICATIONS, data.getOwnerAlertMessages())
                 .apply())
                 .subscribeOn(Schedulers.io())
                 .subscribe();
@@ -95,9 +88,9 @@ public class AccountManager {
 
     public NotificationData getNotificationData() {
         NotificationData data = new NotificationData(getSessionInfo());
-        data.setOwnerBookingMessages(mPrefs.getInt(OWNER_ALERT_NOTIFICATIONS, 0));
+        data.setOwnerAlertMessages(mPrefs.getInt(OWNER_ALERT_NOTIFICATIONS, 0));
         data.setOwnerChatMessages(mPrefs.getInt(OWNER_CHAT_NOTIFICATIONS, 0));
-        data.setRenterBookingMessages(mPrefs.getInt(RENTER_ALERT_NOTIFICATIONS, 0));
+        data.setRenterAlertMessages(mPrefs.getInt(RENTER_ALERT_NOTIFICATIONS, 0));
         data.setRenterChatMessages(mPrefs.getInt(RENTER_CHAT_NOTIFICATIONS, 0));
         return data;
     }

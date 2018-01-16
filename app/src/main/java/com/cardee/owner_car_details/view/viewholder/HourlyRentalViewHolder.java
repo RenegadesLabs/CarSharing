@@ -327,9 +327,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void onSave(TimingSaveEvent event) {
-        String startTime = stringDelegate.getGMTTimeString(event.getHourBegin());
-        String endTime = stringDelegate.getGMTTimeString(event.getHourEnd());
-        stringDelegate.onSetHourlyAvailabilityTime(timing, startTime, endTime);
-        presenter.updateAvailabilityTiming(startTime, endTime);
+        stringDelegate.onSetHourlyAvailabilityTime(timing, event.getTimeBegin(), event.getTimeEnd());
+        presenter.updateAvailabilityTiming(event.getTimeBegin(), event.getTimeEnd());
     }
 }

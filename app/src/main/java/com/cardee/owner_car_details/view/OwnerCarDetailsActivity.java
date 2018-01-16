@@ -10,17 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.custom.modal.DetailsMoreMenuFragment;
+import com.cardee.domain.owner.entity.Car;
+import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
 public class OwnerCarDetailsActivity extends AppCompatActivity
-        implements TabLayout.OnTabSelectedListener, View.OnClickListener {
+        implements TabLayout.OnTabSelectedListener, View.OnClickListener, OwnerCarDetailsFragment.OnCarFetchedListener {
 
     private static final String TAG = OwnerCarDetailsActivity.class.getSimpleName();
 
@@ -54,7 +54,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
 
     private void initContent(String title, String[] tabTitles) {
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
@@ -68,13 +68,17 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
     }
 
     private void initPages(String[] tabTitles) {
-        mTabs = (TabLayout) findViewById(R.id.tab_layout);
-        mPager = (ViewPager) findViewById(R.id.car_details_pager);
+        mTabs = findViewById(R.id.tab_layout);
+        mPager = findViewById(R.id.car_details_pager);
         mPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabTitles));
         mPager.setOffscreenPageLimit(2);
         mTabs.setupWithViewPager(mPager);
-        mTabs.getTabAt(1).select();
+//        mTabs.getTabAt(1).select();
         mTabs.addOnTabSelectedListener(this);
+    }
+
+    private void setTitle(String title) {
+        mTitle.setText(title);
     }
 
     @Override
@@ -110,6 +114,12 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onCarFetched(Car car) {
+        String title = car.getLicenceNumber();
+        setTitle(title);
+    }
+
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -130,7 +140,7 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
                     fragment = OwnerCarRentalFragment.newInstance(mCarId);
                     break;
                 case 1:
-                    fragment = OwnerCarDetailsFragment.newInstance(mCarId);
+                    fragment = OwnerCarDetailsFragment.newInstance(mCarId, OwnerCarDetailsActivity.this);
                     break;
                 case 2:
                     fragment = OwnerCarReviewsFragment.newInstance(mCarId);

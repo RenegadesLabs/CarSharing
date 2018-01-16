@@ -1,6 +1,7 @@
 package com.cardee.inbox.chat.single.presenter;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.cardee.data_source.inbox.local.chat.entity.ChatMessage;
 import com.cardee.mvp.BaseView;
@@ -15,16 +16,14 @@ public interface ChatContract {
 
         void onChatDataRequest();
 
-        void onGetMessagesRequest();
-
         void onDestroy();
+
+        void setOnClickListener(ImageView recipientPhoto, Integer recipientId);
     }
 
     interface View extends BaseView {
+        void openOwnerAccount(Integer recipientId);
 
-        void notifyAboutInboxDataObtained();
-
-        void setMessageList(List<ChatMessage> messageList);
-
+        void openRenterAccount(Integer recipientId);
     }
 }

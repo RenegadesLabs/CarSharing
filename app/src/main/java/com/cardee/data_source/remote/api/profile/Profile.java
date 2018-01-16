@@ -37,6 +37,10 @@ public interface Profile {
     @Headers("Content-Type: application/json")
     Single<RenterProfileResponse> loadRenterProfile();
 
+    @GET("profiles/renter/{id}")
+    @Headers("Content-Type: application/json")
+    Single<RenterProfileResponse> getRenterById(@Path("id") int id);
+
     //TODO: implement
     void uploadProfilePhoto();
 

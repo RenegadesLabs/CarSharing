@@ -31,6 +31,8 @@ public class RentalTermsAdditional extends AppCompatActivity implements View.OnC
     private ProgressDialog mProgress;
     private RentalTermsAdditionalPresenter mPresenter;
 
+    private String mDefText;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,8 @@ public class RentalTermsAdditional extends AppCompatActivity implements View.OnC
     }
 
     private void initViewState() {
-        additionalTermsET.setText(getIntent().getStringExtra(ADDITIONAL_TERMS));
+        mDefText = getIntent().getStringExtra(ADDITIONAL_TERMS);
+        additionalTermsET.setText(mDefText);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class RentalTermsAdditional extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                if (additionalTermsET.getText().toString().isEmpty()) {
+                if (additionalTermsET.getText().toString().equals(mDefText)) {
                     showMessage(R.string.nothing_to_save);
                     return;
                 }
