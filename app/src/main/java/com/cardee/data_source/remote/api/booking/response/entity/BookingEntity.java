@@ -74,6 +74,9 @@ public class BookingEntity {
     @SerializedName("address_delivery")
     @Expose
     private String addressDelivery;
+    @Expose
+    @SerializedName("cost_breakdown")
+    private BookingCost cost;
 
 
     public BookingEntity(){
@@ -246,5 +249,13 @@ public class BookingEntity {
 
     public void setAddressDelivery(String addressDelivery) {
         this.addressDelivery = addressDelivery;
+    }
+
+    public BookingCost getCost() {
+        return cost;
+    }
+
+    public void setCost(BookingCost cost) {
+        this.cost = cost;
     }
 }

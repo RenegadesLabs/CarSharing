@@ -2,6 +2,7 @@ package com.cardee.owner_bookings.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
@@ -118,7 +121,35 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     @BindView(R.id.rating_title)
     public TextView ratingTitle;
     @BindView(R.id.earnings_container)
-    public ConstraintLayout earningsContainer;
+    public ScrollView earningsContainer;
+    @BindView(R.id.earning_rental_off_peak)
+    public TextView offPeakTitle;
+    @BindView(R.id.earning_rental_off_peak_value)
+    public TextView offPeakValue;
+    @BindView(R.id.earning_rental_peak)
+    public TextView peakTitle;
+    @BindView(R.id.earning_rental_peak_value)
+    public TextView peakValue;
+    @BindView(R.id.earning_rental_discount)
+    public TextView discountTitle;
+    @BindView(R.id.earning_rental_discount_value)
+    public TextView discountValue;
+    @BindView(R.id.earning_rental_delivery)
+    public TextView deliveryTitle;
+    @BindView(R.id.earning_rental_delivery_value)
+    public TextView deliveryValue;
+    @BindView(R.id.earning_booking_cost)
+    public TextView costTitle;
+    @BindView(R.id.earning_booking_cost_value)
+    public TextView costValue;
+    @BindView(R.id.earning_service_fee)
+    public TextView feeTitle;
+    @BindView(R.id.earning_service_fee_value)
+    public TextView feeValue;
+    @BindView(R.id.earning_nett)
+    public TextView nettEarningTitle;
+    @BindView(R.id.earning_nett_value)
+    public TextView nettEarningsValue;
 
 
     public BookingView(Context context) {
@@ -202,6 +233,37 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
             intent.putExtra("booking_id", booking.getBookingId());
             getContext().startActivity(intent);
         });
+        if (booking.getCost() != null) {
+            bindCost(booking.getCost());
+        }
+    }
+
+    private void bindCost(BookingCost cost) {
+        float peak = cost.getPeakCost() == null ? 0 : cost.getPeakCost();
+        float nonPeak = cost.getNonPeakCost() == null ? 0 : cost.getNonPeakCost();
+        float discount = cost.getDiscount() == null ? 0 : -cost.getDiscount();
+        float delivery = cost.getDelivery() == null ? 0 : cost.getDelivery();
+        float nettCost = peak + nonPeak + discount + delivery;
+        float fee = cost.getFee() == null ? 0 : -cost.getFee();
+        float nettEarnings = nettCost + fee;
+        onBindCostValue(peakValue, peak);
+        onBindCostValue(offPeakValue, nonPeak);
+        onBindCostValue(discountValue, discount);
+        onBindCostValue(deliveryValue, delivery);
+        onBindCostValue(costValue, nettCost);
+        onBindCostValue(feeValue, fee);
+        onBindCostValue(nettEarningsValue, nettEarnings);
+    }
+
+    private void onBindCostValue(TextView view, float value) {
+        String stringValue;
+        if (value < 0) {
+            view.setTextColor(ContextCompat.getColor(getContext(), R.color.red_error));
+            stringValue = "-$" + String.valueOf(-value);
+        } else {
+            stringValue = "$" + String.valueOf(value);
+        }
+        view.setText(stringValue);
     }
 
     @Override

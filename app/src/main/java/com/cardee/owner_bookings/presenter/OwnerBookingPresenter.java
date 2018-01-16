@@ -204,5 +204,6 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onRatingEdit() {
+
     }
 }

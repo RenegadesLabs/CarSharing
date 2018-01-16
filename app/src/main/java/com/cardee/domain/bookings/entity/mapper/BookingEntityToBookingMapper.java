@@ -133,6 +133,7 @@ public class BookingEntityToBookingMapper {
                 .setFuelPolicyId(fuelPolicyId)
                 .setFuelPolicyName(fuelPolicyName)
                 .setPaymentType(paymentType)
+                .setCost(entity.getCost())
                 .build();
     }
 }

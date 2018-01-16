@@ -2,6 +2,7 @@ package com.cardee.domain.bookings.entity;
 
 import android.util.Log;
 
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.PaymentType;
 import com.cardee.domain.owner.entity.Image;
@@ -41,6 +42,7 @@ public class Booking {
     private final String reviewFromOwner;
     private final String deliveryAddress;
     private final PaymentType paymentType;
+    private final BookingCost cost;
 
 
     private Booking(Float totalAmount,
@@ -73,7 +75,8 @@ public class Booking {
                     String reviewFromRenter,
                     String reviewFromOwner,
                     String deliveryAddress,
-                    PaymentType paymentType) {
+                    PaymentType paymentType,
+                    BookingCost cost) {
         this.totalAmount = totalAmount;
         this.timeBegin = timeBegin;
         this.timeEnd = timeEnd;
@@ -105,6 +108,7 @@ public class Booking {
         this.reviewFromOwner = reviewFromOwner;
         this.deliveryAddress = deliveryAddress;
         this.paymentType = paymentType;
+        this.cost = cost;
     }
 
     public static class Builder {
@@ -139,6 +143,7 @@ public class Booking {
         private String reviewFromOwner;
         private String deliveryAddress;
         private PaymentType paymentType;
+        private BookingCost cost;
 
         public Builder() {
 
@@ -299,13 +304,18 @@ public class Booking {
             return this;
         }
 
+        public Builder setCost(BookingCost cost) {
+            this.cost = cost;
+            return this;
+        }
+
         public Booking build() {
             return new Booking(totalAmount, timeBegin, timeEnd, bookingId, bookingNum, note,
                     tankPart, tankPartRentingOut, fuelPolicyId, fuelPolicyName, dateCreated,
                     bookingStateName, bookingStateType, carId, manufactureYear, plateNumber,
                     carTitle, images, primaryImage, renterId, renterName, renterPhoto, renterRates,
                     ownerId, ownerName, ownerPhoto, ownerRates, reviewFromRenter, reviewFromOwner,
-                    deliveryAddress, paymentType);
+                    deliveryAddress, paymentType, cost);
         }
     }
 
@@ -341,6 +351,7 @@ public class Booking {
         builder.setReviewFromOwner(reviewFromOwner);
         builder.setDeliveryAddress(deliveryAddress);
         builder.setPaymentType(paymentType);
+        builder.setCost(cost);
         return builder;
     }
 
@@ -466,6 +477,10 @@ public class Booking {
 
     public PaymentType getPaymentType() {
         return paymentType;
+    }
+
+    public BookingCost getCost() {
+        return cost;
     }
 
     public Integer getRenterRating() {
