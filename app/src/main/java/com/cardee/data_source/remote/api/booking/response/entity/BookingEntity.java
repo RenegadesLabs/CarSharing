@@ -4,6 +4,7 @@ package com.cardee.data_source.remote.api.booking.response.entity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 import com.cardee.data_source.remote.api.reviews.response.entity.Renter;
+import com.cardee.domain.bookings.entity.Booking;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -74,6 +75,12 @@ public class BookingEntity {
     @SerializedName("address_delivery")
     @Expose
     private String addressDelivery;
+    @Expose
+    @SerializedName("cost_breakdown")
+    private BookingCost cost;
+    @Expose
+    @SerializedName("is_booking_by_day")
+    private Boolean bookingByDay;
 
 
     public BookingEntity(){
@@ -246,5 +253,21 @@ public class BookingEntity {
 
     public void setAddressDelivery(String addressDelivery) {
         this.addressDelivery = addressDelivery;
+    }
+
+    public BookingCost getCost() {
+        return cost;
+    }
+
+    public void setCost(BookingCost cost) {
+        this.cost = cost;
+    }
+
+    public Boolean getBookingByDay() {
+        return bookingByDay;
+    }
+
+    public void setBookingByDay(Boolean bookingByDay) {
+        this.bookingByDay = bookingByDay;
     }
 }
