@@ -2,7 +2,6 @@ package com.cardee.inbox.chat.single.view;
 
 import android.content.Context;
 
-import com.cardee.R;
 import com.cardee.inbox.chat.list.adapter.UtcDateFormatter;
 
 import java.text.ParseException;
@@ -18,16 +17,16 @@ public class ChatActivityDateFormatter implements UtcDateFormatter {
     private final Calendar mCalendar;
     private final SimpleDateFormat mUtcDateFormat;
     private final SimpleDateFormat mTimeFormat;
-    private final String to;
+
+
 
     public ChatActivityDateFormatter(Context context) {
         mCalendar = Calendar.getInstance();
         TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
         mUtcDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US);
-        mTimeFormat = new SimpleDateFormat("d MMM, ha", Locale.US);
+        mTimeFormat = new SimpleDateFormat("d\u00a0MMM yyyy,\u00a0ha", Locale.US);
         mUtcDateFormat.setTimeZone(timeZone);
         mCalendar.setTimeZone(timeZone);
-        to = context.getString(R.string.to);
     }
 
     @Override
@@ -43,6 +42,6 @@ public class ChatActivityDateFormatter implements UtcDateFormatter {
 
     @Override
     public String getDivider() {
-        return " " + to + " ";
-    }
+        return " - ";
+    } //'to' changed to '-' for better UX
 }

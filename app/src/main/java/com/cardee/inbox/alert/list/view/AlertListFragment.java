@@ -17,6 +17,7 @@ import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.inbox.alert.list.adapter.AlertListAdapter;
 import com.cardee.inbox.alert.list.presenter.AlertListContract;
 import com.cardee.inbox.alert.list.presenter.AlertListPresenterImp;
+import com.cardee.mvp.BaseView;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.owner_bookings.view.BookingActivity;
@@ -158,12 +159,10 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
 
     @Override
     public void showMessage(String message) {
-
     }
 
     @Override
     public void showMessage(int messageId) {
-
     }
 
     @Override

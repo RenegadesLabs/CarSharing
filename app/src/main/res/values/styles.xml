@@ -213,7 +213,7 @@
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
 
-    <style name="ChatEditTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="ChatEditTextStyle" parent="Base.Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/text_account_settings</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/text_account_settings</item>

@@ -79,7 +79,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
             handleErrorResponse(response, callback);
         }, throwable -> {
             Log.e(TAG, throwable.getMessage());
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
         });
     }
 

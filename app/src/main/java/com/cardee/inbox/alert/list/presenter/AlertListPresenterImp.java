@@ -3,11 +3,13 @@ package com.cardee.inbox.alert.list.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.cardee.data_source.Error;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.repository.InboxRepository;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
 import com.cardee.data_source.remote.service.AccountManager;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,20 +71,30 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
     @Override
     public void onAlertClick(Alert alert) {
-        alert.setNewBooking(false);
         if (mView != null) {
             mView.showAlert(alert);
         }
-        List<Integer> alerts = new ArrayList<>();
-        alerts.add(alert.getAlertId());
-        mInboxRepository.markAsRead(alerts).subscribe(o -> {
-            // updates local database
-            List<Alert> alertList = new ArrayList<>();
-            alertList.add(alert);
-            mInboxRepository.fetchAlertData(alertList);
-            mNotificationRepository.updateInboxUnreadCount();
-        }, throwable
-                -> Log.e(TAG, throwable.getMessage()));
+        if (alert.isNewBooking()) {
+            List<Integer> alerts = new ArrayList<>();
+            alerts.add(alert.getAlertId());
+            alert.setNewBooking(false);
+            mInboxRepository.markAsRead(alerts).subscribe(o -> {
+                // updates local database
+
+                List<Alert> alertList = new ArrayList<>();
+                alertList.add(alert);
+                mInboxRepository.fetchAlertData(alertList);
+                mNotificationRepository.updateInboxUnreadCount();
+                mNotificationRepository.saveSessionData();
+            }, throwable -> {
+                alert.setNewBooking(true);
+                if (throwable instanceof UnknownHostException) {
+                    Log.e(TAG, Error.Message.CONNECTION_LOST);
+                } else {
+                    Log.e(TAG, throwable.getMessage());
+                }
+            });
+        }
     }
 
     @Override

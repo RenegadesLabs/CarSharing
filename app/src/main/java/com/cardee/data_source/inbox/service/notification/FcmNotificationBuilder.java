@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -59,11 +60,17 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     pendingIntent = createChatPendingIntent(context, notification);
                 }
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelChatId)
-                        .setSmallIcon(R.drawable.ic_cardee_icon)
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
                         .setSound(mChatNotifySound);
+
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon);
+                } else {
+                    mNotificationBuilder.setSmallIcon(getValidAlertImage(notification.getType()));
+                }
+
                 if (pendingIntent != null) {
                     mNotificationBuilder.setContentIntent(pendingIntent);
                 }
@@ -74,12 +81,16 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     pendingIntent = createAlertPendingIntent(context, notification);
                 }
                 mNotificationBuilder = new NotificationCompat.Builder(context, channelAlertId)
-//                        .setSmallIcon(getValidAlertImage(notification.getType()))
-                        .setSmallIcon(R.drawable.ic_cardee_icon)
                         .setContentTitle(notification.getContentTitle())
                         .setContentText(notification.getContentText())
                         .setAutoCancel(true)
                         .setSound(mChatNotifySound);
+
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mNotificationBuilder.setSmallIcon(R.drawable.ic_cardee_icon);
+                } else {
+                    mNotificationBuilder.setSmallIcon(getValidAlertImage(notification.getType()));
+                }
 
                 if (pendingIntent != null) {
                     mNotificationBuilder.setContentIntent(pendingIntent);
@@ -116,6 +127,12 @@ public class FcmNotificationBuilder implements NotificationBuilder {
             Alert.Type type = alertNotification.getType();
             if (type != null) {
                 int objectId = alertNotification.getObjectId();
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                Intent previousIntent = new Intent(context, notification.isOwnerSession() ? OwnerHomeActivity.class : RenterHomeActivity.class);
+                previousIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                stackBuilder.addNextIntent(previousIntent);
+
                 switch (type) {
                     case ACCEPTED:
                     case REQUEST_EXPIRED:
@@ -128,12 +145,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         if (alertNotification.isOwnerSession()) {
                             Intent intent = new Intent(context, BookingActivity.class);
                             intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
-                            return PendingIntent.getActivity(
-                                    context,
-                                    FCM_NOTIFICATION_REQUEST_CODE,
-                                    intent,
-                                    PendingIntent.FLAG_UPDATE_CURRENT
-                            );
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            stackBuilder.addNextIntent(intent);
+                            return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                         } else {
                             //TODO: implement for Renter
                         }
@@ -142,12 +156,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     case RENTER_STATE_CHANGE:
                     case OWNER_STATE_CHANGE:
                         Intent accountIntent = new Intent(context, AccountDetailsActivity.class);
-                        return PendingIntent.getActivity(
-                                context,
-                                FCM_NOTIFICATION_REQUEST_CODE,
-                                accountIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
+                        accountIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(accountIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case BROADCAST:
                         //TODO: different UI every time.
                         break;
@@ -155,12 +166,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     case RENTER_REVIEW:
                         Intent renterRateIntent = new Intent(context, RateRentalExpActivity.class);
                         renterRateIntent.putExtra("booking_id", objectId);
-                        return PendingIntent.getActivity(
-                                context,
-                                FCM_NOTIFICATION_REQUEST_CODE,
-                                renterRateIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
+                        renterRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(renterRateIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case OWNER_CHECKLIST_UPD:
                         //TODO:  editedCheckList();
                         break;
@@ -174,12 +182,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
 
                         Intent bookingIntent = new Intent(context, BookingActivity.class);
                         bookingIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
-                        return PendingIntent.getActivity(
-                                context,
-                                FCM_NOTIFICATION_REQUEST_CODE,
-                                bookingIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
+                        bookingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(bookingIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case INIT_CHECKLIST:
                         //TODO: checkList();
                         break;
@@ -187,22 +192,16 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                     case OWNER_REVIEW_REMINDER:
                         Intent ownerRateIntent = new Intent(context, CarReturnedActivity.class);
                         ownerRateIntent.putExtra("booking_id", objectId);
-                        return PendingIntent.getActivity(
-                                context,
-                                FCM_NOTIFICATION_REQUEST_CODE,
-                                ownerRateIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
+                        ownerRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(ownerRateIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case CAR_VERIFICATION:
                     case CAR_STATE_CHANGE:
                         Intent ownerCarIntent = new Intent(context, OwnerCarDetailsActivity.class);
                         ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
-                        return PendingIntent.getActivity(
-                                context,
-                                FCM_NOTIFICATION_REQUEST_CODE,
-                                ownerCarIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
+                        ownerCarIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(ownerCarIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case SYSTEM_MESSAGES:
                         // ignore;
                         break;

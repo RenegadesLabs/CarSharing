@@ -99,7 +99,8 @@ public class InboxRepository implements InboxContract {
     @Override
     public Single<NoDataResponse> markAsRead(List<Integer> alerts) {
         return mAlertRemoteSource
-                .markAlertsAsRead(alerts);
+                .markAlertsAsRead(alerts)
+                .subscribeOn(Schedulers.io());
     }
 
     private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {
