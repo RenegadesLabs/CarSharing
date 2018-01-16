@@ -170,12 +170,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(yearInput.getText().toString(),
                 PickerMenuFragment.Mode.YEAR_OF_MANUFACTURE);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value) {
-                yearInput.setText(value);
-            }
-        });
+        menu.setOnDoneClickListener(value -> yearInput.setText(value));
     }
 
     @OnClick(R.id.et_addCarInfoSeating)
@@ -183,12 +178,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(seatingCapacityInput.getText().toString(),
                 PickerMenuFragment.Mode.SEATING_CAPACITY);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value) {
-                seatingCapacityInput.setText(value);
-            }
-        });
+        menu.setOnDoneClickListener(value -> seatingCapacityInput.setText(value));
     }
 
     @OnClick(R.id.et_addCarInfoEngine)
@@ -196,12 +186,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(engineCapacityInput.getText().toString(),
                 PickerMenuFragment.Mode.ENGINE_CAPACITY);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value) {
-                engineCapacityInput.setText(value);
-            }
-        });
+        menu.setOnDoneClickListener(value -> engineCapacityInput.setText(value));
     }
 
     @OnClick(R.id.et_addCarInfoTransmission)
@@ -209,12 +194,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(transmissionInput.getText().toString(),
                 PickerMenuFragment.Mode.TRANSMISSION);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value) {
-                transmissionInput.setText(value);
-            }
-        });
+        menu.setOnDoneClickListener(value -> transmissionInput.setText(value));
     }
 
     @OnClick(R.id.et_addCarInfoBody)
@@ -222,12 +202,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(transmissionInput.getText().toString(),
                 PickerMenuFragment.Mode.BODY_TYPE);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value) {
-                bodyTypeInput.setText(value);
-            }
-        });
+        menu.setOnDoneClickListener(value -> bodyTypeInput.setText(value));
     }
 
     @Override

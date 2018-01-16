@@ -48,7 +48,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details_edit);
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
@@ -56,7 +56,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
             mBtnSave = toolbar.findViewById(R.id.toolbar_action);
             mBtnSave.setOnClickListener(this);
         }
-        mProgress = (ProgressBar) findViewById(R.id.details_progress);
+        mProgress = findViewById(R.id.details_progress);
         int carId = getIntent().getIntExtra(NewCarFormsContract.CAR_ID, -1);
         Serializable extra = getIntent().getSerializableExtra(NewCarFormsContract.VIEW_MODE);
         if (extra != null) {

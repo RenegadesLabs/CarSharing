@@ -17,6 +17,7 @@ import android.widget.NumberPicker;
 import com.cardee.R;
 import com.cardee.owner_car_details.view.eventbus.DailyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
+import com.cardee.util.TimeFrameDelegate;
 
 import java.lang.reflect.Field;
 
@@ -28,6 +29,7 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
     private String[] timeValues;
     private NumberPicker pickupTimePicker;
     private NumberPicker returnTimePicker;
+    private TimeFrameDelegate pickerDelegate;
 
     public static DailyAvailabilityTimingFragment newInstance(String timePickup, String timeReturn) {
         DailyAvailabilityTimingFragment fragment = new DailyAvailabilityTimingFragment();
@@ -71,15 +73,19 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
     }
 
     private void init(View parent) {
+        pickerDelegate = new TimeFrameDelegate(getContext());
         timeValues = getContext().getResources().getStringArray(R.array.availability_time_titles);
         pickupTimePicker = parent.findViewById(R.id.time_pickup_picker);
         returnTimePicker = parent.findViewById(R.id.time_return_picker);
-        pickupTimePicker.setDisplayedValues(timeValues);
-        pickupTimePicker.setMinValue(0);
-        pickupTimePicker.setMaxValue(timeValues.length - 1);
-        returnTimePicker.setDisplayedValues(timeValues);
-        returnTimePicker.setMinValue(0);
-        returnTimePicker.setMaxValue(timeValues.length - 1);
+//        pickupTimePicker.setWrapSelectorWheel(false);
+//        returnTimePicker.setWrapSelectorWheel(false);
+//        pickupTimePicker.setDisplayedValues(timeValues);
+//        pickupTimePicker.setMinValue(0);
+//        pickupTimePicker.setMaxValue(timeValues.length - 1);
+//        returnTimePicker.setDisplayedValues(timeValues);
+//        returnTimePicker.setMinValue(0);
+//        returnTimePicker.setMaxValue(timeValues.length - 1);
+        pickerDelegate.onInitDailyPickers(pickupTimePicker, returnTimePicker);
         parent.findViewById(R.id.btn_timing_save).setOnClickListener(this);
         setDividerColor(pickupTimePicker, ContextCompat.getColor(getContext(),
                 android.R.color.transparent));
@@ -99,8 +105,8 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
                 timeReturnPosition = i;
             }
         }
-        pickupTimePicker.setValue(timePickupPosition);
-        returnTimePicker.setValue(timeReturnPosition);
+//        pickupTimePicker.setValue(timePickupPosition);
+//        returnTimePicker.setValue(timeReturnPosition);
     }
 
     private void setDividerColor(NumberPicker picker, int color) {
@@ -123,9 +129,9 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_timing_save:
-                DailyTimingEventBus.getInstance().post(new TimingSaveEvent(
-                        pickupTimePicker.getValue() + 1,
-                        returnTimePicker.getValue() + 1));
+                String pickupTime = pickerDelegate.onGetPickupTime(pickupTimePicker);
+                String returnTime = pickerDelegate.onGetReturnTime(returnTimePicker);
+                DailyTimingEventBus.getInstance().post(new TimingSaveEvent(pickupTime, returnTime));
                 dismiss();
                 break;
         }

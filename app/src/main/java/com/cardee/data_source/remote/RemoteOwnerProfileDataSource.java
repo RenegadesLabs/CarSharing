@@ -11,10 +11,9 @@ import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
 import com.cardee.data_source.remote.api.profile.request.ChangeEmailRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
-import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
+import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
-import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 
 import io.reactivex.functions.Consumer;
 
@@ -38,6 +37,20 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
     @Override
     public void loadOwnerProfile(final ProfileCallback callback) {
         mApi.loadOwnerProfile().subscribe(ownerProfileResponse -> {
+            if (ownerProfileResponse.isSuccessful()) {
+                callback.onSuccess(ownerProfileResponse.getOwnerProfile());
+                return;
+            }
+            handleErrorResponse(callback, ownerProfileResponse);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
+    }
+
+    @Override
+    public void getOwnerProfileById(int profileId, ProfileCallback callback) {
+        mApi.getOwnerProfileById(profileId).subscribe(ownerProfileResponse -> {
             if (ownerProfileResponse.isSuccessful()) {
                 callback.onSuccess(ownerProfileResponse.getOwnerProfile());
                 return;
@@ -152,7 +165,6 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
             }
         });
     }
-
 
     private void handleErrorResponse(BaseCallback callback, BaseResponse response) {
         if (response.getResponseCode() == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR) {

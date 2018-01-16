@@ -2,6 +2,8 @@ package com.cardee.domain.inbox.usecase.entity;
 
 public class ChatInfo {
 
+    private Integer recipientId;
+
     private String recipientName;
 
     private String recipientPhotoUrl;
@@ -17,6 +19,10 @@ public class ChatInfo {
     private String bookingTimeEnd;
 
     private ChatInfo() {
+    }
+
+    public Integer getRecipientId() {
+        return recipientId;
     }
 
     public String getRecipientName() {
@@ -53,6 +59,11 @@ public class ChatInfo {
 
         public Builder() {
             chatInfo = new ChatInfo();
+        }
+
+        public ChatInfo.Builder withRecipientId(Integer recipientId) {
+            chatInfo.recipientId = recipientId;
+            return this;
         }
 
         public ChatInfo.Builder withRecipientName(String recipientName) {

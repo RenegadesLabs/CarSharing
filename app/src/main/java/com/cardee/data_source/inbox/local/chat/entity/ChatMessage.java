@@ -8,21 +8,18 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "chat_message",
         foreignKeys = @ForeignKey(
                 entity = Chat.class,
-                parentColumns = "_id",
+                parentColumns = "chat_id",
                 childColumns = "chat_owner_id",
                 onDelete = ForeignKey.CASCADE))
 
 public class ChatMessage {
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    private Integer id;
+    @PrimaryKey
+    @ColumnInfo(name = "message_id")
+    private Integer messageId;
 
     @ColumnInfo(name = "chat_owner_id")
     private Integer chatId;
-
-    @ColumnInfo(name = "message_id")
-    private Integer messageId;
 
     @ColumnInfo(name = "message")
     private String message;
@@ -35,14 +32,6 @@ public class ChatMessage {
 
     @ColumnInfo(name = "date")
     private String dateCreated;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getMessageId() {
         return messageId;
@@ -90,6 +79,21 @@ public class ChatMessage {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChatMessage that = (ChatMessage) o;
+
+        return isRead.equals(that.isRead);
+    }
+
+    @Override
+    public int hashCode() {
+        return isRead.hashCode();
     }
 
     public static class Builder {

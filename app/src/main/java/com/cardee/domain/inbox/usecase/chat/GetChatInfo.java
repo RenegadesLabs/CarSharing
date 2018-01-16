@@ -14,7 +14,7 @@ public class GetChatInfo implements UseCase<GetChatInfo.RequestValues, GetChatIn
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mRepository.sendChatIdentifier(values.getServerId(), values.getDatabaseId(), values.getAttachment());
+        mRepository.sendChatIdentifier(values.getServerId(), values.getAttachment());
         mRepository.getChatInfo()
                 .subscribe(chatInfo -> callback.onSuccess(new ResponseValues(chatInfo)));
     }

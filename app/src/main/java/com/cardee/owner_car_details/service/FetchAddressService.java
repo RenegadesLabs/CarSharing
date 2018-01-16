@@ -19,6 +19,7 @@ public class FetchAddressService extends IntentService {
     public static final String RECEIVER = "service_result_receiver";
     public static final String LOCATION = "location";
     public static final String ADDRESS = "location_address";
+    public static final String REQUEST_CODE = "address_request_code";
 
     public static final int CODE_SUCCESS = 101;
     public static final int CODE_NOT_FOUND = 202;
@@ -35,8 +36,9 @@ public class FetchAddressService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         LatLng location = intent.getParcelableExtra(LOCATION);
         addressReceiver = intent.getParcelableExtra(RECEIVER);
+        int requestCode = intent.getIntExtra(REQUEST_CODE, -1);
         if (!Geocoder.isPresent()) {
-            sendResponseToReceiver(CODE_ERROR, null);
+            sendResponseToReceiver(CODE_ERROR, null, requestCode);
             return;
         }
         Geocoder geocoder = new Geocoder(this, Locale.getDefault()); //TODO: specify location if needed
@@ -45,21 +47,21 @@ public class FetchAddressService extends IntentService {
         try {
             addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1);
         } catch (IOException | IllegalArgumentException e) {
-            sendResponseToReceiver(CODE_ERROR, null);
+            sendResponseToReceiver(CODE_ERROR, null, requestCode);
         }
 
         if (addresses == null || addresses.isEmpty()) {
-            sendResponseToReceiver(CODE_NOT_FOUND, null);
+            sendResponseToReceiver(CODE_NOT_FOUND, null, requestCode);
         } else {
             Address address = addresses.get(0);
-
-            sendResponseToReceiver(CODE_SUCCESS, address);
+            sendResponseToReceiver(CODE_SUCCESS, address, requestCode);
         }
     }
 
-    private void sendResponseToReceiver(int code, Address address) {
+    private void sendResponseToReceiver(int code, Address address, int requestCode) {
         if (addressReceiver != null) {
             Bundle args = new Bundle();
+            args.putInt(REQUEST_CODE, requestCode);
             args.putParcelable(ADDRESS, address);
             addressReceiver.send(code, args);
         }

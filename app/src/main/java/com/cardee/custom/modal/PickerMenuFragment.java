@@ -16,12 +16,11 @@ import android.widget.TextView;
 import com.cardee.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PickerMenuFragment extends BottomSheetDialogFragment {
-
-    private final static String[] YEARS = {"2007", "2008", "2009", "2010", "2011", "2012",
-            "2013", "2014", "2015", "2016", "2017"};
 
     private final static String[] SEATS = {"2", "3", "4", "5", "6", "7", "8"};
 
@@ -71,7 +70,7 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         mMode = mode;
         switch (mode) {
             case YEAR_OF_MANUFACTURE:
-                mValues = YEARS;
+                mValues = calculateYearArray();
                 break;
             case SEATING_CAPACITY:
                 mValues = SEATS;
@@ -92,6 +91,17 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
+    private static String[] calculateYearArray() {
+        String[] years = new String[10];
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+        for (int i = years.length - 1; i >= 0; i--) {
+            years[i] = String.valueOf(year);
+            year--;
+        }
+        return years;
+    }
 
     private BottomSheetBehavior.BottomSheetCallback mCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override

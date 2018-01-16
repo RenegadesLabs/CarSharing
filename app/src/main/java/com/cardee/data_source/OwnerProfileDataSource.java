@@ -11,6 +11,8 @@ public interface OwnerProfileDataSource {
 
     void loadOwnerProfile(ProfileCallback callback);
 
+    void getOwnerProfileById(int profileId, ProfileCallback callback);
+
     void changeNote(ChangeNoteRequest changeNoteRequest, NoResponseCallback callback);
 
     void changePassword(PassChangeRequest request, NoResponseCallback callback);

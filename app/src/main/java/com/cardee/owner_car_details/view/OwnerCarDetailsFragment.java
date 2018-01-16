@@ -24,14 +24,16 @@ public class OwnerCarDetailsFragment extends Fragment
 
     private OwnerCarDetailViewHolder mHolder;
     private OwnerCarDetailsPresenter mPresenter;
+    private OnCarFetchedListener mListener;
 
     private Toast mCurrentToast;
 
-    public static Fragment newInstance(Integer carId) {
+    public static Fragment newInstance(Integer carId, OnCarFetchedListener listener) {
         OwnerCarDetailsFragment fragment = new OwnerCarDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(CAR_ID, carId);
         fragment.setArguments(args);
+        fragment.setListener(listener);
         return fragment;
     }
 
@@ -84,10 +86,12 @@ public class OwnerCarDetailsFragment extends Fragment
     public void onDestroy() {
         super.onDestroy();
         mPresenter.destroy();
+        mListener = null;
     }
 
     @Override
     public void setCar(Car car) {
+        mListener.onCarFetched(car);
         mHolder.bind(car);
     }
 
@@ -124,6 +128,16 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void onConnectionLost() {
+
+    }
+
+    public void setListener(OnCarFetchedListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnCarFetchedListener {
+
+        void onCarFetched(Car car);
 
     }
 }

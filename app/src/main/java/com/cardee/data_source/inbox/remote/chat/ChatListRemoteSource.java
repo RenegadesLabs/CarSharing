@@ -23,19 +23,27 @@ public class ChatListRemoteSource implements RemoteData.ChatListSource {
 
     @Override
     public Single<List<Chat>> getRemoteChats(String attachment) {
-        ChatMapper mapper = new ChatMapper(attachment);
+        ChatListMapper mapper = new ChatListMapper(attachment);
         return mChatApi.getChats(attachment)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(chatListResponse -> mapper.map(chatListResponse.getChatRemotes()))
                 .subscribeOn(Schedulers.io());
     }
 
-    private static class ChatMapper implements Mapper<ChatRemote[], List<Chat>> {
+    @Override
+    public Single<Chat> getSingleChat(int serverId, String attachment) {
+        ChatSingleMapper mapper = new ChatSingleMapper(attachment);
+        return mChatApi.getSingleChat(serverId)
+                .subscribeOn(Schedulers.io())
+                .map(chatSingleResponse -> mapper.map(chatSingleResponse.getChatRemote()));
+    }
+
+    private static class ChatListMapper implements Mapper<ChatRemote[], List<Chat>> {
 
         private List<Chat> mChats;
         private String mAttachment;
 
-        ChatMapper(String attachment) {
+        ChatListMapper(String attachment) {
             mAttachment = attachment;
             mChats = new ArrayList<>();
         }
@@ -46,6 +54,8 @@ public class ChatListRemoteSource implements RemoteData.ChatListSource {
                 Chat chat = new Chat.Builder()
                         .withChatId(remoteChatRemote.getChatId())
                         .withChatAttachment(mAttachment)
+                        .withActive(remoteChatRemote.getActive())
+                        .withRecipientId(remoteChatRemote.getRecipient().getProfileId())
                         .withName(remoteChatRemote.getRecipient().getName())
                         .withPhotoUrl(remoteChatRemote.getRecipient().getPhoto())
                         .withLastMessage(remoteChatRemote.getLastMessage().getMessage())
@@ -60,6 +70,35 @@ public class ChatListRemoteSource implements RemoteData.ChatListSource {
                 mChats.add(chat);
             }
             return mChats;
+        }
+    }
+
+    private static class ChatSingleMapper implements Mapper<ChatRemote, Chat> {
+
+        private String mAttachment;
+
+        ChatSingleMapper(String attachment) {
+            mAttachment = attachment;
+        }
+
+        @Override
+        public Chat map(ChatRemote chatRemote) {
+            return new Chat.Builder()
+                    .withChatId(chatRemote.getChatId())
+                    .withChatAttachment(mAttachment)
+                    .withActive(chatRemote.getActive())
+                    .withRecipientId(chatRemote.getRecipient().getProfileId())
+                    .withName(chatRemote.getRecipient().getName())
+                    .withPhotoUrl(chatRemote.getRecipient().getPhoto())
+                    .withLastMessage(chatRemote.getLastMessage().getMessage())
+                    .withLastMessageTime(chatRemote.getLastMessage().getDateCreated())
+                    .withUnreadMessageCount(chatRemote.getNewCount())
+                    .withCarTitle(chatRemote.getCarVersion().getCarTitle())
+                    .withCarPhoto(chatRemote.getCarVersion().getImageUrl())
+                    .withLicenseNumber(chatRemote.getCarVersion().getCarNumber())
+                    .withBookingBegin(chatRemote.getBooking().getTimeBegin())
+                    .withBookingEnd(chatRemote.getBooking().getTimeEnd())
+                    .build();
         }
     }
 }

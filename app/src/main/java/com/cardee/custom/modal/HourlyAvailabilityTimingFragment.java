@@ -17,6 +17,7 @@ import android.widget.NumberPicker;
 import com.cardee.R;
 import com.cardee.owner_car_details.view.eventbus.HourlyTimingEventBus;
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent;
+import com.cardee.util.DateStringDelegate;
 
 import java.lang.reflect.Field;
 
@@ -29,6 +30,7 @@ public class HourlyAvailabilityTimingFragment extends BottomSheetDialogFragment
     private String[] timeValues;
     private NumberPicker beginTimePicker;
     private NumberPicker endTimePicker;
+    private DateStringDelegate stringDelegate;
 
     public static HourlyAvailabilityTimingFragment newInstance(String timeBegin, String timeEnd) {
         HourlyAvailabilityTimingFragment fragment = new HourlyAvailabilityTimingFragment();
@@ -72,6 +74,7 @@ public class HourlyAvailabilityTimingFragment extends BottomSheetDialogFragment
     }
 
     private void init(View parent) {
+        stringDelegate = new DateStringDelegate(getContext());
         timeValues = getContext().getResources().getStringArray(R.array.availability_time_titles);
         beginTimePicker = parent.findViewById(R.id.time_begin_picker);
         endTimePicker = parent.findViewById(R.id.time_end_picker);
@@ -124,9 +127,9 @@ public class HourlyAvailabilityTimingFragment extends BottomSheetDialogFragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_timing_save:
-                HourlyTimingEventBus.getInstance().post(new TimingSaveEvent(
-                        beginTimePicker.getValue() + 1,
-                        endTimePicker.getValue() + 1));
+                String timeBegin = stringDelegate.getGMTTimeString(beginTimePicker.getValue() + 1);
+                String timeEnd = stringDelegate.getGMTTimeString(endTimePicker.getValue() + 1);
+                HourlyTimingEventBus.getInstance().post(new TimingSaveEvent(timeBegin, timeEnd));
                 dismiss();
                 break;
         }

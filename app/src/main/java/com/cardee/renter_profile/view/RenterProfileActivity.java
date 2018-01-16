@@ -46,6 +46,8 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
     private RenterReviewListAdapter mAdapter;
     private Toast mCurrentToast;
     private byte[] mPictureByteArray;
+    private boolean mEditable;
+    private int mProfileId;
 
 
     @BindView(R.id.renter_profile_container)
@@ -96,12 +98,36 @@ public class RenterProfileActivity extends AppCompatActivity implements RenterPr
         setContentView(R.layout.activity_renter_profile);
         ButterKnife.bind(this);
 
+        getIntentExtras();
         initToolBar();
         mPresenter = new RenterProfilePresenter(this);
         mAdapter = new RenterReviewListAdapter(this);
         initReviewList();
+        initEditableState();
 
-        mPresenter.getRenterProfile();
+        if (mEditable){
+            mPresenter.getRenterProfile();
+        } else {
+            if (mProfileId != -1){
+                mPresenter.getRenterById(mProfileId);
+            }
+        }
+    }
+
+    private void initEditableState() {
+        if (mEditable) {
+            mNoteEdit.setVisibility(View.VISIBLE);
+            mProfilePhotoEdit.setVisibility(View.VISIBLE);
+        } else {
+            mNoteEdit.setVisibility(View.GONE);
+            mProfilePhotoEdit.setVisibility(View.GONE);
+        }
+    }
+
+    private void getIntentExtras() {
+        Intent intent = getIntent();
+        mEditable = intent.getBooleanExtra("editable", false);
+        mProfileId = intent.getIntExtra("profile_id", -1);
     }
 
     private void initReviewList() {

@@ -78,14 +78,30 @@
             app:layout_constraintEnd_toEndOf="@id/faded_line"
             app:layout_constraintTop_toTopOf="@+id/faded_line" />
 
+        <View
+            android:id="@+id/hourly_pseudo_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/daily_pseudo_view"/>
+
+        <View
+            android:id="@id/daily_pseudo_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hourly_pseudo_view"/>
+
         <TextView
             android:id="@+id/car_hourly_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/widget_margin_mid"
             android:text="@string/car_list_item_hourly_label"
             android:textSize="@dimen/list_item_control_title"
-            app:layout_constraintStart_toStartOf="@+id/car_hourly_selector"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/hourly_pseudo_view"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <android.support.v7.widget.SwitchCompat
@@ -106,6 +122,7 @@
             android:layout_marginEnd="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_mid"
             android:clickable="true"
+            android:visibility="gone"
             android:text="Currently not available"
             app:layout_constraintEnd_toStartOf="@+id/car_daily_selector"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,9 +133,10 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/list_item_control_text"
             android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/widget_margin_small"
             android:text="@string/car_list_item_daily_label"
             android:textSize="@dimen/list_item_control_title"
-            app:layout_constraintStart_toStartOf="@+id/car_daily_selector"
+            app:layout_constraintStart_toStartOf="@id/daily_pseudo_view"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
         <android.support.v7.widget.SwitchCompat
@@ -137,11 +155,11 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
             android:layout_marginEnd="@dimen/widget_margin_mid"
-            android:layout_marginStart="@dimen/widget_margin_small"
             android:clickable="true"
             android:text="6 available days"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/car_hourly_selector"
+            app:layout_constraintStart_toStartOf="@+id/car_daily_title"
             app:layout_constraintTop_toBottomOf="@id/car_daily_title" />
 
         <Button
@@ -149,13 +167,16 @@
             style="@style/SelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
-            android:layout_margin="@dimen/widget_margin_mid"
+            android:layout_marginTop="@dimen/widget_margin_x_small"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginBottom="@dimen/widget_margin_mid"
             android:clickable="true"
             android:text="454 Hougang Ave 10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/car_hourly_selector" />
+            app:layout_constraintTop_toBottomOf="@+id/car_daily_selector" />
 
         <ImageView
             android:id="@+id/car_location_selector_icon"

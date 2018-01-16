@@ -30,7 +30,7 @@ public class GetChats implements UseCase<GetChats.RequestValues, GetChats.Respon
         Disposable remoteSubscribe = mRepository
                 .getRemoteChats(attachment)
                 .filter(chats -> chats != null && !chats.isEmpty())
-                .subscribe(mRepository::fetchOrSaveData,
+                .subscribe(mRepository::fetchChatData,
                         throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
 
         mCompositeDisposable.addAll(localSubscribe, remoteSubscribe);

@@ -5,8 +5,8 @@ import android.util.Log;
 import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.local.chat.entity.Chat;
 import com.cardee.data_source.inbox.local.db.LocalInboxDatabase;
+import com.cardee.data_source.inbox.service.model.ChatNotification;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -31,44 +31,38 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
     }
 
     @Override
-    public void addChat(Chat chat) {
-        Completable
+    public Completable addChat(Chat chat) {
+        return Completable
                 .fromRunnable(() -> mDataBase.getChatDao().addChat(chat))
                 .doOnComplete(() -> Log.d(TAG, "Chat added: " + chat.getRecipientName() + " " + chat.getLastMessageText()))
-                .doOnError(throwable -> Log.e(TAG, throwable.toString()))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+                .doOnError(throwable -> Log.e(TAG, throwable.toString()));
+    }
+
+    @Override
+    public Completable updateChat(ChatNotification chatNotification) {
+        int unreadMessages = chatNotification.isCurrentSession() ? 0 : chatNotification.getUnreadMessageCount();
+        return Completable.create(emitter -> {
+            long result = mDataBase.getChatDao()
+                    .updateChatPresentation(
+                            chatNotification.getMessageText(),
+                            chatNotification.getMessageTime(),
+                            unreadMessages,
+                            chatNotification.getChatId(),
+                            chatNotification.getChatAttachment());
+            if (result != 0) {
+                emitter.onComplete();
+            } else {
+                emitter.onError(new Throwable("Local chat doesn't exist"));
+            }
+        });
     }
 
     @Override
     public Single<Chat> getChat(Chat chat) {
         return mDataBase.getChatDao()
-                .getChat(chat.getChatServerId(), chat.getChatAttachment())
+                .getChat(chat.getChatId(), chat.getChatAttachment())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public void fetchUpdates(List<Chat> oldChatList, List<Chat> newChatList) {
-        Completable.fromRunnable(() -> {
-            List<Chat> listToUpdate = new ArrayList<>();
-            for (Chat remoteChat : newChatList) {
-                if (!oldChatList.contains(remoteChat)) {
-                    int position = oldChatList.indexOf(remoteChat);
-                    if (isExistChat(position)) {
-                        remoteChat.setChatLocalId(oldChatList.get(position).getChatLocalId());
-                    }
-                    listToUpdate.add(remoteChat);
-                }
-            }
-            if (!listToUpdate.isEmpty()) {
-                saveChats(listToUpdate);
-            }
-        }).subscribeOn(Schedulers.io()).subscribe(() -> Log.e(TAG, "Starting fetch data..."), throwable -> Log.e(TAG, throwable.getMessage()));
-    }
-
-    private boolean isExistChat(int position) {
-        return position != -1;
     }
 
     @Override
@@ -77,16 +71,6 @@ public class ChatListLocalSource implements LocalData.ChatListSource {
                 .fromRunnable(() -> mDataBase.getChatDao().addChats(chats))
                 .doOnError(throwable -> Log.e(TAG, throwable.getMessage()))
                 .doOnComplete(() -> Log.e(TAG, "All chats persist"))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
-
-    @Override
-    public void updateChats(List<Chat> chats) {
-        Completable
-                .fromRunnable(() -> mDataBase.getChatDao().updateChats(chats))
-                .doOnComplete(() -> Log.d(TAG, "Chat updated"))
-                .doOnError(throwable -> Log.e(TAG, throwable.toString()))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

@@ -13,7 +13,9 @@ import com.cardee.R;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
+import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetBooking;
 import com.cardee.domain.bookings.usecase.SendReviewAsOwner;
 import com.cardee.domain.owner.entity.Image;
@@ -26,6 +28,7 @@ public class CarReturnedPresenter implements BasePresenter {
     private CarReturnedView mView;
     private UseCaseExecutor mExecutor;
     private SendReviewAsOwner mSendReviewAsOwner;
+    private ChangeBookingState mChangeBookingState;
     private GetBooking mGetBooking;
     private Resources mResources;
 
@@ -35,6 +38,7 @@ public class CarReturnedPresenter implements BasePresenter {
         mExecutor = UseCaseExecutor.getInstance();
         mSendReviewAsOwner = new SendReviewAsOwner();
         mGetBooking = new GetBooking();
+        mChangeBookingState = new ChangeBookingState();
     }
 
     public void getData(int bookingId) {
@@ -62,6 +66,9 @@ public class CarReturnedPresenter implements BasePresenter {
                     }
 
                     private void setCommentHint(String renterName) {
+                        if (renterName == null) {
+                            return;
+                        }
                         String[] parts = renterName.split(" ");
                         String hint = String.format(mResources.getString(
                                 R.string.car_returned_comment_hint), parts[0]);
@@ -103,12 +110,26 @@ public class CarReturnedPresenter implements BasePresenter {
 
     public void omSubmitClicked(String comment, byte rate, int bookingId) {
         mView.showProgress(true);
-        mExecutor.execute(mSendReviewAsOwner, new SendReviewAsOwner.RequestValues(comment, rate, bookingId),
-                new UseCase.Callback<SendReviewAsOwner.ResponseValues>() {
+        mExecutor.execute(mChangeBookingState,
+                new ChangeBookingState.RequestValues(bookingId, BookingState.COMPLETED),
+                new UseCase.Callback<ChangeBookingState.ResponseValues>() {
                     @Override
-                    public void onSuccess(SendReviewAsOwner.ResponseValues response) {
-                        mView.showProgress(false);
-                        mView.onSendCommentSuccess();
+                    public void onSuccess(ChangeBookingState.ResponseValues response) {
+                        mExecutor.execute(mSendReviewAsOwner,
+                                new SendReviewAsOwner.RequestValues(comment, rate, bookingId),
+                                new UseCase.Callback<SendReviewAsOwner.ResponseValues>() {
+                                    @Override
+                                    public void onSuccess(SendReviewAsOwner.ResponseValues response) {
+                                        mView.showProgress(false);
+                                        mView.onSendCommentSuccess();
+                                    }
+
+                                    @Override
+                                    public void onError(Error error) {
+                                        mView.showProgress(false);
+                                        mView.showMessage(error.getMessage());
+                                    }
+                                });
                     }
 
                     @Override
@@ -118,5 +139,4 @@ public class CarReturnedPresenter implements BasePresenter {
                     }
                 });
     }
-
 }

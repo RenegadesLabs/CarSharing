@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cardee.R;
-import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.owner_cardee.view.OwnerCardeeActivity;
 import com.cardee.owner_home.view.OwnerHomeActivity;
@@ -101,6 +100,7 @@ public class RenterProfileFragment extends Fragment implements RenterProfileCont
     @Override
     public void openOwnerProfile() {
         Intent intent = new Intent(getActivity(), RenterProfileActivity.class);
+        intent.putExtra("editable", true);
         startActivityForResult(intent, GET_PICTURE_REQUEST);
     }
 
