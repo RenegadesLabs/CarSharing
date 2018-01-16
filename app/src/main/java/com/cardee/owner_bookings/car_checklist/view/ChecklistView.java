@@ -62,7 +62,7 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @BindView(R.id.b_handoverCar)
     public TextView handoverB; //changed from AppCompatButton
 
-    private ProgressDialog mProgress;
+    private ProgressDialog mProgressHandingOver, mProgress;
 
     private Unbinder mUnbinder;
 
@@ -84,8 +84,10 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     protected void onFinishInflate() {
         super.onFinishInflate();
         mUnbinder = ButterKnife.bind(this, this);
-        mProgress = DialogHelper.getProgressDialog(getContext(),
+        mProgressHandingOver = DialogHelper.getProgressDialog(getContext(),
                 getContext().getResources().getString(R.string.owner_handover_progress), false);
+        mProgress = DialogHelper.getProgressDialog(getContext(),
+                getContext().getString(R.string.car_rental_info_rates), false);
     }
 
     public Toolbar getToolbar() {
@@ -107,19 +109,28 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     @Override
     public void onHandingOverProcessing(boolean showProgress) {
         if (showProgress) {
-            mProgress.show();
+            mProgressHandingOver.show();
             return;
         }
-        mProgress.dismiss();
+        mProgressHandingOver.dismiss();
     }
 
     @Override
-    public void showProgress(boolean show) {
+    public void showProgressPetrolMileage(boolean show) {
         if (show) {
             petrolMileageProgress.setVisibility(VISIBLE);
             return;
         }
         petrolMileageProgress.setVisibility(GONE);
+    }
+
+    @Override
+    public void showProgress(boolean show) {
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
     }
 
     @Override
