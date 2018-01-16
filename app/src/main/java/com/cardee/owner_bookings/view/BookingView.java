@@ -35,6 +35,7 @@ import butterknife.Unbinder;
 
 public class BookingView extends CoordinatorLayout implements OwnerBookingContract.View {
 
+
     private OwnerBookingContract.Presenter presenter;
     private Toast currentToast;
     private Unbinder unbinder;
