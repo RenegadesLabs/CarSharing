@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.cardee.R;
@@ -20,6 +21,7 @@ import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.Notification;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.owner_bookings.view.BookingActivity;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
@@ -160,9 +162,24 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                                 PendingIntent.FLAG_UPDATE_CURRENT
                         );
                     case OWNER_CHECKLIST_UPD:
-                    case RENTER_CHECKLIST_UPD:
                         //TODO:  editedCheckList();
                         break;
+                    case RENTER_CHECKLIST_UPD:
+                        PendingChecklistStorage.addChecklist(context, objectId);
+
+                        // if in BookingActivity shows CheckList
+                        Intent showCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST);
+                        showCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(showCheckListIntent);
+
+                        Intent bookingIntent = new Intent(context, BookingActivity.class);
+                        bookingIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        return PendingIntent.getActivity(
+                                context,
+                                FCM_NOTIFICATION_REQUEST_CODE,
+                                bookingIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
                     case INIT_CHECKLIST:
                         //TODO: checkList();
                         break;

@@ -12,7 +12,7 @@ public interface NotificationContract {
 
     void updateChatUnreadCount(Integer count);
 
-    void updateInboxUnreadCount(Integer count);
+    void updateInboxUnreadCount();
 
     boolean isCurrentSessionNeedToNotify(String attachment);
 

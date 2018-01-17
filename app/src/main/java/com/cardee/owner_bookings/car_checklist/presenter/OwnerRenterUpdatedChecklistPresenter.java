@@ -12,6 +12,7 @@ import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetChecklist;
 import com.cardee.domain.bookings.usecase.SaveChecklist;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
+import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.RenterUpdatedChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
@@ -75,17 +76,19 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
                 new UseCase.Callback<GetChecklist.ResponseValues>() {
                     @Override
                     public void onSuccess(GetChecklist.ResponseValues response) {
-                        mView.showProgress(false);
-                        if (response.isSuccess()) {
+                        if (mView != null && response.isSuccess()) {
                             mChecklist = response.getChecklist();
                             fillData();
+                            mView.showProgress(false);
                         }
                     }
 
                     @Override
                     public void onError(Error error) {
-                        mView.showProgress(false);
-                        mView.showMessage(R.string.error_occurred);
+                        if (mView != null) {
+                            mView.showProgress(false);
+                            mView.showMessage(R.string.error_occurred);
+                        }
                     }
                 });
 
@@ -128,6 +131,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
                         if (mView != null && response.isSuccess()) {
                             mView.showProgress(false);
                             mView.showMessage(R.string.saved_successfully);
+                            PendingChecklistStorage.remove(mChecklistView.getContext(), mBookingId);
                             mCallbacks.onCancelled();
                         }
                     }
@@ -156,6 +160,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
             public void onSuccess(ChangeBookingState.ResponseValues response) {
                 if (mView != null && response.isSuccessful()) {
                     mView.showProgress(false);
+                    PendingChecklistStorage.remove(mChecklistView.getContext(), mBookingId);
                     mCallbacks.onConfirmed();
                 }
             }
@@ -192,6 +197,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
 
     public interface View {
         void onConfirmed();
+
         void onCancelled();
     }
 }

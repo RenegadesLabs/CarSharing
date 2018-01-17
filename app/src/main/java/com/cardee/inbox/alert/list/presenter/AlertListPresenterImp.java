@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.repository.InboxRepository;
+import com.cardee.data_source.inbox.repository.NotificationRepository;
 import com.cardee.data_source.remote.service.AccountManager;
 
 import java.util.ArrayList;
@@ -23,12 +24,14 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
 
     private final InboxRepository mInboxRepository;
     private final String mAttachment;
+    private final NotificationRepository mNotificationRepository;
     private CompositeDisposable mCompositeDisposable;
 
     public AlertListPresenterImp(Context context) {
         mAttachment = AccountManager.getInstance(context).getSessionInfo();
         mInboxRepository = InboxRepository.getInstance();
         mCompositeDisposable = new CompositeDisposable();
+        mNotificationRepository = NotificationRepository.getInstance();
     }
 
     @Override
@@ -77,7 +80,7 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
             List<Alert> alertList = new ArrayList<>();
             alertList.add(alert);
             mInboxRepository.fetchAlertData(alertList);
-
+            mNotificationRepository.updateInboxUnreadCount();
         }, throwable
                 -> Log.e(TAG, throwable.getMessage()));
     }

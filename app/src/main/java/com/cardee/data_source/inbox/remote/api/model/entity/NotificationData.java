@@ -96,9 +96,16 @@ public class NotificationData {
         else renterChatMessages = renterChatMessages - unreadCount;
     }
 
-    public void updateAlertUnreadCount(Integer unreadCount) {
-        if (isOwnerSession()) ownerAlertMessages = ownerAlertMessages - unreadCount;
-        else renterAlertMessages = renterAlertMessages - unreadCount;
+    public void updateAlertUnreadCount() {
+        if (isOwnerSession()) {
+            if (ownerAlertMessages > 0) {
+                ownerAlertMessages = ownerAlertMessages - 1;
+            }
+        } else {
+            if (renterAlertMessages > 0) {
+                renterAlertMessages = renterAlertMessages - 1;
+            }
+        }
     }
 
     private boolean isOwnerSession() {

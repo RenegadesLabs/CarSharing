@@ -2,7 +2,6 @@ package com.cardee.owner_bookings.car_checklist.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.StringRes;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,11 +11,7 @@ public class PendingChecklistStorage {
     private static final String PENDING_CHECKLIST_STORAGE = "pending_checklist_storage";
     private static final String CHECKLISTS = "checklist_set";
 
-    public PendingChecklistStorage() {
-
-    }
-
-    public void addChecklist(Context context, int bookingId) {
+    public static void addChecklist(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
         Set<String> defaultSet = new HashSet<>();
         Set<String> checklistSet = pref.getStringSet(CHECKLISTS, defaultSet);
@@ -27,12 +22,12 @@ public class PendingChecklistStorage {
         pref.edit().putStringSet(CHECKLISTS, defaultSet).apply();
     }
 
-    public boolean containsChecklist(Context context, int bookingId) {
+    public static boolean containsChecklist(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
         return pref.getStringSet(CHECKLISTS, new HashSet<>()).contains(String.valueOf(bookingId));
     }
 
-    public void remove(Context context, int bookingId) {
+    public static void remove(Context context, int bookingId) {
         SharedPreferences pref = context.getSharedPreferences(PENDING_CHECKLIST_STORAGE, Context.MODE_PRIVATE);
         Set<String> checklists = pref.getStringSet(CHECKLISTS, null);
         if (checklists != null) {

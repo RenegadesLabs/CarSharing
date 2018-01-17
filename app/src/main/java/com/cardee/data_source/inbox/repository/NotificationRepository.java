@@ -95,8 +95,8 @@ public class NotificationRepository implements NotificationContract {
     }
 
     @Override
-    public void updateInboxUnreadCount(Integer count) {
-        mNotificationData.updateAlertUnreadCount(count);
+    public void updateInboxUnreadCount() {
+        mNotificationData.updateAlertUnreadCount();
         publishAllData();
     }
 
