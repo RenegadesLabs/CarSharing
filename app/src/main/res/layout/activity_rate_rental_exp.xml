@@ -97,7 +97,7 @@
         android:padding="14dp"
         android:text="@string/rental_exp_header"
         android:textAlignment="center"
-        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textColor="@color/item_secondary_txt"
         android:textSize="15sp" />
 
     <FrameLayout

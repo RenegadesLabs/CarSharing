@@ -244,7 +244,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private void setDeliveryViewsState(boolean enabled) {
         curbsideDeliveryEdit.setClickable(enabled);
         if (enabled) {
-            curbsideDeliveryIcon.setImageResource(R.drawable.ic_direction);
+            curbsideDeliveryIcon.setImageResource(R.drawable.ic_curbside);
             curbsideDeliveryTitle.setTextColor(getActivity().getResources().getColor(R.color.text_enabled));
             curbsideDeliveryEdit.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
         } else {

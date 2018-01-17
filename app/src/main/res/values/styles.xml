@@ -175,7 +175,7 @@
     </style>
 
     <style name="TextSettingsSection">
-        <item name="android:textColor">@color/add_car_item_vehicle_secondary_txt</item>
+        <item name="android:textColor">@color/item_secondary_txt</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/text_regular</item>
         <item name="android:textStyle">bold</item>
