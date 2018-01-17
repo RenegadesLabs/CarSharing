@@ -16,6 +16,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.service.FragmentFactory;
+import com.cardee.renter_browse_cars.view.RenterBrowseCarsFragment;
 import com.cardee.renter_home.view.listener.RenterMoreTabEventListener;
 
 public class RenterHomeActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, RenterMoreTabEventListener {
@@ -41,7 +42,6 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
         BottomNavigationHelper.prepareForRenter(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.setCurrentItem(3);
-        bottomMenu.disableItemAtPosition(0); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
 
     }
@@ -67,6 +67,9 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
     private void showFragmentOnPosition(int position) {
         Class fragmentClazz = null;
         switch (position) {
+            case 0:
+                fragmentClazz = RenterBrowseCarsFragment.class;
+                break;
             case 1:
                 fragmentClazz = RenterBookingsFragment.class;
                 break;
