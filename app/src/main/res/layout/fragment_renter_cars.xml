@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,16 +15,83 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height">
 
+           <android.support.v7.widget.AppCompatImageButton
+               android:padding="@dimen/small_margin"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@android:color/transparent"
+               app:srcCompat="@drawable/ic_search"/>
 
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/ToolbarTitle"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_main"
+                    android:textSize="@dimen/text_xlarge"
+                    android:textStyle="bold"
+                    android:text="Personal Car"/>
 
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_marginTop="@dimen/xsmall_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_arrow_down_white"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/small_margin"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_temp_favorite_border"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/small_margin"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_temp_filter_list"/>
+
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_renterBrowseCarsList"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        layout="@layout/view_header_browse_cars"
+        android:layout_width="match_parent"
+        android:layout_marginTop="48dp"
+        android:layout_height="48dp" />
+
+
+    <include
+        layout="@layout/view_floating_browse_cars"
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        app:layout_anchor="@id/rv_renterBrowseCarsList"
+        app:layout_anchorGravity="center_horizontal|bottom" />
+
+</android.support.design.widget.CoordinatorLayout>
