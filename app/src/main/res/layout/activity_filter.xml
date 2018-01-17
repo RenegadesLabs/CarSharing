@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="filter"
             type="com.cardee.domain.renter.entity.BrowseCarsFilter" />
@@ -79,6 +81,39 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconPersonal"
+                        android:layout_width="34dp"
+                        android:layout_height="26dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_personal_car" />
+
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconUber"
+                        android:layout_width="200dp"
+                        android:layout_height="26dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 1 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_uber_grab" />
+
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconCommercial"
+                        android:layout_width="28dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 2 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_truck" />
+
                     <android.support.design.widget.TabLayout
                         android:id="@+id/vehicleType"
                         style="@style/FilterTabLayout"
@@ -108,8 +143,36 @@
                             android:text="@string/vehicle_type_commercial" />
                     </android.support.design.widget.TabLayout>
 
+                    <TextView
+                        android:id="@+id/vehicleTypeDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/padding_x_small"
+                        android:layout_marginStart="@dimen/padding_x_small"
+                        android:layout_marginTop="@dimen/padding_x_small"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{filter.vehicleTypeDesc[filter.vehicleTypeId]}"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleType" />
                 </android.support.constraint.ConstraintLayout>
 
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bookingTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </android.support.constraint.ConstraintLayout>
             </LinearLayout>
         </ScrollView>
 

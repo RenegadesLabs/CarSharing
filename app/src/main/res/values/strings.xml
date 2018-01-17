@@ -662,6 +662,7 @@
     <string name="vehicle_type_personal_cars">Personal Cars</string>
     <string name="vehicle_type_private">Private-Hire Vehicle</string>
     <string name="vehicle_type_commercial">Commercial Vehicle</string>
-
+    <string name="vehicle_type_private_desc">Private-hire cars, registered for Grab &amp; Uber use</string>
+    <string name="vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
 
 </resources>

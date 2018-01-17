@@ -264,8 +264,6 @@
 
     <style name="FilterTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/colorPrimaryDark</item>
-        <!--<item name="tabIndicatorHeight">4dp</item>-->
-        <!--<item name="tabBackground">?attr/selectableItemBackground</item>-->
         <item name="tabTextAppearance">@style/FilterTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/text_owner_profile_name</item>
     </style>
