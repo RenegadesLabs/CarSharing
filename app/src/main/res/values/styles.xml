@@ -263,17 +263,13 @@
     </style>
 
     <style name="FilterTabLayout" parent="Widget.Design.TabLayout">
-        <!--<item name="tabMaxWidth">@dimen/tab_max_width</item>-->
-        <!--<item name="tabIndicatorColor">?attr/colorAccent</item>-->
+        <item name="tabIndicatorColor">@color/colorPrimaryDark</item>
         <!--<item name="tabIndicatorHeight">4dp</item>-->
-        <!--<item name="tabPaddingStart">6dp</item>-->
-        <!--<item name="tabPaddingEnd">6dp</item>-->
         <!--<item name="tabBackground">?attr/selectableItemBackground</item>-->
         <item name="tabTextAppearance">@style/FilterTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/text_owner_profile_name</item>
     </style>
 
-    <!-- for text -->
     <style name="FilterTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/divider_dark</item>

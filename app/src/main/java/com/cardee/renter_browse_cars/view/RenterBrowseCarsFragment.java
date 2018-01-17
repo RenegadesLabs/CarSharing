@@ -2,15 +2,29 @@ package com.cardee.renter_browse_cars.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.cardee.R;
+import com.cardee.renter_browse_cars.view.filter.view.FilterActivity;
 
 
 public class RenterBrowseCarsFragment extends Fragment {
+
+
+    public RenterBrowseCarsFragment() {
+    }
+
+    public static RenterBrowseCarsFragment newInstance() {
+        RenterBrowseCarsFragment fragment = new RenterBrowseCarsFragment();
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -30,7 +44,13 @@ public class RenterBrowseCarsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View root = inflater.inflate(R.layout.fragment_renter_cars, container, false);
+        ImageView filter = root.findViewById(R.id.filterIcon);
+        filter.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), FilterActivity.class);
+            startActivity(intent);
+        });
+        return root;
     }
 
     @Override
@@ -47,4 +67,6 @@ public class RenterBrowseCarsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

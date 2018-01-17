@@ -84,6 +84,10 @@
                         style="@style/FilterTabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:paddingEnd="1dp"
+                        android:paddingStart="1dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/vehicleTypeTitle"
                         app:tabTextAppearance="@style/FilterTabTextAppearance">

@@ -6,6 +6,7 @@ import com.cardee.inbox.InboxFragment;
 import com.cardee.owner_bookings.view.BookingListFragment;
 import com.cardee.owner_home.view.OwnerCarsFragment;
 import com.cardee.owner_home.view.OwnerProfileFragment;
+import com.cardee.renter_browse_cars.view.RenterBrowseCarsFragment;
 import com.cardee.renter_home.view.RenterBookingsFragment;
 import com.cardee.renter_home.view.RenterProfileFragment;
 
@@ -29,6 +30,9 @@ public class FragmentFactory {
         }
         if (RenterBookingsFragment.class.getName().equals(clazz.getName())){
             return RenterBookingsFragment.newInstance();
+        }
+        if (RenterBrowseCarsFragment.class.getName().equals(clazz.getName())){
+            return RenterBrowseCarsFragment.newInstance();
         }
         return null;
     }
