@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import com.cardee.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,6 +19,11 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse_cars_map)
         init(this)
+        supportActionBar ?: setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            this.setDisplayHomeAsUpEnabled(true)
+            this.title = null
+        }
         map.onCreate(savedInstanceState)
         map.getMapAsync(this)
         adapter = CarsAdapter(this)
@@ -30,6 +36,17 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     override fun onMapReady(googleMap: GoogleMap?) {
         var list: List<Any> = listOf(Any(), Any(), Any(), Any(), Any(), Any(), Any())
         adapter.setItems(list)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (it.itemId) {
+                android.R.id.home -> {
+                    onBackPressed()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {

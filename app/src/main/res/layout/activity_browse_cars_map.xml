@@ -21,9 +21,9 @@
             android:id="@+id/carsList"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingStart="@dimen/widget_margin_xx_small"
-            android:paddingEnd="@dimen/widget_margin_xx_small"
             android:clipToPadding="false"
+            android:paddingEnd="@dimen/widget_margin_xx_small"
+            android:paddingStart="@dimen/widget_margin_xx_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="3:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,44 +39,32 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close">
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/car_add_vehicle_personal" />
 
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Personal Car"
-                    android:textColor="@color/bg_main"
-                    android:textSize="@dimen/text_xlarge"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/btnFilter"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_filter_list" />
 
-                <ImageView
-                    android:id="@+id/btnFilter"
-                    android:layout_width="@dimen/item_icon_side_large"
-                    android:layout_height="@dimen/item_icon_side_large"
-                    android:layout_marginEnd="@dimen/widget_margin_xx_small"
-                    android:background="@color/white_opacity60"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/btnFavorites"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_favorite" />
 
-                <ImageView
-                    android:id="@+id/btnFavorites"
-                    android:layout_width="@dimen/item_icon_side_large"
-                    android:layout_height="@dimen/item_icon_side_large"
-                    android:layout_marginEnd="@dimen/widget_margin_xx_small"
-                    android:background="@color/white_opacity60"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnFilter"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 </android.support.design.widget.CoordinatorLayout>

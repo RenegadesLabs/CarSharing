@@ -17,4 +17,70 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="16:11"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/selectedMarker"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/imgCar"
+        app:layout_constraintStart_toStartOf="@id/imgCar"
+        app:layout_constraintTop_toTopOf="@id/imgCar" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/widget_margin_x_small"
+        android:layout_marginTop="@dimen/widget_margin_x_small"
+        android:text="Range Rover"
+        android:textColor="@color/bg_main"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/imgCar"
+        app:layout_constraintTop_toTopOf="@id/imgCar" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" \u2022 4.2 \u2605"
+        android:textColor="@color/bg_main"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/title" />
+
+    <ImageView
+        android:id="@+id/imgFavorite"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="@dimen/padding_x_small"
+        android:layout_marginStart="@dimen/widget_margin_x_small"
+        app:layout_constraintBottom_toBottomOf="@id/imgCar"
+        app:layout_constraintStart_toStartOf="@id/imgCar"
+        app:srcCompat="@drawable/ic_favorite_selected" />
+
+    <ImageView
+        android:id="@+id/imgInstant"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="@dimen/widget_margin_xx_small"
+        app:layout_constraintBottom_toBottomOf="@id/imgFavorite"
+        app:layout_constraintStart_toEndOf="@id/imgFavorite"
+        app:layout_constraintTop_toTopOf="@id/imgFavorite"
+        app:srcCompat="@drawable/ic_instant" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_x_small"
+        android:layout_marginEnd="@dimen/widget_margin_x_small"
+        android:text="$144"
+        android:textColor="@color/bg_main"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/imgCar"
+        app:layout_constraintEnd_toEndOf="@id/imgCar" />
+
 </android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cardee.R
+import kotlinx.android.synthetic.main.item_car_renter_map.view.*
 
 
 class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
@@ -24,7 +25,7 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CarViewHolder?, position: Int) {
-        holder?.bind(items[position])
+        holder?.bind(position)
     }
 
     override fun getItemCount(): Int = items.size
@@ -37,9 +38,9 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
 }
 
 
-class CarViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(car: Any) {
-
+    fun bind(position: Int) = with(itemView) {
+        selectedMarker.visibility = if (position == 0) View.VISIBLE else View.GONE
     }
 }

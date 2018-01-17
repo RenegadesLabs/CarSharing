@@ -150,6 +150,12 @@
         <item name="android:layout_marginEnd">@dimen/widget_margin_regular</item>
     </style>
 
+    <style name="ToolbarActionIcon">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginEnd">@dimen/widget_margin_x_small</item>
+    </style>
+
     <style name="TextInfo">
         <item name="android:textSize">@dimen/text_regular</item>
         <item name="android:textColor">@color/text_regular</item>
