@@ -21,8 +21,11 @@
             android:id="@+id/carsList"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:paddingStart="@dimen/widget_margin_xx_small"
+            android:paddingEnd="@dimen/widget_margin_xx_small"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="2.7:1"
+            app:layout_constraintDimensionRatio="3:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
