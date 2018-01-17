@@ -653,6 +653,11 @@
     <!-- Browse Cars Filters-->
     <string name="filters">Filters</string>
     <string name="reset">Reset</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="vehicle_type_personal_cars_desc">Everyday cars for personal use</string>
+    <string name="vehicle_type_personal_cars">Personal Cars</string>
+    <string name="vehicle_type_private">Private-Hire Vehicle</string>
+    <string name="vehicle_type_commercial">Commercial Vehicle</string>
 
 
 </resources>

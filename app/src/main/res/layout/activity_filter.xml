@@ -1,68 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_main"
-    tools:context="com.cardee.renter_browse_cars.view.filter.view.FilterActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbarLayout"
+    <data>
+
+        <variable
+            name="filter"
+            type="com.cardee.domain.renter.entity.BrowseCarsFilter" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/bg_main"
+        tools:context="com.cardee.renter_browse_cars.view.filter.view.FilterActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            app:navigationIcon="@drawable/ic_close"
-            app:theme="@style/CardeeToolbar"
-            app:titleTextColor="@color/colorAccent">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/toolbarTitle"
-                style="@style/ToolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/filters" />
-
-            <TextView
-                android:id="@+id/toolbarAction"
-                style="@style/ToolbarAction"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/reset" />
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/vehicleTypeContainer"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_marginStart="@dimen/medium_margin">
+                android:layout_height="@dimen/toolbar_height"
+                app:navigationIcon="@drawable/ic_close"
+                app:theme="@style/CardeeToolbar"
+                app:titleTextColor="@color/colorAccent">
 
                 <TextView
-
+                    android:id="@+id/toolbarTitle"
+                    style="@style/ToolbarTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:text="@string/filters" />
 
-            </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/toolbarAction"
+                    style="@style/ToolbarAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/reset" />
 
-        </LinearLayout>
-    </ScrollView>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/vehicleTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/vehicleTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/padding_x_small"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/vehicle_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/vehicleType"
+                        style="@style/FilterTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleTypeTitle"
+                        app:tabTextAppearance="@style/FilterTabTextAppearance">
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_personal_cars" />
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_private" />
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_commercial" />
+                    </android.support.design.widget.TabLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

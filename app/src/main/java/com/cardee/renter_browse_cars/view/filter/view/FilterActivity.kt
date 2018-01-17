@@ -1,9 +1,12 @@
 package com.cardee.renter_browse_cars.view.filter.view
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.databinding.ActivityFilterBinding
+import com.cardee.domain.renter.entity.BrowseCarsFilter
 
 class FilterActivity : AppCompatActivity(), FilterView {
 
@@ -11,7 +14,12 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filter)
+
+        val binding: ActivityFilterBinding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
+
+        val filter = BrowseCarsFilter()
+        binding.filter = filter
+        binding.executePendingBindings()
 
     }
 
