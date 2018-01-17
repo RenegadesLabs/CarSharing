@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -72,4 +72,26 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_renterBrowseCarsList"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        layout="@layout/view_header_browse_cars"
+        android:layout_width="match_parent"
+        android:layout_marginTop="48dp"
+        android:layout_height="48dp" />
+
+
+    <include
+        layout="@layout/view_floating_browse_cars"
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        app:layout_anchor="@id/rv_renterBrowseCarsList"
+        app:layout_anchorGravity="center_horizontal|bottom" />
+
+</android.support.design.widget.CoordinatorLayout>
