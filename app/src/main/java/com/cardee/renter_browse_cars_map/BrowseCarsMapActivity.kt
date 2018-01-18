@@ -24,6 +24,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             this.setDisplayHomeAsUpEnabled(true)
             this.title = null
         }
+
         map.onCreate(savedInstanceState)
         map.getMapAsync(this)
         adapter = CarsAdapter(this)

@@ -37,7 +37,6 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 }
 
-
 class CarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(position: Int) = with(itemView) {
