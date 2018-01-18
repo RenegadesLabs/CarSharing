@@ -104,6 +104,8 @@ dependencies {
 
     //Data Binding
     kapt "com.android.databinding:compiler:3.0.1"
+
+    compile 'com.crystal:crystalrangeseekbar:1.1.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

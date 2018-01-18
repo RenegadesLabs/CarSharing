@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_main"
-        tools:context="com.cardee.renter_browse_cars.view.filter.view.FilterActivity">
+        tools:context=".renter_browse_cars.filter.view.FilterActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/toolbarLayout"
@@ -74,7 +74,7 @@
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/padding_x_small"
+                        android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginTop="30dp"
                         android:text="@string/vehicle_type"
                         android:textStyle="bold"
@@ -125,6 +125,7 @@
                         android:paddingStart="1dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/vehicleTypeTitle"
+                        app:tabMode="fixed"
                         app:tabTextAppearance="@style/FilterTabTextAppearance">
 
                         <android.support.design.widget.TabItem
@@ -148,7 +149,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/padding_x_small"
-                        android:layout_marginStart="@dimen/padding_x_small"
+                        android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginTop="@dimen/padding_x_small"
                         android:ellipsize="end"
                         android:maxLines="2"
@@ -169,10 +170,337 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/bookingTypeContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/bookingTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="@string/booking_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/bookHourly"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bookingHourly ? @drawable/bg_filter_btn_enabled: @drawable/bg_tabbar_filter}"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/book_hourly"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@{filter.bookingHourly ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/bookDaily"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookingTypeTitle" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@id/bookDaily"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bookingHourly ? @drawable/bg_tabbar_filter: @drawable/bg_filter_btn_enabled}"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/book_daily"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@{filter.bookingHourly ? @color/divider_dark: @color/colorPrimaryDark}"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/bookHourly"
+                        app:layout_constraintTop_toBottomOf="@id/bookingTypeTitle" />
+
+                    <TextView
+                        android:id="@+id/rentalPeriodTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/rental_period"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookHourly" />
+
+                    <TextView
+                        android:id="@+id/rentalPeriodText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookHourly" />
 
 
+                    <LinearLayout
+                        android:id="@+id/rentalPeriodButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:orientation="horizontal"
+                        android:paddingBottom="14dp"
+                        android:paddingTop="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rentalPeriodTitle">
+
+                        <TextView
+                            android:id="@+id/rental_period_from"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/rental_period_from"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/rental_period_to"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/rental_period_to"
+                            android:textAlignment="center" />
+                    </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/searchAreaContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/searchAreaTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="@string/search_area"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/searchAreaButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:orientation="vertical"
+                        android:paddingBottom="14dp"
+                        android:paddingTop="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/searchAreaTitle">
+
+                        <TextView
+                            android:id="@+id/searchAreaAddress"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:ellipsize="end"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="7 Sengkang East Ave  •  Within 5km"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextSettingsSection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/more_filters" />
+                </LinearLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/instantBookingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/instantBookingTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/instant_booking"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@{filter.instantBooking ? @drawable/ic_instant : @drawable/ic_instant_inactive}"
+                        app:layout_constraintBottom_toBottomOf="@id/instantBookingTitle"
+                        app:layout_constraintStart_toEndOf="@id/instantBookingTitle"
+                        app:layout_constraintTop_toTopOf="@id/instantBookingTitle" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/instantBookingSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:checked="@{filter.instantBooking}"
+                        app:layout_constraintBottom_toBottomOf="@id/instantBookingTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/instantBookingTitle" />
+
+                    <TextView
+                        android:id="@+id/instantBookingDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginTop="13dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@string/instant_booking_desc"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/instantBookingSwitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/instantBookingTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/CurbDelContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/CurbDelTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/curbside_delivery"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@{filter.curbsideDelivery ? @drawable/ic_direction : @drawable/ic_direction_inactive}"
+                        app:layout_constraintBottom_toBottomOf="@id/CurbDelTitle"
+                        app:layout_constraintStart_toEndOf="@id/CurbDelTitle"
+                        app:layout_constraintTop_toTopOf="@id/CurbDelTitle" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/curbDelSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:checked="@{filter.curbsideDelivery}"
+                        app:layout_constraintBottom_toBottomOf="@id/CurbDelTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/CurbDelTitle" />
+
+                    <TextView
+                        android:id="@+id/curbDelDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginTop="13dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@string/curbside_delivery_desc"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/curbDelSwitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/CurbDelTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <com.cardee.custom.seekBar.RangeSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    app:bar_color="#F2F2F2"
+                    app:bar_highlight_color="#92BFE7"
+                    app:corner_radius="10"
+                    app:data_type="_integer"
+                    app:left_thumb_image="@drawable/ic_seekbar_left"
+                    app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
+                    app:max_value="100"
+                    app:min_value="0"
+                    app:right_thumb_image="@drawable/ic_seekbar_right"
+                    app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
+                    app:steps="1" />
+
             </LinearLayout>
         </ScrollView>
 

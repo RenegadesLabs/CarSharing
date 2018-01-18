@@ -1,4 +1,4 @@
-package com.cardee.renter_browse_cars.view.filter.view
+package com.cardee.renter_browse_cars.filter.view
 
 import com.cardee.mvp.BaseView
 

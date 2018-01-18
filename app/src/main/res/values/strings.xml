@@ -664,5 +664,18 @@
     <string name="vehicle_type_commercial">Commercial Vehicle</string>
     <string name="vehicle_type_private_desc">Private-hire cars, registered for Grab &amp; Uber use</string>
     <string name="vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+    <string name="booking_type">Booking Type</string>
+    <string name="book_hourly">Book Hourly</string>
+    <string name="book_daily">Book Daily</string>
+    <string name="rental_period">Rental Period</string>
+    <string name="rental_period_from">Choose from</string>
+    <string name="rental_period_to">Choose to</string>
+    <string name="search_area">Search Area</string>
+    <string name="more_filters">More Filters</string>
+    <string name="instant_booking">Instant Booking</string>
+    <string name="instant_booking_desc">Only show cars that can be booked instantly without owner\’s response</string>
+    <string name="curbside_delivery">Curbside Delivery</string>
+    <string name="curbside_delivery_desc">Only show cars that provide curbside delivery to my pick up location</string>
+
 
 </resources>

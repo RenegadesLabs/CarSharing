@@ -1,4 +1,4 @@
-package com.cardee.renter_browse_cars.view.filter.view
+package com.cardee.renter_browse_cars.filter.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import kotlinx.android.synthetic.main.activity_filter.*
 
 class FilterActivity : AppCompatActivity(), FilterView {
 
@@ -17,12 +18,20 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bindView()
+        setListeners()
 
+    }
+
+    private fun bindView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
         filter = BrowseCarsFilter()
         binding.filter = filter
         binding.executePendingBindings()
-        binding.vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+    }
+
+    private fun setListeners() {
+        vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> filter.vehicleTypeId = 0
@@ -37,6 +46,18 @@ class FilterActivity : AppCompatActivity(), FilterView {
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
         })
+        bookHourly.setOnClickListener {
+            if (!filter.bookingHourly) {
+                filter.bookingHourly = true
+            }
+        }
+        bookDaily.setOnClickListener {
+            if (filter.bookingHourly) {
+                filter.bookingHourly = false
+            }
+        }
+        instantBookingSwitch.setOnCheckedChangeListener { p0, p1 -> filter.instantBooking = !filter.instantBooking }
+        curbDelSwitch.setOnCheckedChangeListener { p0, p1 -> filter.curbsideDelivery = !filter.curbsideDelivery }
     }
 
 

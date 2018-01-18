@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cardee.R;
-import com.cardee.renter_browse_cars.view.filter.view.FilterActivity;
+import com.cardee.renter_browse_cars.filter.view.FilterActivity;
 
 
 public class RenterBrowseCarsFragment extends Fragment {
