@@ -8,13 +8,13 @@ public class OffersResponse extends BaseResponse {
 
     @Expose
     @SerializedName("data")
-    OffersResponseBody mOffersResponseBody;
+    OfferResponseBody[] mOfferResponseBody;
 
-    public OffersResponseBody getOffersResponseBody() {
-        return mOffersResponseBody;
+    public OfferResponseBody[] getOfferResponseBody() {
+        return mOfferResponseBody;
     }
 
-    public void setOffersResponseBody(OffersResponseBody offersResponseBody) {
-        mOffersResponseBody = offersResponseBody;
+    public void setOfferResponseBody(OfferResponseBody[] offerResponseBody) {
+        mOfferResponseBody = offerResponseBody;
     }
 }

@@ -26,7 +26,7 @@ public class RenterBrowseCarsListAdapter
 
     public static class RenterBrowseCarsListItemViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mAvatar
+//        private final ImageView mAvatar;
 
 
         public RenterBrowseCarsListItemViewHolder(View itemView) {

@@ -8,5 +8,5 @@ import retrofit2.http.GET;
 public interface Offers {
 
     @GET("offers/")
-    public Call<OffersResponse> browseCars();
+    Call<OffersResponse> browseCars();
 }

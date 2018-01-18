@@ -7,7 +7,7 @@ import com.cardee.data_source.remote.api.offers.response.entity.OfferOwnerEntity
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OffersResponseBody extends ErrorResponseBody {
+public class OfferResponseBody extends ErrorResponseBody {
 
     @Expose
     @SerializedName("car_details")
@@ -26,10 +26,10 @@ public class OffersResponseBody extends ErrorResponseBody {
     private Float mRating;
 
     @Expose
-    @SerializedName("oreder_details")
+    @SerializedName("order_details")
     private OfferOrderDetails mOrderDetails;
 
-    public OffersResponseBody() {
+    public OfferResponseBody() {
     }
 
     public OfferCarDetailsEntity getCarDetailEntity() {
