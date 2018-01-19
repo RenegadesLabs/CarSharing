@@ -1,41 +1,70 @@
 package com.cardee.renter_browse_cars.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
+import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 
 public class RenterBrowseCarsListAdapter
         extends RecyclerView.Adapter<RenterBrowseCarsListAdapter.RenterBrowseCarsListItemViewHolder> {
 
+    private final List<OfferCar> mOfferCars;
+
+    private final LayoutInflater mInflater;
+    private final RequestManager mGlideRequestManager;
+
+    private SparseArray<RenterBrowseCarsListAdapter.RenterBrowseCarsListItemViewHolder> mHolders;
+
+    private final PublishSubject<RenterBrowseCarListContract.CarEvent> mEventObservable;
+
+    public RenterBrowseCarsListAdapter(Context context) {
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mOfferCars = new ArrayList<>();
+        mHolders = new SparseArray<>();
+        mGlideRequestManager = Glide.with(context);
+        mEventObservable = PublishSubject.create();
+    }
+
     @Override
     public RenterBrowseCarsListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = mInflater.inflate(R.layout.item_list_renter_car, parent, false);
+        return new RenterBrowseCarsListItemViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RenterBrowseCarsListItemViewHolder holder, int position) {
-
+        final OfferCar car = mOfferCars.get(position);
+        holder.bind(car, mGlideRequestManager, mEventObservable);
+        mHolders.put(car.getCarId(), holder);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mOfferCars.size();
     }
 
     public static class RenterBrowseCarsListItemViewHolder extends RecyclerView.ViewHolder {
@@ -127,7 +156,56 @@ public class RenterBrowseCarsListAdapter
             mRating.setRating(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);
-
+            String price = "$" + String.valueOf(model.getRateFirst());
+            mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
+            mHeart.setOnClickListener(view ->
+                    observable.onNext(new RenterBrowseCarListContract.CarEvent(model,
+                            RenterBrowseCarListContract.Action.FAVORITE)));
+            mPrice.setText(price);
+            mInstant.setVisibility(model.isInstantBooking() ? View.VISIBLE : View.GONE);
+            mCurbside.setVisibility(model.isCurbsideDelivery() ? View.VISIBLE : View.GONE);
+            mPrimaryCarImage.setOnClickListener(view ->
+                    observable.onNext(new RenterBrowseCarListContract.CarEvent(model, RenterBrowseCarListContract.Action.OPEN)));
         }
+    }
+
+
+    public void insert(List<OfferCar> cars) {
+        mOfferCars.clear();
+        mOfferCars.addAll(cars);
+        notifyDataSetChanged();
+    }
+
+    public void update(OfferCar car) {
+        int index = mOfferCars.indexOf(car);
+        if (index == -1) {
+            return;
+        }
+        mOfferCars.set(index, car);
+        RenterBrowseCarsListItemViewHolder holder = mHolders.get(car.getCarId());
+        if (holder != null) {
+            holder.bind(car, null, mEventObservable);
+            return;
+        }
+        notifyItemChanged(index);
+    }
+    public void remove(OfferCar car) {
+        int index = mOfferCars.indexOf(car);
+        if (index > -1) {
+            mOfferCars.remove(index);
+            notifyItemRemoved(index);
+        }
+    }
+
+    public void subscribe(Consumer<RenterBrowseCarListContract.CarEvent> consumer) {
+        mEventObservable.subscribe(consumer);
+        if (!mOfferCars.isEmpty()) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void recycle() {
+        mOfferCars.clear();
+        mHolders.clear();
     }
 }

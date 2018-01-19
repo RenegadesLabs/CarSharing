@@ -44,6 +44,8 @@ public class OfferResponseBodyToOfferMapper {
         double longitude = carDetails.getLongitude();
         double latitude = carDetails.getLatitude();
         int distance = carDetails.getDistance();
+        String address = carDetails.getAddress();
+        String town = carDetails.getTown();
         OfferOwnerEntity owner = response.getOwnerEntity();
         int ownerId = owner.getId();
         String ownerPicture = owner.getPhotoUrl();
@@ -77,6 +79,8 @@ public class OfferResponseBodyToOfferMapper {
                 .setLongitude(longitude)
                 .setLatitude(latitude)
                 .setDistance(distance)
+                .setAddress(address)
+                .setTown(town)
                 .setOwnerId(ownerId)
                 .setOwnerPicture(ownerPicture)
                 .setOwnerName(ownerName)

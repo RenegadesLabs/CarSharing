@@ -34,6 +34,10 @@ public class OfferCar {
 
     private int mDistance;
 
+    private String mAddress;
+
+    private String mTown;
+
     private int mOwnerId;
 
     private String mOwnerPicture;
@@ -79,6 +83,8 @@ public class OfferCar {
                     double longitude,
                     double latitude,
                     int distance,
+                    String address,
+                    String town,
                     int ownerId,
                     String ownerPicture,
                     String ownerName,
@@ -108,6 +114,8 @@ public class OfferCar {
         mLongitude = longitude;
         mLatitude = latitude;
         mDistance = distance;
+        mAddress = address;
+        mTown = town;
         mOwnerId = ownerId;
         mOwnerPicture = ownerPicture;
         mOwnerName = ownerName;
@@ -141,6 +149,8 @@ public class OfferCar {
         private double mLongitude;
         private double mLatitude;
         private int mDistance;
+        private String mAddress;
+        private String mTown;
         private int mOwnerId;
         private String mOwnerPicture;
         private String mOwnerName;
@@ -220,6 +230,16 @@ public class OfferCar {
 
         public Builder setDistance(int distance) {
             mDistance = distance;
+            return this;
+        }
+
+        public Builder setAddress(String address) {
+            mAddress = address;
+            return this;
+        }
+
+        public Builder setTown(String town) {
+            mTown = town;
             return this;
         }
 
@@ -308,7 +328,8 @@ public class OfferCar {
                     mSeatCapacity, mImages, mPrimaryCarImage, mLicensePlateNumber,
                     mYearOfManufacture, mBodyType, mVehicleType,
                     mTitle, mLongitude, mLatitude,
-                    mDistance, mOwnerId, mOwnerPicture,
+                    mDistance, mAddress, mTown,
+                    mOwnerId, mOwnerPicture,
                     mOwnerName, mRatingCount, mRating,
                     instantBooking, curbsideDelivery, acceptCash,
                     mFuelPolicyName, mRateFirst, mRateSecond,
@@ -368,6 +389,14 @@ public class OfferCar {
 
     public int getDistance() {
         return mDistance;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public String getTown() {
+        return mTown;
     }
 
     public int getOwnerId() {

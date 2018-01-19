@@ -11,13 +11,13 @@ public interface RenterBrowseCarListContract {
 
     interface View extends BaseView {
 
-        void setItems(List<Car> cars);
+        void setItems(List<OfferCar> cars);
 
-        void updateItem(Car car);
+        void updateItem(OfferCar car);
 
-        void removeItem(Car car);
+        void removeItem(OfferCar car);
 
-        void openItem(Car car);
+        void openItem(OfferCar car);
 
         void onUnauthorized();
 
@@ -29,7 +29,7 @@ public interface RenterBrowseCarListContract {
     }
 
     enum Action {
-        OPEN, ADD_TO_FAVORITE, UPDATED
+        OPEN, FAVORITE, UPDATED
     }
 
     class CarEvent {
