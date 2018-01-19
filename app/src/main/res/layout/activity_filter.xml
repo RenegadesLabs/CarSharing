@@ -431,7 +431,7 @@
                     android:layout_marginStart="24dp">
 
                     <TextView
-                        android:id="@+id/CurbDelTitle"
+                        android:id="@+id/curbDelTitle"
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -442,13 +442,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:layout_width="16dp"
+                        android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@{filter.curbsideDelivery ? @drawable/ic_direction : @drawable/ic_direction_inactive}"
-                        app:layout_constraintBottom_toBottomOf="@id/CurbDelTitle"
-                        app:layout_constraintStart_toEndOf="@id/CurbDelTitle"
-                        app:layout_constraintTop_toTopOf="@id/CurbDelTitle" />
+                        app:layout_constraintBottom_toBottomOf="@id/curbDelTitle"
+                        app:layout_constraintStart_toEndOf="@id/curbDelTitle"
+                        app:layout_constraintTop_toTopOf="@id/curbDelTitle" />
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/curbDelSwitch"
@@ -456,9 +456,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
                         android:checked="@{filter.curbsideDelivery}"
-                        app:layout_constraintBottom_toBottomOf="@id/CurbDelTitle"
+                        app:layout_constraintBottom_toBottomOf="@id/curbDelTitle"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/CurbDelTitle" />
+                        app:layout_constraintTop_toTopOf="@id/curbDelTitle" />
 
                     <TextView
                         android:id="@+id/curbDelDesc"
@@ -473,7 +473,7 @@
                         android:textSize="@dimen/text_small"
                         app:layout_constraintEnd_toStartOf="@id/curbDelSwitch"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/CurbDelTitle" />
+                        app:layout_constraintTop_toBottomOf="@id/curbDelTitle" />
                 </android.support.constraint.ConstraintLayout>
 
                 <View
@@ -484,22 +484,122 @@
                     android:layout_marginTop="22dp"
                     android:background="@color/add_car_divider" />
 
-                <com.cardee.custom.seekBar.RangeSeekBar
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/priceRangeContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    app:bar_color="#F2F2F2"
-                    app:bar_highlight_color="#92BFE7"
-                    app:corner_radius="10"
-                    app:data_type="_integer"
-                    app:left_thumb_image="@drawable/ic_seekbar_left"
-                    app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
-                    app:max_value="100"
-                    app:min_value="0"
-                    app:right_thumb_image="@drawable/ic_seekbar_right"
-                    app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
-                    app:steps="1" />
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/priceRangeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@{filter.bookingHourly ? filter.priceRangeTitles[0] : filter.priceRangeTitles[1]}"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/priceRangeText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.cardee.custom.seekBar.RangeSeekBar
+                        android:id="@+id/priceRangeSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        app:bar_color="#F2F2F2"
+                        app:bar_highlight_color="#92BFE7"
+                        app:corner_radius="10"
+                        app:data_type="_integer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/priceRangeTitle"
+                        app:left_thumb_image="@drawable/ic_seekbar_left"
+                        app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
+                        app:maxStartValue="@{filter.bookingHourly ? 41f : 201f}"
+                        app:maxValue="@{filter.bookingHourly ? 41f : 201f}"
+                        app:minValue="@{filter.bookingHourly ? 2f : 20f}"
+                        app:right_thumb_image="@drawable/ic_seekbar_right"
+                        app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
+                        app:steps="1" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/carAgeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/carAgeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/car_age"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/carAgeText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.cardee.custom.seekBar.RangeSeekBar
+                        android:id="@+id/carAgeSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        app:bar_color="#F2F2F2"
+                        app:bar_highlight_color="#92BFE7"
+                        app:corner_radius="10"
+                        app:data_type="_integer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/carAgeTitle"
+                        app:left_thumb_image="@drawable/ic_seekbar_left"
+                        app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
+                        app:maxStartValue="@{11f}"
+                        app:maxValue="11"
+                        app:minValue="1"
+                        app:right_thumb_image="@drawable/ic_seekbar_right"
+                        app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
+                        app:steps="1" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
 
             </LinearLayout>
         </ScrollView>

@@ -228,13 +228,13 @@ public class RangeSeekBar extends View {
         leftThumbPressed = (leftThumbPressed == null) ? leftThumb : leftThumbPressed;
         rightThumbPressed = (rightThumbPressed == null) ? rightThumb : rightThumbPressed;
 
-        gap = Math.max(0, Math.min(gap, absoluteMaxValue - absoluteMinValue));
-        gap = gap / (absoluteMaxValue - absoluteMinValue) * 100;
-        if (fixGap != NO_FIXED_GAP) {
-            fixGap = Math.min(fixGap, absoluteMaxValue);
-            fixGap = fixGap / (absoluteMaxValue - absoluteMinValue) * 100;
-            addFixGap(true);
-        }
+//        gap = Math.max(0, Math.min(gap, absoluteMaxValue - absoluteMinValue));
+//        gap = gap / (absoluteMaxValue - absoluteMinValue) * 100;
+//        if (fixGap != NO_FIXED_GAP) {
+//            fixGap = Math.min(fixGap, absoluteMaxValue);
+//            fixGap = fixGap / (absoluteMaxValue - absoluteMinValue) * 100;
+//            addFixGap(true);
+//        }
 
         thumbWidth = getThumbWidth();
         thumbHeight = getThumbHeight();
@@ -252,8 +252,8 @@ public class RangeSeekBar extends View {
 
         pressedThumb = null;
 
-        setMinStartValue();
-        setMaxStartValue();
+        setMyMinStartValue();
+        setMyMaxStartValue();
 
         setWillNotDraw(false);
     }
@@ -267,28 +267,28 @@ public class RangeSeekBar extends View {
         return this;
     }
 
-    public RangeSeekBar setMinValue(float minValue) {
+    public void setMinValue(float minValue) {
         this.minValue = minValue;
         this.absoluteMinValue = minValue;
-        return this;
+//        return this;
     }
 
-    public RangeSeekBar setMaxValue(float maxValue) {
+    public void setMaxValue(float maxValue) {
         this.maxValue = maxValue;
         this.absoluteMaxValue = maxValue;
-        return this;
+//        return this;
     }
 
-    public RangeSeekBar setMinStartValue(float minStartValue) {
+    public void setMinStartValue(float minStartValue) {
         this.minStartValue = minStartValue;
         this.absoluteMinStartValue = minStartValue;
-        return this;
+//        return this;
     }
 
-    public RangeSeekBar setMaxStartValue(float maxStartValue) {
+    public void setMaxStartValue(float maxStartValue) {
         this.maxStartValue = maxStartValue;
-        this.absoluteMaxStartValue = maxStartValue;
-        return this;
+//        this.absoluteMaxStartValue = maxStartValue;
+//        return this;
     }
 
     public RangeSeekBar setSteps(float steps) {
@@ -494,13 +494,13 @@ public class RangeSeekBar extends View {
         normalizedMinValue = 0d;
         normalizedMaxValue = 100d;
 
-        gap = Math.max(0, Math.min(gap, absoluteMaxValue - absoluteMinValue));
-        gap = gap / (absoluteMaxValue - absoluteMinValue) * 100;
-        if (fixGap != NO_FIXED_GAP) {
-            fixGap = Math.min(fixGap, absoluteMaxValue);
-            fixGap = fixGap / (absoluteMaxValue - absoluteMinValue) * 100;
-            addFixGap(true);
-        }
+//        gap = Math.max(0, Math.min(gap, absoluteMaxValue - absoluteMinValue));
+//        gap = gap / (absoluteMaxValue - absoluteMinValue) * 100;
+//        if (fixGap != NO_FIXED_GAP) {
+//            fixGap = Math.min(fixGap, absoluteMaxValue);
+//            fixGap = fixGap / (absoluteMaxValue - absoluteMinValue) * 100;
+//            addFixGap(true);
+//        }
 
         thumbWidth = getThumbWidth();
         thumbHeight = getThumbHeight();
@@ -517,9 +517,9 @@ public class RangeSeekBar extends View {
             setNormalizedMinValue(minStartValue);
         } else if (minStartValue >= absoluteMaxValue) {
             minStartValue = absoluteMaxValue;
-            setMinStartValue();
+            setMyMinStartValue();
         } else {
-            setMinStartValue();
+            setMyMinStartValue();
         }
 
         // set max start value
@@ -528,9 +528,9 @@ public class RangeSeekBar extends View {
             setNormalizedMaxValue(maxStartValue);
         } else if (maxStartValue >= absoluteMaxValue) {
             maxStartValue = absoluteMaxValue;
-            setMaxStartValue();
+            setMyMaxStartValue();
         } else {
-            setMaxStartValue();
+            setMyMaxStartValue();
         }
         invalidate();
 
@@ -580,19 +580,19 @@ public class RangeSeekBar extends View {
     }
 
     protected float getMinValue(final TypedArray typedArray) {
-        return typedArray.getFloat(R.styleable.RangeSeekBar_min_value, 0f);
+        return typedArray.getFloat(R.styleable.RangeSeekBar_minValue, 0f);
     }
 
     protected float getMaxValue(final TypedArray typedArray) {
-        return typedArray.getFloat(R.styleable.RangeSeekBar_max_value, 100f);
+        return typedArray.getFloat(R.styleable.RangeSeekBar_maxValue, 100f);
     }
 
     protected float getMinStartValue(final TypedArray typedArray) {
-        return typedArray.getFloat(R.styleable.RangeSeekBar_min_start_value, minValue);
+        return typedArray.getFloat(R.styleable.RangeSeekBar_minStartValue, minValue);
     }
 
     protected float getMaxStartValue(final TypedArray typedArray) {
-        return typedArray.getFloat(R.styleable.RangeSeekBar_max_start_value, maxValue);
+        return typedArray.getFloat(R.styleable.RangeSeekBar_maxStartValue, maxValue);
     }
 
     protected float getSteps(final TypedArray typedArray) {
@@ -782,6 +782,24 @@ public class RangeSeekBar extends View {
 
     protected void drawLeftThumbWithImage(final Canvas canvas, final Paint paint, final RectF rect, final Bitmap image) {
         canvas.drawBitmap(image, rect.left, rect.top, paint);
+
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        paint.setTextSize(14 * getResources().getDisplayMetrics().density);
+        paint.setFakeBoldText(true);
+
+        float height = -paint.ascent() + paint.descent();
+        float x = (rect.left + rect.right) / 2;
+        float y = ((rect.bottom + rect.top) / 2) + (height / 3);
+
+        Number value = getSelectedMinValue();
+        String valueText = value.toString();
+        if (value.floatValue() == maxValue) {
+            valueText = "\u221E";
+            paint.setTextSize(18 * getResources().getDisplayMetrics().density);
+            y = ((rect.bottom + rect.top) / 2) + (height / 4);
+        }
+        canvas.drawText(valueText, x, y, paint);
     }
 
     protected void setupRightThumb(final Canvas canvas, final Paint paint, final RectF rect) {
@@ -811,7 +829,29 @@ public class RangeSeekBar extends View {
 
     protected void drawRightThumbWithImage(final Canvas canvas, final Paint paint, final RectF rect, final Bitmap image) {
         canvas.drawBitmap(image, rect.left, rect.top, paint);
+
+
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(14 * getResources().getDisplayMetrics().density);
+        paint.setFakeBoldText(true);
+
+        float height = -paint.ascent() + paint.descent();
+        float x = (rect.left + rect.right) / 2;
+//        float y = ((((rect.bottom + rect.top) / 2) - (height / 2)) + rect.bottom) / 2;
+        float y = ((rect.bottom + rect.top) / 2) + (height / 3);
+
+        Number value = getSelectedMaxValue();
+        String valueText = value.toString();
+        if (value.floatValue() == maxValue) {
+            valueText = "\u221E";
+            paint.setTextSize(18 * getResources().getDisplayMetrics().density);
+            y = ((rect.bottom + rect.top) / 2) + (height / 4);
+        }
+
+        canvas.drawText(valueText, x, y, paint);
     }
+
 
     protected void trackTouchEvent(MotionEvent event) {
         final int pointerIndex = event.findPointerIndex(mActivePointerId);
@@ -863,7 +903,7 @@ public class RangeSeekBar extends View {
     // PRIVATE METHODS
     //////////////////////////////////////////
 
-    private void setMinStartValue() {
+    private void setMyMinStartValue() {
         if (minStartValue > minValue && minStartValue <= maxValue) {
             minStartValue = Math.min(minStartValue, absoluteMaxValue);
             minStartValue -= absoluteMinValue;
@@ -872,9 +912,9 @@ public class RangeSeekBar extends View {
         }
     }
 
-    private void setMaxStartValue() {
+    private void setMyMaxStartValue() {
         if (maxStartValue <= absoluteMaxValue && maxStartValue > absoluteMinValue && maxStartValue >= absoluteMinStartValue) {
-            maxStartValue = Math.max(absoluteMaxStartValue, absoluteMinValue);
+            maxStartValue = Math.max(maxStartValue, absoluteMinValue);
             maxStartValue -= absoluteMinValue;
             maxStartValue = maxStartValue / (absoluteMaxValue - absoluteMinValue) * 100;
             setNormalizedMaxValue(maxStartValue);

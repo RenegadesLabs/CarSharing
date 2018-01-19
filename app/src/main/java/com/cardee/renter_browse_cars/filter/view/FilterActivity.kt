@@ -49,11 +49,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
         bookHourly.setOnClickListener {
             if (!filter.bookingHourly) {
                 filter.bookingHourly = true
+                priceRangeSeekBar.apply()
+                carAgeSeekBar.apply()
             }
         }
         bookDaily.setOnClickListener {
             if (filter.bookingHourly) {
                 filter.bookingHourly = false
+                priceRangeSeekBar.apply()
+                carAgeSeekBar.apply()
             }
         }
         instantBookingSwitch.setOnCheckedChangeListener { p0, p1 -> filter.instantBooking = !filter.instantBooking }

@@ -41,10 +41,10 @@
 
     <declare-styleable name="RangeSeekBar" >
         <attr name="corner_radius" />
-        <attr name="min_value" />
-        <attr name="max_value" />
-        <attr name="min_start_value" />
-        <attr name="max_start_value" />
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="minStartValue" />
+        <attr name="maxStartValue" />
         <attr name="steps" />
         <attr name="gap" />
         <attr name="fix_gap" />

@@ -676,6 +676,9 @@
     <string name="instant_booking_desc">Only show cars that can be booked instantly without owner\’s response</string>
     <string name="curbside_delivery">Curbside Delivery</string>
     <string name="curbside_delivery_desc">Only show cars that provide curbside delivery to my pick up location</string>
+    <string name="price_range_per_day">Price Range (per day)</string>
+    <string name="price_range_per_hour">Price Range (per hour)</string>
+    <string name="car_age">Car Age</string>
 
 
 </resources>
