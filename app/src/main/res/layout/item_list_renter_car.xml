@@ -103,7 +103,7 @@
                     android:theme="@style/RatingBar" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarItemRatingText"
+                    android:id="@+id/tv_renterCarItemRatingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(10)"
@@ -112,6 +112,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_renterCarItemHeart"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="@dimen/medium_margin"

@@ -27,6 +27,15 @@ public class OfferResponseBodyToOfferMapper {
                     responseImages[i].getLink(),
                     responseImages[i].isPrimary());
         }
+        Image primary = null;
+        for (Image image : images) {
+            if (image.isPrimary()) {
+                primary = new Image(image.getImageId(),
+                        image.getLink(), image.getThumbnail(),
+                        image.isPrimary());
+                break;
+            }
+        }
         String licenseNumber = carDetails.getLicencePlateNumber();
         String year = carDetails.getManufactureYear();
         String bodyType = carDetails.getBodyType();
@@ -59,6 +68,7 @@ public class OfferResponseBodyToOfferMapper {
                 .setFavorite(favorite)
                 .setSeatCapacity(seatCapacity)
                 .setImages(images)
+                .setPrimaryCarImage(primary)
                 .setLicensePlateNumber(licenseNumber)
                 .setYearOfManufacture(year)
                 .setBodyType(bodyType)

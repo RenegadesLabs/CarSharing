@@ -2,6 +2,7 @@ package com.cardee.renter_browse_cars.presenter;
 
 
 import com.cardee.domain.owner.entity.Car;
+import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 
 import java.util.List;
@@ -32,10 +33,10 @@ public interface RenterBrowseCarListContract {
     }
 
     class CarEvent {
-        private final Car mCar;
+        private final OfferCar mCar;
         private final Action mAction;
 
-        public CarEvent(Car car, Action action) {
+        public CarEvent(OfferCar car, Action action) {
             mCar = car;
             mAction = action;
         }
@@ -44,7 +45,7 @@ public interface RenterBrowseCarListContract {
             return mAction;
         }
 
-        public Car getCar() {
+        public OfferCar getCar() {
             return mCar;
         }
     }

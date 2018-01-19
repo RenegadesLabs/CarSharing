@@ -16,6 +16,8 @@ public class OfferCar {
 
     private Image[] mImages;
 
+    private Image mPrimaryCarImage;
+
     private String mLicensePlateNumber;
 
     private String mYearOfManufacture;
@@ -68,6 +70,7 @@ public class OfferCar {
                     boolean favorite,
                     int seatCapacity,
                     Image[] images,
+                    Image primaryCarImage,
                     String licensePlateNumber,
                     String yearOfManufacture,
                     String bodyType,
@@ -96,6 +99,7 @@ public class OfferCar {
         this.favorite = favorite;
         mSeatCapacity = seatCapacity;
         mImages = images;
+        mPrimaryCarImage = primaryCarImage;
         mLicensePlateNumber = licensePlateNumber;
         mYearOfManufacture = yearOfManufacture;
         mBodyType = bodyType;
@@ -128,6 +132,7 @@ public class OfferCar {
         private boolean favorite;
         private int mSeatCapacity;
         private Image[] mImages;
+        private Image mPrimaryCarImage;
         private String mLicensePlateNumber;
         private String mYearOfManufacture;
         private String mBodyType;
@@ -170,6 +175,11 @@ public class OfferCar {
 
         public Builder setImages(Image[] images) {
             mImages = images;
+            return this;
+        }
+
+        public Builder setPrimaryCarImage(Image primaryCarImage) {
+            mPrimaryCarImage = primaryCarImage;
             return this;
         }
 
@@ -295,7 +305,7 @@ public class OfferCar {
 
         public OfferCar build() {
             return new OfferCar(mCarId, favorite,
-                    mSeatCapacity, mImages, mLicensePlateNumber,
+                    mSeatCapacity, mImages, mPrimaryCarImage, mLicensePlateNumber,
                     mYearOfManufacture, mBodyType, mVehicleType,
                     mTitle, mLongitude, mLatitude,
                     mDistance, mOwnerId, mOwnerPicture,
@@ -322,6 +332,10 @@ public class OfferCar {
 
     public Image[] getImages() {
         return mImages;
+    }
+
+    public Image getPrimaryCarImage() {
+        return mPrimaryCarImage;
     }
 
     public String getLicensePlateNumber() {
