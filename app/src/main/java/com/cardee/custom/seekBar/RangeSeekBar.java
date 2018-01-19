@@ -267,6 +267,14 @@ public class RangeSeekBar extends View {
         return this;
     }
 
+    public float getMinValue() {
+        return minValue;
+    }
+
+    public float getMaxValue() {
+        return maxValue;
+    }
+
     public void setMinValue(float minValue) {
         this.minValue = minValue;
         this.absoluteMinValue = minValue;
@@ -794,6 +802,11 @@ public class RangeSeekBar extends View {
 
         Number value = getSelectedMinValue();
         String valueText = value.toString();
+        if (maxStartValue == 11) {
+            valueText = valueText + " yr";
+        } else {
+            valueText = "$" + valueText;
+        }
         if (value.floatValue() == maxValue) {
             valueText = "\u221E";
             paint.setTextSize(18 * getResources().getDisplayMetrics().density);
@@ -843,6 +856,11 @@ public class RangeSeekBar extends View {
 
         Number value = getSelectedMaxValue();
         String valueText = value.toString();
+        if (maxStartValue == 11) {
+            valueText = valueText + " yr";
+        } else {
+            valueText = "$" + valueText;
+        }
         if (value.floatValue() == maxValue) {
             valueText = "\u221E";
             paint.setTextSize(18 * getResources().getDisplayMetrics().density);

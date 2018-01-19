@@ -14,7 +14,10 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
                        instantBooking: Boolean = false,
                        curbsideDelivery: Boolean = false,
                        val priceRangeTitles: Array<String> = arrayOf(CardeeApp.context.resources.getString(R.string.price_range_per_hour),
-                               CardeeApp.context.resources.getString(R.string.price_range_per_day))) : BaseObservable() {
+                               CardeeApp.context.resources.getString(R.string.price_range_per_day)),
+                       bodyTypeId: Int = 5,
+                       transmissionAuto: Boolean = true,
+                       transmissionManual: Boolean = true) : BaseObservable() {
 
 
     @get:Bindable
@@ -45,4 +48,24 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
             notifyPropertyChanged(BR.curbsideDelivery)
         }
 
+    @get:Bindable
+    var bodyTypeId: Int = 5
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.bodyTypeId)
+        }
+
+    @get:Bindable
+    var transmissionAuto: Boolean = true
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.transmissionAuto)
+        }
+
+    @get:Bindable
+    var transmissionManual: Boolean = true
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.transmissionManual)
+        }
 }

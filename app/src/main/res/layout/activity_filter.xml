@@ -94,7 +94,7 @@
 
                     <ImageView
                         android:id="@+id/vehicleTypeIconUber"
-                        android:layout_width="200dp"
+                        android:layout_width="190dp"
                         android:layout_height="26dp"
                         android:layout_marginEnd="@dimen/small_margin"
                         android:visibility="@{filter.vehicleTypeId == 1 ? View.VISIBLE : View.GONE}"
@@ -517,6 +517,7 @@
                         android:id="@+id/priceRangeSeekBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_margin"
                         android:layout_marginTop="13dp"
                         app:bar_color="#F2F2F2"
                         app:bar_highlight_color="#92BFE7"
@@ -575,6 +576,7 @@
                         android:id="@+id/carAgeSeekBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_margin"
                         android:layout_marginTop="13dp"
                         app:bar_color="#F2F2F2"
                         app:bar_highlight_color="#92BFE7"
@@ -600,9 +602,298 @@
                     android:layout_marginTop="22dp"
                     android:background="@color/add_car_divider" />
 
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bodyTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/bodyTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/body_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSedan"
+                        android:layout_width="56dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_sedan" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconHatchback"
+                        android:layout_width="51dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 1 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_hatchback" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSuv"
+                        android:layout_width="57dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 2 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_suv" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSport"
+                        android:layout_width="56dp"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 3 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_sport" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconConv"
+                        android:layout_width="57dp"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 4 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_convertible" />
+
+                    <TextView
+                        android:id="@+id/sedanButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 0 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/sedan"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 0 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/hatchbackButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@id/hatchbackButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 1 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/hatchback"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 1 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/suvButton"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/sedanButton"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@id/suvButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 2 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/suv_mpv"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 2 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/hatchbackButton"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@+id/sportButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 3 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/sports_coupe"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 3 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/convertibleButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+
+                    <TextView
+                        android:id="@id/convertibleButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 4 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/convertible"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 4 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/anyButton"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/sportButton"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+
+                    <TextView
+                        android:id="@id/anyButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 5 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/any"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 5 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/convertibleButton"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/transmissionContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="86dp"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/transmissionTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/transmission"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/transmissionText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/any"
+                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/autoButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.transmissionAuto ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/auto"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.transmissionAuto ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/manualButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/transmissionTitle" />
+
+                    <TextView
+                        android:id="@id/manualButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.transmissionManual ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/manual"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.transmissionManual ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/autoButton"
+                        app:layout_constraintTop_toBottomOf="@id/transmissionTitle" />
+                </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
         </ScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/submitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/bg_button_regular"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="View 5 Cars"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

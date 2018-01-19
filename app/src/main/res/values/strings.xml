@@ -679,6 +679,16 @@
     <string name="price_range_per_day">Price Range (per day)</string>
     <string name="price_range_per_hour">Price Range (per hour)</string>
     <string name="car_age">Car Age</string>
+    <string name="body_type">Body Type</string>
+    <string name="sedan">Sedan</string>
+    <string name="hatchback">Hatchback</string>
+    <string name="suv_mpv">SUV / MPV</string>
+    <string name="sports_coupe">Sports / Coupe</string>
+    <string name="convertible">Convertible</string>
+    <string name="transmission">Transmission</string>
+    <string name="any">Any</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
 
 
 </resources>
