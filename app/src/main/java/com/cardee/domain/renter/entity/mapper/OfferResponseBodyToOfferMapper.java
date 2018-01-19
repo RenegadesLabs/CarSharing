@@ -41,29 +41,44 @@ public class OfferResponseBodyToOfferMapper {
         String bodyType = carDetails.getBodyType();
         String vehicleType = carDetails.getVehicleType();
         String title = carDetails.getTitle();
-        double longitude = carDetails.getLongitude();
-        double latitude = carDetails.getLatitude();
-        int distance = carDetails.getDistance();
+        double longitude = carDetails.getLongitude() == null ? 0.0 : carDetails.getLongitude();
+        double latitude = carDetails.getLatitude() == null ? 0.0 : carDetails.getLatitude();
+        int distance = carDetails.getDistance() == null ? 0 : carDetails.getDistance();
         String address = carDetails.getAddress();
         String town = carDetails.getTown();
         OfferOwnerEntity owner = response.getOwnerEntity();
         int ownerId = owner.getId();
         String ownerPicture = owner.getPhotoUrl();
         String ownerName = owner.getName();
-        int ratingCount = response.getRatingCount();
-        float rating = response.getRating();
+        int ratingCount = response.getRatingCount() == null ? 0 : response.getRatingCount();
+        float rating = response.getRating() == null ? .0f : response.getRating();
         OfferOrderDetails order = response.getOrderDetails();
-        boolean instant = order.isInstantBooking();
-        boolean curbside = order.isCurbsideDelivery();
-        boolean cash = order.isAcceptCash();
-        String fuelPolicy = order.getFuelPolicy().getFuelPolicyName();
-        float rateFirst = order.getRateFirst();
-        float rateSecond = order.getRateSecond();
-        float discountFirst = order.getDiscountFirst();
-        float discountSecond = order.getDiscountSecond();
-        int minRental = order.getMinRentalDuration();
-        String pickupTime = order.getPickupTime();
-        String returnTime = order.getReturnTime();
+
+        boolean instant = false;
+        boolean curbside = false;
+        boolean cash = false;
+        String fuelPolicy = null;
+        float rateFirst = 0;
+        float rateSecond = 0;
+        float discountFirst = 0;
+        float discountSecond = 0;
+        int minRental = 0;
+        String pickupTime = null;
+        String returnTime = null;
+        if (order != null) {
+
+            instant = order.isInstantBooking() == null ? false : order.isInstantBooking();
+            curbside = order.isCurbsideDelivery() == null ? false : order.isCurbsideDelivery();
+            cash = order.isAcceptCash() == null ? false : order.isAcceptCash();
+            fuelPolicy = order.getFuelPolicy().getFuelPolicyName();
+            rateFirst = order.getRateFirst() == null ? .0f : order.getRateFirst();
+            rateSecond = order.getRateSecond() == null ? .0f : order.getRateSecond();
+            discountFirst = order.getDiscountFirst() == null ? .0f : order.getDiscountFirst();
+            discountSecond = order.getDiscountSecond() == null ? .0f : order.getDiscountSecond();
+            minRental = order.getMinRentalDuration() == null ? 0 : order.getMinRentalDuration();
+            pickupTime = order.getPickupTime();
+            returnTime = order.getReturnTime();
+        }
 
         return new OfferCar.Builder()
                 .setCarId(carId)

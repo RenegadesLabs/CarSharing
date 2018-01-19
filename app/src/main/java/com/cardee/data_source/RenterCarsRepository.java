@@ -3,6 +3,7 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -49,6 +50,7 @@ public class RenterCarsRepository implements RenterCarsDataSource {
         }
 
         mRemoteDataSource.obtainCars(new Callback() {
+
             @Override
             public void onSuccess(OfferResponseBody[] response) {
                 callback.onSuccess(response);

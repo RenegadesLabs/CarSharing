@@ -150,9 +150,10 @@ public class RenterBrowseCarsListAdapter
 
             mTitle.setText(model.getTitle());
             mYear.setText(model.getYearOfManufacture());
-            String location = model.getDistance() + " m " + "\u26AB";
+            String location = model.getDistance() + " m " + "\u26AB " + model.getAddress();
             mLocation.setText(location);
-            mType.setText(model.getBodyType());
+            String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());
+            mType.setText(type);
             mRating.setRating(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);

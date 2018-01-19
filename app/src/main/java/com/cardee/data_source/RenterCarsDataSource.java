@@ -8,7 +8,7 @@ public interface RenterCarsDataSource {
     void obtainCars(Callback callback);
 
     interface Callback {
-        void onSuccess(OffersResponse response);
+        void onSuccess(OfferResponseBody[] response);
 
         void onError(Error error);
     }

@@ -4,6 +4,7 @@ package com.cardee.domain.renter.usecase;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.RenterCarsRepository;
+import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.renter.entity.OfferCar;
@@ -23,9 +24,8 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
         mRepository.obtainCars(new RenterCarsDataSource.Callback() {
             @Override
-            public void onSuccess(OffersResponse response) {
-                callback.onSuccess(new ResponseValues(response.isSuccessful(),
-                        OfferResponseBodyToOfferMapper.transform(response.getOfferResponseBody())));
+            public void onSuccess(OfferResponseBody[] response) {
+                callback.onSuccess(new ResponseValues(OfferResponseBodyToOfferMapper.transform(response)));
             }
 
             @Override
@@ -44,16 +44,10 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
 
     public static class ResponseValues implements UseCase.ResponseValues {
 
-        private final boolean success;
         private final List<OfferCar> mOfferCar;
 
-        public ResponseValues(boolean success, List<OfferCar> offerCar) {
-            this.success = success;
+        public ResponseValues(List<OfferCar> offerCar) {
             mOfferCar = offerCar;
-        }
-
-        public boolean isSuccess() {
-            return success;
         }
 
         public List<OfferCar> getOfferCars() {
