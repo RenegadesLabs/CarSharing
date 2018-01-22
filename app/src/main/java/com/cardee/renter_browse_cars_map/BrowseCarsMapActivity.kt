@@ -5,38 +5,52 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import com.cardee.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_browse_cars_map.*
 
 class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClientImpl()) :
-        LocationClient by delegate, AppCompatActivity(), OnMapReadyCallback {
+        LocationClient by delegate, AppCompatActivity(), OnMapReadyCallback, BrowseCarsContract.View<OfferItem> {
 
-    lateinit var adapter: CarsAdapter
+    private lateinit var adapter: CarsAdapter
+    private lateinit var presenter: BrowseCarsPresenter
+    private val eventProducer: PublishSubject<UIModelEvent> = PublishSubject.create()
+    private var disposable: Disposable = Disposables.empty()
+    private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse_cars_map)
         init(this)
         supportActionBar ?: setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            this.setDisplayHomeAsUpEnabled(true)
-            this.title = null
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.title = null
         }
-
-        map.onCreate(savedInstanceState)
-        map.getMapAsync(this)
+        map.let {
+            it.onCreate(savedInstanceState)
+            it.getMapAsync(this)
+        }
+        presenter = BrowseCarsPresenter(this)
         adapter = CarsAdapter(this)
-        carsList.adapter = adapter
-        carsList.layoutManager = LinearLayoutManager(
-                this, LinearLayoutManager.HORIZONTAL, false)
-        carsList.itemAnimator = DefaultItemAnimator()
+        adapter.subscribe(presenter)
+        disposable = eventProducer.subscribe(presenter)
+        carsList.let {
+            it.adapter = adapter
+            it.itemAnimator = DefaultItemAnimator()
+            it.layoutManager = LinearLayoutManager(
+                    this, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        var list: List<Any> = listOf(Any(), Any(), Any(), Any(), Any(), Any(), Any())
-        adapter.setItems(list)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -56,6 +70,24 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
         map.onResume()
     }
 
+    override fun showProgress(show: Boolean) {
+        loadingProgress.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun showMessage(message: String?) {
+        toast?.cancel()
+        toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
+        toast!!.show()
+    }
+
+    override fun showMessage(messageId: Int) {
+        showMessage(getString(messageId))
+    }
+
+    override fun bind(offers: List<OfferItem>) {
+        adapter.setItems(offers)
+    }
+
     override fun onPause() {
         super.onPause()
         map.onPause()
@@ -65,5 +97,9 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
         super.onDestroy()
         disconnect()
         map.onDestroy()
+        adapter.unsubscribe()
+        if (!disposable.isDisposed) {
+            disposable.dispose()
+        }
     }
 }

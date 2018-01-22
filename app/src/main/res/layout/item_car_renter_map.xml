@@ -83,4 +83,16 @@
         app:layout_constraintBottom_toBottomOf="@id/imgCar"
         app:layout_constraintEnd_toEndOf="@id/imgCar" />
 
+    <ProgressBar
+        android:id="@+id/imgProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/imgCar"
+        app:layout_constraintEnd_toEndOf="@id/imgCar"
+        app:layout_constraintStart_toStartOf="@id/imgCar"
+        app:layout_constraintTop_toTopOf="@id/imgCar" />
+
 </android.support.constraint.ConstraintLayout>
