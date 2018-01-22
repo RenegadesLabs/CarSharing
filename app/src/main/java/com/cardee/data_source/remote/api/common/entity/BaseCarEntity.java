@@ -53,6 +53,9 @@ public class BaseCarEntity {
     @Expose
     @SerializedName("address")
     private String address;
+    @Expose
+    @SerializedName("town")
+    private String town;
 
 
     public BaseCarEntity() {
@@ -185,5 +188,13 @@ public class BaseCarEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 }

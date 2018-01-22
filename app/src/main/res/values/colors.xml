@@ -42,7 +42,7 @@
     <color name="add_car_divider">#7A8794</color>
 
     <color name="add_car_item_vehicle_inactive">#979797</color>
-    <color name="add_car_item_vehicle_secondary_txt">#7A8794</color>
+    <color name="item_secondary_txt">#7A8794</color>
 
     <color name="colorPrimary">#419CED</color>
     <color name="colorPrimaryDark">#1283E8</color>

@@ -5,18 +5,18 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 
 
-public class BrowseCarsHeaderView extends ConstraintLayout {
+public class RenterBrowseCarsFloatingView extends ConstraintLayout {
 
 
-    public BrowseCarsHeaderView(Context context) {
+    public RenterBrowseCarsFloatingView(Context context) {
         super(context);
     }
 
-    public BrowseCarsHeaderView(Context context, AttributeSet attrs) {
+    public RenterBrowseCarsFloatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BrowseCarsHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RenterBrowseCarsFloatingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

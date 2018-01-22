@@ -36,13 +36,10 @@ public class RenterBookingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_renter_bookings, container, false);
         showButton = root.findViewById(R.id.button);
-        showButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RateRentalExpActivity.class);
-                intent.putExtra("booking_id", 430);
-                startActivity(intent);
-            }
+        showButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), RateRentalExpActivity.class);
+            intent.putExtra("booking_id", 430);
+            startActivity(intent);
         });
         return root;
     }

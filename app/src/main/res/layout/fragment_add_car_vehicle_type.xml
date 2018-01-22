@@ -52,7 +52,7 @@
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/car_add_vehicle_personal_expl"
-        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textColor="@color/item_secondary_txt"
         android:textSize="@dimen/text_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_vehiclePersonal" />
@@ -93,7 +93,7 @@
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/car_add_vehicle_private_expl"
-        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textColor="@color/item_secondary_txt"
         android:textSize="@dimen/text_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_vehiclePrivate" />
@@ -134,7 +134,7 @@
         android:layout_marginStart="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/car_add_vehicle_commercial_expl"
-        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textColor="@color/item_secondary_txt"
         android:textSize="@dimen/text_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_vehicleCommercial" />

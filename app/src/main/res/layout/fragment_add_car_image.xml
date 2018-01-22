@@ -64,7 +64,7 @@
         android:layout_marginTop="@dimen/medium_margin"
         android:padding="@dimen/medium_margin"
         android:text="@string/car_add_image_why"
-        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+        android:textColor="@color/item_secondary_txt"
         app:layout_constraintTop_toBottomOf="@+id/iv_addCarImage"/>
 
 </android.support.constraint.ConstraintLayout>

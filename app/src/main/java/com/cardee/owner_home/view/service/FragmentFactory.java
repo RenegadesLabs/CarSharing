@@ -31,7 +31,7 @@ public class FragmentFactory {
         if (RenterBookingsFragment.class.getName().equals(clazz.getName())){
             return RenterBookingsFragment.newInstance();
         }
-        if (RenterBrowseCarsFragment.class.getName().equals(clazz.getName())){
+        if(RenterBrowseCarsFragment.class.getName().equals(clazz.getName())){
             return RenterBrowseCarsFragment.newInstance();
         }
         return null;

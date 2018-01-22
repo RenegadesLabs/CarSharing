@@ -53,20 +53,34 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.AppCompatImageButton
+                <FrameLayout
+                    android:id="@+id/fl_renterCarsToolbarFavorites"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:padding="@dimen/small_margin"
-                    app:srcCompat="@drawable/ic_temp_favorite_border" />
+                    android:layout_height="match_parent">
 
-                <android.support.v7.widget.AppCompatImageButton
-                    android:id="@+id/filterIcon"
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="@dimen/small_margin"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_favorites_toolbar" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_renterCarsToolbarFilter"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:padding="@dimen/small_margin"
-                    app:srcCompat="@drawable/ic_temp_filter_list" />
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="@dimen/small_margin"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_filter" />
+                </FrameLayout>
+
 
             </LinearLayout>
 
@@ -91,7 +105,7 @@
     <include
         layout="@layout/view_floating_browse_cars"
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
+        android:layout_height="60dp"
         app:layout_anchor="@id/rv_renterBrowseCarsList"
         app:layout_anchorGravity="center_horizontal|bottom" />
 

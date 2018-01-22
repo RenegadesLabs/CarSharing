@@ -178,6 +178,8 @@
             android:name="com.cardee.renter_browse_cars.filter.view.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChatStyle" />
+
+        <activity android:name=".renter_browse_cars_map.BrowseCarsMapActivity" />
     </application>
 
 </manifest>
