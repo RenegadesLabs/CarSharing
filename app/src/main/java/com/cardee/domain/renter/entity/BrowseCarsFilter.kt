@@ -17,7 +17,11 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
                                CardeeApp.context.resources.getString(R.string.price_range_per_day)),
                        bodyTypeId: Int = 5,
                        transmissionAuto: Boolean = true,
-                       transmissionManual: Boolean = true) : BaseObservable() {
+                       transmissionManual: Boolean = true,
+                       var minYears: Int = 0,
+                       var maxYears: Int = 0,
+                       var minPrice: Int = 0,
+                       var maxPrice: Int = 0) : BaseObservable() {
 
 
     @get:Bindable

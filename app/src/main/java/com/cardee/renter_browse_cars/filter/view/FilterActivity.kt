@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import kotlinx.android.synthetic.main.activity_filter.*
 
 class FilterActivity : AppCompatActivity(), FilterView {
@@ -17,6 +18,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityFilterBinding
     lateinit var filter: BrowseCarsFilter
+    private var mPresenter: CarsFilterPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,16 @@ class FilterActivity : AppCompatActivity(), FilterView {
         initToolBar()
         initViews()
         setListeners()
+        initPresenter()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        mPresenter?.getFilteredCars(filter)
+    }
+
+    private fun initPresenter() {
+        mPresenter = CarsFilterPresenter(this)
     }
 
     private fun initViews() {
@@ -129,6 +140,9 @@ class FilterActivity : AppCompatActivity(), FilterView {
             }
         }
         priceRangeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
+            filter.minPrice = minValue.toInt()
+            filter.maxPrice = maxValue.toInt()
+
             if (minValue?.toFloat() == priceRangeSeekBar.minValue) {
                 if (maxValue?.toFloat() == priceRangeSeekBar.maxValue) {
                     priceRangeText.text = "Any"
@@ -144,6 +158,9 @@ class FilterActivity : AppCompatActivity(), FilterView {
             }
         }
         carAgeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
+            filter.minYears = minValue.toInt()
+            filter.maxYears = maxValue.toInt()
+
             if (minValue?.toFloat() == carAgeSeekBar.minValue) {
                 if (maxValue?.toFloat() == carAgeSeekBar.maxValue) {
                     carAgeText.text = "Any"
@@ -158,6 +175,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 }
             }
         }
+    }
+
+    override fun setButtonText(s: String) {
+        submitButton.text = s
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter?.onDestroy()
     }
 
     override fun showProgress(show: Boolean) {
