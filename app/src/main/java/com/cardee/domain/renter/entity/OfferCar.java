@@ -16,7 +16,7 @@ public class OfferCar {
 
     private Image[] mImages;
 
-    private Image mPrimaryCarImage;
+    private String mPrimaryCarImage;
 
     private String mLicensePlateNumber;
 
@@ -74,7 +74,7 @@ public class OfferCar {
                     boolean favorite,
                     int seatCapacity,
                     Image[] images,
-                    Image primaryCarImage,
+                    String primaryCarImage,
                     String licensePlateNumber,
                     String yearOfManufacture,
                     String bodyType,
@@ -140,7 +140,7 @@ public class OfferCar {
         private boolean favorite;
         private int mSeatCapacity;
         private Image[] mImages;
-        private Image mPrimaryCarImage;
+        private String mPrimaryCarImage;
         private String mLicensePlateNumber;
         private String mYearOfManufacture;
         private String mBodyType;
@@ -188,7 +188,7 @@ public class OfferCar {
             return this;
         }
 
-        public Builder setPrimaryCarImage(Image primaryCarImage) {
+        public Builder setPrimaryCarImage(String primaryCarImage) {
             mPrimaryCarImage = primaryCarImage;
             return this;
         }
@@ -355,7 +355,7 @@ public class OfferCar {
         return mImages;
     }
 
-    public Image getPrimaryCarImage() {
+    public String getPrimaryCarThumbnail() {
         return mPrimaryCarImage;
     }
 

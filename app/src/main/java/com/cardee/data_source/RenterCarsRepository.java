@@ -3,7 +3,6 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
-import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -37,7 +36,7 @@ public class RenterCarsRepository implements RenterCarsDataSource {
 
 
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCars(OffersCallback offersCallback) {
         if (notDirtyCache()) {
             Collection<OfferResponseBody> values = mCachedCars.values();
             OfferResponseBody[] cars = new OfferResponseBody[values.size()];
@@ -46,15 +45,36 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 cars[index] = carEntity;
                 index++;
             }
-            callback.onSuccess(cars);
+            offersCallback.onSuccess(cars);
         }
 
-        mRemoteDataSource.obtainCars(new Callback() {
+        mRemoteDataSource.obtainCars(new OffersCallback() {
 
             @Override
             public void onSuccess(OfferResponseBody[] response) {
-                callback.onSuccess(response);
+                offersCallback.onSuccess(response);
                 refreshCache(response);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+        });
+
+    }
+
+    @Override
+    public void addCarToFavorites(int carId, Callback callback) {
+        mRemoteDataSource.addCarToFavorites(carId, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
             }
 
             @Override
@@ -62,7 +82,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 callback.onError(error);
             }
         });
-
     }
 
     public void refreshCars() {

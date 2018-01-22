@@ -5,7 +5,6 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.RenterCarsRepository;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
-import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.domain.renter.entity.mapper.OfferResponseBodyToOfferMapper;
@@ -22,10 +21,15 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mRepository.obtainCars(new RenterCarsDataSource.Callback() {
+        mRepository.obtainCars(new RenterCarsDataSource.OffersCallback() {
             @Override
             public void onSuccess(OfferResponseBody[] response) {
                 callback.onSuccess(new ResponseValues(OfferResponseBodyToOfferMapper.transform(response)));
+            }
+
+            @Override
+            public void onSuccess() {
+
             }
 
             @Override

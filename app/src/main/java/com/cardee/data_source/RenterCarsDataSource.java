@@ -1,15 +1,22 @@
 package com.cardee.data_source;
 
+
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
-import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
 public interface RenterCarsDataSource {
 
-    void obtainCars(Callback callback);
+    void obtainCars(OffersCallback offersCallback);
 
-    interface Callback {
+    void addCarToFavorites(int carId, Callback callback);
+
+    interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);
 
+        void onError(Error error);
+    }
+
+    interface Callback {
+        void onSuccess();
         void onError(Error error);
     }
 }

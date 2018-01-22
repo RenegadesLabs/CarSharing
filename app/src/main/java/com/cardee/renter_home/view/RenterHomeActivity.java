@@ -56,7 +56,7 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
                     getSupportActionBar().hide();
                     break;
                 case 0:
-                    getSupportActionBar().show();
+                    getSupportActionBar().hide();
                     break;
             }
             showFragmentOnPosition(position);

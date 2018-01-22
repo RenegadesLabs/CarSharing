@@ -16,7 +16,12 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
 
 
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCars(OffersCallback offersCallback) {
+
+    }
+
+    @Override
+    public void addCarToFavorites(int carId, Callback callback) {
 
     }
 }

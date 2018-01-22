@@ -31,19 +31,32 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCars(OffersCallback offersCallback) {
         try {
             Response<OffersResponse> response = mApi.browseCars().execute();
             if (response.isSuccessful()) {
-                callback.onSuccess(response.body().getOfferResponseBody());
+                offersCallback.onSuccess(response.body().getOfferResponseBody());
                 return;
             }
-            handleErrorResponse(callback, response.body());
+            handleErrorResponse(offersCallback, response.body());
         } catch (IOException e) {
             e.printStackTrace();
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
         }
     }
+
+    @Override
+    public void addCarToFavorites(int carId, Callback callback) {
+        mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable ->
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+    }
+
 
     private void handleErrorResponse(Callback callback, BaseResponse response) {
         if (response == null) {

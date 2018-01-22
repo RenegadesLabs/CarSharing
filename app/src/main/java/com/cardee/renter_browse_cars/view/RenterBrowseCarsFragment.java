@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
@@ -19,6 +22,9 @@ import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
+import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;
+import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsHeaderView;
+import com.cardee.renter_browse_cars.view.custom.listener.CustomRecyclerScrollListener;
 import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
 
 import java.util.List;
@@ -30,6 +36,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     private RenterBrowseCarListPresenter mPresenter;
 
     private RecyclerView mCarsListView;
+
+    private RenterBrowseCarsFloatingView mFloatingView;
+    private LinearLayout mHeaderView;
 
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
@@ -58,12 +67,42 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mCarsListView = rootView.findViewById(R.id.rv_renterBrowseCarsList);
+        mFloatingView = rootView.findViewById(R.id.floating_browse_cars);
+        mHeaderView = rootView.findViewById(R.id.header);
+        addOnScrollListener();
         initCarList(mCarsListView);
         rootView.findViewById(R.id.ll_browseCarsFloatingMapBtn).setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), BrowseCarsMapActivity.class);
             startActivity(intent);
         });
         return rootView;
+    }
+
+    private void addOnScrollListener() {
+        mCarsListView.addOnScrollListener(new CustomRecyclerScrollListener() {
+            @Override
+            public void show() {
+                mHeaderView.animate().translationY(-mHeaderView.getHeight())
+                        .setInterpolator(new AccelerateInterpolator(2))
+                        .start();
+
+                mFloatingView.animate().translationY(0)
+                        .setInterpolator(new DecelerateInterpolator(2))
+                        .start();
+            }
+
+            @Override
+            public void hide() {
+
+                mHeaderView.animate().translationY(0)
+                        .setInterpolator(new DecelerateInterpolator(2))
+                        .start();
+
+                mFloatingView.animate().translationY(mFloatingView.getHeight())
+                        .setInterpolator(new AccelerateInterpolator(2))
+                        .start();
+            }
+        });
     }
 
     private void initCarList(RecyclerView listView) {

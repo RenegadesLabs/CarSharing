@@ -6,6 +6,7 @@ import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.domain.renter.usecase.AddCarToFavorites;
 import com.cardee.domain.renter.usecase.GetCars;
 import com.crashlytics.android.Crashlytics;
 
@@ -37,6 +38,7 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                 break;
 
             case FAVORITE:
+                addCarToFavorites(carEvent.getCar().getCarId());
                 break;
         }
 
@@ -51,7 +53,7 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
             @Override
             public void onSuccess(GetCars.ResponseValues response) {
                 List<OfferCar> cars = response.getOfferCars();
-                if (mView != null) {
+                if (firstStart && mView != null) {
                     mView.showProgress(false);
                     mView.setItems(cars);
                     firstStart = false;
@@ -66,6 +68,20 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
             }
         });
 
+    }
+
+    private void addCarToFavorites(int carId) {
+        mExecutor.execute(new AddCarToFavorites(), new AddCarToFavorites.RequestValues(carId), new UseCase.Callback<AddCarToFavorites.ResponseValues>() {
+            @Override
+            public void onSuccess(AddCarToFavorites.ResponseValues response) {
+                loadItems();
+            }
+
+            @Override
+            public void onError(Error error) {
+                handleError(error);
+            }
+        });
     }
 
     public void refresh() {
