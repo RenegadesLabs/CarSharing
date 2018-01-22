@@ -8,6 +8,7 @@ import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.domain.renter.usecase.AddCarToFavorites;
 import com.cardee.domain.renter.usecase.GetCars;
+import com.cardee.domain.renter.usecase.GetFavorites;
 import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
@@ -82,6 +83,33 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                 handleError(error);
             }
         });
+    }
+
+    public void showFavorites(boolean show) {
+        if (show) {
+//            if (mView != null) {
+//                mView.showProgress(true);
+//            }
+            mExecutor.execute(new GetFavorites(), new GetFavorites.RequestValues(true),
+                    new UseCase.Callback<GetFavorites.ResponseValues>() {
+                        @Override
+                        public void onSuccess(GetFavorites.ResponseValues response) {
+                            List<OfferCar> cars = response.getOfferCars();
+                            if (mView != null) {
+//                                mView.showProgress(false);
+                                mView.setItems(cars);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+//                            mView.showProgress(false);
+                            handleError(error);
+                        }
+                    });
+            return;
+        }
+        loadItems();
     }
 
     public void refresh() {

@@ -9,6 +9,8 @@ public interface RenterCarsDataSource {
 
     void addCarToFavorites(int carId, Callback callback);
 
+    void getFavorites(boolean isFavorite, OffersCallback offersCallback);
+
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);
 

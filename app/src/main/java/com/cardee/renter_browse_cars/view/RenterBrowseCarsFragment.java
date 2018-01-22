@@ -1,11 +1,13 @@
 package com.cardee.renter_browse_cars.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import com.cardee.R;
+import com.cardee.data_source.util.DialogHelper;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
@@ -30,7 +33,8 @@ import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
 import java.util.List;
 
 
-public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCarListContract.View {
+public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCarListContract.View,
+        View.OnClickListener {
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
     private RenterBrowseCarListPresenter mPresenter;
@@ -39,6 +43,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private RenterBrowseCarsFloatingView mFloatingView;
     private LinearLayout mHeaderView;
+    private AppCompatImageView mFavsImage;
+
+    private boolean favoritesSelected = false;
+
+    private ProgressDialog mProgress;
 
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
@@ -71,10 +80,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mHeaderView = rootView.findViewById(R.id.header);
         addOnScrollListener();
         initCarList(mCarsListView);
-        rootView.findViewById(R.id.ll_browseCarsFloatingMapBtn).setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), BrowseCarsMapActivity.class);
-            startActivity(intent);
-        });
+        mProgress = DialogHelper.getProgressDialog(getActivity(), getString(R.string.loading), false);
+        mFavsImage = rootView.findViewById(R.id.iv_renterCarsToolbarFavoritesImg);
+        rootView.findViewById(R.id.ll_browseCarsFloatingMapBtn).setOnClickListener(this);
+        rootView.findViewById(R.id.fl_renterCarsToolbarFavorites).setOnClickListener(this);
         return rootView;
     }
 
@@ -130,7 +139,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     @Override
     public void showProgress(boolean show) {
-
+        if (show) {
+            mProgress.show();
+            return;
+        }
+        mProgress.dismiss();
     }
 
     @Override
@@ -172,5 +185,23 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public void onConnectionLost() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_browseCarsFloatingMapBtn:
+                startActivity(new Intent(getActivity(), BrowseCarsMapActivity.class));
+                break;
+            case R.id.fl_renterCarsToolbarFavorites:
+                toggleShowFavorites();
+                break;
+        }
+    }
+
+    private void toggleShowFavorites() {
+        favoritesSelected = !favoritesSelected;
+        mPresenter.showFavorites(favoritesSelected);
+        mFavsImage.setImageResource(favoritesSelected ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
     }
 }

@@ -5,6 +5,7 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
+import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
 import java.io.IOException;
@@ -55,6 +56,21 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
             handleErrorResponse(callback, noDataResponse);
         }, throwable ->
             callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+    }
+
+    @Override
+    public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOfferResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
     }
 
 
