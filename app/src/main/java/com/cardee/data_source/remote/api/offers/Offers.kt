@@ -10,5 +10,4 @@ interface Offers {
     @GET("offers/")
     fun obtainAll(): Single<OffersResponse>
 
-
 }

@@ -1,5 +1,6 @@
 package com.cardee.renter_browse_cars_map
 
+import com.cardee.domain.rx.Response
 import com.cardee.domain.rx.browse_car.ObtainAllOffers
 import io.reactivex.functions.Consumer
 
@@ -30,6 +31,15 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
     private fun handleErrorResponse(responseCode: Int, message: String?) {
         view?.let {
             it.showProgress(false)
+            when (responseCode) {
+                Response.UNAUTHORIZED -> {
+                    TODO("not implemented") //implement
+                }
+                Response.SERVER_ERROR -> {
+                    //TODO("not implemented") //implement
+                }
+                else -> view?.showMessage(message)
+            }
         }
     }
 

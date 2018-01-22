@@ -18,8 +18,8 @@ abstract class UseCase<T>(private val executor: ThreadExecutor, private val resp
                 error: (Throwable) -> Unit,
                 complete: () -> Unit) {
         disposable = buildUseCaseObserver(request)
-                .observeOn(Schedulers.from(executor))
-                .subscribeOn(responseThread)
+                .observeOn(responseThread)
+                .subscribeOn(Schedulers.from(executor))
                 .subscribe(success, error, complete)
     }
 
@@ -27,8 +27,8 @@ abstract class UseCase<T>(private val executor: ThreadExecutor, private val resp
                 success: (Response<T>) -> Unit,
                 error: (Throwable) -> Unit) {
         disposable = buildUseCaseObserver(request)
-                .observeOn(Schedulers.from(executor))
-                .subscribeOn(responseThread)
+                .observeOn(responseThread)
+                .subscribeOn(Schedulers.from(executor))
                 .subscribe(success, error)
     }
 
@@ -38,8 +38,8 @@ abstract class UseCase<T>(private val executor: ThreadExecutor, private val resp
      */
     fun execute(request: Request, observer: Observer<Response<T>>) {
         buildUseCaseObserver(request)
-                .observeOn(Schedulers.from(executor))
-                .subscribeOn(responseThread)
+                .observeOn(responseThread)
+                .subscribeOn(Schedulers.from(executor))
                 .subscribe(observer)
     }
 

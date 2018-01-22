@@ -47,6 +47,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             it.layoutManager = LinearLayoutManager(
                     this, LinearLayoutManager.HORIZONTAL, false)
         }
+        presenter.loadAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
