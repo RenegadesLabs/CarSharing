@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="14dp"
                         android:layout_marginTop="20dp"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        android:textColor="@color/item_secondary_txt"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/bookHourly" />
 
@@ -445,7 +445,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
-                        android:src="@{filter.curbsideDelivery ? @drawable/ic_direction : @drawable/ic_direction_inactive}"
+                        android:src="@{filter.curbsideDelivery ? @drawable/ic_curbside : @drawable/ic_direction_inactive}"
                         app:layout_constraintBottom_toBottomOf="@id/curbDelTitle"
                         app:layout_constraintStart_toEndOf="@id/curbDelTitle"
                         app:layout_constraintTop_toTopOf="@id/curbDelTitle" />
@@ -509,7 +509,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="14dp"
                         android:layout_marginTop="20dp"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        android:textColor="@color/item_secondary_txt"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -568,7 +568,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="14dp"
                         android:layout_marginTop="20dp"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        android:textColor="@color/item_secondary_txt"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -826,7 +826,7 @@
                         android:layout_marginEnd="14dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/any"
-                        android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                        android:textColor="@color/item_secondary_txt"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

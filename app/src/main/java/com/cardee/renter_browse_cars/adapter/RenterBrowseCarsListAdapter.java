@@ -18,7 +18,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 
@@ -129,23 +128,25 @@ public class RenterBrowseCarsListAdapter
                     mCarImageProgress.setVisibility(View.VISIBLE);
                 }
 
-                imageRequestManager
-                        .load(model.getPrimaryCarImage().getThumbnail())
-                        .listener(new RequestListener<String, GlideDrawable>() {
-                            @Override
-                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                mCarImageProgress.setVisibility(View.GONE);
-                                return false;
-                            }
+                if (model.getPrimaryCarImage() != null) {
+                    imageRequestManager
+                            .load(model.getPrimaryCarImage().getThumbnail())
+                            .listener(new RequestListener<String, GlideDrawable>() {
+                                @Override
+                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                    mCarImageProgress.setVisibility(View.GONE);
+                                    return false;
+                                }
 
-                            @Override
-                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                mCarImageProgress.setVisibility(View.GONE);
-                                return false;
-                            }
-                        })
-                        .error(R.drawable.img_no_car)
-                        .into(mPrimaryCarImage);
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                    mCarImageProgress.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
+                            .error(R.drawable.img_no_car)
+                            .into(mPrimaryCarImage);
+                }
             }
 
             mTitle.setText(model.getTitle());
@@ -190,6 +191,7 @@ public class RenterBrowseCarsListAdapter
         }
         notifyItemChanged(index);
     }
+
     public void remove(OfferCar car) {
         int index = mOfferCars.indexOf(car);
         if (index > -1) {

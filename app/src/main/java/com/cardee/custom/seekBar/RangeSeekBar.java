@@ -102,6 +102,9 @@ public class RangeSeekBar extends View {
     private int pxWidth;
     private int pxHeight;
 
+    // Display value formatter
+    private String valueFormatter;
+
     //private float thumbHalfWidth;
     //private float thumbHalfHeight;
     private float thumbHeight;
@@ -228,6 +231,7 @@ public class RangeSeekBar extends View {
         leftThumbPressed = (leftThumbPressed == null) ? leftThumb : leftThumbPressed;
         rightThumbPressed = (rightThumbPressed == null) ? rightThumb : rightThumbPressed;
 
+        gap = 100f / (maxValue - minValue);
 //        gap = Math.max(0, Math.min(gap, absoluteMaxValue - absoluteMinValue));
 //        gap = gap / (absoluteMaxValue - absoluteMinValue) * 100;
 //        if (fixGap != NO_FIXED_GAP) {
@@ -262,6 +266,11 @@ public class RangeSeekBar extends View {
     // PUBLIC METHODS
     //////////////////////////////////////////
 
+
+    public void setValueFormatter(String valueFormatter) {
+        this.valueFormatter = valueFormatter;
+    }
+
     public RangeSeekBar setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
         return this;
@@ -278,6 +287,7 @@ public class RangeSeekBar extends View {
     public void setMinValue(float minValue) {
         this.minValue = minValue;
         this.absoluteMinValue = minValue;
+        gap = 100f / (maxValue - minValue);
 //        return this;
     }
 
@@ -801,12 +811,7 @@ public class RangeSeekBar extends View {
         float y = ((rect.bottom + rect.top) / 2) + (height / 3);
 
         Number value = getSelectedMinValue();
-        String valueText = value.toString();
-        if (maxStartValue == 11) {
-            valueText = valueText + " yr";
-        } else {
-            valueText = "$" + valueText;
-        }
+        String valueText = String.format(valueFormatter, value);
         if (value.floatValue() == maxValue) {
             valueText = "\u221E";
             paint.setTextSize(18 * getResources().getDisplayMetrics().density);
@@ -855,12 +860,7 @@ public class RangeSeekBar extends View {
         float y = ((rect.bottom + rect.top) / 2) + (height / 3);
 
         Number value = getSelectedMaxValue();
-        String valueText = value.toString();
-        if (maxStartValue == 11) {
-            valueText = valueText + " yr";
-        } else {
-            valueText = "$" + valueText;
-        }
+        String valueText = String.format(valueFormatter, value);
         if (value.floatValue() == maxValue) {
             valueText = "\u221E";
             paint.setTextSize(18 * getResources().getDisplayMetrics().density);

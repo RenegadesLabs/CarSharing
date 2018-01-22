@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
+import com.cardee.renter_browse_cars.filter.view.FilterActivity;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
@@ -59,6 +59,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mCarsListView = rootView.findViewById(R.id.rv_renterBrowseCarsList);
         initCarList(mCarsListView);
+        rootView.findViewById(R.id.fl_renterCarsToolbarFilter).setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), FilterActivity.class);
+            startActivity(intent);
+        });
         rootView.findViewById(R.id.ll_browseCarsFloatingMapBtn).setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), BrowseCarsMapActivity.class);
             startActivity(intent);

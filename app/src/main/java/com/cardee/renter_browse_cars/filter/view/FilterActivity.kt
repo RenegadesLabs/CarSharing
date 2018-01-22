@@ -22,8 +22,14 @@ class FilterActivity : AppCompatActivity(), FilterView {
         super.onCreate(savedInstanceState)
         bindView()
         initToolBar()
+        initViews()
         setListeners()
 
+    }
+
+    private fun initViews() {
+        priceRangeSeekBar.setValueFormatter("$%d")
+        carAgeSeekBar.setValueFormatter("%d yr")
     }
 
     private fun bindView() {
