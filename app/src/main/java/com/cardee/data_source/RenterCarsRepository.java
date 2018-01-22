@@ -3,7 +3,7 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
-import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -35,7 +35,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
 
-
     @Override
     public void obtainCars(Callback callback) {
         if (notDirtyCache()) {
@@ -64,6 +63,23 @@ public class RenterCarsRepository implements RenterCarsDataSource {
         });
 
     }
+
+    @Override
+    public void obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
+        mRemoteDataSource.obtainCarsByFilter(filterRequest, new Callback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                callback.onSuccess(response);
+                refreshCache(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
 
     public void refreshCars() {
         mDirtyCache = true;

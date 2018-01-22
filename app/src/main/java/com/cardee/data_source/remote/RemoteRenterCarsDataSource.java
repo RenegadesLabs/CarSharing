@@ -6,6 +6,7 @@ import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
 
@@ -35,6 +36,21 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         try {
             Response<OffersResponse> response = mApi.browseCars().execute();
             if (response.isSuccessful()) {
+                callback.onSuccess(response.body().getOfferResponseBody());
+                return;
+            }
+            handleErrorResponse(callback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
+        try {
+            Response<OffersResponse> response = mApi.obtainCarsByFilter(filterRequest).execute();
+            if (response.isSuccessful() && response.body() != null) {
                 callback.onSuccess(response.body().getOfferResponseBody());
                 return;
             }

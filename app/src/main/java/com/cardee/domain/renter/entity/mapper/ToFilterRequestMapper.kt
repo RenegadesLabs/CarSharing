@@ -9,7 +9,7 @@ class ToFilterRequestMapper {
                 typeVehicleId = filter.vehicleTypeId,
                 carBodyType = filter.bodyTypeId,
                 carTransmission = if (filter.transmissionAuto && filter.transmissionManual) 0 else
-                    if (filter.transmissionAuto) 1 else 0,
+                    if (filter.transmissionAuto) 1 else 2 ,
                 minYears = filter.minYears,
                 maxYears = filter.maxYears,
                 isInstantBooking = filter.instantBooking,

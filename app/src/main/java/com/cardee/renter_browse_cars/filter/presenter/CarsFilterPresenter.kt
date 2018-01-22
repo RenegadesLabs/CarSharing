@@ -26,11 +26,11 @@ class CarsFilterPresenter(var mView: FilterView?) {
                 mView?.setButtonText("View ${carList?.size} Cars")
             }
 
-            override fun onError(error: Error?) {
+            override fun onError(
+                    error: Error?) {
                 mView?.showMessage(error?.message)
             }
         })
-
     }
 
     fun onDestroy() {
