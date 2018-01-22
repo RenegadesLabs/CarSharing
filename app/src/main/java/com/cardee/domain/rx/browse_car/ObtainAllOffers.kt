@@ -16,9 +16,9 @@ class ObtainAllOffers(private val repository: OffersRepository = OffersRepositor
         UseCase<List<Offer>>(executor = executor, responseThread = responseThread) {
 
     override fun buildUseCaseObserver(request: Request): Observable<Response<List<Offer>>> {
+        val (offset, take) = request as ObtainAllRequest
         return repository.obtainAll().flatMap { response ->
             var useCaseResponse: Response<List<Offer>> = Response(response.offers, null, null)
-
             Observable.just(useCaseResponse)
         }
     }
