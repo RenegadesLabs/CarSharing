@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import io.reactivex.disposables.Disposable;
+
 public class RenterCarsRepository implements RenterCarsDataSource {
 
     private final RemoteRenterCarsDataSource mRemoteDataSource;
@@ -65,8 +67,8 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
     @Override
-    public void obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
-        mRemoteDataSource.obtainCarsByFilter(filterRequest, new Callback() {
+    public Disposable obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
+        return mRemoteDataSource.obtainCarsByFilter(filterRequest, new Callback() {
             @Override
             public void onSuccess(OfferResponseBody[] response) {
                 callback.onSuccess(response);

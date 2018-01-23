@@ -3,6 +3,7 @@ package com.cardee.data_source.remote.api.offers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
+import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -14,5 +15,5 @@ public interface Offers {
     Call<OffersResponse> browseCars();
 
     @POST("offers/")
-    Call<OffersResponse> obtainCarsByFilter(@Body FilterRequest request);
+    Maybe<OffersResponse> obtainCarsByFilter(@Body FilterRequest request);
 }

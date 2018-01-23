@@ -51,7 +51,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             val t = TextView(this@FilterActivity)
             t.textAlignment = View.TEXT_ALIGNMENT_CENTER
             t.setTextColor(resources.getColor(R.color.colorAccent))
-            t.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16f, context.resources.displayMetrics)
+            t.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12f, context.resources.displayMetrics)
             t.setTypeface(t.typeface, Typeface.BOLD)
             t
         }
