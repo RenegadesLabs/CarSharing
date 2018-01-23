@@ -691,5 +691,9 @@
     <string name="manual">Manual</string>
     <string name="submit_btn_text">View 0 Cars</string>
 
+    <!-- Browse Cars Search Area-->
+    <string name="search_from">Search from:</string>
+    <string name="my_current_location">My Current Location</string>
+
 
 </resources>

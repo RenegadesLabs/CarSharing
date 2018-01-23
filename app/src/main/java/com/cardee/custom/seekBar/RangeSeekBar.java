@@ -778,10 +778,7 @@ public class RangeSeekBar extends View {
         leftThumbColor = (Thumb.MIN.equals(pressedThumb)) ? leftThumbColorPressed : leftThumbColorNormal;
         paint.setColor(leftThumbColor);
 
-        //float leftL = normalizedToScreen(normalizedMinValue);
-        //float rightL = Math.min(leftL + thumbHalfWidth + barPadding, getWidth());
         rectLeftThumb.left = normalizedToScreen(normalizedMinValue);
-//        rectLeftThumb.right = Math.min(rectLeftThumb.left + (getThumbWidth() / 2) + barPadding, getWidth());
         rectLeftThumb.right = rectLeftThumb.left + (getThumbWidth() / 2) + barPadding;
         rectLeftThumb.top = 0f;
         rectLeftThumb.bottom = thumbHeight;

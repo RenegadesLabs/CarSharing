@@ -1,11 +1,11 @@
 package com.cardee.renter_browse_cars.filter.view
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +16,7 @@ import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
+import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
 import kotlinx.android.synthetic.main.activity_filter.*
 
 
@@ -40,8 +41,17 @@ class FilterActivity : AppCompatActivity(), FilterView {
         mPresenter?.getFilteredCars(filter)
     }
 
-    private fun initPresenter() {
-        mPresenter = CarsFilterPresenter(this)
+    private fun bindView() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
+        filter = BrowseCarsFilter()
+        binding.filter = filter
+        binding.executePendingBindings()
+    }
+
+    private fun initToolBar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = null
     }
 
     private fun initViews() {
@@ -58,20 +68,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
         submitButtonText.setInAnimation(this, R.anim.fade_in)
         submitButtonText.setOutAnimation(this, R.anim.fade_out)
         submitButtonText.setCurrentText(resources.getString(R.string.submit_btn_text))
-    }
-
-    private fun bindView() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
-        filter = BrowseCarsFilter()
-        binding.filter = filter
-        binding.executePendingBindings()
-    }
-
-    private fun initToolBar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = null
     }
 
     private fun setListeners() {
@@ -130,11 +126,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 mPresenter?.getFilteredCars(filter)
             }
         }
-        instantBookingSwitch.setOnCheckedChangeListener { p0, p1 ->
+        searchAreaButton.setOnClickListener {
+            val intent = Intent(this, SearchAreaActivity::class.java)
+            startActivity(intent)
+        }
+        instantBookingSwitch.setOnCheckedChangeListener { _, _ ->
             filter.instantBooking = instantBookingSwitch.isChecked
             mPresenter?.getFilteredCars(filter)
         }
-        curbDelSwitch.setOnCheckedChangeListener { p0, p1 ->
+        curbDelSwitch.setOnCheckedChangeListener { _, _ ->
             filter.curbsideDelivery = curbDelSwitch.isChecked
             mPresenter?.getFilteredCars(filter)
         }
@@ -236,6 +236,10 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
             mPresenter?.getFilteredCars(filter)
         }
+    }
+
+    private fun initPresenter() {
+        mPresenter = CarsFilterPresenter(this)
     }
 
     override fun setButtonText(s: String) {
