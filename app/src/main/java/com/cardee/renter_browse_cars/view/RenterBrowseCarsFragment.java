@@ -17,18 +17,19 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;
-import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsHeaderView;
 import com.cardee.renter_browse_cars.view.custom.listener.CustomRecyclerScrollListener;
 import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
+import com.cardee.settings.SettingsManager;
+import com.cardee.settings.Settings;
 
 import java.util.List;
 
@@ -49,6 +50,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private ProgressDialog mProgress;
 
+    private ProgressBar mProgressBar;
+
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
     }
@@ -67,7 +70,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCarsListAdapter = new RenterBrowseCarsListAdapter(getActivity());
-        mPresenter = new RenterBrowseCarListPresenter(this);
+        Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
+        mPresenter = new RenterBrowseCarListPresenter(this, settings);
         mCarsListAdapter.subscribe(mPresenter);
     }
 
@@ -75,16 +79,22 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
+        initViews(rootView);
+        return rootView;
+    }
+
+    private void initViews(View rootView) {
         mCarsListView = rootView.findViewById(R.id.rv_renterBrowseCarsList);
         mFloatingView = rootView.findViewById(R.id.floating_browse_cars);
         mHeaderView = rootView.findViewById(R.id.header);
         addOnScrollListener();
         initCarList(mCarsListView);
         mProgress = DialogHelper.getProgressDialog(getActivity(), getString(R.string.loading), false);
+        mProgressBar = rootView.findViewById(R.id.progress);
         mFavsImage = rootView.findViewById(R.id.iv_renterCarsToolbarFavoritesImg);
+        rootView.findViewById(R.id.ll_browseCarsFloatingSortBtn).setOnClickListener(this);
         rootView.findViewById(R.id.ll_browseCarsFloatingMapBtn).setOnClickListener(this);
         rootView.findViewById(R.id.fl_renterCarsToolbarFavorites).setOnClickListener(this);
-        return rootView;
     }
 
     private void addOnScrollListener() {
@@ -140,10 +150,12 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public void showProgress(boolean show) {
         if (show) {
-            mProgress.show();
+            mProgressBar.setVisibility(View.VISIBLE);
+//            mProgress.show();
             return;
         }
-        mProgress.dismiss();
+        mProgressBar.setVisibility(View.GONE);
+//        mProgress.dismiss();
     }
 
     @Override
@@ -195,6 +207,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 break;
             case R.id.fl_renterCarsToolbarFavorites:
                 toggleShowFavorites();
+                break;
+            case R.id.ll_browseCarsFloatingSortBtn:
+                mPresenter.showSort(getActivity());
                 break;
         }
     }

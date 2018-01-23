@@ -2,35 +2,47 @@ package com.cardee.settings;
 
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.usecase.ObtainBookings;
+import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
 
 public class Settings {
 
-    private BookingState filter;
-    private ObtainBookings.Sort sort;
+    private BookingState filterBooking;
+    private ObtainBookings.Sort sortBooking;
+    private RenterBrowseCarListContract.Sort sortOffers;
 
-    private final SettingManager manager;
+    private final SettingsManager manager;
 
-    Settings(SettingManager manager) {
+    Settings(SettingsManager manager) {
         this.manager = manager;
-        filter = manager.getFilter();
-        sort = manager.getSort();
+        filterBooking = manager.getBookingFilter();
+        sortBooking = manager.getBookingSort();
+        sortOffers = manager.getOffersSort();
     }
 
-    public BookingState getFilter() {
-        return filter;
+    public BookingState getFilterBooking() {
+        return filterBooking;
     }
 
-    public ObtainBookings.Sort getSort() {
-        return sort;
+    public ObtainBookings.Sort getSortBooking() {
+        return sortBooking;
     }
 
-    public void setFilter(BookingState filter) {
-        this.filter = filter;
-        manager.saveFilter(filter);
+    public RenterBrowseCarListContract.Sort getSortOffers() {
+        return sortOffers;
     }
 
-    public void setSort(ObtainBookings.Sort sort) {
-        this.sort = sort;
-        manager.saveSort(sort);
+    public void setFilterBooking(BookingState filterBooking) {
+        this.filterBooking = filterBooking;
+        manager.saveBookingFilter(filterBooking);
+    }
+
+    public void setSortBooking(ObtainBookings.Sort sortBooking) {
+        this.sortBooking = sortBooking;
+        manager.saveBookingSort(sortBooking);
+    }
+
+    public void setSortOffers(RenterBrowseCarListContract.Sort sortOffers) {
+        this.sortOffers = sortOffers;
+        manager.saveOffersSort(sortOffers);
     }
 }

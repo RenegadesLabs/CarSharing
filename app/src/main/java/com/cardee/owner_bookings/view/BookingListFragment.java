@@ -19,7 +19,7 @@ import com.cardee.domain.bookings.usecase.ObtainBookings;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;
-import com.cardee.settings.SettingManager;
+import com.cardee.settings.SettingsManager;
 import com.cardee.settings.Settings;
 
 public class BookingListFragment extends Fragment
@@ -40,7 +40,7 @@ public class BookingListFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Settings settings = SettingManager.getInstance(getActivity()).obtainSettings();
+        Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
         presenter = new OwnerBookingListPresenter(this, settings);
         adapter = new BookingListAdapter(presenter, getActivity());
     }
