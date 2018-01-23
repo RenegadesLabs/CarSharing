@@ -15,7 +15,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -36,12 +35,14 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
     private val imageManager: RequestManager
     private var selectedPosition: Int = 0
     private var selectedMarker: Marker? = null
+    private val markerMap: MutableMap<Int?, Marker?> = mutableMapOf()
     private val favIcon: Drawable
     private val favIconSelected: Drawable
     private val idleMarkerIcon: Bitmap
     private val selectedMarkerIcon: Bitmap
     private var recyclerView: RecyclerView? = null
     private var googleMap: GoogleMap? = null
+    private var scrollHandler: RecyclerAutoscrollHandler? = null
 
     init {
         items = ArrayList()
@@ -51,19 +52,25 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
         val res = context.resources
         favIcon = VectorDrawableCompat.create(res, R.drawable.ic_favorite, null) as Drawable
         favIconSelected = VectorDrawableCompat.create(res, R.drawable.ic_favorite_selected, null) as Drawable
-        var idleBitmap = BitmapFactory.decodeResource(res, R.drawable.ic_car_marker)
-        var selectedBitmap = BitmapFactory.decodeResource(res, R.drawable.ic_car_marker_selected)
+        val idleBitmap = BitmapFactory.decodeResource(res, R.drawable.ic_car_marker)
+        val selectedBitmap = BitmapFactory.decodeResource(res, R.drawable.ic_car_marker_selected)
         idleMarkerIcon = Bitmap.createScaledBitmap(idleBitmap, 128, 128, false)
         selectedMarkerIcon = Bitmap.createScaledBitmap(selectedBitmap, 128, 128, false)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
-        super.onAttachedToRecyclerView(recyclerView)
+    fun initScrollingBehaviour(recyclerView: RecyclerView) {
         this.recyclerView = recyclerView
+        scrollHandler = RecyclerAutoscrollHandler(recyclerView)
+        scrollHandler?.subscribe({ position: Int ->
+            val item = items[position]
+            val marker = markerMap[item.id]
+            onSelect(position)
+            selectMarker(marker)
+        })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CarViewHolder {
-        var itemView = inflater.inflate(R.layout.item_car_renter_map, parent, false)
+        val itemView = inflater.inflate(R.layout.item_car_renter_map, parent, false)
         return CarViewHolder(itemView, imageManager, favIcon, favIconSelected)
     }
 
@@ -78,10 +85,11 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
         items.addAll(offerItems)
         notifyDataSetChanged()
         onSelect(selectedPosition)
+        moveToSelection()
         initMarkers()
     }
 
-    fun onSelect(position: Int) {
+    private fun onSelect(position: Int) {
         val idle = items[selectedPosition]
         val selected = items[position]
         items[selectedPosition] = idle.copy(selected = false)
@@ -89,7 +97,10 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
         notifyItemChanged(selectedPosition)
         notifyItemChanged(position)
         selectedPosition = position
-        recyclerView?.smoothScrollToPosition(selectedPosition)
+    }
+
+    private fun moveToSelection() {
+        recyclerView?.scrollToPosition(selectedPosition)
     }
 
     fun setGoogleMap(map: GoogleMap) {
@@ -118,21 +129,11 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
             val marker = googleMap?.addMarker(markerOptions)
             if (selectedPosition == index) {
                 selectedMarker = marker
+                mapFocus(googleMap, selectedMarker)
             }
             marker?.tag = item.id
+            markerMap.put(item.id, marker)
             index++
-        }
-        mapFocus(googleMap)
-    }
-
-    private fun mapFocus(map: GoogleMap?) {
-        map?.let {
-            val zoom = it.cameraPosition.zoom
-            val cameraUpdate = CameraUpdateFactory
-                    .newCameraPosition(CameraPosition.builder()
-                            .zoom(if (zoom < 15) 15f else zoom)
-                            .build())
-            map.moveCamera(cameraUpdate)
         }
     }
 
@@ -140,13 +141,32 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
         val id = marker?.tag as Int
         val selected = items.find { id.equals(it.id) }
         val newPosition = items.indexOf(selected)
-        if (newPosition > -1) {
-            selectedMarker?.setIcon(BitmapDescriptorFactory.fromBitmap(idleMarkerIcon))
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
-            selectedMarker = marker
-            onSelect(newPosition)
-        }
+        selectMarker(marker)
+        onSelect(newPosition)
+        moveToSelection()
         return false
+    }
+
+    private fun selectMarker(marker: Marker?) {
+        marker?.let {
+            selectedMarker?.setIcon(BitmapDescriptorFactory.fromBitmap(idleMarkerIcon))
+            it.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
+            selectedMarker = it
+            mapFocus(googleMap, selectedMarker)
+        }
+    }
+
+    private fun mapFocus(map: GoogleMap?, marker: Marker?) {
+        map ?: return
+        marker?.let {
+            val zoom = map.cameraPosition.zoom
+            val cameraUpdate = CameraUpdateFactory
+                    .newCameraPosition(CameraPosition.builder()
+                            .zoom(if (zoom < 15) 15f else zoom)
+                            .target(it.position)
+                            .build())
+            map.animateCamera(cameraUpdate)
+        }
     }
 
     fun subscribe(consumer: Consumer<UIModelEvent>) {
@@ -154,6 +174,7 @@ class CarsAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>(), Goo
     }
 
     fun unsubscribe() {
+        scrollHandler?.unsubscribe()
         if (!disposable.isDisposed) {
             disposable.dispose()
         }
@@ -175,9 +196,9 @@ class CarViewHolder(itemView: View,
         car ?: return@with
         selectedMarker.visibility = if (offerItem.selected) View.VISIBLE else View.GONE
         imgProgress.visibility = View.VISIBLE
-        var link = car.images?.firstOrNull { image -> image.isPrimary }?.link
+        val link = car.images?.firstOrNull { image -> image.isPrimary }?.link
         imageManager
-                .load(if (link == null) "" else link)
+                .load(link ?: "")
                 .listener(object : RequestListener<String?, GlideDrawable> {
                     override fun onException(e: Exception?,
                                              model: String?,

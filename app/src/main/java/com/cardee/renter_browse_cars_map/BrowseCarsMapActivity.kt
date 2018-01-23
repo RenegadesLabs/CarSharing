@@ -46,12 +46,17 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             it.itemAnimator = DefaultItemAnimator()
             it.layoutManager = LinearLayoutManager(
                     this, LinearLayoutManager.HORIZONTAL, false)
+            adapter.initScrollingBehaviour(it)
         }
         presenter.loadAll()
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap?.let { adapter.setGoogleMap(googleMap) }
+        googleMap?.let {
+            val uiSettings = it.uiSettings
+            uiSettings.isRotateGesturesEnabled = false
+            uiSettings.isIndoorLevelPickerEnabled = false
+            adapter.setGoogleMap(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
