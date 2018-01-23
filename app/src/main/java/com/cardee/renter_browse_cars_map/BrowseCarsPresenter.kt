@@ -22,7 +22,10 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
                     } else {
                         view?.showProgress(false)
                         response.body?.let {
-                            view?.bind(it.flatMap { offer -> listOf(OfferItem(offer)) })
+                            view?.bind(it.flatMap {
+                                offer ->
+                                val id = offer.carDetails?.carId
+                                listOf(OfferItem(id, offer)) })
                         }
                     }
                 }, onError)

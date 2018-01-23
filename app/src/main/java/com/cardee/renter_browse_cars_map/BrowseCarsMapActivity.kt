@@ -51,7 +51,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-
+        googleMap?.let { adapter.setGoogleMap(googleMap) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
