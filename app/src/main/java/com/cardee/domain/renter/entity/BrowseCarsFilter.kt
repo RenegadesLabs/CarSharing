@@ -6,7 +6,7 @@ import com.cardee.BR
 import com.cardee.CardeeApp
 import com.cardee.R
 
-class BrowseCarsFilter(vehicleTypeId: Int = 0,
+class BrowseCarsFilter(vehicleTypeId: Int = 1,
                        val vehicleTypeDesc: Array<String> = arrayOf(CardeeApp.context.resources.getString(R.string.vehicle_type_personal_cars_desc),
                                CardeeApp.context.resources.getString(R.string.vehicle_type_private_desc),
                                CardeeApp.context.resources.getString(R.string.vehicle_type_commercial_desc)),
@@ -15,7 +15,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
                        curbsideDelivery: Boolean = false,
                        val priceRangeTitles: Array<String> = arrayOf(CardeeApp.context.resources.getString(R.string.price_range_per_hour),
                                CardeeApp.context.resources.getString(R.string.price_range_per_day)),
-                       bodyTypeId: Int = 5,
+                       bodyTypeId: Int = 0,
                        transmissionAuto: Boolean = true,
                        transmissionManual: Boolean = true,
                        var minYears: Int = 0,
@@ -25,7 +25,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
 
 
     @get:Bindable
-    var vehicleTypeId: Int = 0
+    var vehicleTypeId: Int = 1
         set(value) {
             field = value
             notifyPropertyChanged(BR.vehicleTypeId)
@@ -53,7 +53,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 0,
         }
 
     @get:Bindable
-    var bodyTypeId: Int = 5
+    var bodyTypeId: Int = 0
         set(value) {
             field = value
             notifyPropertyChanged(BR.bodyTypeId)

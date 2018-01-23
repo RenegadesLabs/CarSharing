@@ -689,6 +689,7 @@
     <string name="any">Any</string>
     <string name="auto">Auto</string>
     <string name="manual">Manual</string>
+    <string name="submit_btn_text">View 0 Cars</string>
 
 
 </resources>

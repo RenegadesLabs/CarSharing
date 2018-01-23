@@ -7,15 +7,16 @@ class ToFilterRequestMapper {
     fun transform(filter: BrowseCarsFilter): FilterRequest {
         return FilterRequest(rentType = if (filter.bookingHourly) "hourly" else "daily",
                 typeVehicleId = filter.vehicleTypeId,
-                carBodyType = filter.bodyTypeId,
-                carTransmission = if (filter.transmissionAuto && filter.transmissionManual) 0 else
-                    if (filter.transmissionAuto) 1 else 2 ,
+                carBodyType = if (filter.bodyTypeId != 0) filter.bodyTypeId else null,
+                carTransmission = if (filter.transmissionAuto && filter.transmissionManual) null else
+                    if (filter.transmissionAuto) 1 else 2,
                 minYears = filter.minYears,
                 maxYears = filter.maxYears,
                 isInstantBooking = filter.instantBooking,
                 isCurbsideDelivery = filter.curbsideDelivery,
                 lowerPriceRange = filter.minPrice,
-                upperPriceRange = filter.maxPrice
+                upperPriceRange = if ((filter.bookingHourly && filter.maxPrice == 41) ||
+                        (!filter.bookingHourly && filter.maxPrice == 201)) null else filter.maxPrice
         )
     }
 }

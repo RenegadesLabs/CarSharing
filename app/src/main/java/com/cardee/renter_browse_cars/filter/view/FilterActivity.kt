@@ -1,17 +1,23 @@
 package com.cardee.renter_browse_cars.filter.view
 
 import android.databinding.DataBindingUtil
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.TypedValue
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import com.cardee.CardeeApp.context
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import kotlinx.android.synthetic.main.activity_filter.*
+
 
 class FilterActivity : AppCompatActivity(), FilterView {
 
@@ -41,6 +47,17 @@ class FilterActivity : AppCompatActivity(), FilterView {
     private fun initViews() {
         priceRangeSeekBar.setValueFormatter("$%d")
         carAgeSeekBar.setValueFormatter("%d yr")
+        submitButtonText.setFactory {
+            val t = TextView(this@FilterActivity)
+            t.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            t.setTextColor(resources.getColor(R.color.colorAccent))
+            t.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16f, context.resources.displayMetrics)
+            t.setTypeface(t.typeface, Typeface.BOLD)
+            t
+        }
+        submitButtonText.setInAnimation(this, R.anim.fade_in)
+        submitButtonText.setOutAnimation(this, R.anim.fade_out)
+        submitButtonText.setCurrentText(resources.getString(R.string.submit_btn_text))
     }
 
     private fun bindView() {
@@ -61,23 +78,33 @@ class FilterActivity : AppCompatActivity(), FilterView {
         toolbarAction.setOnClickListener {
             // Reset filter
             vehicleType.getTabAt(0)?.select()
-            filter.vehicleTypeId = 0
+            filter.vehicleTypeId = 1
             filter.bookingHourly = false
             filter.instantBooking = false
             filter.curbsideDelivery = false
             priceRangeSeekBar.apply()
             carAgeSeekBar.apply()
-            filter.bodyTypeId = 5
+            filter.bodyTypeId = 0
             filter.transmissionAuto = true
             filter.transmissionManual = true
             transmissionText.text = resources.getString(R.string.any)
+            mPresenter?.getFilteredCars(filter)
         }
         vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> filter.vehicleTypeId = 0
-                    1 -> filter.vehicleTypeId = 1
-                    2 -> filter.vehicleTypeId = 2
+                    0 -> {
+                        filter.vehicleTypeId = 1
+                        mPresenter?.getFilteredCars(filter)
+                    }
+                    1 -> {
+                        filter.vehicleTypeId = 2
+                        mPresenter?.getFilteredCars(filter)
+                    }
+                    2 -> {
+                        filter.vehicleTypeId = 3
+                        mPresenter?.getFilteredCars(filter)
+                    }
                 }
             }
 
@@ -92,6 +119,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 filter.bookingHourly = true
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                mPresenter?.getFilteredCars(filter)
             }
         }
         bookDaily.setOnClickListener {
@@ -99,21 +127,47 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 filter.bookingHourly = false
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                mPresenter?.getFilteredCars(filter)
             }
         }
-        instantBookingSwitch.setOnCheckedChangeListener { p0, p1 -> filter.instantBooking = instantBookingSwitch.isChecked }
-        curbDelSwitch.setOnCheckedChangeListener { p0, p1 -> filter.curbsideDelivery = curbDelSwitch.isChecked }
-        sedanButton.setOnClickListener { filter.bodyTypeId = 0 }
-        hatchbackButton.setOnClickListener { filter.bodyTypeId = 1 }
-        suvButton.setOnClickListener { filter.bodyTypeId = 2 }
-        sportButton.setOnClickListener { filter.bodyTypeId = 3 }
-        convertibleButton.setOnClickListener { filter.bodyTypeId = 4 }
-        anyButton.setOnClickListener { filter.bodyTypeId = 5 }
+        instantBookingSwitch.setOnCheckedChangeListener { p0, p1 ->
+            filter.instantBooking = instantBookingSwitch.isChecked
+            mPresenter?.getFilteredCars(filter)
+        }
+        curbDelSwitch.setOnCheckedChangeListener { p0, p1 ->
+            filter.curbsideDelivery = curbDelSwitch.isChecked
+            mPresenter?.getFilteredCars(filter)
+        }
+        sedanButton.setOnClickListener {
+            filter.bodyTypeId = 1
+            mPresenter?.getFilteredCars(filter)
+        }
+        hatchbackButton.setOnClickListener {
+            filter.bodyTypeId = 4
+            mPresenter?.getFilteredCars(filter)
+        }
+        suvButton.setOnClickListener {
+            filter.bodyTypeId = 3
+            mPresenter?.getFilteredCars(filter)
+        }
+        sportButton.setOnClickListener {
+            filter.bodyTypeId = 6
+            mPresenter?.getFilteredCars(filter)
+        }
+        convertibleButton.setOnClickListener {
+            filter.bodyTypeId = 7
+            mPresenter?.getFilteredCars(filter)
+        }
+        anyButton.setOnClickListener {
+            filter.bodyTypeId = 0
+            mPresenter?.getFilteredCars(filter)
+        }
         autoButton.setOnClickListener {
             if (filter.transmissionAuto) {
                 if (filter.transmissionManual) {
                     filter.transmissionAuto = false
                     transmissionText.text = resources.getString(R.string.manual)
+                    mPresenter?.getFilteredCars(filter)
                 }
             } else {
                 filter.transmissionAuto = true
@@ -122,6 +176,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 } else {
                     transmissionText.text = resources.getString(R.string.auto)
                 }
+                mPresenter?.getFilteredCars(filter)
             }
         }
         manualButton.setOnClickListener {
@@ -129,6 +184,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 if (filter.transmissionAuto) {
                     filter.transmissionManual = false
                     transmissionText.text = resources.getString(R.string.auto)
+                    mPresenter?.getFilteredCars(filter)
                 }
             } else {
                 filter.transmissionManual = true
@@ -137,6 +193,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 } else {
                     transmissionText.text = resources.getString(R.string.manual)
                 }
+                mPresenter?.getFilteredCars(filter)
             }
         }
         priceRangeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
@@ -156,6 +213,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
                     priceRangeText.text = "from $$minValue to $$maxValue"
                 }
             }
+
+            mPresenter?.getFilteredCars(filter)
         }
         carAgeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
             filter.minYears = minValue.toInt()
@@ -174,11 +233,13 @@ class FilterActivity : AppCompatActivity(), FilterView {
                     carAgeText.text = "from $minValue yr to $maxValue yr"
                 }
             }
+
+            mPresenter?.getFilteredCars(filter)
         }
     }
 
     override fun setButtonText(s: String) {
-        submitButton.text = s
+        submitButtonText?.setText(s)
     }
 
     override fun onDestroy() {
