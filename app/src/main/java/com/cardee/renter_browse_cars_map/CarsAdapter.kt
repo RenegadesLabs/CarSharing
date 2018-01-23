@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,23 +77,31 @@ class CarViewHolder(itemView: View,
     : RecyclerView.ViewHolder(itemView) {
 
     companion object {
-        val INFO_STRING_DOT = "\\u2022"
-        val INFO_STRING_STAR = "\\u2605"
+        val INFO_STRING_DOT = "\u2022"
+        val INFO_STRING_STAR = "\u2605"
     }
 
     fun bind(offerItem: OfferItem) = with(itemView) {
         val car = offerItem.offer.carDetails
         car ?: return@with
         imgProgress.visibility = View.VISIBLE
+        var link = car.images?.firstOrNull { image -> image.isPrimary }?.link
         imageManager
-                .load(car.images?.find { image -> image.isPrimary })
-                .listener(object : RequestListener<ImageEntity?, GlideDrawable> {
-                    override fun onException(e: Exception?, model: ImageEntity?, target: Target<GlideDrawable>?, isFirstResource: Boolean): Boolean {
+                .load(if (link == null) "" else link)
+                .listener(object : RequestListener<String?, GlideDrawable> {
+                    override fun onException(e: Exception?,
+                                             model: String?,
+                                             target: Target<GlideDrawable>?,
+                                             isFirstResource: Boolean): Boolean {
                         imgProgress.visibility = View.GONE
                         return false
                     }
 
-                    override fun onResourceReady(resource: GlideDrawable?, model: ImageEntity?, target: Target<GlideDrawable>?, isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
+                    override fun onResourceReady(resource: GlideDrawable?,
+                                                 model: String?,
+                                                 target: Target<GlideDrawable>?,
+                                                 isFromMemoryCache: Boolean,
+                                                 isFirstResource: Boolean): Boolean {
                         imgProgress.visibility = View.GONE
                         return false
                     }
