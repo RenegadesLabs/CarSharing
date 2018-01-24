@@ -52,6 +52,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         scrollHandler = RecyclerAutoscrollHandler(recyclerView)
         scrollHandler?.subscribe({ position: Int ->
             onSelect(position)
+            manager?.mapFocus(items[position].id ?: -1)
         })
     }
 
@@ -87,18 +88,27 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         selectedPosition = position
     }
 
+    private fun onSelected(item: OfferItem) {
+        selectedPosition = items.indexOf(item)
+        moveToSelection()
+    }
+
     private fun moveToSelection() {
         recyclerView?.scrollToPosition(selectedPosition)
     }
 
-    fun initMapManager(context: Context, map: GoogleMap) {
+    fun initMapContent(context: Context, map: GoogleMap) {
         manager = MapManager(context, map)
+        manager?.subscribe { item: MapManager.MarkerItem<OfferItem> ->
+            item.base.selected = true
+            onSelected(item.base)
+        }
         if (items.isNotEmpty()) {
             initMapContent(items)
         }
     }
 
-    fun initMapContent(items: List<OfferItem>) {
+    private fun initMapContent(items: List<OfferItem>) {
         manager?.clear()
         items.filter { item -> item.id != null }
                 .filter { item -> item.offer.carDetails != null }
@@ -132,6 +142,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
 
     fun unsubscribe() {
         scrollHandler?.unsubscribe()
+        manager?.unsubscribe()
         if (!disposable.isDisposed) {
             disposable.dispose()
         }

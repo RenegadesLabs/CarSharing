@@ -56,7 +56,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             val uiSettings = it.uiSettings
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
-            adapter.initMapManager(this, it) }
+            adapter.initMapContent(this, it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

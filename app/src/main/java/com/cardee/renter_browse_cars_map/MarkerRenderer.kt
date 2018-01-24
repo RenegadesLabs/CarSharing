@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.cardee.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
@@ -18,8 +19,7 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
 
     private val markerIcon: Bitmap
     private val selectedMarkerIcon: Bitmap
-    private val markers: MutableMap<Int, MarkerOptions?> = mutableMapOf()
-    private var previous: MarkerOptions? = null
+    private var previous: Marker? = null
     private val iconGenerator: IconGenerator
     private var clusterIconView: ClusterIconView
 
@@ -39,7 +39,13 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
         markerOptions?.icon(if (item?.isSelected() == true)
             BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon) else
             BitmapDescriptorFactory.fromBitmap(markerIcon))
-        markers.put(item?.getId()!!, markerOptions)
+    }
+
+    override fun onClusterItemRendered(item: MapManager.MarkerItem<T>?, marker: Marker?) {
+        super.onClusterItemRendered(item, marker)
+        if (item?.isSelected() == true) {
+            previous = marker
+        }
     }
 
     override fun onBeforeClusterRendered(cluster: Cluster<MapManager.MarkerItem<T>>?, markerOptions: MarkerOptions?) {
@@ -52,7 +58,14 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
         markerOptions?.icon(BitmapDescriptorFactory.fromBitmap(icon))
     }
 
-    fun renderSelection(id: Int) {
-        val selected = markers[id]
+    fun renderSelection(item: MapManager.MarkerItem<T>) {
+        val marker = getMarker(item)
+        try {
+            previous?.setIcon(BitmapDescriptorFactory.fromBitmap(markerIcon))
+        } catch (ex: IllegalArgumentException) {
+            //TODO: log
+        }
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
+        previous = marker
     }
 }

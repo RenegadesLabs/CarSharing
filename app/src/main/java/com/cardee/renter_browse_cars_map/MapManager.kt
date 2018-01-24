@@ -4,17 +4,20 @@ import android.content.Context
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
+import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
+import io.reactivex.subjects.PublishSubject
 
 
 class MapManager<T>(context: Context, private val map: GoogleMap) {
 
     private val manager: ClusterManager<MarkerItem<T>>
     private val markers: MutableMap<Int, MarkerItem<T>> = mutableMapOf()
-    private var selectedMarker: MarkerItem<T>? = null
     private val renderer: MarkerRenderer<T>
+    private val subject: PublishSubject<MarkerItem<T>> = PublishSubject.create()
+    private var disposable: Disposable = Disposables.empty()
 
     init {
         manager = ClusterManager(context, map)
@@ -22,6 +25,11 @@ class MapManager<T>(context: Context, private val map: GoogleMap) {
         map.setOnMarkerClickListener(manager)
         renderer = MarkerRenderer(context, map, manager)
         manager.renderer = renderer
+        manager.setOnClusterItemClickListener { item ->
+            subject.onNext(item)
+            renderer.renderSelection(item)
+            false
+        }
     }
 
     fun populate(list: List<T>, creator: (T) -> MarkerItem<T>) {
@@ -34,19 +42,31 @@ class MapManager<T>(context: Context, private val map: GoogleMap) {
     }
 
     fun select(id: Int) {
-        renderer.renderSelection(id)
+        val item = markers[id]
+        if (item != null) {
+            renderer.renderSelection(item)
+        }
     }
 
-    private fun mapFocus(map: GoogleMap?, marker: Marker?) {
-        map ?: return
-        marker?.let {
-            val zoom = map.cameraPosition.zoom
-            val cameraUpdate = CameraUpdateFactory
-                    .newCameraPosition(CameraPosition.builder()
-                            .zoom(if (zoom < 15) 15f else zoom)
-                            .target(it.position)
-                            .build())
-            map.animateCamera(cameraUpdate)
+    fun mapFocus(id: Int) {
+        val marker = markers[id]
+        marker ?: return
+        val zoom = map.cameraPosition.zoom
+        val cameraUpdate = CameraUpdateFactory
+                .newCameraPosition(CameraPosition.builder()
+                        .zoom(if (zoom < 15) 15f else zoom)
+                        .target(marker.position)
+                        .build())
+        map.animateCamera(cameraUpdate)
+    }
+
+    fun subscribe(consumer: (MarkerItem<T>) -> Unit) {
+        disposable = subject.subscribe(consumer)
+    }
+
+    fun unsubscribe() {
+        if (!disposable.isDisposed) {
+            disposable.dispose()
         }
     }
 
