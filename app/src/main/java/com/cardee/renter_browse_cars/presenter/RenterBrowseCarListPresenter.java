@@ -3,16 +3,16 @@ package com.cardee.renter_browse_cars.presenter;
 
 import android.support.v4.app.FragmentActivity;
 
-import com.cardee.custom.modal.SortBookingDialog;
 import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.domain.renter.usecase.AddCarToFavorites;
 import com.cardee.domain.renter.usecase.GetCars;
 import com.cardee.domain.renter.usecase.GetFavorites;
+import com.cardee.domain.renter.usecase.SearchCars;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.settings.Settings;
 import com.crashlytics.android.Crashlytics;
 
@@ -56,6 +56,7 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
 
     }
 
+    @Override
     public void loadItems() {
         if (firstStart && mView != null) {
             mView.showProgress(true);
@@ -82,7 +83,8 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
 
     }
 
-    private void addCarToFavorites(int carId) {
+    @Override
+    public void addCarToFavorites(int carId) {
         if (mView != null) {
             mView.showProgress(true);
         }
@@ -105,6 +107,7 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
         });
     }
 
+    @Override
     public void showFavorites(boolean show) {
         isFavorites = show;
         if (show) {
@@ -133,6 +136,29 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
         loadItems();
     }
 
+    @Override
+    public void searchCars(String criteria) {
+
+        if (mView != null) {
+            mView.showSearchProgress(true);
+        }
+
+        mExecutor.execute(new SearchCars(), new SearchCars.RequestValues(criteria),
+                new UseCase.Callback<SearchCars.ResponseValues>() {
+                    @Override
+                    public void onSuccess(SearchCars.ResponseValues response) {
+                        mView.showSearchProgress(false);
+                        mView.setItemsSearchList(response.getOfferCars());
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        mView.showSearchProgress(false);
+                        handleError(error);
+                    }
+                });
+    }
+
     public void refresh() {
         firstStart = true;
     }
@@ -147,6 +173,8 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
             mView.showMessage(error.getMessage());
         }
     }
+
+
 
     @Override
     public void showSort(FragmentActivity activity) {

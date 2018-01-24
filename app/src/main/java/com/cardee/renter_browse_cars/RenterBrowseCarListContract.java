@@ -1,10 +1,9 @@
-package com.cardee.renter_browse_cars.presenter;
+package com.cardee.renter_browse_cars;
 
 
 import android.support.v4.app.FragmentActivity;
 
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 
@@ -22,6 +21,10 @@ public interface RenterBrowseCarListContract {
 
         void openItem(OfferCar car);
 
+        void showSearchProgress(boolean show);
+
+        void setItemsSearchList(List<OfferCar> cars);
+
         void onUnauthorized();
 
         void onConnectionLost();
@@ -32,6 +35,14 @@ public interface RenterBrowseCarListContract {
         void showSort(FragmentActivity activity);
 
         void setSort(RenterBrowseCarListContract.Sort sort);
+
+        void loadItems();
+
+        void addCarToFavorites(int carId);
+
+        void showFavorites(boolean show);
+
+        void searchCars(String criteria);
 
     }
 

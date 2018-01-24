@@ -11,6 +11,8 @@ public interface RenterCarsDataSource {
 
     void getFavorites(boolean isFavorite, OffersCallback offersCallback);
 
+    void searchCars(String searchCriteria, OffersCallback offersCallback);
+
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);
 

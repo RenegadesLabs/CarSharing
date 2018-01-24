@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.usecase.ObtainBookings;
-import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 
 public class SettingsManager {
 

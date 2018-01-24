@@ -15,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cardee.R;
-import com.cardee.domain.bookings.usecase.ObtainBookings;
-import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

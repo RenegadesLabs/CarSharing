@@ -18,9 +18,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
-import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.renter.entity.OfferCar;
-import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;

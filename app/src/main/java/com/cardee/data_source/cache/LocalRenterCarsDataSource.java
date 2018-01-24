@@ -29,4 +29,9 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
 
     }
+
+    @Override
+    public void searchCars(String searchCriteria, OffersCallback offersCallback) {
+
+    }
 }

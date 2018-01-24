@@ -47,9 +47,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            >
+            android:visibility="visible">
 
             <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/iv_renterBrowseCarsSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -120,22 +121,38 @@
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:visibility="gone">
+            <include layout="@layout/view_toolbar_search" />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <ProgressBar
         android:id="@+id/progress"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:theme="@style/CardeeProgress"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:theme="@style/CardeeProgress"
+        android:visibility="gone" />
 
     <include
         layout="@layout/view_floating_browse_cars"
         android:layout_width="wrap_content"
         android:layout_height="58dp"
-        android:layout_gravity="center_horizontal|bottom"
-     />
+        android:layout_gravity="center_horizontal|bottom" />
+    <ListView
+        android:id="@+id/lv_renterBrowseCarsSearchList"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 
 </android.support.design.widget.CoordinatorLayout>

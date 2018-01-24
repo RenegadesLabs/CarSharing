@@ -10,7 +10,7 @@ public class OffersResponse extends BaseResponse {
     @SerializedName("data")
     OfferResponseBody[] mOfferResponseBody;
 
-    public OfferResponseBody[] getOfferResponseBody() {
+    public OfferResponseBody[] getOffersResponseBody() {
         return mOfferResponseBody;
     }
 

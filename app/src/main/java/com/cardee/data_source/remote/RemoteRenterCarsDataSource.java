@@ -6,6 +6,7 @@ import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
+import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         try {
             Response<OffersResponse> response = mApi.browseCars().execute();
             if (response.isSuccessful()) {
-                offersCallback.onSuccess(response.body().getOfferResponseBody());
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
             }
             handleErrorResponse(offersCallback, response.body());
@@ -63,7 +64,22 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         try {
             Response<OffersResponse> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
             if (response.isSuccessful()) {
-                offersCallback.onSuccess(response.body().getOfferResponseBody());
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void searchCars(String searchCriteria, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
             }
             handleErrorResponse(offersCallback, response.body());

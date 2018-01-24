@@ -104,6 +104,26 @@ public class RenterCarsRepository implements RenterCarsDataSource {
         });
     }
 
+    @Override
+    public void searchCars(String searchCriteria, OffersCallback offersCallback) {
+        mRemoteDataSource.searchCars(searchCriteria, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                offersCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+    }
+
     public void refreshCars() {
         mDirtyCache = true;
     }
