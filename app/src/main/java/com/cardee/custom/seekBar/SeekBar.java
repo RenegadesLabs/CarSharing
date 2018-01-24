@@ -570,7 +570,7 @@ public class SeekBar extends View {
     }
 
     protected float getMinStartValue(final TypedArray typedArray) {
-        return typedArray.getFloat(R.styleable.SeekBar_min_start_value, minValue);
+        return typedArray.getFloat(R.styleable.SeekBar_min_start_value, 30f);
     }
 
     protected float getSteps(final TypedArray typedArray) {
@@ -797,7 +797,7 @@ public class SeekBar extends View {
     //////////////////////////////////////////
 
     private void setMinStartValue() {
-        if (minStartValue > minValue && minStartValue < maxValue) {
+        if (minStartValue > minValue && minStartValue <= maxValue) {
             minStartValue = Math.min(minStartValue, absoluteMaxValue);
             minStartValue -= absoluteMinValue;
             minStartValue = minStartValue / (absoluteMaxValue - absoluteMinValue) * 100;

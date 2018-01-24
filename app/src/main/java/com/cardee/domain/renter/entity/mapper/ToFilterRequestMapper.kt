@@ -7,6 +7,10 @@ class ToFilterRequestMapper {
     fun transform(filter: BrowseCarsFilter): FilterRequest {
         return FilterRequest(rentType = if (filter.bookingHourly) "hourly" else "daily",
                 typeVehicleId = filter.vehicleTypeId,
+                byLocation = filter.byLocation,
+                latitude = if (filter.byLocation) filter.latitude else null,
+                longitude = if (filter.byLocation) filter.longitude else null,
+                radius = if (filter.byLocation) filter.radius else null,
                 carBodyType = if (filter.bodyTypeId != 0) filter.bodyTypeId else null,
                 carTransmission = if (filter.transmissionAuto && filter.transmissionManual) null else
                     if (filter.transmissionAuto) 1 else 2,

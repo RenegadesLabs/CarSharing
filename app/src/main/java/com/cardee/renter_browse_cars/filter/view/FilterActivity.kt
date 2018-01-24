@@ -1,5 +1,6 @@
 package com.cardee.renter_browse_cars.filter.view
 
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
@@ -11,17 +12,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.cardee.CardeeApp.context
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_filter.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {
 
+    private val LOCATION_REQUEST_CODE = 111
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityFilterBinding
     lateinit var filter: BrowseCarsFilter
@@ -61,7 +63,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             val t = TextView(this@FilterActivity)
             t.textAlignment = View.TEXT_ALIGNMENT_CENTER
             t.setTextColor(resources.getColor(R.color.colorAccent))
-            t.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12f, context.resources.displayMetrics)
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             t.setTypeface(t.typeface, Typeface.BOLD)
             t
         }
@@ -75,6 +77,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             // Reset filter
             vehicleType.getTabAt(0)?.select()
             filter.vehicleTypeId = 1
+            filter.byLocation = false
             filter.bookingHourly = false
             filter.instantBooking = false
             filter.curbsideDelivery = false
@@ -128,7 +131,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
         searchAreaButton.setOnClickListener {
             val intent = Intent(this, SearchAreaActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, LOCATION_REQUEST_CODE)
         }
         instantBookingSwitch.setOnCheckedChangeListener { _, _ ->
             filter.instantBooking = instantBookingSwitch.isChecked
@@ -263,6 +266,27 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     override fun showMessage(messageId: Int) {
         showMessage(getString(messageId))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val address = data?.getStringExtra("address")
+                val radius = data?.getIntExtra("radius", 0)
+                val location = data?.getParcelableExtra<LatLng>("location")
+
+                searchAreaAddress.text = String.format(
+                        resources.getString(R.string.filter_search_area_template), address, radius)
+                filter.byLocation = true
+                filter.latitude = location?.latitude ?: return
+                filter.longitude = location.longitude
+                if (radius != null) {
+                    filter.radius = radius * 1000
+                }
+
+                mPresenter?.getFilteredCars(filter)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

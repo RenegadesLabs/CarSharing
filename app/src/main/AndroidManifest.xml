@@ -179,7 +179,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ChatStyle" />
         <activity android:name=".renter_browse_cars_map.BrowseCarsMapActivity" />
-        <activity android:name=".renter_browse_cars.search_area.view.SearchAreaActivity"></activity>
+        <activity android:name=".renter_browse_cars.search_area.view.SearchAreaActivity" />
     </application>
 
 </manifest>

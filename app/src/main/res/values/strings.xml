@@ -690,6 +690,7 @@
     <string name="auto">Auto</string>
     <string name="manual">Manual</string>
     <string name="submit_btn_text">View 0 Cars</string>
+    <string name="filter_search_area_template">%s\u0020\u0020\u2022\u0020\u0020Within %dkm"</string>
 
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>
