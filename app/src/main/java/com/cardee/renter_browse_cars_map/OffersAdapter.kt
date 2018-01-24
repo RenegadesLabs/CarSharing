@@ -52,7 +52,9 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         scrollHandler = RecyclerAutoscrollHandler(recyclerView)
         scrollHandler?.subscribe({ position: Int ->
             onSelect(position)
-            manager?.mapFocus(items[position].id ?: -1)
+            val id = items[position].id ?: -1
+            manager?.mapFocus(id)
+            manager?.select(id)
         })
     }
 
@@ -79,10 +81,8 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     private fun onSelect(position: Int) {
-        val idle = items[selectedPosition]
-        val selected = items[position]
-        items[selectedPosition] = idle.copy(selected = false)
-        items[position] = selected.copy(selected = true)
+        items[selectedPosition].selected = false
+        items[position].selected = true
         notifyItemChanged(selectedPosition)
         notifyItemChanged(position)
         selectedPosition = position
@@ -100,6 +100,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     fun initMapContent(context: Context, map: GoogleMap) {
         manager = MapManager(context, map)
         manager?.subscribe { item: MapManager.MarkerItem<OfferItem> ->
+            items[selectedPosition].selected = false
             item.base.selected = true
             onSelected(item.base)
         }

@@ -56,6 +56,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             val uiSettings = it.uiSettings
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
+            uiSettings.isMapToolbarEnabled = false
             adapter.initMapContent(this, it) }
     }
 

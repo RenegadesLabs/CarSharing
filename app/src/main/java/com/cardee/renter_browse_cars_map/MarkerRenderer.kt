@@ -65,7 +65,9 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
         } catch (ex: IllegalArgumentException) {
             //TODO: log
         }
-        marker.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
-        previous = marker
+        if (marker != null) {
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
+            previous = marker
+        }
     }
 }
