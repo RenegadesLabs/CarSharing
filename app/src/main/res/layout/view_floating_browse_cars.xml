@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/floating_browse_cars"
+    android:id="@+id/v_renterBrowseCarsFloating"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_shadow"

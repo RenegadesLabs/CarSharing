@@ -12,8 +12,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,19 +54,21 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public RecyclerView mCarsListView;
     @BindView(R.id.lv_renterBrowseCarsSearchList)
     public ListView mSearchListView;
-    @BindView(R.id.floating_browse_cars)
+    @BindView(R.id.v_renterBrowseCarsFloating)
     public RenterBrowseCarsFloatingView mFloatingView;
-    @BindView(R.id.header)
+    @BindView(R.id.v_renterBrowseCarsHeader)
     public LinearLayout mHeaderView;
     @BindView(R.id.iv_renterCarsToolbarFavoritesImg)
     public AppCompatImageView mFavsImage;
     @BindView(R.id.toolbar_search)
     public Toolbar mSearchView;
+    @BindView(R.id.et_searchCarsInput)
+    AppCompatEditText mSearchInput;
     @BindView(R.id.toolbar)
     public Toolbar mToolbar;
-    @BindView(R.id.search_progress)
+    @BindView(R.id.p_renterBrowseCarsSearch)
     public ProgressBar mSearchProgress;
-    @BindView(R.id.progress)
+    @BindView(R.id.p_renterBrowseCars)
     public ProgressBar mProgressBar;
 
     private boolean favoritesSelected = false;
@@ -245,6 +245,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mSearchView.setVisibility(search ? View.VISIBLE : View.GONE);
         if (!search) {
             mSearchListView.setVisibility(View.GONE);
+            mSearchInput.setText("");
         }
     }
 
@@ -256,7 +257,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     @OnTextChanged(R.id.et_searchCarsInput)
     public void onTextChanged(CharSequence text) {
-        if (text.length() >= 2) {
+        if (text.length() >= 1) {
             mPresenter.searchCars(text.toString());
             if (mSearchListView.getVisibility() == View.GONE) {
                 mSearchListView.setVisibility(View.VISIBLE);

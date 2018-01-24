@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.cardee.R;
 import com.cardee.domain.renter.entity.OfferCar;
 
 import java.util.List;
@@ -31,9 +32,9 @@ public class RenterBrowseCarsSearchListAdapter extends ArrayAdapter<OfferCar> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View v = convertView;
         if (v == null) {
-            v = LayoutInflater.from(mCtx).inflate(android.R.layout.activity_list_item, null);
+            v = LayoutInflater.from(mCtx).inflate(R.layout.item_search_list, null);
         }
-        TextView tv = v.findViewById(android.R.id.text1);
+        TextView tv = v.findViewById(R.id.text1);
         tv.setText(mResults.get(position).getTitle());
         return v;
     }
