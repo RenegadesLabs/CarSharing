@@ -489,6 +489,7 @@
     <string name="cars_browse_sort_price">Price</string>
     <string name="cars_browse_sort_ratings">Ratings</string>
     <string name="cars_browse_sort_popularity">Popularity</string>
+    <string name="cars_browse_search_hint">Search brand, models etc.</string>
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>
