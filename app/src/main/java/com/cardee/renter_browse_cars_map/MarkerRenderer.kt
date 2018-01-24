@@ -62,11 +62,13 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
         val marker = getMarker(item)
         try {
             previous?.setIcon(BitmapDescriptorFactory.fromBitmap(markerIcon))
+            previous?.hideInfoWindow()
         } catch (ex: IllegalArgumentException) {
             //TODO: log
         }
         if (marker != null) {
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(selectedMarkerIcon))
+            marker.showInfoWindow()
             previous = marker
         }
     }
