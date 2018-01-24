@@ -1,9 +1,6 @@
 package com.cardee.renter_browse_cars_map
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import com.cardee.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
@@ -14,20 +11,17 @@ import com.google.maps.android.clustering.ClusterManager
 
 class MapManager<T>(context: Context, private val map: GoogleMap) {
 
-    private val manager: ClusterManager<ClusterItem>
-    private val markerIcon: Bitmap
-    private val selectedMarkerIcon: Bitmap
-    private val counterIcon: Bitmap
+    private val manager: ClusterManager<MarkerItem<T>>
     private val markers: MutableMap<Int, MarkerItem<T>> = mutableMapOf()
     private var selectedMarker: MarkerItem<T>? = null
+    private val renderer: MarkerRenderer<T>
 
     init {
         manager = ClusterManager(context, map)
-        markerIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_marker)
-        selectedMarkerIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_marker_selected)
-        counterIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_marker)
         map.setOnCameraIdleListener(manager)
         map.setOnMarkerClickListener(manager)
+        renderer = MarkerRenderer(context, map, manager)
+        manager.renderer = renderer
     }
 
     fun populate(list: List<T>, creator: (T) -> MarkerItem<T>) {
@@ -40,7 +34,7 @@ class MapManager<T>(context: Context, private val map: GoogleMap) {
     }
 
     fun select(id: Int) {
-
+        renderer.renderSelection(id)
     }
 
     private fun mapFocus(map: GoogleMap?, marker: Marker?) {
@@ -63,6 +57,8 @@ class MapManager<T>(context: Context, private val map: GoogleMap) {
     abstract class MarkerItem<B>(val base: B) : ClusterItem {
 
         abstract fun getId(): Int
+
+        abstract fun isSelected(): Boolean
 
     }
 }

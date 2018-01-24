@@ -18,8 +18,5 @@ data class OfferItem(val id: Int?, val offer: Offer, var selected: Boolean = fal
         }
     }
 
-    override fun hashCode(): Int {
-        id ?: 0
-        return id!!.hashCode()
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 }

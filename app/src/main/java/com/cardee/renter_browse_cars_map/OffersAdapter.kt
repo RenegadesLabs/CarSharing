@@ -111,6 +111,8 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
 
                     override fun getId(): Int = base.id!!
 
+                    override fun isSelected(): Boolean = base.selected
+
                     override fun getSnippet(): String = ""
 
                     override fun getTitle(): String = base.offer.carDetails!!.carTitle ?: ""
