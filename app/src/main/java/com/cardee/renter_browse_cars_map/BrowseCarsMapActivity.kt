@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_browse_cars_map.*
 class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClientImpl()) :
         LocationClient by delegate, AppCompatActivity(), OnMapReadyCallback, BrowseCarsContract.View<OfferItem> {
 
-    private lateinit var adapter: CarsAdapter
+    private lateinit var adapter: OffersAdapter
     private lateinit var presenter: BrowseCarsPresenter
     private val eventProducer: PublishSubject<UIModelEvent> = PublishSubject.create()
     private var disposable: Disposable = Disposables.empty()
@@ -38,7 +38,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             it.getMapAsync(this)
         }
         presenter = BrowseCarsPresenter(this)
-        adapter = CarsAdapter(this)
+        adapter = OffersAdapter(this)
         adapter.subscribe(presenter)
         disposable = eventProducer.subscribe(presenter)
         carsList.let {
@@ -56,7 +56,7 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             val uiSettings = it.uiSettings
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
-            adapter.setGoogleMap(it) }
+            adapter.initMapManager(this, it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
