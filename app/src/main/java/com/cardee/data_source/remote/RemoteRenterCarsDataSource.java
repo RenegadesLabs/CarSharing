@@ -12,6 +12,8 @@ import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
 
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableMaybeObserver;
@@ -39,35 +41,34 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
 
     @Override
     public void obtainCars(OffersCallback offersCallback) {
-        try {
-            Response<OffersResponseJava> response = mApi.browseCars().execute();
-            if (response.isSuccessful()) {
-                offersCallback.onSuccess(response.body().getOffersResponseBody());
+        Disposable disposable = mApi.browseCars().subscribe(offersResponse -> {
+            if (offersResponse.isSuccessful()) {
+                offersCallback.onSuccess(offersResponse.getOffersResponseBody());
                 return;
             }
-            handleErrorResponse(offersCallback, response.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
-        }
+            handleErrorResponse(offersCallback, offersResponse);
+        }, throwable -> {
+            throwable.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
     }
 
     @Override
-    public void addCarToFavorites(int carId, NoDataCallback callback) {
-        mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
+    public void addCarToFavorites(int carId, Callback callback) {
+        Disposable disposable = mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
                 return;
             }
             handleErrorResponse(callback, noDataResponse);
         }, throwable ->
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
     }
 
     @Override
     public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
         try {
-            Response<OffersResponseJava> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
+            Response<OffersResponse> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
@@ -82,7 +83,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void searchCars(String searchCriteria, OffersCallback offersCallback) {
         try {
-            Response<OffersResponseJava> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
+            Response<OffersResponse> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;

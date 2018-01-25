@@ -112,10 +112,9 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     private fun initMapContent(items: List<OfferItem>) {
         manager?.clear()
         items.filter { item -> item.id != null }
-                .filter { item -> item.offer.carDetails != null }
                 .filter { item ->
-                    val details = item.offer.carDetails
-                    details!!.latitude != null && details.longitude != null
+                    val offer = item.offer
+                    offer!!.latitude != null && offer.longitude != null
                 }.let { list ->
             manager?.populate(list, { item ->
                 object : MapManager.MarkerItem<OfferItem>(item) {
@@ -126,11 +125,11 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
 
                     override fun getSnippet(): String = ""
 
-                    override fun getTitle(): String = base.offer.carDetails!!.carTitle ?: ""
+                    override fun getTitle(): String = base.offer.title ?: ""
 
                     override fun getPosition(): LatLng {
-                        val details = base.offer.carDetails
-                        return LatLng(details!!.latitude!!, details.longitude!!)
+                        val offer = base.offer
+                        return LatLng(offer.latitude, offer.longitude)
                     }
                 }
             })
@@ -161,11 +160,10 @@ class CarViewHolder(itemView: View,
     }
 
     fun bind(offerItem: OfferItem) = with(itemView) {
-        val car = offerItem.offer.carDetails
-        car ?: return@with
+        val car = offerItem.offer
         selectedMarker.visibility = if (offerItem.selected) View.VISIBLE else View.GONE
         imgProgress.visibility = View.VISIBLE
-        val link = car.images?.firstOrNull { image -> image.isPrimary }?.link
+        val link = car.images?.firstOrNull { image -> image.isPrimary }?.thumbnail
         imageManager
                 .load(link ?: "")
                 .listener(object : RequestListener<String?, GlideDrawable> {
@@ -189,8 +187,8 @@ class CarViewHolder(itemView: View,
                 .error(R.drawable.img_no_car)
                 .into(imgCar)
 
-        title.text = car.carTitle
-        info.text = " ${INFO_STRING_DOT} ${car?.carYear} ${INFO_STRING_STAR}"
+        title.text = car.title
+        info.text = " ${INFO_STRING_DOT} ${car?.yearOfManufacture} ${INFO_STRING_STAR}"
         car.isFavorite?.let { favorite ->
             imgFavorite.setImageDrawable(if (favorite) favIconSelected else favIcon)
         }

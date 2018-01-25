@@ -24,7 +24,7 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
                         response.body?.let {
                             view?.bind(it.flatMap {
                                 offer ->
-                                val id = offer.carDetails?.carId
+                                val id = offer.carId
                                 listOf(OfferItem(id, offer)) })
                         }
                     }
@@ -36,7 +36,7 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
             it.showProgress(false)
             when (responseCode) {
                 Response.UNAUTHORIZED -> {
-                    TODO("not implemented") //implement
+                    //TODO("not implemented") //implement
                 }
                 Response.SERVER_ERROR -> {
                     //TODO("not implemented") //implement
