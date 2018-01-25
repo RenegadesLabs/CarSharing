@@ -31,11 +31,6 @@ public class SearchCars implements UseCase<SearchCars.RequestValues, SearchCars.
             public void onError(Error error) {
                 callback.onError(error);
             }
-
-            @Override
-            public void onSuccess() {
-
-            }
         });
     }
 

@@ -28,11 +28,6 @@ public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseV
             }
 
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
             public void onError(Error error) {
                 callback.onError(error);
             }

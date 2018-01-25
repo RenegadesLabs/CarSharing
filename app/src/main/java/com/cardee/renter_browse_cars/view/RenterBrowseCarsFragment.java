@@ -207,7 +207,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             R.id.b_searchViewCancel,
             R.id.fl_renterCarsToolbarFavorites,
             R.id.ll_browseCarsFloatingSortBtn,
-            R.id.ll_renterBrowseCarsType})
+            R.id.ll_renterBrowseCarsType,
+            R.id.fl_renterCarsToolbarFilter})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_browseCarsFloatingMapBtn:
@@ -224,6 +225,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 break;
             case R.id.ll_browseCarsFloatingSortBtn:
                 mPresenter.showSort(getActivity());
+                break;
+            case R.id.fl_renterCarsToolbarFilter:
+                Intent i = new Intent(getActivity(), FilterActivity.class);
+                startActivity(i);
                 break;
             case R.id.ll_renterBrowseCarsType:
                 mPresenter.showType(getActivity());

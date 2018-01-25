@@ -53,7 +53,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
         mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
@@ -96,7 +96,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
 
 
     @Override
-    public Disposable obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
+    public Disposable obtainCarsByFilter(FilterRequest filterRequest, OffersCallback callback) {
         return mApi.obtainCarsByFilter(filterRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +104,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
                     @Override
                     public void onSuccess(OffersResponse response) {
                         if (response.isSuccessful()) {
-                            callback.onSuccess(response.getOfferResponseBody());
+                            callback.onSuccess(response.getOffersResponseBody());
                             return;
                         }
                         handleErrorResponse(callback, response);
