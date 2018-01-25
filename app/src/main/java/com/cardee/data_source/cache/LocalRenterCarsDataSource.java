@@ -1,6 +1,9 @@
 package com.cardee.data_source.cache;
 
 import com.cardee.data_source.RenterCarsDataSource;
+import com.cardee.domain.renter.entity.FilterRequest;
+
+import io.reactivex.disposables.Disposable;
 
 
 public class LocalRenterCarsDataSource implements RenterCarsDataSource {
@@ -33,5 +36,10 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void searchCars(String searchCriteria, OffersCallback offersCallback) {
 
+    }
+
+    @Override
+    public Disposable obtainCarsByFilter(FilterRequest filter, Callback callback) {
+        return null;
     }
 }

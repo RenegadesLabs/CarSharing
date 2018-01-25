@@ -31,6 +31,8 @@ public class Error {
         public final static String PASSWORD_DO_EXIST = "Password do exist.";
 
         public final static String WRONG_AUTHENTICATION = "Wrong password.";
+
+        public final static String CONNECTION_LOST = "Connection lost";
     }
 
     public Error(@NonNull Type type, @NonNull String message) {

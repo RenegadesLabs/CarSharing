@@ -665,4 +665,49 @@
     <string name="cost_nett">Booking Cost</string>
     <string name="cost_service_fee">Service Fee</string>
     <string name="cost_nett_earnings">Nett Earnings</string>
+
+    <!-- Browse Cars Filters-->
+    <string name="filters">Filters</string>
+    <string name="reset">Reset</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="vehicle_type_personal_cars_desc">Everyday cars for personal use</string>
+    <string name="vehicle_type_personal_cars">Personal Cars</string>
+    <string name="vehicle_type_private">Private-Hire Vehicle</string>
+    <string name="vehicle_type_commercial">Commercial Vehicle</string>
+    <string name="vehicle_type_private_desc">Private-hire cars, registered for Grab &amp; Uber use</string>
+    <string name="vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+    <string name="booking_type">Booking Type</string>
+    <string name="book_hourly">Book Hourly</string>
+    <string name="book_daily">Book Daily</string>
+    <string name="rental_period">Rental Period</string>
+    <string name="rental_period_from">Choose from</string>
+    <string name="rental_period_to">Choose to</string>
+    <string name="search_area">Search Area</string>
+    <string name="more_filters">More Filters</string>
+    <string name="instant_booking">Instant Booking</string>
+    <string name="instant_booking_desc">Only show cars that can be booked instantly without owner\’s response</string>
+    <string name="curbside_delivery">Curbside Delivery</string>
+    <string name="curbside_delivery_desc">Only show cars that provide curbside delivery to my pick up location</string>
+    <string name="price_range_per_day">Price Range (per day)</string>
+    <string name="price_range_per_hour">Price Range (per hour)</string>
+    <string name="car_age">Car Age</string>
+    <string name="body_type">Body Type</string>
+    <string name="sedan">Sedan</string>
+    <string name="hatchback">Hatchback</string>
+    <string name="suv_mpv">SUV / MPV</string>
+    <string name="sports_coupe">Sports / Coupe</string>
+    <string name="convertible">Convertible</string>
+    <string name="transmission">Transmission</string>
+    <string name="any">Any</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
+    <string name="submit_btn_text">View 0 Cars</string>
+    <string name="filter_search_area_template">%s\u0020\u0020\u2022\u0020\u0020Within %dkm"</string>
+
+    <!-- Browse Cars Search Area-->
+    <string name="search_from">Search from:</string>
+    <string name="my_current_location">My Current Location</string>
+    <string name="default_search_area">Current\u0020\u0020\u2022\u0020\u0020Within SG</string>
+
+
 </resources>

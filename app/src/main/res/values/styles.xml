@@ -217,7 +217,7 @@
         <item name="colorControlActivated">@color/text_account_settings</item>
     </style>
 
-    <style name="ChatEditTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="ChatEditTextStyle" parent="Base.Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/text_account_settings</item>
         <item name="textColorError">@color/red_error</item>
         <item name="colorAccent">@color/text_account_settings</item>
@@ -264,6 +264,18 @@
 
     <style name="ChatStyle" parent="AppTheme">
         <item name="colorAccent">@color/main_enabled</item>
+    </style>
+
+    <style name="FilterTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorPrimaryDark</item>
+        <item name="tabTextAppearance">@style/FilterTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/text_owner_profile_name</item>
+    </style>
+
+    <style name="FilterTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/divider_dark</item>
+        <item name="textAllCaps">false</item>
     </style>
 
 </resources>

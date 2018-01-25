@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CardeeButton">
-        <attr name="drawableStartCompat" format="reference"/>
-        <attr name="drawableEndCompat" format="reference"/>
+        <attr name="drawableStartCompat" format="reference" />
+        <attr name="drawableEndCompat" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="CarProgressBar">
@@ -29,13 +29,76 @@
     </declare-styleable>
 
     <declare-styleable name="CustomRatingBar">
-        <attr name="maxStars" format="integer"/>
-        <attr name="stars" format="float"/>
-        <attr name="starOff" format="reference|integer"/>
-        <attr name="starOn" format="reference|integer"/>
-        <attr name="starHalf" format="reference|integer"/>
-        <attr name="starPadding" format="dimension"/>
-        <attr name="onlyForDisplay" format="boolean"/>
-        <attr name="halfStars" format="boolean"/>
+        <attr name="maxStars" format="integer" />
+        <attr name="stars" format="float" />
+        <attr name="starOff" format="reference|integer" />
+        <attr name="starOn" format="reference|integer" />
+        <attr name="starHalf" format="reference|integer" />
+        <attr name="starPadding" format="dimension" />
+        <attr name="onlyForDisplay" format="boolean" />
+        <attr name="halfStars" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RangeSeekBar">
+        <attr name="corner_radius" />
+        <attr name="minValue" />
+        <attr name="maxValue" />
+        <attr name="minStartValue" />
+        <attr name="maxStartValue" />
+        <attr name="steps" />
+        <attr name="gap" />
+        <attr name="fix_gap" />
+        <attr name="bar_height" />
+        <attr name="bar_color_mode" format="enum">
+            <enum name="solid" value="0" />
+            <enum name="gradient" value="1" />
+        </attr>
+        <attr name="bar_color" />
+        <attr name="bar_gradient_start" />
+        <attr name="bar_gradient_end" />
+        <attr name="bar_highlight_color_mode" />
+        <attr name="bar_highlight_color" />
+        <attr name="bar_highlight_gradient_start" />
+        <attr name="bar_highlight_gradient_end" />
+        <attr name="thumb_diameter" />
+        <attr name="position" />
+        <attr name="data_type" />
+        <attr name="left_thumb_color" format="color" />
+        <attr name="left_thumb_color_pressed" format="color" />
+        <attr name="left_thumb_image" format="reference" />
+        <attr name="left_thumb_image_pressed" format="reference" />
+        <attr name="right_thumb_color" format="color" />
+        <attr name="right_thumb_color_pressed" format="color" />
+        <attr name="right_thumb_image" format="reference" />
+        <attr name="right_thumb_image_pressed" format="reference" />
+        <attr name="seek_bar_touch_enabled" />
+    </declare-styleable>
+
+    <declare-styleable name="SeekBar">
+        <attr name="corner_radius" />
+        <attr name="min_value" />
+        <attr name="max_value" />
+        <attr name="min_start_value" />
+        <attr name="max_start_value" />
+        <attr name="steps" />
+        <attr name="gap" />
+        <attr name="fix_gap" />
+        <attr name="bar_height" />
+        <attr name="bar_color_mode" />
+        <attr name="bar_color" />
+        <attr name="bar_gradient_start" />
+        <attr name="bar_gradient_end" />
+        <attr name="bar_highlight_color_mode" />
+        <attr name="bar_highlight_color" />
+        <attr name="bar_highlight_gradient_start" />
+        <attr name="bar_highlight_gradient_end" />
+        <attr name="thumb_diameter" />
+        <attr name="position" />
+        <attr name="data_type" />
+        <attr name="thumb_color" format="color" />
+        <attr name="thumb_color_pressed" format="color" />
+        <attr name="thumb_image" format="reference" />
+        <attr name="thumb_image_pressed" format="reference" />
+        <attr name="seek_bar_touch_enabled" />
     </declare-styleable>
 </resources>

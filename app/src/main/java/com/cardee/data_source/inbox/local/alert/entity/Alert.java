@@ -63,7 +63,7 @@ public class Alert {
     private String notificationText;
 
     @ColumnInfo(name = "state")
-    private Boolean isNewBooking;
+    private Boolean newBooking;
 
 
     public Integer getAlertId() {
@@ -110,12 +110,12 @@ public class Alert {
         this.notificationText = notificationText;
     }
 
-    public Boolean getNewBooking() {
-        return isNewBooking;
+    public Boolean isNewBooking() {
+        return newBooking;
     }
 
     public void setNewBooking(Boolean newBooking) {
-        isNewBooking = newBooking;
+        this.newBooking = newBooking;
     }
 
     public String getAttachment() {
@@ -177,8 +177,8 @@ public class Alert {
             return this;
         }
 
-        public Builder withStatus(Boolean isNewBooking) {
-            mAlert.isNewBooking = isNewBooking;
+        public Builder withStatus(Boolean newBooking) {
+            mAlert.newBooking = newBooking;
             return this;
         }
 
@@ -196,14 +196,14 @@ public class Alert {
 
         if (!dateCreated.equals(alert.dateCreated)) return false;
         if (!notificationText.equals(alert.notificationText)) return false;
-        return isNewBooking.equals(alert.isNewBooking);
+        return newBooking.equals(alert.newBooking);
     }
 
     @Override
     public int hashCode() {
         int result = dateCreated.hashCode();
         result = 31 * result + notificationText.hashCode();
-        result = 31 * result + isNewBooking.hashCode();
+        result = 31 * result + newBooking.hashCode();
         return result;
     }
 }

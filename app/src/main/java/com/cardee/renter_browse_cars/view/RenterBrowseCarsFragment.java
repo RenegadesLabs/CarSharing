@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import com.cardee.R;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
+import com.cardee.renter_browse_cars.filter.view.FilterActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;

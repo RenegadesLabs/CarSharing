@@ -3,10 +3,13 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import io.reactivex.disposables.Disposable;
 
 public class RenterCarsRepository implements RenterCarsDataSource {
 
@@ -32,7 +35,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
         mLocalDataSource = LocalRenterCarsDataSource.getInstance();
         mCachedCars = new LinkedHashMap<>();
     }
-
 
 
     @Override
@@ -84,6 +86,22 @@ public class RenterCarsRepository implements RenterCarsDataSource {
         });
     }
 
+    }
+
+    @Override
+    public Disposable obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {
+        return mRemoteDataSource.obtainCarsByFilter(filterRequest, new Callback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                callback.onSuccess(response);
+                refreshCache(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
     @Override
     public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
         mRemoteDataSource.getFavorites(isFavorite, new OffersCallback() {
@@ -123,6 +141,7 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             }
         });
     }
+
 
     public void refreshCars() {
         mDirtyCache = true;
