@@ -78,6 +78,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             vehicleType.getTabAt(0)?.select()
             filter.vehicleTypeId = 1
             filter.byLocation = false
+            searchAreaAddress.text = resources.getString(R.string.default_search_area)
             filter.bookingHourly = false
             filter.instantBooking = false
             filter.curbsideDelivery = false

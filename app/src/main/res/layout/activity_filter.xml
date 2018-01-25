@@ -339,7 +339,7 @@
                             android:ellipsize="end"
                             android:gravity="center_horizontal"
                             android:maxLines="2"
-                            android:text="7 Sengkang East Ave  •  Within 5km"
+                            android:text="@string/default_search_area"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
