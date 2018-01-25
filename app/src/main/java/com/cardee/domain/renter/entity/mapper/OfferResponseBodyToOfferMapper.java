@@ -28,8 +28,8 @@ public class OfferResponseBodyToOfferMapper {
         String bodyType = carDetails.getBodyType();
         String vehicleType = carDetails.getVehicleType();
         String title = carDetails.getTitle();
-        double longitude = carDetails.getLongitude() == null ? 0.0 : carDetails.getLongitude();
-        double latitude = carDetails.getLatitude() == null ? 0.0 : carDetails.getLatitude();
+        Double longitude = carDetails.getLongitude();
+        Double latitude = carDetails.getLatitude();
         int distance = carDetails.getDistance() == null ? 0 : carDetails.getDistance();
         String address = carDetails.getAddress();
         String town = carDetails.getTown();

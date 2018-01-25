@@ -114,7 +114,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         items.filter { item -> item.id != null }
                 .filter { item ->
                     val offer = item.offer
-                    offer!!.latitude != null && offer.longitude != null
+                    offer.latitude != null && offer.longitude != null
                 }.let { list ->
             manager?.populate(list, { item ->
                 object : MapManager.MarkerItem<OfferItem>(item) {
