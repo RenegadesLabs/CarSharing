@@ -31,18 +31,7 @@ class RecyclerAutoscrollHandler(recycle: RecyclerView) : RecyclerView.OnScrollLi
                 return
             }
             val firstPos = layoutManager.findFirstVisibleItemPosition()
-            val lastPos = layoutManager.findLastVisibleItemPosition()
             recyclerView?.let {
-                //                if (lastPos == recyclerView.adapter.itemCount - 1) {
-//                    val last = it.findViewHolderForAdapterPosition(lastPos).itemView
-//                    if ((last.right - it.right) < (it.right - last.left)) {
-//                        it.smoothScrollToPosition(lastPos)
-//                        autoscrolling = true
-//                    } else {
-//
-//                    }
-//                    return
-//                }
                 val first = it.findViewHolderForAdapterPosition(firstPos).itemView
                 if (Math.abs(first.left) > first.right) {
                     recyclerView.smoothScrollBy(first.right, 0)
