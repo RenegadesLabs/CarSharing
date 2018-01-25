@@ -146,6 +146,14 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        mToolbar.setVisibility(View.VISIBLE);
+        mSearchView.setVisibility(View.GONE);
+        mSearchInput.setText("");
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();

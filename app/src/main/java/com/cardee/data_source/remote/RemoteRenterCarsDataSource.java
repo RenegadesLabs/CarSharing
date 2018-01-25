@@ -7,15 +7,13 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
-import com.cardee.data_source.remote.api.offers.response.OffersResponseJava;
+import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
@@ -54,7 +52,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
         Disposable disposable = mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
@@ -101,9 +99,9 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         return mApi.obtainCarsByFilter(filterRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableMaybeObserver<OffersResponseJava>() {
+                .subscribeWith(new DisposableMaybeObserver<OffersResponse>() {
                     @Override
-                    public void onSuccess(OffersResponseJava response) {
+                    public void onSuccess(OffersResponse response) {
                         if (response.isSuccessful()) {
                             callback.onSuccess(response.getOffersResponseBody());
                             return;

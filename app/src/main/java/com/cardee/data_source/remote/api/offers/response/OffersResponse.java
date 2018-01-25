@@ -4,7 +4,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OffersResponseJava extends BaseResponse {
+public class OffersResponse extends BaseResponse {
 
     @Expose
     @SerializedName("data")

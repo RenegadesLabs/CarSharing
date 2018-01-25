@@ -4,7 +4,9 @@ import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.renter.entity.FilterRequest;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -27,4 +29,7 @@ public interface Offers {
 
     @POST("offers/")
     Call<OffersResponse> searchOffers(@Body SearchOffers requestBody);
+
+    @POST("offers/")
+    Maybe<OffersResponse> obtainCarsByFilter(@Body FilterRequest request);
 }
