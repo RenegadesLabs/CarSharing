@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cardee.renter_browse_cars.view.RenterBrowseCarsHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -56,10 +55,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/small_margin"
-                app:srcCompat="@drawable/ic_temp_location" />
+                app:srcCompat="@drawable/ic_location_of_car" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -97,12 +96,4 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <View
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@drawable/bg_shadow"
-        app:layout_constraintTop_toBottomOf="@+id/container"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-</com.cardee.renter_browse_cars.view.RenterBrowseCarsHeaderView>
+</com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsHeaderView>

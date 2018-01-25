@@ -1,12 +1,14 @@
 package com.cardee.domain.renter.entity;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.cardee.domain.owner.entity.Image;
 import com.google.android.gms.maps.model.LatLng;
 
-public class OfferCar {
+public class OfferCar implements Parcelable {
 
     private int mCarId;
 
@@ -16,7 +18,7 @@ public class OfferCar {
 
     private Image[] mImages;
 
-    private Image mPrimaryCarImage;
+    private String mPrimaryCarImage;
 
     private String mLicensePlateNumber;
 
@@ -74,7 +76,7 @@ public class OfferCar {
                     boolean favorite,
                     int seatCapacity,
                     Image[] images,
-                    Image primaryCarImage,
+                    String primaryCarImage,
                     String licensePlateNumber,
                     String yearOfManufacture,
                     String bodyType,
@@ -134,13 +136,97 @@ public class OfferCar {
         mReturnTime = returnTime;
     }
 
+    protected OfferCar(Parcel in) {
+        mCarId = in.readInt();
+        favorite = in.readByte() != 0;
+        mSeatCapacity = in.readInt();
+        mPrimaryCarImage = in.readString();
+        mLicensePlateNumber = in.readString();
+        mYearOfManufacture = in.readString();
+        mBodyType = in.readString();
+        mVehicleType = in.readString();
+        mTitle = in.readString();
+        mLongitude = in.readDouble();
+        mLatitude = in.readDouble();
+        mDistance = in.readInt();
+        mAddress = in.readString();
+        mTown = in.readString();
+        mOwnerId = in.readInt();
+        mOwnerPicture = in.readString();
+        mOwnerName = in.readString();
+        mRatingCount = in.readInt();
+        mRating = in.readFloat();
+        instantBooking = in.readByte() != 0;
+        curbsideDelivery = in.readByte() != 0;
+        acceptCash = in.readByte() != 0;
+        mFuelPolicyName = in.readString();
+        mRateFirst = in.readFloat();
+        mRateSecond = in.readFloat();
+        mDiscountFirst = in.readFloat();
+        mDiscountSecond = in.readFloat();
+        mMinRentalDuration = in.readInt();
+        mPickupTime = in.readString();
+        mReturnTime = in.readString();
+    }
+
+    public static final Creator<OfferCar> CREATOR = new Creator<OfferCar>() {
+        @Override
+        public OfferCar createFromParcel(Parcel in) {
+            return new OfferCar(in);
+        }
+
+        @Override
+        public OfferCar[] newArray(int size) {
+            return new OfferCar[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mCarId);
+        parcel.writeByte((byte) (favorite ? 1 : 0));
+        parcel.writeInt(mSeatCapacity);
+        parcel.writeString(mPrimaryCarImage);
+        parcel.writeString(mLicensePlateNumber);
+        parcel.writeString(mYearOfManufacture);
+        parcel.writeString(mBodyType);
+        parcel.writeString(mVehicleType);
+        parcel.writeString(mTitle);
+        parcel.writeDouble(mLongitude);
+        parcel.writeDouble(mLatitude);
+        parcel.writeInt(mDistance);
+        parcel.writeString(mAddress);
+        parcel.writeString(mTown);
+        parcel.writeInt(mOwnerId);
+        parcel.writeString(mOwnerPicture);
+        parcel.writeString(mOwnerName);
+        parcel.writeInt(mRatingCount);
+        parcel.writeFloat(mRating);
+        parcel.writeByte((byte) (instantBooking ? 1 : 0));
+        parcel.writeByte((byte) (curbsideDelivery ? 1 : 0));
+        parcel.writeByte((byte) (acceptCash ? 1 : 0));
+        parcel.writeString(mFuelPolicyName);
+        parcel.writeFloat(mRateFirst);
+        parcel.writeFloat(mRateSecond);
+        parcel.writeFloat(mDiscountFirst);
+        parcel.writeFloat(mDiscountSecond);
+        parcel.writeInt(mMinRentalDuration);
+        parcel.writeString(mPickupTime);
+        parcel.writeString(mReturnTime);
+    }
+
     public static class Builder {
 
         private int mCarId;
         private boolean favorite;
         private int mSeatCapacity;
         private Image[] mImages;
-        private Image mPrimaryCarImage;
+        private String mPrimaryCarImage;
         private String mLicensePlateNumber;
         private String mYearOfManufacture;
         private String mBodyType;
@@ -188,7 +274,7 @@ public class OfferCar {
             return this;
         }
 
-        public Builder setPrimaryCarImage(Image primaryCarImage) {
+        public Builder setPrimaryCarImage(String primaryCarImage) {
             mPrimaryCarImage = primaryCarImage;
             return this;
         }
@@ -355,7 +441,7 @@ public class OfferCar {
         return mImages;
     }
 
-    public Image getPrimaryCarImage() {
+    public String getPrimaryCarThumbnail() {
         return mPrimaryCarImage;
     }
 

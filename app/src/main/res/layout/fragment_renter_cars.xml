@@ -4,18 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_renterBrowseCarsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/v_renterBrowseCarsHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_anchor="@+id/rv_renterBrowseCarsList"
+        app:layout_anchorGravity="top"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <include
+            layout="@layout/view_header_browse_cars"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp" />
+
+        <View
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@drawable/bg_shadow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container" />
+    </LinearLayout>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="@dimen/toolbar_height"
+            android:visibility="visible">
 
             <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/iv_renterBrowseCarsSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -59,6 +94,7 @@
                     android:layout_height="match_parent">
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/iv_renterCarsToolbarFavoritesImg"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
@@ -85,28 +121,38 @@
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:visibility="gone">
+            <include layout="@layout/view_toolbar_search" />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_renterBrowseCarsList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/toolbar_height">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <include
-        layout="@layout/view_header_browse_cars"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="48dp" />
-
+    <ProgressBar
+        android:id="@+id/p_renterBrowseCars"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:theme="@style/CardeeProgress"
+        android:visibility="gone" />
 
     <include
         layout="@layout/view_floating_browse_cars"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        app:layout_anchor="@id/rv_renterBrowseCarsList"
-        app:layout_anchorGravity="center_horizontal|bottom" />
+        android:layout_height="58dp"
+        android:layout_gravity="center_horizontal|bottom" />
+    <ListView
+        android:id="@+id/lv_renterBrowseCarsSearchList"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 
 </android.support.design.widget.CoordinatorLayout>

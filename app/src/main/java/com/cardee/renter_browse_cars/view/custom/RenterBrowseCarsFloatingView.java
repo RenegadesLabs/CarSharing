@@ -1,4 +1,4 @@
-package com.cardee.renter_browse_cars.view;
+package com.cardee.renter_browse_cars.view.custom;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;

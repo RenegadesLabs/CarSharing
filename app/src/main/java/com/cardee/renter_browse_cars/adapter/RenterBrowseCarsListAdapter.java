@@ -19,7 +19,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.renter.entity.OfferCar;
-import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListContract;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
+import com.cardee.util.glide.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class RenterBrowseCarsListAdapter
 
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
+    private final Context mContext;
 
     private SparseArray<RenterBrowseCarsListAdapter.RenterBrowseCarsListItemViewHolder> mHolders;
 
@@ -46,6 +48,7 @@ public class RenterBrowseCarsListAdapter
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
         mEventObservable = PublishSubject.create();
+        mContext = context;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class RenterBrowseCarsListAdapter
     @Override
     public void onBindViewHolder(RenterBrowseCarsListItemViewHolder holder, int position) {
         final OfferCar car = mOfferCars.get(position);
-        holder.bind(car, mGlideRequestManager, mEventObservable);
+        holder.bind(car, mGlideRequestManager, mEventObservable, mContext);
         mHolders.put(car.getCarId(), holder);
     }
 
@@ -105,7 +108,7 @@ public class RenterBrowseCarsListAdapter
 
         private void bind(final OfferCar model,
                           RequestManager imageRequestManager,
-                          PublishSubject<RenterBrowseCarListContract.CarEvent> observable) {
+                          PublishSubject<RenterBrowseCarListContract.CarEvent> observable, Context context) {
 
             if (imageRequestManager != null) {
 
@@ -122,36 +125,35 @@ public class RenterBrowseCarsListAdapter
                                 return false;
                             }
                         })
+                        .transform(new CircleTransform(context))
                         .into(mAvatar);
 
                 if (mCarImageProgress.getVisibility() == View.GONE) {
                     mCarImageProgress.setVisibility(View.VISIBLE);
                 }
 
-                if (model.getPrimaryCarImage() != null) {
-                    imageRequestManager
-                            .load(model.getPrimaryCarImage().getThumbnail())
-                            .listener(new RequestListener<String, GlideDrawable>() {
-                                @Override
-                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    mCarImageProgress.setVisibility(View.GONE);
-                                    return false;
-                                }
+                imageRequestManager
+                        .load(model.getPrimaryCarThumbnail())
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                mCarImageProgress.setVisibility(View.GONE);
+                                return false;
+                            }
 
-                                @Override
-                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                    mCarImageProgress.setVisibility(View.GONE);
-                                    return false;
-                                }
-                            })
-                            .error(R.drawable.img_no_car)
-                            .into(mPrimaryCarImage);
-                }
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                mCarImageProgress.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .error(R.drawable.img_no_car)
+                        .into(mPrimaryCarImage);
             }
 
             mTitle.setText(model.getTitle());
             mYear.setText(model.getYearOfManufacture());
-            String location = model.getDistance() + " m " + "\u26AB " + model.getAddress();
+            String location = model.getDistance() <= 0 ? model.getAddress() : model.getDistance() + " m" + "\u26AB" + model.getAddress();
             mLocation.setText(location);
             String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());
             mType.setText(type);
@@ -160,9 +162,11 @@ public class RenterBrowseCarsListAdapter
             mRatingCount.setText(ratingCount);
             String price = "$" + String.valueOf(model.getRateFirst());
             mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
-            mHeart.setOnClickListener(view ->
-                    observable.onNext(new RenterBrowseCarListContract.CarEvent(model,
-                            RenterBrowseCarListContract.Action.FAVORITE)));
+            mHeart.setOnClickListener(view -> {
+                observable.onNext(new RenterBrowseCarListContract.CarEvent(model,
+                        RenterBrowseCarListContract.Action.FAVORITE));
+                mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite : R.drawable.ic_favorite_filled);
+            });
             mPrice.setText(price);
             mInstant.setVisibility(model.isInstantBooking() ? View.VISIBLE : View.GONE);
             mCurbside.setVisibility(model.isCurbsideDelivery() ? View.VISIBLE : View.GONE);
@@ -186,7 +190,7 @@ public class RenterBrowseCarsListAdapter
         mOfferCars.set(index, car);
         RenterBrowseCarsListItemViewHolder holder = mHolders.get(car.getCarId());
         if (holder != null) {
-            holder.bind(car, null, mEventObservable);
+            holder.bind(car, null, mEventObservable, mContext);
             return;
         }
         notifyItemChanged(index);

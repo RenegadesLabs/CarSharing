@@ -5,6 +5,8 @@ import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
+import com.cardee.data_source.remote.api.offers.request.GetFavorites;
+import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -36,19 +38,62 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCars(OffersCallback offersCallback) {
         try {
             Response<OffersResponse> response = mApi.browseCars().execute();
             if (response.isSuccessful()) {
-                callback.onSuccess(response.body().getOfferResponseBody());
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
             }
-            handleErrorResponse(callback, response.body());
+            handleErrorResponse(offersCallback, response.body());
         } catch (IOException e) {
             e.printStackTrace();
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
         }
     }
+
+    @Override
+    public void addCarToFavorites(int carId, Callback callback) {
+        mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
+            if (noDataResponse.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(callback, noDataResponse);
+        }, throwable ->
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+    }
+
+    @Override
+    public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void searchCars(String searchCriteria, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
 
     @Override
     public Disposable obtainCarsByFilter(FilterRequest filterRequest, Callback callback) {

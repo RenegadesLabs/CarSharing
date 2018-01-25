@@ -21,21 +21,8 @@ public class OfferResponseBodyToOfferMapper {
         int seatCapacity = carDetails.getSeatingCapacity();
         ImageEntity[] responseImages = carDetails.getImages();
         Image[] images = new Image[responseImages.length];
-        for (int i = 0; i < images.length; i++) {
-            images[i] = new Image(responseImages[i].getImageId(),
-                    responseImages[i].getThumbnail(),
-                    responseImages[i].getLink(),
-                    responseImages[i].isPrimary());
-        }
-        Image primary = null;
-        for (Image image : images) {
-            if (image.isPrimary()) {
-                primary = new Image(image.getImageId(),
-                        image.getLink(), image.getThumbnail(),
-                        image.isPrimary());
-                break;
-            }
-        }
+        transformImageEntityToImageArray(responseImages, images);
+        String primary = getPrimaryImageThumbnail(images);
         String licenseNumber = carDetails.getLicencePlateNumber();
         String year = carDetails.getManufactureYear();
         String bodyType = carDetails.getBodyType();
@@ -124,5 +111,25 @@ public class OfferResponseBodyToOfferMapper {
             return offers;
         }
         return null;
+    }
+
+    private static void transformImageEntityToImageArray(ImageEntity[] responseImages, Image[] images) {
+        for (int i = 0; i < images.length; i++) {
+            images[i] = new Image(responseImages[i].getImageId(),
+                    responseImages[i].getThumbnail(),
+                    responseImages[i].getLink(),
+                    responseImages[i].isPrimary());
+        }
+    }
+
+    private static String getPrimaryImageThumbnail(Image[] images) {
+        String primary = null;
+        for (Image image : images) {
+            if (image.isPrimary()) {
+                return image.getThumbnail();
+            }
+            primary = images[0].getThumbnail();
+        }
+        return primary;
     }
 }

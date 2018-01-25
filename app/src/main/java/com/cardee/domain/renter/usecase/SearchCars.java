@@ -1,6 +1,5 @@
 package com.cardee.domain.renter.usecase;
 
-
 import com.cardee.data_source.Error;
 import com.cardee.data_source.RenterCarsDataSource;
 import com.cardee.data_source.RenterCarsRepository;
@@ -11,43 +10,48 @@ import com.cardee.domain.renter.entity.mapper.OfferResponseBodyToOfferMapper;
 
 import java.util.List;
 
-public class GetCars implements UseCase<GetCars.RequestValues, GetCars.ResponseValues> {
 
-    private RenterCarsRepository mRepository;
+public class SearchCars implements UseCase<SearchCars.RequestValues, SearchCars.ResponseValues> {
 
-    public GetCars() {
+    private final RenterCarsRepository mRepository;
+
+    public SearchCars() {
         mRepository = RenterCarsRepository.getInstance();
     }
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mRepository.obtainCars(new RenterCarsDataSource.OffersCallback() {
+        mRepository.searchCars(values.getSearchCriteria(), new RenterCarsDataSource.OffersCallback() {
             @Override
             public void onSuccess(OfferResponseBody[] response) {
                 callback.onSuccess(new ResponseValues(OfferResponseBodyToOfferMapper.transform(response)));
             }
 
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
             public void onError(Error error) {
                 callback.onError(error);
             }
-        });
 
+            @Override
+            public void onSuccess() {
+
+            }
+        });
     }
 
     public static class RequestValues implements UseCase.RequestValues {
+        private final String mSearchCriteria;
 
-        public RequestValues() {
+        public RequestValues(String searchCriteria) {
+            mSearchCriteria = searchCriteria;
+        }
+
+        public String getSearchCriteria() {
+            return mSearchCriteria;
         }
     }
 
     public static class ResponseValues implements UseCase.ResponseValues {
-
         private final List<OfferCar> mOfferCar;
 
         public ResponseValues(List<OfferCar> offerCar) {

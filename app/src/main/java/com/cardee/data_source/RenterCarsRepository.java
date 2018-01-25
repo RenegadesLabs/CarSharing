@@ -37,8 +37,9 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
 
+
     @Override
-    public void obtainCars(Callback callback) {
+    public void obtainCars(OffersCallback offersCallback) {
         if (notDirtyCache()) {
             Collection<OfferResponseBody> values = mCachedCars.values();
             OfferResponseBody[] cars = new OfferResponseBody[values.size()];
@@ -47,15 +48,36 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 cars[index] = carEntity;
                 index++;
             }
-            callback.onSuccess(cars);
+            offersCallback.onSuccess(cars);
         }
 
-        mRemoteDataSource.obtainCars(new Callback() {
+        mRemoteDataSource.obtainCars(new OffersCallback() {
 
             @Override
             public void onSuccess(OfferResponseBody[] response) {
-                callback.onSuccess(response);
+                offersCallback.onSuccess(response);
                 refreshCache(response);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+        });
+
+    }
+
+    @Override
+    public void addCarToFavorites(int carId, Callback callback) {
+        mRemoteDataSource.addCarToFavorites(carId, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
             }
 
             @Override
@@ -63,7 +85,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 callback.onError(error);
             }
         });
-
     }
 
     @Override
@@ -80,8 +101,45 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 callback.onError(error);
             }
         });
+    @Override
+    public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
+        mRemoteDataSource.getFavorites(isFavorite, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                offersCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
     }
 
+    @Override
+    public void searchCars(String searchCriteria, OffersCallback offersCallback) {
+        mRemoteDataSource.searchCars(searchCriteria, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                offersCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+    }
 
     public void refreshCars() {
         mDirtyCache = true;

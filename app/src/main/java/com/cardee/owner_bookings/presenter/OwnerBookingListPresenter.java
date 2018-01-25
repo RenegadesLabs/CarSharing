@@ -1,7 +1,6 @@
 package com.cardee.owner_bookings.presenter;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.cardee.custom.modal.FilterBookingDialog;
 import com.cardee.custom.modal.SortBookingDialog;
@@ -36,8 +35,8 @@ public class OwnerBookingListPresenter
     public OwnerBookingListPresenter(OwnerBookingListContract.View view, Settings settings) {
         this.view = view;
         this.settings = settings;
-        sort = settings.getSort();
-        filter = settings.getFilter();
+        sort = settings.getSortBooking();
+        filter = settings.getFilterBooking();
         bookings = new ArrayList<>();
         obtainBookings = new ObtainBookings();
         executor = UseCaseExecutor.getInstance();
@@ -101,14 +100,14 @@ public class OwnerBookingListPresenter
 
     @Override
     public void showSort(FragmentActivity activity) {
-        SortBookingDialog sortDialog = SortBookingDialog.getInstance(settings.getSort());
+        SortBookingDialog sortDialog = SortBookingDialog.getInstance(settings.getSortBooking());
         sortDialog.show(activity.getSupportFragmentManager(), sortDialog.getTag());
         sortDialog.setSortSelectListener(this);
     }
 
     @Override
     public void showFilter(FragmentActivity activity) {
-        FilterBookingDialog filterDialog = FilterBookingDialog.getInstance(settings.getFilter());
+        FilterBookingDialog filterDialog = FilterBookingDialog.getInstance(settings.getFilterBooking());
         filterDialog.show(activity.getSupportFragmentManager(), filterDialog.getTag());
         filterDialog.setFilterSelectListener(this);
     }
@@ -136,7 +135,7 @@ public class OwnerBookingListPresenter
     @Override
     public void onSortSelected(ObtainBookings.Sort sort) {
         this.sort = sort;
-        settings.setSort(sort);
+        settings.setSortBooking(sort);
         initialized = false;
         obtainBookings(true);
     }
@@ -144,7 +143,7 @@ public class OwnerBookingListPresenter
     @Override
     public void onFilterSelected(BookingState filter) {
         this.filter = filter;
-        settings.setFilter(filter);
+        settings.setFilterBooking(filter);
         initialized = false;
         obtainBookings(true);
     }
