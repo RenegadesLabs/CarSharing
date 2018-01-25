@@ -16,8 +16,9 @@ object OffersRepository : OffersDataSource {
         cache = ArrayList()
     }
 
-    override fun obtainAll(): Observable<OffersResponse> =
-            api.obtainAll().toObservable()
+    override fun obtainAll(): Observable<OffersResponse> {
+        return api.browseCars()
+    }
 
     override fun obtainById(id: Int): Observable<Offer> {
         return Observable.just(null)

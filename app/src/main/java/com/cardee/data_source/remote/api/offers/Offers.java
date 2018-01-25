@@ -5,6 +5,7 @@ import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,7 +17,7 @@ import retrofit2.http.Path;
 public interface Offers {
 
     @GET("offers/")
-    Call<OffersResponse> browseCars();
+    Observable<OffersResponse> browseCars();
 
     @PUT("offers/{id}/favorites")
     Single<NoDataResponse> addCarToFavorites(@Path("id") int id);

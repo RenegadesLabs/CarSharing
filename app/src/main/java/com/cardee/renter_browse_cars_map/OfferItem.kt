@@ -1,8 +1,8 @@
 package com.cardee.renter_browse_cars_map
 
-import com.cardee.data_source.remote.api.offers.response.Offer
+import com.cardee.domain.renter.entity.OfferCar
 
-data class OfferItem(val id: Int?, val offer: Offer, var selected: Boolean = false) {
+data class OfferItem(val id: Int?, val offer: OfferCar, var selected: Boolean = false) {
 
     override fun equals(other: Any?): Boolean {
         other ?: return false
