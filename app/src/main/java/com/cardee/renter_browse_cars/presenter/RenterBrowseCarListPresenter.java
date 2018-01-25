@@ -141,6 +141,7 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
 
         if (mView != null) {
             mView.showSearchProgress(true);
+            mView.showProgress(true);
         }
 
         mExecutor.execute(new SearchCars(), new SearchCars.RequestValues(criteria),
@@ -148,12 +149,14 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                     @Override
                     public void onSuccess(SearchCars.ResponseValues response) {
                         mView.showSearchProgress(false);
-                        mView.setItemsSearchList(response.getOfferCars());
+                        mView.showProgress(false);
+                        mView.setItems(response.getOfferCars());
                     }
 
                     @Override
                     public void onError(Error error) {
                         mView.showSearchProgress(false);
+                        mView.showProgress(false);
                         handleError(error);
                     }
                 });

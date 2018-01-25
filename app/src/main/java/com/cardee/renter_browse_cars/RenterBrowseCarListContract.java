@@ -23,8 +23,6 @@ public interface RenterBrowseCarListContract {
 
         void showSearchProgress(boolean show);
 
-        void setItemsSearchList(List<OfferCar> cars);
-
         void onUnauthorized();
 
         void onConnectionLost();

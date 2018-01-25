@@ -25,7 +25,6 @@ import com.cardee.R;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
-import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsSearchListAdapter;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;
 import com.cardee.renter_browse_cars.view.custom.listener.CustomRecyclerScrollListener;
@@ -33,7 +32,6 @@ import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
 import com.cardee.settings.SettingsManager;
 import com.cardee.settings.Settings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,7 +45,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         View.OnClickListener {
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
-    private RenterBrowseCarsSearchListAdapter mSearchListAdapter;
+    //    private RenterBrowseCarsSearchListAdapter mSearchListAdapter;
     private RenterBrowseCarListPresenter mPresenter;
 
     @BindView(R.id.rv_renterBrowseCarsList)
@@ -94,7 +92,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCarsListAdapter = new RenterBrowseCarsListAdapter(getActivity());
-        mSearchListAdapter = new RenterBrowseCarsSearchListAdapter(getActivity(), -1, new ArrayList<>());
         Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
         mPresenter = new RenterBrowseCarListPresenter(this, settings);
         mCarsListAdapter.subscribe(mPresenter);
@@ -109,7 +106,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.setAdapter(mCarsListAdapter);
         mCarsListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCarsListView.setItemAnimator(new DefaultItemAnimator());
-        mSearchListView.setAdapter(mSearchListAdapter);
         return rootView;
     }
 
@@ -200,11 +196,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     }
 
     @Override
-    public void setItemsSearchList(List<OfferCar> cars) {
-        mSearchListAdapter.update(cars);
-    }
-
-    @Override
     public void onUnauthorized() {
 
     }
@@ -259,11 +250,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onTextChanged(CharSequence text) {
         if (text.length() >= 1) {
             mPresenter.searchCars(text.toString());
-            if (mSearchListView.getVisibility() == View.GONE) {
-                mSearchListView.setVisibility(View.VISIBLE);
-            }
             return;
         }
-        mSearchListView.setVisibility(View.GONE);
+        mPresenter.loadItems();
     }
 }
