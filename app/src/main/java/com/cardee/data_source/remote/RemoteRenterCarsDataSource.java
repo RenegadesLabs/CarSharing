@@ -7,7 +7,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
-import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.data_source.remote.api.offers.response.OffersResponseJava;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void obtainCars(OffersCallback offersCallback) {
         try {
-            Response<OffersResponse> response = mApi.browseCars().execute();
+            Response<OffersResponseJava> response = mApi.browseCars().execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
@@ -67,7 +67,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void getFavorites(boolean isFavorite, OffersCallback offersCallback) {
         try {
-            Response<OffersResponse> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
+            Response<OffersResponseJava> response = mApi.getFavorites(new GetFavorites(isFavorite)).execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
@@ -82,7 +82,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void searchCars(String searchCriteria, OffersCallback offersCallback) {
         try {
-            Response<OffersResponse> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
+            Response<OffersResponseJava> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;
@@ -100,9 +100,9 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         return mApi.obtainCarsByFilter(filterRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableMaybeObserver<OffersResponse>() {
+                .subscribeWith(new DisposableMaybeObserver<OffersResponseJava>() {
                     @Override
-                    public void onSuccess(OffersResponse response) {
+                    public void onSuccess(OffersResponseJava response) {
                         if (response.isSuccessful()) {
                             callback.onSuccess(response.getOffersResponseBody());
                             return;

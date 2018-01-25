@@ -178,10 +178,7 @@
             android:name=".renter_browse_cars.filter.view.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChatStyle" />
-        <activity android:name=".renter_browse_cars_map.BrowseCarsMapActivity" />
         <activity android:name=".renter_browse_cars.search_area.view.SearchAreaActivity" />
-
-        <activity android:name=".owner_bookings.car_returned.view.CarReturnedActivity" />
         <activity
             android:name=".renter_browse_cars_map.BrowseCarsMapActivity"
             android:theme="@style/AppTheme.DarkTheme"
