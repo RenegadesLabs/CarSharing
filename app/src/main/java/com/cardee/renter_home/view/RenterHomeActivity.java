@@ -1,5 +1,6 @@
 package com.cardee.renter_home.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,7 +42,8 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepareForRenter(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
-        bottomMenu.setCurrentItem(3);
+        bottomMenu.setCurrentItem(0);
+        bottomMenu.disableItemAtPosition(1); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
 
     }
@@ -123,5 +125,11 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
     @Override
     public void onStopLoading() {
         mProgress.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

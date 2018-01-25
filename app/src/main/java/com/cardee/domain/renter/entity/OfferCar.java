@@ -3,10 +3,8 @@ package com.cardee.domain.renter.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import com.cardee.domain.owner.entity.Image;
-import com.google.android.gms.maps.model.LatLng;
 
 public class OfferCar implements Parcelable {
 
@@ -72,7 +70,7 @@ public class OfferCar implements Parcelable {
 
     private String mReturnTime;
 
-    public OfferCar(@NonNull int carId,
+    public OfferCar(int carId,
                     boolean favorite,
                     int seatCapacity,
                     Image[] images,
@@ -140,6 +138,9 @@ public class OfferCar implements Parcelable {
         mCarId = in.readInt();
         favorite = in.readByte() != 0;
         mSeatCapacity = in.readInt();
+        if (in.readByte() == 0) {
+            mImages = in.createTypedArray(Image.CREATOR);
+        }
         mPrimaryCarImage = in.readString();
         mLicensePlateNumber = in.readString();
         mYearOfManufacture = in.readString();
@@ -191,6 +192,12 @@ public class OfferCar implements Parcelable {
         parcel.writeInt(mCarId);
         parcel.writeByte((byte) (favorite ? 1 : 0));
         parcel.writeInt(mSeatCapacity);
+        if (mImages.length == 0) {
+            parcel.writeByte((byte) 1);
+        } else {
+            parcel.writeByte((byte) 0);
+            parcel.writeTypedArray(mImages, i);
+        }
         parcel.writeString(mPrimaryCarImage);
         parcel.writeString(mLicensePlateNumber);
         parcel.writeString(mYearOfManufacture);

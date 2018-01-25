@@ -365,7 +365,7 @@ public class SeekBar extends View {
     public void setOnSeekbarChangeListener(OnSeekbarChangeListener onSeekbarChangeListener) {
         this.onSeekbarChangeListener = onSeekbarChangeListener;
         if (this.onSeekbarChangeListener != null) {
-            this.onSeekbarChangeListener.valueChanged(getSelectedMinValue());
+            this.onSeekbarChangeListener.valueChanged(getSelectedMinValue(), normalizedMinValue / 100 * 30);
         }
     }
 
@@ -544,7 +544,7 @@ public class SeekBar extends View {
 
         invalidate();
         if (onSeekbarChangeListener != null) {
-            onSeekbarChangeListener.valueChanged(getSelectedMinValue());
+            onSeekbarChangeListener.valueChanged(getSelectedMinValue(), normalizedMinValue / 100 * 30);
         }
     }
 
@@ -968,7 +968,7 @@ public class SeekBar extends View {
                     }
 
                     if (onSeekbarChangeListener != null) {
-                        onSeekbarChangeListener.valueChanged(getSelectedMinValue());
+                        onSeekbarChangeListener.valueChanged(getSelectedMinValue(), normalizedMinValue / 100 * 30);
                     }
                 }
                 break;
@@ -992,7 +992,7 @@ public class SeekBar extends View {
                 pressedThumb = null;
                 invalidate();
                 if (onSeekbarChangeListener != null) {
-                    onSeekbarChangeListener.valueChanged(getSelectedMinValue());
+                    onSeekbarChangeListener.valueChanged(getSelectedMinValue(), normalizedMinValue / 100 * 30);
                 }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN: {

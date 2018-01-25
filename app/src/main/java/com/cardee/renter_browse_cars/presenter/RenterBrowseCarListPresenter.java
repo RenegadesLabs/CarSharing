@@ -5,19 +5,25 @@ import android.support.v4.app.FragmentActivity;
 
 import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.data_source.Error;
+import com.cardee.domain.RxUseCase;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper;
 import com.cardee.domain.renter.usecase.AddCarToFavorites;
 import com.cardee.domain.renter.usecase.GetCars;
-import com.cardee.domain.renter.usecase.GetFavorites;
+import com.cardee.domain.renter.usecase.GetFilteredCars;
 import com.cardee.domain.renter.usecase.SearchCars;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.settings.Settings;
 import com.crashlytics.android.Crashlytics;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarListContract.CarEvent>,
@@ -25,18 +31,19 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
 
     private final UseCaseExecutor mExecutor;
     private RenterBrowseCarListContract.View mView;
+    private GetFilteredCars mGetFilteredCars;
 
     private boolean firstStart = true;
 
-    private boolean isFavorites = false;
-
     private final Settings mSettings;
+    private Disposable mDisposable;
 
 
     public RenterBrowseCarListPresenter(RenterBrowseCarListContract.View view, Settings settings) {
         mView = view;
         mExecutor = UseCaseExecutor.getInstance();
         mSettings = settings;
+        mGetFilteredCars = new GetFilteredCars();
     }
 
     @Override
@@ -92,10 +99,6 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
             @Override
             public void onSuccess(AddCarToFavorites.ResponseValues response) {
                 mView.showProgress(false);
-                if (isFavorites) {
-                    showFavorites(true);
-                    return;
-                }
                 loadItems();
             }
 
@@ -105,35 +108,6 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                 handleError(error);
             }
         });
-    }
-
-    @Override
-    public void showFavorites(boolean show) {
-        isFavorites = show;
-        if (show) {
-            if (mView != null) {
-                mView.showProgress(true);
-            }
-            mExecutor.execute(new GetFavorites(), new GetFavorites.RequestValues(true),
-                    new UseCase.Callback<GetFavorites.ResponseValues>() {
-                        @Override
-                        public void onSuccess(GetFavorites.ResponseValues response) {
-                            List<OfferCar> cars = response.getOfferCars();
-                            if (mView != null) {
-                                mView.showProgress(false);
-                                mView.setItems(cars);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Error error) {
-                            mView.showProgress(false);
-                            handleError(error);
-                        }
-                    });
-            return;
-        }
-        loadItems();
     }
 
     @Override
@@ -159,6 +133,37 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                 });
     }
 
+    @Override
+    public void getCarsByFilter(BrowseCarsFilter filter) {
+        if (mView != null) {
+            mView.showProgress(true);
+        }
+
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
+
+        mDisposable = mGetFilteredCars.execute(new GetFilteredCars.RequestValues(
+                        new ToFilterRequestMapper().transform(filter)),
+                new RxUseCase.Callback<GetFilteredCars.ResponseValues>() {
+                    @Override
+                    public void onError(@NotNull Error error) {
+                        if (mView != null) {
+                            mView.showProgress(false);
+                            handleError(error);
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(GetFilteredCars.ResponseValues response) {
+                        if (mView != null) {
+                            mView.showProgress(false);
+                            mView.setItems(response.getCars());
+                        }
+                    }
+                });
+    }
+
     public void refresh() {
         firstStart = true;
     }
@@ -173,7 +178,6 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
             mView.showMessage(error.getMessage());
         }
     }
-
 
 
     @Override

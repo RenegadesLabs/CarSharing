@@ -29,6 +29,7 @@ class CarsFilterPresenter(var mView: FilterView?) {
             override fun onSuccess(response: GetFilteredCars.ResponseValues) {
                 val carList = response.cars
                 mView?.setButtonText("View ${carList.size} Cars")
+                mView?.setCars(carList)
             }
 
             override fun onError(error: Error) {

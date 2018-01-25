@@ -5,7 +5,7 @@ import com.cardee.domain.renter.entity.FilterRequest
 
 class ToFilterRequestMapper {
     fun transform(filter: BrowseCarsFilter): FilterRequest {
-        return FilterRequest(rentType = if (filter.bookingHourly) "hourly" else "daily",
+        return FilterRequest(rentType = if (filter.bookingHourly == true) "hourly" else if (filter.bookingHourly == false) "daily" else null,
                 typeVehicleId = filter.vehicleTypeId,
                 byLocation = filter.byLocation,
                 latitude = if (filter.byLocation) filter.latitude else null,
@@ -15,12 +15,14 @@ class ToFilterRequestMapper {
                 carTransmission = if (filter.transmissionAuto && filter.transmissionManual) null else
                     if (filter.transmissionAuto) 1 else 2,
                 minYears = filter.minYears,
-                maxYears = filter.maxYears,
+                maxYears = if (filter.maxYears == 0) null else filter.maxYears,
                 isInstantBooking = filter.instantBooking,
                 isCurbsideDelivery = filter.curbsideDelivery,
                 lowerPriceRange = filter.minPrice,
-                upperPriceRange = if ((filter.bookingHourly && filter.maxPrice == 41) ||
-                        (!filter.bookingHourly && filter.maxPrice == 201)) null else filter.maxPrice
+                upperPriceRange = if ((filter.bookingHourly == true && filter.maxPrice == 41) ||
+                        (filter.bookingHourly == false && filter.maxPrice == 201) ||
+                        filter.maxPrice == 0) null else filter.maxPrice,
+                isFavorite = filter.favorite
         )
     }
 }

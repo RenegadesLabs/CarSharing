@@ -24,6 +24,11 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
+    public Disposable obtainCarsByFilter(FilterRequest filter, OffersCallback callback) {
+        return null;
+    }
+
+    @Override
     public void addCarToFavorites(int carId, Callback callback) {
 
     }
@@ -36,10 +41,5 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void searchCars(String searchCriteria, OffersCallback offersCallback) {
 
-    }
-
-    @Override
-    public Disposable obtainCarsByFilter(FilterRequest filter, Callback callback) {
-        return null;
     }
 }

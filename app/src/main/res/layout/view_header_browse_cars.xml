@@ -16,13 +16,13 @@
 
         <LinearLayout
             android:id="@+id/ll_browseCarsHeaderPeriod"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginStart="@dimen/small_margin"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,12 +31,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/ic_calendar_rental" />
 
             <TextView
                 android:id="@+id/tv_browseCarsPeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="24 -26 Mar"
                 android:textColor="@android:color/black" />
 
@@ -44,7 +46,7 @@
 
         <LinearLayout
             android:id="@+id/ll_browseCarsHeaderRadius"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/small_margin"
             android:gravity="center_vertical"
@@ -58,16 +60,22 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/small_margin"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/ic_location_of_car" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/searchAreaAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="@string/cars_browse_header_current"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />

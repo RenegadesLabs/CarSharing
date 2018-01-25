@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.OfferCar
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
 import com.google.android.gms.maps.model.LatLng
@@ -22,17 +23,18 @@ import kotlinx.android.synthetic.main.activity_filter.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {
-
     private val LOCATION_REQUEST_CODE = 111
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityFilterBinding
     lateinit var filter: BrowseCarsFilter
     private var mPresenter: CarsFilterPresenter? = null
+    private var mCars: List<OfferCar>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindView()
         initToolBar()
+        getIntentData()
         initViews()
         setListeners()
         initPresenter()
@@ -57,6 +59,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
     }
 
     private fun initViews() {
+        filter.bookingHourly = false
+        filter.instantBooking = false
+        filter.curbsideDelivery = false
+
+        if (filter.byLocation) {
+            searchAreaAddress.text = String.format(
+                    resources.getString(R.string.filter_search_area_template), filter.address, filter.radius)
+        }
+
         priceRangeSeekBar.setValueFormatter("$%d")
         carAgeSeekBar.setValueFormatter("%d yr")
         submitButtonText.setFactory {
@@ -115,7 +126,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             }
         })
         bookHourly.setOnClickListener {
-            if (!filter.bookingHourly) {
+            if (filter.bookingHourly == false) {
                 filter.bookingHourly = true
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
@@ -123,7 +134,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
             }
         }
         bookDaily.setOnClickListener {
-            if (filter.bookingHourly) {
+            if (filter.bookingHourly == true) {
                 filter.bookingHourly = false
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
@@ -240,19 +251,38 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
             mPresenter?.getFilteredCars(filter)
         }
+        submitButton.setOnClickListener {
+            val intent = Intent()
+            val list: ArrayList<OfferCar>? = mCars?.toCollection(ArrayList())
+            intent.putParcelableArrayListExtra("cars", list)
+            val temp = filter
+            intent.putExtra("filter", filter)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     private fun initPresenter() {
         mPresenter = CarsFilterPresenter(this)
     }
 
+    private fun getIntentData() {
+        filter = intent.getParcelableExtra("filter")
+        binding.filter = filter
+    }
+
     override fun setButtonText(s: String) {
         submitButtonText?.setText(s)
+    }
+
+    override fun setCars(carList: List<OfferCar>) {
+        mCars = carList
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mPresenter?.onDestroy()
+        mCars = null
     }
 
     override fun showProgress(show: Boolean) {
@@ -284,6 +314,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 if (radius != null) {
                     filter.radius = radius * 1000
                 }
+                filter.address = address ?: ""
 
                 mPresenter?.getFilteredCars(filter)
             }

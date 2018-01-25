@@ -4,6 +4,7 @@ package com.cardee.renter_browse_cars;
 import android.support.v4.app.FragmentActivity;
 
 import com.cardee.R;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 
@@ -40,10 +41,9 @@ public interface RenterBrowseCarListContract {
 
         void addCarToFavorites(int carId);
 
-        void showFavorites(boolean show);
-
         void searchCars(String criteria);
 
+        void getCarsByFilter(BrowseCarsFilter filter);
     }
 
     enum Action {

@@ -77,8 +77,8 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     }
 
     private fun setListeners() {
-        seekBar.setOnSeekbarChangeListener({ value ->
-            circle?.radius = (value.toInt() * 1000).toDouble()
+        seekBar.setOnSeekbarChangeListener({ value, actualValue ->
+            circle?.radius = actualValue * 1000
         })
         myLocationButton.setOnClickListener { moveToMyCurrentLocation() }
         searchSaveButton.setOnClickListener {
@@ -183,8 +183,8 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (apiClient?.isConnected == true) {
-                val location = LocationServices.FusedLocationApi.getLastLocation(apiClient)
-                val latLng = LatLng(location.latitude, location.longitude)
+                val location: Location? = LocationServices.FusedLocationApi.getLastLocation(apiClient)
+                val latLng = LatLng(location?.latitude ?: return, location.longitude)
                 updateCurrent(latLng, MY_ADDRESS_BY_LOCATION_UPDATE_CODE)
             }
         } else {

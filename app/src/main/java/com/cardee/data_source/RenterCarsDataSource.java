@@ -10,9 +10,8 @@ public interface RenterCarsDataSource {
 
     void obtainCars(OffersCallback offersCallback);
 
-    Disposable obtainCarsByFilter(FilterRequest filter, Callback callback);
+    Disposable obtainCarsByFilter(FilterRequest filter, OffersCallback callback);
 
-    interface Callback {
     void addCarToFavorites(int carId, Callback callback);
 
     void getFavorites(boolean isFavorite, OffersCallback offersCallback);
@@ -27,6 +26,7 @@ public interface RenterCarsDataSource {
 
     interface Callback {
         void onSuccess();
+
         void onError(Error error);
     }
 }
