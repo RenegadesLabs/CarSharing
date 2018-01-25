@@ -55,8 +55,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_marginEnd="@dimen/small_margin"
                 app:srcCompat="@drawable/ic_location_of_car" />
 
