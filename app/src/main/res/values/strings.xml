@@ -490,6 +490,13 @@
     <string name="cars_browse_sort_ratings">Ratings</string>
     <string name="cars_browse_sort_popularity">Popularity</string>
     <string name="cars_browse_search_hint">Search brand, models etc.</string>
+    <string name="cars_browse_vehicle_type">Select vehicle type</string>
+    <string name="cars_browse_vehicle_type_personal">Personal Car</string>
+    <string name="cars_browse_vehicle_type_personal_desc">Passenger cars for personal use</string>
+    <string name="cars_browse_vehicle_type_private">Private-Hire Cars</string>
+    <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
+    <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
+    <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

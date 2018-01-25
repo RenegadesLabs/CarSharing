@@ -4,6 +4,7 @@ package com.cardee.renter_browse_cars.presenter;
 import android.support.v4.app.FragmentActivity;
 
 import com.cardee.custom.modal.SortRenterOffersDialog;
+import com.cardee.custom.modal.TypeRenterOffersDialog;
 import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
@@ -21,7 +22,8 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 
 public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarListContract.CarEvent>,
-        RenterBrowseCarListContract.Presenter, SortRenterOffersDialog.SortSelectListener {
+        RenterBrowseCarListContract.Presenter, SortRenterOffersDialog.SortSelectListener,
+        TypeRenterOffersDialog.TypeSelectListener {
 
     private final UseCaseExecutor mExecutor;
     private RenterBrowseCarListContract.View mView;
@@ -187,12 +189,28 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
     }
 
     @Override
+    public void showType(FragmentActivity activity) {
+        TypeRenterOffersDialog typeDialog = TypeRenterOffersDialog.getInstance(mSettings.getTypeOffers());
+        typeDialog.show(activity.getSupportFragmentManager(), typeDialog.getTag());
+    }
+
+    @Override
     public void setSort(RenterBrowseCarListContract.Sort sort) {
         mSettings.setSortOffers(sort);
     }
 
     @Override
+    public void setType(RenterBrowseCarListContract.VehicleType type) {
+        mSettings.setTypeOffers(type);
+    }
+
+    @Override
     public void onSortSelected(RenterBrowseCarListContract.Sort sort) {
+
+    }
+
+    @Override
+    public void onTypeSelected(RenterBrowseCarListContract.VehicleType type) {
 
     }
 }

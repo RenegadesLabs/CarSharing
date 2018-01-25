@@ -58,6 +58,7 @@
                 app:srcCompat="@drawable/ic_search" />
 
             <LinearLayout
+                android:id="@+id/ll_renterBrowseCarsType"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -127,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:visibility="gone">
+
             <include layout="@layout/view_toolbar_search" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -145,14 +147,5 @@
         android:layout_width="wrap_content"
         android:layout_height="58dp"
         android:layout_gravity="center_horizontal|bottom" />
-    <ListView
-        android:id="@+id/lv_renterBrowseCarsSearchList"
-        android:layout_marginTop="@dimen/toolbar_height"
-        android:background="@android:color/white"
-        android:visibility="gone"
-        android:divider="@null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
 
 </android.support.design.widget.CoordinatorLayout>

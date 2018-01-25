@@ -9,6 +9,7 @@ public class Settings {
     private BookingState filterBooking;
     private ObtainBookings.Sort sortBooking;
     private RenterBrowseCarListContract.Sort sortOffers;
+    private RenterBrowseCarListContract.VehicleType typeOffers;
 
     private final SettingsManager manager;
 
@@ -17,6 +18,7 @@ public class Settings {
         filterBooking = manager.getBookingFilter();
         sortBooking = manager.getBookingSort();
         sortOffers = manager.getOffersSort();
+        typeOffers = manager.getOffersType();
     }
 
     public BookingState getFilterBooking() {
@@ -29,6 +31,10 @@ public class Settings {
 
     public RenterBrowseCarListContract.Sort getSortOffers() {
         return sortOffers;
+    }
+
+    public RenterBrowseCarListContract.VehicleType getTypeOffers() {
+        return typeOffers;
     }
 
     public void setFilterBooking(BookingState filterBooking) {
@@ -44,5 +50,10 @@ public class Settings {
     public void setSortOffers(RenterBrowseCarListContract.Sort sortOffers) {
         this.sortOffers = sortOffers;
         manager.saveOffersSort(sortOffers);
+    }
+
+    public void setTypeOffers(RenterBrowseCarListContract.VehicleType typeOffers) {
+        this.typeOffers = typeOffers;
+        manager.saveOffersType(typeOffers);
     }
 }
