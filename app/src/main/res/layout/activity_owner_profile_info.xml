@@ -112,7 +112,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/owner_profile_info_acceptance"
                             android:textAlignment="center"
-                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textColor="@color/item_secondary_txt"
                             android:textSize="@dimen/text_regular" />
 
                         <LinearLayout
@@ -161,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/owner_profile_info_response"
                             android:textAlignment="center"
-                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textColor="@color/item_secondary_txt"
                             android:textSize="@dimen/text_regular" />
 
 
@@ -209,7 +209,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/bookings"
                             android:textAlignment="center"
-                            android:textColor="@color/add_car_item_vehicle_secondary_txt"
+                            android:textColor="@color/item_secondary_txt"
                             android:textSize="@dimen/text_regular" />
 
                         <TextView

@@ -481,6 +481,15 @@
     <string name="rental_exp_review_hint">Write a short review about your rental experience here…</string>
     <string name="rental_exp_review_sent">Review sent</string>
 
+    <!--Renter Browse Cars-->
+    <string name="cars_browse_floating_distance">Distance</string>
+    <string name="cars_browse_floating_map">Map</string>
+    <string name="cars_browse_header_current">Current</string>
+    <string name="cars_browse_sort_distance">Distance</string>
+    <string name="cars_browse_sort_price">Price</string>
+    <string name="cars_browse_sort_ratings">Ratings</string>
+    <string name="cars_browse_sort_popularity">Popularity</string>
+    <string name="cars_browse_search_hint">Search brand, models etc.</string>
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>

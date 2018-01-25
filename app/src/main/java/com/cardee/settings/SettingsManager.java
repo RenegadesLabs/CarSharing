@@ -5,23 +5,25 @@ import android.content.SharedPreferences;
 
 import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.usecase.ObtainBookings;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 
-public class SettingManager {
+public class SettingsManager {
 
-    private static SettingManager INSTANCE;
+    private static SettingsManager INSTANCE;
     private static final String SETTING_PREF = "_setting_pref";
     private static final String OWNER_BOOKING_SORT = "_owner_booking_sort";
     private static final String OWNER_BOOKING_FILTER = "_owner_booking_filter";
+    private static final String RENTER_OFFERS_SORT = "_renter_booking_filter";
 
     private SharedPreferences settingPrefs;
 
-    private SettingManager(Context context) {
+    private SettingsManager(Context context) {
         settingPrefs = context.getSharedPreferences(SETTING_PREF, Context.MODE_PRIVATE);
     }
 
-    public static SettingManager getInstance(Context context) {
+    public static SettingsManager getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new SettingManager(context);
+            INSTANCE = new SettingsManager(context);
         }
         return INSTANCE;
     }
@@ -30,21 +32,28 @@ public class SettingManager {
         return new Settings(this);
     }
 
-    public void saveFilter(BookingState filter) {
+    public void saveBookingFilter(BookingState filter) {
         settingPrefs
                 .edit()
                 .putString(OWNER_BOOKING_FILTER, filter == null ? null : filter.name())
                 .apply();
     }
 
-    public void saveSort(ObtainBookings.Sort sort) {
+    public void saveBookingSort(ObtainBookings.Sort sort) {
         settingPrefs
                 .edit()
                 .putString(OWNER_BOOKING_SORT, sort == null ? null : sort.name())
                 .apply();
     }
 
-    public BookingState getFilter() {
+    public void saveOffersSort(RenterBrowseCarListContract.Sort sort) {
+        settingPrefs
+                .edit()
+                .putString(RENTER_OFFERS_SORT, sort == null ? null : sort.name())
+                .apply();
+    }
+
+    public BookingState getBookingFilter() {
         String filterName = settingPrefs.getString(OWNER_BOOKING_FILTER, null);
         BookingState filter = null;
         if (filterName != null) {
@@ -57,7 +66,7 @@ public class SettingManager {
         return filter;
     }
 
-    public ObtainBookings.Sort getSort() {
+    public ObtainBookings.Sort getBookingSort() {
         String sortName = settingPrefs.getString(OWNER_BOOKING_SORT, null);
         ObtainBookings.Sort sort = null;
         if (sortName != null) {
@@ -65,6 +74,19 @@ public class SettingManager {
                 sort = ObtainBookings.Sort.valueOf(sortName);
             } catch (IllegalArgumentException ex) {
                 ex.printStackTrace();
+            }
+        }
+        return sort;
+    }
+
+    public RenterBrowseCarListContract.Sort getOffersSort() {
+        String sortName = settingPrefs.getString(RENTER_OFFERS_SORT, null);
+        RenterBrowseCarListContract.Sort sort = null;
+        if (sortName != null) {
+            try {
+                sort = RenterBrowseCarListContract.Sort.valueOf(sortName);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
             }
         }
         return sort;

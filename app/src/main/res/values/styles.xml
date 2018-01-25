@@ -65,6 +65,10 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
+    <style name="CardeeProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="RoundedButton">
         <item name="android:background">@drawable/bg_button_rounded</item>
         <item name="android:textSize">@dimen/text_regular</item>
@@ -186,7 +190,7 @@
     </style>
 
     <style name="TextSettingsSection">
-        <item name="android:textColor">@color/add_car_item_vehicle_secondary_txt</item>
+        <item name="android:textColor">@color/item_secondary_txt</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/text_regular</item>
         <item name="android:textStyle">bold</item>

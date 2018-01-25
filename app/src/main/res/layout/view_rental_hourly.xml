@@ -227,7 +227,7 @@
                     android:layout_margin="@dimen/large_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/div3"
-                    app:srcCompat="@drawable/ic_direction" />
+                    app:srcCompat="@drawable/ic_curbside" />
 
                 <TextView
                     android:id="@+id/curbside_delivery"
