@@ -37,9 +37,9 @@
                 android:id="@+id/tv_browseCarsPeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_small"
                 android:text="24 -26 Mar"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
@@ -70,17 +70,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cars_browse_header_current"
-                    android:textSize="@dimen/text_small"
                     android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_browseCarsHeaderRadiusTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_small"
                     android:text="Within 5 km"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small" />
             </LinearLayout>
 
 

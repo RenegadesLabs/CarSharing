@@ -110,8 +110,9 @@
                     android:layout_height="match_parent">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        style="@style/ToolbarActionIcon"
+                        android:layout_width="@dimen/item_icon_side_large"
+                        android:layout_height="@dimen/item_icon_side_large"
                         android:layout_gravity="center_vertical"
                         android:background="@android:color/transparent"
                         android:padding="@dimen/padding_x_small"
@@ -145,6 +146,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/floating_view_height"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="@dimen/floating_view_bottom_margin"/>
+        android:layout_marginBottom="@dimen/floating_view_bottom_margin" />
 
 </android.support.design.widget.CoordinatorLayout>
