@@ -25,7 +25,7 @@ class MarkerRenderer<T>(context: Context, map: GoogleMap, manager: ClusterManage
 
     init {
         val idleBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_marker)
-        val selectedBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_marker_selected)
+        val selectedBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_car_merker_selected)
         markerIcon = Bitmap.createScaledBitmap(idleBitmap, 128, 128, false)
         selectedMarkerIcon = Bitmap.createScaledBitmap(selectedBitmap, 128, 128, false)
         iconGenerator = IconGenerator(context)

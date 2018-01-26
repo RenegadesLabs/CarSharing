@@ -84,7 +84,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/small_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -95,11 +94,12 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/iv_renterCarsToolbarFavoritesImg"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        style="@style/ToolbarActionIcon"
+                        android:layout_width="@dimen/item_icon_side_large"
+                        android:layout_height="@dimen/item_icon_side_large"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/small_margin"
                         android:background="@android:color/transparent"
+                        android:padding="@dimen/padding_x_small"
                         app:srcCompat="@drawable/ic_favorites_toolbar" />
                 </FrameLayout>
 
@@ -109,15 +109,14 @@
                     android:layout_height="match_parent">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        style="@style/ToolbarActionIcon"
+                        android:layout_width="@dimen/item_icon_side_large"
+                        android:layout_height="@dimen/item_icon_side_large"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/small_margin"
                         android:background="@android:color/transparent"
+                        android:padding="@dimen/padding_x_small"
                         app:srcCompat="@drawable/ic_filter" />
                 </FrameLayout>
-
-
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
@@ -127,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:visibility="gone">
+
             <include layout="@layout/view_toolbar_search" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -134,8 +134,8 @@
     <ProgressBar
         android:id="@+id/p_renterBrowseCars"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
         android:layout_gravity="center"
         android:theme="@style/CardeeProgress"
         android:visibility="gone" />
@@ -143,16 +143,17 @@
     <include
         layout="@layout/view_floating_browse_cars"
         android:layout_width="wrap_content"
-        android:layout_height="58dp"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_height="@dimen/floating_view_height"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/floating_view_bottom_margin" />
+
     <ListView
         android:id="@+id/lv_renterBrowseCarsSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height"
         android:background="@android:color/white"
-        android:visibility="gone"
         android:divider="@null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

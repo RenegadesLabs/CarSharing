@@ -59,7 +59,7 @@
         android:layout_marginStart="@dimen/widget_margin_x_small"
         app:layout_constraintBottom_toBottomOf="@id/imgCar"
         app:layout_constraintStart_toStartOf="@id/imgCar"
-        app:srcCompat="@drawable/ic_favorite_selected" />
+        app:srcCompat="@drawable/ic_favorite" />
 
     <ImageView
         android:id="@+id/imgInstant"

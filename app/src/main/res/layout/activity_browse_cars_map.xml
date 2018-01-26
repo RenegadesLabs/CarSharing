@@ -74,7 +74,7 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:padding="@dimen/padding_x_small"
-                app:srcCompat="@drawable/ic_filter_list" />
+                app:srcCompat="@drawable/ic_filter" />
 
             <ImageView
                 android:id="@+id/btnFavorites"
@@ -82,7 +82,7 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:padding="@dimen/padding_x_small"
-                app:srcCompat="@drawable/ic_favorite" />
+                app:srcCompat="@drawable/ic_favorites_toolbar" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

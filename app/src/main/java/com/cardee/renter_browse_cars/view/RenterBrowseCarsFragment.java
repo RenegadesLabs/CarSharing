@@ -71,6 +71,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private boolean favoritesSelected = false;
     private boolean search = false;
+    private int bottomViewOffset;
 
     private Unbinder mUnbinder;
 
@@ -100,6 +101,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        bottomViewOffset = getActivity().getResources().getDimensionPixelSize(R.dimen.floating_view_bottom_margin);
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         addOnScrollListener();
@@ -113,7 +115,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.addOnScrollListener(new CustomRecyclerScrollListener() {
             @Override
             public void show() {
-                mHeaderView.animate().translationY(-mHeaderView.getHeight())
+                mHeaderView
+                        .animate()
+                        .translationY(-mHeaderView.getHeight() - bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
                         .start();
 
@@ -129,7 +133,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         .setInterpolator(new DecelerateInterpolator(2))
                         .start();
 
-                mFloatingView.animate().translationY(mFloatingView.getHeight())
+                mFloatingView
+                        .animate()
+                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
                         .start();
             }

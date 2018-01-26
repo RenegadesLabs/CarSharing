@@ -44,7 +44,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         imageManager = Glide.with(context)
         val res = context.resources
         favIcon = VectorDrawableCompat.create(res, R.drawable.ic_favorite, null) as Drawable
-        favIconSelected = VectorDrawableCompat.create(res, R.drawable.ic_favorite_selected, null) as Drawable
+        favIconSelected = VectorDrawableCompat.create(res, R.drawable.ic_favorite_filled, null) as Drawable
     }
 
     fun initScrollingBehaviour(recyclerView: RecyclerView) {

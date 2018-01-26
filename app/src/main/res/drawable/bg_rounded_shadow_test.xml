@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp"
+                android:top="0.3dp" />
+            <solid android:color="#00202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp"
+                android:top="0.3dp" />
+            <solid android:color="#02202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp"
+                android:top="0.3dp" />
+            <solid android:color="#04202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp"
+                android:top="0.3dp" />
+            <solid android:color="#06202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp" />
+            <solid android:color="#08202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp" />
+            <solid android:color="#10202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp" />
+            <solid android:color="#12202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="0.5dp"
+                android:left="0.3dp"
+                android:right="0.3dp" />
+            <solid android:color="#14202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding android:bottom="0.5dp" />
+            <solid android:color="#16202020" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#ffffff" />
+            <corners android:radius="50pt" />
+        </shape>
+    </item>
+</layer-list>
