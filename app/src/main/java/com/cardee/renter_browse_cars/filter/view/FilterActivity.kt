@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.FilterStringHolder
 import com.cardee.domain.renter.entity.OfferCar
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
@@ -49,6 +50,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
         filter = BrowseCarsFilter()
         binding.filter = filter
+        binding.stringHolder = FilterStringHolder()
         binding.executePendingBindings()
     }
 
@@ -56,6 +58,11 @@ class FilterActivity : AppCompatActivity(), FilterView {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = null
+    }
+
+    private fun getIntentData() {
+        filter = intent.getParcelableExtra("filter")
+        binding.filter = filter
     }
 
     private fun initViews() {
@@ -265,11 +272,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     private fun initPresenter() {
         mPresenter = CarsFilterPresenter(this)
-    }
-
-    private fun getIntentData() {
-        filter = intent.getParcelableExtra("filter")
-        binding.filter = filter
     }
 
     override fun setButtonText(s: String) {

@@ -290,7 +290,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             mPresenter.getCarsByFilter(mFilter);
         } else {
             mFilter.setFavorite(null);
-            mPresenter.loadItems();
+            mPresenter.getCarsByFilter(mFilter);
         }
     }
 
