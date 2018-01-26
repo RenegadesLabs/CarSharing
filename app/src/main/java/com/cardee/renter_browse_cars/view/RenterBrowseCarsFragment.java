@@ -126,8 +126,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mSearchListView.setAdapter(mSearchListAdapter);
         if (mFilter.getByLocation()) {
             mSearchAreaAddress.setText(mFilter.getAddress());
-            String radiusText = String.format(getResources().getString(R.string.cars_browse_search_area_template), mFilter.getRadius());
-            if (mFilter.getRadius() == 30) {
+            int radiusInKm = mFilter.getRadius() / 1000;
+            String radiusText = String.format(getResources().getString(R.string.cars_browse_search_area_template), radiusInKm);
+            if (radiusInKm == 30) {
                 radiusText = getResources().getString(R.string.cars_browse_search_area_default);
             }
             mSearchAreaRadius.setText(radiusText);
@@ -326,7 +327,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                             mFilter.setByLocation(true);
                             mFilter.setLatitude(location.latitude);
                             mFilter.setLongitude(location.longitude);
-                            mFilter.setRadius(radius);
+                            mFilter.setRadius(radius * 1000);
                             mFilter.setAddress(address);
 
                             mPresenter.getCarsByFilter(mFilter);
@@ -338,9 +339,18 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
                         ArrayList<OfferCar> list = data.getParcelableArrayListExtra("cars");
-                        mFilter = data.getParcelableExtra("filter");
                         if (list != null) {
                             setItems(list);
+                        }
+                        mFilter = data.getParcelableExtra("filter");
+                        if (mFilter.getByLocation()) {
+                            mSearchAreaAddress.setText(mFilter.getAddress());
+                            int radiusInKm = mFilter.getRadius() / 1000;
+                            String radiusText = String.format(getResources().getString(R.string.cars_browse_search_area_template), radiusInKm);
+                            if (radiusInKm == 30) {
+                                radiusText = getResources().getString(R.string.cars_browse_search_area_default);
+                            }
+                            mSearchAreaRadius.setText(radiusText);
                         }
                     }
                 }

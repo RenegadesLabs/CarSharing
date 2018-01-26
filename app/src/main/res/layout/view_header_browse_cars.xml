@@ -44,31 +44,40 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/ll_browseCarsHeaderRadius"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/small_margin"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/searchAreaInfo"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_location_of_car" />
 
             <LinearLayout
+                android:id="@id/searchAreaInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/searchAreaAddress"
@@ -89,7 +98,7 @@
             </LinearLayout>
 
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <View
             android:id="@+id/divider"
