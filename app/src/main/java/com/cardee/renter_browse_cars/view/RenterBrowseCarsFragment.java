@@ -337,8 +337,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             case (FILTER_REQUEST_CODE):
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
+                        ArrayList<OfferCar> list = data.getParcelableArrayListExtra("cars");
                         mFilter = data.getParcelableExtra("filter");
-                        List<OfferCar> list = data.getParcelableArrayListExtra("cars");
                         if (list != null) {
                             setItems(list);
                         }

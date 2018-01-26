@@ -253,8 +253,9 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
         submitButton.setOnClickListener {
             val intent = Intent()
-            val list: ArrayList<OfferCar>? = mCars?.toCollection(ArrayList())
+            val list: ArrayList<OfferCar>? = ArrayList(mCars)
             intent.putParcelableArrayListExtra("cars", list)
+
             val temp = filter
             intent.putExtra("filter", filter)
             setResult(Activity.RESULT_OK, intent)

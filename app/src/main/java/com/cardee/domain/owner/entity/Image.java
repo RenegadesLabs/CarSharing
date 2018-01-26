@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Image implements Parcelable {
 
-    private final Integer mImageId;
+    private final int mImageId;
     private final String mLink;
     private final String mThumbnail;
     private final Boolean mPrimary;
@@ -18,11 +18,7 @@ public class Image implements Parcelable {
     }
 
     protected Image(Parcel in) {
-        if (in.readByte() == 0) {
-            mImageId = null;
-        } else {
-            mImageId = in.readInt();
-        }
+        mImageId = in.readInt();
         mLink = in.readString();
         mThumbnail = in.readString();
         byte tmpMPrimary = in.readByte();
@@ -64,12 +60,7 @@ public class Image implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (mImageId == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(mImageId);
-        }
+        parcel.writeInt(mImageId);
         parcel.writeString(mLink);
         parcel.writeString(mThumbnail);
         parcel.writeByte((byte) (mPrimary == null ? 0 : mPrimary ? 1 : 2));
