@@ -13,7 +13,8 @@ public class SettingsManager {
     private static final String SETTING_PREF = "_setting_pref";
     private static final String OWNER_BOOKING_SORT = "_owner_booking_sort";
     private static final String OWNER_BOOKING_FILTER = "_owner_booking_filter";
-    private static final String RENTER_OFFERS_SORT = "_renter_booking_filter";
+    private static final String RENTER_OFFERS_SORT = "_renter_offers_sort";
+    private static final String RENTER_OFFERS_TYPE = "_renter_offers_type";
 
     private SharedPreferences settingPrefs;
 
@@ -50,6 +51,13 @@ public class SettingsManager {
         settingPrefs
                 .edit()
                 .putString(RENTER_OFFERS_SORT, sort == null ? null : sort.name())
+                .apply();
+    }
+
+    public void saveOffersType(RenterBrowseCarListContract.VehicleType type) {
+        settingPrefs
+                .edit()
+                .putString(RENTER_OFFERS_TYPE, type == null ? null : type.name())
                 .apply();
     }
 
@@ -90,5 +98,18 @@ public class SettingsManager {
             }
         }
         return sort;
+    }
+
+    public RenterBrowseCarListContract.VehicleType getOffersType() {
+        String typeName = settingPrefs.getString(RENTER_OFFERS_TYPE, null);
+        RenterBrowseCarListContract.VehicleType type = null;
+        if (typeName != null) {
+            try {
+                type = RenterBrowseCarListContract.VehicleType.valueOf(typeName);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+        return type;
     }
 }

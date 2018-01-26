@@ -7,12 +7,16 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
+import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 
@@ -49,7 +53,7 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
         Disposable disposable = mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
@@ -90,6 +94,47 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
         }
     }
 
+    @Override
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.getSorted(new SortOffers(sortBy)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+
+    @Override
+    public Disposable obtainCarsByFilter(FilterRequest filterRequest, OffersCallback callback) {
+        return mApi.obtainCarsByFilter(filterRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<OffersResponse>() {
+                    @Override
+                    public void onSuccess(OffersResponse response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(response.getOffersResponseBody());
+                            return;
+                        }
+                        handleErrorResponse(callback, response);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 
     private void handleErrorResponse(Callback callback, BaseResponse response) {
         if (response == null) {

@@ -19,4 +19,9 @@
     <dimen name="list_item_control_title">15sp</dimen>
     <dimen name="list_item_text_general">14sp</dimen>
     <dimen name="list_item_selector_value">12sp</dimen>
+
+    <!--RangeSeekBar-->
+    <dimen name="thumb_width">60dp</dimen>
+    <dimen name="thumb_height">33dp</dimen>
+
 </resources>

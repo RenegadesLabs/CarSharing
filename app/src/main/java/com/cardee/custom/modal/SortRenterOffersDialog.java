@@ -112,7 +112,7 @@ public class SortRenterOffersDialog extends BottomSheetDialogFragment {
         RenterBrowseCarListContract.Sort sort = null;
         switch (sortView.getId()) {
             case R.id.cars_sort_distance:
-
+                sort = RenterBrowseCarListContract.Sort.DISTANCE;
                 break;
             case R.id.cars_sort_price:
                 sort = RenterBrowseCarListContract.Sort.PRICE;
@@ -140,7 +140,7 @@ public class SortRenterOffersDialog extends BottomSheetDialogFragment {
         sortPrice.setTypeface(RenterBrowseCarListContract.Sort.PRICE.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortRatings.setTypeface(RenterBrowseCarListContract.Sort.RATINGS.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortPopularity.setTypeface(RenterBrowseCarListContract.Sort.POPULARITY.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        sortDistanceSelected.setVisibility(sort == null ? View.VISIBLE : View.GONE);
+        sortDistanceSelected.setVisibility(RenterBrowseCarListContract.Sort.DISTANCE.equals(sort) ? View.VISIBLE : View.GONE);
         sortPriceSelected.setVisibility(RenterBrowseCarListContract.Sort.PRICE.equals(sort) ? View.VISIBLE : View.GONE);
         sortRatingsSelected.setVisibility(RenterBrowseCarListContract.Sort.RATINGS.equals(sort) ? View.VISIBLE : View.GONE);
         sortPopularitySelected.setVisibility(RenterBrowseCarListContract.Sort.POPULARITY.equals(sort) ? View.VISIBLE : View.GONE);

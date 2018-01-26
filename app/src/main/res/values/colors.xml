@@ -66,4 +66,6 @@
     <color name="rate_star_inactive">#D8D8D8</color>
     <color name="payment_card">#000000</color>
     <color name="payment_cash">#4fae4f</color>
+
+    <color name="search_area_circle">#334285F4</color>
 </resources>

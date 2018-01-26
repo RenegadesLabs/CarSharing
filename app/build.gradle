@@ -42,7 +42,12 @@ android {
 
 repositories {
     mavenCentral()
-    maven { url 'https://maven.google.com' }
+    maven {
+        url 'https://maven.google.com'
+    }
+    maven {
+        url 'https://dl.bintray.com/kotlin/kotlin-eap'
+    }
 }
 
 dependencies {
@@ -100,6 +105,9 @@ dependencies {
 
     //Data Binding
     kapt "com.android.databinding:compiler:3.0.1"
+
+    // Custom seek bar
+    compile 'com.crystal:crystalrangeseekbar:1.1.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

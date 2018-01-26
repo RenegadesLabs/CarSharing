@@ -84,7 +84,7 @@ public class AlertListAdapter extends RecyclerView.Adapter<AlertListAdapter.Aler
         public void bind(Alert alert, PublishSubject<Alert> onClickSubject) {
             mRootView.setOnClickListener(view -> onClickSubject.onNext(alert));
             mAlertImage.setImageResource(getValidAlertImage(alert.getAlertType()));
-            mAlertNewDot.setVisibility(alert.getNewBooking() ? View.VISIBLE : View.GONE);
+            mAlertNewDot.setVisibility(alert.isNewBooking() ? View.VISIBLE : View.GONE);
             mAlertMessage.setText(alert.getNotificationText());
         }
 

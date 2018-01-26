@@ -3,10 +3,13 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import io.reactivex.disposables.Disposable;
 
 public class RenterCarsRepository implements RenterCarsDataSource {
 
@@ -34,7 +37,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
 
-
     @Override
     public void obtainCars(OffersCallback offersCallback) {
         if (notDirtyCache()) {
@@ -57,11 +59,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             }
 
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
@@ -70,11 +67,27 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
-        mRemoteDataSource.addCarToFavorites(carId, new Callback() {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
+        mRemoteDataSource.addCarToFavorites(carId, new NoDataCallback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public Disposable obtainCarsByFilter(FilterRequest filterRequest, OffersCallback callback) {
+        return mRemoteDataSource.obtainCarsByFilter(filterRequest, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                callback.onSuccess(response);
+                refreshCache(response);
             }
 
             @Override
@@ -96,11 +109,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
-
-            @Override
-            public void onSuccess() {
-
-            }
         });
     }
 
@@ -116,13 +124,24 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
+        });
+    }
+
+    @Override
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+        mRemoteDataSource.getSorted(sortBy, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                offersCallback.onSuccess(response);
+            }
 
             @Override
-            public void onSuccess() {
-
+            public void onError(Error error) {
+                offersCallback.onError(error);
             }
         });
     }
+
 
     public void refreshCars() {
         mDirtyCache = true;

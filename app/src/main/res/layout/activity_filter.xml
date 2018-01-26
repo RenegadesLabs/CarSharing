@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="filter"
+            type="com.cardee.domain.renter.entity.BrowseCarsFilter" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_main"
+        tools:context=".renter_browse_cars.filter.view.FilterActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                app:navigationIcon="@drawable/ic_close"
+                app:theme="@style/CardeeToolbar"
+                app:titleTextColor="@color/colorAccent">
+
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    style="@style/ToolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/filters" />
+
+                <TextView
+                    android:id="@+id/toolbarAction"
+                    style="@style/ToolbarAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/reset" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/vehicleTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/vehicleTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/vehicle_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconPersonal"
+                        android:layout_width="34dp"
+                        android:layout_height="26dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 1 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_personal_car" />
+
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconUber"
+                        android:layout_width="190dp"
+                        android:layout_height="26dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 2 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_uber_grab" />
+
+                    <ImageView
+                        android:id="@+id/vehicleTypeIconCommercial"
+                        android:layout_width="28dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.vehicleTypeId == 3 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/vehicleTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/vehicleTypeTitle"
+                        app:srcCompat="@drawable/ic_truck" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/vehicleType"
+                        style="@style/FilterTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:paddingEnd="1dp"
+                        android:paddingStart="1dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleTypeTitle"
+                        app:tabMode="fixed"
+                        app:tabTextAppearance="@style/FilterTabTextAppearance">
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_personal_cars" />
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_private" />
+
+                        <android.support.design.widget.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/vehicle_type_commercial" />
+                    </android.support.design.widget.TabLayout>
+
+                    <TextView
+                        android:id="@+id/vehicleTypeDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/padding_x_small"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="@dimen/padding_x_small"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{filter.vehicleTypeDesc[filter.vehicleTypeId - 1]}"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicleType" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bookingTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/bookingTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="@string/booking_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/bookHourly"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bookingHourly ? @drawable/bg_filter_btn_enabled: @drawable/bg_tabbar_filter}"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/book_hourly"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@{filter.bookingHourly ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/bookDaily"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookingTypeTitle" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@id/bookDaily"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bookingHourly ? @drawable/bg_tabbar_filter: @drawable/bg_filter_btn_enabled}"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/book_daily"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@{filter.bookingHourly ? @color/divider_dark: @color/colorPrimaryDark}"
+                        android:textSize="@dimen/text_large"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/bookHourly"
+                        app:layout_constraintTop_toBottomOf="@id/bookingTypeTitle" />
+
+                    <TextView
+                        android:id="@+id/rentalPeriodTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/rental_period"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookHourly" />
+
+                    <TextView
+                        android:id="@+id/rentalPeriodText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/item_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bookHourly" />
+
+
+                    <LinearLayout
+                        android:id="@+id/rentalPeriodButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:orientation="horizontal"
+                        android:paddingBottom="14dp"
+                        android:paddingTop="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rentalPeriodTitle">
+
+                        <TextView
+                            android:id="@+id/rental_period_from"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/rental_period_from"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/rental_period_to"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/rental_period_to"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/searchAreaContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/searchAreaTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:text="@string/search_area"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/searchAreaButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_tabbar_filter"
+                        android:orientation="vertical"
+                        android:paddingBottom="14dp"
+                        android:paddingTop="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/searchAreaTitle">
+
+                        <TextView
+                            android:id="@+id/searchAreaAddress"
+                            style="@style/TextSettingsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:ellipsize="end"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="@string/default_search_area"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/bg_regular"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextSettingsSection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/more_filters" />
+                </LinearLayout>
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/instantBookingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/instantBookingTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/instant_booking"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@{filter.instantBooking ? @drawable/ic_instant : @drawable/ic_instant_inactive}"
+                        app:layout_constraintBottom_toBottomOf="@id/instantBookingTitle"
+                        app:layout_constraintStart_toEndOf="@id/instantBookingTitle"
+                        app:layout_constraintTop_toTopOf="@id/instantBookingTitle" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/instantBookingSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:checked="@{filter.instantBooking}"
+                        app:layout_constraintBottom_toBottomOf="@id/instantBookingTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/instantBookingTitle" />
+
+                    <TextView
+                        android:id="@+id/instantBookingDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginTop="13dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@string/instant_booking_desc"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/instantBookingSwitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/instantBookingTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/CurbDelContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/curbDelTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/curbside_delivery"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@{filter.curbsideDelivery ? @drawable/ic_curbside : @drawable/ic_direction_inactive}"
+                        app:layout_constraintBottom_toBottomOf="@id/curbDelTitle"
+                        app:layout_constraintStart_toEndOf="@id/curbDelTitle"
+                        app:layout_constraintTop_toTopOf="@id/curbDelTitle" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/curbDelSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:checked="@{filter.curbsideDelivery}"
+                        app:layout_constraintBottom_toBottomOf="@id/curbDelTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/curbDelTitle" />
+
+                    <TextView
+                        android:id="@+id/curbDelDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginTop="13dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@string/curbside_delivery_desc"
+                        android:textColor="@color/add_car_divider"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toStartOf="@id/curbDelSwitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/curbDelTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/priceRangeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/priceRangeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@{filter.bookingHourly ? filter.priceRangeTitles[0] : filter.priceRangeTitles[1]}"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/priceRangeText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/item_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.cardee.custom.seekBar.RangeSeekBar
+                        android:id="@+id/priceRangeSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:layout_marginTop="13dp"
+                        app:bar_color="#D8D8D8"
+                        app:bar_highlight_color="#92BFE7"
+                        app:corner_radius="10"
+                        app:data_type="_integer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/priceRangeTitle"
+                        app:left_thumb_image="@drawable/ic_seekbar_left"
+                        app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
+                        app:maxStartValue="@{filter.bookingHourly ? 41f : 201f}"
+                        app:maxValue="@{filter.bookingHourly ? 41f : 201f}"
+                        app:minValue="@{filter.bookingHourly ? 2f : 20f}"
+                        app:right_thumb_image="@drawable/ic_seekbar_right"
+                        app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
+                        app:steps="1" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/carAgeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:id="@+id/carAgeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/car_age"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/carAgeText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/item_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.cardee.custom.seekBar.RangeSeekBar
+                        android:id="@+id/carAgeSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:layout_marginTop="13dp"
+                        app:bar_color="#D8D8D8"
+                        app:bar_highlight_color="#92BFE7"
+                        app:corner_radius="10"
+                        app:data_type="_integer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/carAgeTitle"
+                        app:left_thumb_image="@drawable/ic_seekbar_left"
+                        app:left_thumb_image_pressed="@drawable/ic_seekbar_left"
+                        app:maxStartValue="@{11f}"
+                        app:maxValue="11"
+                        app:minValue="1"
+                        app:right_thumb_image="@drawable/ic_seekbar_right"
+                        app:right_thumb_image_pressed="@drawable/ic_seekbar_right"
+                        app:steps="1" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bodyTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/bodyTypeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/body_type"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSedan"
+                        android:layout_width="56dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 1 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_sedan" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconHatchback"
+                        android:layout_width="51dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 4 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_hatchback" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSuv"
+                        android:layout_width="57dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 3 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_suv" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconSport"
+                        android:layout_width="56dp"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 6 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_sport" />
+
+                    <ImageView
+                        android:id="@+id/bodyTypeIconConv"
+                        android:layout_width="57dp"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:visibility="@{filter.bodyTypeId == 7 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/bodyTypeTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_convertible" />
+
+                    <TextView
+                        android:id="@+id/sedanButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 1 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/sedan"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 1 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/hatchbackButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@id/hatchbackButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 4 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/hatchback"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 4 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/suvButton"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/sedanButton"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@id/suvButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 3 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/suv_mpv"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 3 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/hatchbackButton"
+                        app:layout_constraintTop_toBottomOf="@id/bodyTypeTitle" />
+
+                    <TextView
+                        android:id="@+id/sportButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 6 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/sports_coupe"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 6 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/convertibleButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+
+                    <TextView
+                        android:id="@id/convertibleButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 7 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/convertible"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 7 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/anyButton"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/sportButton"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+
+                    <TextView
+                        android:id="@id/anyButton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.bodyTypeId == 0 ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:text="@string/any"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.bodyTypeId == 0 ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/convertibleButton"
+                        app:layout_constraintTop_toBottomOf="@id/sedanButton" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="@dimen/large_margin"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/transmissionContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="86dp"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/transmissionTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/transmission"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/transmissionText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/any"
+                        android:textColor="@color/item_secondary_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/autoButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.transmissionAuto ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/auto"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.transmissionAuto ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toStartOf="@+id/manualButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/transmissionTitle" />
+
+                    <TextView
+                        android:id="@id/manualButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@{filter.transmissionManual ? @drawable/bg_filter_active: @drawable/bg_tabbar_filter}"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/manual"
+                        android:textAlignment="center"
+                        android:textColor="@{filter.transmissionManual ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/autoButton"
+                        app:layout_constraintTop_toBottomOf="@id/transmissionTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/submitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/bg_button_regular"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextSwitcher
+            android:id="@+id/submitButtonText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:translationZ="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/submitButton"
+            app:layout_constraintEnd_toEndOf="@id/submitButton"
+            app:layout_constraintStart_toStartOf="@id/submitButton"
+            app:layout_constraintTop_toTopOf="@id/submitButton" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
