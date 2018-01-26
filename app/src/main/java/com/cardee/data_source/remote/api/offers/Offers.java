@@ -3,6 +3,7 @@ package com.cardee.data_source.remote.api.offers;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
+import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -26,6 +27,9 @@ public interface Offers {
 
     @POST("offers/")
     Call<OffersResponse> getFavorites(@Body GetFavorites requestBody);
+
+    @POST("offers/")
+    Call<OffersResponse> getSorted(@Body SortOffers requestBody);
 
     @POST("offers/")
     Call<OffersResponse> searchOffers(@Body SearchOffers requestBody);

@@ -18,6 +18,8 @@ public interface RenterCarsDataSource {
 
     void searchCars(String searchCriteria, OffersCallback offersCallback);
 
+    void getSorted(String sortBy, OffersCallback offersCallback);
+
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);
     }

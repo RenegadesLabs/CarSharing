@@ -7,6 +7,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
+import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -82,6 +83,21 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     public void searchCars(String searchCriteria, OffersCallback offersCallback) {
         try {
             Response<OffersResponse> response = mApi.searchOffers(new SearchOffers(searchCriteria)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.getSorted(new SortOffers(sortBy)).execute();
             if (response.isSuccessful()) {
                 offersCallback.onSuccess(response.body().getOffersResponseBody());
                 return;

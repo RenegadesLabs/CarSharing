@@ -16,7 +16,7 @@ class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars
     }
 
     override fun execute(values: RequestValues, callback: RxUseCase.Callback<ResponseValues>): Disposable {
-        return repository.obtainCarsByFilter(values.filter, object : RenterCarsDataSource.OffersCallback{
+        return repository.obtainCarsByFilter(values.filter, object : RenterCarsDataSource.OffersCallback {
 
             override fun onSuccess(response: Array<OfferResponseBody>) {
                 callback.onSuccess(ResponseValues(response))

@@ -26,7 +26,7 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
 
     private static final String TYPE = "_booking_sort";
 
-    private RenterBrowseCarListContract.Sort currentSort;
+    private RenterBrowseCarListContract.VehicleType currentType;
     private TypeSelectListener listener;
 
     @BindView(R.id.cars_type_personal_t)
@@ -72,7 +72,7 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            currentSort = (RenterBrowseCarListContract.Sort) args.getSerializable(TYPE);
+            currentType = (RenterBrowseCarListContract.VehicleType) args.getSerializable(TYPE);
         }
     }
 
@@ -82,7 +82,7 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
         View rootView = View.inflate(getContext(), R.layout.modal_dialog_offers_type, null);
         unbinder = ButterKnife.bind(this, rootView);
         dialog.setContentView(rootView);
-        changeSelection(currentSort);
+        changeSelection(currentType);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) rootView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
@@ -107,7 +107,7 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
         RenterBrowseCarListContract.VehicleType type = null;
         switch (sortView.getId()) {
             case R.id.cars_type_personal:
-                type = RenterBrowseCarListContract.VehicleType.PERSONAL;
+//                type = RenterBrowseCarListContract.VehicleType.PERSONAL;
                 break;
             case R.id.cars_type_private:
                 type = RenterBrowseCarListContract.VehicleType.PRIVATE;
@@ -116,8 +116,8 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
                 type = RenterBrowseCarListContract.VehicleType.COMMERCIAL;
                 break;
         }
-        if (currentSort != null && !currentSort.equals(type) ||
-                (type != null && !type.equals(currentSort))) {
+        if (currentType != null && !currentType.equals(type) ||
+                (type != null && !type.equals(currentType))) {
 //            changeSelection(sort);
             if (listener != null) {
                 listener.onTypeSelected(type);
@@ -126,14 +126,14 @@ public class TypeRenterOffersDialog extends BottomSheetDialogFragment {
         }
     }
 
-    private void changeSelection(RenterBrowseCarListContract.Sort sort) {
-        currentSort = sort;
-        typePersonal.setTypeface(sort == null ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        typePrivate.setTypeface(RenterBrowseCarListContract.Sort.PRICE.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        typeCommercial.setTypeface(RenterBrowseCarListContract.Sort.RATINGS.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        typePersonalSelected.setVisibility(sort == null ? View.VISIBLE : View.GONE);
-        typePrivateSelected.setVisibility(RenterBrowseCarListContract.Sort.PRICE.equals(sort) ? View.VISIBLE : View.GONE);
-        typeCommercialSelected.setVisibility(RenterBrowseCarListContract.Sort.RATINGS.equals(sort) ? View.VISIBLE : View.GONE);
+    private void changeSelection(RenterBrowseCarListContract.VehicleType type) {
+        currentType = type;
+        typePersonal.setTypeface(type == null ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        typePrivate.setTypeface(RenterBrowseCarListContract.VehicleType.PRIVATE.equals(type) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        typeCommercial.setTypeface(RenterBrowseCarListContract.VehicleType.COMMERCIAL.equals(type) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        typePersonalSelected.setVisibility(type == null ? View.VISIBLE : View.GONE);
+        typePrivateSelected.setVisibility(RenterBrowseCarListContract.VehicleType.PRIVATE.equals(type) ? View.VISIBLE : View.GONE);
+        typeCommercialSelected.setVisibility(RenterBrowseCarListContract.VehicleType.COMMERCIAL.equals(type) ? View.VISIBLE : View.GONE);
     }
 
     public void setTypeSelectListener(TypeSelectListener listener) {

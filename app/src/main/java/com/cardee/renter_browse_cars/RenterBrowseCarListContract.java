@@ -4,6 +4,7 @@ package com.cardee.renter_browse_cars;
 import android.support.v4.app.FragmentActivity;
 
 import com.cardee.R;
+import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 
@@ -14,6 +15,8 @@ public interface RenterBrowseCarListContract {
     interface View extends BaseView {
 
         void setItems(List<OfferCar> cars);
+
+        void setSortValue(String value);
 
         void updateItem(OfferCar car);
 
@@ -35,6 +38,8 @@ public interface RenterBrowseCarListContract {
         void showType(FragmentActivity activity);
 
         void setSort(Sort sort);
+
+        void sortCars(String sortBy);
 
         void setType(VehicleType type);
 

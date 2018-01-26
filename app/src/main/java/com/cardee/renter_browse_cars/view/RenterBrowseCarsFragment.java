@@ -19,8 +19,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.cardee.R;
+import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.filter.view.FilterActivity;
@@ -51,6 +53,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public RecyclerView mCarsListView;
     @BindView(R.id.v_renterBrowseCarsFloating)
     public RenterBrowseCarsFloatingView mFloatingView;
+    @BindView(R.id.tv_browseCarsFloatingSortText)
+    public TextView mSortText;
     @BindView(R.id.v_renterBrowseCarsHeader)
     public LinearLayout mHeaderView;
     @BindView(R.id.iv_renterCarsToolbarFavoritesImg)
@@ -70,6 +74,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     private boolean search = false;
 
     private Unbinder mUnbinder;
+    private Settings mSettings;
 
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
@@ -89,8 +94,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCarsListAdapter = new RenterBrowseCarsListAdapter(getActivity());
-        Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
-        mPresenter = new RenterBrowseCarListPresenter(this, settings);
+        mSettings = SettingsManager.getInstance(getActivity()).obtainSettings();
+        mPresenter = new RenterBrowseCarListPresenter(this, mSettings);
         mCarsListAdapter.subscribe(mPresenter);
     }
 
@@ -100,6 +105,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         addOnScrollListener();
+        mSortText.setText(mSettings.getSortOffers() == null ? R.string.cars_browse_sort_distance : mSettings.getSortOffers().getTitleId());
         mCarsListView.setAdapter(mCarsListAdapter);
         mCarsListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCarsListView.setItemAnimator(new DefaultItemAnimator());
@@ -178,6 +184,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void setItems(List<OfferCar> cars) {
         mCarsListAdapter.insert(cars);
 
+    }
+
+    @Override
+    public void setSortValue(String value) {
+        mSortText.setText(value);
     }
 
     @Override

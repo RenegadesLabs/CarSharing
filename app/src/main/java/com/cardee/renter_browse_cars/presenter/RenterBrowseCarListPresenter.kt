@@ -6,10 +6,7 @@ import com.cardee.custom.modal.TypeRenterOffersDialog
 import com.cardee.data_source.Error
 import com.cardee.domain.UseCase
 import com.cardee.domain.UseCaseExecutor
-import com.cardee.domain.renter.usecase.AddCarToFavorites
-import com.cardee.domain.renter.usecase.GetCars
-import com.cardee.domain.renter.usecase.GetFavorites
-import com.cardee.domain.renter.usecase.SearchCars
+import com.cardee.domain.renter.usecase.*
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract
 import com.cardee.settings.Settings
 import com.crashlytics.android.Crashlytics
@@ -47,7 +44,8 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
             mView?.showProgress(true)
         }
 
-        mExecutor.execute<GetCars.RequestValues, GetCars.ResponseValues>(GetCars(), GetCars.RequestValues(), object : UseCase.Callback<GetCars.ResponseValues> {
+        mExecutor.execute<GetCars.RequestValues, GetCars.ResponseValues>(GetCars(),
+                GetCars.RequestValues(), object : UseCase.Callback<GetCars.ResponseValues> {
             override fun onSuccess(response: GetCars.ResponseValues) {
                 val cars = response.offerCars
                 if (firstStart) {
@@ -109,9 +107,8 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
     }
 
     override fun searchCars(criteria: String) {
-            mView?.showSearchProgress(true)
-            mView?.showProgress(true)
-
+        mView?.showSearchProgress(true)
+        mView?.showProgress(true)
         mExecutor.execute<SearchCars.RequestValues, SearchCars.ResponseValues>(SearchCars(), SearchCars.RequestValues(criteria),
                 object : UseCase.Callback<SearchCars.ResponseValues> {
                     override fun onSuccess(response: SearchCars.ResponseValues) {
@@ -142,9 +139,9 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
 
 
     override fun showSort(activity: FragmentActivity) {
-        val sortDialog = SortRenterOffersDialog.getInstance(mSettings.sortOffers)
-        sortDialog.show(activity.supportFragmentManager, sortDialog.tag)
+        val sortDialog = SortRenterOffersDialog.getInstance(mSettings.sortOffers);
         sortDialog.setSortSelectListener(this)
+        sortDialog.show(activity.supportFragmentManager, sortDialog.tag)
     }
 
     override fun showType(activity: FragmentActivity) {
@@ -155,6 +152,24 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
 
     override fun setSort(sort: RenterBrowseCarListContract.Sort) {
         mSettings.sortOffers = sort
+        mView?.setSortValue(sort.value)
+        sortCars(sort.value)
+    }
+
+    override fun sortCars(sortBy: String?) {
+        mView?.showProgress(true)
+        mExecutor.execute<SortCars.RequestValues, SortCars.ResponseValues>(SortCars(), SortCars.RequestValues(sortBy),
+                object : UseCase.Callback<SortCars.ResponseValues> {
+                    override fun onSuccess(response: SortCars.ResponseValues) {
+                        mView?.showProgress(false)
+                        mView?.setItems(response.offerCars)
+                    }
+
+                    override fun onError(error: Error) {
+                        mView?.showProgress(false)
+                        handleError(error)
+                    }
+                })
     }
 
     override fun setType(type: RenterBrowseCarListContract.VehicleType) {
@@ -162,10 +177,10 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
     }
 
     override fun onSortSelected(sort: RenterBrowseCarListContract.Sort) {
-
+        setSort(sort)
     }
 
     override fun onTypeSelected(type: RenterBrowseCarListContract.VehicleType) {
-
+//        setType(type)
     }
 }
