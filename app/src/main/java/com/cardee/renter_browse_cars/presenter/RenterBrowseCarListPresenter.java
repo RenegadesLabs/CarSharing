@@ -179,7 +179,6 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
         }
     }
 
-
     @Override
     public void showSort(FragmentActivity activity) {
         SortRenterOffersDialog sortDialog = SortRenterOffersDialog.getInstance(mSettings.getSortOffers());

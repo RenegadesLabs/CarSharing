@@ -332,6 +332,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
                             mPresenter.getCarsByFilter(mFilter);
                         }
+
                     }
                 }
                 break;
@@ -342,7 +343,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         if (list != null) {
                             setItems(list);
                         }
-                        mFilter = data.getParcelableExtra("filter");
+                        BrowseCarsFilter temp = data.getParcelableExtra("filter");
+                        mFilter = temp;
                         if (mFilter.getByLocation()) {
                             mSearchAreaAddress.setText(mFilter.getAddress());
                             int radiusInKm = mFilter.getRadius() / 1000;

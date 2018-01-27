@@ -90,8 +90,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
             parcel.readInt(),
             parcel.readInt(),
             parcel.readInt(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean) {
-    }
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(vehicleTypeId)
@@ -119,7 +118,8 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
 
     companion object CREATOR : Parcelable.Creator<BrowseCarsFilter> {
         override fun createFromParcel(parcel: Parcel): BrowseCarsFilter {
-            return BrowseCarsFilter(parcel)
+            val temp = BrowseCarsFilter(parcel)
+            return temp
         }
 
         override fun newArray(size: Int): Array<BrowseCarsFilter?> {

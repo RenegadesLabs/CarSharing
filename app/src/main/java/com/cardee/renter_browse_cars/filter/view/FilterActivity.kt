@@ -262,8 +262,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
             val intent = Intent()
             val list: ArrayList<OfferCar>? = ArrayList(mCars)
             intent.putParcelableArrayListExtra("cars", list)
-
-            val temp = filter
             intent.putExtra("filter", filter)
             setResult(Activity.RESULT_OK, intent)
             finish()
