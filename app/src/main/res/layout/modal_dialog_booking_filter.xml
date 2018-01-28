@@ -12,7 +12,6 @@
         android:layout_height="@dimen/modal_menu_title_height"
         android:background="@android:color/transparent"
         android:text="@string/booking_filter_title"
-        android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/booking_filter_all"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />

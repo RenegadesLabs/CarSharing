@@ -24,7 +24,7 @@
         <include
             layout="@layout/view_header_browse_cars"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/toolbar_height"
             android:layout_marginTop="48dp" />
 
         <View

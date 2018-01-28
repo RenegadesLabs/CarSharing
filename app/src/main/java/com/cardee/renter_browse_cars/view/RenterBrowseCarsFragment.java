@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.renter_availability_filter.AvailabilityDialogActivity;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.filter.view.FilterActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
@@ -227,7 +228,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     }
 
-    @OnClick({R.id.ll_browseCarsFloatingMapBtn,
+    @OnClick({R.id.ll_browseCarsHeaderPeriod,
+            R.id.ll_browseCarsFloatingMapBtn,
             R.id.iv_renterBrowseCarsSearch,
             R.id.b_searchViewCancel,
             R.id.fl_renterCarsToolbarFavorites,
@@ -236,6 +238,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             R.id.fl_renterCarsToolbarFilter})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_browseCarsHeaderPeriod:
+                startActivity(new Intent(getActivity(), AvailabilityDialogActivity.class));
+                getActivity().overridePendingTransition(R.anim.enter_up, 0);
+                break;
             case R.id.ll_browseCarsFloatingMapBtn:
                 startActivity(new Intent(getActivity(), BrowseCarsMapActivity.class));
                 break;

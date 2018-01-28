@@ -181,8 +181,12 @@
         <activity android:name=".renter_browse_cars.search_area.view.SearchAreaActivity" />
         <activity
             android:name=".renter_browse_cars_map.BrowseCarsMapActivity"
-            android:theme="@style/AppTheme.DarkTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.DarkTheme" />
+        <activity
+            android:name=".renter_availability_filter.AvailabilityDialogActivity"
+            android:theme="@style/ActivityTranslucent"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
