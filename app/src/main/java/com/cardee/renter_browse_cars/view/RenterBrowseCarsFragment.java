@@ -111,7 +111,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
         mPresenter = new RenterBrowseCarListPresenter(this, settings);
         mCarsListAdapter.subscribe(mPresenter);
-//        mFilter = new BrowseCarsFilter();
         mFilter = mPresenter.getFilter();
     }
 
