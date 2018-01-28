@@ -4,17 +4,20 @@ import com.cardee.data_source.Error
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper
+import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.GetFilteredCars
+import com.cardee.domain.renter.usecase.SaveFilter
 import com.cardee.renter_browse_cars.filter.view.FilterView
 import io.reactivex.disposables.Disposable
 
 class CarsFilterPresenter(var mView: FilterView?) {
 
-    val getCars: GetFilteredCars
+    private val getCars: GetFilteredCars = GetFilteredCars()
+    private val getFilterUseCase = GetFilter()
+    private val saveFilterUseCase = SaveFilter()
     var disposable: Disposable?
 
     init {
-        getCars = GetFilteredCars()
         disposable = null
     }
 
@@ -40,5 +43,13 @@ class CarsFilterPresenter(var mView: FilterView?) {
 
     fun onDestroy() {
         mView = null
+    }
+
+    fun getFilter(): BrowseCarsFilter {
+        return getFilterUseCase.getFilter()
+    }
+
+    fun saveFilter(filter: BrowseCarsFilter) {
+        saveFilterUseCase.saveFilter(filter)
     }
 }

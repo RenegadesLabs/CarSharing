@@ -3,6 +3,7 @@ package com.cardee.data_source;
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.util.Collection;
@@ -145,6 +146,16 @@ public class RenterCarsRepository implements RenterCarsDataSource {
 
             }
         });
+    }
+
+    @Override
+    public void saveFilter(BrowseCarsFilter filter) {
+        mLocalDataSource.saveFilter(filter);
+    }
+
+    @Override
+    public BrowseCarsFilter getFilter() {
+        return mLocalDataSource.getFilter();
     }
 
     public void refreshCars() {

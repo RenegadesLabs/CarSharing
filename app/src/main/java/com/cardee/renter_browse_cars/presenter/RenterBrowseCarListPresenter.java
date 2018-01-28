@@ -13,7 +13,9 @@ import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper;
 import com.cardee.domain.renter.usecase.AddCarToFavorites;
 import com.cardee.domain.renter.usecase.GetCars;
+import com.cardee.domain.renter.usecase.GetFilter;
 import com.cardee.domain.renter.usecase.GetFilteredCars;
+import com.cardee.domain.renter.usecase.SaveFilter;
 import com.cardee.domain.renter.usecase.SearchCars;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.settings.Settings;
@@ -32,6 +34,8 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
     private final UseCaseExecutor mExecutor;
     private RenterBrowseCarListContract.View mView;
     private GetFilteredCars mGetFilteredCars;
+    private GetFilter mGetFilter;
+    private SaveFilter mSaveFilter;
 
     private boolean firstStart = true;
 
@@ -44,6 +48,8 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
         mExecutor = UseCaseExecutor.getInstance();
         mSettings = settings;
         mGetFilteredCars = new GetFilteredCars();
+        mGetFilter = new GetFilter();
+        mSaveFilter = new SaveFilter();
     }
 
     @Override
@@ -162,6 +168,16 @@ public class RenterBrowseCarListPresenter implements Consumer<RenterBrowseCarLis
                         }
                     }
                 });
+    }
+
+    @Override
+    public BrowseCarsFilter getFilter() {
+        return mGetFilter.getFilter();
+    }
+
+    @Override
+    public void saveFilter(BrowseCarsFilter filter) {
+        mSaveFilter.saveFilter(filter);
     }
 
     public void refresh() {

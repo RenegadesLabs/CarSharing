@@ -33,12 +33,12 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initPresenter()
+        getFilter()
         bindView()
         initToolBar()
-        getIntentData()
         initViews()
         setListeners()
-        initPresenter()
     }
 
     override fun onStart() {
@@ -48,7 +48,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     private fun bindView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
-        filter = BrowseCarsFilter()
         binding.filter = filter
         binding.stringHolder = FilterStringHolder()
         binding.executePendingBindings()
@@ -60,15 +59,14 @@ class FilterActivity : AppCompatActivity(), FilterView {
         supportActionBar?.title = null
     }
 
-    private fun getIntentData() {
-        filter = intent.getParcelableExtra("filter")
-        binding.filter = filter
+    private fun getFilter() {
+        filter = mPresenter?.getFilter() ?: return
     }
 
     private fun initViews() {
-        filter.bookingHourly = false
-        filter.instantBooking = false
-        filter.curbsideDelivery = false
+        if (filter.bookingHourly == null) {
+            filter.bookingHourly = false
+        }
 
         if (filter.byLocation) {
             searchAreaAddress.text = String.format(
@@ -262,7 +260,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
             val intent = Intent()
             val list: ArrayList<OfferCar>? = ArrayList(mCars)
             intent.putParcelableArrayListExtra("cars", list)
-            intent.putExtra("filter", filter)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

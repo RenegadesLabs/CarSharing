@@ -111,7 +111,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
         mPresenter = new RenterBrowseCarListPresenter(this, settings);
         mCarsListAdapter.subscribe(mPresenter);
-        mFilter = new BrowseCarsFilter();
+//        mFilter = new BrowseCarsFilter();
+        mFilter = mPresenter.getFilter();
     }
 
     @Nullable
@@ -151,7 +152,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
             @Override
             public void hide() {
-
                 mHeaderView.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator(2))
                         .start();
@@ -263,7 +263,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 break;
             case R.id.fl_renterCarsToolbarFilter:
                 Intent intent = new Intent(getActivity(), FilterActivity.class);
-                intent.putExtra("filter", mFilter);
                 startActivityForResult(intent, FILTER_REQUEST_CODE);
                 break;
             case R.id.ll_browseCarsHeaderRadius:
@@ -308,6 +307,12 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.saveFilter(mFilter);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case (LOCATION_REQUEST_CODE):
@@ -343,8 +348,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         if (list != null) {
                             setItems(list);
                         }
-                        BrowseCarsFilter temp = data.getParcelableExtra("filter");
-                        mFilter = temp;
+                        mFilter = mPresenter.getFilter();
                         if (mFilter.getByLocation()) {
                             mSearchAreaAddress.setText(mFilter.getAddress());
                             int radiusInKm = mFilter.getRadius() / 1000;

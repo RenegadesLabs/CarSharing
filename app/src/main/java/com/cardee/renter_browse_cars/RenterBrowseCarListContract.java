@@ -44,6 +44,10 @@ public interface RenterBrowseCarListContract {
         void searchCars(String criteria);
 
         void getCarsByFilter(BrowseCarsFilter filter);
+
+        BrowseCarsFilter getFilter();
+
+        void saveFilter(BrowseCarsFilter filter);
     }
 
     enum Action {
