@@ -109,6 +109,13 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="NegativeButton" parent="RegularButton">
+        <item name="android:background">@drawable/bg_button_white</item>
+        <item name="android:textColor">@color/toggling_text_color</item>
+        <item name="android:paddingStart">@dimen/widget_padding_regular</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_regular</item>
+    </style>
+
     <style name="SelectorButton" parent="RegularButton">
         <item name="android:background">@drawable/bg_button_white</item>
         <item name="android:textSize">@dimen/list_item_selector_value</item>

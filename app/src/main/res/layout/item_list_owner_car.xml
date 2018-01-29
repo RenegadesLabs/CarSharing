@@ -156,7 +156,7 @@
             android:layout_height="@dimen/button_regular_height"
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:clickable="true"
-            android:text="6 available days"
+            android:text="6 available hours"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/car_daily_title"

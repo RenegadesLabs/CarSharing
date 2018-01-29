@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:background="@drawable/bg_rounded_top"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="9:13"
+        app:layout_constraintDimensionRatio="9:13.5"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_title_height"
         android:background="@android:color/transparent"
-        android:text="@string/booking_filter_title"
+        android:text="@string/availability_filter_title"
         app:layout_constraintBottom_toTopOf="@+id/backgroundView"
         app:layout_constraintStart_toStartOf="parent" />
 

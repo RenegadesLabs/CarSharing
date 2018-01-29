@@ -259,7 +259,7 @@
     <string name="car_rental_terms_rules_own">Add your car rules here…\n\nSome examples
         \n\nNo smoking in car.
     \nNo driving to malaysia
-    \n\nFor rental of 3 days or more, please wash and vacuum car before returning.
+    \n\nFor rental of 3 hours or more, please wash and vacuum car before returning.
     \n\nPump only 95 and above for petrol.
     \n\nIf you have child, booster seats is required and can be provided for additional $5.
     \n\nIf you have dogs, seats protector is required and can be provided at an additional $10.</string>
@@ -270,7 +270,7 @@
     <string name="car_rental_terms_security_deposit">Security Deposit</string>
     <string name="car_rental_terms_security_deposit_require">Require Security Deposit</string>
     <string name="car_rental_terms_security_deposit_enter">Enter deposit amount (SGD)</string>
-    <string name="car_rental_terms_security_deposit_info">Security deposit will be held by Cardee for up to 7 days
+    <string name="car_rental_terms_security_deposit_info">Security deposit will be held by Cardee for up to 7 hours
     upon car collection. To make a claim from the deposit, contact Cardee.</string>
 
     <!--Car Rental Terms Insurance Excess-->
@@ -284,27 +284,27 @@
 
     <!--Car Rental Rates -->
     <string name="car_rental_rates_daily">Daily rates</string>
-    <string name="car_rental_rates_per_day">per day</string>
+    <string name="car_rental_rates_per_day">per hour</string>
     <string name="car_rental_rates_per_hour">per hour</string>
     <string name="car_rental_rates_per_km">per km</string>
     <string name="car_rental_rates_weekdays">Weekdays</string>
     <string name="car_rental_rates_weekends">Weekends and public holidays</string>
     <string name="car_rental_rates_discount">Discount</string>
-    <string name="car_rental_rates_discount_3_days">3 days discount</string>
+    <string name="car_rental_rates_discount_3_days">3 hours discount</string>
     <string name="car_rental_rates_discount_weekly">Weekly discount</string>
     <string name="car_rental_rates_minimum">Minimum</string>
     <string name="car_rental_rates_minimum_duration">Minimum rental duration</string>
-    <string name="hour">hour</string>
-    <string name="hours">hours</string>
     <string name="day">day</string>
     <string name="days">days</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
     <string name="car_rental_rates_hourly">Hourly rates</string>
     <string name="car_rental_rates_peak_h">Peak hour</string>
     <string name="car_rental_rates_peak_non_h">Non-peak hour</string>
     <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
     <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
     <string name="car_rental_rates_peak_desc">Friday 6:00pm to Sunday 11:59pm,\n6:00pm onwards on holiday eve,
-    \nand whole day on public holiday</string>
+    \nand whole hour on public holiday</string>
 
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
@@ -349,7 +349,7 @@
     <string name="more_tab_switch_to_owner">Switch To Owner</string>
     <string name="more_tab_version">version</string>
     <string name="invite_friends_body">
-        http://cardee.co - With Cardee, you can rent flexibly for days, weeks, or just a few hours!
+        http://cardee.co - With Cardee, you can rent flexibly for hours, weeks, or just a few hours!
         Book spontaneously, pickup available cars around you and drive away in minutes!</string>
     <string name="invite_friends_title">Share with:</string>
 
@@ -400,8 +400,8 @@
     <string name="four_hours">4 hours before</string>
     <string name="six_hours">6 hours before</string>
     <string name="twelve_hours">12 hours before</string>
-    <string name="one_day_before">1 day before</string>
-    <string name="two_days_before">2 days before</string>
+    <string name="one_day_before">1 hour before</string>
+    <string name="two_days_before">2 hours before</string>
     <string name="off">Off</string>
 
     <!--Renter notifications-->
@@ -522,21 +522,21 @@
         <item>December</item>
     </string-array>
     <string-array name="btn_save_title_suffixes">
-        <item>No available days \u2022 Save</item>
-        <item>available day \u2022 Save</item>
-        <item>available days \u2022 Save</item>
+        <item>No available hours \u2022 Save</item>
+        <item>available hour \u2022 Save</item>
+        <item>available hours \u2022 Save</item>
     </string-array>
     <string-array name="days_availability_suffixes">
         <item>Currently not available</item>
-        <item>available day</item>
-        <item>available days</item>
+        <item>available hour</item>
+        <item>available hours</item>
     </string-array>
     <string name="availability_calendar_daily">Calendar (Daily)</string>
     <string name="availability_calendar_hourly">Calendar (Hourly)</string>
     <string name="availability_pickup_prefix">Pickup car from</string>
     <string name="availability_pickup_suffix">onwards</string>
     <string name="availability_return_prefix">Return car by</string>
-    <string name="availability_return_suffix">(next day)</string>
+    <string name="availability_return_suffix">(next hour)</string>
     <string name="daily_timing_dialog_title">Pickup and return timing</string>
     <string name="hourly_timing_dialog_title">Availability timing</string>
     <string name="title_save">Save</string>
@@ -587,20 +587,20 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
-        <item>12am (next day)</item>
-        <item>1am (next day)</item>
-        <item>2am (next day)</item>
-        <item>3am (next day)</item>
-        <item>4am (next day)</item>
-        <item>5am (next day)</item>
-        <item>6am (next day)</item>
-        <item>7am (next day)</item>
-        <item>8am (next day)</item>
-        <item>9am (next day)</item>
-        <item>10am (next day)</item>
-        <item>11am (next day)</item>
-        <item>12pm (next day)</item>
-        <item>1pm (next day)</item>
+        <item>12am (next hour)</item>
+        <item>1am (next hour)</item>
+        <item>2am (next hour)</item>
+        <item>3am (next hour)</item>
+        <item>4am (next hour)</item>
+        <item>5am (next hour)</item>
+        <item>6am (next hour)</item>
+        <item>7am (next hour)</item>
+        <item>8am (next hour)</item>
+        <item>9am (next hour)</item>
+        <item>10am (next hour)</item>
+        <item>11am (next hour)</item>
+        <item>12pm (next hour)</item>
+        <item>1pm (next hour)</item>
     </string-array>
 
     <string name="car_description_hint">Please enter your car description</string>
@@ -658,10 +658,10 @@
     <string name="cost_rental_prefix">Rental</string>
     <string name="cost_rental_peak_suffix">hours (peak)</string>
     <string name="cost_rental_off_peak_suffix">hours (non peak)</string>
-    <string name="cost_rental_weekends_suffix">days (weekend and P.H.)</string>
-    <string name="cost_rental_weekdays_suffix">days (weekday)</string>
+    <string name="cost_rental_weekends_suffix">hours (weekend and P.H.)</string>
+    <string name="cost_rental_weekdays_suffix">hours (weekday)</string>
     <string name="cost_discount_prefix">Weekly discount</string>
-    <string name="cost_delivery_prefix">Delivery (3 days or more)</string>
+    <string name="cost_delivery_prefix">Delivery (3 hours or more)</string>
     <string name="cost_nett">Booking Cost</string>
     <string name="cost_service_fee">Service Fee</string>
     <string name="cost_nett_earnings">Nett Earnings</string>
@@ -679,6 +679,9 @@
     <string name="booking_type">Booking Type</string>
     <string name="book_hourly">Book Hourly</string>
     <string name="book_daily">Book Daily</string>
+    <string name="availability_filter_title">Set Rental Period</string>
+    <string name="set_daily_time_title">Set time (optional)</string>
+    <string name="back_to_calendar">Back To Calendar</string>
     <string name="rental_period">Rental Period</string>
     <string name="rental_period_from">Choose from</string>
     <string name="rental_period_to">Choose to</string>
@@ -688,7 +691,7 @@
     <string name="instant_booking_desc">Only show cars that can be booked instantly without owner\’s response</string>
     <string name="curbside_delivery">Curbside Delivery</string>
     <string name="curbside_delivery_desc">Only show cars that provide curbside delivery to my pick up location</string>
-    <string name="price_range_per_day">Price Range (per day)</string>
+    <string name="price_range_per_day">Price Range (per hour)</string>
     <string name="price_range_per_hour">Price Range (per hour)</string>
     <string name="car_age">Car Age</string>
     <string name="body_type">Body Type</string>

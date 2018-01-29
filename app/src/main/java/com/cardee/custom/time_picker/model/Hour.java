@@ -1,9 +1,9 @@
-package com.cardee.custom.calendar.model;
+package com.cardee.custom.time_picker.model;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.cardee.custom.calendar.domain.criteria.SelectionState;
+import com.cardee.custom.time_picker.domain.criteria.SelectionState;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,65 +11,32 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Day implements Comparable<Day> {
+public class Hour implements Comparable<Hour> {
 
-    private static final String TAG = Day.class.getSimpleName();
-    private static final SimpleDateFormat NEW_DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    private static final SimpleDateFormat COMPARE_DATE_FORMAT =
-            new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    private static final String TAG = Hour.class.getSimpleName();
+    private static final SimpleDateFormat COMPARE_TIME_FORMAT =
+            new SimpleDateFormat("yyyyMMdd_hh", Locale.getDefault());
 
     private final Calendar calendar;
-    private final String dateTitle;
-    private final int dayOfWeek;
-    private final boolean current;
+    private final String hourTitle;
+    private final int hourOfDay;
     private final boolean enabled;
-    private final boolean empty;
     private boolean selected;
     private SelectionState state;
 
-    private Day(@NonNull Date date) {
+    private Hour(@NonNull Date date) {
         this.calendar = Calendar.getInstance();
         calendar.setTime(date);
-        dateTitle = String.valueOf(calendar.get(Calendar.DATE));
-        dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String ampm = calendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm";
+        hourTitle = String.valueOf(calendar.get(Calendar.HOUR)) + ampm;
+        hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         Date now = new Date();
         int currentCompare = compareTo(now);
-        current = currentCompare == 0;
         enabled = currentCompare >= 0;
-        empty = false;
     }
 
-    private Day() {
-        calendar = null;
-        dateTitle = null;
-        dayOfWeek = -1;
-        current = false;
-        enabled = false;
-        empty = true;
-    }
-
-    public static Day from(@NonNull Date date) {
-        return new Day(date);
-    }
-
-    public static Day empty() {
-        return new Day();
-    }
-
-
-    /**
-     * @param date - string representation of date
-     * @return Hour object in case of valid date string. Otherwise returns null
-     */
-    public static Day from(@NonNull String date) {
-        try {
-            Date dateArg = NEW_DATE_FORMAT.parse(date);
-            return new Day(dateArg);
-        } catch (ParseException e) {
-            Log.e(TAG, e.getMessage());
-            return null;
-        }
+    public static Hour from(@NonNull Date date) {
+        return new Hour(date);
     }
 
     public void setSelectionState(SelectionState state) {
@@ -81,24 +48,16 @@ public class Day implements Comparable<Day> {
         return selected;
     }
 
-    public boolean isCurrent() {
-        return current;
+    public int getHourOfDay() {
+        return hourOfDay;
     }
 
-    public String getTitle() {
-        return dateTitle;
-    }
-
-    public int getDayOfWeed() {
-        return dayOfWeek;
+    public String getHourTitle() {
+        return hourTitle;
     }
 
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public boolean isEmpty() {
-        return empty;
     }
 
     public Date getCalendarTime() {
@@ -111,7 +70,7 @@ public class Day implements Comparable<Day> {
 
     @Override
     public int hashCode() {
-        return COMPARE_DATE_FORMAT.format(calendar.getTime()).hashCode();
+        return COMPARE_TIME_FORMAT.format(calendar.getTime()).hashCode();
     }
 
     @Override
@@ -119,19 +78,19 @@ public class Day implements Comparable<Day> {
         if (!obj.getClass().getName().equals(getClass().getName())) {
             return false;
         }
-        Day target = (Day) obj;
+        Hour target = (Hour) obj;
         return equalsDate(target.calendar.getTime());
     }
 
     public boolean equalsDate(Date date) {
-        String targetDate = COMPARE_DATE_FORMAT.format(date);
-        String currentDate = COMPARE_DATE_FORMAT.format(calendar.getTime());
+        String targetDate = COMPARE_TIME_FORMAT.format(date);
+        String currentDate = COMPARE_TIME_FORMAT.format(calendar.getTime());
         return currentDate.equals(targetDate);
     }
 
     @Override
-    public int compareTo(@NonNull Day day) {
-        return compareTo(day.calendar);
+    public int compareTo(@NonNull Hour hour) {
+        return compareTo(hour.calendar);
     }
 
     private int compareTo(Date date) {
@@ -155,6 +114,11 @@ public class Day implements Comparable<Day> {
         int currentDay = this.calendar.get(Calendar.DAY_OF_MONTH);
         if (currentDay != targetDay) {
             return currentDay < targetDay ? -1 : 1;
+        }
+        int targetHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentHour = this.calendar.get(Calendar.HOUR_OF_DAY);
+        if (currentHour != targetHour) {
+            return currentHour < targetHour ? -1 : 1;
         }
         return 0;
     }
