@@ -1,17 +1,18 @@
 package com.cardee.renter_availability_filter
 
-import com.cardee.custom.calendar.model.Day
-import com.cardee.custom.calendar.view.selection.RangeSelectionAdapter
+import com.cardee.custom.time_picker.model.Hour
+import com.cardee.custom.time_picker.view.selection.RangeSelectionAdapter
 import java.util.*
 
-class CalendarAdapter : RangeSelectionAdapter<Date>() {
+
+class TimePickerAdapter : RangeSelectionAdapter<Date>() {
 
     private var listener: (List<Date>) -> Unit = {}
     private var selection: MutableList<Date> = mutableListOf()
 
-    override fun onSelectionChanged(dayz: MutableList<Day>?) {
+    override fun onSelectionChanged(hourz: MutableList<Hour>?) {
         selection.clear()
-        dayz?.forEach { selection.add(it.calendarTime) }
+        hourz?.forEach { selection.add(it.calendarTime) }
         listener.invoke(selection)
     }
 

@@ -17,7 +17,6 @@ class GenerateDaysDelegate {
     }
 
     private List<Day> onGenerateMonths(int range, Calendar calendar) {
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         List<Day> days = new ArrayList<>(range);
         for (int i = 0; i < range; i++) {

@@ -2,6 +2,7 @@ package com.cardee.custom.time_picker.view.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +51,7 @@ public class DayHolderDelegate {
         titleView.setId(R.id.month_title);
         titleView.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical);
         titleView.setTypeface(null, Typeface.BOLD);
-        titleView.setTextColor(config.getBodyTextColor());
+        titleView.setTextColor(ContextCompat.getColor(context, R.color.text_additional_info));
         titleView.setBackground(config.getTitleBackground());
         titleView.setGravity(convertValueToPlatformRelated(config.getTitleGravity()));
         return titleView;

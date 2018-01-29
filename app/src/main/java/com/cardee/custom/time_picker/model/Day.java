@@ -29,7 +29,7 @@ public class Day {
         this.month = calendar.get(Calendar.MONTH);
         this.year = calendar.get(Calendar.YEAR);
         dateTitle = calendar.get(Calendar.DAY_OF_MONTH) + " " +
-                MONTHES[month] + ", " + DAYZ[calendar.get(Calendar.DAY_OF_WEEK)];
+                MONTHES[month] + ", " + DAYZ[calendar.get(Calendar.DAY_OF_WEEK) - 1];
     }
 
     public List<Hour> getHours() {
@@ -42,6 +42,10 @@ public class Day {
 
     public int getYear() {
         return year;
+    }
+
+    public String getDateTitle() {
+        return dateTitle;
     }
 
     @Override

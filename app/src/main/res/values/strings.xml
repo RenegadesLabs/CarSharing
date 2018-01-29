@@ -587,20 +587,20 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
-        <item>12am (next hour)</item>
-        <item>1am (next hour)</item>
-        <item>2am (next hour)</item>
-        <item>3am (next hour)</item>
-        <item>4am (next hour)</item>
-        <item>5am (next hour)</item>
-        <item>6am (next hour)</item>
-        <item>7am (next hour)</item>
-        <item>8am (next hour)</item>
-        <item>9am (next hour)</item>
-        <item>10am (next hour)</item>
-        <item>11am (next hour)</item>
-        <item>12pm (next hour)</item>
-        <item>1pm (next hour)</item>
+        <item>12am (next day)</item>
+        <item>1am (next day)</item>
+        <item>2am (next day)</item>
+        <item>3am (next day)</item>
+        <item>4am (next day)</item>
+        <item>5am (next day)</item>
+        <item>6am (next day)</item>
+        <item>7am (next day)</item>
+        <item>8am (next day)</item>
+        <item>9am (next day)</item>
+        <item>10am (next day)</item>
+        <item>11am (next day)</item>
+        <item>12pm (next day)</item>
+        <item>1pm (next day)</item>
     </string-array>
 
     <string name="car_description_hint">Please enter your car description</string>
@@ -706,6 +706,8 @@
     <string name="manual">Manual</string>
     <string name="submit_btn_text">View 0 Cars</string>
     <string name="filter_search_area_template">%s\u0020\u0020\u2022\u0020\u0020Within %dkm"</string>
+    <string name="pickup_on">Pickup on</string>
+    <string name="return_by">Return by</string>
 
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>

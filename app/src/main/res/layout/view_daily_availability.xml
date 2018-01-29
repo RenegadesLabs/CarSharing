@@ -85,9 +85,9 @@
         android:textColor="@color/booking_subtitle"
         android:textSize="@dimen/text_small"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/setTimeIcon"
-        app:layout_constraintStart_toEndOf="@id/setTimeIcon"
-        app:layout_constraintTop_toTopOf="@id/setTimeIcon" />
+        app:layout_constraintBottom_toBottomOf="@id/backTitleIcon"
+        app:layout_constraintStart_toEndOf="@id/backTitleIcon"
+        app:layout_constraintTop_toTopOf="@id/backTitleIcon" />
 
     <com.cardee.custom.calendar.view.CalendarView
         android:id="@+id/calendar"
@@ -101,13 +101,90 @@
         app:header_height="40dp"
         app:header_highlighted_text_color="@color/red_error"
         app:header_text_color="@color/text_regular"
-        app:selection_color="@color/light_blue"
-        app:title_background="@android:color/transparent"
-        app:title_gravity="start"
         app:layout_constraintBottom_toTopOf="@+id/btnReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateFrom" />
+        app:layout_constraintTop_toBottomOf="@id/dateFrom"
+        app:selection_color="@color/light_blue"
+        app:title_background="@android:color/transparent"
+        app:title_gravity="start" />
+
+    <FrameLayout
+        android:id="@+id/pickerBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_horizontal_lines"
+        app:layout_constraintBottom_toBottomOf="@id/returnTimeTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pickupTimeTitle" />
+
+    <View
+        android:id="@+id/timeSelector"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/selector_view"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupTimePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickupTimePicker" />
+
+    <TextView
+        android:id="@+id/pickupTimeTitle"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginTop="@dimen/widget_margin_x_small"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/pickup_on"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/returnTimeTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backTitleIcon" />
+
+    <TextView
+        android:id="@id/returnTimeTitle"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginTop="@dimen/widget_margin_x_small"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/return_by"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pickupTimeTitle"
+        app:layout_constraintTop_toBottomOf="@id/backTitleIcon" />
+
+    <NumberPicker
+        android:id="@id/pickupTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/NumberPicker"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/returnTimePicker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pickupTimeTitle" />
+
+    <NumberPicker
+        android:id="@id/returnTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/NumberPicker"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pickupTimePicker"
+        app:layout_constraintTop_toBottomOf="@id/returnTimeTitle" />
 
     <TextView
         android:id="@+id/btnReset"

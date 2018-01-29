@@ -44,6 +44,21 @@
         app:layout_constraintStart_toEndOf="@id/dateSeparator"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.cardee.custom.time_picker.view.TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_clickable_top_line_normal"
+        android:layout_marginBottom="@dimen/widget_margin_x_small"
+        app:body_text_color="@color/text_regular"
+        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateFrom"
+        app:selection_color="@color/light_blue"
+        app:title_background="@color/bg_window"
+        app:title_gravity="start" />
+
     <TextView
         android:id="@+id/btnReset"
         style="@style/NegativeButton"

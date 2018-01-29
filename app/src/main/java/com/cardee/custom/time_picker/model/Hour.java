@@ -13,7 +13,6 @@ import java.util.Locale;
 
 public class Hour implements Comparable<Hour> {
 
-    private static final String TAG = Hour.class.getSimpleName();
     private static final SimpleDateFormat COMPARE_TIME_FORMAT =
             new SimpleDateFormat("yyyyMMdd_hh", Locale.getDefault());
 
