@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_dialog_availability.*
 
 class AvailabilityDialogActivity : AppCompatActivity() {
 
+    var availabilityView: AvailabilityFilterView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialog_availability)
@@ -21,9 +23,10 @@ class AvailabilityDialogActivity : AppCompatActivity() {
         val content = inflater.inflate(R.layout.view_availability_filter, backgroundView, false)
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
+        availabilityView = content as AvailabilityFilterView
+        availabilityView?.subscribe { it -> proceedExit(it) }
         backgroundView.addView(content)
         dim.setOnClickListener { _ -> onBackPressed() }
-        btnDialogClose.setOnClickListener { _ -> onBackPressed() }
         prepareWindow()
     }
 
@@ -35,6 +38,15 @@ class AvailabilityDialogActivity : AppCompatActivity() {
         }
         window.attributes.dimAmount = 0.6f
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        availabilityView?.unsubscribe()
+    }
+
+    private fun proceedExit(saved: Boolean) {
+        TODO() //implement onActivityResult
     }
 
     override fun finish() {
