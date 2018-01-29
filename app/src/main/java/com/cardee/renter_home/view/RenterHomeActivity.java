@@ -42,15 +42,15 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
         AHBottomNavigation bottomMenu = (AHBottomNavigation) findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepareForRenter(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
-        bottomMenu.setCurrentItem(0);
         bottomMenu.disableItemAtPosition(1); //Just for demo
         bottomMenu.disableItemAtPosition(2); //Just for demo
+        bottomMenu.setCurrentItem(0);
 
     }
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
-        if (!wasSelected) {
+//        if (!wasSelected) {
             switch (position) {
                 case 1:
                 case 2:
@@ -62,7 +62,7 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
                     break;
             }
             showFragmentOnPosition(position);
-        }
+//        }
         return true;
     }
 
