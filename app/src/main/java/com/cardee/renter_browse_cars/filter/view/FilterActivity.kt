@@ -96,10 +96,12 @@ class FilterActivity : AppCompatActivity(), FilterView {
             filter.byLocation = false
             searchAreaAddress.text = resources.getString(R.string.default_search_area)
             filter.bookingHourly = false
-            filter.instantBooking = false
-            filter.curbsideDelivery = false
             priceRangeSeekBar.apply()
             carAgeSeekBar.apply()
+            filter.maxPrice = 201
+            filter.minPrice = 20
+            filter.instantBooking = false
+            filter.curbsideDelivery = false
             filter.bodyTypeId = 0
             filter.transmissionAuto = true
             filter.transmissionManual = true
@@ -135,6 +137,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 filter.bookingHourly = true
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                filter.maxPrice = 41
+                filter.minPrice = 2
                 mPresenter?.getFilteredCars(filter)
             }
         }
@@ -143,6 +147,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 filter.bookingHourly = false
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                filter.maxPrice = 201
+                filter.minPrice = 20
                 mPresenter?.getFilteredCars(filter)
             }
         }
