@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 
 
-class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContract.View?, private val mSettings: Settings) :
+class RenterBrowseCarListPresenter(private var mView: RenterBrowseCarListContract.View?, private val mSettings: Settings) :
         Consumer<RenterBrowseCarListContract.CarEvent>,
         RenterBrowseCarListContract.Presenter,
         SortRenterOffersDialog.SortSelectListener,
@@ -90,17 +90,13 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
                 ToFilterRequestMapper().transform(filter)),
                 object : RxUseCase.Callback<GetFilteredCars.ResponseValues> {
                     override fun onError(error: Error) {
-                        if (mView != null) {
-                            mView.showProgress(false)
-                            handleError(error)
-                        }
+                        mView?.showProgress(false)
+                        handleError(error)
                     }
 
                     override fun onSuccess(response: GetFilteredCars.ResponseValues) {
-                        if (mView != null) {
-                            mView.showProgress(false)
-                            mView.setItems(response.cars)
-                        }
+                        mView?.showProgress(false)
+                        mView?.setItems(response.cars)
                     }
                 })
     }
@@ -139,25 +135,24 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
     }
 
     override fun setSort(sort: RenterBrowseCarListContract.Sort) {
+        if (sort == RenterBrowseCarListContract.Sort.DISTANCE) {
+            mView?.checkLocationPermission()
+        } else {
+            continueSetSort(sort)
+        }
+    }
+
+    override fun continueSetSort(sort: RenterBrowseCarListContract.Sort) {
         mSettings.sortOffers = sort
         mView?.setSortValue(sort.value)
         sortCars(sort.value)
     }
 
     override fun sortCars(sortBy: String?) {
-        mView?.showProgress(true)
-        mExecutor.execute<SortCars.RequestValues, SortCars.ResponseValues>(SortCars(), SortCars.RequestValues(sortBy),
-                object : UseCase.Callback<SortCars.ResponseValues> {
-                    override fun onSuccess(response: SortCars.ResponseValues) {
-                        mView?.showProgress(false)
-                        mView?.setItems(response.offerCars)
-                    }
-
-                    override fun onError(error: Error) {
-                        mView?.showProgress(false)
-                        handleError(error)
-                    }
-                })
+        val fil = filter
+        fil.orderBy = sortBy
+        saveFilter(fil)
+        getCarsByFilter(fil)
     }
 
     override fun setType(type: RenterBrowseCarListContract.VehicleType) {
@@ -171,4 +166,9 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
     override fun onTypeSelected(type: RenterBrowseCarListContract.VehicleType) {
 //        setType(type)
     }
+
+    override fun onDestroy() {
+        mView = null
+    }
+
 }

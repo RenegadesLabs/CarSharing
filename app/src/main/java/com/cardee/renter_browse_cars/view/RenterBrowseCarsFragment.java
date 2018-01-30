@@ -1,17 +1,26 @@
 package com.cardee.renter_browse_cars.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +55,16 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 
 public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCarListContract.View,
-        View.OnClickListener {
+        View.OnClickListener, LocationListener {
 
     private final static int LOCATION_REQUEST_CODE = 111;
     private final static int FILTER_REQUEST_CODE = 112;
+    private final static int PERMISSIONS_REQUEST_ACCESS_LOCATION = 101;
+    private final String TAG = this.getClass().getSimpleName();
     private final static int AVAILABILITY_REQUEST_CODE = 113;
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
@@ -121,7 +134,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         addOnScrollListener();
-        mSortText.setText(mSettings.getSortOffers() == null ? R.string.cars_browse_sort_distance : mSettings.getSortOffers().getTitleId());
+        mSortText.setText(mSettings.getSortOffers() == null ? R.string.booking_sort_title : mSettings.getSortOffers().getTitleId());
         mCarsListView.setAdapter(mCarsListAdapter);
         mCarsListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCarsListView.setItemAnimator(new DefaultItemAnimator());
@@ -192,6 +205,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        mPresenter.onDestroy();
     }
 
     @Override
@@ -252,6 +266,70 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     }
 
+    @Override
+    public void checkLocationPermission() {
+        if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)
+                || (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)) {
+            getCurrentLocation();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
+        }
+    }
+
+    private void getCurrentLocation() {
+        Location location = null;
+
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+        boolean gpsEnabled = false;
+        boolean networkEnabled = false;
+        if (locationManager != null) {
+            gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+
+        if (!gpsEnabled && !networkEnabled) {
+            Log.d(TAG, "getCurrentLocation: no provider is enabled");
+        } else {
+            if (networkEnabled) {
+                if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED)
+                        || (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED)) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+            }
+
+            if (gpsEnabled) {
+                if (location == null) {
+                    if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED)
+                            || (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED)) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                }
+            }
+
+            if (location != null) {
+                BrowseCarsFilter fil = mPresenter.getFilter();
+                if (!fil.getByLocation()) {
+                    fil.setByLocation(true);
+                    fil.setRadius(30000); // Within SG
+                }
+                fil.setLatitude(location.getLatitude());
+                fil.setLongitude(location.getLongitude());
+                mFilter = fil;
+                mPresenter.saveFilter(fil);
+            }
+            mPresenter.continueSetSort(RenterBrowseCarListContract.Sort.DISTANCE);
+        }
+    }
+
     @OnClick({R.id.ll_browseCarsHeaderPeriod,
             R.id.ll_browseCarsFloatingMapBtn,
             R.id.iv_renterBrowseCarsSearch,
@@ -309,13 +387,14 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     private void toggleShowFavorites() {
         favoritesSelected = !favoritesSelected;
         mFavsImage.setImageResource(favoritesSelected ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
+        mFilter = mPresenter.getFilter();
         if (favoritesSelected) {
             mFilter.setFavorite(favoritesSelected);
-            mPresenter.getCarsByFilter(mFilter);
         } else {
             mFilter.setFavorite(null);
-            mPresenter.getCarsByFilter(mFilter);
         }
+        mPresenter.saveFilter(mFilter);
+        mPresenter.getCarsByFilter(mFilter);
     }
 
     @OnTextChanged(R.id.et_searchCarsInput)
@@ -323,6 +402,15 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         if (text.length() >= 1) {
             mPresenter.searchCars(text.toString());
             return;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            }
         }
     }
 
@@ -349,6 +437,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                             mFilter.setRadius(radius * 1000);
                             mFilter.setAddress(address);
 
+                            mPresenter.saveFilter(mFilter);
                             mPresenter.getCarsByFilter(mFilter);
                         }
 
@@ -383,5 +472,25 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }
