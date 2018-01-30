@@ -52,6 +52,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private final static int LOCATION_REQUEST_CODE = 111;
     private final static int FILTER_REQUEST_CODE = 112;
+    private final static int AVAILABILITY_REQUEST_CODE = 113;
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
     private RenterBrowseCarListPresenter mPresenter;
@@ -263,7 +264,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_browseCarsHeaderPeriod:
-                startActivity(new Intent(getActivity(), AvailabilityDialogActivity.class));
+                Intent availabilityIntent = new Intent(getActivity(), AvailabilityDialogActivity.class);
+                startActivityForResult(availabilityIntent, AVAILABILITY_REQUEST_CODE);
                 getActivity().overridePendingTransition(R.anim.enter_up, 0);
                 break;
             case R.id.ll_browseCarsFloatingMapBtn:
@@ -371,6 +373,13 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                             mSearchAreaRadius.setText(radiusText);
                         }
                     }
+                }
+                break;
+            case AVAILABILITY_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    mFilter = mPresenter.getFilter();
+                    //TODO: implement dates title change
+                    mPresenter.getCarsByFilter(mFilter);
                 }
                 break;
         }

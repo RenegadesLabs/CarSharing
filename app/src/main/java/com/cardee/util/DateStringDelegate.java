@@ -20,12 +20,14 @@ public class DateStringDelegate {
     private static final String TIME_VIEW_PATTERN = "ha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private static final String DATE_VIEW_PATTERN = "d\u00a0MMM yyyy,\u00a0ha";
+    private static final String DATE_SHORT_VIEW_PATTERN = "d\u00a0MMM";
     private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM yyyy, h:mma";
 
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat dateViewFormatter;
+    private SimpleDateFormat dateShortViewFormatter;
     private SimpleDateFormat creationDateViewFormatter;
     private Calendar calendar;
     private String[] saveSuffixes;
@@ -46,12 +48,14 @@ public class DateStringDelegate {
         dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN, Locale.US);
         creationDateViewFormatter = new SimpleDateFormat(CREATION_DATE_VIEW_FORMATTER, Locale.US);
+        dateShortViewFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
         dateFormatter.setTimeZone(timeZone);
         dateViewFormatter.setTimeZone(timeZone);
         creationDateViewFormatter.setTimeZone(timeZone);
+        dateShortViewFormatter.setTimeZone(timeZone);
 
         DateFormatSymbols symbols = new DateFormatSymbols(Locale.US);
         symbols.setAmPmStrings(new String[]{"am", "pm"});
@@ -134,6 +138,16 @@ public class DateStringDelegate {
         return null;
     }
 
+    public String getShortGMTTime(String time){
+        try {
+            Date date = timeViewFormatter.parse(time);
+            return timeFormatter.format(date).toLowerCase();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void onSetHourlyShortTitle(TextView view, int daysCount, String beginTime, String endTime) {
         int index = daysCount > 1 ? 2 : daysCount;
         String prefix = index == 0 ? "" : String.valueOf(daysCount) + " ";
@@ -156,6 +170,18 @@ public class DateStringDelegate {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getGMTTimeString(Date date){
+        return dateFormatter.format(date);
+    }
+
+    public String getTimeString(Date date){
+        return timeFormatter.format(date);
+    }
+
+    public String getTimeTitle(Date date){
+        return dateShortViewFormatter.format(date);
     }
 
     public String getGMTTimeString(int hour) {
