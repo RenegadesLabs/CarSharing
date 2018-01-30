@@ -17,19 +17,24 @@ import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.FilterStringHolder
 import com.cardee.domain.renter.entity.OfferCar
+import com.cardee.owner_car_details.view.AvailabilityCalendarActivity
+import com.cardee.renter_availability_filter.AvailabilityDialogActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
+import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_filter.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {
     private val LOCATION_REQUEST_CODE = 111
+    private val AVAILABILITY_REQUEST_CODE = 112
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityFilterBinding
     lateinit var filter: BrowseCarsFilter
     private var mPresenter: CarsFilterPresenter? = null
     private var mCars: List<OfferCar>? = null
+    private var delegate: DateStringDelegate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +112,11 @@ class FilterActivity : AppCompatActivity(), FilterView {
             filter.transmissionManual = true
             transmissionText.text = resources.getString(R.string.any)
             mPresenter?.getFilteredCars(filter)
+        }
+        rentalPeriodButton.setOnClickListener {
+            val intent = Intent(this, AvailabilityDialogActivity::class.java)
+            startActivityForResult(intent, AVAILABILITY_REQUEST_CODE)
+            overridePendingTransition(R.anim.enter_up, 0);
         }
         vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -239,7 +249,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
                     priceRangeText.text = "from $$minValue to $$maxValue"
                 }
             }
-
             mPresenter?.getFilteredCars(filter)
         }
         carAgeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
@@ -272,6 +281,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
     }
 
     private fun initPresenter() {
+        delegate = DateStringDelegate(this)
         mPresenter = CarsFilterPresenter(this)
     }
 
@@ -309,7 +319,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 val address = data?.getStringExtra("address")
                 val radius = data?.getIntExtra("radius", 0)
                 val location = data?.getParcelableExtra<LatLng>("location")
-
                 searchAreaAddress.text = String.format(
                         resources.getString(R.string.filter_search_area_template), address, radius)
                 filter.byLocation = true
@@ -319,10 +328,27 @@ class FilterActivity : AppCompatActivity(), FilterView {
                     filter.radius = radius * 1000
                 }
                 filter.address = address ?: ""
-
+                mPresenter?.getFilteredCars(filter)
+            }
+        } else if (requestCode == AVAILABILITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val newFilter = mPresenter?.getFilter() ?: return
+                filter.bookingHourly = newFilter.bookingHourly
+                filter.rentalPeriodBegin = newFilter.rentalPeriodBegin
+                filter.rentalPeriodEnd = newFilter.rentalPeriodEnd
+                filter.pickupTime = newFilter.pickupTime
+                filter.returnTime = newFilter.returnTime
+                changeRentalPeriodTitle()
                 mPresenter?.getFilteredCars(filter)
             }
         }
+    }
+
+    private fun changeRentalPeriodTitle() {
+        val beginString = delegate?.getDateString(filter.rentalPeriodBegin) ?: getString(R.string.rental_period_from)
+        val endString = delegate?.getDateString(filter.rentalPeriodEnd) ?: getString(R.string.rental_period_to)
+        rental_period_from.text = beginString
+        rental_period_to.text = endString
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
