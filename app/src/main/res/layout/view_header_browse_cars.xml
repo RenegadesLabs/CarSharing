@@ -87,7 +87,7 @@
                     android:id="@+id/tv_browseCarsHeaderRadiusTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Within 5 km"
+                    android:text="@string/cars_browse_search_area_default"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_small" />
             </LinearLayout>

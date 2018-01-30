@@ -22,7 +22,8 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
                        var maxYears: Int = 0,
                        var minPrice: Int = 0,
                        var maxPrice: Int = 0,
-                       var favorite: Boolean? = null) : BaseObservable(), Parcelable {
+                       var favorite: Boolean? = null,
+                       var orderBy: String? = null) : BaseObservable(), Parcelable {
 
     @get:Bindable
     var vehicleTypeId: Int = 1
@@ -90,7 +91,8 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
             parcel.readInt(),
             parcel.readInt(),
             parcel.readInt(),
-            parcel.readValue(Boolean::class.java.classLoader) as? Boolean)
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(String::class.java.classLoader) as? String)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(vehicleTypeId)
@@ -110,6 +112,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
         parcel.writeInt(minPrice)
         parcel.writeInt(maxPrice)
         parcel.writeValue(favorite)
+        parcel.writeValue(orderBy)
     }
 
     override fun describeContents(): Int {
@@ -118,8 +121,7 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
 
     companion object CREATOR : Parcelable.Creator<BrowseCarsFilter> {
         override fun createFromParcel(parcel: Parcel): BrowseCarsFilter {
-            val temp = BrowseCarsFilter(parcel)
-            return temp
+            return BrowseCarsFilter(parcel)
         }
 
         override fun newArray(size: Int): Array<BrowseCarsFilter?> {

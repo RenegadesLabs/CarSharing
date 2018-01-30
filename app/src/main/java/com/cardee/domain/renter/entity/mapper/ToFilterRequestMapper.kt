@@ -22,7 +22,8 @@ class ToFilterRequestMapper {
                 upperPriceRange = if ((filter.bookingHourly == true && filter.maxPrice == 41) ||
                         (filter.bookingHourly == false && filter.maxPrice == 201) ||
                         filter.maxPrice == 0) null else filter.maxPrice,
-                isFavorite = filter.favorite
+                isFavorite = filter.favorite,
+                orderBy = filter.orderBy
         )
     }
 }

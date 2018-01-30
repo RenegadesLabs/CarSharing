@@ -30,6 +30,8 @@ public interface RenterBrowseCarListContract {
         void onUnauthorized();
 
         void onConnectionLost();
+
+        void checkLocationPermission();
     }
 
     interface Presenter {
@@ -53,6 +55,10 @@ public interface RenterBrowseCarListContract {
         BrowseCarsFilter getFilter();
 
         void saveFilter(BrowseCarsFilter filter);
+
+        void continueSetSort(Sort sort);
+
+        void onDestroy();
     }
 
     enum Action {
