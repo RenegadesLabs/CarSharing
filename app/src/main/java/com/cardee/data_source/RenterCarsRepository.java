@@ -60,11 +60,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             }
 
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
@@ -73,8 +68,8 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
-        mRemoteDataSource.addCarToFavorites(carId, new Callback() {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
+        mRemoteDataSource.addCarToFavorites(carId, new NoDataCallback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
@@ -97,11 +92,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             }
 
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
             public void onError(Error error) {
                 callback.onError(error);
             }
@@ -120,11 +110,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
-
-            @Override
-            public void onSuccess() {
-
-            }
         });
     }
 
@@ -140,11 +125,6 @@ public class RenterCarsRepository implements RenterCarsDataSource {
             public void onError(Error error) {
                 offersCallback.onError(error);
             }
-
-            @Override
-            public void onSuccess() {
-
-            }
         });
     }
 
@@ -156,6 +136,20 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     @Override
     public BrowseCarsFilter getFilter() {
         return mLocalDataSource.getFilter();
+    }
+
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+        mRemoteDataSource.getSorted(sortBy, new OffersCallback() {
+            @Override
+            public void onSuccess(OfferResponseBody[] response) {
+                offersCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offersCallback.onError(error);
+            }
+        });
     }
 
     public void refreshCars() {

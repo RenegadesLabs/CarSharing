@@ -28,9 +28,9 @@ public class OfferCar implements Parcelable {
 
     private String mTitle;
 
-    private double mLongitude;
+    private Double mLongitude;
 
-    private double mLatitude;
+    private Double mLatitude;
 
     private int mDistance;
 
@@ -80,8 +80,8 @@ public class OfferCar implements Parcelable {
                     String bodyType,
                     String vehicleType,
                     String title,
-                    double longitude,
-                    double latitude,
+                    Double longitude,
+                    Double latitude,
                     int distance,
                     String address,
                     String town,
@@ -239,8 +239,8 @@ public class OfferCar implements Parcelable {
         private String mBodyType;
         private String mVehicleType;
         private String mTitle;
-        private double mLongitude;
-        private double mLatitude;
+        private Double mLongitude;
+        private Double mLatitude;
         private int mDistance;
         private String mAddress;
         private String mTown;
@@ -311,12 +311,12 @@ public class OfferCar implements Parcelable {
             return this;
         }
 
-        public Builder setLongitude(double longitude) {
+        public Builder setLongitude(Double longitude) {
             mLongitude = longitude;
             return this;
         }
 
-        public Builder setLatitude(double latitude) {
+        public Builder setLatitude(Double latitude) {
             mLatitude = latitude;
             return this;
         }
@@ -472,11 +472,11 @@ public class OfferCar implements Parcelable {
         return mTitle;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return mLongitude;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return mLatitude;
     }
 

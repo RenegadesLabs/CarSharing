@@ -1,26 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/map"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/blue"
-        app:layout_constraintBottom_toTopOf="@+id/cars_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/carsList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/red_error"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="3:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/carsList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/carsList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingEnd="@dimen/widget_margin_xx_small"
+            android:paddingStart="@dimen/widget_margin_xx_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/loadingProgress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/loadingProgressIndicator"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:layout_gravity="center"
+                android:theme="@style/LoadingIndicator" />
+        </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_close">
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/car_add_vehicle_personal" />
+
+            <ImageView
+                android:id="@+id/btnFilter"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_filter" />
+
+            <ImageView
+                android:id="@+id/btnFavorites"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_favorites_toolbar" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>

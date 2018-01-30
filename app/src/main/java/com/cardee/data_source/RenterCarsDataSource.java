@@ -13,11 +13,13 @@ public interface RenterCarsDataSource {
 
     Disposable obtainCarsByFilter(FilterRequest filter, OffersCallback callback);
 
-    void addCarToFavorites(int carId, Callback callback);
+    void addCarToFavorites(int carId, NoDataCallback callback);
 
     void getFavorites(boolean isFavorite, OffersCallback offersCallback);
 
     void searchCars(String searchCriteria, OffersCallback offersCallback);
+
+    void getSorted(String sortBy, OffersCallback offersCallback);
 
     void saveFilter(BrowseCarsFilter filter);
 
@@ -25,13 +27,13 @@ public interface RenterCarsDataSource {
 
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);
-
-        void onError(Error error);
     }
 
     interface Callback {
-        void onSuccess();
-
         void onError(Error error);
+    }
+
+    interface NoDataCallback extends Callback {
+        void onSuccess();
     }
 }

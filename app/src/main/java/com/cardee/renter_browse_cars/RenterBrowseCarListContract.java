@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
+import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 
@@ -16,6 +17,8 @@ public interface RenterBrowseCarListContract {
 
         void setItems(List<OfferCar> cars);
 
+        void setSortValue(String value);
+
         void updateItem(OfferCar car);
 
         void removeItem(OfferCar car);
@@ -23,8 +26,6 @@ public interface RenterBrowseCarListContract {
         void openItem(OfferCar car);
 
         void showSearchProgress(boolean show);
-
-        void setItemsSearchList(List<OfferCar> cars);
 
         void onUnauthorized();
 
@@ -35,7 +36,13 @@ public interface RenterBrowseCarListContract {
 
         void showSort(FragmentActivity activity);
 
-        void setSort(RenterBrowseCarListContract.Sort sort);
+        void showType(FragmentActivity activity);
+
+        void setSort(Sort sort);
+
+        void sortCars(String sortBy);
+
+        void setType(VehicleType type);
 
         void loadItems();
 
@@ -65,6 +72,24 @@ public interface RenterBrowseCarListContract {
 
         Sort(String value, int titleId) {
             this.value = value;
+            this.titleId = titleId;
+        }
+
+        public int getTitleId() {
+            return titleId;
+        }
+    }
+
+    enum VehicleType {
+        PERSONAL(0, R.string.cars_browse_vehicle_type_personal),
+        PRIVATE(1, R.string.cars_browse_vehicle_type_private),
+        COMMERCIAL(2, R.string.cars_browse_vehicle_type_commercial);
+
+        public final int typeId;
+        private int titleId;
+
+        VehicleType(int typeId, int titleId) {
+            this.typeId = typeId;
             this.titleId = titleId;
         }
 

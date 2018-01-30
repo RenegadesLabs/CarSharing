@@ -30,11 +30,6 @@ public class GetFavorites implements UseCase<GetFavorites.RequestValues, GetFavo
             public void onError(Error error) {
                 callback.onError(error);
             }
-
-            @Override
-            public void onSuccess() {
-
-            }
         });
     }
 

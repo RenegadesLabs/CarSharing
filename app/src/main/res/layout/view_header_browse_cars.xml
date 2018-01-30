@@ -28,8 +28,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="@dimen/small_margin"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_calendar_rental" />
@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="24 -26 Mar"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
@@ -79,6 +80,7 @@
                     android:maxLines="1"
                     android:text="@string/cars_browse_header_current"
                     android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small"
                     android:textStyle="bold" />
 
                 <TextView
@@ -86,7 +88,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Within 5 km"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small" />
             </LinearLayout>
         </LinearLayout>
 
@@ -94,8 +97,8 @@
             android:id="@+id/divider"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginTop="@dimen/widget_margin_small"
             android:background="@color/add_car_divider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

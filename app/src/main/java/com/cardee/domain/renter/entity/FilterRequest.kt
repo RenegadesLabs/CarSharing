@@ -65,6 +65,4 @@ data class FilterRequest(@SerializedName("rent_type")
                          private var orderBy: String? = null,
                          @SerializedName("search_criteria")
                          @Expose
-                         private var searchCriteria: String? = null) {
-    
-}
+                         private var searchCriteria: String? = null)

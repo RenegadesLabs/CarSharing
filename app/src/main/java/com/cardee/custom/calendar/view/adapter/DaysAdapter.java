@@ -46,6 +46,9 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayHolder>
         this.dayz.clear();
         Day day = dayz.get(0);
         int dayOfWeed = day.getDayOfWeed();
+        if (dayOfWeed == 7) {
+            dayOfWeed = 0;
+        }
         for (int i = 0; i < dayOfWeed; i++) {
             this.dayz.add(Day.empty());
         }

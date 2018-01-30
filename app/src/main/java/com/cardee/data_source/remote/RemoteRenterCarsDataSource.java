@@ -7,6 +7,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
+import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
@@ -38,22 +39,21 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
 
     @Override
     public void obtainCars(OffersCallback offersCallback) {
-        try {
-            Response<OffersResponse> response = mApi.browseCars().execute();
-            if (response.isSuccessful()) {
-                offersCallback.onSuccess(response.body().getOffersResponseBody());
+        Disposable disposable = mApi.browseCars().subscribe(offersResponse -> {
+            if (offersResponse.isSuccessful()) {
+                offersCallback.onSuccess(offersResponse.getOffersResponseBody());
                 return;
             }
-            handleErrorResponse(offersCallback, response.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
-        }
+            handleErrorResponse(offersCallback, offersResponse);
+        }, throwable -> {
+            throwable.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
     }
 
     @Override
-    public void addCarToFavorites(int carId, Callback callback) {
-        mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
+    public void addCarToFavorites(int carId, NoDataCallback callback) {
+        Disposable disposable = mApi.addCarToFavorites(carId).subscribe(noDataResponse -> {
             if (noDataResponse.isSuccessful()) {
                 callback.onSuccess();
                 return;
@@ -96,6 +96,21 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void saveFilter(BrowseCarsFilter filter) {
 
+    }
+
+    @Override
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+        try {
+            Response<OffersResponse> response = mApi.getSorted(new SortOffers(sortBy)).execute();
+            if (response.isSuccessful()) {
+                offersCallback.onSuccess(response.body().getOffersResponseBody());
+                return;
+            }
+            handleErrorResponse(offersCallback, response.body());
+        } catch (IOException e) {
+            e.printStackTrace();
+            offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
     }
 
     @Override

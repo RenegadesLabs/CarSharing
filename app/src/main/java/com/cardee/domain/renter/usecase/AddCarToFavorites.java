@@ -16,7 +16,7 @@ public class AddCarToFavorites implements UseCase<AddCarToFavorites.RequestValue
 
     @Override
     public void execute(RequestValues values, Callback<ResponseValues> callback) {
-        mRepository.addCarToFavorites(values.getId(), new RenterCarsDataSource.Callback() {
+        mRepository.addCarToFavorites(values.getId(), new RenterCarsDataSource.NoDataCallback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess(new ResponseValues(true));

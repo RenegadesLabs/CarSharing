@@ -42,7 +42,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_calendar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         titleView = toolbar.findViewById(R.id.toolbar_title);
         actionView = toolbar.findViewById(R.id.toolbar_action);
         if (getSupportActionBar() == null) {
@@ -50,10 +50,10 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
             getSupportActionBar().setTitle(null);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        buttonSave = (TextView) findViewById(R.id.btn_availability_save);
+        buttonSave = findViewById(R.id.btn_availability_save);
         buttonSave.setOnClickListener(this);
         actionView.setOnClickListener(this);
-        calendarView = (CalendarView) findViewById(R.id.availability_calendar);
+        calendarView = findViewById(R.id.availability_calendar);
         adapter = new AvailabilityCalendarAdapter();
         adapter.setListener(this);
         calendarView.setSelectionAdapter(adapter);

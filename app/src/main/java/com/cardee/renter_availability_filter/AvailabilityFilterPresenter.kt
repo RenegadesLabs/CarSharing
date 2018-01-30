@@ -1,0 +1,3 @@
+package com.cardee.renter_availability_filter
+
+class AvailabilityFilterPresenter

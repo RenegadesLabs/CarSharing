@@ -4,10 +4,9 @@
     <color name="icon_blue">#99c6e2</color>
     <color name="black">#000000</color>
     <color name="light_blue">#569be7</color>
-
     <color name="white_opacity60">#60FFFFFF</color>
-
     <color name="red_error">#FF5040</color>
+    <color name="pink">#ec576f</color>
 
     <color name="main_enabled">#569be7</color>
     <color name="main_disabled">#d8d8d8</color>
@@ -38,9 +37,7 @@
     <color name="text_account_settings">#9C9FA1</color>
     <color name="text_change_pass_cancel">#535E67</color>
     <color name="text_rate_regular">#414A53</color>
-
     <color name="add_car_divider">#7A8794</color>
-
     <color name="add_car_item_vehicle_inactive">#979797</color>
     <color name="item_secondary_txt">#7A8794</color>
 
@@ -49,10 +46,8 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
-
     <color name="button_facebook">#3B579D</color>
     <color name="button_google">#D95232</color>
-
     <color name="modal_menu_title">#ffffff</color>
     <color name="bg_regular">#F2F2F2</color>
 
@@ -67,12 +62,11 @@
     <color name="details_title">#6b727a</color>
     <color name="bg_additional_info">#e5edf4</color>
     <color name="text_additional_info">#8b95a0</color>
-
     <color name="rate_star">#F2B632</color>
     <color name="rate_star_inactive">#D8D8D8</color>
-
     <color name="payment_card">#000000</color>
     <color name="payment_cash">#4fae4f</color>
+    <color name="selector_view">#e5edf4</color>
 
     <color name="search_area_circle">#334285F4</color>
 </resources>

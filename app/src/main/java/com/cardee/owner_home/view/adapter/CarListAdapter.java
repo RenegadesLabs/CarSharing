@@ -62,7 +62,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
     public void onBindViewHolder(final CarListItemViewHolder holder, int position) {
         final Car car = mCarViewItems.get(position);
         holder.bind(car, mGlideRequestManager, mEventObservable);
-        mHolders.put(car.getCarId(), holder);
+        mHolders.put(car.getCarId() == null ? 0 : car.getCarId(), holder);
     }
 
     @Override

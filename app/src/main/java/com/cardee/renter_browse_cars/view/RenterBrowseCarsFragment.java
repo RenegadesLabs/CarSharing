@@ -18,17 +18,20 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
+import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsSearchListAdapter;
+import com.cardee.renter_availability_filter.AvailabilityDialogActivity;
+import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.filter.view.FilterActivity;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity;
 import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;
@@ -38,7 +41,6 @@ import com.cardee.settings.Settings;
 import com.cardee.settings.SettingsManager;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,6 +66,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public ListView mSearchListView;
     @BindView(R.id.v_renterBrowseCarsFloating)
     public RenterBrowseCarsFloatingView mFloatingView;
+    @BindView(R.id.tv_browseCarsFloatingSortText)
+    public TextView mSortText;
     @BindView(R.id.v_renterBrowseCarsHeader)
     public LinearLayout mHeaderView;
     @BindView(R.id.iv_renterCarsToolbarFavoritesImg)
@@ -71,7 +75,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @BindView(R.id.toolbar_search)
     public Toolbar mSearchView;
     @BindView(R.id.et_searchCarsInput)
-    AppCompatEditText mSearchInput;
+    public AppCompatEditText mSearchInput;
     @BindView(R.id.toolbar)
     public Toolbar mToolbar;
     @BindView(R.id.p_renterBrowseCarsSearch)
@@ -85,9 +89,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private boolean favoritesSelected = false;
     private boolean search = false;
+    private int bottomViewOffset;
     private BrowseCarsFilter mFilter;
 
     private Unbinder mUnbinder;
+    private Settings mSettings;
 
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
@@ -107,9 +113,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCarsListAdapter = new RenterBrowseCarsListAdapter(getActivity());
-        mSearchListAdapter = new RenterBrowseCarsSearchListAdapter(getActivity(), -1, new ArrayList<>());
-        Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
-        mPresenter = new RenterBrowseCarListPresenter(this, settings);
+        mSettings = SettingsManager.getInstance(getActivity()).obtainSettings();
+        mPresenter = new RenterBrowseCarListPresenter(this, mSettings);
         mCarsListAdapter.subscribe(mPresenter);
         mFilter = mPresenter.getFilter();
     }
@@ -117,9 +122,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        bottomViewOffset = getActivity().getResources().getDimensionPixelSize(R.dimen.floating_view_bottom_margin);
         View rootView = inflater.inflate(R.layout.fragment_renter_cars, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         addOnScrollListener();
+        mSortText.setText(mSettings.getSortOffers() == null ? R.string.cars_browse_sort_distance : mSettings.getSortOffers().getTitleId());
         mCarsListView.setAdapter(mCarsListAdapter);
         mCarsListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCarsListView.setItemAnimator(new DefaultItemAnimator());
@@ -140,7 +147,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.addOnScrollListener(new CustomRecyclerScrollListener() {
             @Override
             public void show() {
-                mHeaderView.animate().translationY(-mHeaderView.getHeight())
+                mHeaderView
+                        .animate()
+                        .translationY(-mHeaderView.getHeight() - bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
                         .start();
 
@@ -155,7 +164,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         .setInterpolator(new DecelerateInterpolator(2))
                         .start();
 
-                mFloatingView.animate().translationY(mFloatingView.getHeight())
+                mFloatingView
+                        .animate()
+                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
                         .start();
             }
@@ -172,6 +183,15 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mToolbar.setVisibility(View.VISIBLE);
+        mSearchView.setVisibility(View.GONE);
+        mSearchInput.setText("");
+        mPresenter.saveFilter(mFilter);
     }
 
     @Override
@@ -202,6 +222,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     }
 
     @Override
+    public void setSortValue(String value) {
+        mSortText.setText(value);
+    }
+
+    @Override
     public void updateItem(OfferCar car) {
         mCarsListAdapter.update(car);
     }
@@ -222,11 +247,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     }
 
     @Override
-    public void setItemsSearchList(List<OfferCar> cars) {
-        mSearchListAdapter.update(cars);
-    }
-
-    @Override
     public void onUnauthorized() {
 
     }
@@ -236,15 +256,21 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     }
 
-    @OnClick({R.id.ll_browseCarsFloatingMapBtn,
+    @OnClick({R.id.ll_browseCarsHeaderPeriod,
+            R.id.ll_browseCarsFloatingMapBtn,
             R.id.iv_renterBrowseCarsSearch,
             R.id.b_searchViewCancel,
             R.id.fl_renterCarsToolbarFavorites,
             R.id.ll_browseCarsFloatingSortBtn,
+            R.id.ll_renterBrowseCarsType,
             R.id.fl_renterCarsToolbarFilter,
             R.id.ll_browseCarsHeaderRadius})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_browseCarsHeaderPeriod:
+                startActivity(new Intent(getActivity(), AvailabilityDialogActivity.class));
+                getActivity().overridePendingTransition(R.anim.enter_up, 0);
+                break;
             case R.id.ll_browseCarsFloatingMapBtn:
                 startActivity(new Intent(getActivity(), BrowseCarsMapActivity.class));
                 break;
@@ -268,6 +294,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 Intent searchAreaIntent = new Intent(getActivity(), SearchAreaActivity.class);
                 startActivityForResult(searchAreaIntent, LOCATION_REQUEST_CODE);
                 break;
+            case R.id.ll_renterBrowseCarsType:
+                mPresenter.showType(getActivity());
+                break;
         }
     }
 
@@ -276,7 +305,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mToolbar.setVisibility(search ? View.GONE : View.VISIBLE);
         mSearchView.setVisibility(search ? View.VISIBLE : View.GONE);
         if (!search) {
-            mSearchListView.setVisibility(View.GONE);
             mSearchInput.setText("");
         }
     }
@@ -297,18 +325,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onTextChanged(CharSequence text) {
         if (text.length() >= 1) {
             mPresenter.searchCars(text.toString());
-            if (mSearchListView.getVisibility() == View.GONE) {
-                mSearchListView.setVisibility(View.VISIBLE);
-            }
             return;
         }
-        mSearchListView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mPresenter.saveFilter(mFilter);
     }
 
     @Override

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cardee.renter_availability_filter.DailyAvailabilityView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dateFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:gravity="center"
+        android:text="24 Mar, 10am"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/dateSeparator"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/dateSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="to"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintBottom_toBottomOf="@id/dateFrom"
+        app:layout_constraintEnd_toStartOf="@+id/dateTo"
+        app:layout_constraintStart_toEndOf="@id/dateFrom"
+        app:layout_constraintTop_toTopOf="@id/dateFrom" />
+
+    <TextView
+        android:id="@id/dateTo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:gravity="center"
+        android:text="26 Mar, 9am"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dateSeparator"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/setTimeIcon"
+        android:layout_width="@dimen/item_icon_side_small"
+        android:layout_height="@dimen/item_icon_side_small"
+        android:layout_marginEnd="@dimen/widget_margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTo"
+        app:srcCompat="@drawable/ic_arrow_subtitle" />
+
+    <TextView
+        android:id="@+id/setTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/widget_margin_x_small"
+        android:text="@string/set_daily_time_title"
+        android:textColor="@color/booking_subtitle"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="@id/setTimeIcon"
+        app:layout_constraintEnd_toStartOf="@id/setTimeIcon"
+        app:layout_constraintTop_toTopOf="@id/setTimeIcon" />
+
+    <ImageView
+        android:id="@+id/backTitleIcon"
+        android:layout_width="@dimen/item_icon_side_small"
+        android:layout_height="@dimen/item_icon_side_small"
+        android:layout_marginStart="@dimen/widget_margin_x_small"
+        android:rotation="180"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTo"
+        app:srcCompat="@drawable/ic_arrow_subtitle" />
+
+    <TextView
+        android:id="@+id/backTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:text="@string/back_to_calendar"
+        android:textColor="@color/booking_subtitle"
+        android:textSize="@dimen/text_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/backTitleIcon"
+        app:layout_constraintStart_toEndOf="@id/backTitleIcon"
+        app:layout_constraintTop_toTopOf="@id/backTitleIcon" />
+
+    <com.cardee.custom.calendar.view.CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/widget_margin_x_small"
+        android:layout_marginTop="@dimen/item_icon_side_small"
+        app:body_text_color="@color/text_regular"
+        app:current_date_color="@color/divider_light"
+        app:header_background="@drawable/bg_underlined"
+        app:header_height="40dp"
+        app:header_highlighted_text_color="@color/red_error"
+        app:header_text_color="@color/text_regular"
+        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateFrom"
+        app:selection_color="@color/light_blue"
+        app:title_background="@android:color/transparent"
+        app:title_gravity="start" />
+
+    <FrameLayout
+        android:id="@+id/pickerBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_horizontal_lines"
+        app:layout_constraintBottom_toBottomOf="@id/returnTimeTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pickupTimeTitle" />
+
+    <View
+        android:id="@+id/timeSelector"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/selector_view"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupTimePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickupTimePicker" />
+
+    <TextView
+        android:id="@+id/pickupTimeTitle"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginTop="@dimen/widget_margin_x_small"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/pickup_on"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/returnTimeTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backTitleIcon" />
+
+    <TextView
+        android:id="@id/returnTimeTitle"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginTop="@dimen/widget_margin_x_small"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/return_by"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pickupTimeTitle"
+        app:layout_constraintTop_toBottomOf="@id/backTitleIcon" />
+
+    <NumberPicker
+        android:id="@id/pickupTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/NumberPicker"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/returnTimePicker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pickupTimeTitle" />
+
+    <NumberPicker
+        android:id="@id/returnTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/NumberPicker"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pickupTimePicker"
+        app:layout_constraintTop_toBottomOf="@id/returnTimeTitle" />
+
+    <TextView
+        android:id="@+id/btnReset"
+        style="@style/NegativeButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/widget_margin_small"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.5:1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btnSave"
+        style="@style/RegularButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/widget_margin_small"
+        android:layout_marginEnd="@dimen/widget_margin_small"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/title_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnReset" />
+</com.cardee.renter_availability_filter.DailyAvailabilityView>
