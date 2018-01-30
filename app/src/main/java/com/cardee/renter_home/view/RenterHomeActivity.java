@@ -51,17 +51,17 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
 //        if (!wasSelected) {
-            switch (position) {
-                case 1:
-                case 2:
-                case 3:
-                    getSupportActionBar().hide();
-                    break;
-                case 0:
-                    getSupportActionBar().hide();
-                    break;
-            }
-            showFragmentOnPosition(position);
+        switch (position) {
+            case 1:
+            case 2:
+            case 3:
+                getSupportActionBar().hide();
+                break;
+            case 0:
+                getSupportActionBar().hide();
+                break;
+        }
+        showFragmentOnPosition(position);
 //        }
         return true;
     }

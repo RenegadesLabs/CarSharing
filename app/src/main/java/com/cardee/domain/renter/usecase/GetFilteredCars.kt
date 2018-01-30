@@ -24,9 +24,6 @@ class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars
                 callback.onSuccess(ResponseValues(OfferResponseBodyToOfferMapper.transform(response)))
             }
 
-            override fun onSuccess() {
-            }
-
             override fun onError(error: Error?) {
                 callback.onError(error ?: return)
             }

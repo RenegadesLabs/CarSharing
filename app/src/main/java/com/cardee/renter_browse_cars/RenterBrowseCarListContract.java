@@ -44,8 +44,6 @@ public interface RenterBrowseCarListContract {
 
         void setType(VehicleType type);
 
-        void loadItems();
-
         void addCarToFavorites(int carId);
 
         void searchCars(String criteria);

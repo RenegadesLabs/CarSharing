@@ -4,12 +4,15 @@ import android.support.v4.app.FragmentActivity
 import com.cardee.custom.modal.SortRenterOffersDialog
 import com.cardee.custom.modal.TypeRenterOffersDialog
 import com.cardee.data_source.Error
+import com.cardee.domain.RxUseCase
 import com.cardee.domain.UseCase
 import com.cardee.domain.UseCaseExecutor
+import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper
 import com.cardee.domain.renter.usecase.*
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract
 import com.cardee.settings.Settings
-import com.crashlytics.android.Crashlytics
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 
 
@@ -20,7 +23,10 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
         TypeRenterOffersDialog.TypeSelectListener {
 
     private var firstStart = true
-    private var isFavorites = false
+    private val mGetFilteredCars: GetFilteredCars = GetFilteredCars()
+    private val mGetFilter: GetFilter = GetFilter()
+    private val mSaveFilter: SaveFilter = SaveFilter()
+    private var mDisposable: Disposable? = null
 
     private val mExecutor: UseCaseExecutor = UseCaseExecutor.getInstance()
 
@@ -39,71 +45,19 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
 
     }
 
-    override fun loadItems() {
-        if (firstStart) {
-            mView?.showProgress(true)
-        }
-
-        mExecutor.execute<GetCars.RequestValues, GetCars.ResponseValues>(GetCars(),
-                GetCars.RequestValues(), object : UseCase.Callback<GetCars.ResponseValues> {
-            override fun onSuccess(response: GetCars.ResponseValues) {
-                val cars = response.offerCars
-                if (firstStart) {
-                    mView?.showProgress(false)
-                    firstStart = false
-                } else {
-                    Crashlytics.logException(Throwable("Success: View is null"))
-                }
-                mView?.setItems(cars)
-            }
-
-            override fun onError(error: Error) {
-                handleError(error)
-            }
-        })
-
-    }
-
     override fun addCarToFavorites(carId: Int) {
         mView?.showProgress(true)
         mExecutor.execute<AddCarToFavorites.RequestValues, AddCarToFavorites.ResponseValues>(AddCarToFavorites(),
                 AddCarToFavorites.RequestValues(carId), object : UseCase.Callback<AddCarToFavorites.ResponseValues> {
             override fun onSuccess(response: AddCarToFavorites.ResponseValues) {
                 mView?.showProgress(false)
-                if (isFavorites) {
-                    showFavorites(true)
-                    return
-                }
-                loadItems()
             }
 
             override fun onError(error: Error) {
-                mView!!.showProgress(false)
+                mView?.showProgress(false)
                 handleError(error)
             }
         })
-    }
-
-    override fun showFavorites(show: Boolean) {
-        isFavorites = show
-        if (show) {
-            mView?.showProgress(true)
-            mExecutor.execute<GetFavorites.RequestValues, GetFavorites.ResponseValues>(GetFavorites(), GetFavorites.RequestValues(true),
-                    object : UseCase.Callback<GetFavorites.ResponseValues> {
-                        override fun onSuccess(response: GetFavorites.ResponseValues) {
-                            val cars = response.offerCars
-                            mView?.showProgress(false)
-                            mView?.setItems(cars)
-                        }
-
-                        override fun onError(error: Error) {
-                            mView?.showProgress(false)
-                            handleError(error)
-                        }
-                    })
-            return
-        }
-        loadItems()
     }
 
     override fun searchCars(criteria: String) {
@@ -123,6 +77,40 @@ class RenterBrowseCarListPresenter(private val mView: RenterBrowseCarListContrac
                         handleError(error)
                     }
                 })
+    }
+
+    override fun getCarsByFilter(filter: BrowseCarsFilter) {
+        mView?.showProgress(true)
+
+        if (mDisposable?.isDisposed == false) {
+            mDisposable?.dispose()
+        }
+
+        mDisposable = mGetFilteredCars.execute(GetFilteredCars.RequestValues(
+                ToFilterRequestMapper().transform(filter)),
+                object : RxUseCase.Callback<GetFilteredCars.ResponseValues> {
+                    override fun onError(error: Error) {
+                        if (mView != null) {
+                            mView.showProgress(false)
+                            handleError(error)
+                        }
+                    }
+
+                    override fun onSuccess(response: GetFilteredCars.ResponseValues) {
+                        if (mView != null) {
+                            mView.showProgress(false)
+                            mView.setItems(response.cars)
+                        }
+                    }
+                })
+    }
+
+    override fun getFilter(): BrowseCarsFilter {
+        return mGetFilter.getFilter()
+    }
+
+    override fun saveFilter(filter: BrowseCarsFilter) {
+        mSaveFilter.saveFilter(filter)
     }
 
     fun refresh() {

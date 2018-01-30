@@ -23,15 +23,11 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
-import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
-import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
-import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
-import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsSearchListAdapter;
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity;
+import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.filter.view.FilterActivity;
-import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity;
 import com.cardee.renter_browse_cars.view.custom.RenterBrowseCarsFloatingView;
@@ -41,6 +37,7 @@ import com.cardee.settings.Settings;
 import com.cardee.settings.SettingsManager;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,13 +54,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     private final static int FILTER_REQUEST_CODE = 112;
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
-    private RenterBrowseCarsSearchListAdapter mSearchListAdapter;
     private RenterBrowseCarListPresenter mPresenter;
 
     @BindView(R.id.rv_renterBrowseCarsList)
     public RecyclerView mCarsListView;
-    @BindView(R.id.lv_renterBrowseCarsSearchList)
-    public ListView mSearchListView;
     @BindView(R.id.v_renterBrowseCarsFloating)
     public RenterBrowseCarsFloatingView mFloatingView;
     @BindView(R.id.tv_browseCarsFloatingSortText)
@@ -130,7 +124,6 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.setAdapter(mCarsListAdapter);
         mCarsListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCarsListView.setItemAnimator(new DefaultItemAnimator());
-        mSearchListView.setAdapter(mSearchListAdapter);
         if (mFilter.getByLocation()) {
             mSearchAreaAddress.setText(mFilter.getAddress());
             int radiusInKm = mFilter.getRadius() / 1000;
@@ -177,7 +170,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.refresh();
-        mPresenter.loadItems();
+        mPresenter.getCarsByFilter(mFilter);
     }
 
     @Override
@@ -202,7 +195,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     @Override
     public void showProgress(boolean show) {
-        mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
