@@ -20,6 +20,7 @@ public class DateStringDelegate {
     private static final String TIME_VIEW_PATTERN = "ha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private static final String DATE_VIEW_PATTERN = "d\u00a0MMM yyyy,\u00a0ha";
+    private static final String DATE_SHORT_VIEW_TITLE_PATTERN = "d\u00a0MMM,\u00a0ha";
     private static final String DATE_SHORT_VIEW_PATTERN = "d\u00a0MMM";
     private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM yyyy, h:mma";
 
@@ -28,6 +29,7 @@ public class DateStringDelegate {
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat dateViewFormatter;
     private SimpleDateFormat dateShortViewFormatter;
+    private SimpleDateFormat dateShortViewTitleFormatter;
     private SimpleDateFormat creationDateViewFormatter;
     private Calendar calendar;
     private String[] saveSuffixes;
@@ -48,11 +50,13 @@ public class DateStringDelegate {
         dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN, Locale.US);
         creationDateViewFormatter = new SimpleDateFormat(CREATION_DATE_VIEW_FORMATTER, Locale.US);
+        dateShortViewTitleFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_TITLE_PATTERN, Locale.US);
         dateShortViewFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
         dateFormatter.setTimeZone(timeZone);
+        dateShortViewTitleFormatter.setTimeZone(timeZone);
         dateViewFormatter.setTimeZone(timeZone);
         creationDateViewFormatter.setTimeZone(timeZone);
         dateShortViewFormatter.setTimeZone(timeZone);
@@ -182,6 +186,10 @@ public class DateStringDelegate {
 
     public String getTimeTitle(Date date){
         return dateShortViewFormatter.format(date);
+    }
+
+    public String getTimeLongTitle(Date date){
+        return dateShortViewTitleFormatter.format(date);
     }
 
     public String getGMTTimeString(int hour) {

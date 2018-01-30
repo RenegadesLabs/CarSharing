@@ -19,11 +19,12 @@ class AvailabilityFilterPresenter(context: Context) {
 
     fun getFilter(): BrowseCarsFilter {
         val result = getFilterUseCase.getFilter()
-        filter = BrowseCarsFilter(result.vehicleTypeId, result.byLocation, result.latitude, result.longitude,
-                result.radius, result.address, result.bookingHourly, result.rentalPeriodBegin, result.rentalPeriodEnd,
-                result.pickupTime, result.returnTime, result.instantBooking, result.curbsideDelivery, result.bodyTypeId,
-                result.transmissionAuto, result.transmissionManual, result.minYears, result.maxYears, result.minPrice,
-                result.maxPrice, result.favorite)
+        filter = BrowseCarsFilter(result.vehicleTypeId, result.byLocation, result.latitude,
+                result.longitude, result.radius, result.address, result.bookingHourly,
+                result.rentalPeriodBegin, result.rentalPeriodEnd, result.pickupTime,
+                result.returnTime, result.instantBooking, result.curbsideDelivery,
+                result.bodyTypeId, result.transmissionAuto, result.transmissionManual,
+                result.minYears, result.maxYears, result.minPrice, result.maxPrice, result.favorite)
         return filter!!
     }
 
