@@ -10,4 +10,5 @@ interface FilterViewContract {
     fun saveFilter(doOnSave: () -> Unit = {})
 
     fun resetFilter(doOnReset: () -> Unit = {})
+
 }

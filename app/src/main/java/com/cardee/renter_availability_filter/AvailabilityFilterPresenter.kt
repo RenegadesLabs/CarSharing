@@ -28,21 +28,22 @@ class AvailabilityFilterPresenter(context: Context) {
         return filter!!
     }
 
-    fun saveFilter(hourly: Boolean?) {
+    fun saveFilter(hourly: Boolean?, callback: () -> Unit) {
         filter?.let {
             it.bookingHourly = hourly
             saveFilterUseCase.saveFilter(it)
+            callback.invoke()
         }
     }
 
-    fun resetFilter() {
+    fun resetFilter(callback: () -> Unit) {
         filter?.let {
             it.rentalPeriodBegin = null
             it.rentalPeriodEnd = null
             it.pickupTime = null
             it.returnTime = null
         }
-        saveFilter(null)
+        saveFilter(null, callback)
     }
 
     fun setHourlyFilter(start: Date? = null, end: Date? = null) {

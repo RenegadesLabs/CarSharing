@@ -20,7 +20,6 @@
     </style>
 
     <style name="AppTheme.DarkTheme">
-        <item name="colorPrimary">@color/bg_transparent_black</item>
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 

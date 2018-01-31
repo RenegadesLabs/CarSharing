@@ -59,6 +59,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_transparent_black"
             app:navigationIcon="@drawable/ic_close">
 
             <TextView

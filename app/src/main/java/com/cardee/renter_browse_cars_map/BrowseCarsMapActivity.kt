@@ -1,5 +1,6 @@
 package com.cardee.renter_browse_cars_map
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
@@ -69,6 +70,18 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun openFilter() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun toggleFavorites(selected: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResume() {

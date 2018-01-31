@@ -24,6 +24,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     private val toggle: (v: View) -> Unit = { toggleState() }
     private var presenter: AvailabilityFilterPresenter? = null
     private val doOnSave = { finishCallback.invoke(true) }
+    private val doOnReset = { clearSelection() }
     private val onTimePicked: (NumberPicker?, Int) -> Unit = { _, _ ->
         val pickupPos = pickupTimePicker.value
         val returnPos = returnTimePicker.value
@@ -45,7 +46,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         setTimeIcon.setOnClickListener(toggle)
         backTitleIcon.setOnClickListener(toggle)
         btnSave.setOnClickListener { saveFilter(doOnSave) }
-        btnReset.setOnClickListener { resetFilter(doOnSave) }
+        btnReset.setOnClickListener { resetFilter(doOnReset) }
         initNumberPickers()
     }
 
@@ -100,13 +101,19 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     override fun saveFilter(doOnSave: () -> Unit) {
-        presenter?.saveFilter(false)
-        doOnSave.invoke()
+        presenter?.saveFilter(false, doOnSave)
     }
 
     override fun resetFilter(doOnReset: () -> Unit) {
-        presenter?.resetFilter()
-        doOnReset.invoke()
+        presenter?.resetFilter(doOnReset)
+    }
+
+    private fun setSelection(start: Date, end: Date) {
+
+    }
+
+    private fun clearSelection() {
+
     }
 
     private fun changeDailyRange(begin: Date?, end: Date?) {

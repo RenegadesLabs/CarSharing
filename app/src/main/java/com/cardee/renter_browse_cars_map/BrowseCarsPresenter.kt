@@ -1,16 +1,40 @@
 package com.cardee.renter_browse_cars_map
 
+import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.usecase.GetFilter
+import com.cardee.domain.renter.usecase.GetFilteredCars
+import com.cardee.domain.renter.usecase.SaveFilter
 import com.cardee.domain.rx.Response
 import com.cardee.domain.rx.browse_car.ObtainAllOffers
 import io.reactivex.functions.Consumer
 
 class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
-                          private val allOffersUseCase: ObtainAllOffers = ObtainAllOffers()) :
+                          private val allOffersUseCase: ObtainAllOffers = ObtainAllOffers(),
+                          private val getFilterUseCase: GetFilter = GetFilter(),
+                          private val saveFilterUseCase: SaveFilter = SaveFilter(),
+                          private val getFilteredCara: GetFilteredCars = GetFilteredCars()) :
         BrowseCarsContract.Presenter, Consumer<UIModelEvent> {
 
-    override fun accept(t: UIModelEvent?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    private var filter: BrowseCarsFilter? = null
+
+    override fun accept(event: UIModelEvent?) {
+        when (event?.eventType) {
+            UIModelEvent.EVENT_OFFER_FAVORITE_TOGGLE -> {
+
+            }
+            UIModelEvent.EVENT_OFFER_FILTER_CLICK -> {
+            }
+            UIModelEvent.EVENT_OFFER_LIST_CLICK -> {
+            }
+        }
     }
+
+    private fun toggleFavorite() {
+
+    }
+
+
 
     override fun loadAll() {
         view?.showProgress(true)
@@ -22,10 +46,10 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
                     } else {
                         view?.showProgress(false)
                         response.body?.let {
-                            view?.bind(it.flatMap {
-                                offer ->
+                            view?.bind(it.flatMap { offer ->
                                 val id = offer.carId
-                                listOf(OfferItem(id, offer)) })
+                                listOf(OfferItem(id, offer))
+                            })
                         }
                     }
                 }, onError)

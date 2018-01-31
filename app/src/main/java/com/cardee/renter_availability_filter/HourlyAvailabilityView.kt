@@ -16,6 +16,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
     private val adapter: TimePickerAdapter = TimePickerAdapter()
     private var presenter: AvailabilityFilterPresenter? = null
     private val doOnSave = { finishCallback.invoke(true) }
+    private val doOnReset = { clearSelection() }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -28,7 +29,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
             }
         }
         btnHourSave.setOnClickListener { saveFilter(doOnSave) }
-        btnHourReset.setOnClickListener { resetFilter(doOnSave) }
+        btnHourReset.setOnClickListener { resetFilter(doOnReset) }
     }
 
     override fun setPresenter(presenter: AvailabilityFilterPresenter) {
@@ -41,13 +42,19 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
     }
 
     override fun saveFilter(doOnSave: () -> Unit) {
-        presenter?.saveFilter(true)
-        doOnSave.invoke()
+        presenter?.saveFilter(true, doOnSave)
     }
 
     override fun resetFilter(doOnReset: () -> Unit) {
-        presenter?.resetFilter()
-        doOnReset.invoke()
+        presenter?.resetFilter(doOnReset)
+    }
+
+    private fun setSelection(start: Date, end: Date) {
+
+    }
+
+    private fun clearSelection() {
+
     }
 
     private fun changeHourlyRange(begin: Date?, end: Date?) {
