@@ -242,22 +242,14 @@ public class SelectionManager implements OnViewClickListener<DayView> {
 
     public void setIncludeCurrent(boolean include) {
         includeCurrent = include;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Day day : selectedDayz) {
-                    if (day.isCurrent()) {
-                        if (day.isSelected()) {
-                            day.setSelectionState(null);
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                        break;
+        new Thread(() -> {
+            for (Day day : selectedDayz) {
+                if (day.isCurrent()) {
+                    if (day.isSelected()) {
+                        day.setSelectionState(null);
+                        handler.post(() -> adapter.notifyDataSetChanged());
                     }
+                    break;
                 }
             }
         }).start();

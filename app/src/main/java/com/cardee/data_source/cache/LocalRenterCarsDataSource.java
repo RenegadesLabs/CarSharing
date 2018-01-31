@@ -56,7 +56,8 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
 
     @Override
     public BrowseCarsFilter getFilter() {
-        return mFilter;}
+        return mFilter;
+    }
 
     public void getSorted(String sortBy, OffersCallback offersCallback) {
 

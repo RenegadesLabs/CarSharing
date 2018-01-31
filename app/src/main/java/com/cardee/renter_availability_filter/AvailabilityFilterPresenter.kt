@@ -17,7 +17,11 @@ class AvailabilityFilterPresenter(context: Context) {
     private val delegate: DateStringDelegate = DateStringDelegate(context)
     var disposable: Disposable? = Disposables.empty()
 
-    fun getFilter(): BrowseCarsFilter {
+    fun getFilter(callback: (BrowseCarsFilter) -> Unit) {
+        filter?.let {
+            callback.invoke(it)
+            return
+        }
         val result = getFilterUseCase.getFilter()
         filter = BrowseCarsFilter(result.vehicleTypeId, result.byLocation, result.latitude,
                 result.longitude, result.radius, result.address, result.bookingHourly,
@@ -25,7 +29,7 @@ class AvailabilityFilterPresenter(context: Context) {
                 result.returnTime, result.instantBooking, result.curbsideDelivery,
                 result.bodyTypeId, result.transmissionAuto, result.transmissionManual,
                 result.minYears, result.maxYears, result.minPrice, result.maxPrice, result.favorite)
-        return filter!!
+        filter?.let(callback)
     }
 
     fun saveFilter(hourly: Boolean?, callback: () -> Unit) {
@@ -70,5 +74,15 @@ class AvailabilityFilterPresenter(context: Context) {
             it.pickupTime = delegate.getShortGMTTime(pickupTime)
             it.returnTime = delegate.getShortGMTTime(returnTime)
         }
+    }
+
+    fun isTimingAllowed(): Boolean {
+        filter ?: return false
+        filter?.bookingHourly?.let { hourly ->
+            if (!hourly && filter?.rentalPeriodBegin != null && filter?.rentalPeriodEnd != null) {
+                return true
+            }
+        }
+        return false
     }
 }

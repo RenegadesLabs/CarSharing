@@ -34,7 +34,9 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
 
     override fun setPresenter(presenter: AvailabilityFilterPresenter) {
         this.presenter = presenter
-        this.presenter?.getFilter()
+        this.presenter?.getFilter {
+
+        }
     }
 
     override fun setCallback(callback: (Boolean) -> Unit) {
@@ -49,12 +51,8 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         presenter?.resetFilter(doOnReset)
     }
 
-    private fun setSelection(start: Date, end: Date) {
-
-    }
-
     private fun clearSelection() {
-
+        timePicker.reset()
     }
 
     private fun changeHourlyRange(begin: Date?, end: Date?) {

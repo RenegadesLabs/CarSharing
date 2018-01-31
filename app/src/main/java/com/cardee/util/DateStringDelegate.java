@@ -203,6 +203,9 @@ public class DateStringDelegate {
     }
 
     public String getGMTTimeString(Date date) {
+        if (date == null) {
+            return null;
+        }
         return dateFormatter.format(date);
     }
 
