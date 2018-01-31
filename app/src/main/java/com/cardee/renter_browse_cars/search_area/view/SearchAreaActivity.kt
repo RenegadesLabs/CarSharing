@@ -124,6 +124,10 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
         mMap?.setOnCameraMoveListener(this)
+        mMap?.setOnCameraIdleListener {
+            val latLng = mMap?.cameraPosition?.target
+            requestAddressByLocation(latLng, ADDRESS_BY_LOCATION_CODE)
+        }
 
         getLocationPermission()
         getDeviceLocation()
@@ -137,10 +141,6 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
         val myCurrentLocation = LatLng(mLastKnownLocation?.latitude ?: return,
                 mLastKnownLocation?.longitude ?: return)
         requestAddressByLocation(myCurrentLocation, MY_ADDRESS_BY_LOCATION_CODE)
-        mMap?.setOnCameraIdleListener {
-            val latLng = mMap?.cameraPosition?.target
-            requestAddressByLocation(latLng, ADDRESS_BY_LOCATION_CODE)
-        }
     }
 
     private fun requestAddressByLocation(location: LatLng?, requestCode: Int) {
@@ -236,6 +236,7 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true
+                moveToMyCurrentLocation()
             }
         }
     }
