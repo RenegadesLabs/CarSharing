@@ -12,6 +12,7 @@
         android:textColor="@color/text_regular"
         android:textSize="@dimen/text_regular"
         android:textStyle="bold"
+        android:text="Not Specified"
         app:layout_constraintEnd_toStartOf="@+id/dateSeparator"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         android:textColor="@color/text_regular"
         android:textSize="@dimen/text_regular"
         android:textStyle="bold"
+        android:text="Not Specified"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dateSeparator"
         app:layout_constraintTop_toTopOf="parent" />

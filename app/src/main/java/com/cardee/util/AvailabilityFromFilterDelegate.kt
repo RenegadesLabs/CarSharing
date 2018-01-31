@@ -22,6 +22,7 @@ class AvailabilityFromFilterDelegate(context: Context) {
         private val ISO_DATE_PATTERN: String = "HH:mm:ssZZZZZ"
         private val SHORT_DATE_PATTERN: String = "d MMM"
         private val SHORT_TIME_PATTERN: String = "ha"
+        private val TITLE_PATTERN: String = "d MMM, ha"
     }
 
     private var anytime: String = "Anytime"
@@ -29,6 +30,8 @@ class AvailabilityFromFilterDelegate(context: Context) {
     private var hourly: String = "Book Hourly"
     private var noValue: String = "Not Specified"
     private val timePattern = Regex(", \\d{1,2}[ap]m$")
+    private val datePattern = Regex("^\\d{1,2} [a-zA-Z]+$")
+    private val titlePattern = Regex("^(\\d{1,2} [a-zA-Z]+), (\\d{1,2}[ap]m)$")
 
     private val iso8601OutDateFormatter: SimpleDateFormat
     private val iso8601InDateFormatter: SimpleDateFormat
@@ -36,15 +39,17 @@ class AvailabilityFromFilterDelegate(context: Context) {
     private val isoInDateFormatter: SimpleDateFormat
     private val shortDateFormatter: SimpleDateFormat
     private val shortTimeFormatter: SimpleDateFormat
+    private val titleFormatter: SimpleDateFormat
 
     init {
         val timeZone = TimeZone.getTimeZone("GMT+08:00")
-        iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.getDefault())
-        iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.getDefault())
-        isoOutDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.getDefault())
-        isoInDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.getDefault())
-        shortDateFormatter = SimpleDateFormat(SHORT_DATE_PATTERN, Locale.getDefault())
-        shortTimeFormatter = SimpleDateFormat(SHORT_TIME_PATTERN, Locale.getDefault())
+        iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
+        iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
+        isoOutDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.US)
+        isoInDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.US)
+        shortDateFormatter = SimpleDateFormat(SHORT_DATE_PATTERN, Locale.US)
+        shortTimeFormatter = SimpleDateFormat(SHORT_TIME_PATTERN, Locale.US)
+        titleFormatter = SimpleDateFormat(TITLE_PATTERN, Locale.US)
         iso8601OutDateFormatter.timeZone = timeZone
         isoInDateFormatter.timeZone = timeZone
     }
@@ -88,11 +93,39 @@ class AvailabilityFromFilterDelegate(context: Context) {
     }
 
     fun onSetTitlesFromFilter(startView: TextView, endView: TextView, filter: BrowseCarsFilter, mode: Mode) {
+        if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
+            startView.text = noValue
+            endView.text = noValue
+            return
+        }
+        when (mode) {
+            Mode.DAILY -> setDailyTitlesFromFilter(startView, endView, filter)
+            Mode.HOURLY -> {
+                setHourlyTitle(startView, filter.rentalPeriodBegin)
+                setHourlyTitle(endView, filter.rentalPeriodEnd)
+            }
+        }
+    }
 
+    private fun setHourlyTitle(view: TextView, time: String?) {
+        time?.let {
+            try {
+                val date = iso8601InDateFormatter.parse(time)
+                onSetTitleFromDate(view, date)
+            } catch (ex: ParseException) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    private fun setDailyTitlesFromFilter(startView: TextView, endView: TextView, filter: BrowseCarsFilter) {
+        startView.text = noValue
+        endView.text = noValue
     }
 
     fun onSetTitleFromDate(view: TextView, date: Date?) {
-
+        val dateString = titleFormatter.format(date)
+        view.text = dateString
     }
 
     fun onSetTiming(view: TextView, time: String?) {

@@ -147,6 +147,9 @@ public class DateStringDelegate {
     }
 
     public String getShortGMTTime(String time) {
+        if (time == null) {
+            return null;
+        }
         try {
             Date date = timeViewFormatter.parse(time);
             return timeFormatter.format(date).toLowerCase();
