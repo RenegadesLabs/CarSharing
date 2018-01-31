@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -78,7 +78,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @BindView(R.id.tv_browseCarsFloatingSortText)
     public TextView mSortText;
     @BindView(R.id.v_renterBrowseCarsHeader)
-    public LinearLayout mHeaderView;
+    public FrameLayout mHeaderView;
     @BindView(R.id.iv_renterCarsToolbarFavoritesImg)
     public AppCompatImageView mFavsImage;
     @BindView(R.id.toolbar_search)
@@ -157,27 +157,17 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.addOnScrollListener(new CustomRecyclerScrollListener() {
             @Override
             public void show() {
-                mHeaderView
+                mFloatingView
                         .animate()
-                        .translationY(-mHeaderView.getHeight() - bottomViewOffset)
+                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
-                        .start();
-
-                mFloatingView.animate().translationY(0)
-                        .setInterpolator(new DecelerateInterpolator(2))
                         .start();
             }
 
             @Override
             public void hide() {
-                mHeaderView.animate().translationY(0)
+                mFloatingView.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator(2))
-                        .start();
-
-                mFloatingView
-                        .animate()
-                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
-                        .setInterpolator(new AccelerateInterpolator(2))
                         .start();
             }
         });
@@ -384,6 +374,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mSearchView.setVisibility(search ? View.VISIBLE : View.GONE);
         if (!search) {
             mSearchInput.setText("");
+            mPresenter.getCarsByFilter(mPresenter.getFilter());
         }
     }
 
