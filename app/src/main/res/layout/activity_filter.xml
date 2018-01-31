@@ -342,7 +342,7 @@
                             android:layout_gravity="center_horizontal"
                             android:ellipsize="end"
                             android:gravity="center_horizontal"
-                            android:maxLines="2"
+                            android:maxLines="1"
                             android:text="@string/default_search_area"
                             android:textAlignment="center" />
                     </LinearLayout>
