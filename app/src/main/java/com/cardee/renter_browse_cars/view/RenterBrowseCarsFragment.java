@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -26,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -77,7 +78,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @BindView(R.id.tv_browseCarsFloatingSortText)
     public TextView mSortText;
     @BindView(R.id.v_renterBrowseCarsHeader)
-    public LinearLayout mHeaderView;
+    public FrameLayout mHeaderView;
     @BindView(R.id.iv_renterCarsToolbarFavoritesImg)
     public AppCompatImageView mFavsImage;
     @BindView(R.id.toolbar_search)
@@ -94,6 +95,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public TextView mSearchAreaAddress;
     @BindView(R.id.tv_browseCarsHeaderRadiusTxt)
     public TextView mSearchAreaRadius;
+    @BindView(R.id.ll_browseCarsHeaderRadius)
+    public ConstraintLayout mSearchAreaContainer;
 
     private boolean favoritesSelected = false;
     private boolean search = false;
@@ -154,27 +157,17 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListView.addOnScrollListener(new CustomRecyclerScrollListener() {
             @Override
             public void show() {
-                mHeaderView
+                mFloatingView
                         .animate()
-                        .translationY(-mHeaderView.getHeight() - bottomViewOffset)
+                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
                         .setInterpolator(new AccelerateInterpolator(2))
-                        .start();
-
-                mFloatingView.animate().translationY(0)
-                        .setInterpolator(new DecelerateInterpolator(2))
                         .start();
             }
 
             @Override
             public void hide() {
-                mHeaderView.animate().translationY(0)
+                mFloatingView.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator(2))
-                        .start();
-
-                mFloatingView
-                        .animate()
-                        .translationY(mFloatingView.getHeight() + bottomViewOffset)
-                        .setInterpolator(new AccelerateInterpolator(2))
                         .start();
             }
         });
@@ -274,7 +267,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 == PackageManager.PERMISSION_GRANTED)) {
             getCurrentLocation();
         } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
         }
     }
@@ -381,6 +374,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mSearchView.setVisibility(search ? View.VISIBLE : View.GONE);
         if (!search) {
             mSearchInput.setText("");
+            mPresenter.getCarsByFilter(mPresenter.getFilter());
         }
     }
 
@@ -425,6 +419,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         LatLng location = data.getParcelableExtra("location");
                         if (location != null) {
                             mSearchAreaAddress.setText(address);
+                            mSearchAreaAddress.requestLayout();
                             String radiusText = String.format(getResources().getString(R.string.cars_browse_search_area_template), radius);
                             if (radius == 30) {
                                 radiusText = getResources().getString(R.string.cars_browse_search_area_default);
@@ -453,7 +448,12 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                         }
                         mFilter = mPresenter.getFilter();
                         if (mFilter.getByLocation()) {
-                            mSearchAreaAddress.setText(mFilter.getAddress());
+                            String address = mFilter.getAddress();
+                            if (address.equals("")) {
+                                address = getResources().getString(R.string.current);
+                            }
+                            mSearchAreaAddress.setText(address);
+                            mSearchAreaAddress.requestLayout();
                             int radiusInKm = mFilter.getRadius() / 1000;
                             String radiusText = String.format(getResources().getString(R.string.cars_browse_search_area_template), radiusInKm);
                             if (radiusInKm == 30) {

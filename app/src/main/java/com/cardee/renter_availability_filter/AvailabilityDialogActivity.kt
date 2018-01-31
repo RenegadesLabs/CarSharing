@@ -34,8 +34,8 @@ class AvailabilityDialogActivity : AppCompatActivity() {
     private fun prepareWindow() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT
-            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+            window.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
+                    WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         }
         window.attributes.dimAmount = 0.6f
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)

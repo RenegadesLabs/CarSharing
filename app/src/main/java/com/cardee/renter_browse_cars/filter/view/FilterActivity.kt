@@ -74,8 +74,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
 
         if (filter.byLocation) {
+            var address = filter.address
+            if (address == "") {
+                address = resources.getString(R.string.current)
+            }
             searchAreaAddress.text = String.format(
-                    resources.getString(R.string.filter_search_area_template), filter.address, filter.radius / 1000)
+                    resources.getString(R.string.filter_search_area_template), address, filter.radius / 1000)
+
+        } else {
+            searchAreaAddress.text = resources.getString(R.string.default_search_area)
         }
 
         priceRangeSeekBar.setValueFormatter("$%d")
