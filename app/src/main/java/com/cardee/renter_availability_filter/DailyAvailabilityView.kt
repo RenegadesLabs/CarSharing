@@ -76,9 +76,9 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                         delegate.onInitTimingSelection(pickupTimePicker, filter.pickupTime!!, timeValues)
                         delegate.onInitTimingSelection(returnTimePicker, filter.returnTime!!, timeValues)
                     }
-                    delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter, AvailabilityFromFilterDelegate.Mode.DAILY)
                 }
             }
+            delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter, AvailabilityFromFilterDelegate.Mode.DAILY)
         }
     }
 

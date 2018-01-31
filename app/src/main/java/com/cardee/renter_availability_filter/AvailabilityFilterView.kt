@@ -22,7 +22,15 @@ class AvailabilityFilterView @JvmOverloads constructor(context: Context, attrs: 
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        availabilityPager.adapter = AvailabilityPagerAdapter(context, exitSubject)
+        val availabilityAdapter = AvailabilityPagerAdapter(context, exitSubject)
+        availabilityPager.adapter = availabilityAdapter
+        availabilityAdapter.presenter.getFilter { filter ->
+            filter.bookingHourly?.let { hourly ->
+                if (!hourly) {
+                    availabilityPager.setCurrentItem(1, false)
+                }
+            }
+        }
         availabilityTabs.setupWithViewPager(availabilityPager)
     }
 
