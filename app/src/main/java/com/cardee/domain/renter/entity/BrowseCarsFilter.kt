@@ -13,6 +13,10 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
                        var radius: Int = 0, // radius in meters
                        var address: String = "",
                        bookingHourly: Boolean? = null,
+                       var rentalPeriodBegin: String? = null,
+                       var rentalPeriodEnd: String? = null,
+                       var pickupTime: String? = null,
+                       var returnTime: String? = null,
                        instantBooking: Boolean = false,
                        curbsideDelivery: Boolean = false,
                        bodyTypeId: Int = 0,
@@ -82,6 +86,10 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
             parcel.readInt(),
             parcel.readString(),
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readInt(),
@@ -102,6 +110,10 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
         parcel.writeInt(radius)
         parcel.writeString(address)
         parcel.writeValue(bookingHourly)
+        parcel.writeString(rentalPeriodBegin)
+        parcel.writeString(rentalPeriodEnd)
+        parcel.writeString(pickupTime)
+        parcel.writeString(returnTime)
         parcel.writeByte(if (instantBooking) 1 else 0)
         parcel.writeByte(if (curbsideDelivery) 1 else 0)
         parcel.writeInt(bodyTypeId)

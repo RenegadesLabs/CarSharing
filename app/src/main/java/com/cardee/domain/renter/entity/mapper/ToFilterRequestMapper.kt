@@ -6,6 +6,10 @@ import com.cardee.domain.renter.entity.FilterRequest
 class ToFilterRequestMapper {
     fun transform(filter: BrowseCarsFilter): FilterRequest {
         return FilterRequest(rentType = if (filter.bookingHourly == true) "hourly" else if (filter.bookingHourly == false) "daily" else null,
+                rentalPeriodBegin = filter.rentalPeriodBegin,
+                rentalPeriodEnd = filter.rentalPeriodEnd,
+                timePickup = filter.pickupTime,
+                timeReturn = filter.returnTime,
                 typeVehicleId = filter.vehicleTypeId,
                 byLocation = filter.byLocation,
                 latitude = if (filter.byLocation) filter.latitude else null,

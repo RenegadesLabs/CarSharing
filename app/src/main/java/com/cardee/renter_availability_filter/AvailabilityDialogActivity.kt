@@ -1,5 +1,6 @@
 package com.cardee.renter_availability_filter
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -46,7 +47,10 @@ class AvailabilityDialogActivity : AppCompatActivity() {
     }
 
     private fun proceedExit(saved: Boolean) {
-        TODO() //implement onActivityResult
+        if (saved) {
+            setResult(Activity.RESULT_OK)
+        }
+        finish()
     }
 
     override fun finish() {
