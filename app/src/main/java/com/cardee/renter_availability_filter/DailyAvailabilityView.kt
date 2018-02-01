@@ -20,7 +20,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     private val noTiming = "--"
     private var toast: Toast? = null
     private val adapter = CalendarAdapter()
-    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate(context)
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
     private val timeValues: Array<String?> = arrayOfNulls(25)
     private var finishCallback: (Boolean) -> Unit = {}
     private var presenter: AvailabilityFilterPresenter? = null
@@ -77,10 +77,8 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                     if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
                         delegate.onInitCalendarSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
                     } else return@let
-                    if (filter.pickupTime != null && filter.returnTime != null) {
-                        delegate.onInitTimingSelection(pickupTimePicker, filter.pickupTime!!, timeValues)
-                        delegate.onInitTimingSelection(returnTimePicker, filter.returnTime!!, timeValues)
-                    }
+                    filter.pickupTime?.let { delegate.onInitTimingSelection(pickupTimePicker, it, timeValues) }
+                    filter.returnTime?.let { delegate.onInitTimingSelection(returnTimePicker, it, timeValues) }
                     delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter)
                     delegate.onSetSubmitTitle(btnSave, filter)
                 }
@@ -164,7 +162,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         delegate.onSetTiming(dateTo, returnTime)
     }
 
-    private fun showMessage(message: String){
+    private fun showMessage(message: String) {
         toast?.cancel()
         toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
         toast?.show()

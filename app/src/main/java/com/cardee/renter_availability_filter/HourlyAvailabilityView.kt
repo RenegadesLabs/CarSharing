@@ -14,7 +14,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         ConstraintLayout(context, attrs, defStyleAttr), FilterViewContract {
 
     private var finishCallback: (Boolean) -> Unit = {}
-    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate(context)
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
     private val adapter: TimePickerAdapter = TimePickerAdapter()
     private var presenter: AvailabilityFilterPresenter? = null
     private val doOnSave = { finishCallback.invoke(true) }

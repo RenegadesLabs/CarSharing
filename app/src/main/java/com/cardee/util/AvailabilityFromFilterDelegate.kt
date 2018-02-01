@@ -1,6 +1,5 @@
 package com.cardee.util
 
-import android.content.Context
 import android.widget.NumberPicker
 import android.widget.TextView
 import com.cardee.domain.renter.entity.BrowseCarsFilter
@@ -12,14 +11,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AvailabilityFromFilterDelegate(context: Context) {
+class AvailabilityFromFilterDelegate {
 
     companion object {
         private val ISO_8601_DATE_PATTERN: String = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        private val ISO_DATE_PATTERN: String = "HH:mm:ssZZZZZ"
+        private val ISO_TIME_PATTERN: String = "HH:mm:ssZZZZZ"
         private val SHORT_DATE_PATTERN: String = "d MMM"
-        private val SHORT_TIME_PATTERN: String = "ha"
-        private val TITLE_PATTERN: String = "d MMM, ha"
+        private val SHORT_TIME_PATTERN: String = "hha"
+        private val TITLE_PATTERN: String = "d MMM, hha"
     }
 
     private var anytime: String = "Anytime"
@@ -33,8 +32,8 @@ class AvailabilityFromFilterDelegate(context: Context) {
 
     private val iso8601OutDateFormatter: SimpleDateFormat
     private val iso8601InDateFormatter: SimpleDateFormat
-    private val isoOutDateFormatter: SimpleDateFormat
-    private val isoInDateFormatter: SimpleDateFormat
+    private val isoOutTimeFormatter: SimpleDateFormat
+    private val isoInTimeFormatter: SimpleDateFormat
     private val shortDateFormatter: SimpleDateFormat
     private val shortTimeFormatter: SimpleDateFormat
     private val titleFormatter: SimpleDateFormat
@@ -45,13 +44,13 @@ class AvailabilityFromFilterDelegate(context: Context) {
         symbols.amPmStrings = arrayOf("am", "pm")
         iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
         iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
-        isoOutDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.US)
-        isoInDateFormatter = SimpleDateFormat(ISO_DATE_PATTERN, Locale.US)
+        isoOutTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
+        isoInTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
         shortDateFormatter = SimpleDateFormat(SHORT_DATE_PATTERN, Locale.US)
         shortTimeFormatter = SimpleDateFormat(SHORT_TIME_PATTERN, Locale.US)
         titleFormatter = SimpleDateFormat(TITLE_PATTERN, Locale.US)
         iso8601OutDateFormatter.timeZone = timeZone
-        isoInDateFormatter.timeZone = timeZone
+        isoInTimeFormatter.timeZone = timeZone
         shortTimeFormatter.dateFormatSymbols = symbols
         titleFormatter.dateFormatSymbols = symbols
     }
@@ -81,10 +80,10 @@ class AvailabilityFromFilterDelegate(context: Context) {
             throw IllegalArgumentException("NumberPicker and Array size mismatch")
         }
         try {
-            val date = isoInDateFormatter.parse(isoTime)
+            val date = isoInTimeFormatter.parse(isoTime)
             val timeString = shortTimeFormatter.format(date).toLowerCase()
             for (i in 0 until values.size) {
-                if (timeString == values[i]) {
+                if (timeString.run { replace(Regex("^0"), "") } == values[i]) {
                     picker.value = i
                     break
                 }
@@ -111,7 +110,6 @@ class AvailabilityFromFilterDelegate(context: Context) {
 
     private fun setHourlyTitle(view: TextView, time: String) {
         val date = iso8601InDateFormatter.parse(time)
-
         onSetTitleFromTime(view, date)
     }
 
@@ -121,6 +119,8 @@ class AvailabilityFromFilterDelegate(context: Context) {
             val endDate = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
             onSetTitleFromDate(startView, startDate)
             onSetTitleFromDate(endView, endDate)
+            filter.pickupTime?.let { onAttachTimingToTitle(startView, it) }
+            filter.returnTime?.let { onAttachTimingToTitle(endView, it) }
         } catch (ex: ParseException) {
             startView.text = noValue
             endView.text = noValue
@@ -143,6 +143,16 @@ class AvailabilityFromFilterDelegate(context: Context) {
     fun onSetTitleFromTime(view: TextView, date: Date?) {
         val dateString = titleFormatter.format(date)
         view.text = dateString
+    }
+
+    fun onAttachTimingToTitle(view: TextView, isoTime: String) {
+        try {
+            val date = isoInTimeFormatter.parse(isoTime)
+            val timeString = shortTimeFormatter.format(date)
+            onSetTiming(view, timeString.run { replace(Regex("^0"), "") })
+        } catch (ex: ParseException) {
+            ex.printStackTrace()
+        }
     }
 
     fun onSetTiming(view: TextView, time: String?) {
