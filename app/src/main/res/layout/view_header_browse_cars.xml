@@ -32,23 +32,42 @@
                 android:layout_height="20dp"
                 android:layout_marginEnd="@dimen/small_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv_browseCarsPeriod"
+                app:layout_constraintEnd_toStartOf="@+id/searchAreaInfo"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_calendar_rental" />
 
-            <TextView
-                android:id="@id/tv_browseCarsPeriod"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@id/searchAreaInfo"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="24 -26 Mar"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_small"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/calendarImage"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="wrap">
+
+                <TextView
+                    android:id="@+id/tv_browseCarsPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small"
+                    android:text="Title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_browseCarsPeriodSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="Subtitle"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
 

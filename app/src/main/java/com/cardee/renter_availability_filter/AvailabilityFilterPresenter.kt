@@ -47,7 +47,7 @@ class AvailabilityFilterPresenter(context: Context) {
             it.pickupTime = null
             it.returnTime = null
         }
-        saveFilter(null, callback)
+        saveFilter(filter?.bookingHourly, callback)
     }
 
     fun setHourlyFilter(start: Date? = null, end: Date? = null) {

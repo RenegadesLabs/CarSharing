@@ -1,5 +1,6 @@
 package com.cardee.util
 
+import android.view.View
 import android.widget.NumberPicker
 import android.widget.TextView
 import com.cardee.domain.renter.entity.BrowseCarsFilter
@@ -37,11 +38,13 @@ class AvailabilityFromFilterDelegate {
     private val shortDateFormatter: SimpleDateFormat
     private val shortTimeFormatter: SimpleDateFormat
     private val titleFormatter: SimpleDateFormat
+    private val calendar: Calendar
 
     init {
         val timeZone = TimeZone.getTimeZone("GMT+08:00")
         val symbols = DateFormatSymbols(Locale.US)
         symbols.amPmStrings = arrayOf("am", "pm")
+        calendar = Calendar.getInstance()
         iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
         iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
         isoOutTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
@@ -53,6 +56,20 @@ class AvailabilityFromFilterDelegate {
         isoInTimeFormatter.timeZone = timeZone
         shortTimeFormatter.dateFormatSymbols = symbols
         titleFormatter.dateFormatSymbols = symbols
+    }
+
+    private fun getLocalGMT(): String {
+        val gmtOffset = TimeZone.getDefault().getOffset(Date().time) / 1000 / 60 / 60
+        if (gmtOffset == 0) {
+            return "GMT"
+        }
+        val gmtStringParam = "${Math.abs(gmtOffset)}"
+        val sign = if (gmtOffset < 0) "-" else "+"
+        return when (gmtStringParam.length) {
+            1 -> "GMT${sign}0$gmtStringParam:00"
+            2 -> "GMT$sign$gmtStringParam:00"
+            else -> "GMT"
+        }
     }
 
     fun onInitCalendarSelection(calendarAdapter: CalendarAdapter, isoDateStart: String, isoDateEnd: String) {
@@ -172,17 +189,126 @@ class AvailabilityFromFilterDelegate {
 
     private fun concatTiming(dateString: String, timeString: String): String {
         if (!timeString.isBlank()) {
-            return "${dateString}, ${timeString}"
+            return "$dateString, $timeString"
         }
         return dateString
     }
 
     private fun replaceTiming(dateString: String, timeString: String): String {
-        val timeSuffix = if (timeString.isEmpty()) "" else ", ${timeString}"
+        val timeSuffix = if (timeString.isEmpty()) "" else ", $timeString"
         return dateString.replace(timePattern, timeSuffix)
     }
 
     fun onSetDateRangeTitle(view: TextView, filter: BrowseCarsFilter) {
+
+    }
+
+    fun onSetDateRangeTitle(titleView: TextView, subtitleView: TextView, filter: BrowseCarsFilter) {
+        var title: String
+        if (filter.bookingHourly == null) {
+            setDefaultDailyString(titleView, subtitleView)
+            return
+        }
+        if (filter.bookingHourly == false) {
+            if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
+                setDefaultDailyString(titleView, subtitleView)
+            } else {
+                titleView.visibility = View.GONE
+                title = buildDailyRangeTitle(filter)
+                if ("" == title) {
+                    setDefaultDailyString(titleView, subtitleView)
+                    return
+                }
+                subtitleView.text = title
+            }
+            return
+        }
+        if (filter.bookingHourly == true) {
+            if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
+                setDefaultHourlyString(titleView, subtitleView)
+            } else {
+                titleView.visibility = View.GONE
+                title = buildHourlyRangeTitle(filter)
+                if (title == "") {
+                    setDefaultHourlyString(titleView, subtitleView)
+                    return
+                }
+                subtitleView.text = title
+            }
+        }
+    }
+
+    private fun setDefaultDailyString(titleView: TextView, subtitleView: TextView) {
+        titleView.visibility = View.VISIBLE
+        titleView.text = daily
+        subtitleView.text = anytime
+    }
+
+    private fun setDefaultHourlyString(titleView: TextView, subtitleView: TextView) {
+        titleView.visibility = View.VISIBLE
+        titleView.text = hourly
+        subtitleView.text = anytime
+    }
+
+    private fun buildDailyRangeTitle(filter: BrowseCarsFilter): String {
+        try {
+            val dateBegin = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
+            val dateEnd = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            if (filter.pickupTime == null && filter.returnTime == null) {
+                if (isSingleMonth(dateBegin, dateEnd)) {
+                    return buildSingleMonthString(dateBegin, dateEnd)
+                }
+            }
+        } catch (ex: ParseException) {
+        }
+        return ""
+    }
+
+    private fun buildHourlyRangeTitle(filter: BrowseCarsFilter): String {
+        try {
+            val dateBegin = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
+            val dateEnd = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            if (isSingleDay(dateBegin, dateEnd)) {
+                return buildSingleDayString(dateBegin, dateEnd)
+            }
+        } catch (ex: ParseException) {
+        }
+        return ""
+    }
+
+    private fun isSingleMonth(dateBegin: Date, dateEnd: Date): Boolean {
+        calendar.time = dateBegin
+        val monthBegin = calendar.get(Calendar.MONTH)
+        calendar.time = dateEnd
+        val monthEnd = calendar.get(Calendar.MONTH)
+        return monthBegin == monthEnd
+    }
+
+    private fun isSingleDay(dateBegin: Date, dateEnd: Date): Boolean {
+        calendar.time = dateBegin
+        val monthBegin = calendar.get(Calendar.MONTH)
+        val dayBegin = calendar.get(Calendar.DAY_OF_MONTH)
+        calendar.time = dateEnd
+        val monthEnd = calendar.get(Calendar.MONTH)
+        val dayEnd = calendar.get(Calendar.DAY_OF_MONTH)
+        return monthBegin == monthEnd && dayBegin == dayEnd
+    }
+
+    private fun buildSingleDayString(dateBegin: Date, dateEnd: Date): String {
+
+        return ""
+    }
+
+    private fun buildSingleMonthString(dateBegin: Date, dateEnd: Date): String {
+
+        return ""
+    }
+
+    private fun buildHoursString() {
+
+    }
+
+    private fun buildDaysString() {
 
     }
 
