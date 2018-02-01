@@ -18,7 +18,7 @@ class AvailabilityFromFilterDelegate {
         private val ISO_TIME_PATTERN: String = "HH:mm:ssZZZZZ"
         private val SHORT_DATE_PATTERN: String = "d MMM"
         private val SHORT_TIME_PATTERN: String = "hha"
-        private val TITLE_PATTERN: String = "d MMM, hha"
+        private val TITLE_PATTERN: String = "d MMM, ha"
     }
 
     private var anytime: String = "Anytime"
