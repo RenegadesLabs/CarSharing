@@ -30,6 +30,7 @@ public class CarResponseToRentalDetailsMapper {
             rentalDetails.setDailyTimePickup(dailyDetails.getTimePickup());
             rentalDetails.setDailyTimeReturn(dailyDetails.getTimeReturn());
             rentalDetails.setDailyInstantBooking(dailyDetails.getInstantBooking());
+            rentalDetails.setDailyInstantBookingCount(dailyDetails.getInstantBookingCount());
             rentalDetails.setDailyCurbsideDelivery(dailyDetails.getCurbsideDelivery());
             rentalDetails.setDailyAcceptCash(dailyDetails.getAcceptCash());
             rentalDetails.setDailyAmountRateFirst(dailyDetails.getAmntRateFirst());
@@ -52,6 +53,7 @@ public class CarResponseToRentalDetailsMapper {
         OrderHourlyDetailsEntity hourlyDetails = response.getOrderHourlyDetails();
         if (hourlyDetails != null) {
             rentalDetails.setHourlyInstantBooking(hourlyDetails.getInstantBooking());
+            rentalDetails.setHourlyInstantBookingCount(hourlyDetails.getInstantBookingCount());
             rentalDetails.setHourlyCurbsideDelivery(hourlyDetails.getCurbsideDelivery());
             rentalDetails.setHourlyAcceptCash(hourlyDetails.getAcceptCrash());
             rentalDetails.setHourlyAmountRateFirst(hourlyDetails.getAmntRateFirst());

@@ -11,6 +11,9 @@ public class OrderHourlyDetailsEntity {
     @SerializedName("is_instant_booking")
     private Boolean instantBooking;
     @Expose
+    @SerializedName("cnt_hours4instant_booking")
+    private Integer instantBookingCount;
+    @Expose
     @SerializedName("is_curbside_delivery")
     private Boolean curbsideDelivery;
     @Expose
@@ -48,6 +51,14 @@ public class OrderHourlyDetailsEntity {
 
     public void setInstantBooking(Boolean instantBooking) {
         this.instantBooking = instantBooking;
+    }
+
+    public Integer getInstantBookingCount() {
+        return instantBookingCount == null ? 0 : instantBookingCount;
+    }
+
+    public void setInstantBookingCount(Integer instantBookingCount) {
+        this.instantBookingCount = instantBookingCount;
     }
 
     public Boolean getCurbsideDelivery() {

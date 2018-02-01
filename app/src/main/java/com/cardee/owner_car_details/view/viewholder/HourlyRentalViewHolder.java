@@ -37,6 +37,8 @@ import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 import com.cardee.util.DateStringDelegate;
 
+import java.util.Locale;
+
 public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, RentalDetailsContract.ControlView,
         HourlyTimingEventBus.Listener, CompoundButton.OnCheckedChangeListener {
@@ -169,6 +171,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                     @Override
                     public void onDoneClicked(String value) {
                         instantBookingEdit.setText(value);
+                        presenter.updateInstantBookingCount(Integer.valueOf(value.split(" ")[0]));
                     }
                 });
                 break;
@@ -300,6 +303,12 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
         setInstantBookingState(rentalDetails);
+        int hours = rentalDetails.getHourlyInstantBookingCount();
+        String template = "%d hours";
+        if (hours == 1) {
+            template = "%d hour";
+        }
+        instantBookingEdit.setText(String.format(Locale.getDefault(), template, hours));
         setCurbsideDeliveryState(rentalDetails);
         setAcceptCashState(rentalDetails);
     }
