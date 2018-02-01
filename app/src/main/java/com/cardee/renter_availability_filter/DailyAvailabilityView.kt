@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.NumberPicker
+import android.widget.Toast
 import com.cardee.R
 import com.cardee.util.AvailabilityFromFilterDelegate
 import kotlinx.android.synthetic.main.view_daily_availability.view.*
@@ -17,6 +18,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         ConstraintLayout(context, attrs, defStyleAttr), FilterViewContract {
 
     private val noTiming = "--"
+    private var toast: Toast? = null
     private val adapter = CalendarAdapter()
     private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate(context)
     private val timeValues: Array<String?> = arrayOfNulls(25)
@@ -25,11 +27,14 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     private val doOnSave = { finishCallback.invoke(true) }
     private val doOnReset = { clearSelection() }
     private val toggle: (v: View) -> Unit = {
-        if (presenter?.isTimingAllowed() == true) {
+        if (presenter?.isTimingAllowed() == true && calendar.visibility == View.VISIBLE) {
             toggleState()
+        } else {
+            showMessage("Please select dates first")
         }
     }
-    private val onTimePicked: (NumberPicker?, Int) -> Unit = { _, _ ->
+    private val toggleBack: (v: View) -> Unit = { toggleState() }
+    private val onTimePicked: (NumberPicker?, Int, Int) -> Unit = { _, _, _ ->
         val pickupValue = timeValues[pickupTimePicker.value]
         val returnValue = timeValues[returnTimePicker.value]
         val pickupTime = if (pickupValue == noTiming) null else pickupValue
@@ -56,9 +61,9 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
             }
         }
         setTime.setOnClickListener(toggle)
-        backTitle.setOnClickListener(toggle)
         setTimeIcon.setOnClickListener(toggle)
-        backTitleIcon.setOnClickListener(toggle)
+        backTitle.setOnClickListener(toggleBack)
+        backTitleIcon.setOnClickListener(toggleBack)
         btnSave.setOnClickListener { saveFilter(doOnSave) }
         btnReset.setOnClickListener { resetFilter(doOnReset) }
         initNumberPickers()
@@ -76,8 +81,8 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                         delegate.onInitTimingSelection(pickupTimePicker, filter.pickupTime!!, timeValues)
                         delegate.onInitTimingSelection(returnTimePicker, filter.returnTime!!, timeValues)
                     }
-                    delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter, AvailabilityFromFilterDelegate.Mode.DAILY)
-                    delegate.onSetSubmitTitle(btnSave, filter, AvailabilityFromFilterDelegate.Mode.DAILY)
+                    delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter)
+                    delegate.onSetSubmitTitle(btnSave, filter)
                 }
             }
         }
@@ -113,8 +118,8 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         returnTimePicker.wrapSelectorWheel = false
         setDividerColor(pickupTimePicker, ContextCompat.getColor(context, android.R.color.transparent))
         setDividerColor(returnTimePicker, ContextCompat.getColor(context, android.R.color.transparent))
-        pickupTimePicker.setOnScrollListener(onTimePicked)
-        returnTimePicker.setOnScrollListener(onTimePicked)
+        pickupTimePicker.setOnValueChangedListener(onTimePicked)
+        returnTimePicker.setOnValueChangedListener(onTimePicked)
     }
 
     private fun setDividerColor(picker: NumberPicker, color: Int) {
@@ -140,6 +145,11 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
 
     private fun clearSelection() {
         calendar.reset()
+        pickupTimePicker.value = 0
+        returnTimePicker.value = 0
+        if (calendar.visibility != View.VISIBLE) {
+            toggleState()
+        }
     }
 
     private fun changeDailyRange(begin: Date?, end: Date?) {
@@ -152,5 +162,11 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         presenter?.setDailyFilterTime(pickupTime, returnTime)
         delegate.onSetTiming(dateFrom, pickupTime)
         delegate.onSetTiming(dateTo, returnTime)
+    }
+
+    private fun showMessage(message: String){
+        toast?.cancel()
+        toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toast?.show()
     }
 }
