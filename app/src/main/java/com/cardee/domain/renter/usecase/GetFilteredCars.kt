@@ -6,6 +6,8 @@ import com.cardee.data_source.RenterCarsRepository
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.renter.entity.FilterRequest
+import com.cardee.domain.renter.entity.OfferCar
+import com.cardee.domain.renter.entity.mapper.OfferResponseBodyToOfferMapper
 import io.reactivex.disposables.Disposable
 
 class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars.ResponseValues> {
@@ -19,7 +21,7 @@ class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars
         return repository.obtainCarsByFilter(values.filter, object : RenterCarsDataSource.OffersCallback {
 
             override fun onSuccess(response: Array<OfferResponseBody>) {
-                callback.onSuccess(ResponseValues(response))
+                callback.onSuccess(ResponseValues(OfferResponseBodyToOfferMapper.transform(response)))
             }
 
             override fun onError(error: Error?) {
@@ -29,5 +31,5 @@ class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars
     }
 
     class RequestValues(val filter: FilterRequest) : RxUseCase.RequestValues
-    class ResponseValues(val cars: Array<OfferResponseBody>) : RxUseCase.ResponseValues
+    class ResponseValues(val cars: List<OfferCar>) : RxUseCase.ResponseValues
 }

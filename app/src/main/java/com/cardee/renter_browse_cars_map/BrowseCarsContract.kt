@@ -8,6 +8,10 @@ interface BrowseCarsContract {
 
         fun bind(offers: List<T>)
 
+        fun openFilter()
+
+        fun toggleFavorites(selected: Boolean)
+
     }
 
     interface Presenter {

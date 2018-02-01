@@ -304,7 +304,7 @@
     <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
     <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
     <string name="car_rental_rates_peak_desc">Friday 6:00pm to Sunday 11:59pm,\n6:00pm onwards on holiday eve,
-    \nand whole day on public holiday</string>
+    \nand whole hour on public holiday</string>
 
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
@@ -490,6 +490,8 @@
     <string name="cars_browse_sort_ratings">Ratings</string>
     <string name="cars_browse_sort_popularity">Popularity</string>
     <string name="cars_browse_search_hint">Search brand, models etc.</string>
+    <string name="cars_browse_search_area_template">Within %dkm</string>
+    <string name="cars_browse_search_area_default">Within SG</string>
     <string name="cars_browse_vehicle_type">Select vehicle type</string>
     <string name="cars_browse_vehicle_type_personal">Personal Car</string>
     <string name="cars_browse_vehicle_type_personal_desc">Passenger cars for personal use</string>
@@ -497,6 +499,7 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+
     <!--Calendar-->
     <string-array name="days_of_week">
         <item>S</item>
@@ -679,6 +682,9 @@
     <string name="booking_type">Booking Type</string>
     <string name="book_hourly">Book Hourly</string>
     <string name="book_daily">Book Daily</string>
+    <string name="availability_filter_title">Set Rental Period</string>
+    <string name="set_daily_time_title">Set time (optional)</string>
+    <string name="back_to_calendar">Back To Calendar</string>
     <string name="rental_period">Rental Period</string>
     <string name="rental_period_from">Choose from</string>
     <string name="rental_period_to">Choose to</string>
@@ -702,7 +708,9 @@
     <string name="auto">Auto</string>
     <string name="manual">Manual</string>
     <string name="submit_btn_text">View 0 Cars</string>
-    <string name="filter_search_area_template">%s\u0020\u0020\u2022\u0020\u0020Within %dkm"</string>
+    <string name="filter_search_area_template">%1$s\u0020\u0020\u2022\u0020\u0020Within %2$dkm</string>
+    <string name="pickup_on">Pickup on</string>
+    <string name="return_by">Return by</string>
 
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>

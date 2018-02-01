@@ -60,7 +60,7 @@ public class Day implements Comparable<Day> {
 
     /**
      * @param date - string representation of date
-     * @return Day object in case of valid date string. Otherwise returns null
+     * @return Hour object in case of valid date string. Otherwise returns null
      */
     public static Day from(@NonNull String date) {
         try {

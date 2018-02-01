@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.*
 import android.support.annotation.DrawableRes
 import android.support.v4.app.ActivityCompat
@@ -29,7 +31,10 @@ import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_search_area.*
 
-class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraMoveListener {
+class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        GoogleMap.OnCameraMoveListener, LocationListener {
+
     private val PERMISSIONS_REQUEST_ACCESS_LOCATION = 101
     private val ADDRESS_BY_LOCATION_CODE = 201
     private val MY_ADDRESS_BY_LOCATION_CODE = 202
@@ -77,8 +82,8 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     }
 
     private fun setListeners() {
-        seekBar.setOnSeekbarChangeListener({ value ->
-            circle?.radius = (value.toInt() * 1000).toDouble()
+        seekBar.setOnSeekbarChangeListener({ value, actualValue ->
+            circle?.radius = actualValue * 1000
         })
         myLocationButton.setOnClickListener { moveToMyCurrentLocation() }
         searchSaveButton.setOnClickListener {
@@ -148,14 +153,7 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     }
 
     private fun getDeviceLocation() {
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED)
-                || (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED)) {
-
-            mLastKnownLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient)
-        }
-
+        mLastKnownLocation = getLocation()
         when {
             mCameraPosition != null -> mMap?.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition))
             mLastKnownLocation != null -> mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -163,6 +161,36 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
                             mLastKnownLocation?.longitude ?: return), DEFAULT_ZOOM))
             else -> mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM))
         }
+    }
+
+    private fun getLocation(): Location? {
+        var location: Location? = null
+
+        val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
+        var gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        var networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (!gpsEnabled && !networkEnabled) {
+            Log.d(TAG, "getLocation: no provider is enabled")
+        } else {
+            if (networkEnabled) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                }
+            }
+            if (gpsEnabled) {
+                if (location == null) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                }
+            }
+        }
+        return location
     }
 
     private fun getLocationPermission() {
@@ -179,18 +207,9 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
 
     private fun moveToMyCurrentLocation() {
         getLocationPermission()
-        if (ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (apiClient?.isConnected == true) {
-                val location = LocationServices.FusedLocationApi.getLastLocation(apiClient)
-                val latLng = LatLng(location.latitude, location.longitude)
-                updateCurrent(latLng, MY_ADDRESS_BY_LOCATION_UPDATE_CODE)
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION), PERMISSIONS_REQUEST_ACCESS_LOCATION)
-        }
+        val location: Location? = getLocation()
+        val latLng = LatLng(location?.latitude ?: return, location.longitude)
+        updateCurrent(latLng, MY_ADDRESS_BY_LOCATION_UPDATE_CODE)
     }
 
     private fun updateCurrent(location: LatLng, addressRequestCode: Int) {
@@ -253,6 +272,22 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
             outState?.putParcelable(KEY_LOCATION, mLastKnownLocation)
             super.onSaveInstanceState(outState)
         }
+    }
+
+    override fun onLocationChanged(p0: Location?) {
+
+    }
+
+    override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+
+    }
+
+    override fun onProviderEnabled(p0: String?) {
+
+    }
+
+    override fun onProviderDisabled(p0: String?) {
+
     }
 
     override fun showProgress(show: Boolean) {

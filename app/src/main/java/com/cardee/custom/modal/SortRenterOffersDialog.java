@@ -124,8 +124,7 @@ public class SortRenterOffersDialog extends BottomSheetDialogFragment {
                 sort = RenterBrowseCarListContract.Sort.POPULARITY;
                 break;
         }
-        if (currentSort != null && !currentSort.equals(sort) ||
-                (sort != null && !sort.equals(currentSort))) {
+        if (sort != null && !sort.equals(currentSort)) {
 //            changeSelection(sort);
             if (listener != null) {
                 listener.onSortSelected(sort);
@@ -136,7 +135,7 @@ public class SortRenterOffersDialog extends BottomSheetDialogFragment {
 
     private void changeSelection(RenterBrowseCarListContract.Sort sort) {
         currentSort = sort;
-        sortDistance.setTypeface(sort == null ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        sortDistance.setTypeface(RenterBrowseCarListContract.Sort.DISTANCE.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortPrice.setTypeface(RenterBrowseCarListContract.Sort.PRICE.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortRatings.setTypeface(RenterBrowseCarListContract.Sort.RATINGS.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         sortPopularity.setTypeface(RenterBrowseCarListContract.Sort.POPULARITY.equals(sort) ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);

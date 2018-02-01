@@ -41,6 +41,8 @@
     <dimen name="toolbar_height">48dp</dimen>
     <dimen name="floating_view_height">44dp</dimen>
     <dimen name="details_item_height">98dp</dimen>
+    <dimen name="item_icon_side_small">20dp</dimen>
+    <dimen name="item_icon_side_regular">28dp</dimen>
     <dimen name="item_icon_side_large">32dp</dimen>
     <dimen name="item_icon_side_xlarge">44dp</dimen>
     <dimen name="small_car_picture_height">58dp</dimen>

@@ -8,8 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ActivityTranslucent" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.DarkTheme">
-        <item name="colorPrimary">@color/bg_transparent_black</item>
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 
@@ -98,6 +108,13 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="NegativeButton" parent="RegularButton">
+        <item name="android:background">@drawable/bg_button_white</item>
+        <item name="android:textColor">@color/toggling_text_color</item>
+        <item name="android:paddingStart">@dimen/widget_padding_regular</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_regular</item>
+    </style>
+
     <style name="SelectorButton" parent="RegularButton">
         <item name="android:background">@drawable/bg_button_white</item>
         <item name="android:textSize">@dimen/list_item_selector_value</item>
@@ -117,6 +134,11 @@
 
     <style name="Tabs" parent="AppTheme">
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextNotCaps" parent="TextAppearance.Design.Tab">
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="Dialog" parent="AlertDialog.AppCompat.Light">

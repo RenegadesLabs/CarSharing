@@ -1,6 +1,7 @@
 package com.cardee.data_source.cache;
 
 import com.cardee.data_source.RenterCarsDataSource;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import io.reactivex.disposables.Disposable;
@@ -9,6 +10,11 @@ import io.reactivex.disposables.Disposable;
 public class LocalRenterCarsDataSource implements RenterCarsDataSource {
 
     private static LocalRenterCarsDataSource INSTANCE;
+    private BrowseCarsFilter mFilter;
+
+    private LocalRenterCarsDataSource() {
+        mFilter = new BrowseCarsFilter();
+    }
 
     public static LocalRenterCarsDataSource getInstance() {
         if (INSTANCE == null) {
@@ -21,6 +27,11 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public void obtainCars(OffersCallback offersCallback) {
 
+    }
+
+    @Override
+    public Disposable obtainCarsByFilter(FilterRequest filter, OffersCallback callback) {
+        return null;
     }
 
     @Override
@@ -39,12 +50,16 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
-    public void getSorted(String sortBy, OffersCallback offersCallback) {
-
+    public void saveFilter(BrowseCarsFilter filter) {
+        mFilter = filter;
     }
 
     @Override
-    public Disposable obtainCarsByFilter(FilterRequest filter, OffersCallback callback) {
-        return null;
+    public BrowseCarsFilter getFilter() {
+        return mFilter;
+    }
+
+    public void getSorted(String sortBy, OffersCallback offersCallback) {
+
     }
 }

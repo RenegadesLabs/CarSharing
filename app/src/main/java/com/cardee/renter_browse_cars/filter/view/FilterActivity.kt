@@ -15,27 +15,35 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.FilterStringHolder
+import com.cardee.domain.renter.entity.OfferCar
+import com.cardee.owner_car_details.view.AvailabilityCalendarActivity
+import com.cardee.renter_availability_filter.AvailabilityDialogActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
+import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_filter.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {
-
     private val LOCATION_REQUEST_CODE = 111
+    private val AVAILABILITY_REQUEST_CODE = 112
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityFilterBinding
     lateinit var filter: BrowseCarsFilter
     private var mPresenter: CarsFilterPresenter? = null
+    private var mCars: List<OfferCar>? = null
+    private var delegate: DateStringDelegate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initPresenter()
+        getFilter()
         bindView()
         initToolBar()
         initViews()
         setListeners()
-        initPresenter()
     }
 
     override fun onStart() {
@@ -45,8 +53,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
     private fun bindView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_filter)
-        filter = BrowseCarsFilter()
         binding.filter = filter
+        binding.stringHolder = FilterStringHolder()
         binding.executePendingBindings()
     }
 
@@ -56,7 +64,20 @@ class FilterActivity : AppCompatActivity(), FilterView {
         supportActionBar?.title = null
     }
 
+    private fun getFilter() {
+        filter = mPresenter?.getFilter() ?: return
+    }
+
     private fun initViews() {
+        if (filter.bookingHourly == null) {
+            filter.bookingHourly = false
+        }
+
+        if (filter.byLocation) {
+            searchAreaAddress.text = String.format(
+                    resources.getString(R.string.filter_search_area_template), filter.address, filter.radius / 1000)
+        }
+
         priceRangeSeekBar.setValueFormatter("$%d")
         carAgeSeekBar.setValueFormatter("%d yr")
         submitButtonText.setFactory {
@@ -80,15 +101,22 @@ class FilterActivity : AppCompatActivity(), FilterView {
             filter.byLocation = false
             searchAreaAddress.text = resources.getString(R.string.default_search_area)
             filter.bookingHourly = false
-            filter.instantBooking = false
-            filter.curbsideDelivery = false
             priceRangeSeekBar.apply()
             carAgeSeekBar.apply()
+            filter.maxPrice = 201
+            filter.minPrice = 20
+            filter.instantBooking = false
+            filter.curbsideDelivery = false
             filter.bodyTypeId = 0
             filter.transmissionAuto = true
             filter.transmissionManual = true
             transmissionText.text = resources.getString(R.string.any)
             mPresenter?.getFilteredCars(filter)
+        }
+        rentalPeriodButton.setOnClickListener {
+            val intent = Intent(this, AvailabilityDialogActivity::class.java)
+            startActivityForResult(intent, AVAILABILITY_REQUEST_CODE)
+            overridePendingTransition(R.anim.enter_up, 0);
         }
         vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -115,18 +143,22 @@ class FilterActivity : AppCompatActivity(), FilterView {
             }
         })
         bookHourly.setOnClickListener {
-            if (!filter.bookingHourly) {
+            if (filter.bookingHourly == false) {
                 filter.bookingHourly = true
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                filter.maxPrice = 41
+                filter.minPrice = 2
                 mPresenter?.getFilteredCars(filter)
             }
         }
         bookDaily.setOnClickListener {
-            if (filter.bookingHourly) {
+            if (filter.bookingHourly == true) {
                 filter.bookingHourly = false
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+                filter.maxPrice = 201
+                filter.minPrice = 20
                 mPresenter?.getFilteredCars(filter)
             }
         }
@@ -217,7 +249,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
                     priceRangeText.text = "from $$minValue to $$maxValue"
                 }
             }
-
             mPresenter?.getFilteredCars(filter)
         }
         carAgeSeekBar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
@@ -240,9 +271,17 @@ class FilterActivity : AppCompatActivity(), FilterView {
 
             mPresenter?.getFilteredCars(filter)
         }
+        submitButton.setOnClickListener {
+            val intent = Intent()
+            val list: ArrayList<OfferCar>? = ArrayList(mCars)
+            intent.putParcelableArrayListExtra("cars", list)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     private fun initPresenter() {
+        delegate = DateStringDelegate(this)
         mPresenter = CarsFilterPresenter(this)
     }
 
@@ -250,9 +289,14 @@ class FilterActivity : AppCompatActivity(), FilterView {
         submitButtonText?.setText(s)
     }
 
+    override fun setCars(carList: List<OfferCar>) {
+        mCars = carList
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mPresenter?.onDestroy()
+        mCars = null
     }
 
     override fun showProgress(show: Boolean) {
@@ -275,7 +319,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 val address = data?.getStringExtra("address")
                 val radius = data?.getIntExtra("radius", 0)
                 val location = data?.getParcelableExtra<LatLng>("location")
-
                 searchAreaAddress.text = String.format(
                         resources.getString(R.string.filter_search_area_template), address, radius)
                 filter.byLocation = true
@@ -284,10 +327,28 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 if (radius != null) {
                     filter.radius = radius * 1000
                 }
-
+                filter.address = address ?: ""
+                mPresenter?.getFilteredCars(filter)
+            }
+        } else if (requestCode == AVAILABILITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val newFilter = mPresenter?.getFilter() ?: return
+                filter.bookingHourly = newFilter.bookingHourly
+                filter.rentalPeriodBegin = newFilter.rentalPeriodBegin
+                filter.rentalPeriodEnd = newFilter.rentalPeriodEnd
+                filter.pickupTime = newFilter.pickupTime
+                filter.returnTime = newFilter.returnTime
+                changeRentalPeriodTitle()
                 mPresenter?.getFilteredCars(filter)
             }
         }
+    }
+
+    private fun changeRentalPeriodTitle() {
+        val beginString = delegate?.getDateString(filter.rentalPeriodBegin) ?: getString(R.string.rental_period_from)
+        val endString = delegate?.getDateString(filter.rentalPeriodEnd) ?: getString(R.string.rental_period_to)
+        rental_period_from.text = beginString
+        rental_period_to.text = endString
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

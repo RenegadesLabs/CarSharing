@@ -9,12 +9,13 @@ import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import java.io.IOException;
 
-import io.reactivex.disposables.Disposable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
@@ -22,9 +23,7 @@ import retrofit2.Response;
 
 public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
 
-
     private static RemoteRenterCarsDataSource INSTANCE;
-
     private Offers mApi;
 
     public RemoteRenterCarsDataSource() {
@@ -95,6 +94,11 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
+    public void saveFilter(BrowseCarsFilter filter) {
+
+    }
+
+    @Override
     public void getSorted(String sortBy, OffersCallback offersCallback) {
         try {
             Response<OffersResponse> response = mApi.getSorted(new SortOffers(sortBy)).execute();
@@ -107,6 +111,11 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
             e.printStackTrace();
             offersCallback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
         }
+    }
+
+    @Override
+    public BrowseCarsFilter getFilter() {
+        return null;
     }
 
 

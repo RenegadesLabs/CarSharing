@@ -2,31 +2,32 @@ package com.cardee.domain.renter.entity
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import android.os.Parcel
+import android.os.Parcelable
 import com.cardee.BR
-import com.cardee.CardeeApp
-import com.cardee.R
 
 class BrowseCarsFilter(vehicleTypeId: Int = 1,
-                       val vehicleTypeDesc: Array<String> = arrayOf(CardeeApp.context.resources.getString(R.string.vehicle_type_personal_cars_desc),
-                               CardeeApp.context.resources.getString(R.string.vehicle_type_private_desc),
-                               CardeeApp.context.resources.getString(R.string.vehicle_type_commercial_desc)),
                        var byLocation: Boolean = false,
                        var latitude: Double = 0.0,
                        var longitude: Double = 0.0,
                        var radius: Int = 0, // radius in meters
-                       bookingHourly: Boolean = false,
+                       var address: String = "",
+                       bookingHourly: Boolean? = null,
+                       var rentalPeriodBegin: String? = null,
+                       var rentalPeriodEnd: String? = null,
+                       var pickupTime: String? = null,
+                       var returnTime: String? = null,
                        instantBooking: Boolean = false,
                        curbsideDelivery: Boolean = false,
-                       val priceRangeTitles: Array<String> = arrayOf(CardeeApp.context.resources.getString(R.string.price_range_per_hour),
-                               CardeeApp.context.resources.getString(R.string.price_range_per_day)),
                        bodyTypeId: Int = 0,
                        transmissionAuto: Boolean = true,
                        transmissionManual: Boolean = true,
                        var minYears: Int = 0,
                        var maxYears: Int = 0,
                        var minPrice: Int = 0,
-                       var maxPrice: Int = 0) : BaseObservable() {
-
+                       var maxPrice: Int = 0,
+                       var favorite: Boolean? = null,
+                       var orderBy: String? = null) : BaseObservable(), Parcelable {
 
     @get:Bindable
     var vehicleTypeId: Int = 1
@@ -36,44 +37,107 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
         }
 
     @get:Bindable
-    var bookingHourly: Boolean = false
+    var bookingHourly: Boolean? = bookingHourly
         set(value) {
             field = value
             notifyPropertyChanged(BR.bookingHourly)
         }
 
     @get:Bindable
-    var instantBooking: Boolean = false
+    var instantBooking: Boolean = instantBooking
         set(value) {
             field = value
             notifyPropertyChanged(BR.instantBooking)
         }
 
     @get:Bindable
-    var curbsideDelivery: Boolean = false
+    var curbsideDelivery: Boolean = curbsideDelivery
         set(value) {
             field = value
             notifyPropertyChanged(BR.curbsideDelivery)
         }
 
     @get:Bindable
-    var bodyTypeId: Int = 0
+    var bodyTypeId: Int = bodyTypeId
         set(value) {
             field = value
             notifyPropertyChanged(BR.bodyTypeId)
         }
 
     @get:Bindable
-    var transmissionAuto: Boolean = true
+    var transmissionAuto: Boolean = transmissionAuto
         set(value) {
             field = value
             notifyPropertyChanged(BR.transmissionAuto)
         }
 
     @get:Bindable
-    var transmissionManual: Boolean = true
+    var transmissionManual: Boolean = transmissionManual
         set(value) {
             field = value
             notifyPropertyChanged(BR.transmissionManual)
         }
+
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readDouble(),
+            parcel.readDouble(),
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(String::class.java.classLoader) as? String)
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(vehicleTypeId)
+        parcel.writeByte(if (byLocation) 1 else 0)
+        parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
+        parcel.writeInt(radius)
+        parcel.writeString(address)
+        parcel.writeValue(bookingHourly)
+        parcel.writeString(rentalPeriodBegin)
+        parcel.writeString(rentalPeriodEnd)
+        parcel.writeString(pickupTime)
+        parcel.writeString(returnTime)
+        parcel.writeByte(if (instantBooking) 1 else 0)
+        parcel.writeByte(if (curbsideDelivery) 1 else 0)
+        parcel.writeInt(bodyTypeId)
+        parcel.writeByte(if (transmissionAuto) 1 else 0)
+        parcel.writeByte(if (transmissionManual) 1 else 0)
+        parcel.writeInt(minYears)
+        parcel.writeInt(maxYears)
+        parcel.writeInt(minPrice)
+        parcel.writeInt(maxPrice)
+        parcel.writeValue(favorite)
+        parcel.writeValue(orderBy)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<BrowseCarsFilter> {
+        override fun createFromParcel(parcel: Parcel): BrowseCarsFilter {
+            return BrowseCarsFilter(parcel)
+        }
+
+        override fun newArray(size: Int): Array<BrowseCarsFilter?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

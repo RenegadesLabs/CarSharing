@@ -2,6 +2,7 @@ package com.cardee.data_source;
 
 
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import io.reactivex.disposables.Disposable;
@@ -19,6 +20,10 @@ public interface RenterCarsDataSource {
     void searchCars(String searchCriteria, OffersCallback offersCallback);
 
     void getSorted(String sortBy, OffersCallback offersCallback);
+
+    void saveFilter(BrowseCarsFilter filter);
+
+    BrowseCarsFilter getFilter();
 
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);

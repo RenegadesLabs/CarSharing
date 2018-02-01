@@ -8,8 +8,8 @@ import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import io.reactivex.Maybe;
-import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,6 +21,9 @@ public interface Offers {
 
     @GET("offers/")
     Observable<OffersResponse> browseCars();
+
+    @POST("offers/")
+    Maybe<OffersResponse> obtainCarsByFilter(@Body FilterRequest request);
 
     @PUT("offers/{id}/favorites")
     Single<NoDataResponse> addCarToFavorites(@Path("id") int id);
@@ -34,6 +37,4 @@ public interface Offers {
     @POST("offers/")
     Call<OffersResponse> searchOffers(@Body SearchOffers requestBody);
 
-    @POST("offers/")
-    Maybe<OffersResponse> obtainCarsByFilter(@Body FilterRequest request);
 }
