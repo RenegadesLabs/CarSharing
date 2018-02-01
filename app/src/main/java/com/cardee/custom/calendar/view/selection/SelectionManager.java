@@ -112,6 +112,7 @@ public class SelectionManager implements OnViewClickListener<DayView> {
         rangeStart = day;
         rangeEnd = day;
         view.refresh();
+        notifyInternalSubscriber();
     }
 
     private void selectRange(Day start, Day end) {
