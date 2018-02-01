@@ -8,6 +8,8 @@ import com.cardee.data_source.remote.RemoteOwnerCarDataSource;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
 import com.cardee.data_source.remote.api.profile.response.entity.CarEntity;
 
+import static com.cardee.data_source.Error.Type.SERVER;
+
 public class OwnerCarRepository implements OwnerCarDataSource {
 
     private static OwnerCarRepository INSTANCE;
@@ -49,9 +51,14 @@ public class OwnerCarRepository implements OwnerCarDataSource {
         mRemoteDataSource.obtainCar(id, new Callback() {
             @Override
             public void onSuccess(CarResponseBody carResponse) {
-                callback.onSuccess(carResponse);
-                mCache.put(carResponse.getCarDetails().getCarId(), carResponse);
-                mCarId = carResponse.getCarDetails().getCarId();
+                Integer id = carResponse.getCarDetails().getCarId();
+                if (id != null) {
+                    callback.onSuccess(carResponse);
+                    mCache.put(carResponse.getCarDetails().getCarId(), carResponse);
+                    mCarId = carResponse.getCarDetails().getCarId();
+                } else {
+                    callback.onError(new Error(SERVER, "car_id is null!"));
+                }
             }
 
             @Override

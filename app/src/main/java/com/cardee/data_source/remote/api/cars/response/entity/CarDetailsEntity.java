@@ -14,9 +14,9 @@ public class CarDetailsEntity extends BaseCarEntity {
     @Expose
     @SerializedName("latitude")
     private Double latitude;
-    @Expose
-    @SerializedName("town")
-    private String town;
+//    @Expose
+//    @SerializedName("town")
+//    private String town;
     @Expose
     @SerializedName("req_min_age")
     private Integer requiredMinAge;
@@ -74,13 +74,13 @@ public class CarDetailsEntity extends BaseCarEntity {
         this.latitude = latitude;
     }
 
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
-    }
+//    public String getTown() {
+//        return town;
+//    }
+//
+//    public void setTown(String town) {
+//        this.town = town;
+//    }
 
     public Integer getRequiredMinAge() {
         return requiredMinAge;

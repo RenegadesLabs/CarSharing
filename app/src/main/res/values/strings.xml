@@ -715,7 +715,8 @@
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>
     <string name="my_current_location">My Current Location</string>
-    <string name="default_search_area">Current\u0020\u0020\u2022\u0020\u0020Within SG</string>
+    <string name="default_search_area">Current \u0020\u2022\u0020 Within SG</string>
+    <string name="current">Current</string>
 
 
 </resources>
