@@ -99,6 +99,7 @@
         app:current_date_color="@color/divider_light"
         app:header_background="@drawable/bg_underlined"
         app:header_height="40dp"
+        app:select_current="false"
         app:header_highlighted_text_color="@color/red_error"
         app:header_text_color="@color/text_regular"
         app:layout_constraintBottom_toTopOf="@+id/btnReset"

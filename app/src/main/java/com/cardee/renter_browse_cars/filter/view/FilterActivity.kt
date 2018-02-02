@@ -17,15 +17,12 @@ import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.FilterStringHolder
 import com.cardee.domain.renter.entity.OfferCar
-import com.cardee.owner_car_details.view.AvailabilityCalendarActivity
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
-import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_filter.*
-import kotlinx.android.synthetic.main.view_hourly_availability.view.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {

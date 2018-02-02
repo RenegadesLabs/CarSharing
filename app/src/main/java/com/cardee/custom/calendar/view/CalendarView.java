@@ -73,6 +73,7 @@ public class CalendarView extends LinearLayout {
         HeaderConfig headerConfig = new HeaderConfig(context, dayz);
         BodyConfig bodyConfig = new BodyConfig(context);
         bodyConfig.setColumnCount(dayz.length);
+        boolean selectCurrent = typedArray.getBoolean(R.styleable.CalendarView_select_current, true);
         try {
             initHeaderConfig(headerConfig, typedArray);
             initBodyConfig(bodyConfig, typedArray);
@@ -85,7 +86,7 @@ public class CalendarView extends LinearLayout {
         bodyConfig.setDayClickListener(selectionManager.getDayClickListener());
         addView(createHeader(headerConfig));
         addView(bodyRecyclerView);
-        presenter.retrieveMonthList();
+        presenter.retrieveMonthList(selectCurrent);
     }
 
     private HeaderConfig initHeaderConfig(HeaderConfig config, TypedArray typedArray) {

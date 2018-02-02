@@ -214,7 +214,7 @@ class AvailabilityFromFilterDelegate {
     }
 
     fun onSetDateRangeTitle(titleView: TextView, subtitleView: TextView, filter: BrowseCarsFilter) {
-        var title: String
+        val title: String
         if (filter.bookingHourly == null) {
             setDefaultDailyString(titleView, subtitleView)
             return
@@ -353,8 +353,9 @@ class AvailabilityFromFilterDelegate {
     }
 
     fun onSetSubmitTitle(view: TextView, filter: BrowseCarsFilter, hourly: Boolean) {
+        val defaultTitle = "$anytime $separator $save"
         if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
-            view.text = save
+            view.text = defaultTitle
             return
         }
         try {
@@ -377,7 +378,7 @@ class AvailabilityFromFilterDelegate {
             return
         } catch (ex: ParseException) {
         }
-        view.text = save
+        view.text = defaultTitle
     }
 
     private fun countDays(begin: Date, end: Date): Long {

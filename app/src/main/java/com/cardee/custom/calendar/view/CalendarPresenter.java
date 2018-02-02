@@ -24,6 +24,11 @@ class CalendarPresenter {
         retrieveMonthList(new GenerateCalendarModel.RequestValues());
     }
 
+    public void retrieveMonthList(boolean selectCurrent) {
+        GenerateCalendarModel.RequestValues request = new GenerateCalendarModel.RequestValues(selectCurrent);
+        retrieveMonthList(request);
+    }
+
     public void retrieveMonthList(int count) {
         retrieveMonthList(new GenerateCalendarModel.RequestValues(count));
     }
