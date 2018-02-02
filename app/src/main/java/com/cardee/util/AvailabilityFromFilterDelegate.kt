@@ -18,6 +18,7 @@ class AvailabilityFromFilterDelegate {
         private val ISO_8601_DATE_PATTERN: String = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         private val ISO_TIME_PATTERN: String = "HH:mm:ssZZZZZ"
         private val SHORT_DATE_PATTERN: String = "d MMM"
+        private val SHORT_MONTH_PATTERN: String = "MMM"
         private val SHORT_TIME_PATTERN: String = "hha"
         private val TITLE_PATTERN: String = "d MMM, ha"
     }
@@ -33,6 +34,7 @@ class AvailabilityFromFilterDelegate {
 
     private val iso8601OutDateFormatter: SimpleDateFormat
     private val iso8601InDateFormatter: SimpleDateFormat
+    private val shortMonthFormatter: SimpleDateFormat
     private val isoOutTimeFormatter: SimpleDateFormat
     private val isoInTimeFormatter: SimpleDateFormat
     private val shortDateFormatter: SimpleDateFormat
@@ -41,35 +43,19 @@ class AvailabilityFromFilterDelegate {
     private val calendar: Calendar
 
     init {
-        val timeZone = TimeZone.getTimeZone("GMT+08:00")
         val symbols = DateFormatSymbols(Locale.US)
         symbols.amPmStrings = arrayOf("am", "pm")
         calendar = Calendar.getInstance()
         iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
         iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
-        isoOutTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
-        isoInTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
+        shortMonthFormatter = SimpleDateFormat(SHORT_MONTH_PATTERN, Locale.US)
         shortDateFormatter = SimpleDateFormat(SHORT_DATE_PATTERN, Locale.US)
         shortTimeFormatter = SimpleDateFormat(SHORT_TIME_PATTERN, Locale.US)
+        isoOutTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
+        isoInTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
         titleFormatter = SimpleDateFormat(TITLE_PATTERN, Locale.US)
-        iso8601OutDateFormatter.timeZone = timeZone
-        isoInTimeFormatter.timeZone = timeZone
         shortTimeFormatter.dateFormatSymbols = symbols
         titleFormatter.dateFormatSymbols = symbols
-    }
-
-    private fun getLocalGMT(): String {
-        val gmtOffset = TimeZone.getDefault().getOffset(Date().time) / 1000 / 60 / 60
-        if (gmtOffset == 0) {
-            return "GMT"
-        }
-        val gmtStringParam = "${Math.abs(gmtOffset)}"
-        val sign = if (gmtOffset < 0) "-" else "+"
-        return when (gmtStringParam.length) {
-            1 -> "GMT${sign}0$gmtStringParam:00"
-            2 -> "GMT$sign$gmtStringParam:00"
-            else -> "GMT"
-        }
     }
 
     fun onInitCalendarSelection(calendarAdapter: CalendarAdapter, isoDateStart: String, isoDateEnd: String) {
@@ -158,8 +144,12 @@ class AvailabilityFromFilterDelegate {
     }
 
     fun onSetTitleFromTime(view: TextView, date: Date?) {
-        val dateString = titleFormatter.format(date)
-        view.text = dateString
+        if(date != null){
+            val dateString = titleFormatter.format(date)
+            view.text = dateString
+            return
+        }
+        view.text = noValue
     }
 
     fun onAttachTimingToTitle(view: TextView, isoTime: String) {
@@ -197,10 +187,6 @@ class AvailabilityFromFilterDelegate {
     private fun replaceTiming(dateString: String, timeString: String): String {
         val timeSuffix = if (timeString.isEmpty()) "" else ", $timeString"
         return dateString.replace(timePattern, timeSuffix)
-    }
-
-    fun onSetDateRangeTitle(view: TextView, filter: BrowseCarsFilter) {
-
     }
 
     fun onSetDateRangeTitle(titleView: TextView, subtitleView: TextView, filter: BrowseCarsFilter) {
@@ -267,10 +253,14 @@ class AvailabilityFromFilterDelegate {
     private fun buildHourlyRangeTitle(filter: BrowseCarsFilter): String {
         try {
             val dateBegin = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
-            val dateEnd = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            val dateEndIncluded = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            calendar.time = dateEndIncluded
+            calendar.add(Calendar.HOUR, 1)
+            val dateEnd = calendar.time
             if (isSingleDay(dateBegin, dateEnd)) {
                 return buildSingleDayString(dateBegin, dateEnd)
             }
+            return buildHoursString(dateBegin, dateEnd)
         } catch (ex: ParseException) {
         }
         return ""
@@ -295,17 +285,27 @@ class AvailabilityFromFilterDelegate {
     }
 
     private fun buildSingleDayString(dateBegin: Date, dateEnd: Date): String {
-
-        return ""
+        val dayOfMonth = shortDateFormatter.format(dateBegin)
+        val hourBegin = shortTimeFormatter.format(dateBegin)
+                .apply { replace(Regex("^0"), "") }
+        val hourEnd = shortTimeFormatter.format(dateEnd)
+                .apply { replace(Regex("^0"), "") }
+        return "$dayOfMonth\n$hourBegin - $hourEnd"
     }
 
     private fun buildSingleMonthString(dateBegin: Date, dateEnd: Date): String {
-
-        return ""
+        val month = shortMonthFormatter.format(dateBegin)
+        calendar.time = dateBegin
+        val dayStart = calendar.get(Calendar.DAY_OF_MONTH)
+        calendar.time = dateEnd
+        val dayEnd = calendar.get(Calendar.DAY_OF_MONTH)
+        return "$month $dayStart - $dayEnd"
     }
 
-    private fun buildHoursString() {
-
+    private fun buildHoursString(dateBegin: Date, dateEnd: Date): String {
+        val dateBeginString = titleFormatter.format(dateBegin)
+        val dateEndString = titleFormatter.format(dateEnd)
+        return "$dateBeginString - \n$dateEndString"
     }
 
     private fun buildDaysString() {
