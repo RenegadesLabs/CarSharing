@@ -123,7 +123,7 @@ class AvailabilityFromFilterDelegate {
         onSetTitleFromTime(view, date)
     }
 
-    private fun setDailyTitlesFromFilter(startView: TextView, endView: TextView, filter: BrowseCarsFilter) {
+    fun setDailyTitlesFromFilter(startView: TextView, endView: TextView, filter: BrowseCarsFilter) {
         try {
             val startDate = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
             val endDate = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
@@ -147,6 +147,15 @@ class AvailabilityFromFilterDelegate {
             view.text = replaceDate(previous, date)
         } else {
             view.text = shortDateFormatter.format(date)
+        }
+    }
+
+    fun onSetTitleFromTime(view: TextView, dateString: String?, includingLast: Boolean = true) {
+        dateString ?: return
+        try {
+            val date = iso8601InDateFormatter.parse(dateString)
+            onSetTitleFromTime(view, date, includingLast)
+        } catch (ex: ParseException) {
         }
     }
 

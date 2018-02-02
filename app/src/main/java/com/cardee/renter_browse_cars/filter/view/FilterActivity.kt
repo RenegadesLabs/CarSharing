@@ -21,9 +21,11 @@ import com.cardee.owner_car_details.view.AvailabilityCalendarActivity
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
+import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.view_hourly_availability.view.*
 
 
 class FilterActivity : AppCompatActivity(), FilterView {
@@ -34,7 +36,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
     lateinit var filter: BrowseCarsFilter
     private var mPresenter: CarsFilterPresenter? = null
     private var mCars: List<OfferCar>? = null
-    private var delegate: DateStringDelegate? = null
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -288,7 +290,6 @@ class FilterActivity : AppCompatActivity(), FilterView {
     }
 
     private fun initPresenter() {
-        delegate = DateStringDelegate(this)
         mPresenter = CarsFilterPresenter(this)
     }
 
@@ -352,10 +353,22 @@ class FilterActivity : AppCompatActivity(), FilterView {
     }
 
     private fun changeRentalPeriodTitle() {
-        val beginString = delegate?.getDateString(filter.rentalPeriodBegin) ?: getString(R.string.rental_period_from)
-        val endString = delegate?.getDateString(filter.rentalPeriodEnd) ?: getString(R.string.rental_period_to)
-        rental_period_from.text = beginString
-        rental_period_to.text = endString
+        filter.bookingHourly?.let { hourly ->
+            if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
+                rental_period_from.text = getString(R.string.rental_period_from)
+                rental_period_to.text = getString(R.string.rental_period_to)
+                return@let
+            }
+            when (hourly) {
+                true -> {
+                    delegate.onSetTitleFromTime(rental_period_from, filter.rentalPeriodBegin)
+                    delegate.onSetTitleFromTime(rental_period_to, filter.rentalPeriodEnd, false)
+                }
+                false -> {
+                    delegate.setDailyTitlesFromFilter(rental_period_from, rental_period_to, filter)
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
