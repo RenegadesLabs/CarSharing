@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/xlarge_margin"
+    android:background="@android:color/white">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_clocks"
+        android:layout_width="@dimen/image_icon_dimens"
+        android:layout_height="@dimen/image_icon_dimens"
+        android:layout_margin="@dimen/large_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_clock" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsTimingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:text="@string/renter_car_details_timing"
+        android:textColor="@color/item_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toEndOf="@+id/image_clocks"
+        app:layout_constraintTop_toTopOf="@+id/image_clocks" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsTimingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="Pickup car from 9am onwards
+Return by 8am (next day) on the last day"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsTimingTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsTimingTitle" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_bage"
+        android:layout_width="@dimen/image_icon_dimens"
+        android:layout_height="@dimen/image_icon_dimens"
+        android:layout_margin="@dimen/large_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsTimingText"
+        app:srcCompat="@drawable/ic_bage" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsRatesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:text="@string/car_rental_info_rates"
+        android:textColor="@color/item_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toEndOf="@+id/image_bage"
+        app:layout_constraintTop_toTopOf="@+id/image_bage" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsRatesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="$80 per day (weekday)
+$100 per day (weekend and P.H.)"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsRatesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatesTitle" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_delivery"
+        android:layout_width="@dimen/image_icon_dimens"
+        android:layout_height="@dimen/image_icon_dimens"
+        android:layout_margin="@dimen/large_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatesText"
+        app:srcCompat="@drawable/ic_delivery_border" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsDeliveryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:text="@string/car_rental_delivery_rates_title"
+        android:textColor="@color/item_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toEndOf="@+id/image_delivery"
+        app:layout_constraintTop_toTopOf="@+id/image_delivery" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsDeliveryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="Delivery @ $5 + $1.50 per km"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsDeliveryTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsDeliveryTitle" />
+    <TextView
+        android:id="@+id/tv_renterCarDetailsDeliveryTextItalic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$20 to your current location"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsDeliveryText"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsDeliveryText" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_fuel"
+        android:layout_width="@dimen/image_icon_dimens"
+        android:layout_height="@dimen/image_icon_dimens"
+        android:layout_margin="@dimen/large_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsDeliveryTextItalic"
+        app:srcCompat="@drawable/ic_fuel" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsFuelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:text="@string/car_rental_info_fuel"
+        android:textColor="@color/item_secondary_txt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toEndOf="@+id/image_fuel"
+        app:layout_constraintTop_toTopOf="@+id/image_fuel" />
+
+    <TextView
+        android:id="@+id/tv_renterCarDetailsFuelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="Return with similar petrol level"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsFuelTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsFuelTitle" />
+
+</android.support.constraint.ConstraintLayout>

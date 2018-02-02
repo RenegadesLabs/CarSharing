@@ -499,6 +499,12 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+    
+    <!--Renter Car Details-->
+    <string name="renter_car_details_rental_info">Rental info</string>
+    <string name="renter_car_details_timing">Pickup and return timing</string>
+    <string name="renter_car_details_read">Read</string>
+    <string name="renter_car_details_check">Check</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">

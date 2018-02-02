@@ -20,6 +20,8 @@
     <dimen name="list_item_text_general">14sp</dimen>
     <dimen name="list_item_selector_value">12sp</dimen>
 
+    <dimen name="image_icon_dimens">26dp</dimen>
+
     <!--RangeSeekBar-->
     <dimen name="thumb_width">60dp</dimen>
     <dimen name="thumb_height">33dp</dimen>
