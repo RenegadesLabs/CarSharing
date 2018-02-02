@@ -43,7 +43,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
                         delegate.onInitPickerSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
                     }
                     delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter)
-                    delegate.onSetSubmitTitle(btnHourSave, filter)
+                    delegate.onSetSubmitTitle(btnHourSave, filter, true)
                 }
             }
         }
@@ -69,5 +69,8 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         presenter?.setHourlyFilter(begin, end)
         delegate.onSetTitleFromTime(dateHourFrom, begin)
         delegate.onSetTitleFromTime(dateHourTo, end)
+        presenter?.doUpdate { filter ->
+            delegate.onSetSubmitTitle(btnHourSave, filter, true)
+        }
     }
 }

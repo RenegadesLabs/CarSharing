@@ -85,4 +85,8 @@ class AvailabilityFilterPresenter(context: Context) {
         }
         return false
     }
+
+    fun doUpdate(function: (BrowseCarsFilter) -> Unit) {
+        filter?.let(function)
+    }
 }
