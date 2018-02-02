@@ -161,7 +161,7 @@ public class RenterBrowseCarsListAdapter
             mRating.setScore(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);
-            String price = "$" + String.valueOf(model.getRateFirst());
+            String price = "$" + String.valueOf(model.getCost());
             mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
             mHeart.setOnClickListener(view -> {
                 observable.onNext(new RenterBrowseCarListContract.CarEvent(model,

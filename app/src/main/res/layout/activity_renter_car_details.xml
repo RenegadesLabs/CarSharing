@@ -41,64 +41,64 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginEnd="@dimen/small_margin">
 
-                <FrameLayout
-                    android:id="@+id/fl_renterCarsToolbarFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/fl_renterCarDetailsToolbarShare"
+                    style="@style/ToolbarActionIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_share" />
 
-                    <android.support.v7.widget.AppCompatImageView
-                        style="@style/ToolbarActionIcon"
-                        android:layout_width="@dimen/item_icon_side_large"
-                        android:layout_height="@dimen/item_icon_side_large"
-                        android:layout_gravity="center_vertical"
-                        android:background="@android:color/transparent"
-                        android:padding="@dimen/padding_x_small"
-                        app:srcCompat="@drawable/ic_filter" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/fl_renterCarsToolbarFavorites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/iv_renterCarsToolbarFavoritesImg"
-                        style="@style/ToolbarActionIcon"
-                        android:layout_width="@dimen/item_icon_side_large"
-                        android:layout_height="@dimen/item_icon_side_large"
-                        android:layout_gravity="center_vertical"
-                        android:background="@android:color/transparent"
-                        android:padding="@dimen/padding_x_small"
-                        app:srcCompat="@drawable/ic_favorites_toolbar" />
-                </FrameLayout>
-            </LinearLayout>
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                    style="@style/ToolbarActionIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_favorites_toolbar" />
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/car_image_pager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0" />
-    </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/car_image_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

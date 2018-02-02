@@ -29,6 +29,10 @@ public class OfferResponseBody extends ErrorResponseBody {
     @SerializedName("order_details")
     private OfferOrderDetails mOrderDetails;
 
+    @Expose
+    @SerializedName("cost_for_period")
+    private Float mCost;
+
     public OfferResponseBody() {
     }
 
@@ -70,5 +74,13 @@ public class OfferResponseBody extends ErrorResponseBody {
 
     public void setOrderDetails(OfferOrderDetails orderDetails) {
         mOrderDetails = orderDetails;
+    }
+
+    public Float getCost() {
+        return mCost;
+    }
+
+    public void setCost(Float cost) {
+        mCost = cost;
     }
 }
