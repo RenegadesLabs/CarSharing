@@ -185,8 +185,13 @@
             android:theme="@style/AppTheme.DarkTheme" />
         <activity
             android:name=".renter_availability_filter.AvailabilityDialogActivity"
-            android:theme="@style/ActivityTranslucent"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTranslucent" />
+        <activity
+            android:name=".renter_book_car.view.BookCarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChatStyle"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>
