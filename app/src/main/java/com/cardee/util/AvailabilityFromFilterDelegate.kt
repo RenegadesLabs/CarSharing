@@ -150,9 +150,17 @@ class AvailabilityFromFilterDelegate {
         }
     }
 
-    fun onSetTitleFromTime(view: TextView, date: Date?) {
+    fun onSetTitleFromTime(view: TextView, date: Date?, includingLast: Boolean = true) {
         if (date != null) {
-            val dateString = titleFormatter.format(date)
+            val formatReady: Date
+            if (!includingLast) {
+                calendar.time = date
+                calendar.add(Calendar.HOUR, 1)
+                formatReady = calendar.time
+            } else {
+                formatReady = date
+            }
+            val dateString = titleFormatter.format(formatReady)
             view.text = dateString
             return
         }
@@ -323,7 +331,7 @@ class AvailabilityFromFilterDelegate {
     }
 
     private fun buildDaysString(dateBegin: Date, dateEnd: Date, pickupTime: Date?, returnTime: Date?): String {
-        return "${buildDayString(dateBegin, pickupTime)} - ${buildDayString(dateEnd, returnTime)}"
+        return "${buildDayString(dateBegin, pickupTime)} - \n${buildDayString(dateEnd, returnTime)}"
     }
 
     private fun buildDayString(date: Date, time: Date?): String {

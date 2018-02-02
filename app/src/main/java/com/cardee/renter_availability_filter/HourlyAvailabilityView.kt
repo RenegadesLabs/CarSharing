@@ -68,7 +68,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
     private fun changeHourlyRange(begin: Date?, end: Date?) {
         presenter?.setHourlyFilter(begin, end)
         delegate.onSetTitleFromTime(dateHourFrom, begin)
-        delegate.onSetTitleFromTime(dateHourTo, end)
+        delegate.onSetTitleFromTime(dateHourTo, end, false)
         presenter?.doUpdate { filter ->
             delegate.onSetSubmitTitle(btnHourSave, filter, true)
         }
