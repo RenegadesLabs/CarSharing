@@ -31,7 +31,7 @@ class GenerateDaysDelegate {
                 calendar.add(Calendar.HOUR_OF_DAY, 1);
             }
             days.add(new Day(hours, day));
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+//            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return days;
     }

@@ -45,6 +45,7 @@ import com.cardee.renter_browse_cars.view.custom.listener.CustomRecyclerScrollLi
 import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
 import com.cardee.settings.Settings;
 import com.cardee.settings.SettingsManager;
+import com.cardee.util.AvailabilityFromFilterDelegate;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private RenterBrowseCarsListAdapter mCarsListAdapter;
     private RenterBrowseCarListPresenter mPresenter;
+    private AvailabilityFromFilterDelegate delegate;
 
     @BindView(R.id.rv_renterBrowseCarsList)
     public RecyclerView mCarsListView;
@@ -97,6 +99,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public TextView mSearchAreaRadius;
     @BindView(R.id.ll_browseCarsHeaderRadius)
     public ConstraintLayout mSearchAreaContainer;
+    @BindView(R.id.tv_browseCarsPeriod)
+    public TextView availabilityPeriod;
+    @BindView(R.id.tv_browseCarsPeriodSubtitle)
+    public TextView availabilityValue;
 
     private boolean favoritesSelected = false;
     private boolean search = false;
@@ -128,6 +134,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mPresenter = new RenterBrowseCarListPresenter(this, mSettings);
         mCarsListAdapter.subscribe(mPresenter);
         mFilter = mPresenter.getFilter();
+        delegate = new AvailabilityFromFilterDelegate();
     }
 
     @Nullable
@@ -150,6 +157,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             }
             mSearchAreaRadius.setText(radiusText);
         }
+        refreshAvailabilityTitle(mFilter);
         return rootView;
     }
 
@@ -467,11 +475,15 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             case AVAILABILITY_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     mFilter = mPresenter.getFilter();
-                    //TODO: implement dates title change
+                    refreshAvailabilityTitle(mFilter);
                     mPresenter.getCarsByFilter(mFilter);
                 }
                 break;
         }
+    }
+
+    private void refreshAvailabilityTitle(BrowseCarsFilter filter) {
+        delegate.onSetDateRangeTitle(availabilityPeriod, availabilityValue, filter);
     }
 
     @Override

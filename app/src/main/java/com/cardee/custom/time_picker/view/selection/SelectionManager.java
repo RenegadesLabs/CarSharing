@@ -112,6 +112,7 @@ public class SelectionManager implements OnViewClickListener<HourView> {
         rangeStart = hour;
         rangeEnd = hour;
         view.refresh();
+        notifyInternalSubscriber();
     }
 
     private void selectRange(Hour start, Hour end) {

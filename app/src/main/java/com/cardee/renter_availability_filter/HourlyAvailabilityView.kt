@@ -14,7 +14,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         ConstraintLayout(context, attrs, defStyleAttr), FilterViewContract {
 
     private var finishCallback: (Boolean) -> Unit = {}
-    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate(context)
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
     private val adapter: TimePickerAdapter = TimePickerAdapter()
     private var presenter: AvailabilityFilterPresenter? = null
     private val doOnSave = { finishCallback.invoke(true) }
@@ -42,8 +42,8 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
                     if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
                         delegate.onInitPickerSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
                     }
-                    delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter, AvailabilityFromFilterDelegate.Mode.HOURLY)
-                    delegate.onSetSubmitTitle(btnHourSave, filter, AvailabilityFromFilterDelegate.Mode.HOURLY)
+                    delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter)
+                    delegate.onSetSubmitTitle(btnHourSave, filter)
                 }
             }
         }
@@ -67,7 +67,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
 
     private fun changeHourlyRange(begin: Date?, end: Date?) {
         presenter?.setHourlyFilter(begin, end)
-        delegate.onSetTitleFromDate(dateHourFrom, begin)
-        delegate.onSetTitleFromDate(dateHourTo, end)
+        delegate.onSetTitleFromTime(dateHourFrom, begin)
+        delegate.onSetTitleFromTime(dateHourTo, end)
     }
 }
