@@ -18,6 +18,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
+import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.util.glide.CircleTransform;
@@ -76,7 +77,7 @@ public class RenterBrowseCarsListAdapter
         private final TextView mYear;
         private final TextView mLocation;
         private final TextView mType;
-        private final AppCompatRatingBar mRating;
+        private final CustomRatingBar mRating;
         private final TextView mRatingCount;
         private final AppCompatImageView mHeart;
         private final TextView mPrice;
@@ -157,7 +158,7 @@ public class RenterBrowseCarsListAdapter
             mLocation.setText(location);
             String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());
             mType.setText(type);
-            mRating.setRating(model.getRating());
+            mRating.setScore(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);
             String price = "$" + String.valueOf(model.getRateFirst());
