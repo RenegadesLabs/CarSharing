@@ -35,9 +35,9 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
     fun toggleFavorite() {
         val filter = getFilterUseCase.getFilter()
         val favorite = filter.favorite ?: false
-        filter.favorite = favorite
+        filter.favorite = !favorite
         saveFilterUseCase.saveFilter(filter)
-        view?.toggleFavorites(favorite)
+        view?.toggleFavorites(filter.favorite == true)
         loadOffersByFilter(filter)
     }
 

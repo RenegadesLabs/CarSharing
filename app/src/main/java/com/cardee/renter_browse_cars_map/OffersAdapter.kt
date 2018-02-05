@@ -80,6 +80,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
         items.addAll(offerItems)
         manager?.clear()
         notifyDataSetChanged()
+        selectedPosition = 0
         onSelect(selectedPosition)
         moveToSelection()
         if (manager != null) {
@@ -88,6 +89,9 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     private fun onSelect(position: Int) {
+        if (items.isEmpty()) {
+            return
+        }
         items[selectedPosition].selected = false
         items[position].selected = true
         notifyItemChanged(selectedPosition)
