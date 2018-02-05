@@ -21,6 +21,14 @@
 
     <style name="AppTheme.DarkTheme">
         <item name="colorPrimaryDark">@color/black</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="TransparentToolbar">
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="BlackTheme" parent="AppTheme">

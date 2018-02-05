@@ -53,6 +53,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -60,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:background="@color/bg_transparent_black"
+            android:theme="@style/TransparentToolbar"
             app:navigationIcon="@drawable/ic_close">
 
             <TextView

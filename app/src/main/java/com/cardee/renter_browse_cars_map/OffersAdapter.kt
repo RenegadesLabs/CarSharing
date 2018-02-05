@@ -64,7 +64,13 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CarViewHolder?, position: Int) {
-        holder?.bind(items[position])
+        holder?.apply {
+            val model = items[position]
+            bind(model)
+            itemView.setOnClickListener { view ->
+                subject.onNext(UIModelEvent(UIModelEvent.EVENT_OFFER_LIST_CLICK, view, model))
+            }
+        }
     }
 
     override fun getItemCount(): Int = items.size

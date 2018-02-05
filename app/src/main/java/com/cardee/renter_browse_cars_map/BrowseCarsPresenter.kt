@@ -27,7 +27,7 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
         when (event?.eventType) {
             UIModelEvent.EVENT_OFFER_LIST_CLICK -> {
                 //TODO("implement offer screen")
-                Log.e("CLICK_ON_OFFER", event.model.carDetails?.carId.toString())
+                Log.e("CLICK_ON_OFFER", event.model.offer.carId.toString())
             }
         }
     }
