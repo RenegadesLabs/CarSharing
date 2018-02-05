@@ -185,7 +185,13 @@
             android:theme="@style/AppTheme.DarkTheme" />
         <activity
             android:name=".renter_availability_filter.AvailabilityDialogActivity"
-            android:theme="@style/ActivityTranslucent"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTranslucent" />
+        <activity
+            android:name=".renter_availability_filter.DailyFilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".renter_availability_filter.HourlyFilterActivity"
             android:screenOrientation="portrait" />
     </application>
 
