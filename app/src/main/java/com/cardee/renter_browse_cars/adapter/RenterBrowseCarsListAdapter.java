@@ -1,6 +1,7 @@
 package com.cardee.renter_browse_cars.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.renter_book_car.view.BookCarActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.util.glide.CircleTransform;
 

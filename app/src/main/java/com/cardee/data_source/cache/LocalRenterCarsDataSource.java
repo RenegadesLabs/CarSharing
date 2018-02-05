@@ -59,6 +59,11 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
         return mFilter;
     }
 
+    @Override
+    public Disposable getOfferById(int id, OfferCallback offerCallback) {
+        return null;
+    }
+
     public void getSorted(String sortBy, OffersCallback offersCallback) {
 
     }

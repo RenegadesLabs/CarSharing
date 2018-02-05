@@ -365,7 +365,6 @@
                         android:text="@string/more_filters" />
                 </LinearLayout>
 
-
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/instantBookingContainer"
                     android:layout_width="match_parent"

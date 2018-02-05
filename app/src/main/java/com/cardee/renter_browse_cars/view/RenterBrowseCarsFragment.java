@@ -423,6 +423,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
                         String address = data.getStringExtra("address");
+                        if (address == null) {
+                            address = getResources().getString(R.string.current);
+                        }
                         int radius = data.getIntExtra("radius", 0);
                         LatLng location = data.getParcelableExtra("location");
                         if (location != null) {

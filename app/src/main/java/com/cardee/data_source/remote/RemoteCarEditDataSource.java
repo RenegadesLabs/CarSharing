@@ -19,6 +19,7 @@ import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.CurbsideDeliveryEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
+import com.cardee.data_source.remote.api.common.entity.InstantBookingCount;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
@@ -247,6 +248,40 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
         try {
             Response<BaseResponse> response = carsApi.updateInstantBookingHourly(id,
                     new InstantBookingEntity(isInstantBooking))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateInstantBookingDailyCount(Integer id, int count, Callback callback) {
+        try {
+            Response<BaseResponse> response = carsApi.setInstantBookingDailyCount(id,
+                    new InstantBookingCount(count))
+                    .execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateInstantBookingHourlyCount(Integer id, int count, Callback callback) {
+        try {
+            Response<BaseResponse> response = carsApi.setInstantBookingHourlyCount(id,
+                    new InstantBookingCount(count))
                     .execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();

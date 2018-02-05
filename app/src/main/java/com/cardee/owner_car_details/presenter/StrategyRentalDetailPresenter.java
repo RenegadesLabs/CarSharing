@@ -11,8 +11,10 @@ import com.cardee.domain.owner.usecase.SaveHourlyTiming;
 import com.cardee.domain.owner.usecase.UpdateDailyAcceptCashState;
 import com.cardee.domain.owner.usecase.UpdateDailyCurbsideDeliveryState;
 import com.cardee.domain.owner.usecase.UpdateDailyInstantBookingState;
+import com.cardee.domain.owner.usecase.UpdateDailyinstantBookingCount;
 import com.cardee.domain.owner.usecase.UpdateHourlyAcceptCashState;
 import com.cardee.domain.owner.usecase.UpdateHourlyCurbsideDeliveryState;
+import com.cardee.domain.owner.usecase.UpdateHourlyInstantBookingCount;
 import com.cardee.domain.owner.usecase.UpdateHourlyInstantBookingState;
 import com.cardee.owner_car_details.RentalDetailsContract;
 
@@ -75,6 +77,20 @@ public class StrategyRentalDetailPresenter implements RentalDetailsContract.Pres
                 break;
             case HOURLY:
                 updateHourlyInstantBooking(isInstantBooking);
+                break;
+        }
+    }
+
+    public void updateInstantBookingCount(int count) {
+        if (rentalDetails == null) {
+            return;
+        }
+        switch (strategy) {
+            case DAILY:
+                updateDailyInstantBookingCount(count);
+                break;
+            case HOURLY:
+                updateHourlyInstantBookingCount(count);
                 break;
         }
     }
@@ -175,6 +191,46 @@ public class StrategyRentalDetailPresenter implements RentalDetailsContract.Pres
                         OwnerCarRepository.getInstance().refresh(rentalDetails.getCarId());
                         OwnerCarsRepository.getInstance().refreshCars();
                         rentalDetails.setHourlyInstantBooking(isInstantBooking);
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        if (view != null) {
+                            view.setData(rentalDetails);
+                        }
+                    }
+                });
+    }
+
+    private void updateDailyInstantBookingCount(int count) {
+        executor.execute(new UpdateDailyinstantBookingCount(),
+                new UpdateDailyinstantBookingCount.RequestValues(rentalDetails.getCarId(), count),
+                new UseCase.Callback<UpdateDailyinstantBookingCount.ResponseValues>() {
+                    @Override
+                    public void onSuccess(UpdateDailyinstantBookingCount.ResponseValues response) {
+                        OwnerCarRepository.getInstance().refresh(rentalDetails.getCarId());
+                        OwnerCarsRepository.getInstance().refreshCars();
+                        rentalDetails.setDailyInstantBookingCount(count);
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        if (view != null) {
+                            view.setData(rentalDetails);
+                        }
+                    }
+                });
+    }
+
+    private void updateHourlyInstantBookingCount(int count) {
+        executor.execute(new UpdateHourlyInstantBookingCount(),
+                new UpdateHourlyInstantBookingCount.RequestValues(rentalDetails.getCarId(), count),
+                new UseCase.Callback<UpdateHourlyInstantBookingCount.ResponseValues>() {
+                    @Override
+                    public void onSuccess(UpdateHourlyInstantBookingCount.ResponseValues response) {
+                        OwnerCarRepository.getInstance().refresh(rentalDetails.getCarId());
+                        OwnerCarsRepository.getInstance().refreshCars();
+                        rentalDetails.setHourlyInstantBookingCount(count);
                     }
 
                     @Override

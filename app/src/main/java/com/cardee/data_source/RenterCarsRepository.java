@@ -2,6 +2,7 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
+import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
@@ -136,6 +137,21 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     @Override
     public BrowseCarsFilter getFilter() {
         return mLocalDataSource.getFilter();
+    }
+
+    @Override
+    public Disposable getOfferById(int id, OfferCallback offerCallback) {
+        return mRemoteDataSource.getOfferById(id, new OfferCallback() {
+            @Override
+            public void onSuccess(OfferByIdResponseBody response) {
+                offerCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offerCallback.onError(error);
+            }
+        });
     }
 
     public void getSorted(String sortBy, OffersCallback offersCallback) {

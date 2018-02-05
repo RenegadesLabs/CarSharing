@@ -293,6 +293,44 @@ public class CarEditRepository implements CarEditDataSource {
     }
 
     @Override
+    public void updateInstantBookingDailyCount(Integer id, int count, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateInstantBookingDailyCount(id, count, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateInstantBookingHourlyCount(Integer id, int count, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateInstantBookingHourlyCount(id, count, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
     public void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback) {
         if (id == null) {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
