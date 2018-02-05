@@ -1,5 +1,6 @@
 package com.cardee.renter_browse_cars_map
 
+import android.util.Log
 import com.cardee.data_source.Error
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.UseCaseExecutor
@@ -25,7 +26,8 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
     override fun accept(event: UIModelEvent?) {
         when (event?.eventType) {
             UIModelEvent.EVENT_OFFER_LIST_CLICK -> {
-
+                //TODO("implement offer screen")
+                Log.e("CLICK_ON_OFFER", event.model.carDetails?.carId.toString())
             }
         }
     }

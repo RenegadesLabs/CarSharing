@@ -66,8 +66,8 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     }
 
     private fun initResources() {
-        favNormalIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorite, null)
-        favSelectedIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorite_filled, null)
+        favNormalIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorites_toolbar, null)
+        favSelectedIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorites_toolbar_filled, null)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {

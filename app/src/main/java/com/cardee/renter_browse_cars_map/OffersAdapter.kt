@@ -72,6 +72,7 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     fun setItems(offerItems: List<OfferItem>) {
         items.clear()
         items.addAll(offerItems)
+        manager?.clear()
         notifyDataSetChanged()
         onSelect(selectedPosition)
         moveToSelection()

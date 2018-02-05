@@ -388,7 +388,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private void toggleShowFavorites() {
         favoritesSelected = !favoritesSelected;
-        mFavsImage.setImageResource(favoritesSelected ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
+        mFavsImage.setImageResource(favoritesSelected ? R.drawable.ic_favorites_toolbar_filled : R.drawable.ic_favorites_toolbar);
         mFilter = mPresenter.getFilter();
         if (favoritesSelected) {
             mFilter.setFavorite(favoritesSelected);
