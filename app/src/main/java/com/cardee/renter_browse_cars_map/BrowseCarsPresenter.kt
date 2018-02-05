@@ -1,58 +1,71 @@
 package com.cardee.renter_browse_cars_map
 
+import com.cardee.data_source.Error
+import com.cardee.domain.RxUseCase
+import com.cardee.domain.UseCaseExecutor
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper
 import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.GetFilteredCars
 import com.cardee.domain.renter.usecase.SaveFilter
 import com.cardee.domain.rx.Response
 import com.cardee.domain.rx.browse_car.ObtainAllOffers
+import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
 import io.reactivex.functions.Consumer
 
 class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
-                          private val allOffersUseCase: ObtainAllOffers = ObtainAllOffers(),
                           private val getFilterUseCase: GetFilter = GetFilter(),
                           private val saveFilterUseCase: SaveFilter = SaveFilter(),
-                          private val getFilteredCara: GetFilteredCars = GetFilteredCars()) :
+                          private val getFilteredCars: GetFilteredCars = GetFilteredCars()) :
         BrowseCarsContract.Presenter, Consumer<UIModelEvent> {
 
-
-    private var filter: BrowseCarsFilter? = null
+    private var disposable = Disposables.empty()
 
     override fun accept(event: UIModelEvent?) {
         when (event?.eventType) {
-            UIModelEvent.EVENT_OFFER_FAVORITE_TOGGLE -> {
-
-            }
-            UIModelEvent.EVENT_OFFER_FILTER_CLICK -> {
-            }
             UIModelEvent.EVENT_OFFER_LIST_CLICK -> {
+
             }
         }
     }
 
-    private fun toggleFavorite() {
-
+    fun toggleFavorite() {
+        val filter = getFilterUseCase.getFilter()
+        val favorite = filter.favorite ?: false
+        filter.favorite = favorite
+        saveFilterUseCase.saveFilter(filter)
+        view?.toggleFavorites(favorite)
+        loadOffersByFilter(filter)
     }
 
+    override fun load() {
+        val filter = getFilterUseCase.getFilter()
+        view?.toggleFavorites(filter.favorite == true)
+        loadOffersByFilter(filter)
+    }
 
-
-    override fun loadAll() {
+    private fun loadOffersByFilter(filter: BrowseCarsFilter) {
         view?.showProgress(true)
-        val request: ObtainAllOffers.ObtainAllRequest = ObtainAllOffers.ObtainAllRequest(0, 0)
-        allOffersUseCase.execute(request,
-                { response ->
-                    if (!response.success) {
-                        handleErrorResponse(response.errorCode!!, response.errorMessage)
-                    } else {
+        if (!disposable.isDisposed) {
+            disposable.dispose()
+        }
+        disposable = getFilteredCars.execute(GetFilteredCars.RequestValues(
+                ToFilterRequestMapper().transform(filter)),
+                object : RxUseCase.Callback<GetFilteredCars.ResponseValues> {
+                    override fun onError(error: Error) {
                         view?.showProgress(false)
-                        response.body?.let {
-                            view?.bind(it.flatMap { offer ->
-                                val id = offer.carId
-                                listOf(OfferItem(id, offer))
-                            })
-                        }
+                        handleErrorResponse(error.errorType.ordinal, error.message)
                     }
-                }, onError)
+
+                    override fun onSuccess(response: GetFilteredCars.ResponseValues) {
+                        view?.showProgress(false)
+                        view?.bind(response.cars.flatMap { offer ->
+                            val id = offer.carId
+                            listOf(OfferItem(id, offer))
+                        })
+                    }
+                })
     }
 
     private fun handleErrorResponse(responseCode: Int, message: String?) {
@@ -60,10 +73,10 @@ class BrowseCarsPresenter(private var view: BrowseCarsContract.View<OfferItem>?,
             it.showProgress(false)
             when (responseCode) {
                 Response.UNAUTHORIZED -> {
-                    //TODO("not implemented") //implement
+                    view?.showMessage(message)
                 }
                 Response.SERVER_ERROR -> {
-                    //TODO("not implemented") //implement
+                    view?.showMessage(message)
                 }
                 else -> view?.showMessage(message)
             }
