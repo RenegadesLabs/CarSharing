@@ -4,12 +4,13 @@ import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.request.SortOffers;
+import com.cardee.data_source.remote.api.offers.response.OfferByIdResponse;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.FilterRequest;
 
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -37,4 +38,6 @@ public interface Offers {
     @POST("offers/")
     Call<OffersResponse> searchOffers(@Body SearchOffers requestBody);
 
+    @GET("offers/{id}")
+    Maybe<OfferByIdResponse> getOfferById(@Path("id") int id);
 }

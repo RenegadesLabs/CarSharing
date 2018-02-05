@@ -9,19 +9,21 @@ import com.cardee.R
 import com.cardee.databinding.ActivityBookCarBinding
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
+import com.cardee.renter_book_car.presenter.BookCarPresenter
 import kotlinx.android.synthetic.main.activity_book_car.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
-
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
     lateinit var mState: BookCarState
+    private var mPresenter = BookCarPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindView()
         setListeners()
+        mPresenter.init(this)
     }
 
     private fun bindView() {
@@ -47,6 +49,26 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         verifyAccButton.setOnClickListener {
             mState.accVerified.set(true)
         }
+    }
+
+    override fun setCarTitle(title: String?) {
+        carTitle.text = title
+    }
+
+    override fun setCarYear(year: String?) {
+        carYear.text = year
+    }
+
+
+
+
+
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.onDestroy()
     }
 
     override fun showProgress(show: Boolean) {

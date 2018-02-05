@@ -11,11 +11,7 @@ import com.cardee.domain.renter.entity.mapper.OfferResponseBodyToOfferMapper
 import io.reactivex.disposables.Disposable
 
 class GetFilteredCars : RxUseCase<GetFilteredCars.RequestValues, GetFilteredCars.ResponseValues> {
-    val repository: RenterCarsRepository
-
-    init {
-        repository = RenterCarsRepository.getInstance()
-    }
+    val repository: RenterCarsRepository = RenterCarsRepository.getInstance()
 
     override fun execute(values: RequestValues, callback: RxUseCase.Callback<ResponseValues>): Disposable {
         return repository.obtainCarsByFilter(values.filter, object : RenterCarsDataSource.OffersCallback {
