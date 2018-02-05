@@ -45,6 +45,7 @@ import butterknife.ButterKnife;
 public class OwnerProfileInfoActivity extends AppCompatActivity implements ProfileInfoView {
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static int MAX_IMAGE_DIMENSION = 720;
 
     public final static String TAG = OwnerProfileInfoActivity.class.getCanonicalName();
     private OwnerProfileInfoPresenter mPresenter;
@@ -340,13 +341,21 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == ActivityHelper.PICK_IMAGE) {
             if (resultCode == RESULT_OK && data.getData() != null) {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                    int width = bitmap.getWidth();
+                    if (width > MAX_IMAGE_DIMENSION) {
+                        float ratio = (float) MAX_IMAGE_DIMENSION / (float) width;
+
+                        width = MAX_IMAGE_DIMENSION;
+                        int height = (int) ((float) bitmap.getHeight() * ratio);
+                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
+                    }
+
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
                     byte[] pictureByteArray = stream.toByteArray();
                     mPictureByteArray = pictureByteArray;
                     mPresenter.setProfilePicture(convertByteArrayToFile(pictureByteArray));

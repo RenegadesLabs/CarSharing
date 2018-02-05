@@ -733,6 +733,9 @@
     <string name="choose">Choose</string>
     <string name="message_note">Message / Note</string>
     <string name="optional">(Optional)</string>
+    <string name="cost_breakdown">COST BREAKDOWN</string>
+    <string name="cost_breakdown_non_peak_template">Rental %s (non-peak)</string>
+    <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
 
 
 </resources>

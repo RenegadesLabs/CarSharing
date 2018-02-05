@@ -1,5 +1,9 @@
 package com.cardee.renter_book_car.presenter
 
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.view.View
+import com.cardee.R
 import com.cardee.data_source.Error
 import com.cardee.data_source.remote.api.booking.response.entity.BookingCost
 import com.cardee.data_source.remote.api.booking.response.entity.CostRequest
@@ -10,6 +14,7 @@ import com.cardee.domain.bookings.usecase.GetCostBreakdown
 import com.cardee.domain.renter.usecase.GetOfferById
 import com.cardee.renter_book_car.BookCarContract
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.dialog_cost_breakdown.view.*
 
 class BookCarPresenter : BookCarContract.BookCarPresenter {
     private var mView: BookCarContract.BookCarView? = null
@@ -18,6 +23,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     private var mGetOfferDisposable: Disposable? = null
     private var mGetCostDisposable: Disposable? = null
     private var mCostBreakdown: BookingCost? = null
+    private var mCarId: Int? = null
 
     override fun init(bookCarView: BookCarContract.BookCarView) {
         mView = bookCarView
@@ -52,8 +58,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         state.dailyCurbsideDelivery.set(dailyCurb ?: false)
         mView?.updateState(state)
 
-        val carId = offer.carDetails?.carId
-        getCost(carId ?: return, state)
+        mCarId = offer.carDetails?.carId
+        getCost(mCarId ?: return, state)
     }
 
     private fun getCost(carId: Int, state: BookCarState) {
@@ -86,6 +92,77 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
             }
         })
 
+    }
+
+    override fun showCostBreakdown(context: AppCompatActivity, state: BookCarState) {
+        if (mCostBreakdown == null) {
+            getCost(mCarId ?: return, state)
+        }
+        val nonPeakCount = (mCostBreakdown ?: return).nonPeakCount
+        val nonPeakCost = mCostBreakdown?.nonPeakCost
+        val peakCount = mCostBreakdown?.peakCount
+        val peakCost = mCostBreakdown?.peakCost
+        val delivery = mCostBreakdown?.delivery
+        val fee = mCostBreakdown?.fee
+        val discount = mCostBreakdown?.discount
+        val total = mCostBreakdown?.total
+
+
+        val builder = AlertDialog.Builder(context)
+        val root = context.layoutInflater.inflate(R.layout.dialog_cost_breakdown, null)
+        builder.setView(root)
+        val dialog = builder.create()
+        root.buttonOk.setOnClickListener { dialog.dismiss() }
+
+        if (nonPeakCount == null) {
+            root.non_peak_container.visibility = View.GONE
+        } else {
+            val count = if (state.bookingHourly == true) {
+                "$nonPeakCount hour"
+            } else {
+                "$nonPeakCount day"
+            }
+            if (nonPeakCount != 1) count.plus("s")
+
+            root.non_peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_non_peak_template), count)
+            root.non_peak_amount.text = "$$nonPeakCost"
+        }
+
+        if (peakCount == null) {
+            root.peak_container.visibility = View.GONE
+        } else {
+            val count = if (state.bookingHourly == true) {
+                "$peakCount hour"
+            } else {
+                "$peakCount day"
+            }
+            if (peakCount != 1) count.plus("s")
+
+            root.peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_peak_template), count)
+            root.peak_amount.text = "$$peakCost"
+        }
+
+        if (delivery == null) {
+            root.delivery_container.visibility = View.GONE
+        } else {
+            root.delivery_amount.text = "$$delivery"
+        }
+
+        if (fee == null) {
+            root.fee_container.visibility = View.GONE
+        } else {
+            root.fee_amount.text = "$$fee"
+        }
+
+        if (discount == null) {
+            root.discount_container.visibility = View.GONE
+        } else {
+            root.discount_amount.text = "$discount%"
+        }
+
+        root.total_amount.text = "$%.2f".format(total)
+
+        dialog.show()
     }
 
     override fun onDestroy() {

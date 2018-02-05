@@ -210,13 +210,9 @@
                         android:layout_marginStart="@dimen/small_margin"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@{state.state.bookingHourly ?
-                        (state.hourlyCurbsideDelivery.get() ? state.collectStrings[0] : state.collectStrings[1]) :
-                        (state.dailyCurbsideDelivery.get() ? state.collectStrings[0] : state.collectStrings[1])}"
+                        android:text="@{(state.bookingHourly &amp;&amp; state.hourlyCurbsideDelivery.get()) || (!state.bookingHourly &amp;&amp; state.dailyCurbsideDelivery.get()) ? state.collectStrings[0] : state.collectStrings[1]}"
                         android:textAlignment="viewEnd"
-                        android:textColor="@{state.state.bookingHourly ?
-                        (state.hourlyCurbsideDelivery.get() ? @color/blue : @color/text_owner_profile_name) :
-                        (state.dailyCurbsideDelivery.get() ? @color/blue : @color/text_owner_profile_name)}"
+                        android:textColor="@{(state.bookingHourly &amp;&amp; state.hourlyCurbsideDelivery.get()) || (!state.bookingHourly &amp;&amp; state.dailyCurbsideDelivery.get()) ? @color/blue : @color/text_owner_profile_name}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/collectionTitle" />
                 </android.support.constraint.ConstraintLayout>

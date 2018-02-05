@@ -32,7 +32,7 @@ data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?
                                @Expose @SerializedName("images") val images: List<ImageEntity>?,
                                @Expose @SerializedName("year_manufacture") val carYear: String?,
                                @Expose @SerializedName("license_plate_number") val carPlateNumber: String?,
-                               @Expose @SerializedName("delivery_rates") val deliveryRates: List<DeliveryRatesEntity>?,
+                               @Expose @SerializedName("delivery_rates") val deliveryRates: DeliveryRatesEntity?,
                                @Expose @SerializedName("vehicle_type") val vehicleType: String?,
                                @Expose @SerializedName("car_make") val carMake: String?,
                                @Expose @SerializedName("car_model") val carModel: String?,
