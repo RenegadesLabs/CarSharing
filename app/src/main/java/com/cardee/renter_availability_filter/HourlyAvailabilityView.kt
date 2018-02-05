@@ -67,7 +67,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
     }
 
     fun reset() {
-        resetFilter(doOnSave)
+        resetFilter(doOnReset)
     }
 
     fun configureSingleAction() {

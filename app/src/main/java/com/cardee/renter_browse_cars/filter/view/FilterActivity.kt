@@ -18,6 +18,8 @@ import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.FilterStringHolder
 import com.cardee.domain.renter.entity.OfferCar
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity
+import com.cardee.renter_availability_filter.DailyFilterActivity
+import com.cardee.renter_availability_filter.HourlyFilterActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
 import com.cardee.renter_browse_cars.search_area.view.SearchAreaActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
@@ -120,9 +122,13 @@ class FilterActivity : AppCompatActivity(), FilterView {
             mPresenter?.getFilteredCars(filter)
         }
         rentalPeriodButton.setOnClickListener {
-            val intent = Intent(this, AvailabilityDialogActivity::class.java)
+            val intent: Intent
+            if (filter.bookingHourly == true) {
+                intent = Intent(this, HourlyFilterActivity::class.java)
+            } else {
+                intent = Intent(this, DailyFilterActivity::class.java)
+            }
             startActivityForResult(intent, AVAILABILITY_REQUEST_CODE)
-            overridePendingTransition(R.anim.enter_up, 0);
         }
         vehicleType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

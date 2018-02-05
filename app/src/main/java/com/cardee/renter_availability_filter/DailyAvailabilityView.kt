@@ -151,7 +151,7 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     fun reset() {
-        resetFilter(doOnSave)
+        resetFilter(doOnReset)
     }
 
     fun configureSingleAciton() {

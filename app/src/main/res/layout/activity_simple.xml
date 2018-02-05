@@ -28,7 +28,7 @@
                 style="@style/ToolbarAction"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/toolbar_action_save" />
+                android:text="@string/reset" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

@@ -20,7 +20,8 @@ class DailyFilterActivity : AppCompatActivity() {
             title = null
         }
         val contentView: DailyAvailabilityView =
-                layoutInflater.inflate(R.layout.view_daily_availability, content, false) as DailyAvailabilityView
+                layoutInflater.inflate(R.layout.view_daily_availability, content, false)
+                        as DailyAvailabilityView
         content.addView(contentView)
         contentView.setPresenter(AvailabilityFilterPresenter(this))
         contentView.configureSingleAciton()

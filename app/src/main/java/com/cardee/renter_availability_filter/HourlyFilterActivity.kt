@@ -23,7 +23,7 @@ class HourlyFilterActivity : AppCompatActivity() {
         val contentView: HourlyAvailabilityView =
                 layoutInflater.inflate(R.layout.view_hourly_availability, content, false)
                         as HourlyAvailabilityView
-        contentView.addView(contentView)
+        content.addView(contentView)
         contentView.setPresenter(AvailabilityFilterPresenter(this))
         contentView.configureSingleAction()
         contentView.setCallback { saved ->
