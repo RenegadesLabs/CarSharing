@@ -84,7 +84,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="94dp">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/car_image_pager"
@@ -202,6 +203,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <include
+                android:id="@+id/v_renterDetailsMap"
                 layout="@layout/view_renter_car_details_map"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -209,8 +211,305 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/car_info_container" />
 
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/renter_car_details_about"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_renterDetailsMap" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/about_title">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/about_ic"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_car_circle" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsAboutCarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_margin"
+                    android:text="SUV 5 seater . 3.0L Auto"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintBottom_toBottomOf="@+id/about_ic"
+                    app:layout_constraintStart_toEndOf="@+id/about_ic"
+                    app:layout_constraintTop_toTopOf="@+id/about_ic" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsAboutCarDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="Its simply a Range Rover and it's amazing. Very clean and beautiful. All wheel drive. 385HP V8 Engine. 21 inch Premium Wheels Navigation, Bluetooth, Aux Plug, Satellite"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsAboutCarTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsAboutCarTitle" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:background="@color/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsAboutCarDesc" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/rating_ic"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1"
+                    app:srcCompat="@drawable/ic_star_circle" />
+
+                <com.cardee.custom.CustomRatingBar
+                    android:id="@+id/rb_renterCarDetailsRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_margin"
+                    app:halfStars="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
+                    app:layout_constraintStart_toEndOf="@+id/rating_ic"
+                    app:layout_constraintTop_toTopOf="@+id/rating_ic"
+                    app:maxStars="5"
+                    app:onlyForDisplay="true" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsRatingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:text=". 10 trips . 14 likes"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_large"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
+                    app:layout_constraintStart_toEndOf="@+id/rb_renterCarDetailsRating"
+                    app:layout_constraintTop_toTopOf="@+id/rating_ic" />
+
+                <TextView
+                    android:id="@+id/by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="@string/renter_car_details_by"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small"
+                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsCommentName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="Doris Wood"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/by"
+                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsCommentDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="on Sep 15, 2016"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_small"
+                    app:layout_constraintStart_toEndOf="@+id/tv_renterCarDetailsCommentName"
+                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="Great experience. This was my first time using Cardee and Andy was extremely accomodating. He met us at the airport on short notice to deliver..."
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsCommentName" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsRatingMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:paddingBottom="@dimen/xsmall_margin"
+                    android:paddingTop="@dimen/xsmall_margin"
+                    android:text="Read 6 reviews"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsComment" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:background="@color/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatingMore" />
+
+                <android.support.v4.widget.CircleImageView
+                    android:id="@+id/iv_renterCarDetailsOwnerPicture"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/large_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+                <LinearLayout
+                    android:id="@+id/owner_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_renterCarDetailsOwnerPicture"
+                    app:layout_constraintStart_toEndOf="@+id/iv_renterCarDetailsOwnerPicture"
+                    app:layout_constraintTop_toTopOf="@+id/iv_renterCarDetailsOwnerPicture">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Owned by"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/tv_renterCarDetailsOwnerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doris Wood"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/owner_name"
+                    app:layout_constraintTop_toBottomOf="@+id/owner_name">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/owner_profile_info_acceptance"
+                            android:textColor="@color/item_secondary_txt" />
+
+                        <TextView
+                            android:id="@+id/tv_renterCarDetailsOwnerAcceptance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            android:text="90%"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/renter_car_details_cancellation"
+                            android:textColor="@color/item_secondary_txt" />
+
+                        <TextView
+                            android:id="@+id/tv_renterCarDetailsOwnerCancellation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            android:text="10%"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/renter_car_details_response"
+                            android:textColor="@color/item_secondary_txt" />
+
+                        <TextView
+                            android:id="@+id/tv_renterCarDetailsOwnerResponse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            android:text="5 min"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/bg_shadow_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/bottom_view"
+        layout="@layout/view_renter_book_car"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
