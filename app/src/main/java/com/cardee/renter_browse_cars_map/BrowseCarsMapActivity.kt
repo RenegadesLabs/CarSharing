@@ -137,7 +137,15 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     }
 
     override fun bind(offers: List<OfferItem>) {
+        showEmptyMessage(offers.isEmpty())
         adapter.setItems(offers)
+    }
+
+    private fun showEmptyMessage(empty: Boolean) {
+        if (empty) {
+            msgTextView.text = getString(R.string.no_offers_found)
+        }
+        msgTextView.visibility = if (empty) View.VISIBLE else View.GONE
     }
 
     override fun onPause() {
