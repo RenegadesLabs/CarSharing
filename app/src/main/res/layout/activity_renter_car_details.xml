@@ -12,6 +12,7 @@
         android:background="@color/bg_transparent_black">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height">
 
@@ -48,7 +49,7 @@
                 android:layout_marginEnd="@dimen/small_margin">
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/fl_renterCarDetailsToolbarShare"
+                    android:id="@+id/iv_renterCarDetailsToolbarShare"
                     style="@style/ToolbarActionIcon"
                     android:layout_width="32dp"
                     android:layout_height="0dp"

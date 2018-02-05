@@ -14,13 +14,16 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
 import com.cardee.domain.owner.entity.Image
+import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
+import kotlinx.android.synthetic.main.activity_renter_car_details.*
 
 class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) {
 
     private val mGlideRequestManager : RequestManager? = Glide.with(mActivity)
 
-    fun bind() {
+    fun bind(renterDetailedCar: RenterDetailedCar) {
+        mActivity.toolbar_title.text = renterDetailedCar.carTitle
 
     }
 
