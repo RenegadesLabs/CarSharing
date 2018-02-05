@@ -26,12 +26,12 @@ public class BookingCost {
     private Float delivery;
     @Expose
     @SerializedName("discount")
-    private Integer discount;
+    private Float discount;
     @Expose
     @SerializedName("amount_total")
     private Float total;
 
-    public BookingCost(){
+    public BookingCost() {
 
     }
 
@@ -83,11 +83,11 @@ public class BookingCost {
         this.delivery = delivery;
     }
 
-    public Integer getDiscount() {
+    public Float getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Float discount) {
         this.discount = discount;
     }
 

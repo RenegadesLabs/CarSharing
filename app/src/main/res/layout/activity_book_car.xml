@@ -210,9 +210,13 @@
                         android:layout_marginStart="@dimen/small_margin"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@{state.curbsideDelivery.get() ? state.collectStrings[0] : state.collectStrings[1]}"
+                        android:text="@{state.state.bookingHourly ?
+                        (state.hourlyCurbsideDelivery.get() ? state.collectStrings[0] : state.collectStrings[1]) :
+                        (state.dailyCurbsideDelivery.get() ? state.collectStrings[0] : state.collectStrings[1])}"
                         android:textAlignment="viewEnd"
-                        android:textColor="@{state.curbsideDelivery.get() ? @color/blue : @color/text_owner_profile_name}"
+                        android:textColor="@{state.state.bookingHourly ?
+                        (state.hourlyCurbsideDelivery.get() ? @color/blue : @color/text_owner_profile_name) :
+                        (state.dailyCurbsideDelivery.get() ? @color/blue : @color/text_owner_profile_name)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/collectionTitle" />
                 </android.support.constraint.ConstraintLayout>
@@ -305,8 +309,8 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="3dp"
-                        android:padding="5dp"
                         android:layout_marginTop="16dp"
+                        android:padding="5dp"
                         android:textSize="@dimen/text_regular"
                         android:visibility="@{state.promocodeClicked ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toStartOf="@+id/submitCode"

@@ -8,10 +8,13 @@ import com.cardee.data_source.remote.RemoteBookingDataSource;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.CostRequest;
 import com.cardee.domain.bookings.BookingState;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 public class BookingRepository implements BookingDataSource {
 
@@ -196,6 +199,11 @@ public class BookingRepository implements BookingDataSource {
                 callback.onError(error);
             }
         });
+    }
+
+    @Override
+    public Disposable getCostBreakdown(CostRequest request, CostCallback callback) {
+        return remoteDataSource.getCostBreakdown(request, callback);
     }
 
     private class Cache {

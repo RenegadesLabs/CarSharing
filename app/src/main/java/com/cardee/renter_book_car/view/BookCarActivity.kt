@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_book_car.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
+    override fun setTotalCost(total: String) {
+
+    }
+
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
     lateinit var mState: BookCarState
@@ -51,6 +55,11 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         }
     }
 
+    override fun updateState(state: BookCarState) {
+        mState = state
+        binding.state = mState
+    }
+
     override fun setCarTitle(title: String?) {
         carTitle.text = title
     }
@@ -58,12 +67,6 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     override fun setCarYear(year: String?) {
         carYear.text = year
     }
-
-
-
-
-
-
 
 
     override fun onDestroy() {
