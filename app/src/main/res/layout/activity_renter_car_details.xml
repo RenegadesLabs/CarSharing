@@ -9,12 +9,15 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_transparent_black">
+        android:background="@null">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_transparent_black"
+            android:theme="@style/TransparentToolbar"
+            app:titleTextColor="@color/bg_main">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -38,7 +41,6 @@
                     android:layout_marginStart="@dimen/xsmall_margin"
                     android:text="2015"
                     android:textColor="@android:color/white" />
-
 
             </LinearLayout>
 
