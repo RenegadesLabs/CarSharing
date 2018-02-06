@@ -71,11 +71,12 @@
 
                 <TextView
                     android:id="@+id/tv_renterCarItemLocationText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:layout_weight="1"
                     android:ellipsize="end"
-                    android:text="200 m . Senkgang"
+                    android:text="200 m . fghfghfghhhhhhhh"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -89,32 +90,34 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemTitle"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/tv_renterCarItemType"
-                app:layout_constraintTop_toBottomOf="@+id/tv_renterCarItemType">
+                app:layout_constraintTop_toBottomOf="@+id/tv_renterCarItemType"
+                app:layout_constraintBottom_toBottomOf="@+id/location_info_container">
 
-                <android.support.v7.widget.AppCompatRatingBar
+                <com.cardee.custom.CustomRatingBar
                     android:id="@+id/rb_renterCatItemRating"
-                    style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/xsmall_margin"
-                    android:numStars="5"
-                    android:rating="4.5"
-                    android:theme="@style/RatingBar" />
+                    app:halfStars="true"
+                    app:maxStars="5"
+                    app:onlyForDisplay="true"
+                    app:layout_constraintTop_toTopOf="@+id/tv_renterCarItemRatingCount"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemRatingCount"/>
 
                 <TextView
                     android:id="@+id/tv_renterCarItemRatingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(10)"
-                    android:textColor="@color/item_secondary_txt" />
-            </LinearLayout>
+                    android:textColor="@color/item_secondary_txt"
+                    app:layout_constraintStart_toEndOf="@id/rb_renterCatItemRating"/>
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 
         <ImageView

@@ -1,6 +1,7 @@
 package com.cardee.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import java.util.TimeZone;
 public class DateStringDelegate {
 
     private static final String TIME_PATTERN = "HH:mm:ssZZZZZ";
-    private static final String TIME_VIEW_PATTERN = "ha";
+    private static final String TIME_VIEW_PATTERN = "hha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private static final String DATE_STRING_PATTERN = "EEE, d\u00a0MMM";
     private static final String DATE_VIEW_PATTERN = "d\u00a0MMM yyyy,\u00a0ha";
@@ -147,11 +148,14 @@ public class DateStringDelegate {
     }
 
     public String getShortGMTTime(String time) {
+        if (time == null) {
+            return null;
+        }
         try {
             Date date = timeViewFormatter.parse(time);
             return timeFormatter.format(date).toLowerCase();
         } catch (ParseException e) {
-            e.printStackTrace();
+
         }
         return null;
     }
@@ -203,6 +207,9 @@ public class DateStringDelegate {
     }
 
     public String getGMTTimeString(Date date) {
+        if (date == null) {
+            return null;
+        }
         return dateFormatter.format(date);
     }
 

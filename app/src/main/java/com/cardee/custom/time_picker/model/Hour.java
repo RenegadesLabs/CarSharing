@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cardee.custom.time_picker.domain.criteria.SelectionState;
 
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,8 +14,16 @@ import java.util.Locale;
 
 public class Hour implements Comparable<Hour> {
 
+    private static final SimpleDateFormat TIME_TITLE_FORMAT =
+            new SimpleDateFormat("hha", Locale.US);
     private static final SimpleDateFormat COMPARE_TIME_FORMAT =
             new SimpleDateFormat("yyyyMMdd_HH", Locale.getDefault());
+
+    static {
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.US);
+        symbols.setAmPmStrings(new String[]{"am", "pm"});
+        TIME_TITLE_FORMAT.setDateFormatSymbols(symbols);
+    }
 
     private final Calendar calendar;
     private final String hourTitle;
@@ -26,8 +35,7 @@ public class Hour implements Comparable<Hour> {
     private Hour(@NonNull Date date) {
         this.calendar = Calendar.getInstance();
         calendar.setTime(date);
-        String ampm = calendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm";
-        hourTitle = String.valueOf(calendar.get(Calendar.HOUR)) + ampm;
+        hourTitle = TIME_TITLE_FORMAT.format(date).replaceAll("^0", "");
         hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         Date now = new Date();
         int currentCompare = compareTo(now);

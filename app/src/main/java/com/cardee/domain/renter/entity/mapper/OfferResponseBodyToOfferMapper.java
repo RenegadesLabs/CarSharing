@@ -67,6 +67,8 @@ public class OfferResponseBodyToOfferMapper {
             returnTime = order.getReturnTime();
         }
 
+        float cost = response.getCost();
+
         return new OfferCar.Builder()
                 .setCarId(carId)
                 .setFavorite(favorite)
@@ -96,6 +98,7 @@ public class OfferResponseBodyToOfferMapper {
                 .setRateSecond(rateSecond)
                 .setDiscountFirst(discountFirst)
                 .setDiscountSecond(discountSecond)
+                .setCost(cost)
                 .setMinRentalDuration(minRental)
                 .setPickupTime(pickupTime)
                 .setReturnTime(returnTime)

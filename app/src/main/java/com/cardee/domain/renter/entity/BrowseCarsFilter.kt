@@ -37,42 +37,42 @@ class BrowseCarsFilter(vehicleTypeId: Int = 1,
         }
 
     @get:Bindable
-    var bookingHourly: Boolean? = null
+    var bookingHourly: Boolean? = bookingHourly
         set(value) {
             field = value
             notifyPropertyChanged(BR.bookingHourly)
         }
 
     @get:Bindable
-    var instantBooking: Boolean = false
+    var instantBooking: Boolean = instantBooking
         set(value) {
             field = value
             notifyPropertyChanged(BR.instantBooking)
         }
 
     @get:Bindable
-    var curbsideDelivery: Boolean = false
+    var curbsideDelivery: Boolean = curbsideDelivery
         set(value) {
             field = value
             notifyPropertyChanged(BR.curbsideDelivery)
         }
 
     @get:Bindable
-    var bodyTypeId: Int = 0
+    var bodyTypeId: Int = bodyTypeId
         set(value) {
             field = value
             notifyPropertyChanged(BR.bodyTypeId)
         }
 
     @get:Bindable
-    var transmissionAuto: Boolean = true
+    var transmissionAuto: Boolean = transmissionAuto
         set(value) {
             field = value
             notifyPropertyChanged(BR.transmissionAuto)
         }
 
     @get:Bindable
-    var transmissionManual: Boolean = true
+    var transmissionManual: Boolean = transmissionManual
         set(value) {
             field = value
             notifyPropertyChanged(BR.transmissionManual)

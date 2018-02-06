@@ -3,7 +3,9 @@ package com.cardee.renter_availability_filter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
+import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateStringDelegate
+import kotlinx.android.synthetic.main.view_daily_availability.view.*
 import kotlinx.android.synthetic.main.view_hourly_availability.view.*
 import java.util.*
 
@@ -12,7 +14,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         ConstraintLayout(context, attrs, defStyleAttr), FilterViewContract {
 
     private var finishCallback: (Boolean) -> Unit = {}
-    private val delegate: DateStringDelegate = DateStringDelegate(context)
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
     private val adapter: TimePickerAdapter = TimePickerAdapter()
     private var presenter: AvailabilityFilterPresenter? = null
     private val doOnSave = { finishCallback.invoke(true) }
@@ -34,7 +36,17 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
 
     override fun setPresenter(presenter: AvailabilityFilterPresenter) {
         this.presenter = presenter
-        this.presenter?.getFilter()
+        this.presenter?.getFilter { filter ->
+            filter.bookingHourly?.let { hourly ->
+                if (hourly) {
+                    if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
+                        delegate.onInitPickerSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
+                    }
+                    delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter)
+                    delegate.onSetSubmitTitle(btnHourSave, filter)
+                }
+            }
+        }
     }
 
     override fun setCallback(callback: (Boolean) -> Unit) {
@@ -49,19 +61,13 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         presenter?.resetFilter(doOnReset)
     }
 
-    private fun setSelection(start: Date, end: Date) {
-
-    }
-
     private fun clearSelection() {
-
+        timePicker.reset()
     }
 
     private fun changeHourlyRange(begin: Date?, end: Date?) {
-        val dateFromString = if (begin == null) "-" else delegate.getTimeLongTitle(begin)
-        val dateToString = if (begin == null) "-" else delegate.getTimeLongTitle(end)
-        dateHourFrom.text = dateFromString
-        dateHourTo.text = dateToString
         presenter?.setHourlyFilter(begin, end)
+        delegate.onSetTitleFromTime(dateHourFrom, begin)
+        delegate.onSetTitleFromTime(dateHourTo, end)
     }
 }

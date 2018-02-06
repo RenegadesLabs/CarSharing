@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TransparentToolbar" parent="AppTheme">
+        <item name="colorPrimary">@color/bg_transparent_black</item>
+        <item name="colorPrimaryDark">@color/bg_transparent_black</item>
+    </style>
+
     <style name="ActivityTranslucent" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

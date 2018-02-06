@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.cardee.custom.calendar.view.CalendarView;
 
 import java.util.Date;
+import java.util.List;
 
 public abstract class RangeSelectionAdapter<T> extends SelectionAdapter<T> {
 
