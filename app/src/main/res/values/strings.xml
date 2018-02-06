@@ -499,7 +499,7 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
-    
+
     <!--Renter Car Details-->
     <string name="renter_car_details_rental_info">Rental info</string>
     <string name="renter_car_details_timing">Pickup and return timing</string>
@@ -734,8 +734,8 @@
     <!-- Renter Book Car-->
     <string name="book_car">Book Car</string>
     <string name="collection">Collection</string>
-    <string name="self_collect">Self-collect only</string>
-    <string name="not_selected">Not Selected</string>
+    <string name="self_collect_only">Self-collect only</string>
+    <string name="self_collect">Self-collect</string>
     <string name="sgd">SGD</string>
     <string name="see_cost_breakdown">See cost breakdown</string>
     <string name="promo_code">Promo Code</string>
@@ -749,6 +749,8 @@
     <string name="cost_breakdown">COST BREAKDOWN</string>
     <string name="cost_breakdown_non_peak_template">Rental %s (non-peak)</string>
     <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
+    <string name="book_bnt_template">%s  •  Request Booking</string>
+    <string name="book_bnt_instant_template">%s  •  Book Now</string>
 
 
 </resources>

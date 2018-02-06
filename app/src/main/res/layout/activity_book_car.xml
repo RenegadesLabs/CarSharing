@@ -64,16 +64,19 @@
                     <TextView
                         android:id="@+id/carTitle"
                         style="@style/TextSettingsRegular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:text="Range Rover"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/carYear"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_default="wrap" />
 
                     <TextView
                         android:id="@id/carYear"
@@ -578,6 +581,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="10dp"
             android:elevation="9dp"
+            android:visibility="@{(state.bookingHourly &amp;&amp; state.hourlyInstantBooking) || (!state.bookingHourly &amp;&amp; state.dailyInstantBooking) ? View.VISIBLE : View.GONE }"
             app:layout_constraintBottom_toBottomOf="@id/bookButtonText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bookButtonText"

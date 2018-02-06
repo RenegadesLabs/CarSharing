@@ -19,5 +19,6 @@ interface BookCarContract {
         fun getOffer(id: Int, state: BookCarState)
         fun onDestroy()
         fun showCostBreakdown(context: AppCompatActivity, state: BookCarState)
+        fun getCost(carId: Int, state: BookCarState)
     }
 }

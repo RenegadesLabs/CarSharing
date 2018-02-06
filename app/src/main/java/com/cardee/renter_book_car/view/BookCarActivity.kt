@@ -11,6 +11,7 @@ import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import kotlinx.android.synthetic.main.activity_book_car.*
+import java.util.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
@@ -18,17 +19,24 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     lateinit var binding: ActivityBookCarBinding
     lateinit var mState: BookCarState
     private var mPresenter = BookCarPresenter()
+    private var mCarId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindView()
+        initToolBar()
         setListeners()
         mPresenter.init(this)
+        getIntentData()
+    }
+
+    private fun getIntentData() {
+        mCarId = intent.getIntExtra("carId", -1)
     }
 
     override fun onStart() {
         super.onStart()
-        mPresenter.getOffer(329, mState)
+        mCarId?.let { mPresenter.getOffer(it, mState) }
     }
 
     private fun bindView() {
@@ -38,23 +46,47 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         binding.executePendingBindings()
     }
 
+    private fun initToolBar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = null
+    }
+
     private fun setListeners() {
         bookHourly.setOnClickListener {
             if (mState.bookingHourly == false) {
                 mState.bookingHourly = true
+                mState.timeEnd = null
+                mState.timeBegin = null
+                resetCost()
             }
         }
         bookDaily.setOnClickListener {
             if (mState.bookingHourly == true) {
                 mState.bookingHourly = false
+                mState.timeEnd = null
+                mState.timeBegin = null
+                resetCost()
             }
         }
+        collectionAddress.setOnClickListener {
+            // TODO: open map
+        }
+        costBreakdown.setOnClickListener { mPresenter.showCostBreakdown(this, mState) }
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
         verifyAccButton.setOnClickListener {
             mState.accVerified.set(true)
         }
-        costBreakdown.setOnClickListener { mPresenter.showCostBreakdown(this, mState) }
+    }
+
+    private fun resetCost() {
+        val cost = if (mState.bookingHourly == true) {
+            "$0++"
+        } else {
+            "$0"
+        }
+        setTotalCost(cost)
     }
 
     override fun updateState(state: BookCarState) {
@@ -72,8 +104,14 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
 
     override fun setTotalCost(total: String) {
         costText.text = total
-    }
 
+        if ((mState.bookingHourly == true && mState.hourlyInstantBooking.get()) ||
+                (mState.bookingHourly == false && mState.dailyInstantBooking.get())) {
+            bookButtonText.text = String.format(Locale.getDefault(), resources.getString(R.string.book_bnt_instant_template), total)
+        } else {
+            bookButtonText.text = String.format(Locale.getDefault(), resources.getString(R.string.book_bnt_template), total)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

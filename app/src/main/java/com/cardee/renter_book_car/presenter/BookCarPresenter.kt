@@ -11,6 +11,8 @@ import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.domain.bookings.usecase.GetCostBreakdown
+import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.GetOfferById
 import com.cardee.renter_book_car.BookCarContract
 import io.reactivex.disposables.Disposable
@@ -20,6 +22,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     private var mView: BookCarContract.BookCarView? = null
     private val getOfferById = GetOfferById()
     private val getCostBreakdown = GetCostBreakdown()
+    private val getFilter = GetFilter()
+
     private var mGetOfferDisposable: Disposable? = null
     private var mGetCostDisposable: Disposable? = null
     private var mCostBreakdown: BookingCost? = null
@@ -30,6 +34,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     }
 
     override fun getOffer(id: Int, state: BookCarState) {
+        mCarId = id
+
         if (mGetOfferDisposable?.isDisposed == false) {
             mGetOfferDisposable?.dispose()
         }
@@ -46,29 +52,46 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     }
 
     private fun setView(offer: OfferByIdResponseBody, state: BookCarState) {
+        val filter = getFilter.getFilter()
+        state.bookingHourly = getHourly(filter)
+        state.timeBegin = filter.rentalPeriodBegin
+        state.timeEnd = filter.rentalPeriodEnd
+
         val carTitle = offer.carDetails?.carTitle
         mView?.setCarTitle(carTitle)
         val carYear = offer.carDetails?.carYear
         mView?.setCarYear(carYear)
-
         val hourlyCurb = offer.orderHourlyDetails?.curbsideDelivery
         val dailyCurb = offer.orderDailyDetails?.curbsideDelivery
-
         state.hourlyCurbsideDelivery.set(hourlyCurb ?: false)
         state.dailyCurbsideDelivery.set(dailyCurb ?: false)
+        val hourlyInstant = offer.orderHourlyDetails?.instantBooking
+        val dailyInstant = offer.orderDailyDetails?.instantBooking
+        state.hourlyInstantBooking.set(hourlyInstant ?: false)
+        state.dailyInstantBooking.set(dailyInstant ?: false)
+
         mView?.updateState(state)
 
-        mCarId = offer.carDetails?.carId
         getCost(mCarId ?: return, state)
     }
 
-    private fun getCost(carId: Int, state: BookCarState) {
+    private fun getHourly(filter: BrowseCarsFilter): Boolean {
+        if (filter.bookingHourly == null) {
+            return true
+        }
+        return filter.bookingHourly == true
+    }
+
+    override fun getCost(carId: Int, state: BookCarState) {
         if (mGetCostDisposable?.isDisposed == false) {
             mGetCostDisposable?.dispose()
         }
         val timeBegin = state.timeBegin ?: return
         val timeEnd = state.timeEnd ?: return
-        val curbDel = if (state.bookingHourly == true) state.hourlyCurbsideDelivery.get() else state.dailyCurbsideDelivery.get()
+        var curbDel = if (state.bookingHourly == true) state.hourlyCurbsideDelivery.get() else state.dailyCurbsideDelivery.get()
+        if (state.collectionPicked.get().not()) {
+            curbDel = false
+        }
         val latitude = state.latitude
         val longitude = state.longitude
         val bookingDaily = state.bookingHourly == false
@@ -78,13 +101,21 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         mGetCostDisposable = getCostBreakdown.execute(GetCostBreakdown.RequestValues(request), object : RxUseCase.Callback<GetCostBreakdown.ResponseValues> {
             override fun onSuccess(response: GetCostBreakdown.ResponseValues) {
                 mCostBreakdown = response.costBreakdown
-                var total = mCostBreakdown?.total?.toString() ?: return
-                total = if (state.bookingHourly == true) {
-                    String.format("$$total++")
+                val total: Number = mCostBreakdown?.total ?: return
+                var totalString: String?
+                totalString = if (total.toFloat() % 1f == 0f) {
+                    total.toInt().toString()
                 } else {
-                    String.format("$$total")
+                    "%.2f".format(total.toFloat())
                 }
-                mView?.setTotalCost(total)
+
+                totalString = if (state.bookingHourly == true) {
+                    "$$totalString++"
+                } else {
+                    "$$totalString"
+                }
+
+                mView?.setTotalCost(totalString)
             }
 
             override fun onError(error: Error) {
@@ -95,9 +126,9 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     }
 
     override fun showCostBreakdown(context: AppCompatActivity, state: BookCarState) {
-        if (mCostBreakdown == null) {
-            getCost(mCarId ?: return, state)
-        }
+//        if (mCostBreakdown == null) {
+        getCost(mCarId ?: return, state)
+//        }
         val nonPeakCount = (mCostBreakdown ?: return).nonPeakCount
         val nonPeakCost = mCostBreakdown?.nonPeakCost
         val peakCount = mCostBreakdown?.peakCount
@@ -114,7 +145,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val dialog = builder.create()
         root.buttonOk.setOnClickListener { dialog.dismiss() }
 
-        if (nonPeakCount == null) {
+        if (nonPeakCount == null || nonPeakCount == 0) {
             root.non_peak_container.visibility = View.GONE
         } else {
             val count = if (state.bookingHourly == true) {
@@ -125,10 +156,10 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
             if (nonPeakCount != 1) count.plus("s")
 
             root.non_peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_non_peak_template), count)
-            root.non_peak_amount.text = "$$nonPeakCost"
+            root.non_peak_amount.text = "$%.2f".format(nonPeakCost)
         }
 
-        if (peakCount == null) {
+        if (peakCount == null || peakCount == 0) {
             root.peak_container.visibility = View.GONE
         } else {
             val count = if (state.bookingHourly == true) {
@@ -139,25 +170,29 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
             if (peakCount != 1) count.plus("s")
 
             root.peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_peak_template), count)
-            root.peak_amount.text = "$$peakCost"
+            root.peak_amount.text = "$%.2f".format(peakCost)
         }
 
-        if (delivery == null) {
+        if (delivery == null || delivery == 0f) {
             root.delivery_container.visibility = View.GONE
         } else {
-            root.delivery_amount.text = "$$delivery"
+            root.delivery_amount.text = "$%.2f".format(delivery)
         }
 
-        if (fee == null) {
+        if (fee == null || fee == 0f) {
             root.fee_container.visibility = View.GONE
         } else {
-            root.fee_amount.text = "$$fee"
+            root.fee_amount.text = "$%.2f".format(fee)
         }
 
-        if (discount == null) {
+        if (discount == null || discount == 0f) {
             root.discount_container.visibility = View.GONE
         } else {
-            root.discount_amount.text = "$discount%"
+            if (discount % 1f == 0f) {
+                root.discount_amount.text = "%.0f%%".format(discount)
+            } else {
+                root.discount_amount.text = "$discount%"
+            }
         }
 
         root.total_amount.text = "$%.2f".format(total)
@@ -170,5 +205,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         mGetOfferDisposable?.dispose()
         mGetCostDisposable?.dispose()
         mCostBreakdown = null
+        mCarId = null
     }
 }
