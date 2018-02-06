@@ -11,6 +11,7 @@ import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.CurbsideDeliveryEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
+import com.cardee.data_source.remote.api.common.entity.InstantBookingCount;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
@@ -87,6 +88,12 @@ public interface Cars {
 
     @PUT("cars/{id}/rental/hourly")
     Call<BaseResponse> updateInstantBookingHourly(@Path("id") Integer carId, @Body InstantBookingEntity requestBody);
+
+    @PUT("cars/{id}/rental/daily")
+    Call<BaseResponse> setInstantBookingDailyCount(@Path("id") Integer carId, @Body InstantBookingCount requestBody);
+
+    @PUT("cars/{id}/rental/hourly")
+    Call<BaseResponse> setInstantBookingHourlyCount(@Path("id") Integer carId, @Body InstantBookingCount requestBody);
 
     @PUT("cars/{id}/rental/daily")
     Call<BaseResponse> updateCurbsideDeliveryDaily(@Path("id") Integer carId, @Body CurbsideDeliveryEntity requestBody);

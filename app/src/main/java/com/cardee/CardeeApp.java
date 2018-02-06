@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.booking.deserializer.BookingDeserializer;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
+import com.cardee.data_source.remote.api.offers.response.OfferByIdResponse;
 import com.cardee.data_source.remote.api.util.ResponseDeserializer;
 import com.cardee.data_source.remote.client.HttpClientProvider;
 import com.google.android.gms.auth.api.Auth;

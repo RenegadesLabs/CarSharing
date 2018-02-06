@@ -8,6 +8,7 @@ import com.cardee.data_source.remote.api.offers.Offers;
 import com.cardee.data_source.remote.api.offers.request.GetFavorites;
 import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.request.SortOffers;
+import com.cardee.data_source.remote.api.offers.response.OfferByIdResponse;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
@@ -116,6 +117,32 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public BrowseCarsFilter getFilter() {
         return null;
+    }
+
+    @Override
+    public Disposable getOfferById(int id, OfferCallback offerCallback) {
+        return mApi.getOfferById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<OfferByIdResponse>() {
+                    @Override
+                    public void onSuccess(OfferByIdResponse response) {
+                        if (response.isSuccessful()) {
+                            offerCallback.onSuccess(response.getOfferResponse());
+                            return;
+                        }
+                        handleErrorResponse(offerCallback, response);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        offerCallback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
 

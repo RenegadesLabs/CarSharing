@@ -1,5 +1,7 @@
 package com.cardee.renter_browse_cars.presenter
 
+import android.content.Intent
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import com.cardee.custom.modal.SortRenterOffersDialog
 import com.cardee.custom.modal.TypeRenterOffersDialog
@@ -11,6 +13,7 @@ import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.mapper.ToFilterRequestMapper
 import com.cardee.domain.renter.usecase.*
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract
+import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import com.cardee.settings.Settings
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
@@ -38,6 +41,10 @@ class RenterBrowseCarListPresenter(private var mView: RenterBrowseCarListContrac
             }
 
             RenterBrowseCarListContract.Action.OPEN -> {
+                val context = (mView as Fragment).activity
+                val intent = Intent(context, RenterCarDetailsActivity::class.java)
+                intent.putExtra("carId", carEvent.car.carId)
+                context.startActivity(intent)
             }
 
             RenterBrowseCarListContract.Action.FAVORITE -> addCarToFavorites(carEvent.car.carId)

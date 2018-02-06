@@ -89,6 +89,9 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
         searchSaveButton.setOnClickListener {
             if (mMap != null) {
                 val intent = Intent()
+                if (currentAddress == null) {
+                    currentAddress = ""
+                }
                 intent.putExtra("address", currentAddress)
                 intent.putExtra("radius", seekBar.selectedMinValue.toInt())
                 intent.putExtra("location", mLastSearchLocation)

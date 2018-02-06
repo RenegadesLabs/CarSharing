@@ -12,7 +12,6 @@ import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEnti
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsRequirementsEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsSecurityDepositEntity;
-import com.cardee.domain.owner.entity.RentalTermsRequirements;
 
 public interface CarEditDataSource {
 
@@ -27,6 +26,10 @@ public interface CarEditDataSource {
     void updateInstantBookingDaily(Integer id, boolean isInstantBooking, Callback callback);
 
     void updateInstantBookingHourly(Integer id, boolean isInstantBooking, Callback callback);
+
+    void updateInstantBookingDailyCount(Integer id, int count, Callback callback);
+
+    void updateInstantBookingHourlyCount(Integer id, int count, Callback callback);
 
     void updateCurbsideDeliveryDaily(Integer id, boolean isCurbsideDelivery, Callback callback);
 

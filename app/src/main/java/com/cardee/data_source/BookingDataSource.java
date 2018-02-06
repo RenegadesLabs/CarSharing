@@ -3,12 +3,15 @@ package com.cardee.data_source;
 
 import android.net.Uri;
 
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
-import com.cardee.domain.bookings.BookingState;
+import com.cardee.data_source.remote.api.booking.response.entity.CostRequest;
 
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 public interface BookingDataSource {
 
@@ -31,6 +34,8 @@ public interface BookingDataSource {
     void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imagesIds, SimpleCallback callback);
 
     void uploadImage(Integer bookingId, Uri uri, ImageCallback callback);
+
+    Disposable getCostBreakdown(CostRequest request, CostCallback callback);
 
     interface BookingsCallback extends BaseCallback {
 
@@ -55,6 +60,10 @@ public interface BookingDataSource {
 
     interface SimpleCallback extends BaseCallback {
         void onSuccess();
+    }
+
+    interface CostCallback extends BaseCallback {
+        void onSuccess(BookingCost bookingCost);
     }
 
     interface BaseCallback {

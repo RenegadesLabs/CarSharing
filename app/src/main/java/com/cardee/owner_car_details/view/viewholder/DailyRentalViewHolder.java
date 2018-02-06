@@ -36,6 +36,8 @@ import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 import com.cardee.util.DateStringDelegate;
 
+import java.util.Locale;
+
 
 public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         implements View.OnClickListener, RentalDetailsContract.ControlView,
@@ -166,6 +168,7 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                     @Override
                     public void onDoneClicked(String value) {
                         instantBookingEdit.setText(value);
+                        presenter.updateInstantBookingCount(Integer.valueOf(value.split(" ")[0]));
                     }
                 });
                 break;
@@ -299,6 +302,12 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.getDailyAmountDiscountFirst());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getDailyFuelPolicyName(), "");
         setInstantBookingState(rentalDetails);
+        int days = rentalDetails.getDailyInstantBookingCount();
+        String template = "%d days";
+        if (days == 1) {
+            template = "%d day";
+        }
+        instantBookingEdit.setText(String.format(Locale.getDefault(), template, days));
         setCurbsideDeliveryState(rentalDetails);
         setAcceptCashState(rentalDetails);
     }

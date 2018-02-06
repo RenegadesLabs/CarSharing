@@ -15,6 +15,7 @@ public class RentalDetails {
     private String dailyTimePickup;
     private String dailyTimeReturn;
     private boolean dailyInstantBooking;
+    private Integer dailyInstantBookingCount;
     private boolean dailyCurbsideDelivery;
     private boolean dailyAcceptCash;
     private Float dailyAmountRateFirst;
@@ -31,6 +32,7 @@ public class RentalDetails {
     private String hourlyBeginTime;
     private String hourlyEndTime;
     private boolean hourlyInstantBooking;
+    private Integer hourlyInstantBookingCount;
     private boolean hourlyCurbsideDelivery;
     private boolean hourlyAcceptCash;
     private Float hourlyAmountRateFirst;
@@ -48,6 +50,22 @@ public class RentalDetails {
 
     public RentalDetails(int carId) {
         this.carId = carId;
+    }
+
+    public Integer getDailyInstantBookingCount() {
+        return dailyInstantBookingCount == null ? 1 : dailyInstantBookingCount;
+    }
+
+    public void setDailyInstantBookingCount(Integer dailyInstantBookingCount) {
+        this.dailyInstantBookingCount = dailyInstantBookingCount;
+    }
+
+    public Integer getHourlyInstantBookingCount() {
+        return hourlyInstantBookingCount == null ? 2 : hourlyInstantBookingCount;
+    }
+
+    public void setHourlyInstantBookingCount(Integer hourlyInstantBookingCount) {
+        this.hourlyInstantBookingCount = hourlyInstantBookingCount;
     }
 
     public int getCarId() {
@@ -332,6 +350,7 @@ public class RentalDetails {
         copy.setHourlyEndTime(prototype.getHourlyEndTime());
         copy.setDailyCount(prototype.getDailyCount());
         copy.setDailyInstantBooking(prototype.isDailyInstantBooking());
+        copy.setDailyInstantBookingCount(prototype.getDailyInstantBookingCount());
         copy.setDailyCurbsideDelivery(prototype.isDailyCurbsideDelivery());
         copy.setDailyAcceptCash(prototype.isDailyAcceptCash());
         copy.setDailyFuelPolicyName(prototype.getDailyFuelPolicyName());
@@ -343,6 +362,7 @@ public class RentalDetails {
         copy.setDailyMinRentalDuration(prototype.getDailyMinRentalDuration());
         copy.setHourlyCount(prototype.getHourlyCount());
         copy.setHourlyInstantBooking(prototype.isHourlyInstantBooking());
+        copy.setHourlyInstantBookingCount(prototype.getHourlyInstantBookingCount());
         copy.setHourlyCurbsideDelivery(prototype.isHourlyCurbsideDelivery());
         copy.setHourlyAcceptCash(prototype.isHourlyAcceptCash());
         copy.setHourlyFuelPolicyId(prototype.getHourlyFuelPolicyId());

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="state"
+            type="com.cardee.domain.bookings.entity.BookCarState" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_main"
+        tools:context=".renter_book_car.view.BookCarActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:theme="@style/CardeeToolbar"
+                app:titleTextColor="@color/colorAccent">
+
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    style="@style/ToolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/book_car" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="68dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/vehicleTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/carTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Range Rover"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/carYear"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@id/carYear"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="2014"
+                        android:textSize="@dimen/text_xlarge"
+                        app:layout_constraintBaseline_toBaselineOf="@id/carTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/carTitle" />
+
+                    <TextView
+                        android:id="@+id/bookHourly"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/book_hourly"
+                        android:textAlignment="center"
+                        android:textColor="@{state.bookingHourly ? @color/colorPrimaryDark: @color/divider_dark}"
+                        android:textSize="@dimen/text_xlarge"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/divider1"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/carTitle" />
+
+                    <View
+                        android:id="@id/divider1"
+                        android:layout_width="0.5dp"
+                        android:layout_height="28dp"
+                        android:layout_marginBottom="@dimen/widget_margin_small"
+                        android:layout_marginTop="@dimen/widget_margin_small"
+                        android:background="@color/add_car_divider"
+                        app:layout_constraintBottom_toBottomOf="@id/bookHourly"
+                        app:layout_constraintEnd_toStartOf="@+id/bookDaily"
+                        app:layout_constraintStart_toEndOf="@id/bookHourly"
+                        app:layout_constraintTop_toTopOf="@id/bookHourly" />
+
+                    <TextView
+                        android:id="@id/bookDaily"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/book_daily"
+                        android:textAlignment="center"
+                        android:textColor="@{state.bookingHourly ? @color/divider_dark: @color/colorPrimaryDark}"
+                        android:textSize="@dimen/text_xlarge"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@id/divider1"
+                        app:layout_constraintTop_toBottomOf="@id/carTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bookingPeriodContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin">
+
+                    <TextView
+                        android:id="@+id/bookingStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20 Mar, 9am+"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_xlarge"
+                        app:layout_constraintEnd_toStartOf="@+id/to"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@id/to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_xlarge"
+                        app:layout_constraintEnd_toStartOf="@+id/bookingEnd"
+                        app:layout_constraintStart_toEndOf="@id/bookingStart" />
+
+                    <TextView
+                        android:id="@id/bookingEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20 Mar, 2pm+"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_xlarge"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/to" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/collectionContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginStart="26dp">
+
+                    <TextView
+                        android:id="@+id/collectionTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/collection"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/collectionAddress"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{(state.bookingHourly &amp;&amp; state.hourlyCurbsideDelivery.get()) || (!state.bookingHourly &amp;&amp; state.dailyCurbsideDelivery.get()) ? state.collectStrings[0] : state.collectStrings[1]}"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@{(state.bookingHourly &amp;&amp; state.hourlyCurbsideDelivery.get()) || (!state.bookingHourly &amp;&amp; state.dailyCurbsideDelivery.get()) ? @color/blue : @color/text_owner_profile_name}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/collectionTitle" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/costContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginStart="26dp">
+
+                    <TextView
+                        android:id="@+id/costText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$50++"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/sgd"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_x_small"
+                        app:layout_constraintEnd_toStartOf="@id/costText"
+                        app:layout_constraintTop_toTopOf="@id/costText" />
+
+                    <TextView
+                        android:id="@+id/costBreakdown"
+                        style="@style/TextClickable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/see_cost_breakdown"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/costText" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginStart="26dp">
+
+                    <TextView
+                        android:id="@+id/promoCodeTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="22dp"
+                        android:text="@string/promo_code"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/promoCodeText"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="22dp"
+                        android:text="@string/car_add_add"
+                        android:textColor="@color/blue"
+                        android:visibility="@{state.promocodeClicked ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/promoCodeEditText"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="5dp"
+                        android:textSize="@dimen/text_regular"
+                        android:visibility="@{state.promocodeClicked ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toStartOf="@+id/submitCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@id/submitCode"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:visibility="@{state.promocodeClicked ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="@id/promoCodeEditText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_check" />
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/bg_regular"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextSettingsSection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/steps_left" />
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/verifyAccContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:paddingTop="22dp"
+                    android:visibility="@{state.accVerified ? View.GONE : View.VISIBLE}">
+
+                    <TextView
+                        android:id="@+id/verifyAccCount"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="@string/verify_account_title"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/verifyAccButton"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:text="@string/verify"
+                        android:textColor="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="22dp"
+                        android:background="@color/add_car_divider"
+                        app:layout_constraintTop_toBottomOf="@id/verifyAccCount" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/paymentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:paddingTop="22dp">
+
+                    <TextView
+                        android:id="@+id/paymentCounter"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="@{state.accVerified ? state.counterStrings[1] : state.counterStrings[2]}"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/paymentTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/payment_by"
+                        app:layout_constraintStart_toEndOf="@id/paymentCounter" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{state.paymentSelected ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toEndOf="@id/paymentTitle"
+                        app:srcCompat="@drawable/ic_check_circle" />
+
+                    <TextView
+                        android:id="@+id/paymentChoose"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:text="@string/choose"
+                        android:textColor="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/rentalTermsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp">
+
+                    <TextView
+                        android:id="@+id/rentalTermsCounter"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="@{state.accVerified ? state.counterStrings[2] : state.counterStrings[3]}"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/rentalTermsTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/car_rental_info_terms"
+                        app:layout_constraintStart_toEndOf="@id/rentalTermsCounter" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{state.rentalTermsAgreed ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toEndOf="@id/rentalTermsTitle"
+                        app:srcCompat="@drawable/ic_check_circle" />
+
+                    <TextView
+                        android:id="@+id/rentalTermsAgree"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:text="@{state.rentalTermsAgreed ? state.rentalTermsStrings[0] : state.rentalTermsStrings[1]}"
+                        android:textColor="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/add_car_divider" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/noteContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginEnd="23dp"
+                    android:layout_marginStart="23dp">
+
+                    <TextView
+                        android:id="@+id/noteCounter"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="@{state.accVerified ? state.counterStrings[3] : state.counterStrings[4]}"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/noteTitle"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/message_note"
+                        app:layout_constraintStart_toEndOf="@id/noteCounter" />
+
+                    <TextView
+                        android:id="@+id/noteOptional"
+                        style="@style/TextSettingsInactive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/optional"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintBaseline_toBaselineOf="@id/noteTitle"
+                        app:layout_constraintStart_toEndOf="@id/noteTitle" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:visibility="@{state.noteAdded ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toEndOf="@id/noteOptional"
+                        app:srcCompat="@drawable/ic_check_circle" />
+
+                    <TextView
+                        android:id="@+id/addNote"
+                        style="@style/TextSettingsRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:text="@{state.noteAdded ? state.noteStrings[0] : state.noteStrings[1]}"
+                        android:textColor="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bookButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/button_blue_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/bookButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
+            android:clickable="false"
+            android:elevation="9dp"
+            android:focusable="false"
+            android:text="$50++  •  Book Now"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_xlarge"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/instantIcon"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@id/instantIcon"
+            android:layout_width="18dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="10dp"
+            android:elevation="9dp"
+            app:layout_constraintBottom_toBottomOf="@id/bookButtonText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bookButtonText"
+            app:layout_constraintTop_toTopOf="@id/bookButtonText"
+            app:srcCompat="@drawable/ic_instant" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

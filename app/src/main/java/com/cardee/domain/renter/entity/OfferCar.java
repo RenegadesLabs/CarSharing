@@ -64,6 +64,8 @@ public class OfferCar implements Parcelable {
 
     private float mDiscountSecond;
 
+    private float mCost;
+
     private int mMinRentalDuration;
 
     private String mPickupTime;
@@ -98,6 +100,7 @@ public class OfferCar implements Parcelable {
                     float rateSecond,
                     float discountFirst,
                     float discountSecond,
+                    float cost,
                     int minRentalDuration,
                     String pickupTime,
                     String returnTime) {
@@ -129,6 +132,7 @@ public class OfferCar implements Parcelable {
         mRateSecond = rateSecond;
         mDiscountFirst = discountFirst;
         mDiscountSecond = discountSecond;
+        mCost = cost;
         mMinRentalDuration = minRentalDuration;
         mPickupTime = pickupTime;
         mReturnTime = returnTime;
@@ -257,6 +261,7 @@ public class OfferCar implements Parcelable {
         private float mRateSecond;
         private float mDiscountFirst;
         private float mDiscountSecond;
+        private float mCost;
         private int mMinRentalDuration;
         private String mPickupTime;
         private String mReturnTime;
@@ -401,6 +406,11 @@ public class OfferCar implements Parcelable {
             return this;
         }
 
+        public Builder setCost(float cost) {
+            mCost = cost;
+            return this;
+        }
+
         public Builder setMinRentalDuration(int minRentalDuration) {
             mMinRentalDuration = minRentalDuration;
             return this;
@@ -426,8 +436,8 @@ public class OfferCar implements Parcelable {
                     mOwnerName, mRatingCount, mRating,
                     instantBooking, curbsideDelivery, acceptCash,
                     mFuelPolicyName, mRateFirst, mRateSecond,
-                    mDiscountFirst, mDiscountSecond, mMinRentalDuration,
-                    mPickupTime, mReturnTime);
+                    mDiscountFirst, mDiscountSecond, mCost,
+                    mMinRentalDuration, mPickupTime, mReturnTime);
         }
     }
 
@@ -542,6 +552,10 @@ public class OfferCar implements Parcelable {
 
     public float getDiscountSecond() {
         return mDiscountSecond;
+    }
+
+    public float getCost() {
+        return mCost;
     }
 
     public int getMinRentalDuration() {

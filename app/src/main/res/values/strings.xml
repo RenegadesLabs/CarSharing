@@ -499,6 +499,19 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+    
+    <!--Renter Car Details-->
+    <string name="renter_car_details_rental_info">Rental info</string>
+    <string name="renter_car_details_timing">Pickup and return timing</string>
+    <string name="renter_car_details_read">Read</string>
+    <string name="renter_car_details_check">Check</string>
+    <string name="renter_car_details_about">About the car</string>
+    <string name="renter_car_details_by">by</string>
+    <string name="renter_car_details_cancellation">Cancellation</string>
+    <string name="renter_car_details_response">Response</string>
+
+    <string name="renter_car_details_book">Book Car</string>
+    <string name="renter_car_details_book_instantly">Book Instantly</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -718,6 +731,25 @@
     <string name="my_current_location">My Current Location</string>
     <string name="default_search_area">Current \u0020\u2022\u0020 Within SG</string>
     <string name="current">Current</string>
+
+    <!-- Renter Book Car-->
+    <string name="book_car">Book Car</string>
+    <string name="collection">Collection</string>
+    <string name="self_collect">Self-collect only</string>
+    <string name="not_selected">Not Selected</string>
+    <string name="sgd">SGD</string>
+    <string name="see_cost_breakdown">See cost breakdown</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="steps_left">STEPS LEFT TO BOOK</string>
+    <string name="verify_account_title">1. Verify Account</string>
+    <string name="verify">Verify</string>
+    <string name="payment_by">Payment By</string>
+    <string name="choose">Choose</string>
+    <string name="message_note">Message / Note</string>
+    <string name="optional">(Optional)</string>
+    <string name="cost_breakdown">COST BREAKDOWN</string>
+    <string name="cost_breakdown_non_peak_template">Rental %s (non-peak)</string>
+    <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
 
 
 </resources>

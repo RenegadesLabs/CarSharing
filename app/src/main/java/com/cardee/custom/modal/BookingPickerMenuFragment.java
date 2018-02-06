@@ -165,11 +165,11 @@ public class BookingPickerMenuFragment extends BottomSheetDialogFragment {
 
 
     private static String[] initBookingDaysArray() {
-        int[] hours = new int[14];
+        int[] hours = new int[15];
         List<String> values = new ArrayList<>();
         for (int i = 0; i < hours.length; i++) {
-            hours[i] = i + 1;
-            if (hours[i] == 1) {
+            hours[i] = i;
+            if (i == 1) {
                 values.add(String.valueOf(hours[i] + " day"));
             } else {
                 values.add(String.valueOf(hours[i] + " days"));

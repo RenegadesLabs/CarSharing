@@ -13,8 +13,10 @@ import com.cardee.data_source.remote.api.booking.Upload;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
+import com.cardee.data_source.remote.api.booking.response.CostBreakdownResponse;
 import com.cardee.data_source.remote.api.booking.response.UploadBookingImageResponse;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
+import com.cardee.data_source.remote.api.booking.response.entity.CostRequest;
 import com.cardee.data_source.remote.api.booking.response.entity.UploadBookingImageResponseBody;
 import com.cardee.util.ImageProcessor;
 
@@ -22,6 +24,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -216,6 +222,32 @@ public class RemoteBookingDataSource implements BookingDataSource {
         } else {
             callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid File path: " + imageFile.getAbsolutePath()));
         }
+    }
+
+    @Override
+    public Disposable getCostBreakdown(CostRequest request, CostCallback callback) {
+        return api.getCostBreakdown(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<CostBreakdownResponse>() {
+                    @Override
+                    public void onSuccess(CostBreakdownResponse response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(response.getCostBreakdown());
+                            return;
+                        }
+                        handleErrorResponse(response, callback);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     @Override
