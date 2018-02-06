@@ -2,6 +2,7 @@ package com.cardee.renter_car_details.view.viewholder
 
 import android.content.Context
 import android.support.annotation.DrawableRes
+import android.support.design.widget.TabLayout
 import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +18,45 @@ import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
+import kotlinx.android.synthetic.main.view_renter_book_car.*
 
-class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) {
+class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity): TabLayout.OnTabSelectedListener{
+
 
     private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
 
-    fun bind(renterDetailedCar: RenterDetailedCar) {
-        mActivity.toolbar_title.text = renterDetailedCar.carTitle
+    init {
+        mActivity.tl_renterCarDetails.addOnTabSelectedListener(this)
     }
 
-    private inner class ImagePagerAdapter private constructor(context: Context, images: Array<Image>?) : PagerAdapter() {
+    fun bind(renterDetailedCar: RenterDetailedCar) {
+        mActivity.toolbar_title.text = renterDetailedCar.carTitle
+        mActivity.tv_renterCarDetailsTitleYear.text = renterDetailedCar.year
+        mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        when(tab?.position) {
+            0 -> {
+                mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book_instantly)
+                mActivity.iv_bookButtonInstant.visibility = View.VISIBLE
+            }
+            1 -> {
+                mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book)
+                mActivity.iv_bookButtonInstant.visibility = View.GONE
+            }
+        }
+    }
+
+    private inner class ImagePagerAdapter(context: Context, images: Array<Image>?) : PagerAdapter() {
 
         @DrawableRes
         private val mDefaultImageId = R.drawable.img_no_car

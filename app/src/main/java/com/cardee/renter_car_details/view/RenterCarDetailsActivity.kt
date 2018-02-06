@@ -36,12 +36,18 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         RenterCarDetailsViewHolder(this)
-        b_bookCar.setOnClickListener(this)
+        setListeners()
         getData()
     }
 
     private fun getData() {
         mCarId = intent.getIntExtra("carId", -1)
+    }
+
+    private fun setListeners() {
+        iv_renterCarDetailsToolbarShare.setOnClickListener(this)
+        iv_renterCarDetailsToolbarFavoritesImg.setOnClickListener(this)
+        b_bookCar.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
