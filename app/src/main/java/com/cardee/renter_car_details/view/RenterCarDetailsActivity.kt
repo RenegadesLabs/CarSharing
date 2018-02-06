@@ -5,17 +5,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.cardee.R
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_map.*
@@ -47,6 +43,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         presenter.attachView(this)
         init(this)
         setSupportActionBar(toolbar)
+        mapTouchWrapper.disableOnTouch(lockableScrollView)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = null
@@ -65,16 +62,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
             uiSettings.isMapToolbarEnabled = false
-
-            val position = CameraPosition.Builder()
-                    .target(LatLng(1.290270, 103.851959))
-                    .zoom(10f)
-                    .build()
-            val cameraUpdate = CameraUpdateFactory.newCameraPosition(position)
-            animateCamera(cameraUpdate)
-            map.setOnMapClickListener { location ->
-                Toast.makeText(this@RenterCarDetailsActivity, "Loc: ${location.latitude}", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 

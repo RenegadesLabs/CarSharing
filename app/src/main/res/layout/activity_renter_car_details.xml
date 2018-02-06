@@ -7,7 +7,8 @@
     android:background="@color/bg_main"
     tools:context=".renter_car_details.view.RenterCarDetailsActivity">
 
-    <ScrollView
+    <com.cardee.util.ui.LockableScrollView
+        android:id="@+id/lockableScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -422,7 +423,7 @@
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </com.cardee.util.ui.LockableScrollView>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
