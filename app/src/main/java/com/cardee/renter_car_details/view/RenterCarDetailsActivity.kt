@@ -5,16 +5,27 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.cardee.R
 import com.cardee.renter_book_car.view.BookCarActivity
+import com.cardee.renter_browse_cars_map.LocationClient
+import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
+import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 
 
-class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
+class RenterCarDetailsActivity(private val delegate: LocationClient = LocationClientImpl()) :
+        AppCompatActivity(), View.OnClickListener, OnMapReadyCallback, RenterCarDetailsContract.View, LocationClient by delegate {
 
     private var mCarId: Int? = null
+    private var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
 
     override fun onClick(p0: View?) {
         when (p0) {
@@ -33,14 +44,49 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_renter_car_details)
+        presenter.attachView(this)
+        init(this)
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = null
         }
         RenterCarDetailsViewHolder(this)
+        carLocationMap?.run {
+            onCreate(savedInstanceState)
+            getMapAsync(this@RenterCarDetailsActivity)
+        }
         setListeners()
         getData()
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.apply {
+            uiSettings.isRotateGesturesEnabled = false
+            uiSettings.isIndoorLevelPickerEnabled = false
+            uiSettings.isMapToolbarEnabled = false
+
+            val position = CameraPosition.Builder()
+                    .target(LatLng(1.290270, 103.851959))
+                    .zoom(10f)
+                    .build()
+            val cameraUpdate = CameraUpdateFactory.newCameraPosition(position)
+            animateCamera(cameraUpdate)
+            map.setOnMapClickListener { location ->
+                Toast.makeText(this@RenterCarDetailsActivity, "Loc: ${location.latitude}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        carLocationMap.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        connect()
+        carLocationMap.onResume()
     }
 
     private fun getData() {
@@ -58,5 +104,25 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
             onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun setCarLocation(location: String) {
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        carLocationMap.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        carLocationMap.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disconnect()
+        carLocationMap.onDestroy()
     }
 }

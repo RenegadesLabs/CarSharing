@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mv_renterCarInfo"
+        android:id="@+id/carLocationMap"
         android:layout_width="0dp"
         android:layout_height="280dp"
         app:layout_constraintEnd_toEndOf="parent"
