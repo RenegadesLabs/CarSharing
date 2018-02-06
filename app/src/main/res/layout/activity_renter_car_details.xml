@@ -381,7 +381,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatingMore" />
 
-                <android.support.v4.widget.CircleImageView
+                <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/iv_renterCarDetailsOwnerPicture"
                     android:layout_width="42dp"
                     android:layout_height="42dp"

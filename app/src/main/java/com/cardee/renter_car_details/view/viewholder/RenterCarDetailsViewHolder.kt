@@ -20,11 +20,10 @@ import kotlinx.android.synthetic.main.activity_renter_car_details.*
 
 class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) {
 
-    private val mGlideRequestManager : RequestManager? = Glide.with(mActivity)
+    private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
 
     fun bind(renterDetailedCar: RenterDetailedCar) {
         mActivity.toolbar_title.text = renterDetailedCar.carTitle
-
     }
 
     private inner class ImagePagerAdapter private constructor(context: Context, images: Array<Image>?) : PagerAdapter() {
@@ -50,19 +49,17 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
             val progressBar = itemView.findViewById<View>(R.id.image_progress_bar)
             if (!mEmpty) {
                 progressBar.visibility = View.VISIBLE
-                mGlideRequestManager?.
-                        load(mImages?.get(position)?.link)?.
-                        listener(object : RequestListener<String, GlideDrawable> {
-                            override fun onException(e: Exception, model: String, target: Target<GlideDrawable>, isFirstResource: Boolean): Boolean {
-                                progressBar.visibility = View.GONE
-                                return false
-                            }
+                mGlideRequestManager?.load(mImages?.get(position)?.link)?.listener(object : RequestListener<String, GlideDrawable> {
+                    override fun onException(e: Exception, model: String, target: Target<GlideDrawable>, isFirstResource: Boolean): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
 
-                            override fun onResourceReady(resource: GlideDrawable, model: String, target: Target<GlideDrawable>, isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-                                progressBar.visibility = View.GONE
-                                return false
-                            }
-                        })
+                    override fun onResourceReady(resource: GlideDrawable, model: String, target: Target<GlideDrawable>, isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+                })
                         ?.error(mDefaultImageId)
                         ?.into(imageView)
             } else {
