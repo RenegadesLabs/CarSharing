@@ -4,6 +4,7 @@ import com.cardee.data_source.cache.LocalRenterCarsDataSource;
 import com.cardee.data_source.remote.RemoteRenterCarsDataSource;
 import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.bookings.entity.BookCarState;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -152,6 +153,16 @@ public class RenterCarsRepository implements RenterCarsDataSource {
                 offerCallback.onError(error);
             }
         });
+    }
+
+    @Override
+    public BookCarState getBookState() {
+        return mLocalDataSource.getBookState();
+    }
+
+    @Override
+    public void saveBookState(BookCarState state) {
+        mLocalDataSource.saveBookState(state);
     }
 
     public void getSorted(String sortBy, OffersCallback offersCallback) {

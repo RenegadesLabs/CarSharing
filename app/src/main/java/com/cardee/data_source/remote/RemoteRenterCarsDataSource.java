@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.offers.request.SearchOffers;
 import com.cardee.data_source.remote.api.offers.request.SortOffers;
 import com.cardee.data_source.remote.api.offers.response.OfferByIdResponse;
 import com.cardee.data_source.remote.api.offers.response.OffersResponse;
+import com.cardee.domain.bookings.entity.BookCarState;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -143,6 +144,16 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
                     public void onComplete() {
                     }
                 });
+    }
+
+    @Override
+    public BookCarState getBookState() {
+        return null;
+    }
+
+    @Override
+    public void saveBookState(BookCarState state) {
+
     }
 
 

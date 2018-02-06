@@ -749,8 +749,12 @@
     <string name="cost_breakdown">COST BREAKDOWN</string>
     <string name="cost_breakdown_non_peak_template">Rental %s (non-peak)</string>
     <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
-    <string name="book_bnt_template">%s  •  Request Booking</string>
-    <string name="book_bnt_instant_template">%s  •  Book Now</string>
+    <string name="book_bnt_template">%s\u0020\u0020•\u0020\u0020Request Booking</string>
+    <string name="book_bnt_instant_template">%s\u0020\u0020•\u0020\u0020Book Now</string>
+
+    <!-- Book Car Message to Owner -->
+    <string name="book_message_title">Message To Owner</string>
+    <string name="book_message_hint">Add a message to owner to describe your purpose, request, requirements etc.\n\nExample 1\nHi! Lovely car, hoping to rent it for my wedding day! Thank you!\n\nExample 2\nNeed a car that allows me to bring my dog. I have my own car seat cover for my dog and will return the car in great condition! Willing to pay $20 additional.\n\nExample 3\nCan I pickup the car at 8am instead of 9am? Please only accept request if it is ok for you.</string>
 
 
 </resources>

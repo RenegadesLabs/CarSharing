@@ -1,5 +1,6 @@
 package com.cardee.renter_book_car.view
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.cardee.R
 import com.cardee.databinding.ActivityBookCarBinding
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
+import com.cardee.renter_book_car.message.view.BookMessageActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import kotlinx.android.synthetic.main.activity_book_car.*
 import java.util.*
@@ -23,10 +25,10 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mPresenter.init(this)
         bindView()
         initToolBar()
         setListeners()
-        mPresenter.init(this)
         getIntentData()
     }
 
@@ -37,6 +39,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     override fun onStart() {
         super.onStart()
         mCarId?.let { mPresenter.getOffer(it, mState) }
+        updateState(mPresenter.getState())
     }
 
     private fun bindView() {
@@ -78,9 +81,13 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         verifyAccButton.setOnClickListener {
             mState.accVerified.set(true)
         }
+        addNote.setOnClickListener {
+            val intent = Intent(this, BookMessageActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun resetCost() {
+    override fun resetCost() {
         val cost = if (mState.bookingHourly == true) {
             "$0++"
         } else {
@@ -111,6 +118,11 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         } else {
             bookButtonText.text = String.format(Locale.getDefault(), resources.getString(R.string.book_bnt_template), total)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mPresenter?.saveSate(mState)
     }
 
     override fun onDestroy() {

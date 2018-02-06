@@ -240,7 +240,6 @@
                         android:id="@+id/costText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$50++"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -539,7 +538,6 @@
                         android:textColor="@color/blue"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
         </ScrollView>
@@ -566,7 +564,6 @@
             android:clickable="false"
             android:elevation="9dp"
             android:focusable="false"
-            android:text="$50++  •  Book Now"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_xlarge"
             android:textStyle="bold"

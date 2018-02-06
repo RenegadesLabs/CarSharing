@@ -23,6 +23,7 @@
     <color name="bg_button_regular">#55b6ad</color>
     <color name="bg_button_regular_dim">#49968f</color>
     <color name="bg_owner_profile">#f2f2f2</color>
+    <color name="bg_transparent">#00000000</color>
 
     <color name="text_disabled">#bababa</color>
     <color name="turquoise_text">#19B9AD</color>

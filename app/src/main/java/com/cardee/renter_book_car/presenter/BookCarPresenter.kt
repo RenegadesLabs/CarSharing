@@ -12,17 +12,22 @@ import com.cardee.domain.RxUseCase
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.domain.bookings.usecase.GetCostBreakdown
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.usecase.GetBookState
 import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.GetOfferById
+import com.cardee.domain.renter.usecase.SaveBookState
 import com.cardee.renter_book_car.BookCarContract
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.dialog_cost_breakdown.view.*
 
 class BookCarPresenter : BookCarContract.BookCarPresenter {
+
     private var mView: BookCarContract.BookCarView? = null
     private val getOfferById = GetOfferById()
     private val getCostBreakdown = GetCostBreakdown()
     private val getFilter = GetFilter()
+    private val getBookState = GetBookState()
+    private val saveBookState = SaveBookState()
 
     private var mGetOfferDisposable: Disposable? = null
     private var mGetCostDisposable: Disposable? = null
@@ -71,6 +76,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         state.dailyInstantBooking.set(dailyInstant ?: false)
 
         mView?.updateState(state)
+        mView?.resetCost()
 
         getCost(mCarId ?: return, state)
     }
@@ -86,8 +92,10 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         if (mGetCostDisposable?.isDisposed == false) {
             mGetCostDisposable?.dispose()
         }
-        val timeBegin = state.timeBegin ?: return
-        val timeEnd = state.timeEnd ?: return
+        var timeBegin = state.timeBegin ?: return
+        if (state.bookingHourly == false) timeBegin = timeBegin.dropLast(15)
+        var timeEnd = state.timeEnd ?: return
+        if (state.bookingHourly == false) timeEnd = timeEnd.dropLast(15)
         var curbDel = if (state.bookingHourly == true) state.hourlyCurbsideDelivery.get() else state.dailyCurbsideDelivery.get()
         if (state.collectionPicked.get().not()) {
             curbDel = false
@@ -122,13 +130,11 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
                 mView?.showMessage(error.message)
             }
         })
-
     }
 
     override fun showCostBreakdown(context: AppCompatActivity, state: BookCarState) {
-//        if (mCostBreakdown == null) {
         getCost(mCarId ?: return, state)
-//        }
+
         val nonPeakCount = (mCostBreakdown ?: return).nonPeakCount
         val nonPeakCost = mCostBreakdown?.nonPeakCost
         val peakCount = mCostBreakdown?.peakCount
@@ -199,6 +205,15 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
 
         dialog.show()
     }
+
+    override fun getState(): BookCarState {
+        return getBookState.getBookState()
+    }
+
+    override fun saveSate(state: BookCarState) {
+        saveBookState.saveBookState(state)
+    }
+
 
     override fun onDestroy() {
         mView = null

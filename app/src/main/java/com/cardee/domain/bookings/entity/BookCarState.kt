@@ -28,7 +28,8 @@ class BookCarState(bookingHourly: Boolean? = true,
                    val accVerified: ObservableBoolean = ObservableBoolean(),
                    val paymentSelected: ObservableBoolean = ObservableBoolean(),
                    val rentalTermsAgreed: ObservableBoolean = ObservableBoolean(),
-                   val noteAdded: ObservableBoolean = ObservableBoolean()) : BaseObservable() {
+                   val noteAdded: ObservableBoolean = ObservableBoolean(),
+                   var noteText: String? = null) : BaseObservable() {
 
     @get:Bindable
     var bookingHourly: Boolean? = true

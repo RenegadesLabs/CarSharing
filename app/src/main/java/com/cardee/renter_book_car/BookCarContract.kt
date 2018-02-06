@@ -12,6 +12,7 @@ interface BookCarContract {
         fun setCarYear(carYear: String?)
         fun updateState(state: BookCarState)
         fun setTotalCost(total: String)
+        fun resetCost()
     }
 
     interface BookCarPresenter {
@@ -20,5 +21,7 @@ interface BookCarContract {
         fun onDestroy()
         fun showCostBreakdown(context: AppCompatActivity, state: BookCarState)
         fun getCost(carId: Int, state: BookCarState)
+        fun getState(): BookCarState
+        fun saveSate(state: BookCarState)
     }
 }
