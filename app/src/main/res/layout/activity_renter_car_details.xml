@@ -4,82 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_main"
     tools:context=".renter_car_details.view.RenterCarDetailsActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            android:background="@color/bg_transparent_black"
-            android:theme="@style/TransparentToolbar"
-            app:titleTextColor="@color/bg_main">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Personal Car"
-                    android:textColor="@color/bg_main"
-                    android:textSize="@dimen/text_xlarge"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_renterCarDetailsTitleYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/xsmall_margin"
-                    android:text="2015"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/small_margin">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_renterCarDetailsToolbarShare"
-                    style="@style/ToolbarActionIcon"
-                    android:layout_width="32dp"
-                    android:layout_height="0dp"
-                    android:paddingBottom="14dp"
-                    android:paddingTop="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_renterCarDetailsToolbarFavoritesImg"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_share" />
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_renterCarDetailsToolbarFavoritesImg"
-                    style="@style/ToolbarActionIcon"
-                    android:layout_width="32dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:paddingBottom="14dp"
-                    android:paddingTop="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_favorites_toolbar" />
-            </android.support.constraint.ConstraintLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -497,6 +423,68 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_transparent_black"
+            android:theme="@style/TransparentToolbar"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:titleTextColor="@color/bg_main">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Personal Car"
+                    android:textColor="@color/bg_main"
+                    android:textSize="@dimen/text_xlarge"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_renterCarDetailsTitleYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/widget_margin_small"
+                    android:text="2015"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintBaseline_toBaselineOf="@id/toolbar_title"
+                    app:layout_constraintStart_toEndOf="@id/toolbar_title" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_favorites_toolbar" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_renterCarDetailsToolbarShare"
+                style="@style/ToolbarActionIcon"
+                android:layout_width="@dimen/item_icon_side_large"
+                android:layout_height="@dimen/item_icon_side_large"
+                android:padding="@dimen/padding_x_small"
+                app:srcCompat="@drawable/ic_share" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <View
         android:layout_width="match_parent"
