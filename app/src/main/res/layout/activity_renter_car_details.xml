@@ -32,7 +32,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsTitleYear"
+                    android:id="@+id/tvRenterCarDetailsTitleYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/xsmall_margin"
@@ -140,7 +140,7 @@
                     app:tabTextColor="@color/text_disabled" />
 
                 <android.support.v4.view.ViewPager
-                    android:id="@+id/vp_renterCarDetailsInfoPager"
+                    android:id="@+id/vpRenterCarDetailsInfoPager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +157,7 @@
                     android:background="@color/divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vp_renterCarDetailsInfoPager" />
+                    app:layout_constraintTop_toBottomOf="@+id/vpRenterCarDetailsInfoPager" />
 
                 <TextView
                     android:id="@+id/rental"

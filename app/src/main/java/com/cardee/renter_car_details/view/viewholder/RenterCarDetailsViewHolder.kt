@@ -14,25 +14,33 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
+import com.cardee.R.id.tv_renterCarDetailsRatesText
+import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
+import com.cardee.util.AvailabilityFromFilterDelegate
+import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
+import kotlinx.android.synthetic.main.view_renter_car_details_info_page.view.*
 
-class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity): TabLayout.OnTabSelectedListener{
+class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) : TabLayout.OnTabSelectedListener {
 
 
     private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
 
     init {
         mActivity.tl_renterCarDetails.addOnTabSelectedListener(this)
+        mActivity.tl_renterCarDetails.setupWithViewPager(mActivity.vpRenterCarDetailsInfoPager)
     }
 
     fun bind(renterDetailedCar: RenterDetailedCar) {
         mActivity.toolbar_title.text = renterDetailedCar.carTitle
-        mActivity.tv_renterCarDetailsTitleYear.text = renterDetailedCar.year
+        mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar.year
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
+        mActivity.vpRenterCarDetailsInfoPager.adapter = RentalPagerAdapter(renterDetailedCar)
+
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -44,7 +52,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        when(tab?.position) {
+        when (tab?.position) {
             0 -> {
                 mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book_instantly)
                 mActivity.iv_bookButtonInstant.visibility = View.VISIBLE
@@ -114,6 +122,121 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
             return view === `object`
         }
+    }
+
+
+    private inner class RentalPagerAdapter(val renterDetailedCar: RenterDetailedCar) : PagerAdapter() {
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val contentPage = ContentPage.values()[position]
+            val inflater = LayoutInflater.from(mActivity)
+            val layout = inflater.inflate(R.layout.view_renter_car_details_info_page, container, false) as ViewGroup
+
+            when (contentPage) {
+                ContentPage.DAILY -> {
+                    layout.tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
+                    setPickupAndReturnTime(layout)
+                    setRentalRates(true, layout)
+                    setDeliveryRates(true, layout)
+                    setFuelPolicyText(true, layout)
+                }
+                ContentPage.HOURLY -> {
+                    layout.tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
+                    AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(mActivity, layout.tv_renterCarDetailsTimingText, renterDetailedCar)
+                    setRentalRates(false, layout)
+                    setDeliveryRates(false, layout)
+                    setFuelPolicyText(false, layout)
+                }
+            }
+            container.addView(layout)
+            return layout
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            val customPagerEnum = ContentPage.values()[position]
+            return mActivity.getString(customPagerEnum.titleResId)
+        }
+
+        override fun getCount(): Int {
+            return ContentPage.values().size
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean {
+            return view === `object`
+        }
+
+        private fun setRentalRates(daily: Boolean, root: ViewGroup) {
+            root.tv_renterCarDetailsRatesText.text = if (!daily) {
+                "$" + renterDetailedCar.orderHourlyDetails?.amntRateFirst.toString() + " " +
+                        mActivity.getString(R.string.car_rental_rates_per_hour_peak) + "\n" +
+                        "$" + renterDetailedCar.orderHourlyDetails?.amntRateSecond.toString() + " " +
+                        mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
+            } else {
+                "$" + renterDetailedCar.orderDailyDetails?.amntRateFirst.toString() + " " +
+                        mActivity.getString(R.string.car_rental_rates_per_day_weekday) + "\n" +
+                        "$" + renterDetailedCar.orderDailyDetails?.amntRateSecond.toString() + " " +
+                        mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
+            }
+        }
+
+        private fun setPickupAndReturnTime(root: ViewGroup) {
+            DateStringDelegate(mActivity).apply {
+                val text: String = getPickupTime(renterDetailedCar.orderDailyDetails?.timePickup) + "\n" +
+                        getReturnTime(renterDetailedCar.orderDailyDetails?.timeReturn)
+                root.tv_renterCarDetailsTimingText.text = text
+            }
+        }
+
+        private fun setFuelPolicyText(daily: Boolean, root: ViewGroup) {
+            root.tv_renterCarDetailsFuelText.text = if (daily) {
+                val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar.orderDailyDetails?.fuelPolicy
+                when (fuelPolicyEntity?.fuelPolicyId) {
+                    0 -> {
+                        fuelPolicyEntity.fuelPolicyName
+                    }
+                    1 -> {
+                        fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                                " " + mActivity.getString(R.string.car_rental_rates_per_km)
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+
+            } else {
+                val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar.orderHourlyDetails?.fuelPolicy
+                when (fuelPolicyEntity?.fuelPolicyId) {
+                    0 -> {
+                        fuelPolicyEntity.fuelPolicyName
+                    }
+                    1 -> {
+                        fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                                " " + mActivity.getString(R.string.car_rental_rates_per_km)
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+            }
+        }
+        private fun setDeliveryRates(daily: Boolean, root: ViewGroup) {
+            root.tv_renterCarDetailsDeliveryText.text = if (daily) {
+                mActivity.getString(R.string.car_rental_delivery_rates_prefix) + " @ \$" + renterDetailedCar.deliveryRates?.baseRate +
+                        " + $" + renterDetailedCar.deliveryRates?.distanceRate +
+                        mActivity.getString(R.string.car_rental_rates_per_km)
+            } else {
+                mActivity.getString(R.string.car_rental_delivery_rates_self)
+            }
+        }
+    }
+
+    enum class ContentPage private constructor(val titleResId: Int) {
+        HOURLY(R.string.car_rental_info_hourly),
+        DAILY(R.string.car_rental_info_daily)
     }
 }
 

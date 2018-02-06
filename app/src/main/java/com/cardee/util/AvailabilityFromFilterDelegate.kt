@@ -1,9 +1,12 @@
 package com.cardee.util
 
+import android.content.Context
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.TextView
+import com.cardee.R
 import com.cardee.domain.renter.entity.BrowseCarsFilter
+import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
 import java.text.DateFormatSymbols
@@ -274,6 +277,28 @@ class AvailabilityFromFilterDelegate {
         } catch (ex: ParseException) {
         }
         return ""
+    }
+
+    fun setHourlyAvailabilityRange(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar) {
+        try {
+            val timeBegin = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeBegin)
+            val timeEnd = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeEnd)
+            if (isSingleDay(timeBegin, timeEnd)) {
+                val timingText: String? = context.getString(R.string.renter_car_details_timing_available_from) +
+                        timeBegin.time + context.getString(R.string.renter_car_details_timing_available_to) +
+                        timeEnd.time
+                textView.text = timingText
+
+            }
+        } catch (e: ParseException) {}
+    }
+
+    fun setDailyPickupAndReturnTiming(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar) {
+        try {
+
+        } catch (ex: ParseException) {
+            ex.printStackTrace()
+        }
     }
 
     private fun isSingleMonth(dateBegin: Date, dateEnd: Date): Boolean {

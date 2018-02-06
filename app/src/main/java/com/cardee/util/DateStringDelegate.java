@@ -1,6 +1,7 @@
 package com.cardee.util;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -112,6 +113,21 @@ public class DateStringDelegate {
         }
     }
 
+    public String getPickupTime(String pickupTime) {
+        String time = null;
+        if (pickupTime != null) {
+            try {
+                Date date = timeFormatter.parse(pickupTime);
+                String formattedTime = timeViewFormatter.format(date);
+                time = availabilityPickupPrefix + " " +
+                        formattedTime.toLowerCase() + " " + availabilityPickupSuffix;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return time;
+    }
+
     public void onSetReturnTime(TextView view, String returnTime) {
         if (returnTime != null) {
             try {
@@ -124,6 +140,21 @@ public class DateStringDelegate {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String getReturnTime(String returnTime) {
+        String time = null;
+        if (returnTime != null) {
+            try {
+                Date date = timeFormatter.parse(returnTime);
+                String formattedTime = timeViewFormatter.format(date);
+                time = availabilityReturnPrefix + " " +
+                        formattedTime.toLowerCase() + " " + availabilityReturnSuffix;
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return time;
     }
 
     public void onSetHourlyAvailabilityTime(TextView view, String beginTime, String endTime) {
