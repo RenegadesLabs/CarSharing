@@ -18,7 +18,7 @@ public class OrderHourlyDetailsEntity {
     private Boolean curbsideDelivery;
     @Expose
     @SerializedName("is_accept_cash")
-    private Boolean acceptCrash;
+    private Boolean acceptCash;
     @Expose
     @SerializedName("amnt_rate_first")
     private Float amntRateFirst;
@@ -69,12 +69,12 @@ public class OrderHourlyDetailsEntity {
         this.curbsideDelivery = curbsideDelivery;
     }
 
-    public Boolean getAcceptCrash() {
-        return acceptCrash;
+    public Boolean getAcceptCash() {
+        return acceptCash;
     }
 
-    public void setAcceptCrash(Boolean acceptCrash) {
-        this.acceptCrash = acceptCrash;
+    public void setAcceptCash(Boolean acceptCash) {
+        this.acceptCash = acceptCash;
     }
 
     public Float getAmntRateFirst() {

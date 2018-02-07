@@ -1,5 +1,6 @@
 package com.cardee.renter_book_car.view
 
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -10,13 +11,21 @@ import com.cardee.R
 import com.cardee.databinding.ActivityBookCarBinding
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
+import com.cardee.renter_book_car.collection.CollectionAreaActivity
 import com.cardee.renter_book_car.message.view.BookMessageActivity
+import com.cardee.renter_book_car.payment.BookPaymentActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
+import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
 import java.util.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
+    private val PERIOD_REQUEST_CODE = 911
+    private val LOCATION_REQUEST_CODE = 912
+    private val PAYMENT_REQUEST_CODE = 913
+
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
     lateinit var mState: BookCarState
@@ -30,16 +39,12 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         initToolBar()
         setListeners()
         getIntentData()
+        mCarId?.let { mPresenter.getOffer(it, mState) }
     }
 
     private fun getIntentData() {
         mCarId = intent.getIntExtra("carId", -1)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mCarId?.let { mPresenter.getOffer(it, mState) }
-        updateState(mPresenter.getState())
+        mState.bookingHourly = intent.getBooleanExtra("isHourly", true)
     }
 
     private fun bindView() {
@@ -72,14 +77,30 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 resetCost()
             }
         }
+        bookingPeriodContainer.setOnClickListener {
+            val intent = Intent(this, RentalPeriodActivity::class.java)
+            intent.putExtra("hourly", mState.bookingHourly)
+            startActivityForResult(intent, PERIOD_REQUEST_CODE)
+            overridePendingTransition(R.anim.enter_up, 0)
+        }
         collectionAddress.setOnClickListener {
-            // TODO: open map
+            val intent = Intent(this, CollectionAreaActivity::class.java)
+            startActivityForResult(intent, LOCATION_REQUEST_CODE)
         }
         costBreakdown.setOnClickListener { mPresenter.showCostBreakdown(this, mState) }
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
         verifyAccButton.setOnClickListener {
             mState.accVerified.set(true)
+        }
+        paymentChoose.setOnClickListener {
+            val paymentIntent = Intent(this, BookPaymentActivity::class.java)
+            if (mState.bookingHourly == true) {
+                paymentIntent.putExtra("acceptCash", mState.acceptCashHourly.get())
+            } else {
+                paymentIntent.putExtra("acceptCash", mState.acceptCashDaily.get())
+            }
+            startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
         }
         addNote.setOnClickListener {
             val intent = Intent(this, BookMessageActivity::class.java)
@@ -94,11 +115,6 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             "$0"
         }
         setTotalCost(cost)
-    }
-
-    override fun updateState(state: BookCarState) {
-        mState = state
-        binding.state = mState
     }
 
     override fun setCarTitle(title: String?) {
@@ -149,5 +165,28 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             android.R.id.home -> onBackPressed()
         }
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            LOCATION_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val address = data?.getStringExtra("address")
+                    val location = data?.getParcelableExtra<LatLng>("location")
+                    collectionAddress.text = address
+                    mState = mPresenter.getState()
+                    mState.latitude = location?.latitude ?: return
+                    mState.longitude = location.longitude
+                    mState.collectionPicked.set(true)
+                    mPresenter.saveSate(mState)
+                    mPresenter.getCost(mCarId ?: return, mState)
+                }
+            }
+            PAYMENT_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                }
+            }
+        }
     }
 }

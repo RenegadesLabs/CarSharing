@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -127,7 +128,7 @@ public class CalendarView extends LinearLayout {
                 } else {
                     textView.setTextColor(config.getTextColor());
                 }
-                textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, config.getHeaderHeight()));
+                textView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, config.getHeaderHeight()));
                 textView.setGravity(Gravity.CENTER);
                 textView.setText(getItem(position));
                 return textView;

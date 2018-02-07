@@ -751,6 +751,9 @@
     <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
     <string name="book_bnt_template">%s\u0020\u0020•\u0020\u0020Request Booking</string>
     <string name="book_bnt_instant_template">%s\u0020\u0020•\u0020\u0020Book Now</string>
+    <string name="collection_pick_title">Collection</string>
+    <string name="collect_from">Collect from:</string>
+    <string name="payment_title">Payment Method</string>
 
     <!-- Book Car Message to Owner -->
     <string name="book_message_title">Message To Owner</string>

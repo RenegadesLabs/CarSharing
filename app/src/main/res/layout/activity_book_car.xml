@@ -153,11 +153,10 @@
                         android:id="@+id/bookingStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20 Mar, 9am+"
+                        android:text="@string/rental_period_from"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="@dimen/text_xlarge"
                         app:layout_constraintEnd_toStartOf="@+id/to"
-                        app:layout_constraintHorizontal_chainStyle="spread"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
@@ -174,7 +173,7 @@
                         android:id="@id/bookingEnd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20 Mar, 2pm+"
+                        android:text="@string/rental_period_to"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="@dimen/text_xlarge"
                         app:layout_constraintEnd_toEndOf="parent"

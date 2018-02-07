@@ -10,7 +10,6 @@ interface BookCarContract {
     interface BookCarView : BaseView {
         fun setCarTitle(carTitle: String?)
         fun setCarYear(carYear: String?)
-        fun updateState(state: BookCarState)
         fun setTotalCost(total: String)
         fun resetCost()
     }

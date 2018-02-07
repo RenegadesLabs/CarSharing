@@ -74,8 +74,11 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val dailyInstant = offer.orderDailyDetails?.instantBooking
         state.hourlyInstantBooking.set(hourlyInstant ?: false)
         state.dailyInstantBooking.set(dailyInstant ?: false)
+        val acceptCashHourly = offer.orderHourlyDetails?.acceptCash
+        val acceptCashDaily = offer.orderDailyDetails?.acceptCash
+        state.acceptCashHourly.set(acceptCashHourly ?: false)
+        state.acceptCashDaily.set(acceptCashDaily ?: false)
 
-        mView?.updateState(state)
         mView?.resetCost()
 
         getCost(mCarId ?: return, state)

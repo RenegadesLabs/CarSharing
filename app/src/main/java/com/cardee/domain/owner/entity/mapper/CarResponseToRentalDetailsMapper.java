@@ -55,7 +55,7 @@ public class CarResponseToRentalDetailsMapper {
             rentalDetails.setHourlyInstantBooking(hourlyDetails.getInstantBooking());
             rentalDetails.setHourlyInstantBookingCount(hourlyDetails.getInstantBookingCount());
             rentalDetails.setHourlyCurbsideDelivery(hourlyDetails.getCurbsideDelivery());
-            rentalDetails.setHourlyAcceptCash(hourlyDetails.getAcceptCrash());
+            rentalDetails.setHourlyAcceptCash(hourlyDetails.getAcceptCash());
             rentalDetails.setHourlyAmountRateFirst(hourlyDetails.getAmntRateFirst());
             rentalDetails.setHourlyAmountRateSecond(hourlyDetails.getAmntRateSecond());
             rentalDetails.setHourlyAmountPayMileage(hourlyDetails.getAmntPayMileage());
