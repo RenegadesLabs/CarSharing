@@ -125,7 +125,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rental_info_title">
 
                 <android.support.design.widget.TabLayout
-                    android:id="@+id/tl_renterCarDetails"
+                    android:id="@+id/tlRenterCarDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/toolbar_height"
                     android:layout_margin="@dimen/small_margin"
@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tl_renterCarDetails">
+                    app:layout_constraintTop_toBottomOf="@+id/tlRenterCarDetails">
 
                 </android.support.v4.view.ViewPager>
 

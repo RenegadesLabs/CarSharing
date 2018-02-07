@@ -33,8 +33,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private var hourly: Boolean? = true
 
     init {
-        mActivity.tl_renterCarDetails.addOnTabSelectedListener(this)
-        mActivity.tl_renterCarDetails.setupWithViewPager(mActivity.vpRenterCarDetailsInfoPager)
+        mActivity.tlRenterCarDetails.apply {
+            addOnTabSelectedListener(this@RenterCarDetailsViewHolder)
+            setupWithViewPager(mActivity.vpRenterCarDetailsInfoPager)
+        }
     }
 
     fun bind(renterDetailedCar: RenterDetailedCar) {
@@ -231,6 +233,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 }
             }
         }
+
         private fun setDeliveryRates(daily: Boolean, root: ViewGroup) {
             root.tv_renterCarDetailsDeliveryText.text = if (daily) {
                 mActivity.getString(R.string.car_rental_delivery_rates_prefix) + " @ \$" + renterDetailedCar.deliveryRates?.baseRate +
@@ -269,13 +272,13 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.rbRenterCarDetailsRating.score = renterDetailedCar?.rating!!
         setTripsCount()
         mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
-        val dateText = mActivity.getString(R.string. renter_car_details_review_date_prefix) + " " +
+        val dateText = mActivity.getString(R.string.renter_car_details_review_date_prefix) + " " +
                 DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
         mActivity.tvRenterCarDetailsCommentDate.text = dateText
         mActivity.tvRenterCarDetailsComment.text = renterDetailedCar?.reviews?.get(0)?.comment
         val readMoreText = mActivity.getString(R.string.renter_car_details_review_more_prefix) + " " +
                 renterDetailedCar?.reviews?.size + " " +
-                if (renterDetailedCar?.reviewCount?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
+                if (renterDetailedCar?.reviewCount ?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
                 else mActivity.getString(R.string.renter_car_details_review_more_suffix_single)
         mActivity.tvRenterCarDetailsReviewMore.text = readMoreText
     }
@@ -290,7 +293,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.tvRenterCarDetailsOwnerAcceptance.text = renterDetailedCar?.owner?.acceptance.toString()
 
         val responseText = renterDetailedCar?.owner?.responseTime.toString() + " " +
-                if (renterDetailedCar?.owner?.responseTime?: 0 > 1) mActivity.getString(R.string.owner_profile_info_minutes)
+                if (renterDetailedCar?.owner?.responseTime ?: 0 > 1) mActivity.getString(R.string.owner_profile_info_minutes)
                 else mActivity.getString(R.string.owner_profile_info_minute)
         mActivity.tvRenterCarDetailsOwnerResponse.text = responseText
     }
