@@ -51,7 +51,7 @@
         android:layout_marginBottom="@dimen/widget_margin_x_small"
         android:background="@drawable/bg_clickable_top_line_normal"
         app:body_text_color="@color/text_regular"
-        app:layout_constraintBottom_toTopOf="@+id/btnHourReset"
+        app:layout_constraintBottom_toTopOf="@+id/btnHourSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateHourFrom"

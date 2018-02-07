@@ -11,12 +11,11 @@ interface BrowseCarsContract {
         fun openFilter()
 
         fun toggleFavorites(selected: Boolean)
-
     }
 
     interface Presenter {
 
-        fun loadAll()
+        fun load()
 
     }
 }

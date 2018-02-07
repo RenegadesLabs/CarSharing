@@ -10,20 +10,20 @@ import java.util.List;
 
 class GenerateCalendarDelegate {
 
-    List<Month> onGenerateFromNextToDate(int range, Day day) {
+    List<Month> onGenerateFromNextToDate(int range, Day day, boolean selectCurrent) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(day.getCalendarTime());
         calendar.add(Calendar.MONTH, 1);
-        return onGenerateMonths(range, calendar);
+        return onGenerateMonths(range, calendar, selectCurrent);
     }
 
-    List<Month> onGenerateFromCurrent(int range) {
+    List<Month> onGenerateFromCurrent(int range, boolean selectCurrent) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        return onGenerateMonths(range, calendar);
+        return onGenerateMonths(range, calendar, selectCurrent);
     }
 
-    private List<Month> onGenerateMonths(int range, Calendar calendar) {
+    private List<Month> onGenerateMonths(int range, Calendar calendar, boolean selectCurrent) {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         List<Month> months = new ArrayList<>(range);
         for (int i = 0; i < range; i++) {
@@ -32,7 +32,7 @@ class GenerateCalendarDelegate {
             int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
             List<Day> days = new ArrayList<>(daysInMonth);
             for (int j = 1; j <= daysInMonth; j++) {
-                Day day = Day.from(calendar.getTime());
+                Day day = Day.from(calendar.getTime(), selectCurrent);
                 days.add(day);
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }

@@ -47,7 +47,7 @@ class AvailabilityFilterPresenter(context: Context) {
             it.pickupTime = null
             it.returnTime = null
         }
-        saveFilter(filter?.bookingHourly, callback)
+        callback.invoke()
     }
 
     fun setHourlyFilter(start: Date? = null, end: Date? = null) {
@@ -84,5 +84,9 @@ class AvailabilityFilterPresenter(context: Context) {
             }
         }
         return false
+    }
+
+    fun doUpdate(function: (BrowseCarsFilter) -> Unit) {
+        filter?.let(function)
     }
 }
