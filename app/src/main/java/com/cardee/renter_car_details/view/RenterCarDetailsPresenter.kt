@@ -18,5 +18,4 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     override fun onDestroy() {
         view = null
     }
-
 }

@@ -19,7 +19,6 @@ class TouchWrapper @JvmOverloads constructor(context: Context, attrs: AttributeS
         when (ev?.action) {
             MotionEvent.ACTION_DOWN -> {
                 lockable?.lock()
-                return true
             }
             MotionEvent.ACTION_UP -> {
                 lockable?.unlock()

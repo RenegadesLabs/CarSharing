@@ -22,16 +22,6 @@ class LockableScrollView @JvmOverloads constructor(context: Context, attrs: Attr
         locked = false
     }
 
-    override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        when (ev?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (!locked) return super.onTouchEvent(ev)
-                return !locked
-            }
-        }
-        return super.onTouchEvent(ev)
-    }
-
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         if (locked) {
             return false
