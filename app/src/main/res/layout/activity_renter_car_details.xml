@@ -233,7 +233,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
-                    android:text=". 10 trips . 14 likes"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_large"
                     app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
@@ -257,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:text="Doris Wood"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/by"
@@ -269,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:text="on Sep 15, 2016"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_small"
                     app:layout_constraintStart_toEndOf="@+id/tvRenterCarDetailsCommentName"
@@ -281,7 +281,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="26dp"
                     android:layout_marginTop="@dimen/small_margin"
-                    android:text="Great experience. This was my first time using Cardee and Andy was extremely accomodating. He met us at the airport on short notice to deliver..."
+                    android:text=""
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
@@ -294,7 +294,7 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:paddingBottom="@dimen/xsmall_margin"
                     android:paddingTop="@dimen/xsmall_margin"
-                    android:text="Read 6 reviews"
+                    android:text=""
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
@@ -373,7 +373,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
-                            android:text="90%"
+                            android:text=""
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
@@ -395,7 +395,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
-                            android:text="10%"
+                            android:text=""
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
@@ -417,7 +417,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
-                            android:text="5 min"
+                            android:text=""
                             android:textColor="@android:color/black" />
                     </LinearLayout>
                 </LinearLayout>
@@ -448,7 +448,7 @@
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Personal Car"
+                    android:text=""
                     android:textColor="@color/bg_main"
                     android:textSize="@dimen/text_xlarge"
                     android:textStyle="bold"
@@ -456,18 +456,18 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsTitleYear"
+                    android:id="@+id/tvRenterCarDetailsTitleYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/widget_margin_small"
-                    android:text="2015"
+                    android:text=""
                     android:textColor="@android:color/white"
                     app:layout_constraintBaseline_toBaselineOf="@id/toolbar_title"
                     app:layout_constraintStart_toEndOf="@id/toolbar_title" />
             </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                android:id="@+id/ivRenterCarDetailsToolbarFavoritesImg"
                 style="@style/ToolbarActionIcon"
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
@@ -476,7 +476,7 @@
                 app:srcCompat="@drawable/ic_favorites_toolbar" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/iv_renterCarDetailsToolbarShare"
+                android:id="@+id/ivRenterCarDetailsToolbarShare"
                 style="@style/ToolbarActionIcon"
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"

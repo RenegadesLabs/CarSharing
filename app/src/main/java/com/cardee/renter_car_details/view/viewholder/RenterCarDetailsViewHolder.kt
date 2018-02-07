@@ -24,6 +24,7 @@ import com.cardee.util.glide.CircleTransform
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_info_page.view.*
+import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 
 class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) : TabLayout.OnTabSelectedListener {
 
@@ -44,6 +45,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
         mActivity.vpRenterCarDetailsInfoPager.adapter = RentalPagerAdapter(renterDetailedCar)
+        fillMapAddressBar()
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -253,6 +255,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private fun fillToolBar() {
         mActivity.toolbar_title.text = renterDetailedCar?.carTitle
         mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
+    }
+
+    private fun fillMapAddressBar() {
+        mActivity.addressText.text = renterDetailedCar?.address
     }
 
     private fun fillAboutInfo() {
