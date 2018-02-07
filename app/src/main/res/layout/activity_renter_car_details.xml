@@ -49,19 +49,19 @@
                 android:layout_marginEnd="@dimen/small_margin">
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_renterCarDetailsToolbarShare"
+                    android:id="@+id/ivRenterCarDetailsToolbarShare"
                     style="@style/ToolbarActionIcon"
                     android:layout_width="32dp"
                     android:layout_height="0dp"
                     android:paddingBottom="14dp"
                     android:paddingTop="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                    app:layout_constraintEnd_toStartOf="@+id/ivRenterCarDetailsToolbarFavoritesImg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_share" />
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_renterCarDetailsToolbarFavoritesImg"
+                    android:id="@+id/ivRenterCarDetailsToolbarFavoritesImg"
                     style="@style/ToolbarActionIcon"
                     android:layout_width="32dp"
                     android:layout_height="0dp"
@@ -245,11 +245,11 @@
                     app:srcCompat="@drawable/ic_car_circle" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsAboutCarTitle"
+                    android:id="@+id/tvRenterCarDetailsAboutCarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_margin"
-                    android:text="SUV 5 seater . 3.0L Auto"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_large"
                     app:layout_constraintBottom_toBottomOf="@+id/about_ic"
@@ -257,16 +257,16 @@
                     app:layout_constraintTop_toTopOf="@+id/about_ic" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsAboutCarDesc"
+                    android:id="@+id/tvRenterCarDetailsAboutCarDesc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="26dp"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:text="Its simply a Range Rover and it's amazing. Very clean and beautiful. All wheel drive. 385HP V8 Engine. 21 inch Premium Wheels Navigation, Bluetooth, Aux Plug, Satellite"
+                    android:text=""
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsAboutCarTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsAboutCarTitle" />
+                    app:layout_constraintStart_toStartOf="@+id/tvRenterCarDetailsAboutCarTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsAboutCarTitle" />
 
                 <View
                     android:id="@+id/divider1"
@@ -276,7 +276,7 @@
                     android:background="@color/divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsAboutCarDesc" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsAboutCarDesc" />
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/rating_ic"
@@ -288,7 +288,7 @@
                     app:srcCompat="@drawable/ic_star_circle" />
 
                 <com.cardee.custom.CustomRatingBar
-                    android:id="@+id/rb_renterCarDetailsRating"
+                    android:id="@+id/rbRenterCarDetailsRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_margin"
@@ -300,7 +300,7 @@
                     app:onlyForDisplay="true" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsRatingText"
+                    android:id="@+id/tvRenterCarDetailsRatingText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
@@ -308,7 +308,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_large"
                     app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
-                    app:layout_constraintStart_toEndOf="@+id/rb_renterCarDetailsRating"
+                    app:layout_constraintStart_toEndOf="@+id/rbRenterCarDetailsRating"
                     app:layout_constraintTop_toTopOf="@+id/rating_ic" />
 
                 <TextView
@@ -319,11 +319,11 @@
                     android:text="@string/renter_car_details_by"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_small"
-                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
-                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+                    app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/rbRenterCarDetailsRating" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsCommentName"
+                    android:id="@+id/tvRenterCarDetailsCommentName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
@@ -332,10 +332,10 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/by"
-                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+                    app:layout_constraintTop_toBottomOf="@+id/rbRenterCarDetailsRating" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsCommentDate"
+                    android:id="@+id/tvRenterCarDetailsCommentDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
@@ -343,11 +343,11 @@
                     android:text="on Sep 15, 2016"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_small"
-                    app:layout_constraintStart_toEndOf="@+id/tv_renterCarDetailsCommentName"
-                    app:layout_constraintTop_toBottomOf="@+id/rb_renterCarDetailsRating" />
+                    app:layout_constraintStart_toEndOf="@+id/tvRenterCarDetailsCommentName"
+                    app:layout_constraintTop_toBottomOf="@+id/rbRenterCarDetailsRating" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsComment"
+                    android:id="@+id/tvRenterCarDetailsComment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="26dp"
@@ -355,11 +355,11 @@
                     android:text="Great experience. This was my first time using Cardee and Andy was extremely accomodating. He met us at the airport on short notice to deliver..."
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsCommentName" />
+                    app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsCommentName" />
 
                 <TextView
-                    android:id="@+id/tv_renterCarDetailsRatingMore"
+                    android:id="@+id/tvRenterCarDetailsReviewMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
@@ -368,8 +368,8 @@
                     android:text="Read 6 reviews"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/rb_renterCarDetailsRating"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsComment" />
+                    app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsComment" />
 
                 <View
                     android:id="@+id/divider2"
@@ -379,10 +379,10 @@
                     android:background="@color/divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatingMore" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsReviewMore" />
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/iv_renterCarDetailsOwnerPicture"
+                    android:id="@+id/ivRenterCarDetailsOwnerPicture"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_marginStart="@dimen/medium_margin"
@@ -393,25 +393,25 @@
                 <LinearLayout
                     android:id="@+id/owner_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="32dp"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_renterCarDetailsOwnerPicture"
-                    app:layout_constraintStart_toEndOf="@+id/iv_renterCarDetailsOwnerPicture"
-                    app:layout_constraintTop_toTopOf="@+id/iv_renterCarDetailsOwnerPicture">
+                    app:layout_constraintBottom_toBottomOf="@+id/ivRenterCarDetailsOwnerPicture"
+                    app:layout_constraintStart_toEndOf="@+id/ivRenterCarDetailsOwnerPicture"
+                    app:layout_constraintTop_toTopOf="@+id/ivRenterCarDetailsOwnerPicture">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Owned by"
+                        android:text="@string/renter_car_details_owner_by"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_small" />
 
                     <TextView
-                        android:id="@+id/tv_renterCarDetailsOwnerName"
+                        android:id="@+id/tvRenterCarDetailsOwnerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Doris Wood"
+                        android:text=""
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -440,7 +440,7 @@
                             android:textColor="@color/item_secondary_txt" />
 
                         <TextView
-                            android:id="@+id/tv_renterCarDetailsOwnerAcceptance"
+                            android:id="@+id/tvRenterCarDetailsOwnerAcceptance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
@@ -484,7 +484,7 @@
                             android:textColor="@color/item_secondary_txt" />
 
                         <TextView
-                            android:id="@+id/tv_renterCarDetailsOwnerResponse"
+                            android:id="@+id/tvRenterCarDetailsOwnerResponse"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"

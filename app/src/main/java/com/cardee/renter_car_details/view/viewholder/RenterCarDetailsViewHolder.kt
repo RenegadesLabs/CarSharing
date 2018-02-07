@@ -14,13 +14,13 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
-import com.cardee.R.id.tv_renterCarDetailsRatesText
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateStringDelegate
+import com.cardee.util.glide.CircleTransform
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_info_page.view.*
@@ -29,6 +29,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
 
 
     private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
+    private var renterDetailedCar: RenterDetailedCar? = null
+    private var hourly: Boolean? = true
 
     init {
         mActivity.tl_renterCarDetails.addOnTabSelectedListener(this)
@@ -36,11 +38,14 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     fun bind(renterDetailedCar: RenterDetailedCar) {
-        mActivity.toolbar_title.text = renterDetailedCar.carTitle
-        mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar.year
+        this.renterDetailedCar = renterDetailedCar
+        fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
         mActivity.vpRenterCarDetailsInfoPager.adapter = RentalPagerAdapter(renterDetailedCar)
-
+        fillAboutInfo()
+        fillReview()
+        fillOwner()
+        fillBookView()
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -56,12 +61,15 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
             0 -> {
                 mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book_instantly)
                 mActivity.iv_bookButtonInstant.visibility = View.VISIBLE
+                hourly = true
             }
             1 -> {
                 mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book)
                 mActivity.iv_bookButtonInstant.visibility = View.GONE
+                hourly = false
             }
         }
+        updateRate()
     }
 
     private inner class ImagePagerAdapter(context: Context, images: Array<Image>?) : PagerAdapter() {
@@ -237,6 +245,71 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     enum class ContentPage private constructor(val titleResId: Int) {
         HOURLY(R.string.car_rental_info_hourly),
         DAILY(R.string.car_rental_info_daily)
+    }
+
+    private fun fillToolBar() {
+        mActivity.toolbar_title.text = renterDetailedCar?.carTitle
+        mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
+    }
+
+    private fun fillAboutInfo() {
+        val text = renterDetailedCar?.bodyType + " " + renterDetailedCar?.seatingCapacity +
+                mActivity.getString(R.string.renter_car_details_seats_suffix) +
+                renterDetailedCar?.carEngineCapacity + " " + renterDetailedCar?.carTransmission
+        mActivity.tvRenterCarDetailsAboutCarTitle.text = text
+        mActivity.tvRenterCarDetailsAboutCarDesc.text = renterDetailedCar?.description ?: ""
+    }
+
+    private fun setTripsCount() {
+        val text = "\u2022" + renterDetailedCar?.trips
+        mActivity.tvRenterCarDetailsRatingText.text = text
+    }
+
+    private fun fillReview() {
+        mActivity.rbRenterCarDetailsRating.score = renterDetailedCar?.rating!!
+        setTripsCount()
+        mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
+        val dateText = mActivity.getString(R.string. renter_car_details_review_date_prefix) + " " +
+                DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
+        mActivity.tvRenterCarDetailsCommentDate.text = dateText
+        mActivity.tvRenterCarDetailsComment.text = renterDetailedCar?.reviews?.get(0)?.comment
+        val readMoreText = mActivity.getString(R.string.renter_car_details_review_more_prefix) + " " +
+                renterDetailedCar?.reviews?.size + " " +
+                if (renterDetailedCar?.reviewCount?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
+                else mActivity.getString(R.string.renter_car_details_review_more_suffix_single)
+        mActivity.tvRenterCarDetailsReviewMore.text = readMoreText
+    }
+
+    private fun fillOwner() {
+        mActivity.tvRenterCarDetailsOwnerName.text = renterDetailedCar?.owner?.name
+        Glide.with(mActivity)
+                .load(renterDetailedCar?.owner?.photo)
+                .error(mActivity.resources.getDrawable(R.drawable.ic_photo_placeholder))
+                .transform(CircleTransform(mActivity))
+                .into(mActivity.ivRenterCarDetailsOwnerPicture)
+        mActivity.tvRenterCarDetailsOwnerAcceptance.text = renterDetailedCar?.owner?.acceptance.toString()
+
+        val responseText = renterDetailedCar?.owner?.responseTime.toString() + " " +
+                if (renterDetailedCar?.owner?.responseTime?: 0 > 1) mActivity.getString(R.string.owner_profile_info_minutes)
+                else mActivity.getString(R.string.owner_profile_info_minute)
+        mActivity.tvRenterCarDetailsOwnerResponse.text = responseText
+    }
+
+    private fun fillBookView() {
+        mActivity.rbBookCarRating.score = renterDetailedCar?.rating!!
+        updateRate()
+    }
+
+    private fun updateRate() {
+        val rateText = if (hourly == true) "$" + renterDetailedCar?.orderHourlyDetails?.amntRateFirst + " " +
+                mActivity.getString(R.string.car_rental_rates_per_hour)
+        else "$" + renterDetailedCar?.orderDailyDetails?.amntRateFirst + " " +
+                mActivity.getString(R.string.car_rental_rates_per_day)
+        mActivity.tvBookCarRate.text = rateText
+    }
+
+    fun isHourly(): Boolean? {
+        return hourly
     }
 }
 

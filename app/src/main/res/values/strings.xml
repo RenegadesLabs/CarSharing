@@ -332,7 +332,8 @@
     <string name="owner_profile_info_car_review">\u0020Car Review</string>
     <string name="owner_profile_info_dot">\u2022</string>
     <string name="owner_profile_info_percent">%</string>
-    <string name="owner_profile_info_minutes">min</string>
+    <string name="owner_profile_info_minute">min</string>
+    <string name="owner_profile_info_minutes">mins</string>
     <string name="owner_profile_info_note_edit">Note</string>
     <string name="profile_info_note_change">Change</string>
     <string name="profile_info_note_change_title">Change note</string>
@@ -520,6 +521,12 @@
     <string name="renter_car_details_response">Response</string>
     <string name="renter_car_details_book">Book Car</string>
     <string name="renter_car_details_book_instantly">Book Instantly</string>
+    <string name="renter_car_details_seats_suffix">-seater\u2022</string>
+    <string name="renter_car_details_review_date_prefix">on</string>
+    <string name="renter_car_details_review_more_prefix">Read</string>
+    <string name="renter_car_details_review_more_suffix">reviews</string>
+    <string name="renter_car_details_review_more_suffix_single">review</string>
+    <string name="renter_car_details_owner_by">Owned by</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">

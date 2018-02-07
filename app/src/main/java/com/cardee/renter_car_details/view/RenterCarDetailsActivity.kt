@@ -16,15 +16,20 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCarId: Int? = null
 
+    private var mViewHolder: RenterCarDetailsViewHolder? = null
+
     override fun onClick(p0: View?) {
         when (p0) {
-            iv_renterCarDetailsToolbarShare -> {
+            ivRenterCarDetailsToolbarShare -> {
             }
-            iv_renterCarDetailsToolbarFavoritesImg -> {
+            ivRenterCarDetailsToolbarFavoritesImg -> {
             }
-            b_bookCar -> {
+            bBookCar -> {
                 val intent = Intent(this, BookCarActivity::class.java)
-                intent.putExtra("carId", mCarId)
+                intent.apply {
+                    putExtra("carId", mCarId)
+                    putExtra("isHourly", mViewHolder?.isHourly())
+                }
                 startActivity(intent)
             }
         }
@@ -35,7 +40,7 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_renter_car_details)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        RenterCarDetailsViewHolder(this)
+        mViewHolder = RenterCarDetailsViewHolder(this)
         setListeners()
         getData()
     }
@@ -45,9 +50,9 @@ class RenterCarDetailsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        iv_renterCarDetailsToolbarShare.setOnClickListener(this)
-        iv_renterCarDetailsToolbarFavoritesImg.setOnClickListener(this)
-        b_bookCar.setOnClickListener(this)
+        ivRenterCarDetailsToolbarShare.setOnClickListener(this)
+        ivRenterCarDetailsToolbarFavoritesImg.setOnClickListener(this)
+        bBookCar.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

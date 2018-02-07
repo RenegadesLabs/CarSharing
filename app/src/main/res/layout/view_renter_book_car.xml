@@ -6,7 +6,7 @@
     android:background="@android:color/white">
 
     <com.cardee.custom.CustomRatingBar
-        android:id="@+id/r_bookCarRating"
+        android:id="@+id/rbBookCarRating"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_margin="@dimen/medium_margin"
@@ -20,14 +20,14 @@
         android:id="@+id/tv_bookCarRatingCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(10)"
+        android:text=""
         android:textColor="@color/item_secondary_txt"
-        app:layout_constraintBottom_toBottomOf="@+id/r_bookCarRating"
-        app:layout_constraintStart_toEndOf="@+id/r_bookCarRating"
-        app:layout_constraintTop_toTopOf="@+id/r_bookCarRating" />
+        app:layout_constraintBottom_toBottomOf="@+id/rbBookCarRating"
+        app:layout_constraintStart_toEndOf="@+id/rbBookCarRating"
+        app:layout_constraintTop_toTopOf="@+id/rbBookCarRating" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/b_bookCar"
+        android:id="@+id/bBookCar"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="@dimen/medium_margin"
@@ -69,11 +69,11 @@
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tv_bookCarRate"
+        android:id="@+id/tvBookCarRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium_margin"
-        android:text="$10 - $15"
+        android:text=""
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,10 +84,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/xsmall_margin"
-        android:text="per hour"
+        android:text=""
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_small"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_bookCarRate"
-        app:layout_constraintStart_toEndOf="@+id/tv_bookCarRate" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvBookCarRate"
+        app:layout_constraintStart_toEndOf="@+id/tvBookCarRate" />
 
 </android.support.constraint.ConstraintLayout>
