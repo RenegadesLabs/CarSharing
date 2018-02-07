@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.cardee.R
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars_map.LocationClient
