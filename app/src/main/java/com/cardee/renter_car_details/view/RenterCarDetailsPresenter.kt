@@ -1,5 +1,7 @@
 package com.cardee.renter_car_details.view
 
+import com.cardee.renter_car_details.RenterCarDetailsContract
+
 
 class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
 

@@ -9,6 +9,7 @@ import com.cardee.R
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
+import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

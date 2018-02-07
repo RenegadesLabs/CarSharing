@@ -1,4 +1,6 @@
-package com.cardee.renter_car_details.view
+package com.cardee.renter_car_details
+
+import com.cardee.domain.renter.entity.RenterDetailedCar
 
 interface RenterCarDetailsContract {
 
@@ -13,6 +15,8 @@ interface RenterCarDetailsContract {
         fun attachView(view: View)
 
         fun fetchLocation(callback: (String) -> Unit)
+
+        fun fetchDetailedCar(renterDetailedCar: RenterDetailedCar)
 
         fun onDestroy()
     }
