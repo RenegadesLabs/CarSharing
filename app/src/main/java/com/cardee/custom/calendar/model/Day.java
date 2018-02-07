@@ -25,8 +25,8 @@ public class Day implements Comparable<Day> {
     private final String dateTitle;
     private final int dayOfWeek;
     private final boolean current;
-    private final boolean enabled;
     private final boolean empty;
+    private boolean enabled;
     private boolean selected;
     private SelectionState state;
 
@@ -81,6 +81,10 @@ public class Day implements Comparable<Day> {
             Log.e(TAG, e.getMessage());
             return null;
         }
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setSelectionState(SelectionState state) {

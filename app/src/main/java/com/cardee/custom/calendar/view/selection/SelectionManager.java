@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SelectionManager implements OnViewClickListener<DayView> {
+public class SelectionManager implements OnViewClickListener<DayView>, SelectionAdapter.OnAvailableDatesSetListener {
 
     private enum RangeBound {
         START, END
     }
 
-    private int selectionMode = CalendarView.MODE_MULTISELECT; //default mode is MULTISELECT
+    private int selectionMode = CalendarView.MODE_MULTISELECT;
     private final UseCaseExecutor executor;
     private final ApplyInitialSelection applySelection;
     private final List<Day> selectedDayz;
@@ -254,5 +254,16 @@ public class SelectionManager implements OnViewClickListener<DayView> {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onAvailableDatesSet(List<Day> availableDayz) {
+        for (int i = 0; i < allDayz.size(); i++) {
+            Day day = allDayz.get(i);
+            if (day.isEnabled() && !availableDayz.contains(day)) {
+                day.setEnabled(false);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 }
