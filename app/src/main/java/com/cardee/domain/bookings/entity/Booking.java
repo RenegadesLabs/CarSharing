@@ -17,8 +17,8 @@ public class Booking {
     private final Integer bookingId;
     private final String bookingNum;
     private final String note;
-    private final Integer tankPart;
-    private final Integer tankPartRentingOut;
+    private final Float tankPart;
+    private final Float tankPartRentingOut;
     private final Integer fuelPolicyId;
     private final String fuelPolicyName;
     private final String dateCreated;
@@ -52,8 +52,8 @@ public class Booking {
                     Integer bookingId,
                     String bookingNum,
                     String note,
-                    Integer tankPart,
-                    Integer tankPartRentingOut,
+                    Float tankPart,
+                    Float tankPartRentingOut,
                     Integer fuelPolicyId,
                     String fuelPolicyName,
                     String dateCreated,
@@ -121,8 +121,8 @@ public class Booking {
         private Integer bookingId;
         private String bookingNum;
         private String note;
-        private Integer tankPart;
-        private Integer tankPartRentingOut;
+        private Float tankPart;
+        private Float tankPartRentingOut;
         private Integer fuelPolicyId;
         private String fuelPolicyName;
         private String dateCreated;
@@ -238,12 +238,12 @@ public class Booking {
             return this;
         }
 
-        public Builder setTankPart(Integer tankPart) {
+        public Builder setTankPart(Float tankPart) {
             this.tankPart = tankPart;
             return this;
         }
 
-        public Builder setTankPartRentingOut(Integer tankPartRentingOut) {
+        public Builder setTankPartRentingOut(Float tankPartRentingOut) {
             this.tankPartRentingOut = tankPartRentingOut;
             return this;
         }
@@ -433,11 +433,11 @@ public class Booking {
         return note;
     }
 
-    public Integer getTankPart() {
+    public Float getTankPart() {
         return tankPart;
     }
 
-    public Integer getTankPartRentingOut() {
+    public Float getTankPartRentingOut() {
         return tankPartRentingOut;
     }
 

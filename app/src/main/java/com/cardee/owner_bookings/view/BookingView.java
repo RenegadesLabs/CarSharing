@@ -342,5 +342,4 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         presenter = null;
     }
 
-
 }
