@@ -12,7 +12,7 @@ public class Review {
     @SerializedName("review_date")
     @Expose
     private String reviewDate;
-    @SerializedName("review")
+    @SerializedName("comment")
     @Expose
     private String review;
     @SerializedName("renter")

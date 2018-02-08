@@ -3,6 +3,7 @@ package com.cardee.domain.renter.entity
 import com.cardee.data_source.remote.api.cars.response.entity.OrderDailyDetailsEntity
 import com.cardee.data_source.remote.api.cars.response.entity.OrderHourlyDetailsEntity
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity
+import com.cardee.data_source.remote.api.common.entity.OfferCarOwner
 import com.cardee.data_source.remote.api.common.entity.OfferCarRule
 import com.cardee.data_source.remote.api.offers.response.entity.OfferCarReview
 import com.cardee.domain.owner.entity.Image
@@ -14,6 +15,7 @@ class RenterDetailedCar(val carId: Int?,
                         val images: Array<Image>?,
                         val year: String?,
                         val licensePlateNumber: String?,
+                        val trips: Int?,
                         val deliveryRates: DeliveryRatesEntity?,
                         val vehicleType: String?,
                         val carMake: String?,
@@ -55,4 +57,5 @@ class RenterDetailedCar(val carId: Int?,
                         val carAvailabilityTimeBegin: String?,
                         val carAvailabilityTimeEnd: String?,
                         val reviewCount: Int?,
-                        val rating: Float?)
+                        val rating: Float?,
+                        val owner: OfferCarOwner?)
