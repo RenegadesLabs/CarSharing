@@ -113,6 +113,9 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             val intent = Intent(this, BookMessageActivity::class.java)
             startActivity(intent)
         }
+        bookButton.setOnClickListener {
+            mPresenter.requestBooking(mState)
+        }
     }
 
     private fun resetDatesAndDelivery() {
@@ -193,6 +196,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                     mState = mPresenter.getState()
                     mState.latitude = location?.latitude ?: return
                     mState.longitude = location.longitude
+                    mState.deliveryAddress = address
                     mState.collectionPicked.set(true)
                     mPresenter.saveSate(mState)
                     mPresenter.getCost(mCarId ?: return, mState, null)
@@ -201,8 +205,14 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             PAYMENT_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val method = data?.getStringExtra("method")
+                    val token = data?.getStringExtra("token")
                     paymentChoose.text = method ?: resources.getString(R.string.choose)
                     mState.paymentSelected.set(true)
+                    mState.paymentSource = when (method) {
+                        "Cash" -> "cash"
+                        else -> "card"
+                    }
+                    mState.paymentToken = token ?: ""
                     mPresenter.saveSate(mState)
                 }
             }

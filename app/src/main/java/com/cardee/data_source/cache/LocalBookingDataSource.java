@@ -4,6 +4,7 @@ package com.cardee.data_source.cache;
 import android.net.Uri;
 
 import com.cardee.data_source.BookingDataSource;
+import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.response.entity.CostRequest;
 
 import io.reactivex.disposables.Disposable;
@@ -77,6 +78,11 @@ public class LocalBookingDataSource implements BookingDataSource {
 
     @Override
     public Disposable getCostBreakdown(CostRequest request, CostCallback callback) {
+        return null;
+    }
+
+    @Override
+    public Disposable requestBooking(BookingRequest request, SimpleCallback callback) {
         return null;
     }
 }

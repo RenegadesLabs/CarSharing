@@ -24,8 +24,9 @@ class BookPaymentPresenter(view: BookPaymentView) {
 
         disposable = getCards.execute(GetCardsUseCase.RequestValues(), object : RxUseCase.Callback<GetCardsUseCase.ResponseValues> {
             override fun onSuccess(response: GetCardsUseCase.ResponseValues) {
-                val dataList = response.cards.map { it.brand + " " + it.cardNumber }.toList()
+                val dataList = response.cards.map { Pair(it.brand + " " + it.cardNumber, it.paymentToken) }.toList()
                 mAdapter?.setData(dataList)
+
             }
 
             override fun onError(error: Error) {

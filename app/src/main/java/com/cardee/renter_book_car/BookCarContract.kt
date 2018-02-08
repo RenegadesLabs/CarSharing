@@ -22,5 +22,6 @@ interface BookCarContract {
         fun getCost(carId: Int, state: BookCarState, context: AppCompatActivity?)
         fun getState(): BookCarState
         fun saveSate(state: BookCarState)
+        fun requestBooking(mState: BookCarState)
     }
 }

@@ -16,7 +16,7 @@ class PaymentAdapter(context: Context, acceptCash: Boolean, selected: String) : 
     val mContext = context
     val mAcceptCash = acceptCash
     val mSelected = selected
-    var mData: List<String>? = null
+    var mData: List<Pair<String, String>>? = null
     var mClickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PaymentViewHolder {
@@ -29,11 +29,11 @@ class PaymentAdapter(context: Context, acceptCash: Boolean, selected: String) : 
         return (mData?.size ?: 0) + 1
     }
 
-    fun getItem(id: Int): String {
+    fun getItem(id: Int): Pair<String, String> {
         if (id == 0) {
-            return "Cash"
+            return Pair("Cash", "")
         }
-        return mData?.get(id - 1) ?: ""
+        return mData?.get(id - 1) ?: Pair("", "")
     }
 
     override fun onBindViewHolder(holder: PaymentViewHolder?, position: Int) {
@@ -44,14 +44,14 @@ class PaymentAdapter(context: Context, acceptCash: Boolean, selected: String) : 
             }
         } else {
             val item = mData?.get(position - 1) ?: return
-            holder?.textView?.text = item
+            holder?.textView?.text = item.first
         }
         if (mSelected == holder?.textView?.text) {
             holder.checkMarck?.visibility = View.VISIBLE
         }
     }
 
-    fun setData(data: List<String>) {
+    fun setData(data: List<Pair<String, String>>) {
         mData = data
         notifyDataSetChanged()
     }

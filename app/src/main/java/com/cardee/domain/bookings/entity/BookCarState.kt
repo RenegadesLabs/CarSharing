@@ -28,14 +28,21 @@ class BookCarState(bookingHourly: Boolean? = true,
                    val collectionPicked: ObservableBoolean = ObservableBoolean(),
                    var latitude: Double? = null,
                    var longitude: Double? = null,
+                   var deliveryAddress: String? = null,
                    val promocodeClicked: ObservableBoolean = ObservableBoolean(),
                    val accVerified: ObservableBoolean = ObservableBoolean(),
                    val paymentSelected: ObservableBoolean = ObservableBoolean(),
+                   var paymentSource: String = "",
+                   var paymentToken: String = "",
                    val acceptCashHourly: ObservableBoolean = ObservableBoolean(),
                    val acceptCashDaily: ObservableBoolean = ObservableBoolean(),
                    val rentalTermsAgreed: ObservableBoolean = ObservableBoolean(),
                    val noteAdded: ObservableBoolean = ObservableBoolean(),
-                   var noteText: String? = null) : BaseObservable() {
+                   var noteText: String? = null,
+                   var amountTotal: Float? = null,
+                   var amountDiscount: Float? = null
+
+) : BaseObservable() {
 
     @get:Bindable
     var bookingHourly: Boolean? = true

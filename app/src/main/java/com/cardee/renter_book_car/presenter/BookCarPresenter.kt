@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.cardee.R
 import com.cardee.data_source.Error
+import com.cardee.data_source.remote.api.booking.request.BookingRequest
 import com.cardee.data_source.remote.api.booking.response.entity.BookingCost
 import com.cardee.data_source.remote.api.booking.response.entity.CostRequest
 import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.domain.bookings.usecase.GetCostBreakdown
+import com.cardee.domain.bookings.usecase.RequestBooking
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.usecase.GetBookState
 import com.cardee.domain.renter.usecase.GetFilter
@@ -21,22 +23,55 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.dialog_cost_breakdown.view.*
 
 class BookCarPresenter : BookCarContract.BookCarPresenter {
-
     private var mView: BookCarContract.BookCarView? = null
     private val getOfferById = GetOfferById()
     private val getCostBreakdown = GetCostBreakdown()
     private val getFilter = GetFilter()
     private val getBookState = GetBookState()
     private val saveBookState = SaveBookState()
+    private val requestBookingCase = RequestBooking()
 
     private var mGetOfferDisposable: Disposable? = null
     private var mGetCostDisposable: Disposable? = null
+    private var mBookDisposable: Disposable? = null
     private var mCostBreakdown: BookingCost? = null
     private var mCarId: Int? = null
     private var showBreakdown: Boolean = false
 
     override fun init(bookCarView: BookCarContract.BookCarView) {
         mView = bookCarView
+    }
+
+    override fun requestBooking(state: BookCarState) {
+        if (mBookDisposable?.isDisposed == false) {
+            mBookDisposable?.dispose()
+        }
+
+        val request: BookingRequest = if (state.bookingHourly == true) {
+            BookingRequest(mCarId ?: return, state.timeBegin ?: return,
+                    state.timeEnd ?: return, state.hourlyCurbsideDelivery.get(),
+                    state.latitude, state.longitude, state.deliveryAddress, state.paymentSource,
+                    state.paymentToken, state.bookingHourly?.not() ?: return,
+                    state.amountTotal ?: return, state.amountDiscount ?: 0f,
+                    state.noteText)
+        } else {
+            BookingRequest(mCarId ?: return, state.timeBegin ?: return,
+                    state.timeEnd ?: return, state.dailyCurbsideDelivery.get(),
+                    state.latitude, state.longitude, state.deliveryAddress, state.paymentSource,
+                    state.paymentToken, state.bookingHourly?.not() ?: return,
+                    state.amountTotal ?: return, state.amountDiscount ?: 0f,
+                    state.noteText)
+        }
+
+        mBookDisposable = requestBookingCase.execute(RequestBooking.RequestValues(request), object : RxUseCase.Callback<RequestBooking.ResponseValues> {
+            override fun onSuccess(response: RequestBooking.ResponseValues) {
+                mView?.showMessage("Request sent")
+            }
+
+            override fun onError(error: Error) {
+                mView?.showMessage(error.message)
+            }
+        })
     }
 
     override fun getOffer(id: Int, state: BookCarState) {
@@ -118,6 +153,9 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
             override fun onSuccess(response: GetCostBreakdown.ResponseValues) {
                 mCostBreakdown = response.costBreakdown
                 val total: Number = mCostBreakdown?.total ?: return
+                val discount: Number = mCostBreakdown?.discount ?: 0
+                state.amountTotal = total.toFloat()
+                state.amountDiscount = discount.toFloat()
                 var totalString: String?
                 totalString = if (total.toFloat() % 1f == 0f) {
                     total.toInt().toString()

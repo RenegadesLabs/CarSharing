@@ -5,6 +5,7 @@ import android.util.SparseArray;
 
 import com.cardee.data_source.cache.LocalBookingDataSource;
 import com.cardee.data_source.remote.RemoteBookingDataSource;
+import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
 import com.cardee.data_source.remote.api.booking.response.entity.ChecklistEntity;
@@ -204,6 +205,11 @@ public class BookingRepository implements BookingDataSource {
     @Override
     public Disposable getCostBreakdown(CostRequest request, CostCallback callback) {
         return remoteDataSource.getCostBreakdown(request, callback);
+    }
+
+    @Override
+    public Disposable requestBooking(BookingRequest request, SimpleCallback callback) {
+        return remoteDataSource.requestBooking(request, callback);
     }
 
     private class Cache {

@@ -56,7 +56,8 @@ class BookPaymentActivity : AppCompatActivity(), BookPaymentView, PaymentAdapter
 
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent()
-        intent.putExtra("method", mPresenter.getAdapter()?.getItem(position))
+        intent.putExtra("method", mPresenter.getAdapter()?.getItem(position)?.first)
+        intent.putExtra("token", mPresenter.getAdapter()?.getItem(position)?.second)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

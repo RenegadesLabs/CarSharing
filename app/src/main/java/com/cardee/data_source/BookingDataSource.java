@@ -3,6 +3,7 @@ package com.cardee.data_source;
 
 import android.net.Uri;
 
+import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingEntity;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingRentalTerms;
@@ -36,6 +37,8 @@ public interface BookingDataSource {
     void uploadImage(Integer bookingId, Uri uri, ImageCallback callback);
 
     Disposable getCostBreakdown(CostRequest request, CostCallback callback);
+
+    Disposable requestBooking(BookingRequest request, SimpleCallback callback);
 
     interface BookingsCallback extends BaseCallback {
 
