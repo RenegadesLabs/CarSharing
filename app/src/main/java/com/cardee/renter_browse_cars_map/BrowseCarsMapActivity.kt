@@ -1,7 +1,10 @@
 package com.cardee.renter_browse_cars_map
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.renter_browse_cars.filter.view.FilterActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import io.reactivex.disposables.Disposable
@@ -19,8 +23,14 @@ import kotlinx.android.synthetic.main.activity_browse_cars_map.*
 class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClientImpl()) :
         LocationClient by delegate, AppCompatActivity(), OnMapReadyCallback, BrowseCarsContract.View<OfferItem> {
 
+    companion object {
+        private val FILTER_REQUEST_CODE: Int = 112
+    }
+
     private lateinit var adapter: OffersAdapter
     private lateinit var presenter: BrowseCarsPresenter
+    private var favNormalIcon: Drawable? = null
+    private var favSelectedIcon: Drawable? = null
     private val eventProducer: PublishSubject<UIModelEvent> = PublishSubject.create()
     private var disposable: Disposable = Disposables.empty()
     private var toast: Toast? = null
@@ -29,11 +39,14 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse_cars_map)
         init(this)
+        initResources()
         supportActionBar ?: setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.title = null
         }
+        btnFilter.setOnClickListener { openFilter() }
+        btnFavorites.setOnClickListener { presenter.toggleFavorite() }
         map.let {
             it.onCreate(savedInstanceState)
             it.getMapAsync(this)
@@ -49,7 +62,12 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
                     this, LinearLayoutManager.HORIZONTAL, false)
             adapter.initScrollingBehaviour(it)
         }
-        presenter.loadAll()
+        presenter.load()
+    }
+
+    private fun initResources() {
+        favNormalIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorites_toolbar, null)
+        favSelectedIcon = VectorDrawableCompat.create(resources, R.drawable.ic_favorites_toolbar_filled, null)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -58,7 +76,8 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
             uiSettings.isMapToolbarEnabled = false
-            adapter.initMapContent(this, it) }
+            adapter.initMapContent(this, it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -73,15 +92,26 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     }
 
     override fun openFilter() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(this, FilterActivity::class.java)
+        startActivityForResult(intent, FILTER_REQUEST_CODE)
     }
 
     override fun toggleFavorites(selected: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (selected) {
+            btnFavorites.setImageDrawable(favSelectedIcon)
+        } else {
+            btnFavorites.setImageDrawable(favNormalIcon)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            FILTER_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    presenter.load()
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -105,7 +135,15 @@ class BrowseCarsMapActivity(private var delegate: LocationClient = LocationClien
     }
 
     override fun bind(offers: List<OfferItem>) {
+        showEmptyMessage(offers.isEmpty())
         adapter.setItems(offers)
+    }
+
+    private fun showEmptyMessage(empty: Boolean) {
+        if (empty) {
+            msgTextView.text = getString(R.string.no_offers_found)
+        }
+        msgTextView.visibility = if (empty) View.VISIBLE else View.GONE
     }
 
     override fun onPause() {

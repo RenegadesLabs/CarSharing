@@ -13,6 +13,8 @@ import java.util.Locale;
 
 public class Day implements Comparable<Day> {
 
+    private static boolean selectCurrent = true;
+
     private static final String TAG = Day.class.getSimpleName();
     private static final SimpleDateFormat NEW_DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -23,8 +25,8 @@ public class Day implements Comparable<Day> {
     private final String dateTitle;
     private final int dayOfWeek;
     private final boolean current;
-    private final boolean enabled;
     private final boolean empty;
+    private boolean enabled;
     private boolean selected;
     private SelectionState state;
 
@@ -36,7 +38,11 @@ public class Day implements Comparable<Day> {
         Date now = new Date();
         int currentCompare = compareTo(now);
         current = currentCompare == 0;
-        enabled = currentCompare >= 0;
+        if (selectCurrent) {
+            enabled = currentCompare >= 0;
+        } else {
+            enabled = currentCompare > 0;
+        }
         empty = false;
     }
 
@@ -50,6 +56,11 @@ public class Day implements Comparable<Day> {
     }
 
     public static Day from(@NonNull Date date) {
+        return new Day(date);
+    }
+
+    public static Day from(@NonNull Date date, boolean selectCurrent) {
+        Day.selectCurrent = selectCurrent;
         return new Day(date);
     }
 
@@ -70,6 +81,10 @@ public class Day implements Comparable<Day> {
             Log.e(TAG, e.getMessage());
             return null;
         }
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setSelectionState(SelectionState state) {

@@ -26,6 +26,7 @@
         <attr name="selection_color" format="color" />
         <attr name="body_text_color" format="color" />
         <attr name="current_date_color" format="color" />
+        <attr name="select_current" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CustomRatingBar">

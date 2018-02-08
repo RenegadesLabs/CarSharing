@@ -64,7 +64,13 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CarViewHolder?, position: Int) {
-        holder?.bind(items[position])
+        holder?.apply {
+            val model = items[position]
+            bind(model)
+            itemView.setOnClickListener { view ->
+                subject.onNext(UIModelEvent(UIModelEvent.EVENT_OFFER_LIST_CLICK, view, model))
+            }
+        }
     }
 
     override fun getItemCount(): Int = items.size
@@ -72,7 +78,9 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     fun setItems(offerItems: List<OfferItem>) {
         items.clear()
         items.addAll(offerItems)
+        manager?.clear()
         notifyDataSetChanged()
+        selectedPosition = 0
         onSelect(selectedPosition)
         moveToSelection()
         if (manager != null) {
@@ -81,6 +89,9 @@ class OffersAdapter(context: Context) : RecyclerView.Adapter<CarViewHolder>() {
     }
 
     private fun onSelect(position: Int) {
+        if (items.isEmpty()) {
+            return
+        }
         items[selectedPosition].selected = false
         items[position].selected = true
         notifyItemChanged(selectedPosition)

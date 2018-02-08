@@ -3,6 +3,7 @@ package com.cardee.renter_availability_filter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
+import android.view.View
 import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.view_daily_availability.view.*
@@ -43,7 +44,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
                         delegate.onInitPickerSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
                     }
                     delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter)
-                    delegate.onSetSubmitTitle(btnHourSave, filter)
+                    delegate.onSetSubmitTitle(btnHourSave, filter, true)
                 }
             }
         }
@@ -65,9 +66,20 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         timePicker.reset()
     }
 
+    fun reset() {
+        resetFilter(doOnReset)
+    }
+
+    fun configureSingleAction() {
+        btnHourReset.visibility = View.GONE
+    }
+
     private fun changeHourlyRange(begin: Date?, end: Date?) {
         presenter?.setHourlyFilter(begin, end)
         delegate.onSetTitleFromTime(dateHourFrom, begin)
-        delegate.onSetTitleFromTime(dateHourTo, end)
+        delegate.onSetTitleFromTime(dateHourTo, end, false)
+        presenter?.doUpdate { filter ->
+            delegate.onSetSubmitTitle(btnHourSave, filter, true)
+        }
     }
 }

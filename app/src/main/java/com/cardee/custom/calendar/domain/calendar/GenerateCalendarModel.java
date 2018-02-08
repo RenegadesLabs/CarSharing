@@ -25,9 +25,9 @@ public class GenerateCalendarModel
         }
         List<Month> months;
         if (request.isCurrentMonth()) {
-            months = delegate.onGenerateFromCurrent(request.getRange());
+            months = delegate.onGenerateFromCurrent(request.getRange(), request.selectCurrent);
         } else {
-            months = delegate.onGenerateFromNextToDate(request.getRange(), request.getDay());
+            months = delegate.onGenerateFromNextToDate(request.getRange(), request.getDay(), request.selectCurrent);
         }
         if (months == null || months.isEmpty()) {
             callback.onError(new Error("Calendar is not available", Error.Type.UNAVAILABLE));
@@ -43,19 +43,25 @@ public class GenerateCalendarModel
         private final Day dayFromPrevious;
         private final boolean currentMonth;
         private final int range;
+        private final boolean selectCurrent;
 
         public RequestValues() {
             this(DEFAULT_MONTH_COUNT);
         }
 
-        public RequestValues(int range) {
-            this(range, null);
+        public RequestValues(boolean selectCurrent) {
+            this(DEFAULT_MONTH_COUNT, null, selectCurrent);
         }
 
-        public RequestValues(int range, Day dayFromPrevious) {
+        public RequestValues(int range) {
+            this(range, null, true);
+        }
+
+        public RequestValues(int range, Day dayFromPrevious, boolean selectCurrent) {
             this.dayFromPrevious = dayFromPrevious;
             this.currentMonth = dayFromPrevious == null;
             this.range = range;
+            this.selectCurrent = selectCurrent;
         }
 
         Day getDay() {
@@ -68,6 +74,10 @@ public class GenerateCalendarModel
 
         public int getRange() {
             return range;
+        }
+
+        public boolean isSelectCurrent() {
+            return selectCurrent;
         }
     }
 

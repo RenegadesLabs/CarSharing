@@ -724,6 +724,7 @@
     <string name="filter_search_area_template">%1$s\u0020\u0020\u2022\u0020\u0020Within %2$dkm</string>
     <string name="pickup_on">Pickup on</string>
     <string name="return_by">Return by</string>
+    <string name="no_offers_found">No offers found</string>
 
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>

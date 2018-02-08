@@ -28,6 +28,7 @@ public class DateStringDelegate {
 
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat timeViewFormatter;
+    private SimpleDateFormat timeLocalFormatter;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat dateViewFormatter;
     private SimpleDateFormat dateShortViewFormatter;
@@ -56,6 +57,7 @@ public class DateStringDelegate {
         creationDateViewFormatter = new SimpleDateFormat(CREATION_DATE_VIEW_FORMATTER, Locale.US);
         dateShortViewTitleFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_TITLE_PATTERN, Locale.US);
         dateShortViewFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_PATTERN, Locale.US);
+        timeLocalFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         calendar.setTimeZone(timeZone);
         dateViewString.setTimeZone(timeZone);
         timeFormatter.setTimeZone(timeZone);
@@ -152,7 +154,7 @@ public class DateStringDelegate {
             return null;
         }
         try {
-            Date date = timeViewFormatter.parse(time);
+            Date date = timeLocalFormatter.parse(time);
             return timeFormatter.format(date).toLowerCase();
         } catch (ParseException e) {
 

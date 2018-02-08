@@ -29,6 +29,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/msgTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toBottomOf="@id/carsList"
+            app:layout_constraintEnd_toEndOf="@id/carsList"
+            app:layout_constraintStart_toStartOf="@id/carsList"
+            app:layout_constraintTop_toTopOf="@id/carsList" />
+
         <FrameLayout
             android:id="@+id/loadingProgress"
             android:layout_width="0dp"
@@ -53,6 +65,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -60,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:background="@color/bg_transparent_black"
+            android:theme="@style/TransparentToolbar"
             app:navigationIcon="@drawable/ic_close">
 
             <TextView

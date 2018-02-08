@@ -71,7 +71,8 @@ class MapManager<T>(context: Context, private val map: GoogleMap) {
     }
 
     fun clear() {
-
+        manager.clearItems()
+        markers.clear()
     }
 
     abstract class MarkerItem<B>(val base: B) : ClusterItem {

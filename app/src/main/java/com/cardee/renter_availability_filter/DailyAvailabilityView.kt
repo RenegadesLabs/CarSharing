@@ -80,9 +80,12 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                     filter.pickupTime?.let { delegate.onInitTimingSelection(pickupTimePicker, it, timeValues) }
                     filter.returnTime?.let { delegate.onInitTimingSelection(returnTimePicker, it, timeValues) }
                     delegate.onSetTitlesFromFilter(dateFrom, dateTo, filter)
-                    delegate.onSetSubmitTitle(btnSave, filter)
+                    delegate.onSetSubmitTitle(btnSave, filter, false)
                 }
             }
+        }
+        calendar.setOnReadyListener {
+
         }
     }
 
@@ -152,10 +155,21 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
         }
     }
 
+    fun reset() {
+        resetFilter(doOnReset)
+    }
+
+    fun configureSingleAciton() {
+        btnReset.visibility = View.GONE
+    }
+
     private fun changeDailyRange(begin: Date?, end: Date?) {
         presenter?.setDailyFilter(begin, end)
         delegate.onSetTitleFromDate(dateFrom, begin)
         delegate.onSetTitleFromDate(dateTo, end)
+        presenter?.doUpdate { filter ->
+            delegate.onSetSubmitTitle(btnSave, filter, false)
+        }
     }
 
     private fun changeDailyTiming(pickupTime: String?, returnTime: String?) {

@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SelectionManager implements OnViewClickListener<DayView> {
+public class SelectionManager implements OnViewClickListener<DayView>, SelectionAdapter.OnAvailableDatesSetListener {
 
     private enum RangeBound {
         START, END
     }
 
-    private int selectionMode = CalendarView.MODE_MULTISELECT; //default mode is MULTISELECT
+    private int selectionMode = CalendarView.MODE_MULTISELECT;
     private final UseCaseExecutor executor;
     private final ApplyInitialSelection applySelection;
     private final List<Day> selectedDayz;
@@ -97,7 +97,7 @@ public class SelectionManager implements OnViewClickListener<DayView> {
                         lastBound = RangeBound.START;
                     }
             }
-            if (!rangeStart.equals(rangeEnd)) {
+            if (!rangeStart.equals(rangeEnd) && checkWholeRangeAvailable(rangeStart, rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
                 clearSelection();
@@ -105,6 +105,18 @@ public class SelectionManager implements OnViewClickListener<DayView> {
                 selectSingleDayRange(day, view);
             }
         }
+    }
+
+    private boolean checkWholeRangeAvailable(Day rangeStart, Day rangeEnd) {
+        int startIndex = allDayz.indexOf(rangeStart);
+        int endIndex = allDayz.indexOf(rangeEnd);
+        for (int i = startIndex + 1; i < endIndex; i++) {
+            Day day = allDayz.get(i);
+            if (!day.isEnabled()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void selectSingleDayRange(Day day, DayView view) {
@@ -162,6 +174,7 @@ public class SelectionManager implements OnViewClickListener<DayView> {
         this.selectionMode = selectionAdapter.getMode();
         this.selectionAdapter = selectionAdapter;
         this.selectionAdapter.setSelectionManager(this);
+        this.selectionAdapter.setAvailableDatesSetListener(this);
         refresh();
     }
 
@@ -254,5 +267,20 @@ public class SelectionManager implements OnViewClickListener<DayView> {
                 }
             }
         }).start();
+    }
+
+    public boolean isReady(){
+        return !allDayz.isEmpty();
+    }
+
+    @Override
+    public void onAvailableDatesSet(List<Day> availableDayz) {
+        for (int i = 0; i < allDayz.size(); i++) {
+            Day day = allDayz.get(i);
+            if (day.isEnabled() && !availableDayz.contains(day)) {
+                day.setEnabled(false);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 }
