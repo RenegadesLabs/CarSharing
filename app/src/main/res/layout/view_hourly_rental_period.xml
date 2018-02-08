@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/dateFrom"
+        android:id="@+id/dateHourFrom"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/toolbar_height"
         android:gravity="center"
@@ -26,13 +26,13 @@
         android:text="to"
         android:textColor="@color/text_regular"
         android:textSize="@dimen/text_regular"
-        app:layout_constraintBottom_toBottomOf="@id/dateFrom"
-        app:layout_constraintEnd_toStartOf="@+id/dateTo"
-        app:layout_constraintStart_toEndOf="@id/dateFrom"
-        app:layout_constraintTop_toTopOf="@id/dateFrom" />
+        app:layout_constraintBottom_toBottomOf="@id/dateHourFrom"
+        app:layout_constraintEnd_toStartOf="@+id/dateHourTo"
+        app:layout_constraintStart_toEndOf="@id/dateHourFrom"
+        app:layout_constraintTop_toTopOf="@id/dateHourFrom" />
 
     <TextView
-        android:id="@id/dateTo"
+        android:id="@id/dateHourTo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/toolbar_height"
         android:gravity="center"
@@ -44,27 +44,23 @@
         app:layout_constraintStart_toEndOf="@id/dateSeparator"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.cardee.custom.calendar.view.CalendarView
-        android:id="@+id/calendar"
+    <com.cardee.custom.time_picker.view.TimePicker
+        android:id="@+id/timePicker"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/widget_margin_x_small"
+        android:background="@drawable/bg_clickable_top_line_normal"
         app:body_text_color="@color/text_regular"
-        app:current_date_color="@color/divider_light"
-        app:header_background="@drawable/bg_underlined"
-        app:header_height="40dp"
-        app:header_highlighted_text_color="@color/red_error"
-        app:header_text_color="@color/text_regular"
-        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintBottom_toTopOf="@+id/btnHourSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateFrom"
+        app:layout_constraintTop_toBottomOf="@id/dateHourFrom"
         app:selection_color="@color/light_blue"
-        app:title_background="@android:color/transparent"
+        app:title_background="@color/bg_window"
         app:title_gravity="start" />
 
     <TextView
-        android:id="@+id/btnReset"
+        android:id="@+id/btnHourReset"
         style="@style/NegativeButton"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_regular_height"
@@ -78,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/btnSave"
+        android:id="@+id/btnHourSave"
         style="@style/RegularButton"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_regular_height"
@@ -90,5 +86,6 @@
         android:text="@string/title_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnReset" />
+        app:layout_constraintStart_toEndOf="@id/btnHourReset" />
+
 </android.support.constraint.ConstraintLayout>

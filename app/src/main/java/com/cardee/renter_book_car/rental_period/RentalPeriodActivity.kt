@@ -1,28 +1,37 @@
 package com.cardee.renter_book_car.rental_period
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.FrameLayout
 import com.cardee.R
-import com.cardee.renter_availability_filter.HourlyAvailabilityView
-import kotlinx.android.synthetic.main.activity_dialog_availability.*
-import kotlinx.android.synthetic.main.view_hourly_availability.view.*
+import com.cardee.renter_availability_filter.CalendarAdapter
+import com.cardee.util.DateStringDelegate
+import kotlinx.android.synthetic.main.activity_rental_period.*
+import kotlinx.android.synthetic.main.view_daily_no_time.view.*
+import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*
 
 class RentalPeriodActivity : AppCompatActivity() {
 
     var mHourly: Boolean? = null
+    var mDailyAdapter: CalendarAdapter? = null
+    var timeBegin: String? = null
+    var timeEnd: String? = null
+    val dateDelegate: DateStringDelegate = DateStringDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rental_period)
         getIntentData()
         val layout = if (mHourly == true) {
-            R.layout.view_hourly_availability
+            R.layout.view_hourly_rental_period
         } else {
             R.layout.view_daily_no_time
         }
@@ -31,13 +40,31 @@ class RentalPeriodActivity : AppCompatActivity() {
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
         if (mHourly == true) {
-            val hourlyView = content as HourlyAvailabilityView
+            val hourlyView = content as ConstraintLayout
             hourlyView.btnHourReset.setOnClickListener {
-                // TODO: reset hours
+
             }
             hourlyView.btnHourSave.setOnClickListener {
                 // TODO: get start/end dates
                 onBackPressed()
+            }
+        } else {
+            val dailyView = content as ConstraintLayout
+            mDailyAdapter = CalendarAdapter()
+            mDailyAdapter?.setSelectionListener {
+                timeBegin = dateDelegate.getGMTTimeString(it[0])
+                timeEnd = dateDelegate.getGMTTimeString(it[it.lastIndex])
+            }
+            dailyView.calendar.setSelectionAdapter(mDailyAdapter)
+            dailyView.btnReset.setOnClickListener {
+                dailyView.calendar.reset()
+            }
+            dailyView.btnSave.setOnClickListener {
+                intent = Intent()
+                intent.putExtra("begin", timeBegin)
+                intent.putExtra("end", timeEnd)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             }
         }
         backgroundView.addView(content)

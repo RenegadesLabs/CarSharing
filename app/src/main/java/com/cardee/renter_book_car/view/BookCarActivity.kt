@@ -16,6 +16,7 @@ import com.cardee.renter_book_car.message.view.BookMessageActivity
 import com.cardee.renter_book_car.payment.BookPaymentActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
+import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
 import java.util.*
@@ -189,6 +190,26 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                     paymentChoose.text = method ?: resources.getString(R.string.choose)
                     mState.paymentSelected.set(true)
                     mPresenter.saveSate(mState)
+                }
+            }
+            PERIOD_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val timeBegin = data?.getStringExtra("begin")
+                    val timeEnd = data?.getStringExtra("end")
+                    if (timeBegin != null && timeEnd != null) {
+                        mState.timeBegin = timeBegin
+                        mState.timeEnd = timeEnd
+                        val delegate = DateStringDelegate(this)
+                        var beginString = delegate.getTimeFromString(timeBegin)
+                        var endString = delegate.getTimeFromString(timeEnd)
+                        if (mState.bookingHourly == true) {
+                            beginString += "+"
+                            endString += "+"
+                        }
+                        bookingStart?.text = beginString
+                        bookingEnd?.text = endString
+                        mPresenter.saveSate(mState)
+                    }
                 }
             }
         }

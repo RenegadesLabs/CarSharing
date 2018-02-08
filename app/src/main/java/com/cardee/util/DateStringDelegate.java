@@ -1,7 +1,6 @@
 package com.cardee.util;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -225,6 +224,16 @@ public class DateStringDelegate {
 
     public String getTimeLongTitle(Date date) {
         return dateShortViewTitleFormatter.format(date);
+    }
+
+    public String getTimeFromString(String time) {
+        try {
+            Date date = dateFormatter.parse(time);
+            return dateShortViewFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String getGMTTimeString(int hour) {
