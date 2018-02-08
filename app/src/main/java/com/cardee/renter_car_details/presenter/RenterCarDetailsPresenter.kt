@@ -10,6 +10,7 @@ import com.cardee.domain.renter.entity.mapper.OfferResponseByIdToRenterDetailedC
 import com.cardee.domain.renter.usecase.AddCarToFavorites
 import com.cardee.domain.renter.usecase.GetOfferById
 import com.cardee.renter_car_details.RenterCarDetailsContract
+import com.google.android.gms.maps.model.LatLng
 import io.reactivex.disposables.Disposable
 import java.text.DecimalFormat
 
