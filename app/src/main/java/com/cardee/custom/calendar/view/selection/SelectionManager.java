@@ -97,7 +97,7 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
                         lastBound = RangeBound.START;
                     }
             }
-            if (!rangeStart.equals(rangeEnd)) {
+            if (!rangeStart.equals(rangeEnd) && checkWholeRangeAvailable(rangeStart, rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
                 clearSelection();
@@ -105,6 +105,18 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
                 selectSingleDayRange(day, view);
             }
         }
+    }
+
+    private boolean checkWholeRangeAvailable(Day rangeStart, Day rangeEnd) {
+        int startIndex = allDayz.indexOf(rangeStart);
+        int endIndex = allDayz.indexOf(rangeEnd);
+        for (int i = startIndex + 1; i < endIndex; i++) {
+            Day day = allDayz.get(i);
+            if (!day.isEnabled()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void selectSingleDayRange(Day day, DayView view) {
@@ -255,6 +267,10 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
                 }
             }
         }).start();
+    }
+
+    public boolean isReady(){
+        return !allDayz.isEmpty();
     }
 
     @Override

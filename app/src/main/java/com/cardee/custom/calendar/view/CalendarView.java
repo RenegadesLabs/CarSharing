@@ -42,6 +42,7 @@ public class CalendarView extends LinearLayout {
     private RecyclerView bodyRecyclerView;
     private MonthAdapter adapter;
     private SelectionManager selectionManager;
+    private OnReadyListener onReadyListener;
 
     private float xTarget;
     private float yTarget;
@@ -171,6 +172,9 @@ public class CalendarView extends LinearLayout {
 
     public void addMonths(List<Month> months) {
         selectionManager.addToPeriod(months);
+        if (onReadyListener != null) {
+            onReadyListener.onReady();
+        }
     }
 
     public void setIncludeCurrent(boolean include) {
@@ -183,5 +187,17 @@ public class CalendarView extends LinearLayout {
 
     public void setSelectionAdapter(SelectionAdapter selectionAdapter) {
         selectionManager.setSelectionAdapter(selectionAdapter);
+    }
+
+    public void setOnReadyListener(OnReadyListener onReadyListener) {
+        this.onReadyListener = onReadyListener;
+        if (selectionManager.isReady()) {
+            this.onReadyListener.onReady();
+        }
+    }
+
+    public interface OnReadyListener {
+
+        void onReady();
     }
 }

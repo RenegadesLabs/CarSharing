@@ -84,7 +84,9 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                 }
             }
         }
-        adapter.setAvailabilityRange(arrayOf("2018-02-10", "2018-02-11", "2018-02-12", "2018-02-14", "2018-02-21", "2018-02-22"))
+        calendar.setOnReadyListener {
+
+        }
     }
 
     override fun setCallback(callback: (Boolean) -> Unit) {
