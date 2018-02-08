@@ -77,17 +77,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tlRenterCarDetails"/>
 
-            <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/vpRenterCarDetailsInfoPager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/tlRenterCarDetails"-->
-            <!--&gt;-->
-
-        <!--</android.support.v4.view.ViewPager>-->
-
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -335,7 +324,7 @@
         <LinearLayout
             android:id="@+id/owner_name"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/ivRenterCarDetailsOwnerPicture"
@@ -493,6 +482,7 @@ app:elevation="0dp">
         android:layout_width="@dimen/item_icon_side_large"
         android:layout_height="@dimen/item_icon_side_large"
         android:padding="@dimen/padding_x_small"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_share" />
 
 </android.support.v7.widget.Toolbar>

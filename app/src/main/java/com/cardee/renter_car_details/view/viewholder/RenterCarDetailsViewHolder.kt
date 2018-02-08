@@ -46,7 +46,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
         toggleHourlyDailyTabs(true)
-        fillMapAddressBar("")
+        toggleBookInstantly(renterDetailedCar.orderHourlyDetails?.instantBooking ?: false)
+        fillMapAddressBar(renterDetailedCar.distance?: 0)
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -66,12 +67,12 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
             0 -> {
                 hourly = true
                 toggleBookInstantly(renterDetailedCar?.orderHourlyDetails?.instantBooking ?: false)
-                toggleHourlyDailyTabs(hourly?: false)
+                toggleHourlyDailyTabs(hourly ?: false)
             }
             1 -> {
                 hourly = false
                 toggleBookInstantly(renterDetailedCar?.orderDailyDetails?.instantBooking ?: false)
-                toggleHourlyDailyTabs(hourly?: false)
+                toggleHourlyDailyTabs(hourly ?: false)
             }
         }
         updateRate()
@@ -182,27 +183,23 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                     fuelPolicyEntity.fuelPolicyName
                 }
                 2 -> {
-                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
                             " " + mActivity.getString(R.string.car_rental_rates_per_km)
                 }
-                else -> {
-                    ""
-                }
+                else -> { fuelPolicyEntity?.fuelPolicyName }
             }
 
         } else {
             val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar?.orderHourlyDetails?.fuelPolicy
             when (fuelPolicyEntity?.fuelPolicyId) {
-                0 -> {
+                1 -> {
                     fuelPolicyEntity.fuelPolicyName
                 }
-                1 -> {
-                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                2 -> {
+                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
                             " " + mActivity.getString(R.string.car_rental_rates_per_km)
                 }
-                else -> {
-                    ""
-                }
+                else -> { fuelPolicyEntity?.fuelPolicyName }
             }
         }
     }
@@ -222,8 +219,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
     }
 
-    private fun fillMapAddressBar(distance: String) {
-        val text = if (!distance.isEmpty()) distance + "m" + " \u2022 " + renterDetailedCar?.address
+    private fun fillMapAddressBar(distance: Int) {
+        val text = if (distance != 0) distance.toString() + "m" + " \u2022 " + renterDetailedCar?.address
         else renterDetailedCar?.address
         mActivity.addressText.text = text
     }
@@ -268,8 +265,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 .error(mActivity.resources.getDrawable(R.drawable.ic_photo_placeholder))
                 .transform(CircleTransform(mActivity))
                 .into(mActivity.ivRenterCarDetailsOwnerPicture)
-        mActivity.tvRenterCarDetailsOwnerAcceptance.text = renterDetailedCar?.owner?.acceptance.toString()
-
+        val acceptanceText = renterDetailedCar?.owner?.acceptance.toString() + "%"
+        mActivity.tvRenterCarDetailsOwnerAcceptance.text = acceptanceText
+        val cancellationText = renterDetailedCar?.owner?.cancellation.toString() + "%"
+        mActivity.tv_renterCarDetailsOwnerCancellation.text = cancellationText
         val responseText = renterDetailedCar?.owner?.responseTime.toString() + " " +
                 if (renterDetailedCar?.owner?.responseTime ?: 0 > 1) mActivity.getString(R.string.owner_profile_info_minutes)
                 else mActivity.getString(R.string.owner_profile_info_minute)
@@ -301,10 +300,6 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
 
     fun isHourly(): Boolean? {
         return hourly
-    }
-
-    fun updateDistance(distance: String) {
-        fillMapAddressBar(distance)
     }
 }
 
