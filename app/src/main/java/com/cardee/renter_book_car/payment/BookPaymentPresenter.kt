@@ -10,6 +10,7 @@ class BookPaymentPresenter(view: BookPaymentView) {
     var mView: BookPaymentView? = view
     val getCards = GetCardsUseCase()
     var disposable: Disposable? = null
+    var mAdapter: PaymentAdapter? = null
 
     fun onDestroy() {
         mView = null
@@ -23,13 +24,21 @@ class BookPaymentPresenter(view: BookPaymentView) {
 
         disposable = getCards.execute(GetCardsUseCase.RequestValues(), object : RxUseCase.Callback<GetCardsUseCase.ResponseValues> {
             override fun onSuccess(response: GetCardsUseCase.ResponseValues) {
-
+                val dataList = response.cards.map { it.brand + " " + it.cardNumber }.toList()
+                mAdapter?.setData(dataList)
             }
 
             override fun onError(error: Error) {
                 mView?.showMessage(error.message)
             }
         })
+    }
 
+    fun setAdapter(adapter: PaymentAdapter) {
+        mAdapter = adapter
+    }
+
+    fun getAdapter(): PaymentAdapter? {
+        return mAdapter
     }
 }

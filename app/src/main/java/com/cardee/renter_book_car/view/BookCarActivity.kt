@@ -100,6 +100,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             } else {
                 paymentIntent.putExtra("acceptCash", mState.acceptCashDaily.get())
             }
+            paymentIntent.putExtra("card", paymentChoose.text)
             startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
         }
         addNote.setOnClickListener {
@@ -184,7 +185,10 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             }
             PAYMENT_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-
+                    val method = data?.getStringExtra("method")
+                    paymentChoose.text = method ?: resources.getString(R.string.choose)
+                    mState.paymentSelected.set(true)
+                    mPresenter.saveSate(mState)
                 }
             }
         }
