@@ -162,6 +162,7 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
         this.selectionMode = selectionAdapter.getMode();
         this.selectionAdapter = selectionAdapter;
         this.selectionAdapter.setSelectionManager(this);
+        this.selectionAdapter.setAvailableDatesSetListener(this);
         refresh();
     }
 

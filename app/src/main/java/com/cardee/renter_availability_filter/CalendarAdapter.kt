@@ -2,10 +2,12 @@ package com.cardee.renter_availability_filter
 
 import com.cardee.custom.calendar.model.Day
 import com.cardee.custom.calendar.view.selection.RangeSelectionAdapter
+import com.cardee.util.DateRangeConverter
 import java.util.*
 
 class CalendarAdapter : RangeSelectionAdapter<Date>() {
 
+    private val converter = DateRangeConverter()
     private var listener: (List<Date>) -> Unit = {}
     private var selection: MutableList<Date> = mutableListOf()
 
@@ -21,5 +23,11 @@ class CalendarAdapter : RangeSelectionAdapter<Date>() {
 
     fun setSelectionListener(listener: (List<Date>) -> Unit) {
         this.listener = listener
+    }
+
+    fun setAvailabilityRange(dates: Array<String?>) {
+        converter.convertToDailyDateList(dates, { result: List<Date> ->
+            setAvailableDates(result.toTypedArray())
+        })
     }
 }

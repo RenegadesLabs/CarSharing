@@ -11,14 +11,14 @@ import java.util.concurrent.TimeUnit
 class DateRangeConverter {
 
     companion object {
-        private const val ISO_8601_DATE_PATTERN: String = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        private const val ISO_8601_DATE_PATTERN: String = "yyyy-MM-dd"
         private const val ISO_TIME_PATTERN: String = "HH:mm:ssZZZZZ"
     }
 
     private val isoDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
     private val isoTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
 
-    fun convertToDailyDateList(dateArray: Array<String?>, consumer: Consumer<List<Date>>) {
+    fun convertToDailyDateList(dateArray: Array<String?>, consumer: (List<Date>) -> Unit) {
         val subscription = Single.just(dateArray)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -27,11 +27,12 @@ class DateRangeConverter {
                     val dateList = dates.map { isoDateFormatter.parse(it) }
                     Single.just(dateList)
                 }.subscribe(consumer)
+
     }
 
     fun convertToDailyDateList(dateBegin: String,
                                dateEnd: String,
-                               consumer: Consumer<MutableList<Date>>) {
+                               consumer: (List<Date>) -> Unit) {
         val subscription = Single.just(IsoDateRangeWrapper(dateBegin, dateEnd))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,7 +56,7 @@ class DateRangeConverter {
     fun convertToHourlyDateList(dateArray: Array<String?>,
                                 timeBegin: String? = null,
                                 timeEnd: String? = null,
-                                consumer: Consumer<List<Date>>) {
+                                consumer: (List<Date>) -> Unit) {
         val subscription = Single.just(IsoDateWrapper(dateArray, timeBegin, timeEnd))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

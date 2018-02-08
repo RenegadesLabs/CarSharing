@@ -4,8 +4,6 @@ import java.util.concurrent.*
 
 class ThreadExecutor private constructor() : Executor {
 
-    var checkCounter: Int = 0
-
     private val workQueue: BlockingQueue<Runnable>
     private val executor: ThreadPoolExecutor
     private val factory: TaskThreadFactory
