@@ -134,15 +134,12 @@ public class PetrolView extends ConstraintLayout implements View.OnClickListener
                 .equals(LEVELS[7])) {
             fullness = 1.f;
         } else {
-            isByMileage = true;
+//            isByMileage = true;
         }
         return fullness;
     }
 
     public int getMileage() {
-        if (!isByMileage) {
-            return 0;
-        }
         return Integer.parseInt(mMileageValue.getText().toString());
     }
 }

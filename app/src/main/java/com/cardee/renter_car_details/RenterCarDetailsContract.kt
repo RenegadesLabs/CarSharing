@@ -10,8 +10,6 @@ interface RenterCarDetailsContract {
 
         fun setCarLocationString(locationString: String)
 
-        fun setDistanceToCar(distance: String)
-
         fun setDetailedCar(renterDetailedCar: RenterDetailedCar)
 
         fun setFavorite(favorite: Boolean)
@@ -25,8 +23,6 @@ interface RenterCarDetailsContract {
         fun fetchLocation(callback: (LatLng) -> Unit)
 
         fun getDetailedCar(carId: Int?, lat: Double? = null, lng: Double? = null)
-
-        fun getDistanceToCar(myLocation: LatLng, carId: Int)
 
         fun addCarToFavorites(carId: Int?, favorite: Boolean)
 

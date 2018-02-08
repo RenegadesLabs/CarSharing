@@ -168,10 +168,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         //TODO implement)
     }
 
-    override fun setDistanceToCar(distance: String) {
-        viewHolder?.updateDistance(distance)
-    }
-
     override fun showProgress(show: Boolean) {
     }
 
