@@ -300,10 +300,10 @@ class AvailabilityFromFilterDelegate {
         return ""
     }
 
-    fun setHourlyAvailabilityRange(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar) {
+    fun setHourlyAvailabilityRange(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar?) {
         try {
-            val timeBegin = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeBegin)
-            val timeEnd = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeEnd)
+            val timeBegin = shortTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeBegin)
+            val timeEnd = shortTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeEnd)
             if (isSingleDay(timeBegin, timeEnd)) {
                 val timingText: String? = context.getString(R.string.renter_car_details_timing_available_from) +
                         timeBegin.time + context.getString(R.string.renter_car_details_timing_available_to) +

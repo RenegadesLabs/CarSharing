@@ -521,12 +521,14 @@
     <string name="renter_car_details_response">Response</string>
     <string name="renter_car_details_book">Book Car</string>
     <string name="renter_car_details_book_instantly">Book Instantly</string>
-    <string name="renter_car_details_seats_suffix">-seater\u2022</string>
+    <string name="renter_car_details_seats_suffix">-seater \u2022</string>
     <string name="renter_car_details_review_date_prefix">on</string>
     <string name="renter_car_details_review_more_prefix">Read</string>
     <string name="renter_car_details_review_more_suffix">reviews</string>
     <string name="renter_car_details_review_more_suffix_single">review</string>
+    <string name="renter_car_details_review_trips_suffix">\u00a0trips</string>
     <string name="renter_car_details_owner_by">Owned by</string>
+    <string name="renter_car_details_added_to_fav">Added to favorites!</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">

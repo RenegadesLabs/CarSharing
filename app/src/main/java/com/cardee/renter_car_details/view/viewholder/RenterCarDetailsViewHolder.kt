@@ -35,8 +35,9 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
 
     init {
         mActivity.tlRenterCarDetails.apply {
+            addTab(this@apply.newTab().setText(R.string.car_rental_info_hourly), 0)
+            addTab(this@apply.newTab().setText(R.string.car_rental_info_daily), 1)
             addOnTabSelectedListener(this@RenterCarDetailsViewHolder)
-            setupWithViewPager(mActivity.vpRenterCarDetailsInfoPager)
         }
     }
 
@@ -44,8 +45,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         this.renterDetailedCar = renterDetailedCar
         fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
-        mActivity.vpRenterCarDetailsInfoPager.adapter = RentalPagerAdapter(renterDetailedCar)
-        fillMapAddressBar()
+        toggleHourlyDailyTabs(true)
+        fillMapAddressBar("")
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -63,14 +64,14 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     override fun onTabSelected(tab: TabLayout.Tab?) {
         when (tab?.position) {
             0 -> {
-                mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book_instantly)
-                mActivity.iv_bookButtonInstant.visibility = View.VISIBLE
                 hourly = true
+                toggleBookInstantly(renterDetailedCar?.orderHourlyDetails?.instantBooking ?: false)
+                toggleHourlyDailyTabs(hourly?: false)
             }
             1 -> {
-                mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book)
-                mActivity.iv_bookButtonInstant.visibility = View.GONE
                 hourly = false
+                toggleBookInstantly(renterDetailedCar?.orderDailyDetails?.instantBooking ?: false)
+                toggleHourlyDailyTabs(hourly?: false)
             }
         }
         updateRate()
@@ -136,120 +137,84 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         }
     }
 
-
-    private inner class RentalPagerAdapter(val renterDetailedCar: RenterDetailedCar) : PagerAdapter() {
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val contentPage = ContentPage.values()[position]
-            val inflater = LayoutInflater.from(mActivity)
-            val layout = inflater.inflate(R.layout.view_renter_car_details_info_page, container, false) as ViewGroup
-
-            when (contentPage) {
-                ContentPage.DAILY -> {
-                    layout.tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
-                    setPickupAndReturnTime(layout)
-                    setRentalRates(true, layout)
-                    setDeliveryRates(true, layout)
-                    setFuelPolicyText(true, layout)
-                }
-                ContentPage.HOURLY -> {
-                    layout.tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
-                    AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(mActivity, layout.tv_renterCarDetailsTimingText, renterDetailedCar)
-                    setRentalRates(false, layout)
-                    setDeliveryRates(false, layout)
-                    setFuelPolicyText(false, layout)
-                }
-            }
-            container.addView(layout)
-            return layout
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            val customPagerEnum = ContentPage.values()[position]
-            return mActivity.getString(customPagerEnum.titleResId)
-        }
-
-        override fun getCount(): Int {
-            return ContentPage.values().size
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            container.removeView(`object` as View)
-        }
-
-        override fun isViewFromObject(view: View, `object`: Any): Boolean {
-            return view === `object`
-        }
-
-        private fun setRentalRates(daily: Boolean, root: ViewGroup) {
-            root.tv_renterCarDetailsRatesText.text = if (!daily) {
-                "$" + renterDetailedCar.orderHourlyDetails?.amntRateFirst.toString() + " " +
-                        mActivity.getString(R.string.car_rental_rates_per_hour_peak) + "\n" +
-                        "$" + renterDetailedCar.orderHourlyDetails?.amntRateSecond.toString() + " " +
-                        mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
+    private fun toggleHourlyDailyTabs(hourly: Boolean) {
+        mActivity.carDetailsInfoView.apply {
+            if (hourly) {
+                tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
+                setPickupAndReturnTime(this@apply)
             } else {
-                "$" + renterDetailedCar.orderDailyDetails?.amntRateFirst.toString() + " " +
-                        mActivity.getString(R.string.car_rental_rates_per_day_weekday) + "\n" +
-                        "$" + renterDetailedCar.orderDailyDetails?.amntRateSecond.toString() + " " +
-                        mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
+                tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
+                AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(mActivity, this.tv_renterCarDetailsTimingText, renterDetailedCar)
             }
+            setRentalRates(hourly, this@apply)
+            setDeliveryRates(hourly, this@apply)
+            setFuelPolicyText(hourly, this@apply)
         }
+    }
 
-        private fun setPickupAndReturnTime(root: ViewGroup) {
-            DateStringDelegate(mActivity).apply {
-                val text: String = getPickupTime(renterDetailedCar.orderDailyDetails?.timePickup) + "\n" +
-                        getReturnTime(renterDetailedCar.orderDailyDetails?.timeReturn)
-                root.tv_renterCarDetailsTimingText.text = text
-            }
+    private fun setRentalRates(hourly: Boolean, root: View) {
+        root.tv_renterCarDetailsRatesText.text = if (hourly) {
+            "$" + renterDetailedCar?.orderHourlyDetails?.amntRateFirst.toString() + " " +
+                    mActivity.getString(R.string.car_rental_rates_per_hour_peak) + "\n" +
+                    "$" + renterDetailedCar?.orderHourlyDetails?.amntRateSecond.toString() + " " +
+                    mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
+        } else {
+            "$" + renterDetailedCar?.orderDailyDetails?.amntRateFirst.toString() + " " +
+                    mActivity.getString(R.string.car_rental_rates_per_day_weekday) + "\n" +
+                    "$" + renterDetailedCar?.orderDailyDetails?.amntRateSecond.toString() + " " +
+                    mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
         }
+    }
 
-        private fun setFuelPolicyText(daily: Boolean, root: ViewGroup) {
-            root.tv_renterCarDetailsFuelText.text = if (daily) {
-                val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar.orderDailyDetails?.fuelPolicy
-                when (fuelPolicyEntity?.fuelPolicyId) {
-                    0 -> {
-                        fuelPolicyEntity.fuelPolicyName
-                    }
-                    1 -> {
-                        fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
-                                " " + mActivity.getString(R.string.car_rental_rates_per_km)
-                    }
-                    else -> {
-                        ""
-                    }
+    private fun setPickupAndReturnTime(root: View) {
+        DateStringDelegate(mActivity).apply {
+            val text: String = getPickupTime(renterDetailedCar?.orderDailyDetails?.timePickup) + "\n" +
+                    getReturnTime(renterDetailedCar?.orderDailyDetails?.timeReturn)
+            root.tv_renterCarDetailsTimingText.text = text
+        }
+    }
+
+    private fun setFuelPolicyText(hourly: Boolean, root: View) {
+        root.tv_renterCarDetailsFuelText.text = if (!hourly) {
+            val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar?.orderDailyDetails?.fuelPolicy
+            when (fuelPolicyEntity?.fuelPolicyId) {
+                1 -> {
+                    fuelPolicyEntity.fuelPolicyName
                 }
-
-            } else {
-                val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar.orderHourlyDetails?.fuelPolicy
-                when (fuelPolicyEntity?.fuelPolicyId) {
-                    0 -> {
-                        fuelPolicyEntity.fuelPolicyName
-                    }
-                    1 -> {
-                        fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
-                                " " + mActivity.getString(R.string.car_rental_rates_per_km)
-                    }
-                    else -> {
-                        ""
-                    }
+                2 -> {
+                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                            " " + mActivity.getString(R.string.car_rental_rates_per_km)
+                }
+                else -> {
+                    ""
                 }
             }
-        }
 
-        private fun setDeliveryRates(daily: Boolean, root: ViewGroup) {
-            root.tv_renterCarDetailsDeliveryText.text = if (daily) {
-                mActivity.getString(R.string.car_rental_delivery_rates_prefix) + " @ \$" + renterDetailedCar.deliveryRates?.baseRate +
-                        " + $" + renterDetailedCar.deliveryRates?.distanceRate +
-                        mActivity.getString(R.string.car_rental_rates_per_km)
-            } else {
-                mActivity.getString(R.string.car_rental_delivery_rates_self)
+        } else {
+            val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar?.orderHourlyDetails?.fuelPolicy
+            when (fuelPolicyEntity?.fuelPolicyId) {
+                0 -> {
+                    fuelPolicyEntity.fuelPolicyName
+                }
+                1 -> {
+                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage.toString() +
+                            " " + mActivity.getString(R.string.car_rental_rates_per_km)
+                }
+                else -> {
+                    ""
+                }
             }
         }
     }
 
-    enum class ContentPage private constructor(val titleResId: Int) {
-        HOURLY(R.string.car_rental_info_hourly),
-        DAILY(R.string.car_rental_info_daily)
+    private fun setDeliveryRates(hourly: Boolean, root: View) {
+        root.tv_renterCarDetailsDeliveryText.text = if (!hourly) {
+            mActivity.getString(R.string.car_rental_delivery_rates_prefix) + " @ \$" + renterDetailedCar?.deliveryRates?.baseRate +
+                    " + $" + renterDetailedCar?.deliveryRates?.distanceRate +
+                    mActivity.getString(R.string.car_rental_rates_per_km)
+        } else {
+            mActivity.getString(R.string.car_rental_delivery_rates_self)
+        }
     }
 
     private fun fillToolBar() {
@@ -257,8 +222,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
     }
 
-    private fun fillMapAddressBar() {
-        mActivity.addressText.text = renterDetailedCar?.address
+    private fun fillMapAddressBar(distance: String) {
+        val text = if (!distance.isEmpty()) distance + "m" + " \u2022 " + renterDetailedCar?.address
+        else renterDetailedCar?.address
+        mActivity.addressText.text = text
     }
 
     private fun fillAboutInfo() {
@@ -270,23 +237,28 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun setTripsCount() {
-        val text = "\u2022" + renterDetailedCar?.trips
+        val text = " \u2022 " + renterDetailedCar?.trips +
+                mActivity.getString(R.string.renter_car_details_review_trips_suffix)
         mActivity.tvRenterCarDetailsRatingText.text = text
     }
 
     private fun fillReview() {
-        mActivity.rbRenterCarDetailsRating.score = renterDetailedCar?.rating!!
+        mActivity.rbRenterCarDetailsRating.score = renterDetailedCar?.rating ?: 0F
         setTripsCount()
-        mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
-        val dateText = mActivity.getString(R.string.renter_car_details_review_date_prefix) + " " +
-                DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
-        mActivity.tvRenterCarDetailsCommentDate.text = dateText
-        mActivity.tvRenterCarDetailsComment.text = renterDetailedCar?.reviews?.get(0)?.comment
-        val readMoreText = mActivity.getString(R.string.renter_car_details_review_more_prefix) + " " +
-                renterDetailedCar?.reviews?.size + " " +
-                if (renterDetailedCar?.reviewCount ?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
-                else mActivity.getString(R.string.renter_car_details_review_more_suffix_single)
-        mActivity.tvRenterCarDetailsReviewMore.text = readMoreText
+        if (renterDetailedCar?.reviews?.isEmpty() == false) {
+            mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
+            val dateText = mActivity.getString(R.string.renter_car_details_review_date_prefix) + " " +
+                    DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
+            mActivity.tvRenterCarDetailsCommentDate.text = dateText
+            mActivity.tvRenterCarDetailsComment.text = renterDetailedCar?.reviews?.get(0)?.comment
+            val readMoreText = mActivity.getString(R.string.renter_car_details_review_more_prefix) + " " +
+                    renterDetailedCar?.reviews?.size + " " +
+                    if (renterDetailedCar?.reviewCount ?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
+                    else mActivity.getString(R.string.renter_car_details_review_more_suffix_single)
+            mActivity.tvRenterCarDetailsReviewMore.text = readMoreText
+            return
+        }
+        mActivity.clReviewContainer.visibility = View.GONE
     }
 
     private fun fillOwner() {
@@ -305,7 +277,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun fillBookView() {
-        mActivity.rbBookCarRating.score = renterDetailedCar?.rating!!
+        mActivity.rbBookCarRating.score = renterDetailedCar?.rating ?: 0F
         updateRate()
     }
 
@@ -317,8 +289,22 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.tvBookCarRate.text = rateText
     }
 
+    private fun toggleBookInstantly(instant: Boolean) {
+        if (instant) {
+            mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book_instantly)
+            mActivity.iv_bookButtonInstant.visibility = View.VISIBLE
+            return
+        }
+        mActivity.tv_bookButtonText.setText(R.string.renter_car_details_book)
+        mActivity.iv_bookButtonInstant.visibility = View.GONE
+    }
+
     fun isHourly(): Boolean? {
         return hourly
+    }
+
+    fun updateDistance(distance: String) {
+        fillMapAddressBar(distance)
     }
 }
 

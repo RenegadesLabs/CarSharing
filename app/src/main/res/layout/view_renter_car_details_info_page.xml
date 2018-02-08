@@ -28,12 +28,13 @@
 
     <TextView
         android:id="@+id/tv_renterCarDetailsTimingText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
-        android:text="Pickup car from 9am onwards
-Return by 8am (next day) on the last day"
+        android:text=""
         android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsTimingTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsTimingTitle" />
 
@@ -59,12 +60,13 @@ Return by 8am (next day) on the last day"
 
     <TextView
         android:id="@+id/tv_renterCarDetailsRatesText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
-        android:text="$80 per day (weekday)
-$100 per day (weekend and P.H.)"
+        android:text=""
         android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsRatesTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsRatesTitle" />
 
@@ -90,11 +92,13 @@ $100 per day (weekend and P.H.)"
 
     <TextView
         android:id="@+id/tv_renterCarDetailsDeliveryText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
-        android:text="Delivery @ $5 + $1.50 per km"
+        android:text=""
         android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsDeliveryTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsDeliveryTitle" />
     <TextView
@@ -118,7 +122,7 @@ $100 per day (weekend and P.H.)"
 
     <TextView
         android:id="@+id/tv_renterCarDetailsFuelTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_margin"
         android:text="@string/car_rental_info_fuel"
@@ -129,11 +133,13 @@ $100 per day (weekend and P.H.)"
 
     <TextView
         android:id="@+id/tv_renterCarDetailsFuelText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginTop="@dimen/small_margin"
-        android:text="Return with similar petrol level"
+        android:text=""
         android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_renterCarDetailsFuelTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_renterCarDetailsFuelTitle" />
 

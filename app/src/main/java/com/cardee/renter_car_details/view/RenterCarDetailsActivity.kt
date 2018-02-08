@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.cardee.R
+import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.RenterCarDetailsContract
+import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,23 +22,23 @@ import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 
 class RenterCarDetailsActivity(private val delegate: LocationClient = LocationClientImpl()) :
         AppCompatActivity(), View.OnClickListener, OnMapReadyCallback, RenterCarDetailsContract.View, LocationClient by delegate {
-
     private var mCarId: Int? = null
+    private var favorite: Boolean? = null
     private var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
-
-    private var mViewHolder: RenterCarDetailsViewHolder? = null
+    private var viewHolder: RenterCarDetailsViewHolder? = null
 
     override fun onClick(p0: View?) {
         when (p0) {
             ivRenterCarDetailsToolbarShare -> {
             }
             ivRenterCarDetailsToolbarFavoritesImg -> {
+                presenter.addCarToFavorites(mCarId, favorite?: false)
             }
             bBookCar -> {
                 val intent = Intent(this, BookCarActivity::class.java)
                 intent.apply {
                     putExtra("carId", mCarId)
-                    putExtra("isHourly", mViewHolder?.isHourly())
+                    putExtra("isHourly", viewHolder?.isHourly())
                 }
                 startActivity(intent)
             }
@@ -54,13 +56,15 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
             setDisplayHomeAsUpEnabled(true)
             title = null
         }
-        RenterCarDetailsViewHolder(this)
+        viewHolder = RenterCarDetailsViewHolder(this)
         carLocationMap?.run {
             onCreate(savedInstanceState)
             getMapAsync(this@RenterCarDetailsActivity)
         }
         setListeners()
         getData()
+        ivRenterCarDetailsToolbarFavoritesImg
+                .setImageResource(if (favorite == true) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
     }
 
     override fun onMapReady(map: GoogleMap?) {
@@ -73,6 +77,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     override fun onStart() {
         super.onStart()
+        presenter.getDetailedCar(mCarId)
         carLocationMap.onStart()
     }
 
@@ -84,6 +89,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     private fun getData() {
         mCarId = intent.getIntExtra("carId", -1)
+        favorite = intent.getBooleanExtra("isFavorite", false)
     }
 
     private fun setListeners() {
@@ -99,8 +105,31 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return super.onOptionsItemSelected(item)
     }
 
+    override fun setFavorite(favorite: Boolean) {
+        ivRenterCarDetailsToolbarFavoritesImg
+                .setImageResource(if (favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
+    }
+
+
+    override fun setDetailedCar(renterDetailedCar: RenterDetailedCar) {
+        viewHolder?.bind(renterDetailedCar)
+    }
+
     override fun setCarLocation(location: String) {
 
+    }
+
+    override fun setDistanceToCar(distance: String) {
+        viewHolder?.updateDistance(distance)
+    }
+
+    override fun showProgress(show: Boolean) {
+    }
+
+    override fun showMessage(message: String?) {
+    }
+
+    override fun showMessage(messageId: Int) {
     }
 
     override fun onPause() {
@@ -116,6 +145,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     override fun onDestroy() {
         super.onDestroy()
         disconnect()
+        presenter.onDestroy()
         carLocationMap.onDestroy()
     }
 }
