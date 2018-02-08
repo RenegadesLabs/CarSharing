@@ -6,9 +6,9 @@ import com.google.android.gms.maps.model.LatLng
 
 interface RenterCarDetailsContract {
 
-    interface View: BaseView {
+    interface View : BaseView {
 
-        fun setCarLocation(location: String)
+        fun setCarLocationString(locationString: String)
 
         fun setDistanceToCar(distance: String)
 
@@ -22,7 +22,7 @@ interface RenterCarDetailsContract {
 
         fun attachView(view: View)
 
-        fun fetchLocation(callback: (String) -> Unit)
+        fun fetchLocation(callback: (LatLng) -> Unit)
 
         fun getDetailedCar(carId: Int?)
 

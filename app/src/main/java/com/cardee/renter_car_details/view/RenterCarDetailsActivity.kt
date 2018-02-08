@@ -15,6 +15,7 @@ import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_map.*
@@ -32,7 +33,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
             ivRenterCarDetailsToolbarShare -> {
             }
             ivRenterCarDetailsToolbarFavoritesImg -> {
-                presenter.addCarToFavorites(mCarId, favorite?: false)
+                presenter.addCarToFavorites(mCarId, favorite ?: false)
             }
             bBookCar -> {
                 val intent = Intent(this, BookCarActivity::class.java)
@@ -115,7 +116,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         viewHolder?.bind(renterDetailedCar)
     }
 
-    override fun setCarLocation(location: String) {
+    override fun setCarLocationString(locationString: String) {
 
     }
 

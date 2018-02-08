@@ -161,7 +161,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         }
 
         root.total_amount.text = "$%.2f".format(total)
-
         dialog.show()
     }
 
