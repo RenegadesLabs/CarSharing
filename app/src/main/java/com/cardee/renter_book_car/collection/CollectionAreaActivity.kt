@@ -19,10 +19,14 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.mvp.BaseView
 import com.cardee.owner_car_details.service.FetchAddressService
+import com.cardee.service.delegate.HideAnimationDelegate
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.places.Places
+import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -37,6 +41,7 @@ class CollectionAreaActivity : AppCompatActivity(), BaseView, OnMapReadyCallback
     private val ADDRESS_BY_LOCATION_CODE = 201
     private val MY_ADDRESS_BY_LOCATION_CODE = 202
     private val MY_ADDRESS_BY_LOCATION_UPDATE_CODE = 203
+    private val SEARCH_ADDRESS_REQUEST_CODE = 204
     private val KEY_CAMERA_POSITION = "camera_position"
     private val KEY_LOCATION = "location"
     private val SINGAPORE_LAT = 1.352083
@@ -62,6 +67,7 @@ class CollectionAreaActivity : AppCompatActivity(), BaseView, OnMapReadyCallback
     private var mDefaultLocation: LatLng = LatLng(SINGAPORE_LAT, SINGAPORE_LNG)
     private var mCameraPosition: CameraPosition? = null
     private var currentAddress: String? = null
+    private var hideDelegate: HideAnimationDelegate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +81,7 @@ class CollectionAreaActivity : AppCompatActivity(), BaseView, OnMapReadyCallback
         initViews()
         setListeners()
         addressReceiver = AddressResultReceiver(handler)
+        hideDelegate = HideAnimationDelegate(addressCard)
     }
 
     private fun setListeners() {
@@ -89,6 +96,23 @@ class CollectionAreaActivity : AppCompatActivity(), BaseView, OnMapReadyCallback
                 intent.putExtra("location", mLastSearchLocation)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
+            }
+        }
+        addressCard.setOnClickListener {
+            if (hideDelegate?.isAnimating() == true) {
+                return@setOnClickListener
+            }
+            try {
+                val intent = PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                        .build(this)
+                startActivityForResult(intent, SEARCH_ADDRESS_REQUEST_CODE)
+                if (hideDelegate?.isHidden == false) {
+                    hideDelegate?.hide()
+                }
+            } catch (e: GooglePlayServicesRepairableException) {
+                e.printStackTrace()
+            } catch (e: GooglePlayServicesNotAvailableException) {
+                e.printStackTrace()
             }
         }
     }
@@ -302,6 +326,21 @@ class CollectionAreaActivity : AppCompatActivity(), BaseView, OnMapReadyCallback
         return currentAddressString != null &&
                 myCurrentAddressString != null &&
                 currentAddressString.equals(myCurrentAddressString, ignoreCase = true)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SEARCH_ADDRESS_REQUEST_CODE) {
+            if (hideDelegate?.isHidden == true) {
+                hideDelegate?.show()
+            }
+            if (resultCode == RESULT_OK) {
+                val place = PlaceAutocomplete.getPlace(this, data)
+                updateCurrent(place.latLng, ADDRESS_BY_LOCATION_CODE)
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                val status = PlaceAutocomplete.getStatus(this, data)
+                Log.e(TAG, status.statusMessage)
+            }
+        }
     }
 
     private inner class AddressResultReceiver(handler: Handler) : ResultReceiver(handler) {
