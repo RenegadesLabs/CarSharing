@@ -33,6 +33,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     private var mGetCostDisposable: Disposable? = null
     private var mCostBreakdown: BookingCost? = null
     private var mCarId: Int? = null
+    private var showBreakdown: Boolean = false
 
     override fun init(bookCarView: BookCarContract.BookCarView) {
         mView = bookCarView
@@ -78,10 +79,14 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val acceptCashDaily = offer.orderDailyDetails?.acceptCash
         state.acceptCashHourly.set(acceptCashHourly ?: false)
         state.acceptCashDaily.set(acceptCashDaily ?: false)
+        state.availabilityDaily = offer.carAvailabilityDaily
+        state.availabilityHourly = offer.carAvailabilityHourly
+        state.availabilityHourlyBegin = offer.carAvailabilityTimeBegin
+        state.availabilityHourlyEnd = offer.carAvailabilityTimeEnd
 
         mView?.resetCost()
 
-        getCost(mCarId ?: return, state)
+        getCost(mCarId ?: return, state, null)
     }
 
     private fun getHourly(filter: BrowseCarsFilter): Boolean {
@@ -91,7 +96,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         return filter.bookingHourly == true
     }
 
-    override fun getCost(carId: Int, state: BookCarState) {
+    override fun getCost(carId: Int, state: BookCarState, context: AppCompatActivity?) {
         if (mGetCostDisposable?.isDisposed == false) {
             mGetCostDisposable?.dispose()
         }
@@ -119,7 +124,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
                 } else {
                     "%.2f".format(total.toFloat())
                 }
-
                 totalString = if (state.bookingHourly == true) {
                     "$$totalString++"
                 } else {
@@ -127,6 +131,9 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
                 }
 
                 mView?.setTotalCost(totalString)
+                if (showBreakdown) {
+                    continueShowBreakdown(context, state)
+                }
             }
 
             override fun onError(error: Error) {
@@ -135,9 +142,13 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         })
     }
 
-    override fun showCostBreakdown(context: AppCompatActivity, state: BookCarState) {
-        getCost(mCarId ?: return, state)
+    override fun showCostBreakdown(context: AppCompatActivity?, state: BookCarState) {
+        mCostBreakdown = null
+        showBreakdown = true
+        getCost(mCarId ?: return, state, context)
+    }
 
+    private fun continueShowBreakdown(context: AppCompatActivity?, state: BookCarState) {
         val nonPeakCount = (mCostBreakdown ?: return).nonPeakCount
         val nonPeakCost = mCostBreakdown?.nonPeakCost
         val peakCount = mCostBreakdown?.peakCount
@@ -148,7 +159,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val total = mCostBreakdown?.total
 
 
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(context ?: return)
         val root = context.layoutInflater.inflate(R.layout.dialog_cost_breakdown, null)
         builder.setView(root)
         val dialog = builder.create()

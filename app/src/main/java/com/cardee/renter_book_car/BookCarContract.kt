@@ -18,8 +18,8 @@ interface BookCarContract {
         fun init(bookCarView: BookCarView)
         fun getOffer(id: Int, state: BookCarState)
         fun onDestroy()
-        fun showCostBreakdown(context: AppCompatActivity, state: BookCarState)
-        fun getCost(carId: Int, state: BookCarState)
+        fun showCostBreakdown(context: AppCompatActivity?, state: BookCarState)
+        fun getCost(carId: Int, state: BookCarState, context: AppCompatActivity?)
         fun getState(): BookCarState
         fun saveSate(state: BookCarState)
     }

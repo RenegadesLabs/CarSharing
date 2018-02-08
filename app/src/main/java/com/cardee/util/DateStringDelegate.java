@@ -62,7 +62,7 @@ public class DateStringDelegate {
         timeFormatter.setTimeZone(timeZone);
         timeViewFormatter.setTimeZone(timeZone);
         dateFormatter.setTimeZone(timeZone);
-        dateShortViewTitleFormatter.setTimeZone(timeZone);
+//        dateShortViewTitleFormatter.setTimeZone(timeZone);
         dateViewFormatter.setTimeZone(timeZone);
         creationDateViewFormatter.setTimeZone(timeZone);
         dateShortViewFormatter.setTimeZone(timeZone);
@@ -71,6 +71,7 @@ public class DateStringDelegate {
         symbols.setAmPmStrings(new String[]{"am", "pm"});
         dateViewFormatter.setDateFormatSymbols(symbols);
         creationDateViewFormatter.setDateFormatSymbols(symbols);
+        dateShortViewTitleFormatter.setDateFormatSymbols(symbols);
 
         availabilityPickupPrefix = context.getString(R.string.availability_pickup_prefix);
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix);
@@ -229,7 +230,7 @@ public class DateStringDelegate {
     public String getTimeFromString(String time) {
         try {
             Date date = dateFormatter.parse(time);
-            return dateShortViewFormatter.format(date);
+            return dateShortViewTitleFormatter.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

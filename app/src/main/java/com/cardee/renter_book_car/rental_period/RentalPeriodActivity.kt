@@ -22,6 +22,9 @@ import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*
 class RentalPeriodActivity : AppCompatActivity() {
 
     var mHourly: Boolean? = null
+    var mAvailability: Array<String?>? = null
+    var mAvailabilityBegin: String? = null
+    var mAvailabilityEnd: String? = null
     var mDailyAdapter: CalendarAdapter? = null
     var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
@@ -50,6 +53,7 @@ class RentalPeriodActivity : AppCompatActivity() {
                 timeBegin = dateDelegate?.getGMTTimeString(it[0])
                 timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
             }
+            mAvailability?.let { mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd) }
             hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
             hourlyView.btnHourReset.setOnClickListener {
                 hourlyView.timePicker.reset()
@@ -68,6 +72,7 @@ class RentalPeriodActivity : AppCompatActivity() {
                 timeBegin = dateDelegate?.getGMTTimeString(it[0])
                 timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
             }
+            mAvailability?.let { mDailyAdapter?.setAvailabilityRange(it) }
             dailyView.calendar.setSelectionAdapter(mDailyAdapter)
             dailyView.btnReset.setOnClickListener {
                 dailyView.calendar.reset()
@@ -87,6 +92,9 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     private fun getIntentData() {
         mHourly = intent.getBooleanExtra("hourly", true)
+        mAvailability = intent.getStringArrayExtra("availability")
+        mAvailabilityBegin = intent.getStringExtra("begin")
+        mAvailabilityEnd = intent.getStringExtra("end")
     }
 
     private fun prepareWindow() {

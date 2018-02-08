@@ -65,22 +65,27 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         bookHourly.setOnClickListener {
             if (mState.bookingHourly == false) {
                 mState.bookingHourly = true
-                mState.timeEnd = null
-                mState.timeBegin = null
                 resetCost()
+                resetDatesAndDelivery()
             }
         }
         bookDaily.setOnClickListener {
             if (mState.bookingHourly == true) {
                 mState.bookingHourly = false
-                mState.timeEnd = null
-                mState.timeBegin = null
                 resetCost()
+                resetDatesAndDelivery()
             }
         }
         bookingPeriodContainer.setOnClickListener {
             val intent = Intent(this, RentalPeriodActivity::class.java)
             intent.putExtra("hourly", mState.bookingHourly)
+            if (mState.bookingHourly == true) {
+                intent.putExtra("availability", mState.availabilityHourly)
+                intent.putExtra("begin", mState.availabilityHourlyBegin)
+                intent.putExtra("end", mState.availabilityHourlyEnd)
+            } else {
+                intent.putExtra("availability", mState.availabilityDaily)
+            }
             startActivityForResult(intent, PERIOD_REQUEST_CODE)
             overridePendingTransition(R.anim.enter_up, 0)
         }
@@ -108,6 +113,15 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             val intent = Intent(this, BookMessageActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun resetDatesAndDelivery() {
+        mState.timeEnd = null
+        mState.timeBegin = null
+        bookingStart?.text = resources.getString(R.string.rental_period_from)
+        bookingEnd?.text = resources.getString(R.string.rental_period_to)
+
+        mState.collectionPicked.set(false)
     }
 
     override fun resetCost() {
@@ -140,7 +154,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
 
     override fun onStop() {
         super.onStop()
-        mPresenter?.saveSate(mState)
+        mPresenter.saveSate(mState)
     }
 
     override fun onDestroy() {
@@ -181,7 +195,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                     mState.longitude = location.longitude
                     mState.collectionPicked.set(true)
                     mPresenter.saveSate(mState)
-                    mPresenter.getCost(mCarId ?: return, mState)
+                    mPresenter.getCost(mCarId ?: return, mState, null)
                 }
             }
             PAYMENT_REQUEST_CODE -> {
@@ -209,6 +223,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                         bookingStart?.text = beginString
                         bookingEnd?.text = endString
                         mPresenter.saveSate(mState)
+                        mPresenter.getCost(mCarId ?: return, mState, null)
                     }
                 }
             }
