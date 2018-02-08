@@ -15,6 +15,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import com.cardee.R;
+import com.cardee.custom.calendar.view.CalendarView;
 import com.cardee.custom.time_picker.model.Day;
 import com.cardee.custom.time_picker.view.adapter.DayAdapter;
 import com.cardee.custom.time_picker.view.config.BodyConfig;
@@ -34,6 +35,7 @@ public class TimePicker extends LinearLayout {
     private RecyclerView bodyRecyclerView;
     private DayAdapter adapter;
     private SelectionManager selectionManager;
+    private OnReadyListener onReadyListener;
 
     private float xTarget;
     private float yTarget;
@@ -123,6 +125,9 @@ public class TimePicker extends LinearLayout {
 
     public void addMonths(List<Day> days) {
         selectionManager.addToPeriod(days);
+        if (onReadyListener != null) {
+            onReadyListener.onReady();
+        }
     }
 
     public void setIncludeCurrent(boolean include) {
@@ -135,5 +140,17 @@ public class TimePicker extends LinearLayout {
 
     public void setSelectionAdapter(SelectionAdapter selectionAdapter) {
         selectionManager.setSelectionAdapter(selectionAdapter);
+    }
+
+    public void setOnReadyListener(TimePicker.OnReadyListener onReadyListener) {
+        this.onReadyListener = onReadyListener;
+        if (selectionManager.isReady()) {
+            this.onReadyListener.onReady();
+        }
+    }
+
+    public interface OnReadyListener {
+
+        void onReady();
     }
 }

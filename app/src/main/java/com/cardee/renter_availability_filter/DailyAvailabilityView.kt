@@ -84,9 +84,6 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                 }
             }
         }
-        calendar.setOnReadyListener {
-
-        }
     }
 
     override fun setCallback(callback: (Boolean) -> Unit) {

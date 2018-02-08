@@ -28,7 +28,7 @@ public class Hour implements Comparable<Hour> {
     private final Calendar calendar;
     private final String hourTitle;
     private final int hourOfDay;
-    private final boolean enabled;
+    private boolean enabled;
     private boolean selected;
     private SelectionState state;
 
@@ -65,6 +65,10 @@ public class Hour implements Comparable<Hour> {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Date getCalendarTime() {
