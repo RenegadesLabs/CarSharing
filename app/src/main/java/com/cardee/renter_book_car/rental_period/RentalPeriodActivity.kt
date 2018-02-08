@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import com.cardee.R
 import com.cardee.renter_availability_filter.CalendarAdapter
+import com.cardee.renter_availability_filter.TimePickerAdapter
 import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
@@ -22,9 +23,10 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     var mHourly: Boolean? = null
     var mDailyAdapter: CalendarAdapter? = null
+    var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
     var timeEnd: String? = null
-    val dateDelegate: DateStringDelegate = DateStringDelegate(this)
+    var dateDelegate: DateStringDelegate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,21 +41,32 @@ class RentalPeriodActivity : AppCompatActivity() {
         val content = inflater.inflate(layout, backgroundView, false)
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
+
+        dateDelegate = DateStringDelegate(this)
         if (mHourly == true) {
             val hourlyView = content as ConstraintLayout
+            mHourlyAdapter = TimePickerAdapter()
+            mHourlyAdapter?.setSelectionListener {
+                timeBegin = dateDelegate?.getGMTTimeString(it[0])
+                timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
+            }
+            hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
             hourlyView.btnHourReset.setOnClickListener {
-
+                hourlyView.timePicker.reset()
             }
             hourlyView.btnHourSave.setOnClickListener {
-                // TODO: get start/end dates
-                onBackPressed()
+                intent = Intent()
+                intent.putExtra("begin", timeBegin)
+                intent.putExtra("end", timeEnd)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             }
         } else {
             val dailyView = content as ConstraintLayout
             mDailyAdapter = CalendarAdapter()
             mDailyAdapter?.setSelectionListener {
-                timeBegin = dateDelegate.getGMTTimeString(it[0])
-                timeEnd = dateDelegate.getGMTTimeString(it[it.lastIndex])
+                timeBegin = dateDelegate?.getGMTTimeString(it[0])
+                timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
             }
             dailyView.calendar.setSelectionAdapter(mDailyAdapter)
             dailyView.btnReset.setOnClickListener {
