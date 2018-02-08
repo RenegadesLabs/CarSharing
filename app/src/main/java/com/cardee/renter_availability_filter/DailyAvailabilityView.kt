@@ -60,10 +60,10 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
                 changeDailyRange(selection[0], selection[selection.size - 1])
             }
         }
-        setTime.setOnClickListener(toggle)
-        setTimeIcon.setOnClickListener(toggle)
-        backTitle.setOnClickListener(toggleBack)
-        backTitleIcon.setOnClickListener(toggleBack)
+        setTime?.setOnClickListener(toggle)
+        setTimeIcon?.setOnClickListener(toggle)
+        backTitle?.setOnClickListener(toggleBack)
+        backTitleIcon?.setOnClickListener(toggleBack)
         btnSave.setOnClickListener { saveFilter(doOnSave) }
         btnReset.setOnClickListener { resetFilter(doOnReset) }
         initNumberPickers()
@@ -106,18 +106,20 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     private fun initNumberPickers() {
-        pickupTimePicker.displayedValues = timeValues
-        pickupTimePicker.minValue = 0
-        pickupTimePicker.maxValue = timeValues.size - 1
-        pickupTimePicker.wrapSelectorWheel = false
-        returnTimePicker.displayedValues = timeValues
-        returnTimePicker.minValue = 0
-        returnTimePicker.maxValue = timeValues.size - 1
-        returnTimePicker.wrapSelectorWheel = false
-        setDividerColor(pickupTimePicker, ContextCompat.getColor(context, android.R.color.transparent))
-        setDividerColor(returnTimePicker, ContextCompat.getColor(context, android.R.color.transparent))
-        pickupTimePicker.setOnValueChangedListener(onTimePicked)
-        returnTimePicker.setOnValueChangedListener(onTimePicked)
+        pickupTimePicker?.displayedValues = timeValues
+        pickupTimePicker?.minValue = 0
+        pickupTimePicker?.maxValue = timeValues.size - 1
+        pickupTimePicker?.wrapSelectorWheel = false
+        returnTimePicker?.displayedValues = timeValues
+        returnTimePicker?.minValue = 0
+        returnTimePicker?.maxValue = timeValues.size - 1
+        returnTimePicker?.wrapSelectorWheel = false
+        setDividerColor(pickupTimePicker
+                ?: return, ContextCompat.getColor(context, android.R.color.transparent))
+        setDividerColor(returnTimePicker
+                ?: return, ContextCompat.getColor(context, android.R.color.transparent))
+        pickupTimePicker?.setOnValueChangedListener(onTimePicked)
+        returnTimePicker?.setOnValueChangedListener(onTimePicked)
     }
 
     private fun setDividerColor(picker: NumberPicker, color: Int) {
@@ -143,8 +145,8 @@ class DailyAvailabilityView @JvmOverloads constructor(context: Context, attrs: A
 
     private fun clearSelection() {
         calendar.reset()
-        pickupTimePicker.value = 0
-        returnTimePicker.value = 0
+        pickupTimePicker?.value = 0
+        returnTimePicker?.value = 0
         if (calendar.visibility != View.VISIBLE) {
             toggleState()
         }

@@ -3,6 +3,7 @@ package com.cardee.data_source;
 
 import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody;
 import com.cardee.data_source.remote.api.offers.response.OfferResponseBody;
+import com.cardee.domain.bookings.entity.BookCarState;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -27,6 +28,10 @@ public interface RenterCarsDataSource {
     BrowseCarsFilter getFilter();
 
     Disposable getOfferById(int id, OfferCallback offerCallback);
+
+    BookCarState getBookState();
+
+    void saveBookState(BookCarState state);
 
     interface OffersCallback extends Callback {
         void onSuccess(OfferResponseBody[] response);

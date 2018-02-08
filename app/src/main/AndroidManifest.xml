@@ -205,6 +205,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/ChatStyle"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".renter_book_car.message.view.BookMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChatStyle" />
+        <activity
+            android:name=".renter_book_car.rental_period.RentalPeriodActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTranslucent" />
+        <activity android:name=".renter_book_car.collection.CollectionAreaActivity" />
+        <activity android:name=".renter_book_car.payment.BookPaymentActivity"></activity>
     </application>
 
 </manifest>

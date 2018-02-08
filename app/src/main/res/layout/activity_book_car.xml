@@ -64,16 +64,19 @@
                     <TextView
                         android:id="@+id/carTitle"
                         style="@style/TextSettingsRegular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:text="Range Rover"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/carYear"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_default="wrap" />
 
                     <TextView
                         android:id="@id/carYear"
@@ -150,11 +153,10 @@
                         android:id="@+id/bookingStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20 Mar, 9am+"
+                        android:text="@string/rental_period_from"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="@dimen/text_xlarge"
                         app:layout_constraintEnd_toStartOf="@+id/to"
-                        app:layout_constraintHorizontal_chainStyle="spread"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
@@ -171,7 +173,7 @@
                         android:id="@id/bookingEnd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20 Mar, 2pm+"
+                        android:text="@string/rental_period_to"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="@dimen/text_xlarge"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -237,7 +239,6 @@
                         android:id="@+id/costText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$50++"
                         android:textColor="@color/text_owner_profile_name"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -536,7 +537,6 @@
                         android:textColor="@color/blue"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
         </ScrollView>
@@ -563,7 +563,6 @@
             android:clickable="false"
             android:elevation="9dp"
             android:focusable="false"
-            android:text="$50++  •  Book Now"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_xlarge"
             android:textStyle="bold"
@@ -578,6 +577,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="10dp"
             android:elevation="9dp"
+            android:visibility="@{(state.bookingHourly &amp;&amp; state.hourlyInstantBooking) || (!state.bookingHourly &amp;&amp; state.dailyInstantBooking) ? View.VISIBLE : View.GONE }"
             app:layout_constraintBottom_toBottomOf="@id/bookButtonText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bookButtonText"

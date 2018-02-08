@@ -1,6 +1,7 @@
 package com.cardee.data_source.cache;
 
 import com.cardee.data_source.RenterCarsDataSource;
+import com.cardee.domain.bookings.entity.BookCarState;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
@@ -11,9 +12,11 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
 
     private static LocalRenterCarsDataSource INSTANCE;
     private BrowseCarsFilter mFilter;
+    private BookCarState mBookState;
 
     private LocalRenterCarsDataSource() {
         mFilter = new BrowseCarsFilter();
+        mBookState = new BookCarState();
     }
 
     public static LocalRenterCarsDataSource getInstance() {
@@ -62,6 +65,16 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     @Override
     public Disposable getOfferById(int id, OfferCallback offerCallback) {
         return null;
+    }
+
+    @Override
+    public BookCarState getBookState() {
+        return mBookState;
+    }
+
+    @Override
+    public void saveBookState(BookCarState state) {
+        mBookState = state;
     }
 
     public void getSorted(String sortBy, OffersCallback offersCallback) {

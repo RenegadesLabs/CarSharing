@@ -506,7 +506,7 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
-    
+
     <!--Renter Car Details-->
     <string name="renter_car_details_rental_info">Rental info</string>
     <string name="renter_car_details_timing">Pickup and return timing</string>
@@ -754,8 +754,8 @@
     <!-- Renter Book Car-->
     <string name="book_car">Book Car</string>
     <string name="collection">Collection</string>
-    <string name="self_collect">Self-collect only</string>
-    <string name="not_selected">Not Selected</string>
+    <string name="self_collect_only">Self-collect only</string>
+    <string name="self_collect">Self-collect</string>
     <string name="sgd">SGD</string>
     <string name="see_cost_breakdown">See cost breakdown</string>
     <string name="promo_code">Promo Code</string>
@@ -769,6 +769,15 @@
     <string name="cost_breakdown">COST BREAKDOWN</string>
     <string name="cost_breakdown_non_peak_template">Rental %s (non-peak)</string>
     <string name="cost_breakdown_peak_template">Rental %s (peak)</string>
+    <string name="book_bnt_template">%s\u0020\u0020•\u0020\u0020Request Booking</string>
+    <string name="book_bnt_instant_template">%s\u0020\u0020•\u0020\u0020Book Now</string>
+    <string name="collection_pick_title">Collection</string>
+    <string name="collect_from">Collect from:</string>
+    <string name="payment_title">Payment Method</string>
+
+    <!-- Book Car Message to Owner -->
+    <string name="book_message_title">Message To Owner</string>
+    <string name="book_message_hint">Add a message to owner to describe your purpose, request, requirements etc.\n\nExample 1\nHi! Lovely car, hoping to rent it for my wedding day! Thank you!\n\nExample 2\nNeed a car that allows me to bring my dog. I have my own car seat cover for my dog and will return the car in great condition! Willing to pay $20 additional.\n\nExample 3\nCan I pickup the car at 8am instead of 9am? Please only accept request if it is ok for you.</string>
 
 
 </resources>

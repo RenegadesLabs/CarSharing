@@ -8,8 +8,10 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.BookingDataSource;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.BaseResponse;
+import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
 import com.cardee.data_source.remote.api.booking.Upload;
+import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
 import com.cardee.data_source.remote.api.booking.response.BookingResponse;
@@ -234,6 +236,32 @@ public class RemoteBookingDataSource implements BookingDataSource {
                     public void onSuccess(CostBreakdownResponse response) {
                         if (response.isSuccessful()) {
                             callback.onSuccess(response.getCostBreakdown());
+                            return;
+                        }
+                        handleErrorResponse(response, callback);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    @Override
+    public Disposable requestBooking(BookingRequest request, SimpleCallback callback) {
+        return api.requestBooking(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<NoDataResponse>() {
+                    @Override
+                    public void onSuccess(NoDataResponse response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess();
                             return;
                         }
                         handleErrorResponse(response, callback);

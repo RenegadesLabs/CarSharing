@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dateHourFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:gravity="center"
+        android:text="Not Specified"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/dateSeparator"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/dateSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="to"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintBottom_toBottomOf="@id/dateHourFrom"
+        app:layout_constraintEnd_toStartOf="@+id/dateHourTo"
+        app:layout_constraintStart_toEndOf="@id/dateHourFrom"
+        app:layout_constraintTop_toTopOf="@id/dateHourFrom" />
+
+    <TextView
+        android:id="@id/dateHourTo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+        android:gravity="center"
+        android:text="Not Specified"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dateSeparator"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.cardee.custom.time_picker.view.TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/widget_margin_x_small"
+        android:background="@drawable/bg_clickable_top_line_normal"
+        app:body_text_color="@color/text_regular"
+        app:layout_constraintBottom_toTopOf="@+id/btnHourSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateHourFrom"
+        app:selection_color="@color/light_blue"
+        app:title_background="@color/bg_window"
+        app:title_gravity="start" />
+
+    <TextView
+        android:id="@+id/btnHourReset"
+        style="@style/NegativeButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/widget_margin_small"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.5:1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btnHourSave"
+        style="@style/RegularButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/widget_margin_small"
+        android:layout_marginEnd="@dimen/widget_margin_small"
+        android:layout_marginStart="@dimen/widget_margin_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/title_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnHourReset" />
+
+</android.support.constraint.ConstraintLayout>

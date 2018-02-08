@@ -10,14 +10,18 @@ interface BookCarContract {
     interface BookCarView : BaseView {
         fun setCarTitle(carTitle: String?)
         fun setCarYear(carYear: String?)
-        fun updateState(state: BookCarState)
         fun setTotalCost(total: String)
+        fun resetCost()
     }
 
     interface BookCarPresenter {
         fun init(bookCarView: BookCarView)
         fun getOffer(id: Int, state: BookCarState)
         fun onDestroy()
-        fun showCostBreakdown(context: AppCompatActivity, state: BookCarState)
+        fun showCostBreakdown(context: AppCompatActivity?, state: BookCarState)
+        fun getCost(carId: Int, state: BookCarState, context: AppCompatActivity?)
+        fun getState(): BookCarState
+        fun saveSate(state: BookCarState)
+        fun requestBooking(mState: BookCarState)
     }
 }
