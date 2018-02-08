@@ -23,6 +23,6 @@ class GetOfferById : RxUseCase<GetOfferById.RequestValues, GetOfferById.Response
         })
     }
 
-    class RequestValues(val id: Int) : RxUseCase.RequestValues
+    class RequestValues(val id: Int, val lat: Double? = null, val lng: Double? = null) : RxUseCase.RequestValues
     class ResponseValues(val offer: OfferByIdResponseBody?) : RxUseCase.ResponseValues
 }

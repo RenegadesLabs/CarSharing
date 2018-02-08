@@ -1,7 +1,13 @@
 package com.cardee.renter_car_details.view
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
@@ -13,9 +19,12 @@ import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_map.*
@@ -27,6 +36,9 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     private var favorite: Boolean? = null
     private var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
     private var viewHolder: RenterCarDetailsViewHolder? = null
+    private var map: GoogleMap? = null
+    private var markerIcon: Bitmap? = null
+    private val permissionRequestCode = 101
 
     override fun onClick(p0: View?) {
         when (p0) {
@@ -66,14 +78,50 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         getData()
         ivRenterCarDetailsToolbarFavoritesImg
                 .setImageResource(if (favorite == true) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
+        initMarkerBitmap()
+    }
+
+    private fun initMarkerBitmap() {
+        val idleBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_car_marker)
+        markerIcon = Bitmap.createScaledBitmap(idleBitmap, 128, 128, false)
     }
 
     override fun onMapReady(map: GoogleMap?) {
+        this.map = map
         map?.apply {
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isIndoorLevelPickerEnabled = false
             uiSettings.isMapToolbarEnabled = false
         }
+        onSetLocation()
+    }
+
+    private fun onSetLocation() {
+        presenter.fetchLocation { location ->
+            val marker = MarkerOptions().apply {
+                icon(BitmapDescriptorFactory.fromBitmap(markerIcon))
+                position(location)
+            }
+            map?.addMarker(marker)
+            val position = CameraPosition.builder().target(location).zoom(17f).build()
+            map?.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+        }
+    }
+
+    private fun requestCurrentLocation() {
+        if (!checkLocationPermission()) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION), permissionRequestCode)
+        } else {
+
+        }
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED
     }
 
     override fun onStart() {
@@ -117,7 +165,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     override fun setCarLocationString(locationString: String) {
-
+        //TODO implement)
     }
 
     override fun setDistanceToCar(distance: String) {

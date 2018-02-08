@@ -24,7 +24,7 @@ interface RenterCarDetailsContract {
 
         fun fetchLocation(callback: (LatLng) -> Unit)
 
-        fun getDetailedCar(carId: Int?)
+        fun getDetailedCar(carId: Int?, lat: Double? = null, lng: Double? = null)
 
         fun getDistanceToCar(myLocation: LatLng, carId: Int)
 
