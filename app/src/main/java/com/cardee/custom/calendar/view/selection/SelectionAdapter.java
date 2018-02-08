@@ -27,13 +27,13 @@ public abstract class SelectionAdapter<T> {
     }
 
     public void setAvailableDates(Date[] availableDates) {
-        availableDayz = transformToEntites(availableDates);
+        availableDayz = transformToEntities(availableDates);
         if (availableDatesSetListener != null) {
             availableDatesSetListener.onAvailableDatesSet(availableDayz);
         }
     }
 
-    private List<Day> transformToEntites(Date[] availableDates) {
+    private List<Day> transformToEntities(Date[] availableDates) {
         return ArrayUtil.asList(availableDates, Day::from);
     }
 

@@ -33,6 +33,9 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
         }
         btnHourSave.setOnClickListener { saveFilter(doOnSave) }
         btnHourReset.setOnClickListener { resetFilter(doOnReset) }
+        timePicker.setOnReadyListener {
+            adapter.setAvailabilityRange(arrayOf("2018-02-09", "2018-02-10", "2018-02-11"), "9:43:30", "17:45:30")
+        }
     }
 
     override fun setPresenter(presenter: AvailabilityFilterPresenter) {

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SelectionManager implements OnViewClickListener<HourView> {
+public class SelectionManager implements
+        OnViewClickListener<HourView>, SelectionAdapter.OnAvailableDatesSetListener {
 
     private enum RangeBound {
         START, END
@@ -97,7 +98,7 @@ public class SelectionManager implements OnViewClickListener<HourView> {
                         lastBound = RangeBound.START;
                     }
             }
-            if (!rangeStart.equals(rangeEnd)) {
+            if (!rangeStart.equals(rangeEnd) && checkWholeRangeAvailable(rangeStart, rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
                 clearSelection();
@@ -105,6 +106,18 @@ public class SelectionManager implements OnViewClickListener<HourView> {
                 selectSingleDayRange(hour, view);
             }
         }
+    }
+
+    private boolean checkWholeRangeAvailable(Hour rangeStart, Hour rangeEnd) {
+        int startIndex = allDayz.indexOf(rangeStart);
+        int endIndex = allDayz.indexOf(rangeEnd);
+        for (int i = startIndex + 1; i < endIndex; i++) {
+            Hour hour = allDayz.get(i);
+            if (!hour.isEnabled()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void selectSingleDayRange(Hour hour, HourView view) {
@@ -162,6 +175,7 @@ public class SelectionManager implements OnViewClickListener<HourView> {
         this.selectionMode = selectionAdapter.getMode();
         this.selectionAdapter = selectionAdapter;
         this.selectionAdapter.setSelectionManager(this);
+        this.selectionAdapter.setAvailableDatesSetListener(this);
         refresh();
     }
 
@@ -252,5 +266,20 @@ public class SelectionManager implements OnViewClickListener<HourView> {
                 break;
             }
         }).start();
+    }
+
+    public boolean isReady() {
+        return !allDayz.isEmpty();
+    }
+
+    @Override
+    public void onAvailableDatesSet(List<Hour> availableHourz) {
+        for (int i = 0; i < allDayz.size(); i++) {
+            Hour hour = allDayz.get(i);
+            if (hour.isEnabled() && !availableHourz.contains(hour)) {
+                hour.setEnabled(false);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 }

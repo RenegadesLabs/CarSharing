@@ -12,7 +12,7 @@ class DateRangeConverter {
 
     companion object {
         private const val ISO_8601_DATE_PATTERN: String = "yyyy-MM-dd"
-        private const val ISO_TIME_PATTERN: String = "HH:mm:ssZZZZZ"
+        private const val ISO_TIME_PATTERN: String = "HH:mm:ss"
     }
 
     private val isoDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
@@ -63,7 +63,7 @@ class DateRangeConverter {
                 .flatMap { wrapper ->
                     val calendar = Calendar.getInstance()
                     val timeBeginDate = isoTimeFormatter.parse(timeBegin ?: "00:00:00+08:00")
-                    val timeEndDate = isoTimeFormatter.parse(timeBegin ?: "23:59:59+08:00")
+                    val timeEndDate = isoTimeFormatter.parse(timeEnd ?: "23:59:59+08:00")
                     calendar.time = timeBeginDate
                     val hourBegin = calendar.get(Calendar.HOUR_OF_DAY)
                     calendar.time = timeEndDate
@@ -74,8 +74,9 @@ class DateRangeConverter {
                             val date = isoDateFormatter.parse(dateString)
                             calendar.time = date
                             calendar.set(Calendar.HOUR_OF_DAY, hourBegin)
+                            datesList.add(calendar.time) //if we include start date
                             for (i in 1..diff) {
-                                calendar.add(Calendar.HOUR_OF_DAY, i)
+                                calendar.add(Calendar.HOUR_OF_DAY, 1)
                                 datesList.add(calendar.time)
                             }
                         }
