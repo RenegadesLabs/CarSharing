@@ -17,6 +17,7 @@ import com.cardee.custom.calendar.view.CalendarView;
 import com.cardee.custom.calendar.view.DayView;
 import com.cardee.custom.calendar.view.adapter.MonthAdapter;
 import com.cardee.custom.calendar.view.listener.OnViewClickListener;
+import com.cardee.custom.time_picker.model.Hour;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -269,18 +270,20 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
         }).start();
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return !allDayz.isEmpty();
     }
 
     @Override
     public void onAvailableDatesSet(List<Day> availableDayz) {
-        for (int i = 0; i < allDayz.size(); i++) {
-            Day day = allDayz.get(i);
-            if (day.isEnabled() && !availableDayz.contains(day)) {
-                day.setEnabled(false);
+        new Thread(() -> {
+            for (int i = 0; i < allDayz.size(); i++) {
+                Day day = allDayz.get(i);
+                if (day.isEnabled() && !availableDayz.contains(day)) {
+                    day.setEnabled(false);
+                }
             }
-            adapter.notifyDataSetChanged();
-        }
+            handler.post(adapter::notifyDataSetChanged);
+        }).start();
     }
 }

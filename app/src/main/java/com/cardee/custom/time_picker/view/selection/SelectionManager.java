@@ -261,7 +261,7 @@ public class SelectionManager implements
             for (Hour hour : selectedDayz) {
                 if (hour.isSelected()) {
                     hour.setSelectionState(null);
-                    handler.post(() -> adapter.notifyDataSetChanged());
+                    handler.post(adapter::notifyDataSetChanged);
                 }
                 break;
             }
@@ -274,12 +274,15 @@ public class SelectionManager implements
 
     @Override
     public void onAvailableDatesSet(List<Hour> availableHourz) {
-        for (int i = 0; i < allDayz.size(); i++) {
-            Hour hour = allDayz.get(i);
-            if (hour.isEnabled() && !availableHourz.contains(hour)) {
-                hour.setEnabled(false);
+        new Thread(() -> {
+            Hour lastHour = availableHourz.get(availableHourz.size() - 1);
+            for (int i = 0; i < allDayz.size(); i++) {
+                Hour hour = allDayz.get(i);
+                if (hour.isEnabled() && !availableHourz.contains(hour)) {
+                    hour.setEnabled(false);
+                }
             }
-            adapter.notifyDataSetChanged();
-        }
+            handler.post(adapter::notifyDataSetChanged);
+        }).start();
     }
 }
