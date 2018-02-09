@@ -156,6 +156,21 @@ public class RenterCarsRepository implements RenterCarsDataSource {
     }
 
     @Override
+    public Disposable getOfferById(int id, double lat, double lng, OfferCallback offerCallback) {
+        return mRemoteDataSource.getOfferById(id, lat, lng, new OfferCallback() {
+            @Override
+            public void onSuccess(OfferByIdResponseBody response) {
+                offerCallback.onSuccess(response);
+            }
+
+            @Override
+            public void onError(Error error) {
+                offerCallback.onError(error);
+            }
+        });
+    }
+
+    @Override
     public BookCarState getBookState() {
         return mLocalDataSource.getBookState();
     }

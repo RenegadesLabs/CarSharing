@@ -147,6 +147,32 @@ public class RemoteRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
+    public Disposable getOfferById(int id, double lat, double lng, OfferCallback offerCallback) {
+        return mApi.getOfferById(id, lat, lng)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<OfferByIdResponse>() {
+                    @Override
+                    public void onSuccess(OfferByIdResponse response) {
+                        if (response.isSuccessful()) {
+                            offerCallback.onSuccess(response.getOfferResponse());
+                            return;
+                        }
+                        handleErrorResponse(offerCallback, response);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        offerCallback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    @Override
     public BookCarState getBookState() {
         return null;
     }

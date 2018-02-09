@@ -11,16 +11,19 @@ interface LocationClient : GoogleApiClient.ConnectionCallbacks,
 
     fun init(context: Context)
 
+    fun doOnConnect(action: () -> Unit)
+
     fun connect()
 
     fun disconnect()
 
-    fun obtainClient() : GoogleApiClient
+    fun obtainClient(): GoogleApiClient
 }
 
 class LocationClientImpl : LocationClient {
 
     lateinit var apiClient: GoogleApiClient
+    var doOnConnect: () -> Unit = {}
 
     override fun init(context: Context) {
         apiClient = GoogleApiClient.Builder(context)
@@ -38,8 +41,14 @@ class LocationClientImpl : LocationClient {
         apiClient.disconnect()
     }
 
-    override fun onConnected(p0: Bundle?) {
+    override fun doOnConnect(action: () -> Unit) {
+        if (apiClient.isConnected) {
+            action.invoke()
+        } else doOnConnect = action
+    }
 
+    override fun onConnected(p0: Bundle?) {
+        doOnConnect.invoke()
     }
 
     override fun onConnectionSuspended(p0: Int) {
@@ -50,7 +59,7 @@ class LocationClientImpl : LocationClient {
 
     }
 
-    override fun obtainClient() : GoogleApiClient {
+    override fun obtainClient(): GoogleApiClient {
         return apiClient
     }
 }

@@ -1,5 +1,6 @@
 package com.cardee.renter_car_details.presenter
 
+import android.util.Log
 import com.cardee.R
 import com.cardee.data_source.Error
 import com.cardee.domain.RxUseCase
@@ -9,6 +10,7 @@ import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.domain.renter.entity.mapper.OfferResponseByIdToRenterDetailedCar
 import com.cardee.domain.renter.usecase.AddCarToFavorites
 import com.cardee.domain.renter.usecase.GetOfferById
+import com.cardee.domain.renter.usecase.GetOfferDistance
 import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.disposables.Disposable
@@ -22,7 +24,10 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     private var pendingValue: RenterDetailedCar? = null
     private val executor: UseCaseExecutor = UseCaseExecutor.getInstance()
     private val getOfferById = GetOfferById()
+    private val getOfferDistance = GetOfferDistance()
     private var mGetOfferDisposable: Disposable? = null
+    private var mGetDistanceDisposable: Disposable? = null
+    private var distance: Int? = null
 
     override fun attachView(view: RenterCarDetailsContract.View) {
         this.view = view
@@ -35,6 +40,24 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
         }
     }
 
+    override fun fetchDistance(id: Int, lat: Double, lng: Double) {
+        if (mGetDistanceDisposable?.isDisposed == false) {
+            mGetDistanceDisposable?.dispose()
+        }
+        mGetDistanceDisposable = getOfferDistance.execute(GetOfferDistance.RequestValues(id, lat, lng),
+                object : RxUseCase.Callback<GetOfferDistance.ResponseValues> {
+                    override fun onSuccess(response: GetOfferDistance.ResponseValues) {
+                        distance = response.distance
+                        val locationString = composeAddressString(response.address, response.distance)
+                        view?.setLocationString(locationString)
+                    }
+
+                    override fun onError(error: Error) {
+                        Log.e("FETCH_DISTANCE", error.message)
+                    }
+                })
+    }
+
     override fun getDetailedCar(carId: Int?, lat: Double?, lng: Double?) {
         if (mGetOfferDisposable?.isDisposed == false) {
             mGetOfferDisposable?.dispose()
@@ -43,8 +66,9 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
             override fun onSuccess(response: GetOfferById.ResponseValues) {
                 val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer ?: return)
                 view?.setDetailedCar(offerDetails)
+                val locationString = composeAddressString(offerDetails.address, distance)
+                view?.setLocationString(locationString)
                 initLocation(offerDetails)
-                composeAddressString(offerDetails.address, offerDetails.distance)
             }
 
             override fun onError(error: Error) {
@@ -59,14 +83,8 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
         }
     }
 
-    private fun composeAddressString(address: String?, distance: Int?) {
-        view?.let { viewRef ->
-            val locationString = "${address ?: ""} " +
-                    "${if (address == null || distance == null) "" else "•"} " +
-                    (formatDistance(distance) ?: "")
-            viewRef.setCarLocationString(locationString)
-        }
-    }
+    private fun composeAddressString(address: String?, distance: Int?): String =
+            "${address ?: ""} ${if (address == null || distance == null) "" else "•"} ${formatDistance(distance) ?: ""}"
 
     private fun formatDistance(meters: Int?): String? {
         meters ?: return null
