@@ -2,6 +2,7 @@ package com.cardee.util;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.cardee.R;
@@ -27,6 +28,7 @@ public class DateStringDelegate {
     private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM yyyy, h:mma";
 
     private SimpleDateFormat timeFormatter;
+    private SimpleDateFormat timeLocalGMTFormatter;
     private SimpleDateFormat timeViewFormatter;
     private SimpleDateFormat timeLocalFormatter;
     private SimpleDateFormat dateFormatter;
@@ -36,6 +38,7 @@ public class DateStringDelegate {
     private SimpleDateFormat dateShortViewTitleFormatter;
     private SimpleDateFormat creationDateViewFormatter;
     private SimpleDateFormat dateViewString;
+    private TimeZone singaporeTimeZone;
     private Calendar calendar;
     private String[] saveSuffixes;
     private String[] valueSuffixes;
@@ -48,9 +51,10 @@ public class DateStringDelegate {
     public DateStringDelegate(Context context) {
         saveSuffixes = context.getResources().getStringArray(R.array.btn_save_title_suffixes);
         valueSuffixes = context.getResources().getStringArray(R.array.days_availability_suffixes);
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
+        singaporeTimeZone = TimeZone.getTimeZone("GMT+08:00");
         calendar = Calendar.getInstance();
         timeFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.US);
+        timeLocalGMTFormatter = new SimpleDateFormat(TIME_PATTERN, Locale.US);
         timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateViewString = new SimpleDateFormat(DATE_STRING_PATTERN, Locale.US);
@@ -60,16 +64,15 @@ public class DateStringDelegate {
         dateShortViewTitleFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_TITLE_PATTERN, Locale.US);
         dateShortViewFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_PATTERN, Locale.US);
         timeLocalFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
-        calendar.setTimeZone(timeZone);
-        dateViewString.setTimeZone(timeZone);
-        timeFormatter.setTimeZone(timeZone);
-        timeViewFormatter.setTimeZone(timeZone);
-        dateFormatter.setTimeZone(timeZone);
+        timeFormatter.setTimeZone(singaporeTimeZone);
+        calendar.setTimeZone(singaporeTimeZone);
+        dateViewString.setTimeZone(singaporeTimeZone);
+        dateFormatter.setTimeZone(singaporeTimeZone);
 //        dateShortViewTitleFormatter.setTimeZone(timeZone);
-        dateViewFormatter.setTimeZone(timeZone);
-        dateViewWithoutTimeFormatter.setTimeZone(timeZone);
-        creationDateViewFormatter.setTimeZone(timeZone);
-        dateShortViewFormatter.setTimeZone(timeZone);
+        dateViewFormatter.setTimeZone(singaporeTimeZone);
+        dateViewWithoutTimeFormatter.setTimeZone(singaporeTimeZone);
+        creationDateViewFormatter.setTimeZone(singaporeTimeZone);
+        dateShortViewFormatter.setTimeZone(singaporeTimeZone);
 
         DateFormatSymbols symbols = new DateFormatSymbols(Locale.US);
         symbols.setAmPmStrings(new String[]{"am", "pm"});
@@ -175,7 +178,7 @@ public class DateStringDelegate {
 
     private String getShortTime(String gmtTime) {
         try {
-            Date date = timeFormatter.parse(gmtTime);
+            Date date = timeLocalGMTFormatter.parse(gmtTime);
             return timeViewFormatter.format(date).toLowerCase();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -285,6 +288,8 @@ public class DateStringDelegate {
     }
 
     public String getGMTTimeString(int hour) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
