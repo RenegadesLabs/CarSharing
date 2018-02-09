@@ -149,14 +149,11 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
     @OnClick(R.id.tv_fuelPerKm)
     public void onFuelPerKmClicked() {
         mPicker.show(getSupportFragmentManager(), mPicker.getTag());
-        mPicker.setOnDoneClickListener(new PickerFuelMenuFragment.DialogOnClickListener() {
-            @Override
-            public void onDoneClicked(String value1, String value2) {
-                mPickerSelectedVal = value1;
-                costValue.setText(value1);
-                String consumptionTxt = "Suitable for car average petrol consumption of " + value2;
-                consumptionValue.setText(consumptionTxt);
-            }
+        mPicker.setOnDoneClickListener((value1, value2) -> {
+            mPickerSelectedVal = value1;
+            costValue.setText(value1);
+            String consumptionTxt = "Suitable for car average petrol consumption of " + value2;
+            consumptionValue.setText(consumptionTxt);
         });
     }
 

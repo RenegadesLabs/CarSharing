@@ -32,10 +32,10 @@ public class BookingEntity {
     private Integer bookingId;
     @SerializedName("tank_part")
     @Expose
-    private Integer tankPart;
+    private Float tankPart;
     @SerializedName("tank_part_renting_out")
     @Expose
-    private Integer tankPartRentingOut;
+    private Float tankPartRentingOut;
     @SerializedName("master_mileage")
     @Expose
     private Object masterMileage;
@@ -167,19 +167,19 @@ public class BookingEntity {
         this.note = note;
     }
 
-    public Integer getTankPart() {
+    public Float getTankPart() {
         return tankPart;
     }
 
-    public void setTankPart(Integer tankPart) {
+    public void setTankPart(Float tankPart) {
         this.tankPart = tankPart;
     }
 
-    public Integer getTankPartRentingOut() {
+    public Float getTankPartRentingOut() {
         return tankPartRentingOut;
     }
 
-    public void setTankPartRentingOut(Integer tankPartRentingOut) {
+    public void setTankPartRentingOut(Float tankPartRentingOut) {
         this.tankPartRentingOut = tankPartRentingOut;
     }
 

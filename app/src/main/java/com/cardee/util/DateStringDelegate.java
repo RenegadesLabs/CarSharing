@@ -20,7 +20,8 @@ public class DateStringDelegate {
     private static final String TIME_VIEW_PATTERN = "hha";
     private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ";
     private static final String DATE_STRING_PATTERN = "EEE, d\u00a0MMM";
-    private static final String DATE_VIEW_PATTERN = "d\u00a0MMM yyyy,\u00a0ha";
+    private static final String DATE_VIEW_PATTERN_FULL = "d\u00a0MMM yyyy,\u00a0ha";
+    private static final String DATE_VIEW_PATTERN_WITHOUT_TIME = "d MMM, yyyy";
     private static final String DATE_SHORT_VIEW_TITLE_PATTERN = "d\u00a0MMM,\u00a0ha";
     private static final String DATE_SHORT_VIEW_PATTERN = "d\u00a0MMM";
     private static final String CREATION_DATE_VIEW_FORMATTER = "d MMM yyyy, h:mma";
@@ -30,6 +31,7 @@ public class DateStringDelegate {
     private SimpleDateFormat timeLocalFormatter;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat dateViewFormatter;
+    private SimpleDateFormat dateViewWithoutTimeFormatter;
     private SimpleDateFormat dateShortViewFormatter;
     private SimpleDateFormat dateShortViewTitleFormatter;
     private SimpleDateFormat creationDateViewFormatter;
@@ -52,7 +54,8 @@ public class DateStringDelegate {
         timeViewFormatter = new SimpleDateFormat(TIME_VIEW_PATTERN, Locale.US);
         dateFormatter = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateViewString = new SimpleDateFormat(DATE_STRING_PATTERN, Locale.US);
-        dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN, Locale.US);
+        dateViewFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN_FULL, Locale.US);
+        dateViewWithoutTimeFormatter = new SimpleDateFormat(DATE_VIEW_PATTERN_WITHOUT_TIME, Locale.US);
         creationDateViewFormatter = new SimpleDateFormat(CREATION_DATE_VIEW_FORMATTER, Locale.US);
         dateShortViewTitleFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_TITLE_PATTERN, Locale.US);
         dateShortViewFormatter = new SimpleDateFormat(DATE_SHORT_VIEW_PATTERN, Locale.US);
@@ -64,6 +67,7 @@ public class DateStringDelegate {
         dateFormatter.setTimeZone(timeZone);
 //        dateShortViewTitleFormatter.setTimeZone(timeZone);
         dateViewFormatter.setTimeZone(timeZone);
+        dateViewWithoutTimeFormatter.setTimeZone(timeZone);
         creationDateViewFormatter.setTimeZone(timeZone);
         dateShortViewFormatter.setTimeZone(timeZone);
 
@@ -114,6 +118,21 @@ public class DateStringDelegate {
         }
     }
 
+    public String getPickupTime(String pickupTime) {
+        String time = null;
+        if (pickupTime != null) {
+            try {
+                Date date = timeFormatter.parse(pickupTime);
+                String formattedTime = timeViewFormatter.format(date);
+                time = availabilityPickupPrefix + " " +
+                        formattedTime.toLowerCase() + " " + availabilityPickupSuffix;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return time;
+    }
+
     public void onSetReturnTime(TextView view, String returnTime) {
         if (returnTime != null) {
             try {
@@ -126,6 +145,21 @@ public class DateStringDelegate {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String getReturnTime(String returnTime) {
+        String time = null;
+        if (returnTime != null) {
+            try {
+                Date date = timeFormatter.parse(returnTime);
+                String formattedTime = timeViewFormatter.format(date);
+                time = availabilityReturnPrefix + " " +
+                        formattedTime.toLowerCase() + " " + availabilityReturnSuffix;
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return time;
     }
 
     public void onSetHourlyAvailabilityTime(TextView view, String beginTime, String endTime) {
@@ -171,6 +205,19 @@ public class DateStringDelegate {
             return dateViewString.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getDateWithoutTimeString(String gmtTime) {
+        if (gmtTime == null) {
+            return null;
+        }
+        try {
+            Date date = dateFormatter.parse(gmtTime);
+            return dateViewWithoutTimeFormatter.format(date);
+        } catch (ParseException ex) {
+
         }
         return null;
     }

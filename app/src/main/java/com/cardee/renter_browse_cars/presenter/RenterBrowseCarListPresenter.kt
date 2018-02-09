@@ -43,7 +43,10 @@ class RenterBrowseCarListPresenter(private var mView: RenterBrowseCarListContrac
             RenterBrowseCarListContract.Action.OPEN -> {
                 val context = (mView as Fragment).activity
                 val intent = Intent(context, RenterCarDetailsActivity::class.java)
-                intent.putExtra("carId", carEvent.car.carId)
+                intent.apply {
+                    putExtra("carId", carEvent.car.carId)
+                    putExtra("isFavorite", carEvent.car.isFavorite)
+                }
                 context.startActivity(intent)
             }
 

@@ -345,7 +345,7 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@id/renter_name"
+            android:id="@+id/renter_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/widget_margin_small"
@@ -357,11 +357,11 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/renter_photo"
             app:layout_constraintEnd_toStartOf="@+id/renter_call"
-            app:layout_constraintStart_toEndOf="@id/renter_photo"
-            app:layout_constraintTop_toBottomOf="@id/renter_name_title" />
+            app:layout_constraintStart_toEndOf="@+id/renter_photo"
+            app:layout_constraintTop_toBottomOf="@+id/renter_name_title" />
 
         <ImageView
-            android:id="@id/renter_call"
+            android:id="@+id/renter_call"
             android:layout_width="@dimen/booking_action_image"
             android:layout_height="@dimen/booking_action_image"
             android:layout_marginEnd="@dimen/widget_margin_large"
@@ -383,12 +383,12 @@
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/renter_call"
-            app:layout_constraintStart_toStartOf="@id/renter_call"
-            app:layout_constraintTop_toBottomOf="@id/renter_call" />
+            app:layout_constraintEnd_toEndOf="@+id/renter_call"
+            app:layout_constraintStart_toStartOf="@+id/renter_call"
+            app:layout_constraintTop_toBottomOf="@+id/renter_call" />
 
         <ImageView
-            android:id="@id/renter_chat"
+            android:id="@+id/renter_chat"
             android:layout_width="@dimen/booking_action_image"
             android:layout_height="@dimen/booking_action_image"
             android:layout_marginEnd="@dimen/widget_margin_large"
@@ -397,7 +397,7 @@
             android:clickable="true"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/renter_photo"
+            app:layout_constraintTop_toTopOf="@+id/renter_photo"
             app:srcCompat="@drawable/ic_chat_to_renter" />
 
         <TextView
@@ -411,9 +411,9 @@
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/renter_chat"
-            app:layout_constraintStart_toStartOf="@id/renter_chat"
-            app:layout_constraintTop_toBottomOf="@id/renter_chat" />
+            app:layout_constraintEnd_toEndOf="@+id/renter_chat"
+            app:layout_constraintStart_toStartOf="@+id/renter_chat"
+            app:layout_constraintTop_toBottomOf="@+id/renter_chat" />
 
         <TextView
             android:id="@+id/renter_message"
@@ -429,7 +429,7 @@
             app:layout_constraintBottom_toTopOf="@+id/booking_accept_message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/renter_photo" />
+            app:layout_constraintTop_toBottomOf="@+id/renter_photo" />
 
         <TextView
             android:id="@+id/btn_cancel"
@@ -446,7 +446,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@id/btn_accept"
+            android:id="@+id/btn_accept"
             android:layout_width="0dp"
             android:layout_height="@dimen/clickable_bg_view"
             android:background="@drawable/bg_clickable_regular"
@@ -457,7 +457,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_cancel" />
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel" />
 
         <TextView
             android:id="@+id/booking_cancel_message"
@@ -469,12 +469,12 @@
             android:paddingStart="@dimen/widget_padding_regular"
             android:textColor="@color/text_additional_info"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/btn_cancel"
+            app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@id/booking_accept_message"
+            android:id="@+id/booking_accept_message"
             android:layout_width="0dp"
             android:layout_height="@dimen/clickable_bg_view"
             android:background="@color/bg_additional_info"
@@ -483,7 +483,7 @@
             android:paddingStart="@dimen/widget_padding_regular"
             android:textColor="@color/text_additional_info"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/btn_accept"
+            app:layout_constraintBottom_toTopOf="@+id/btn_accept"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -493,7 +493,7 @@
             android:layout_height="@dimen/booking_renter_image"
             android:layout_marginEnd="@dimen/widget_margin_large"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/booking_car_picture"
+            app:layout_constraintBottom_toBottomOf="@+id/booking_car_picture"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <View
@@ -505,7 +505,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rental_period_title" />
+            app:layout_constraintTop_toBottomOf="@+id/rental_period_title" />
 
         <TextView
             android:id="@+id/rating_title"
@@ -516,9 +516,9 @@
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_block"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rating_block" />
+            app:layout_constraintTop_toTopOf="@+id/rating_block" />
 
         <com.cardee.custom.CustomRatingBar
             android:id="@+id/rating_bar"
@@ -527,7 +527,7 @@
             android:layout_marginStart="@dimen/widget_margin_mid"
             android:visibility="gone"
             app:halfStars="true"
-            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_block"
             app:layout_constraintDimensionRatio="5:1"
             app:layout_constraintStart_toEndOf="@id/rating_title"
             app:layout_constraintTop_toTopOf="@id/rating_block"
@@ -544,9 +544,9 @@
             android:textColor="@color/blue"
             android:textSize="@dimen/text_regular"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/rating_block"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_block"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rating_block" />
+            app:layout_constraintTop_toTopOf="@+id/rating_block" />
 
         <ScrollView
             android:id="@+id/earnings_container"
@@ -558,7 +558,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rating_block">
+            app:layout_constraintTop_toBottomOf="@+id/rating_block">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -587,7 +587,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earnings_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/earnings_title" />
 
                 <TextView
                     android:id="@+id/earning_rental_off_peak_value"
@@ -596,7 +596,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_rental_off_peak"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_rental_off_peak"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
@@ -609,7 +609,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_rental_off_peak" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_rental_off_peak" />
 
                 <TextView
                     android:id="@+id/earning_rental_peak_value"
@@ -618,7 +618,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_rental_peak"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_rental_peak"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
@@ -631,7 +631,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_rental_peak" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_rental_peak" />
 
                 <TextView
                     android:id="@+id/earning_rental_discount_value"
@@ -640,7 +640,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_rental_discount"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_rental_discount"
                     app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -654,7 +654,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_rental_discount" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_rental_discount" />
 
                 <TextView
                     android:id="@+id/earning_rental_delivery_value"
@@ -663,7 +663,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_rental_delivery"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_rental_delivery"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <View
@@ -676,7 +676,7 @@
                     android:background="@color/divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_rental_delivery" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_rental_delivery" />
 
                 <TextView
                     android:id="@+id/earning_booking_cost"
@@ -697,7 +697,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_booking_cost"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_booking_cost"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
@@ -710,7 +710,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_booking_cost" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_booking_cost" />
 
                 <TextView
                     android:id="@+id/earning_service_fee_value"
@@ -719,7 +719,7 @@
                     android:layout_marginEnd="@dimen/widget_margin_large"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_service_fee"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_service_fee"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <View
@@ -732,7 +732,7 @@
                     android:background="@color/divider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/earning_service_fee" />
+                    app:layout_constraintTop_toBottomOf="@+id/earning_service_fee" />
 
                 <TextView
                     android:id="@+id/earning_nett"
@@ -746,7 +746,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/div2" />
+                    app:layout_constraintTop_toBottomOf="@+id/div2" />
 
                 <TextView
                     android:id="@+id/earning_nett_value"
@@ -756,7 +756,7 @@
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@id/earning_nett"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/earning_nett"
                     app:layout_constraintEnd_toEndOf="parent" />
 
             </android.support.constraint.ConstraintLayout>

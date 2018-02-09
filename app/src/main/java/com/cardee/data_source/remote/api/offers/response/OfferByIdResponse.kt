@@ -5,6 +5,7 @@ import com.cardee.data_source.remote.api.cars.response.entity.OrderDailyDetailsE
 import com.cardee.data_source.remote.api.cars.response.entity.OrderHourlyDetailsEntity
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity
 import com.cardee.data_source.remote.api.common.entity.ImageEntity
+import com.cardee.data_source.remote.api.common.entity.OfferCarOwner
 import com.cardee.data_source.remote.api.common.entity.OfferCarRule
 import com.cardee.data_source.remote.api.offers.response.entity.OfferCarReview
 import com.google.gson.annotations.Expose
@@ -17,6 +18,7 @@ data class OfferByIdResponseBody(@Expose @SerializedName("car_details") val carD
                                  @Expose @SerializedName("is_available_order_days") val availableOrderDays: Boolean?,
                                  @Expose @SerializedName("car_availability_daily") val carAvailabilityDaily: Array<String>?,
                                  @Expose @SerializedName("car_availability_daily_cnt") val carAvailabilityDailyCount: Int?,
+                                 @Expose @SerializedName("owner") val owner: OfferCarOwner?,
                                  @Expose @SerializedName("order_hourly_details") val orderHourlyDetails: OrderHourlyDetailsEntity?,
                                  @Expose @SerializedName("is_available_order_hours") val availableOrderHours: Boolean?,
                                  @Expose @SerializedName("car_availability_hourly") val carAvailabilityHourly: Array<String>?,
@@ -32,6 +34,7 @@ data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?
                                @Expose @SerializedName("images") val images: List<ImageEntity>?,
                                @Expose @SerializedName("year_manufacture") val carYear: String?,
                                @Expose @SerializedName("license_plate_number") val carPlateNumber: String?,
+                               @Expose @SerializedName("trips_cnt") val tripsCount: Int?,
                                @Expose @SerializedName("delivery_rates") val deliveryRates: DeliveryRatesEntity?,
                                @Expose @SerializedName("vehicle_type") val vehicleType: String?,
                                @Expose @SerializedName("car_make") val carMake: String?,

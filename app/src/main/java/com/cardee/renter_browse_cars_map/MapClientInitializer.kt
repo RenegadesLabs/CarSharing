@@ -14,6 +14,8 @@ interface LocationClient : GoogleApiClient.ConnectionCallbacks,
     fun connect()
 
     fun disconnect()
+
+    fun obtainClient() : GoogleApiClient
 }
 
 class LocationClientImpl : LocationClient {
@@ -46,5 +48,9 @@ class LocationClientImpl : LocationClient {
 
     override fun onConnectionFailed(p0: ConnectionResult) {
 
+    }
+
+    override fun obtainClient() : GoogleApiClient {
+        return apiClient
     }
 }

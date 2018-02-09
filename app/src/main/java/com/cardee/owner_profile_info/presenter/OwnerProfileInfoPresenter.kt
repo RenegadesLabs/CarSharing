@@ -163,7 +163,7 @@ class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
             mView?.setResponseText(responseTime)
         }
 
-        var minutes = mResources.getString(R.string.owner_profile_info_minutes)
+        var minutes = mResources.getString(R.string.owner_profile_info_minute)
         if (responseTime.toInt() != 1) {
             minutes += "s"
         }
