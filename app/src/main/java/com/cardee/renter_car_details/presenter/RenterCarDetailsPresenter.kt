@@ -62,7 +62,8 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
         if (mGetOfferDisposable?.isDisposed == false) {
             mGetOfferDisposable?.dispose()
         }
-        mGetOfferDisposable = getOfferById.execute(GetOfferById.RequestValues(carId!!, lat, lng), object : RxUseCase.Callback<GetOfferById.ResponseValues> {
+        mGetOfferDisposable = getOfferById.execute(GetOfferById.RequestValues(carId!!, lat, lng),
+                object : RxUseCase.Callback<GetOfferById.ResponseValues> {
             override fun onSuccess(response: GetOfferById.ResponseValues) {
                 val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer ?: return)
                 view?.setDetailedCar(offerDetails)
@@ -100,6 +101,7 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     }
 
     override fun addCarToFavorites(carId: Int?, favorite: Boolean) {
+        view?.setFavorite(favorite)
         executor.execute<AddCarToFavorites.RequestValues, AddCarToFavorites.ResponseValues>(AddCarToFavorites(),
                 AddCarToFavorites.RequestValues(carId ?: 0), object : UseCase.Callback<AddCarToFavorites.ResponseValues> {
             override fun onSuccess(response: AddCarToFavorites.ResponseValues) {

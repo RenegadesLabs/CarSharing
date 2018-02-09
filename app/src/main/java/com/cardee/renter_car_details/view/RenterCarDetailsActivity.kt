@@ -188,6 +188,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     override fun setFavorite(favorite: Boolean) {
+        this.favorite = favorite
         ivRenterCarDetailsToolbarFavoritesImg
                 .setImageResource(if (favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
     }
