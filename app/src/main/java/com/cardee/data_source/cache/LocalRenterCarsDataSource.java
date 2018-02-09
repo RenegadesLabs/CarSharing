@@ -90,6 +90,11 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     }
 
     @Override
+    public Disposable getOfferById(int id, double lat, double lng, OfferCallback offerCallback) {
+        return null;
+    }
+
+    @Override
     public BookCarState getBookState() {
         return mBookState;
     }

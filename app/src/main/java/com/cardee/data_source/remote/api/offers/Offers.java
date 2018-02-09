@@ -17,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Offers {
 
@@ -40,4 +41,7 @@ public interface Offers {
 
     @GET("offers/{id}")
     Maybe<OfferByIdResponse> getOfferById(@Path("id") int id);
+
+    @GET("offers/{id}")
+    Maybe<OfferByIdResponse> getOfferById(@Path("id") int id, @Query("lat") double lat, @Query("lng") double lng);
 }

@@ -14,17 +14,20 @@ import android.view.View
 import com.cardee.R
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_book_car.view.BookCarActivity
+import com.cardee.renter_browse_cars.RenterEventBus
 import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
 import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
@@ -39,7 +42,11 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     private var viewHolder: RenterCarDetailsViewHolder? = null
     private var map: GoogleMap? = null
     private var markerIcon: Bitmap? = null
-    private val permissionRequestCode = 101
+    private var currentLocationIcon: Bitmap? = null
+
+    companion object {
+        const val LOCATION_REQUEST_CODE = 101
+    }
 
     override fun onClick(p0: View?) {
         when (p0) {
@@ -70,6 +77,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         setContentView(R.layout.activity_renter_car_details)
         presenter.attachView(this)
         init(this)
+        doOnConnect { requestCurrentLocation() }
         setSupportActionBar(toolbar)
         mapTouchWrapper.disableOnTouch(lockableScrollView)
         supportActionBar?.apply {
@@ -91,6 +99,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     private fun initMarkerBitmap() {
         val idleBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_car_marker)
         markerIcon = Bitmap.createScaledBitmap(idleBitmap, 128, 128, false)
+        currentLocationIcon = Bitmap.createScaledBitmap(idleBitmap, 64, 64, false)
     }
 
     override fun onMapReady(map: GoogleMap?) {
@@ -117,11 +126,36 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     private fun requestCurrentLocation() {
         if (!checkLocationPermission()) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION), permissionRequestCode)
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                    LOCATION_REQUEST_CODE)
         } else {
-
+            val location = LocationServices.FusedLocationApi.getLastLocation(obtainClient())
+            mCarId?.let { id ->
+                renderCurrentLocation(LatLng(location.longitude, location.longitude))
+                presenter.fetchDistance(id, location.latitude, location.longitude)
+            }
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(requestCode == LOCATION_REQUEST_CODE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                requestCurrentLocation()
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun setLocationString(locationString: String) {
+        addressText.text = locationString
+    }
+
+    private fun renderCurrentLocation(location: LatLng) {
+        val currentLocationMarker = MarkerOptions()
+                .position(location)
+                .icon(BitmapDescriptorFactory.fromBitmap(currentLocationIcon))
+        map?.addMarker(currentLocationMarker)
     }
 
     private fun checkLocationPermission(): Boolean {
@@ -163,6 +197,8 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     override fun setFavorite(favorite: Boolean) {
+        this.favorite = favorite
+        RenterEventBus.getInstance().put(RenterEventBus.Event(true))
         ivRenterCarDetailsToolbarFavoritesImg
                 .setImageResource(if (favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
     }
@@ -170,10 +206,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     override fun setDetailedCar(renterDetailedCar: RenterDetailedCar) {
         viewHolder?.bind(renterDetailedCar)
-    }
-
-    override fun setCarLocationString(locationString: String) {
-        //TODO implement)
     }
 
     override fun showProgress(show: Boolean) {

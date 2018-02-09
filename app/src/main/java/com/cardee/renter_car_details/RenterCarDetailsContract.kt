@@ -8,11 +8,11 @@ interface RenterCarDetailsContract {
 
     interface View : BaseView {
 
-        fun setCarLocationString(locationString: String)
-
         fun setDetailedCar(renterDetailedCar: RenterDetailedCar)
 
         fun setFavorite(favorite: Boolean)
+
+        fun setLocationString(locationString: String)
 
     }
 
@@ -21,6 +21,8 @@ interface RenterCarDetailsContract {
         fun attachView(view: View)
 
         fun fetchLocation(callback: (LatLng) -> Unit)
+
+        fun fetchDistance(id: Int, lat: Double, lng: Double)
 
         fun getDetailedCar(carId: Int?, lat: Double? = null, lng: Double? = null)
 

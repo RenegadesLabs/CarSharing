@@ -34,8 +34,10 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.owner_home.CarViewUpdateEventBus;
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
+import com.cardee.renter_browse_cars.RenterEventBus;
 import com.cardee.renter_browse_cars.adapter.RenterBrowseCarsListAdapter;
 import com.cardee.renter_browse_cars.filter.view.FilterActivity;
 import com.cardee.renter_browse_cars.presenter.RenterBrowseCarListPresenter;
@@ -191,6 +193,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public void onStart() {
         super.onStart();
+        RenterEventBus.Event event = RenterEventBus.Companion.getInstance().get();
+        if (event != null && event.getUpdated()) {
+            mPresenter.getCarsByFilter(mFilter);
+        }
     }
 
     @Override

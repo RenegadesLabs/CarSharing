@@ -29,6 +29,8 @@ public interface RenterCarsDataSource {
 
     Disposable getOfferById(int id, OfferCallback offerCallback);
 
+    Disposable getOfferById(int id, double lat, double lng, OfferCallback offerCallback);
+
     BookCarState getBookState();
 
     void saveBookState(BookCarState state);

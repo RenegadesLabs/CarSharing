@@ -49,7 +49,6 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
         toggleHourlyDailyTabs(true)
         toggleBookInstantly(renterDetailedCar.orderHourlyDetails?.instantBooking ?: false)
-        fillMapAddressBar(renterDetailedCar.distance ?: 0)
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -225,10 +224,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
     }
 
-    private fun fillMapAddressBar(distance: Int) {
-        val text = if (distance != 0) distance.toString() + "m" + " \u2022 " + renterDetailedCar?.address
-        else renterDetailedCar?.address
-        mActivity.addressText.text = text
+    private fun fillMapAddressBar() {
+        mActivity.addressText.text = renterDetailedCar?.address
     }
 
     private fun fillAboutInfo() {

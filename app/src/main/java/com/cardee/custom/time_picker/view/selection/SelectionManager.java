@@ -261,10 +261,10 @@ public class SelectionManager implements
             for (Hour hour : selectedDayz) {
                 if (hour.isSelected()) {
                     hour.setSelectionState(null);
-                    handler.post(adapter::notifyDataSetChanged);
+                    break;
                 }
-                break;
             }
+            handler.post(adapter::notifyDataSetChanged);
         }).start();
     }
 
