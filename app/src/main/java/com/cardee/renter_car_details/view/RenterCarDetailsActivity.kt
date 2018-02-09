@@ -14,6 +14,7 @@ import android.view.View
 import com.cardee.R
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_book_car.view.BookCarActivity
+import com.cardee.renter_browse_cars.RenterEventBus
 import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.RenterCarDetailsContract
@@ -189,6 +190,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     override fun setFavorite(favorite: Boolean) {
         this.favorite = favorite
+        RenterEventBus.getInstance().put(RenterEventBus.Event(true))
         ivRenterCarDetailsToolbarFavoritesImg
                 .setImageResource(if (favorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
     }
