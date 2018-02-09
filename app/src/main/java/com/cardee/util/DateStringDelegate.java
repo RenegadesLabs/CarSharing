@@ -227,9 +227,47 @@ public class DateStringDelegate {
         return dateShortViewTitleFormatter.format(date);
     }
 
-    public String getTimeFromString(String time) {
+    public String getTimeForHourly(String time) {
         try {
             Date date = dateFormatter.parse(time);
+            return dateShortViewTitleFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getTimeForHourlyPlusOne(String time) {
+        try {
+            Date date = dateFormatter.parse(time);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+            date = cal.getTime();
+            return dateShortViewTitleFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getTimeForDaily(String time) {
+        try {
+            Date date = dateFormatter.parse(time);
+            return dateShortViewTitleFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getTimeForDailyPlusOne(String time) {
+        try {
+            Date date = dateFormatter.parse(time);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.DATE, 1); // adds one day
+            date = cal.getTime();
             return dateShortViewTitleFormatter.format(date);
         } catch (ParseException e) {
             e.printStackTrace();

@@ -23,6 +23,7 @@ import java.util.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
+
     private val PERIOD_REQUEST_CODE = 911
     private val LOCATION_REQUEST_CODE = 912
     private val PAYMENT_REQUEST_CODE = 913
@@ -67,6 +68,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 mState.bookingHourly = true
                 resetCost()
                 resetDatesAndDelivery()
+                mPresenter.getCost(mCarId ?: return@setOnClickListener, mState, null)
             }
         }
         bookDaily.setOnClickListener {
@@ -74,6 +76,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 mState.bookingHourly = false
                 resetCost()
                 resetDatesAndDelivery()
+                mPresenter.getCost(mCarId ?: return@setOnClickListener, mState, null)
             }
         }
         bookingPeriodContainer.setOnClickListener {
@@ -90,8 +93,11 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             overridePendingTransition(R.anim.enter_up, 0)
         }
         collectionAddress.setOnClickListener {
-            val intent = Intent(this, CollectionAreaActivity::class.java)
-            startActivityForResult(intent, LOCATION_REQUEST_CODE)
+            if ((mState.bookingHourly == true && mState.hourlyCurbsideDelivery.get()) ||
+                    (mState.bookingHourly == false && mState.dailyCurbsideDelivery.get())) {
+                val intent = Intent(this, CollectionAreaActivity::class.java)
+                startActivityForResult(intent, LOCATION_REQUEST_CODE)
+            }
         }
         costBreakdown.setOnClickListener { mPresenter.showCostBreakdown(this, mState) }
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
@@ -119,11 +125,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     }
 
     private fun resetDatesAndDelivery() {
-        mState.timeEnd = null
-        mState.timeBegin = null
-        bookingStart?.text = resources.getString(R.string.rental_period_from)
-        bookingEnd?.text = resources.getString(R.string.rental_period_to)
-
+        setRentalPeriod()
         mState.collectionPicked.set(false)
     }
 
@@ -153,6 +155,34 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         } else {
             bookButtonText.text = String.format(Locale.getDefault(), resources.getString(R.string.book_bnt_template), total)
         }
+    }
+
+    override fun setRentalPeriod() {
+        val delegate = DateStringDelegate(this)
+        var beginString: String?
+        var endString: String?
+        if (mState.bookingHourly == true) {
+            if (mState.timeBeginHourly == null) {
+                beginString = resources.getString(R.string.rental_period_from)
+                endString = resources.getString(R.string.rental_period_to)
+            } else {
+                beginString = delegate.getTimeForHourly(mState.timeBeginHourly)
+                endString = delegate.getTimeForHourly(mState.timeEndHourly)
+                beginString += "+"
+                endString += "+"
+            }
+        } else {
+            if (mState.timeBeginDaily == null) {
+                beginString = resources.getString(R.string.rental_period_from)
+                endString = resources.getString(R.string.rental_period_to)
+            } else {
+                beginString = delegate.getTimeForDaily(mState.timeBeginDaily ?: return)
+                endString = delegate.getTimeForDailyPlusOne(mState.timeEndDaily)
+            }
+        }
+        bookingStart?.text = beginString
+        bookingEnd?.text = endString
+        mPresenter.saveSate(mState)
     }
 
     override fun onStop() {
@@ -221,18 +251,14 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                     val timeBegin = data?.getStringExtra("begin")
                     val timeEnd = data?.getStringExtra("end")
                     if (timeBegin != null && timeEnd != null) {
-                        mState.timeBegin = timeBegin
-                        mState.timeEnd = timeEnd
-                        val delegate = DateStringDelegate(this)
-                        var beginString = delegate.getTimeFromString(timeBegin)
-                        var endString = delegate.getTimeFromString(timeEnd)
                         if (mState.bookingHourly == true) {
-                            beginString += "+"
-                            endString += "+"
+                            mState.timeBeginHourly = timeBegin
+                            mState.timeEndHourly = timeEnd
+                        } else {
+                            mState.timeBeginDaily = timeBegin
+                            mState.timeEndDaily = timeEnd
                         }
-                        bookingStart?.text = beginString
-                        bookingEnd?.text = endString
-                        mPresenter.saveSate(mState)
+                        setRentalPeriod()
                         mPresenter.getCost(mCarId ?: return, mState, null)
                     }
                 }
