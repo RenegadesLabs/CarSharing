@@ -14,7 +14,6 @@ object LocalPaymentsDataSource : PaymentsDataSource {
         return Observable.just(cardsList ?: ArrayList())
                 .subscribeWith(object : DisposableObserver<List<CardsResponseBody>>() {
                     override fun onComplete() {
-                        callback.onSuccess(cardsList ?: return)
                     }
 
                     override fun onNext(t: List<CardsResponseBody>) {

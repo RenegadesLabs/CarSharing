@@ -16,6 +16,7 @@ import com.cardee.renter_book_car.message.view.BookMessageActivity
 import com.cardee.renter_book_car.payment.BookPaymentActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
+import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
 import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
@@ -27,6 +28,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     private val PERIOD_REQUEST_CODE = 911
     private val LOCATION_REQUEST_CODE = 912
     private val PAYMENT_REQUEST_CODE = 913
+    private val RENTAL_TERMS_REQUEST_CODE = 914
 
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
@@ -114,6 +116,12 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             }
             paymentIntent.putExtra("card", paymentChoose.text)
             startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
+        }
+        rentalTermsAgree.setOnClickListener {
+            val intent = Intent(this, RenterRentalTermsActivity::class.java)
+            intent.putExtra("carId", mCarId)
+            intent.putExtra("agree", true)
+            startActivityForResult(intent, RENTAL_TERMS_REQUEST_CODE)
         }
         addNote.setOnClickListener {
             val intent = Intent(this, BookMessageActivity::class.java)
@@ -261,6 +269,12 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                         setRentalPeriod()
                         mPresenter.getCost(mCarId ?: return, mState, null)
                     }
+                }
+            }
+            RENTAL_TERMS_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    mState.rentalTermsAgreed.set(true)
+                    mPresenter.saveSate(mState)
                 }
             }
         }
