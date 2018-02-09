@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class RenterCarsRepository implements RenterCarsDataSource {
@@ -142,17 +143,22 @@ public class RenterCarsRepository implements RenterCarsDataSource {
 
     @Override
     public Disposable getOfferById(int id, OfferCallback offerCallback) {
-        return mRemoteDataSource.getOfferById(id, new OfferCallback() {
+        CompositeDisposable disposable = new CompositeDisposable();
+        disposable.add(mLocalDataSource.getOfferById(id, offerCallback));
+        disposable.add(mRemoteDataSource.getOfferById(id, new OfferCallback() {
             @Override
             public void onSuccess(OfferByIdResponseBody response) {
                 offerCallback.onSuccess(response);
+                mLocalDataSource.saveOfferById(response);
             }
 
             @Override
             public void onError(Error error) {
                 offerCallback.onError(error);
             }
-        });
+        }));
+
+        return disposable;
     }
 
     @Override

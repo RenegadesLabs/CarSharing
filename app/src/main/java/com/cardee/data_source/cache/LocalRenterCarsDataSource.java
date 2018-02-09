@@ -1,11 +1,14 @@
 package com.cardee.data_source.cache;
 
 import com.cardee.data_source.RenterCarsDataSource;
+import com.cardee.data_source.remote.api.offers.response.OfferByIdResponseBody;
 import com.cardee.domain.bookings.entity.BookCarState;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.FilterRequest;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 
 public class LocalRenterCarsDataSource implements RenterCarsDataSource {
@@ -13,6 +16,7 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
     private static LocalRenterCarsDataSource INSTANCE;
     private BrowseCarsFilter mFilter;
     private BookCarState mBookState;
+    private OfferByIdResponseBody mOfferByIdResponseBody;
 
     private LocalRenterCarsDataSource() {
         mFilter = new BrowseCarsFilter();
@@ -64,7 +68,25 @@ public class LocalRenterCarsDataSource implements RenterCarsDataSource {
 
     @Override
     public Disposable getOfferById(int id, OfferCallback offerCallback) {
-        return null;
+        return Observable.just(mOfferByIdResponseBody == null ? new OfferByIdResponseBody() : mOfferByIdResponseBody)
+                .subscribeWith(new DisposableObserver<OfferByIdResponseBody>() {
+                    @Override
+                    public void onNext(OfferByIdResponseBody offerByIdResponseBody) {
+                        offerCallback.onSuccess(offerByIdResponseBody);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void saveOfferById(OfferByIdResponseBody responseBody) {
+        mOfferByIdResponseBody = responseBody;
     }
 
     @Override

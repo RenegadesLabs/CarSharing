@@ -42,25 +42,25 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         mView = bookCarView
     }
 
-    override fun requestBooking(state: BookCarState) {
+    override fun requestBooking(mState: BookCarState) {
         if (mBookDisposable?.isDisposed == false) {
             mBookDisposable?.dispose()
         }
 
-        val request: BookingRequest = if (state.bookingHourly == true) {
-            BookingRequest(mCarId ?: return, state.timeBegin ?: return,
-                    state.timeEnd ?: return, state.hourlyCurbsideDelivery.get(),
-                    state.latitude, state.longitude, state.deliveryAddress, state.paymentSource,
-                    state.paymentToken, state.bookingHourly?.not() ?: return,
-                    state.amountTotal ?: return, state.amountDiscount ?: 0f,
-                    state.noteText)
+        val request: BookingRequest = if (mState.bookingHourly == true) {
+            BookingRequest(mCarId ?: return, mState.timeBeginHourly ?: return,
+                    mState.timeEndHourly ?: return, mState.hourlyCurbsideDelivery.get(),
+                    mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
+                    mState.paymentToken, mState.bookingHourly?.not() ?: return,
+                    mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
+                    mState.noteText)
         } else {
-            BookingRequest(mCarId ?: return, state.timeBegin ?: return,
-                    state.timeEnd ?: return, state.dailyCurbsideDelivery.get(),
-                    state.latitude, state.longitude, state.deliveryAddress, state.paymentSource,
-                    state.paymentToken, state.bookingHourly?.not() ?: return,
-                    state.amountTotal ?: return, state.amountDiscount ?: 0f,
-                    state.noteText)
+            BookingRequest(mCarId ?: return, mState.timeBeginDaily?.dropLast(15) ?: return,
+                    mState.timeEndDaily?.dropLast(15) ?: return, mState.dailyCurbsideDelivery.get(),
+                    mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
+                    mState.paymentToken, mState.bookingHourly?.not() ?: return,
+                    mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
+                    mState.noteText)
         }
 
         mBookDisposable = requestBookingCase.execute(RequestBooking.RequestValues(request), object : RxUseCase.Callback<RequestBooking.ResponseValues> {
@@ -76,6 +76,15 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
 
     override fun getOffer(id: Int, state: BookCarState) {
         mCarId = id
+        val filter = getFilter.getFilter()
+        if (getHourly(filter)) {
+            state.timeBeginHourly = filter.rentalPeriodBegin
+            state.timeEndHourly = filter.rentalPeriodEnd
+        } else {
+            state.timeBeginDaily = filter.rentalPeriodBegin
+            state.timeEndDaily = filter.rentalPeriodEnd
+        }
+        mView?.setRentalPeriod()
 
         if (mGetOfferDisposable?.isDisposed == false) {
             mGetOfferDisposable?.dispose()
@@ -93,11 +102,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     }
 
     private fun setView(offer: OfferByIdResponseBody, state: BookCarState) {
-        val filter = getFilter.getFilter()
-        state.bookingHourly = getHourly(filter)
-        state.timeBegin = filter.rentalPeriodBegin
-        state.timeEnd = filter.rentalPeriodEnd
-
         val carTitle = offer.carDetails?.carTitle
         mView?.setCarTitle(carTitle)
         val carYear = offer.carDetails?.carYear
@@ -135,10 +139,18 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         if (mGetCostDisposable?.isDisposed == false) {
             mGetCostDisposable?.dispose()
         }
-        var timeBegin = state.timeBegin ?: return
-        if (state.bookingHourly == false) timeBegin = timeBegin.dropLast(15)
-        var timeEnd = state.timeEnd ?: return
-        if (state.bookingHourly == false) timeEnd = timeEnd.dropLast(15)
+        var timeBegin: String?
+        var timeEnd: String?
+        if (state.bookingHourly == true) {
+            timeBegin = state.timeBeginHourly ?: return
+            timeEnd = state.timeEndHourly ?: return
+        } else {
+            timeBegin = state.timeBeginDaily ?: return
+            timeEnd = state.timeEndDaily ?: return
+            timeBegin = timeBegin.dropLast(15)
+            timeEnd = timeEnd.dropLast(15)
+        }
+
         var curbDel = if (state.bookingHourly == true) state.hourlyCurbsideDelivery.get() else state.dailyCurbsideDelivery.get()
         if (state.collectionPicked.get().not()) {
             curbDel = false
@@ -195,7 +207,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val fee = mCostBreakdown?.fee
         val discount = mCostBreakdown?.discount
         val total = mCostBreakdown?.total
-
 
         val builder = AlertDialog.Builder(context ?: return)
         val root = context.layoutInflater.inflate(R.layout.dialog_cost_breakdown, null)
@@ -264,7 +275,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     override fun saveSate(state: BookCarState) {
         saveBookState.saveBookState(state)
     }
-
 
     override fun onDestroy() {
         mView = null

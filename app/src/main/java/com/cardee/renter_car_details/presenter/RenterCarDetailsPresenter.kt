@@ -65,7 +65,8 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
         mGetOfferDisposable = getOfferById.execute(GetOfferById.RequestValues(carId!!, lat, lng),
                 object : RxUseCase.Callback<GetOfferById.ResponseValues> {
             override fun onSuccess(response: GetOfferById.ResponseValues) {
-                val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer ?: return)
+                val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer
+                        ?: return)
                 view?.setDetailedCar(offerDetails)
                 val locationString = composeAddressString(offerDetails.address, distance)
                 view?.setLocationString(locationString)
@@ -103,7 +104,8 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     override fun addCarToFavorites(carId: Int?, favorite: Boolean) {
         view?.setFavorite(favorite)
         executor.execute<AddCarToFavorites.RequestValues, AddCarToFavorites.ResponseValues>(AddCarToFavorites(),
-                AddCarToFavorites.RequestValues(carId ?: 0), object : UseCase.Callback<AddCarToFavorites.ResponseValues> {
+                AddCarToFavorites.RequestValues(carId
+                        ?: 0), object : UseCase.Callback<AddCarToFavorites.ResponseValues> {
             override fun onSuccess(response: AddCarToFavorites.ResponseValues) {
                 view?.showMessage(R.string.renter_car_details_added_to_fav)
                 if (favorite) {
@@ -118,6 +120,10 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
 //                handleError(error)
             }
         })
+    }
+
+    override fun getCachedCar(): RenterDetailedCar? {
+        return pendingValue
     }
 
     override fun onDestroy() {

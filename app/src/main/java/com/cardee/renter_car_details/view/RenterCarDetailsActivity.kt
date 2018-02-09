@@ -19,6 +19,7 @@ import com.cardee.renter_browse_cars_map.LocationClient
 import com.cardee.renter_browse_cars_map.LocationClientImpl
 import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
+import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -60,6 +61,12 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                     putExtra("carId", mCarId)
                     putExtra("isHourly", viewHolder?.isHourly())
                 }
+                startActivity(intent)
+            }
+            rentalTermsButton -> {
+                val intent = Intent(this, RenterRentalTermsActivity::class.java)
+                intent.putExtra("carId", mCarId)
+                intent.putExtra("agree", false)
                 startActivity(intent)
             }
         }
@@ -155,7 +162,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED
+                PackageManager.PERMISSION_GRANTED
     }
 
     override fun onStart() {
@@ -179,6 +186,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         ivRenterCarDetailsToolbarShare.setOnClickListener(this)
         ivRenterCarDetailsToolbarFavoritesImg.setOnClickListener(this)
         bBookCar.setOnClickListener(this)
+        rentalTermsButton.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

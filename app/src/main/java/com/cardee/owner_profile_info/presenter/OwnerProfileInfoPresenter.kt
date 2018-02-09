@@ -93,10 +93,12 @@ class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
         if (reviews.isNotEmpty()) {
             val mapper = OwnerReviewToCarReviewMapper()
             val carReviewList = mapper.transform(reviews)
-            for (review in carReviewList) {
+            val iterator = carReviewList.iterator()
+            while (iterator.hasNext()) {
+                val review = iterator.next()
                 val text = review.reviewText
                 if (text.isNullOrEmpty()) {
-                    carReviewList.remove(review)
+                    iterator.remove()
                 } else {
                     review.reviewText = text.trim()
                 }

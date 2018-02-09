@@ -13,20 +13,19 @@ import com.google.gson.annotations.SerializedName
 
 data class OfferByIdResponse(@Expose @SerializedName("data") val offerResponse: OfferByIdResponseBody?) : BaseResponse()
 
-data class OfferByIdResponseBody(@Expose @SerializedName("car_details") val carDetails: OfferByIdCarDetails?,
-                                 @Expose @SerializedName("order_daily_details") val orderDailyDetails: OrderDailyDetailsEntity?,
-                                 @Expose @SerializedName("is_available_order_days") val availableOrderDays: Boolean?,
-                                 @Expose @SerializedName("car_availability_daily") val carAvailabilityDaily: Array<String>?,
-                                 @Expose @SerializedName("car_availability_daily_cnt") val carAvailabilityDailyCount: Int?,
-                                 @Expose @SerializedName("owner") val owner: OfferCarOwner?,
-                                 @Expose @SerializedName("order_hourly_details") val orderHourlyDetails: OrderHourlyDetailsEntity?,
-                                 @Expose @SerializedName("is_available_order_hours") val availableOrderHours: Boolean?,
-                                 @Expose @SerializedName("car_availability_hourly") val carAvailabilityHourly: Array<String>?,
-                                 @Expose @SerializedName("car_availability_hourly_cnt") val carAvailabilityHourlyCount: Int?,
-                                 @Expose @SerializedName("car_availability_time_begin") val carAvailabilityTimeBegin: String?,
-                                 @Expose @SerializedName("car_availability_time_end") val carAvailabilityTimeEnd: String?,
-                                 @Expose @SerializedName("review_cnt") val reviewCount: Int?,
-                                 @Expose @SerializedName("rating") val rating: Float?)
+data class OfferByIdResponseBody(@Expose @SerializedName("car_details") val carDetails: OfferByIdCarDetails? = null,
+                                 @Expose @SerializedName("order_daily_details") val orderDailyDetails: OrderDailyDetailsEntity? = null,
+                                 @Expose @SerializedName("is_available_order_days") val availableOrderDays: Boolean? = null,
+                                 @Expose @SerializedName("car_availability_daily") val carAvailabilityDaily: Array<String>? = null,
+                                 @Expose @SerializedName("car_availability_daily_cnt") val carAvailabilityDailyCount: Int? = null,
+                                 @Expose @SerializedName("owner") val owner: OfferCarOwner? = null,
+                                 @Expose @SerializedName("order_hourly_details") val orderHourlyDetails: OrderHourlyDetailsEntity? = null,
+                                 @Expose @SerializedName("is_available_order_hours") val availableOrderHours: Boolean? = null,
+                                 @Expose @SerializedName("car_availability_hourly") val carAvailabilityHourly: Array<String>? = null,
+                                 @Expose @SerializedName("car_availability_hourly_cnt") val carAvailabilityHourlyCount: Int? = null,
+                                 @Expose @SerializedName("car_availability_time_begin") val carAvailabilityTimeBegin: String? = null,
+                                 @Expose @SerializedName("car_availability_time_end") val carAvailabilityTimeEnd: String? = null,
+                                 @Expose @SerializedName("review_cnt") val reviewCount: Int? = null)
 
 data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?,
                                @Expose @SerializedName("car_title") val carTitle: String?,
@@ -50,8 +49,9 @@ data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?
                                @Expose @SerializedName("town") val town: String?,
                                @Expose @SerializedName("is_hide_exact_location") val hideExactLocation: Boolean?,
                                @Expose @SerializedName("description") val description: String?,
-                               @Expose @SerializedName("req_min_age") val requiredMinAge: String?,
-                               @Expose @SerializedName("req_dr_exp") val requiredDrivingExp: String?,
+                               @Expose @SerializedName("req_min_age") val requiredMinAge: Int?,
+                               @Expose @SerializedName("req_max_age") val requiredMaxAge: Int?,
+                               @Expose @SerializedName("req_dr_exp") val requiredDrivingExp: Int?,
                                @Expose @SerializedName("car_rules") val carRules: List<OfferCarRule>?,
                                @Expose @SerializedName("car_other_rules") val carOtherRules: String?,
                                @Expose @SerializedName("is_req_security_deposit") val requireSecurityDeposit: Boolean?,
@@ -64,4 +64,5 @@ data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?
                                @Expose @SerializedName("car_condition_cleanliness") val carConditionCleanliness: Float?,
                                @Expose @SerializedName("car_comfort_performance") val carComfortPerformance: Float?,
                                @Expose @SerializedName("car_owner") val carOwner: Float?,
-                               @Expose @SerializedName("overall_rental_experience") val overallRentalExperience: Float?)
+                               @Expose @SerializedName("overall_rental_experience") val overallRentalExperience: Float?,
+                               @Expose @SerializedName("rating") val rating: Float?)

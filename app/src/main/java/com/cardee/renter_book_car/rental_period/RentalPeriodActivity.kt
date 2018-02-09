@@ -18,6 +18,7 @@ import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
 import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*
+import java.util.*
 
 class RentalPeriodActivity : AppCompatActivity() {
 
@@ -49,9 +50,10 @@ class RentalPeriodActivity : AppCompatActivity() {
         if (mHourly == true) {
             val hourlyView = content as ConstraintLayout
             mHourlyAdapter = TimePickerAdapter()
-            mHourlyAdapter?.setSelectionListener {
-                timeBegin = dateDelegate?.getGMTTimeString(it[0])
-                timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
+            mHourlyAdapter?.setSelectionListener { it ->
+                val end = addOneHour(it.lastOrNull())
+                timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
+                timeEnd = dateDelegate?.getGMTTimeString(end)
             }
             mAvailability?.let { mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd) }
             hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
@@ -69,8 +71,8 @@ class RentalPeriodActivity : AppCompatActivity() {
             val dailyView = content as ConstraintLayout
             mDailyAdapter = CalendarAdapter()
             mDailyAdapter?.setSelectionListener {
-                timeBegin = dateDelegate?.getGMTTimeString(it[0])
-                timeEnd = dateDelegate?.getGMTTimeString(it[it.lastIndex])
+                timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
+                timeEnd = dateDelegate?.getGMTTimeString(it.lastOrNull())
             }
             mAvailability?.let { mDailyAdapter?.setAvailabilityRange(it) }
             dailyView.calendar.setSelectionAdapter(mDailyAdapter)
@@ -88,6 +90,13 @@ class RentalPeriodActivity : AppCompatActivity() {
         backgroundView.addView(content)
         dim.setOnClickListener { _ -> onBackPressed() }
         prepareWindow()
+    }
+
+    private fun addOneHour(end: Date?): Date? {
+        val calendar = Calendar.getInstance()
+        calendar.time = end ?: return null
+        calendar.add(Calendar.HOUR_OF_DAY, 1)
+        return calendar.time
     }
 
     private fun getIntentData() {

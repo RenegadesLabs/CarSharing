@@ -28,6 +28,8 @@ interface RenterCarDetailsContract {
 
         fun addCarToFavorites(carId: Int?, favorite: Boolean)
 
+        fun getCachedCar(): RenterDetailedCar?
+
         fun onDestroy()
     }
 }

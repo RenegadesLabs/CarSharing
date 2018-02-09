@@ -779,5 +779,22 @@
     <string name="book_message_title">Message To Owner</string>
     <string name="book_message_hint">Add a message to owner to describe your purpose, request, requirements etc.\n\nExample 1\nHi! Lovely car, hoping to rent it for my wedding day! Thank you!\n\nExample 2\nNeed a car that allows me to bring my dog. I have my own car seat cover for my dog and will return the car in great condition! Willing to pay $20 additional.\n\nExample 3\nCan I pickup the car at 8am instead of 9am? Please only accept request if it is ok for you.</string>
 
+    <!-- Renter Car Reviews-->
+    <string name="renter_car_reviews_title">Ratings &amp; Reviews</string>
+
+    <!-- Renter Rental terms-->
+    <string name="renter_rental_terms_title">Rental Terms</string>
+    <string name="requirements">requirements</string>
+    <string name="requirements_template">- Driver must be at least %d years old and not more than %d years old\n- Driver must have at least %d years of driving experience</string>
+    <string name="car_rules">car rules</string>
+    <string name="security_deposit">security deposit</string>
+    <string name="security_deposit_template">A $%d security deposit is required for this car.</string>
+    <string name="security_deposit_hint_first">Deposit amount will be held from your card upon car collection. Claims on the deposit requires Cardee approval.\u0020</string>
+    <string name="security_deposit_hint_second">Learn\u00A0more\u00A0about\u00A0deposit\u00A0and\u00A0claims</string>
+    <string name="insurance_excess">insurance excess</string>
+    <string name="insurance_excess_hint_first">Excess is the maximum payable amount in case of accident.\u0020</string>
+    <string name="insurance_excess_hint_second">Learn\u00A0more</string>
+    <string name="agree_rental_terms">Agree Rental Terms</string>
+
 
 </resources>
