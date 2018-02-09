@@ -262,11 +262,11 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
                 if (day.isCurrent()) {
                     if (day.isSelected()) {
                         day.setSelectionState(null);
-                        handler.post(() -> adapter.notifyDataSetChanged());
                     }
                     break;
                 }
             }
+            handler.post(adapter::notifyDataSetChanged);
         }).start();
     }
 
