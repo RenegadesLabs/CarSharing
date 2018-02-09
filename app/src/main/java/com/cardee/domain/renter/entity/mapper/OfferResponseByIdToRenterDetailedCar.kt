@@ -25,6 +25,6 @@ class OfferResponseByIdToRenterDetailedCar {
                 carDetails?.reviews, carDetails?.carConditionCleanliness, carDetails?.carComfortPerformance, carDetails?.carOwner, carDetails?.overallRentalExperience,
                 offerResponse?.orderDailyDetails, offerResponse?.availableOrderDays, offerResponse?.carAvailabilityDaily, offerResponse?.carAvailabilityDailyCount, offerResponse?.orderHourlyDetails,
                 offerResponse?.availableOrderHours, offerResponse?.carAvailabilityHourly, offerResponse?.carAvailabilityHourlyCount, offerResponse?.carAvailabilityTimeBegin, offerResponse?.carAvailabilityTimeEnd,
-                offerResponse?.reviewCount, offerResponse?.rating, offerResponse?.owner)
+                offerResponse?.reviewCount, carDetails?.rating, offerResponse?.owner)
     }
 }

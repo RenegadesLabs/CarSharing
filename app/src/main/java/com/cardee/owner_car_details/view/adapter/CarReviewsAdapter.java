@@ -102,6 +102,7 @@ public class CarReviewsAdapter extends RecyclerView.Adapter<CarReviewsAdapter.Re
                 df = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
                 mReviewDate.setText(df.format(date));
             } catch (ParseException e) {
+
             }
 
             mReviewText.setText(review.getReview());

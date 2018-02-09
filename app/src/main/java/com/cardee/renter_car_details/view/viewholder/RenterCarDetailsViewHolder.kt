@@ -1,6 +1,7 @@
 package com.cardee.renter_car_details.view.viewholder
 
 import android.content.Context
+import android.content.Intent
 import android.support.annotation.DrawableRes
 import android.support.design.widget.TabLayout
 import android.support.v4.view.PagerAdapter
@@ -17,6 +18,7 @@ import com.cardee.R
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
+import com.cardee.renter_car_details.reviews.RenterCarReviewsActivity
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateStringDelegate
@@ -47,7 +49,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
         toggleHourlyDailyTabs(true)
         toggleBookInstantly(renterDetailedCar.orderHourlyDetails?.instantBooking ?: false)
-        fillMapAddressBar(renterDetailedCar.distance?: 0)
+        fillMapAddressBar(renterDetailedCar.distance ?: 0)
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -186,7 +188,9 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                     fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
                             " " + mActivity.getString(R.string.car_rental_rates_per_km)
                 }
-                else -> { fuelPolicyEntity?.fuelPolicyName }
+                else -> {
+                    fuelPolicyEntity?.fuelPolicyName
+                }
             }
 
         } else {
@@ -199,7 +203,9 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                     fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
                             " " + mActivity.getString(R.string.car_rental_rates_per_km)
                 }
-                else -> { fuelPolicyEntity?.fuelPolicyName }
+                else -> {
+                    fuelPolicyEntity?.fuelPolicyName
+                }
             }
         }
     }
@@ -234,7 +240,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun setTripsCount() {
-        val text = " \u2022 " + renterDetailedCar?.trips +
+        val text = "\u2022  " + renterDetailedCar?.trips +
                 mActivity.getString(R.string.renter_car_details_review_trips_suffix)
         mActivity.tvRenterCarDetailsRatingText.text = text
     }
@@ -242,7 +248,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private fun fillReview() {
         mActivity.rbRenterCarDetailsRating.score = renterDetailedCar?.rating ?: 0F
         setTripsCount()
-        if (renterDetailedCar?.reviews?.isEmpty() == false) {
+        if (renterDetailedCar?.reviews?.isNotEmpty() == true) {
             mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
             val dateText = mActivity.getString(R.string.renter_car_details_review_date_prefix) + " " +
                     DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
@@ -253,6 +259,11 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                     if (renterDetailedCar?.reviewCount ?: 0 > 1) mActivity.getString(R.string.renter_car_details_review_more_suffix)
                     else mActivity.getString(R.string.renter_car_details_review_more_suffix_single)
             mActivity.tvRenterCarDetailsReviewMore.text = readMoreText
+            mActivity.tvRenterCarDetailsReviewMore.setOnClickListener {
+                val intent = Intent(mActivity, RenterCarReviewsActivity::class.java)
+                intent.putExtra("carId", renterDetailedCar?.carId)
+                mActivity.startActivity(intent)
+            }
             return
         }
         mActivity.clReviewContainer.visibility = View.GONE

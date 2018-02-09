@@ -25,8 +25,7 @@ data class OfferByIdResponseBody(@Expose @SerializedName("car_details") val carD
                                  @Expose @SerializedName("car_availability_hourly_cnt") val carAvailabilityHourlyCount: Int?,
                                  @Expose @SerializedName("car_availability_time_begin") val carAvailabilityTimeBegin: String?,
                                  @Expose @SerializedName("car_availability_time_end") val carAvailabilityTimeEnd: String?,
-                                 @Expose @SerializedName("review_cnt") val reviewCount: Int?,
-                                 @Expose @SerializedName("rating") val rating: Float?)
+                                 @Expose @SerializedName("review_cnt") val reviewCount: Int?)
 
 data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?,
                                @Expose @SerializedName("car_title") val carTitle: String?,
@@ -64,4 +63,5 @@ data class OfferByIdCarDetails(@Expose @SerializedName("car_id") val carId: Int?
                                @Expose @SerializedName("car_condition_cleanliness") val carConditionCleanliness: Float?,
                                @Expose @SerializedName("car_comfort_performance") val carComfortPerformance: Float?,
                                @Expose @SerializedName("car_owner") val carOwner: Float?,
-                               @Expose @SerializedName("overall_rental_experience") val overallRentalExperience: Float?)
+                               @Expose @SerializedName("overall_rental_experience") val overallRentalExperience: Float?,
+                               @Expose @SerializedName("rating") val rating: Float?)
