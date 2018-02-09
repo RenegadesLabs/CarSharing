@@ -237,20 +237,6 @@ public class DateStringDelegate {
         return null;
     }
 
-    public String getTimeForHourlyPlusOne(String time) {
-        try {
-            Date date = dateFormatter.parse(time);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
-            date = cal.getTime();
-            return dateShortViewTitleFormatter.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public String getTimeForDaily(String time) {
         try {
             Date date = dateFormatter.parse(time);

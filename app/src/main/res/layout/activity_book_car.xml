@@ -307,6 +307,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="3dp"
                         android:layout_marginTop="16dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:textSize="@dimen/text_regular"
                         android:visibility="@{state.promocodeClicked ? View.VISIBLE : View.GONE}"

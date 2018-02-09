@@ -77,8 +77,7 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     override fun getOffer(id: Int, state: BookCarState) {
         mCarId = id
         val filter = getFilter.getFilter()
-        state.bookingHourly = getHourly(filter)
-        if (state.bookingHourly == true) {
+        if (getHourly(filter)) {
             state.timeBeginHourly = filter.rentalPeriodBegin
             state.timeEndHourly = filter.rentalPeriodEnd
         } else {
@@ -103,8 +102,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     }
 
     private fun setView(offer: OfferByIdResponseBody, state: BookCarState) {
-
-
         val carTitle = offer.carDetails?.carTitle
         mView?.setCarTitle(carTitle)
         val carYear = offer.carDetails?.carYear
@@ -211,7 +208,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val discount = mCostBreakdown?.discount
         val total = mCostBreakdown?.total
 
-
         val builder = AlertDialog.Builder(context ?: return)
         val root = context.layoutInflater.inflate(R.layout.dialog_cost_breakdown, null)
         builder.setView(root)
@@ -280,7 +276,6 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     override fun saveSate(state: BookCarState) {
         saveBookState.saveBookState(state)
     }
-
 
     override fun onDestroy() {
         mView = null
