@@ -14,6 +14,10 @@ class RenterRentalTermsPresenter {
     private var mDisposable: Disposable? = null
     private var mView: RenterRentalTermsView? = null
 
+    fun init(view: RenterRentalTermsView) {
+        mView = view
+    }
+
     fun getRentalTerms(mCarId: Int?) {
         if (mDisposable?.isDisposed == false) {
             mDisposable?.dispose()
@@ -44,16 +48,17 @@ class RenterRentalTermsPresenter {
         } else {
             mView?.setRules(rules)
         }
-        if (offer.carDetails?.requireSecurityDeposit == false) {
+
+        if (offer.carDetails?.requireSecurityDeposit == false || deposit.isNullOrEmpty()) {
             mView?.hideDeposit()
         } else {
             mView?.setDeposit(CardeeApp.context.resources.getString(R.string.security_deposit_template).format(deposit))
         }
-        mView?.setInsurance(insurance)
-    }
 
-    fun init(view: RenterRentalTermsView) {
-        mView = view
+        if (insurance == null) {
+            mView?.hideInsurance()
+        } else {
+            mView?.setInsurance(insurance)
+        }
     }
-
 }

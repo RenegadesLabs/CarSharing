@@ -10,4 +10,5 @@ interface RenterRentalTermsView : BaseView{
     fun setInsurance(insurance: String?)
     fun hideRules()
     fun hideDeposit()
+    fun hideInsurance()
 }
