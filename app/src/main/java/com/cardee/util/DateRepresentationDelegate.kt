@@ -85,6 +85,18 @@ class DateRepresentationDelegate(context: Context) {
         return null
     }
 
+    fun formatMonthDayYearHour(isoDate: String?): String? {
+        isoDate ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN) ?: return null
+        return dropStartZero(dateString)
+    }
+
+    fun formatMonthDayYearHourMinute(isoDate: String?): String? {
+        isoDate ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN) ?: return null
+        return dropStartZero(dateString)
+    }
+
     fun formatAsIsoDate(date: Date?): String? {
         date ?: return null
         formatter.applyPattern(ISO_8601_DATE_TIME_PATTERN)
