@@ -66,25 +66,6 @@ class DateRepresentationDelegate(context: Context) {
         view.text = dateString
     }
 
-    fun formatMonthDayHour(isoDate: String?): String? {
-        isoDate ?: return null
-        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN) ?: return null
-        return dropStartZero(timeString)
-    }
-
-    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
-        isoDate ?: return null
-        try {
-            val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
-            calendar.time = date
-            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
-            return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
-        } catch (ex: ParseException) {
-            Log.e(LOG_TAG, ex.message)
-        }
-        return null
-    }
-
     fun formatMonthDayYearHour(isoDate: String?): String? {
         isoDate ?: return null
         val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN) ?: return null
@@ -106,6 +87,31 @@ class DateRepresentationDelegate(context: Context) {
     fun formatAsIsoTime(time: String?): String? {
         time ?: return null
         return convert(time, HOUR_PATTERN, ISO_8601_TIME_PATTERN)
+    }
+
+    fun formatAsIsoTime(hour: Int): String? {
+        calendar.clear()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        return convertTo(calendar.time, ISO_8601_TIME_PATTERN)
+    }
+
+    fun formatMonthDayHour(isoDate: String?): String? {
+        isoDate ?: return null
+        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN) ?: return null
+        return dropStartZero(timeString)
+    }
+
+    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
+        isoDate ?: return null
+        try {
+            val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
+            calendar.time = date
+            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
+            return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
     }
 
     private fun convert(dateString: String, formatFrom: String, formatTo: String): String? {

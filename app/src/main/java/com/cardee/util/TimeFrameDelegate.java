@@ -19,7 +19,7 @@ public class TimeFrameDelegate {
 
     private static final String DISPLAYED_PATTERN = "(\\d{1,2})([ap]m).*";
 
-    private DateStringDelegate stringDelegate;
+    private DateRepresentationDelegate dateDelegate;
     private String dailyPickupTime;
     private String dailyReturnTime;
     private final String[] dailyPickupValues;
@@ -29,7 +29,7 @@ public class TimeFrameDelegate {
     private Calendar calendar;
 
     public TimeFrameDelegate(@NonNull Context context) {
-        stringDelegate = new DateStringDelegate(context);
+        dateDelegate = new DateRepresentationDelegate(context);
         Resources res = context.getResources();
         dailyPickupValues = res.getStringArray(R.array.daily_timing_pickup_values);
         dailyReturnValues = res.getStringArray(R.array.daily_timing_return_values);
@@ -116,7 +116,7 @@ public class TimeFrameDelegate {
             calendar.set(Calendar.AM_PM, "am".equalsIgnoreCase(ampm)
                     ? Calendar.AM : Calendar.PM);
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-            return stringDelegate.getGMTTimeString(hourOfDay);
+            return dateDelegate.formatAsIsoTime(hourOfDay);
         }
         throw new IllegalArgumentException("Invalid time format: " + time);
     }
