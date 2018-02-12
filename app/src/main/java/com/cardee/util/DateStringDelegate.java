@@ -266,6 +266,15 @@ public class DateStringDelegate {
         return timeFormatter.format(date);
     }
 
+    public Date getTimeDate(String date) {
+        try {
+            return timeFormatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getTimeTitle(Date date) {
         return dateShortViewFormatter.format(date);
     }

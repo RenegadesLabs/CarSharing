@@ -90,6 +90,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 intent.putExtra("end", mState.availabilityHourlyEnd)
             } else {
                 intent.putExtra("availability", mState.availabilityDaily)
+                intent.putExtra("pickup", mState.availabilityDailyPickup)
+                intent.putExtra("return", mState.availabilityDailyReturn)
             }
             startActivityForResult(intent, PERIOD_REQUEST_CODE)
             overridePendingTransition(R.anim.enter_up, 0)

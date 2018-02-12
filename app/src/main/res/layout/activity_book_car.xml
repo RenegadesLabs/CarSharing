@@ -284,7 +284,8 @@
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="22dp"
+                        android:paddingTop="23dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/promo_code"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -293,7 +294,7 @@
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="22dp"
+                        android:paddingTop="23dp"
                         android:text="@string/car_add_add"
                         android:textColor="@color/blue"
                         android:visibility="@{state.promocodeClicked ? View.GONE : View.VISIBLE}"
@@ -307,7 +308,7 @@
                         android:layout_marginTop="16dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:padding="5dp"
+                        android:padding="6dp"
                         android:textSize="@dimen/text_regular"
                         android:visibility="@{state.promocodeClicked ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toStartOf="@+id/submitCode"
