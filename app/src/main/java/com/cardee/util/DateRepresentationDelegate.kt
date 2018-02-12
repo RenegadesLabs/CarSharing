@@ -71,6 +71,20 @@ class DateRepresentationDelegate(context: Context) {
         view.text = rangeString
     }
 
+    fun onSetPickupTime(view: TextView, isoTime: String?) {
+        isoTime ?: return
+        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
+        val pickupTimeString = "$availabilityPickupPrefix $timeString $availabilityPickupSuffix"
+        view.text = pickupTimeString
+    }
+
+    fun onSetReturnTime(view: TextView, isoTime: String?) {
+        isoTime ?: return
+        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
+        val returnTimeString = "$availabilityReturnPrefix $timeString $availabilityReturnSuffix"
+        view.text = returnTimeString
+    }
+
     fun onSetMonthDayYear(view: TextView, isoDate: String) {
         val date = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_PATTERN) ?: return
         val dateString = "$reviewDatePrefix $date"

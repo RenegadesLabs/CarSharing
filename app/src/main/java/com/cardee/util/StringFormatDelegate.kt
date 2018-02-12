@@ -4,16 +4,12 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.cardee.R
+import org.w3c.dom.Text
 
 class StringFormatDelegate(context: Context) {
 
-    private val saveSuffixes: Array<String>
-    private val valueSuffixes: Array<String>
-
-    init {
-        saveSuffixes = context.resources.getStringArray(R.array.btn_save_title_suffixes)
-        valueSuffixes = context.resources.getStringArray(R.array.days_availability_suffixes)
-    }
+    private val saveSuffixes: Array<String> = context.resources.getStringArray(R.array.btn_save_title_suffixes)
+    private val valueSuffixes: Array<String> = context.resources.getStringArray(R.array.days_availability_suffixes)
 
     fun onDateCountTitleChange(view: TextView, count: Int) {
         onChangeCountString(view, count, saveSuffixes)
@@ -38,10 +34,24 @@ class StringFormatDelegate(context: Context) {
         onSetRentalRate(view, it, " per hour (peak)")
     }
 
+    fun onSetDailyRentalRateFirst(view: TextView, amount: Float?) = amount?.let {
+        onSetRentalRate(view, it, " per day (weekdays)")
+    }
+
+    fun onSetDailyRentalRateSecond(view: TextView, amount: Float?) = amount?.let {
+        onSetRentalRate(view, it, " per day (weekends and P.H.)")
+    }
+
     private fun onSetRentalRate(view: TextView, amount: Float, suffix: String) {
         val value = "$$amount $suffix"
         view.visibility = View.VISIBLE
         view.text = value
+    }
+
+    fun onSetDailyRentalDiscount(view: TextView, discount: Float?) = discount?.let {
+        val discountString = "3 days discount $discount%"
+        view.visibility = View.VISIBLE
+        view.text = discountString
     }
 
     fun onSetRentalMinimum(view: TextView, minimum: Int?) = minimum?.let {

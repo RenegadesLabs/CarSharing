@@ -34,7 +34,9 @@ import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
+import com.cardee.util.DateRepresentationDelegate;
 import com.cardee.util.DateStringDelegate;
+import com.cardee.util.StringFormatDelegate;
 
 import java.util.Locale;
 
@@ -71,7 +73,8 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private RentalDetails dailyRental;
     private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
-    private DateStringDelegate stringDelegate;
+    private StringFormatDelegate stringDelegate;
+    private DateRepresentationDelegate dateDeletage;
     private Toast currentToast;
 
 
@@ -121,7 +124,8 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
         setInstantViewsState(instantBookingSwitch.isChecked());
         setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
         setCashViewState(acceptCashSwitch.isChecked());
-        stringDelegate = new DateStringDelegate(context);
+        stringDelegate = new StringFormatDelegate(context);
+        dateDeletage = new DateRepresentationDelegate(context);
     }
 
     @Override
@@ -155,8 +159,8 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 break;
             case R.id.tv_rentalTimingEdit:
                 DailyAvailabilityTimingFragment.newInstance(
-                        stringDelegate.getSimpleTimeFormat(dailyRental.getDailyTimePickup()),
-                        stringDelegate.getSimpleTimeFormat(dailyRental.getDailyTimeReturn()))
+                        dateDeletage.formatHour(dailyRental.getDailyTimePickup()),
+                        dateDeletage.formatHour(dailyRental.getDailyTimeReturn()))
                         .show(getActivity().getSupportFragmentManager(),
                                 DailyAvailabilityTimingFragment.class.getSimpleName());
                 break;
@@ -294,9 +298,9 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void setData(RentalDetails rentalDetails) {
-        stringDelegate.onSetValue(availabilityDays, rentalDetails.getDailyCount());
-        stringDelegate.onSetPickupTime(timingPickup, rentalDetails.getDailyTimePickup());
-        stringDelegate.onSetReturnTime(timingReturn, rentalDetails.getDailyTimeReturn());
+        dateDeletage.onSetPickupTime(timingPickup, rentalDetails.getDailyTimePickup());
+        dateDeletage.onSetReturnTime(timingReturn, rentalDetails.getDailyTimeReturn());
+        stringDelegate.onDateCountValueChange(availabilityDays, rentalDetails.getDailyCount());
         stringDelegate.onSetDailyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getDailyAmountRateFirst());
         stringDelegate.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getDailyAmountRateSecond());
         stringDelegate.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.getDailyAmountDiscountFirst());
@@ -335,8 +339,8 @@ public class DailyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void onSave(TimingSaveEvent event) {
-        stringDelegate.onSetPickupTime(timingPickup, event.getTimeBegin());
-        stringDelegate.onSetReturnTime(timingReturn, event.getTimeEnd());
+        dateDeletage.onSetPickupTime(timingPickup, event.getTimeBegin());
+        dateDeletage.onSetReturnTime(timingReturn, event.getTimeEnd());
         presenter.updateAvailabilityTiming(event.getTimeBegin(), event.getTimeEnd());
     }
 }
