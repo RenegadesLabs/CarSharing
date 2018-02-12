@@ -35,7 +35,9 @@ import com.cardee.owner_car_rental_info.delivery.RentalDeliveryRatesActivity;
 import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
+import com.cardee.util.DateRepresentationDelegate;
 import com.cardee.util.DateStringDelegate;
+import com.cardee.util.StringFormatDelegate;
 
 import java.util.Locale;
 
@@ -69,7 +71,8 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
     private View rentalTermsEdit;
 
     private RentalDetails hourlyRental;
-    private DateStringDelegate stringDelegate;
+    private StringFormatDelegate stringDelegate;
+    private DateRepresentationDelegate dateDelegate;
     private StrategyRentalDetailPresenter presenter;
     private ChildProgressListener progressListener;
     private Toast currentToast;
@@ -120,7 +123,8 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         setInstantViewsState(instantBookingSwitch.isChecked());
         setDeliveryViewsState(curbsideDeliverySwitch.isChecked());
         setCashViewState(acceptCashSwitch.isChecked());
-        stringDelegate = new DateStringDelegate(context);
+        stringDelegate = new StringFormatDelegate(context);
+        dateDelegate = new DateRepresentationDelegate(context);
     }
 
     @Override
@@ -158,8 +162,8 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 break;
             case R.id.tv_rentalTimingEdit:
                 HourlyAvailabilityTimingFragment.newInstance(
-                        stringDelegate.getSimpleTimeFormat(hourlyRental.getHourlyBeginTime()),
-                        stringDelegate.getSimpleTimeFormat(hourlyRental.getHourlyEndTime()))
+                        dateDelegate.formatHour(hourlyRental.getHourlyBeginTime()),
+                        dateDelegate.formatHour(hourlyRental.getHourlyEndTime()))
                         .show(getActivity().getSupportFragmentManager(),
                                 HourlyAvailabilityTimingFragment.class.getSimpleName());
                 break;
@@ -167,12 +171,9 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
                 BookingPickerMenuFragment menu = BookingPickerMenuFragment.getInstance(instantBookingEdit.getText().toString(),
                         BookingPickerMenuFragment.Mode.BOOKING_HOURS);
                 menu.show(getActivity().getSupportFragmentManager(), menu.getTag());
-                menu.setOnDoneClickListener(new PickerMenuFragment.DialogOnClickListener() {
-                    @Override
-                    public void onDoneClicked(String value) {
-                        instantBookingEdit.setText(value);
-                        presenter.updateInstantBookingCount(Integer.valueOf(value.split(" ")[0]));
-                    }
+                menu.setOnDoneClickListener(value -> {
+                    instantBookingEdit.setText(value);
+                    presenter.updateInstantBookingCount(Integer.valueOf(value.split(" ")[0]));
                 });
                 break;
             case R.id.tv_rentalCurbsideRatesEdit:
@@ -296,11 +297,11 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void setData(RentalDetails rentalDetails) {
-        stringDelegate.onSetValue(availabilityDays, rentalDetails.getHourlyCount());
-        stringDelegate.onSetHourlyAvailabilityTime(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
+        dateDelegate.onSetTimeRangeString(timing, rentalDetails.getHourlyBeginTime(), rentalDetails.getHourlyEndTime());
+        stringDelegate.onDateCountValueChange(availabilityDays, rentalDetails.getHourlyCount());
         stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateSecond());
         stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateFirst());
-        stringDelegate.onSetHourlyRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
+        stringDelegate.onSetRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
         stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
         setInstantBookingState(rentalDetails);
         int hours = rentalDetails.getHourlyInstantBookingCount();
@@ -336,7 +337,7 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
 
     @Override
     public void onSave(TimingSaveEvent event) {
-        stringDelegate.onSetHourlyAvailabilityTime(timing, event.getTimeBegin(), event.getTimeEnd());
+        dateDelegate.onSetTimeRangeString(timing, event.getTimeBegin(), event.getTimeEnd());
         presenter.updateAvailabilityTiming(event.getTimeBegin(), event.getTimeEnd());
     }
 }

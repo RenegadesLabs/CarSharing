@@ -1,0 +1,60 @@
+package com.cardee.util
+
+import android.content.Context
+import android.view.View
+import android.widget.TextView
+import com.cardee.R
+
+class StringFormatDelegate(context: Context) {
+
+    private val saveSuffixes: Array<String>
+    private val valueSuffixes: Array<String>
+
+    init {
+        saveSuffixes = context.resources.getStringArray(R.array.btn_save_title_suffixes)
+        valueSuffixes = context.resources.getStringArray(R.array.days_availability_suffixes)
+    }
+
+    fun onDateCountTitleChange(view: TextView, count: Int) {
+        onChangeCountString(view, count, saveSuffixes)
+    }
+
+    fun onDateCountValueChange(view: TextView, count: Int) {
+        onChangeCountString(view, count, valueSuffixes)
+    }
+
+    private fun onChangeCountString(view: TextView, count: Int, values: Array<String>) {
+        val index = if (count > 1) 2 else count
+        val prefix = if (index == 0) "" else "$count "
+        val title = "$prefix + ${values[index]}"
+        view.text = title
+    }
+
+    fun onSetHourlyRentalRateFirst(view: TextView, amount: Float?) = amount?.let {
+        onSetRentalRate(view, it, " per hour (off-peak)")
+    }
+
+    fun onSetHourlyRentalRateSecond(view: TextView, amount: Float?) = amount?.let {
+        onSetRentalRate(view, it, " per hour (peak)")
+    }
+
+    private fun onSetRentalRate(view: TextView, amount: Float, suffix: String) {
+        val value = "$$amount $suffix"
+        view.visibility = View.VISIBLE
+        view.text = value
+    }
+
+    fun onSetRentalMinimum(view: TextView, minimum: Int?) = minimum?.let {
+        val minimumString = "Minimum " + Integer.toString(it) + if (it > 1) " hours" else " hour"
+        view.visibility = View.VISIBLE
+        view.text = minimumString
+    }
+
+    fun onSetFuelPolicy(view: TextView, policyName: String?, payAmountMileage: String?) {
+        policyName?.firstOrNull() ?: return
+        val condition = !payAmountMileage.isNullOrEmpty() && policyName != "Return with similar level"
+        val fuelPolicyString = "$policyName ${if (condition) " @ $payAmountMileage per km" else ""}"
+        view.visibility = View.VISIBLE
+        view.text = fuelPolicyString
+    }
+}
