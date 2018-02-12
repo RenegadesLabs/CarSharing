@@ -5,7 +5,6 @@ import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.SaveFilter
 import com.cardee.util.DateRepresentationDelegate
-import com.cardee.util.DateStringDelegate
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
 import java.util.*

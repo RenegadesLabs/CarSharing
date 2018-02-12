@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.cardee.R;
 import com.cardee.custom.modal.BookingPickerMenuFragment;
 import com.cardee.custom.modal.HourlyAvailabilityTimingFragment;
-import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.RentalDetails;
 import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.RentalDetailsContract;
@@ -36,7 +35,6 @@ import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 import com.cardee.util.DateRepresentationDelegate;
-import com.cardee.util.DateStringDelegate;
 import com.cardee.util.StringFormatDelegate;
 
 import java.util.Locale;

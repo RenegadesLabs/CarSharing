@@ -15,7 +15,6 @@ import com.cardee.R
 import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
 import com.cardee.util.DateRepresentationDelegate
-import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
 import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*

@@ -16,7 +16,6 @@ import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.Rate;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.util.DateRepresentationDelegate;
-import com.cardee.util.DateStringDelegate;
 
 import java.util.List;
 

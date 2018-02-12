@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.cardee.R
-import org.w3c.dom.Text
 
 class StringFormatDelegate(context: Context) {
 
@@ -66,5 +65,15 @@ class StringFormatDelegate(context: Context) {
         val fuelPolicyString = "$policyName ${if (condition) " @ $payAmountMileage per km" else ""}"
         view.visibility = View.VISIBLE
         view.text = fuelPolicyString
+    }
+
+    fun onSetHourlyTitle(view: TextView, daysCount: Int, beginTime: String?, endTime: String?) {
+        val index = if (daysCount > 1) 2 else daysCount
+        val prefix = if (index == 0) "" else "$daysCount "
+        var title = "$prefix ${valueSuffixes[index]}"
+        if (beginTime != null && endTime != null) {
+            title = "$title\n$beginTime - $endTime"
+        }
+        view.text = title
     }
 }

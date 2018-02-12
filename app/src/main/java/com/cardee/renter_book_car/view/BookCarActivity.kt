@@ -18,7 +18,6 @@ import com.cardee.renter_book_car.presenter.BookCarPresenter
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
 import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
 import com.cardee.util.DateRepresentationDelegate
-import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
 import java.util.*

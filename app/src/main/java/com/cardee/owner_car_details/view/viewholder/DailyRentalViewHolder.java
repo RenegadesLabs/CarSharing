@@ -35,7 +35,6 @@ import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity;
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity;
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity;
 import com.cardee.util.DateRepresentationDelegate;
-import com.cardee.util.DateStringDelegate;
 import com.cardee.util.StringFormatDelegate;
 
 import java.util.Locale;
