@@ -4,6 +4,7 @@ import android.content.Context
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.SaveFilter
+import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.DateStringDelegate
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
@@ -14,7 +15,7 @@ class AvailabilityFilterPresenter(context: Context) {
     private var filter: BrowseCarsFilter? = null
     private val getFilterUseCase = GetFilter()
     private val saveFilterUseCase = SaveFilter()
-    private val delegate: DateStringDelegate = DateStringDelegate(context)
+    private val delegate = DateRepresentationDelegate(context)
     var disposable: Disposable? = Disposables.empty()
 
     fun getFilter(callback: (BrowseCarsFilter) -> Unit) {
@@ -53,16 +54,16 @@ class AvailabilityFilterPresenter(context: Context) {
     fun setHourlyFilter(start: Date? = null, end: Date? = null) {
         filter?.let {
             it.bookingHourly = true
-            it.rentalPeriodBegin = delegate.getGMTTimeString(start)
-            it.rentalPeriodEnd = delegate.getGMTTimeString(end)
+            it.rentalPeriodBegin = delegate.formatAsIsoDate(start)
+            it.rentalPeriodEnd = delegate.formatAsIsoDate(end)
         }
     }
 
     fun setDailyFilter(start: Date? = null, end: Date? = null) {
         filter?.let {
             it.bookingHourly = false
-            it.rentalPeriodBegin = delegate.getGMTTimeString(start)
-            it.rentalPeriodEnd = delegate.getGMTTimeString(end)
+            it.rentalPeriodBegin = delegate.formatAsIsoDate(start)
+            it.rentalPeriodEnd = delegate.formatAsIsoDate(end)
             it.pickupTime = null
             it.returnTime = null
         }
@@ -71,8 +72,8 @@ class AvailabilityFilterPresenter(context: Context) {
     fun setDailyFilterTime(pickupTime: String? = null, returnTime: String? = null) {
         filter?.let {
             it.bookingHourly = false
-            it.pickupTime = delegate.getShortGMTTime(pickupTime)
-            it.returnTime = delegate.getShortGMTTime(returnTime)
+            it.pickupTime = delegate.formatAsIsoTime(pickupTime)
+            it.returnTime = delegate.formatAsIsoTime(returnTime)
         }
     }
 

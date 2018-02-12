@@ -17,6 +17,7 @@ import com.cardee.renter_book_car.payment.BookPaymentActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
 import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
+import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.DateStringDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
@@ -35,6 +36,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     lateinit var mState: BookCarState
     private var mPresenter = BookCarPresenter()
     private var mCarId: Int? = null
+    private val delegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,7 +168,6 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     }
 
     override fun setRentalPeriod() {
-        val delegate = DateStringDelegate(this)
         var beginString: String?
         var endString: String?
         if (mState.bookingHourly == true) {
@@ -174,8 +175,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 beginString = resources.getString(R.string.rental_period_from)
                 endString = resources.getString(R.string.rental_period_to)
             } else {
-                beginString = delegate.getTimeForHourly(mState.timeBeginHourly)
-                endString = delegate.getTimeForHourly(mState.timeEndHourly)
+                beginString = delegate.formatMonthDayHour(mState.timeBeginHourly)
+                endString = delegate.formatMonthDayHour(mState.timeEndHourly)
                 beginString += "+"
                 endString += "+"
             }
@@ -184,8 +185,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 beginString = resources.getString(R.string.rental_period_from)
                 endString = resources.getString(R.string.rental_period_to)
             } else {
-                beginString = delegate.getTimeForDaily(mState.timeBeginDaily ?: return)
-                endString = delegate.getTimeForDailyPlusOne(mState.timeEndDaily)
+                beginString = delegate.formatMonthDayHour(mState.timeBeginDaily ?: return)
+                endString = delegate.formatMonthDayHour(mState.timeEndDaily, 1)
             }
         }
         bookingStart?.text = beginString

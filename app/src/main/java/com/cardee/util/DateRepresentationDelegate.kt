@@ -66,19 +66,55 @@ class DateRepresentationDelegate(context: Context) {
         view.text = dateString
     }
 
+    fun formatMonthDayHour(isoDate: String?): String? {
+        isoDate ?: return null
+        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN) ?: return null
+        return dropStartZero(timeString)
+    }
 
-
-    private fun convert(dateString: String, formatFrom: String, formatTo: String): String? {
+    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
+        isoDate ?: return null
         try {
-            formatter.applyPattern(formatFrom)
-            val date = formatter.parse(dateString)
-            formatter.applyPattern(formatTo)
-            return formatter.format(date)
+            val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
+            calendar.time = date
+            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
+            return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
         }
         return null
     }
 
-    private fun reduceStartZero(time: String) = time.replace(startZeroRegex, "")
+    fun formatAsIsoDate(date: Date?): String? {
+        date ?: return null
+        formatter.applyPattern(ISO_8601_DATE_TIME_PATTERN)
+        return formatter.format(date)
+    }
+
+    fun formatAsIsoTime(time: String?): String? {
+        time ?: return null
+        return convert(time, HOUR_PATTERN, ISO_8601_TIME_PATTERN)
+    }
+
+    private fun convert(dateString: String, formatFrom: String, formatTo: String): String? {
+        try {
+            val date = parseDate(dateString, formatFrom)
+            return convertTo(date, formatTo)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
+    private fun parseDate(dateString: String, formatFrom: String): Date {
+        formatter.applyPattern(formatFrom)
+        return formatter.parse(dateString)
+    }
+
+    private fun convertTo(date: Date, formatTo: String): String? {
+        formatter.applyPattern(formatTo)
+        return formatter.format(date)
+    }
+
+    private fun dropStartZero(time: String) = time.replace(startZeroRegex, "")
 }

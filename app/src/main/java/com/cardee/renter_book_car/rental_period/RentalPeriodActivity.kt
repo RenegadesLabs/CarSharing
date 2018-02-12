@@ -14,6 +14,7 @@ import android.widget.FrameLayout
 import com.cardee.R
 import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
+import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
@@ -30,7 +31,7 @@ class RentalPeriodActivity : AppCompatActivity() {
     var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
     var timeEnd: String? = null
-    var dateDelegate: DateStringDelegate? = null
+    val dateDelegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,15 +46,13 @@ class RentalPeriodActivity : AppCompatActivity() {
         val content = inflater.inflate(layout, backgroundView, false)
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
-
-        dateDelegate = DateStringDelegate(this)
         if (mHourly == true) {
             val hourlyView = content as ConstraintLayout
             mHourlyAdapter = TimePickerAdapter()
             mHourlyAdapter?.setSelectionListener { it ->
                 val end = addOneHour(it.lastOrNull())
-                timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
-                timeEnd = dateDelegate?.getGMTTimeString(end)
+                timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
+                timeEnd = dateDelegate.formatAsIsoDate(end)
             }
             mAvailability?.let { mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd) }
             hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
@@ -71,8 +70,8 @@ class RentalPeriodActivity : AppCompatActivity() {
             val dailyView = content as ConstraintLayout
             mDailyAdapter = CalendarAdapter()
             mDailyAdapter?.setSelectionListener {
-                timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
-                timeEnd = dateDelegate?.getGMTTimeString(it.lastOrNull())
+                timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
+                timeEnd = dateDelegate.formatAsIsoDate(it.lastOrNull())
             }
             mAvailability?.let { mDailyAdapter?.setAvailabilityRange(it) }
             dailyView.calendar.setSelectionAdapter(mDailyAdapter)
