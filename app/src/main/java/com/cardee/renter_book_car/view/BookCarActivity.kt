@@ -128,7 +128,11 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             startActivity(intent)
         }
         bookButton.setOnClickListener {
-            mPresenter.requestBooking(mState)
+            if ((mState.accVerified.get() || mState.accVerifAllFieldsFilled.get()) &&
+                    mState.paymentSelected.get() &&
+                    mState.rentalTermsAgreed.get()) {
+                mPresenter.requestBooking(mState)
+            }
         }
     }
 

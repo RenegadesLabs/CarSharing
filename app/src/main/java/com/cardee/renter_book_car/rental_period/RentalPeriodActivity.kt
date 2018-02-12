@@ -16,7 +16,9 @@ import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
 import com.cardee.util.DateStringDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
+import kotlinx.android.synthetic.main.view_daily_no_time.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
+import kotlinx.android.synthetic.main.view_hourly_rental_period.*
 import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*
 import java.util.*
 
@@ -54,8 +56,12 @@ class RentalPeriodActivity : AppCompatActivity() {
                 val end = addOneHour(it.lastOrNull())
                 timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
                 timeEnd = dateDelegate?.getGMTTimeString(end)
+                dateHourFrom.text = dateDelegate?.getTimeForHourly(timeBegin)
+                dateHourTo.text = dateDelegate?.getTimeForHourly(timeEnd)
             }
-            mAvailability?.let { mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd) }
+            mAvailability?.let {
+                mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
+            }
             hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
             hourlyView.btnHourReset.setOnClickListener {
                 hourlyView.timePicker.reset()
@@ -70,12 +76,16 @@ class RentalPeriodActivity : AppCompatActivity() {
         } else {
             val dailyView = content as ConstraintLayout
             mDailyAdapter = CalendarAdapter()
+            dailyView.calendar.setSelectionAdapter(mDailyAdapter)
             mDailyAdapter?.setSelectionListener {
                 timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
                 timeEnd = dateDelegate?.getGMTTimeString(it.lastOrNull())
+                dateFrom.text = dateDelegate?.getTimeForDaily(timeBegin)
+                dateTo.text = dateDelegate?.getTimeForDailyPlusOne(timeEnd)
             }
-            mAvailability?.let { mDailyAdapter?.setAvailabilityRange(it) }
-            dailyView.calendar.setSelectionAdapter(mDailyAdapter)
+            mAvailability?.let {
+                mDailyAdapter?.setAvailabilityRange(it)
+            }
             dailyView.btnReset.setOnClickListener {
                 dailyView.calendar.reset()
             }
