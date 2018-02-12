@@ -16,12 +16,10 @@ class DateRepresentationDelegate(context: Context) {
         private val LOG_TAG = DateRepresentationDelegate::class.java.simpleName
         private const val ISO_8601_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         private const val ISO_8601_TIME_PATTERN = "HH:mm:ssZZZZZ"
-        private const val WEEK_DAY_MONTH_DAY_PATTERN = "EEE, d\u00a0MMM"
         private const val MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN = "d MMM yyyy, h:mma"
         private const val MONTH_DAY_YEAR_HOUR_PATTERN = "d\u00a0MMM yyyy,\u00a0ha"
         private const val MONTH_DAY_YEAR_PATTERN = "d MMM, yyyy"
         private const val MONTH_DAY_HOUR_PATTERN = "d\u00a0MMM,\u00a0ha"
-        private const val MONTH_DAY_PATTERN = "d\u00a0MMM"
         private const val HOUR_PATTERN = "hha"
     }
 
