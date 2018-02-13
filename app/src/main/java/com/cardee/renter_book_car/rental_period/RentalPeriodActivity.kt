@@ -16,7 +16,9 @@ import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
 import com.cardee.util.DateRepresentationDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
+import kotlinx.android.synthetic.main.view_daily_no_time.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
+import kotlinx.android.synthetic.main.view_hourly_rental_period.*
 import kotlinx.android.synthetic.main.view_hourly_rental_period.view.*
 import java.util.*
 
@@ -26,6 +28,8 @@ class RentalPeriodActivity : AppCompatActivity() {
     var mAvailability: Array<String?>? = null
     var mAvailabilityBegin: String? = null
     var mAvailabilityEnd: String? = null
+    var mAvailabilityPickup: String? = null
+    var mAvailabilityReturn: String? = null
     var mDailyAdapter: CalendarAdapter? = null
     var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
@@ -45,49 +49,90 @@ class RentalPeriodActivity : AppCompatActivity() {
         val content = inflater.inflate(layout, backgroundView, false)
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
+        backgroundView.addView(content)
+        dateDelegate = DateStringDelegate(this)
+
         if (mHourly == true) {
-            val hourlyView = content as ConstraintLayout
-            mHourlyAdapter = TimePickerAdapter()
-            mHourlyAdapter?.setSelectionListener { it ->
-                val end = addOneHour(it.lastOrNull())
-                timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
-                timeEnd = dateDelegate.formatAsIsoDate(end)
-            }
-            mAvailability?.let { mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd) }
-            hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
-            hourlyView.btnHourReset.setOnClickListener {
-                hourlyView.timePicker.reset()
-            }
-            hourlyView.btnHourSave.setOnClickListener {
-                intent = Intent()
-                intent.putExtra("begin", timeBegin)
-                intent.putExtra("end", timeEnd)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }
+            initHourlyView(content as ConstraintLayout)
         } else {
-            val dailyView = content as ConstraintLayout
-            mDailyAdapter = CalendarAdapter()
-            mDailyAdapter?.setSelectionListener {
-                timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
-                timeEnd = dateDelegate.formatAsIsoDate(it.lastOrNull())
-            }
-            mAvailability?.let { mDailyAdapter?.setAvailabilityRange(it) }
-            dailyView.calendar.setSelectionAdapter(mDailyAdapter)
-            dailyView.btnReset.setOnClickListener {
-                dailyView.calendar.reset()
-            }
-            dailyView.btnSave.setOnClickListener {
-                intent = Intent()
-                intent.putExtra("begin", timeBegin)
-                intent.putExtra("end", timeEnd)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+            initDailyView(content as ConstraintLayout)
+        }
+
+        dim.setOnClickListener { onBackPressed() }
+        prepareWindow()
+    }
+
+    private fun initHourlyView(hourlyView: ConstraintLayout) {
+        mHourlyAdapter = TimePickerAdapter()
+        mHourlyAdapter?.setSelectionListener { it ->
+            val end = addOneHour(it.lastOrNull())
+            timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
+            timeEnd = dateDelegate?.getGMTTimeString(end)
+            if (timeBegin != null) {
+                dateHourFrom.text = dateDelegate?.getTimeForHourly(timeBegin)
+                dateHourTo.text = dateDelegate?.getTimeForHourly(timeEnd)
+            } else {
+                dateHourFrom.text = resources.getString(R.string.not_specified)
+                dateHourTo.text = resources.getString(R.string.not_specified)
             }
         }
-        backgroundView.addView(content)
-        dim.setOnClickListener { _ -> onBackPressed() }
-        prepareWindow()
+        mAvailability?.let {
+            mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
+        }
+        hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
+        hourlyView.btnHourReset.setOnClickListener {
+            hourlyView.timePicker.reset()
+        }
+        hourlyView.btnHourSave.setOnClickListener {
+            intent = Intent()
+            intent.putExtra("begin", timeBegin)
+            intent.putExtra("end", timeEnd)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+    }
+
+    private fun initDailyView(dailyView: ConstraintLayout) {
+        mDailyAdapter = CalendarAdapter()
+        dailyView.calendar.setSelectionAdapter(mDailyAdapter)
+        mDailyAdapter?.setSelectionListener {
+
+            timeBegin = dateDelegate?.getGMTTimeString(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
+            timeEnd = dateDelegate?.getGMTTimeString(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
+            if (timeBegin != null) {
+
+                dateFrom.text = dateDelegate?.getTimeForDaily(timeBegin)
+                dateTo.text = dateDelegate?.getTimeForDailyPlusOne(timeEnd)
+            } else {
+                dateFrom.text = resources.getString(R.string.not_specified)
+                dateTo.text = resources.getString(R.string.not_specified)
+            }
+        }
+        mAvailability?.let {
+            mDailyAdapter?.setAvailabilityRange(it)
+        }
+        dailyView.btnReset.setOnClickListener {
+            dailyView.calendar.reset()
+        }
+        dailyView.btnSave.setOnClickListener {
+            intent = Intent()
+            intent.putExtra("begin", timeBegin)
+            intent.putExtra("end", timeEnd)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+    }
+
+    private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
+        val calendar = Calendar.getInstance()
+        calendar.time = date ?: return null
+        val tempDate: Date = dateDelegate?.getTimeDate(pickupTime) ?: calendar.time
+        val tempCal = GregorianCalendar()
+        tempCal.time = tempDate
+        calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))
+        calendar.set(Calendar.MINUTE, tempCal.get(Calendar.MINUTE))
+        calendar.set(Calendar.SECOND, tempCal.get(Calendar.SECOND))
+        return calendar.time
     }
 
     private fun addOneHour(end: Date?): Date? {
@@ -100,8 +145,13 @@ class RentalPeriodActivity : AppCompatActivity() {
     private fun getIntentData() {
         mHourly = intent.getBooleanExtra("hourly", true)
         mAvailability = intent.getStringArrayExtra("availability")
-        mAvailabilityBegin = intent.getStringExtra("begin")
-        mAvailabilityEnd = intent.getStringExtra("end")
+        if (mHourly == true) {
+            mAvailabilityBegin = intent.getStringExtra("begin")
+            mAvailabilityEnd = intent.getStringExtra("end")
+        } else {
+            mAvailabilityPickup = intent.getStringExtra("pickup")
+            mAvailabilityReturn = intent.getStringExtra("return")
+        }
     }
 
     private fun prepareWindow() {
