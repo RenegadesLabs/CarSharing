@@ -50,7 +50,6 @@ class RentalPeriodActivity : AppCompatActivity() {
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
         backgroundView.addView(content)
-        dateDelegate = DateStringDelegate(this)
 
         if (mHourly == true) {
             initHourlyView(content as ConstraintLayout)
@@ -100,9 +99,8 @@ class RentalPeriodActivity : AppCompatActivity() {
             timeBegin = dateDelegate?.getGMTTimeString(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
             timeEnd = dateDelegate?.getGMTTimeString(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
             if (timeBegin != null) {
-
-                dateFrom.text = dateDelegate?.getTimeForDaily(timeBegin)
-                dateTo.text = dateDelegate?.getTimeForDailyPlusOne(timeEnd)
+                dateFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
+                dateTo.text = dateDelegate.formatMonthDayHour(timeEnd, 1)
             } else {
                 dateFrom.text = resources.getString(R.string.not_specified)
                 dateTo.text = resources.getString(R.string.not_specified)
@@ -126,7 +124,7 @@ class RentalPeriodActivity : AppCompatActivity() {
     private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
         val calendar = Calendar.getInstance()
         calendar.time = date ?: return null
-        val tempDate: Date = dateDelegate?.getTimeDate(pickupTime) ?: calendar.time
+        val tempDate: Date = dateDelegate.getTimeDate(pickupTime) ?: calendar.time
         val tempCal = GregorianCalendar()
         tempCal.time = tempDate
         calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))
