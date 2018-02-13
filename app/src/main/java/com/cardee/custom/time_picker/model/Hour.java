@@ -3,7 +3,9 @@ package com.cardee.custom.time_picker.model;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cardee.CardeeApp;
 import com.cardee.custom.time_picker.domain.criteria.SelectionState;
+import com.cardee.domain.owner.entity.CarData;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -22,6 +24,8 @@ public class Hour implements Comparable<Hour> {
     static {
         DateFormatSymbols symbols = new DateFormatSymbols(Locale.US);
         symbols.setAmPmStrings(new String[]{"am", "pm"});
+        TIME_TITLE_FORMAT.setTimeZone(CardeeApp.getTimeZone());
+        COMPARE_TIME_FORMAT.setTimeZone(CardeeApp.getTimeZone());
         TIME_TITLE_FORMAT.setDateFormatSymbols(symbols);
     }
 
@@ -34,6 +38,7 @@ public class Hour implements Comparable<Hour> {
 
     private Hour(@NonNull Date date) {
         this.calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);
         hourTitle = TIME_TITLE_FORMAT.format(date).replaceAll("^0", "");
         hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
@@ -106,6 +111,7 @@ public class Hour implements Comparable<Hour> {
 
     private int compareTo(Date date) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);
         return compareTo(calendar);
     }

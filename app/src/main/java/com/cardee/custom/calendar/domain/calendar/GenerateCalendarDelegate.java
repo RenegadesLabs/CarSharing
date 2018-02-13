@@ -1,5 +1,6 @@
 package com.cardee.custom.calendar.domain.calendar;
 
+import com.cardee.CardeeApp;
 import com.cardee.custom.calendar.model.Day;
 import com.cardee.custom.calendar.model.Month;
 
@@ -12,6 +13,7 @@ class GenerateCalendarDelegate {
 
     List<Month> onGenerateFromNextToDate(int range, Day day, boolean selectCurrent) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(day.getCalendarTime());
         calendar.add(Calendar.MONTH, 1);
         return onGenerateMonths(range, calendar, selectCurrent);
@@ -19,6 +21,7 @@ class GenerateCalendarDelegate {
 
     List<Month> onGenerateFromCurrent(int range, boolean selectCurrent) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(new Date());
         return onGenerateMonths(range, calendar, selectCurrent);
     }

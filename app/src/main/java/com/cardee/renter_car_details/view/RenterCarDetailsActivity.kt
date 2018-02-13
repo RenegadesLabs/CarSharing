@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.cardee.R
+import com.cardee.auth.preview.PreviewActivity
+import com.cardee.data_source.remote.service.AccountManager
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars.RenterEventBus
@@ -51,6 +54,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     override fun onClick(p0: View?) {
         when (p0) {
             ivRenterCarDetailsToolbarShare -> {
+                shareCar()
             }
             ivRenterCarDetailsToolbarFavoritesImg -> {
                 presenter.addCarToFavorites(mCarId, favorite ?: false)
@@ -77,6 +81,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         setContentView(R.layout.activity_renter_car_details)
         presenter.attachView(this)
         init(this)
+        getData()
         doOnConnect { requestCurrentLocation() }
         setSupportActionBar(toolbar)
         mapTouchWrapper.disableOnTouch(lockableScrollView)
@@ -90,9 +95,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
             getMapAsync(this@RenterCarDetailsActivity)
         }
         setListeners()
-        getData()
-        ivRenterCarDetailsToolbarFavoritesImg
-                .setImageResource(if (favorite == true) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
         initMarkerBitmap()
     }
 
@@ -131,6 +133,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                     LOCATION_REQUEST_CODE)
         } else {
             val location = LocationServices.FusedLocationApi.getLastLocation(obtainClient())
+            location ?: return
             mCarId?.let { id ->
                 renderCurrentLocation(LatLng(location.longitude, location.longitude))
                 presenter.fetchDistance(id, location.latitude, location.longitude)
@@ -139,8 +142,8 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if(requestCode == LOCATION_REQUEST_CODE){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 requestCurrentLocation()
             }
         }
@@ -162,7 +165,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED
+                        PackageManager.PERMISSION_GRANTED
     }
 
     override fun onStart() {
@@ -179,7 +182,18 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     private fun getData() {
         mCarId = intent.getIntExtra("carId", -1)
-        favorite = intent.getBooleanExtra("isFavorite", false)
+        val appLinkAction = intent.action
+        val appLinkData = intent.data
+        if (Intent.ACTION_VIEW == appLinkAction && appLinkData != null) {
+            if (AccountManager.getInstance(this).isLoggedIn) {
+                val uri = Uri.parse(appLinkData.toString())
+                mCarId = uri.lastPathSegment.toInt()
+                return
+            }
+            showMessage(R.string.auth_error)
+            startActivity(Intent(this, PreviewActivity::class.java))
+            finish()
+        }
     }
 
     private fun setListeners() {
@@ -206,6 +220,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     override fun setDetailedCar(renterDetailedCar: RenterDetailedCar) {
         viewHolder?.bind(renterDetailedCar)
+        this.favorite = renterDetailedCar.favorite
     }
 
     override fun showProgress(show: Boolean) {
@@ -232,5 +247,13 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         disconnect()
         presenter.onDestroy()
         carLocationMap.onDestroy()
+    }
+
+    private fun shareCar() {
+        val link = "http://labracode.itg5.com/offers/link" + mCarId
+        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, link)
+        startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.invite_friends_title)))
     }
 }

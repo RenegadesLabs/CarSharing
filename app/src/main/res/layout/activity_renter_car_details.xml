@@ -485,7 +485,7 @@
                 android:layout_width="@dimen/item_icon_side_large"
                 android:layout_height="@dimen/item_icon_side_large"
                 android:padding="@dimen/padding_x_small"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:srcCompat="@drawable/ic_share" />
 
         </android.support.v7.widget.Toolbar>

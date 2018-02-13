@@ -3,6 +3,8 @@ package com.cardee.custom.time_picker.model;
 
 import android.support.annotation.NonNull;
 
+import com.cardee.CardeeApp;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,9 +13,8 @@ import java.util.Locale;
 
 public class Day {
 
-    private static final String[] MONTHES = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"};
-    private static final String[] DAYZ = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_hh", Locale.getDefault());
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_hh", Locale.US);
+    private static final SimpleDateFormat titleFormat = new SimpleDateFormat("dd MMMM, EEEE", Locale.US);
 
     private final List<Hour> hours;
     private final Date date;
@@ -23,13 +24,15 @@ public class Day {
 
     public Day(@NonNull List<Hour> hours, Date date) {
         this.date = date;
+        dateFormat.setTimeZone(CardeeApp.getTimeZone());
+        titleFormat.setTimeZone(CardeeApp.getTimeZone());
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);
         this.hours = hours;
         this.month = calendar.get(Calendar.MONTH);
         this.year = calendar.get(Calendar.YEAR);
-        dateTitle = calendar.get(Calendar.DAY_OF_MONTH) + " " +
-                MONTHES[month] + ", " + DAYZ[calendar.get(Calendar.DAY_OF_WEEK) - 1];
+        dateTitle = titleFormat.format(date);
     }
 
     public List<Hour> getHours() {

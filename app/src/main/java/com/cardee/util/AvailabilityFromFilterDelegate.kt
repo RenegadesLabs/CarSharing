@@ -42,6 +42,7 @@ class AvailabilityFromFilterDelegate {
     private val datePattern = Regex("^\\d{1,2}\\s+\\w+$")
     private val datePrefixPattern = Regex("^\\d{1,2}\\s+\\w+")
     private val titlePattern = Regex("^(\\d{1,2}\\s+\\w+),\\s(\\d{1,2}[ap]m)$")
+    private val startZeroRegex = Regex("\\b0")
 
     private val iso8601DateFormatter: SimpleDateFormat
     private val shortMonthFormatter: SimpleDateFormat
@@ -236,7 +237,7 @@ class AvailabilityFromFilterDelegate {
                     setDefaultDailyString(titleView, subtitleView)
                     return
                 }
-                subtitleView.text = title
+                subtitleView.text = dropStartZero(title)
             }
             return
         }
@@ -250,7 +251,7 @@ class AvailabilityFromFilterDelegate {
                     setDefaultHourlyString(titleView, subtitleView)
                     return
                 }
-                subtitleView.text = title
+                subtitleView.text = dropStartZero(title)
             }
         }
     }
@@ -309,11 +310,12 @@ class AvailabilityFromFilterDelegate {
             val timeBegin = shortTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeBegin)
             val timeEnd = shortTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeEnd)
             if (isSingleDay(timeBegin, timeEnd)) {
-                val timingText: String? = context.getString(R.string.renter_car_details_timing_available_from) +
-                        timeBegin.time + context.getString(R.string.renter_car_details_timing_available_to) +
-                        timeEnd.time
-                textView.text = timingText
-
+                val timeBeginString = shortTimeFormatter.format(timeBegin)
+                val timeEndString = shortTimeFormatter.format(timeEnd)
+                val timingText: String = context.getString(R.string.renter_car_details_timing_available_from) +
+                        timeBeginString + context.getString(R.string.renter_car_details_timing_available_to) +
+                        timeEndString
+                textView.text = dropStartZero(timingText)
             }
         } catch (e: ParseException) {}
     }
@@ -419,4 +421,6 @@ class AvailabilityFromFilterDelegate {
         val difMillis = end.time - begin.time
         return TimeUnit.HOURS.convert(difMillis, TimeUnit.MILLISECONDS) + 1
     }
+
+    private fun dropStartZero(time: String) = time.replace(startZeroRegex, "")
 }
