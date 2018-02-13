@@ -15,16 +15,16 @@ import com.cardee.domain.bookings.PaymentType;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.entity.Rate;
 import com.cardee.domain.owner.entity.Image;
-import com.cardee.util.DateStringDelegate;
+import com.cardee.util.DateRepresentationDelegate;
 
 import java.util.List;
 
 public class BookingEntityToBookingMapper {
 
-    private DateStringDelegate delegate;
+    private DateRepresentationDelegate delegate;
 
     public BookingEntityToBookingMapper() {
-        delegate = new DateStringDelegate(CardeeApp.context);
+        delegate = new DateRepresentationDelegate(CardeeApp.context);
     }
 
     public Booking transform(BookingEntity entity, BookingRentalTerms rentalTerms) {
@@ -41,9 +41,9 @@ public class BookingEntityToBookingMapper {
         if (primary == null) {
             primary = new Image(0, "", "", true);
         }
-        String beginTime = delegate.formatShortBookingDate(entity.getTimeBegin());
-        String endTime = delegate.formatShortBookingDate(entity.getTimeEnd());
-        String createTime = delegate.formatCreationDate(entity.getDateCreated());
+        String beginTime = delegate.formatMonthDayYearHour(entity.getTimeBegin());
+        String endTime = delegate.formatMonthDayYearHour(entity.getTimeEnd());
+        String createTime = delegate.formatMonthDayYearHourMinute(entity.getDateCreated());
 
         Integer renterId = null;
         String renterName = null;

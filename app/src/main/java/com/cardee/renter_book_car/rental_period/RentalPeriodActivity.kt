@@ -14,7 +14,7 @@ import android.widget.FrameLayout
 import com.cardee.R
 import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
-import com.cardee.util.DateStringDelegate
+import com.cardee.util.DateRepresentationDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.*
 import kotlinx.android.synthetic.main.view_daily_no_time.view.*
@@ -34,7 +34,7 @@ class RentalPeriodActivity : AppCompatActivity() {
     var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
     var timeEnd: String? = null
-    var dateDelegate: DateStringDelegate? = null
+    val dateDelegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,6 @@ class RentalPeriodActivity : AppCompatActivity() {
         content.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT)
         backgroundView.addView(content)
-        dateDelegate = DateStringDelegate(this)
 
         if (mHourly == true) {
             initHourlyView(content as ConstraintLayout)
@@ -66,11 +65,11 @@ class RentalPeriodActivity : AppCompatActivity() {
         mHourlyAdapter = TimePickerAdapter()
         mHourlyAdapter?.setSelectionListener { it ->
             val end = addOneHour(it.lastOrNull())
-            timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
-            timeEnd = dateDelegate?.getGMTTimeString(end)
+            timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
+            timeEnd = dateDelegate.formatAsIsoDate(end)
             if (timeBegin != null) {
-                dateHourFrom.text = dateDelegate?.getTimeForHourly(timeBegin)
-                dateHourTo.text = dateDelegate?.getTimeForHourly(timeEnd)
+                dateHourFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
+                dateHourTo.text = dateDelegate.formatMonthDayHour(timeEnd)
             } else {
                 dateHourFrom.text = resources.getString(R.string.not_specified)
                 dateHourTo.text = resources.getString(R.string.not_specified)
@@ -97,12 +96,11 @@ class RentalPeriodActivity : AppCompatActivity() {
         dailyView.calendar.setSelectionAdapter(mDailyAdapter)
         mDailyAdapter?.setSelectionListener {
 
-            timeBegin = dateDelegate?.getGMTTimeString(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
-            timeEnd = dateDelegate?.getGMTTimeString(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
+            timeBegin = dateDelegate.formatMonthDayHour(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
+            timeEnd = dateDelegate.formatMonthDayHour(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
             if (timeBegin != null) {
-
-                dateFrom.text = dateDelegate?.getTimeForDaily(timeBegin)
-                dateTo.text = dateDelegate?.getTimeForDailyPlusOne(timeEnd)
+                dateFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
+                dateTo.text = dateDelegate.formatMonthDayHour(timeEnd, 1)
             } else {
                 dateFrom.text = resources.getString(R.string.not_specified)
                 dateTo.text = resources.getString(R.string.not_specified)
@@ -126,7 +124,7 @@ class RentalPeriodActivity : AppCompatActivity() {
     private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
         val calendar = Calendar.getInstance()
         calendar.time = date ?: return null
-        val tempDate: Date = dateDelegate?.getTimeDate(pickupTime) ?: calendar.time
+        val tempDate: Date = dateDelegate.convertToDate(pickupTime) ?: calendar.time
         val tempCal = GregorianCalendar()
         tempCal.time = tempDate
         calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))

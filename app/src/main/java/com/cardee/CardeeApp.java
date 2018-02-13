@@ -20,6 +20,8 @@ import com.google.android.gms.common.api.Scope;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.TimeZone;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -29,6 +31,7 @@ public class CardeeApp extends Application {
     public static Context context;
     public static Retrofit retrofit;
     public static Retrofit retrofitMultipart;
+    private static TimeZone defaultTimeZone;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -41,6 +44,7 @@ public class CardeeApp extends Application {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         context = this;
+        defaultTimeZone = TimeZone.getTimeZone(BuildConfig.TIME_ZONE);
         HttpClientProvider httpClientProvider = HttpClientProvider.newInstance();
         GsonConverterFactory gsonConverterFactory = buildGsonConverter();
         retrofit = new Retrofit.Builder()
@@ -77,5 +81,9 @@ public class CardeeApp extends Application {
                 .enableAutoManage(activity, listener)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+    }
+
+    public static TimeZone getTimeZone() {
+        return defaultTimeZone;
     }
 }

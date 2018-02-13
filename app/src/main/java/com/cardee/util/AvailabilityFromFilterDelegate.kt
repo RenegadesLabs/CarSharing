@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.TextView
+import com.cardee.CardeeApp
 import com.cardee.R
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.RenterDetailedCar
@@ -42,11 +43,9 @@ class AvailabilityFromFilterDelegate {
     private val datePrefixPattern = Regex("^\\d{1,2}\\s+\\w+")
     private val titlePattern = Regex("^(\\d{1,2}\\s+\\w+),\\s(\\d{1,2}[ap]m)$")
 
-    private val iso8601OutDateFormatter: SimpleDateFormat
-    private val iso8601InDateFormatter: SimpleDateFormat
+    private val iso8601DateFormatter: SimpleDateFormat
     private val shortMonthFormatter: SimpleDateFormat
-    private val isoOutTimeFormatter: SimpleDateFormat
-    private val isoInTimeFormatter: SimpleDateFormat
+    private val isoTimeFormatter: SimpleDateFormat
     private val shortDateFormatter: SimpleDateFormat
     private val shortTimeFormatter: SimpleDateFormat
     private val titleFormatter: SimpleDateFormat
@@ -56,22 +55,27 @@ class AvailabilityFromFilterDelegate {
         val symbols = DateFormatSymbols(Locale.US)
         symbols.amPmStrings = arrayOf("am", "pm")
         calendar = Calendar.getInstance()
-        iso8601OutDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
-        iso8601InDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
+        val timeZone = CardeeApp.getTimeZone()
+        iso8601DateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
         shortMonthFormatter = SimpleDateFormat(SHORT_MONTH_PATTERN, Locale.US)
         shortDateFormatter = SimpleDateFormat(SHORT_DATE_PATTERN, Locale.US)
         shortTimeFormatter = SimpleDateFormat(SHORT_TIME_PATTERN, Locale.US)
-        isoOutTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
-        isoInTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
+        isoTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
         titleFormatter = SimpleDateFormat(TITLE_PATTERN, Locale.US)
+        iso8601DateFormatter.timeZone = timeZone
+        shortMonthFormatter.timeZone = timeZone
+        shortDateFormatter.timeZone = timeZone
+        shortTimeFormatter.timeZone = timeZone
+        isoTimeFormatter.timeZone = timeZone
+        titleFormatter.timeZone = timeZone
         shortTimeFormatter.dateFormatSymbols = symbols
         titleFormatter.dateFormatSymbols = symbols
     }
 
     fun onInitCalendarSelection(calendarAdapter: CalendarAdapter, isoDateStart: String, isoDateEnd: String) {
         try {
-            val dateStart = iso8601InDateFormatter.parse(isoDateStart)
-            val dateEnd = iso8601InDateFormatter.parse(isoDateEnd)
+            val dateStart = iso8601DateFormatter.parse(isoDateStart)
+            val dateEnd = iso8601DateFormatter.parse(isoDateEnd)
             calendarAdapter.setRange(dateStart, dateEnd)
         } catch (ex: ParseException) {
             ex.printStackTrace()
@@ -80,8 +84,8 @@ class AvailabilityFromFilterDelegate {
 
     fun onInitPickerSelection(pickerAdapter: TimePickerAdapter, isoDateStart: String, isoDateEnd: String) {
         try {
-            val dateStart = iso8601InDateFormatter.parse(isoDateStart)
-            val dateEnd = iso8601InDateFormatter.parse(isoDateEnd)
+            val dateStart = iso8601DateFormatter.parse(isoDateStart)
+            val dateEnd = iso8601DateFormatter.parse(isoDateEnd)
             pickerAdapter.setRange(dateStart, dateEnd)
         } catch (ex: ParseException) {
             ex.printStackTrace()
@@ -93,7 +97,7 @@ class AvailabilityFromFilterDelegate {
             throw IllegalArgumentException("NumberPicker and Array size mismatch")
         }
         try {
-            val date = isoInTimeFormatter.parse(isoTime)
+            val date = isoTimeFormatter.parse(isoTime)
             val timeString = shortTimeFormatter.format(date).toLowerCase()
             for (i in 0 until values.size) {
                 if (timeString.run { replace(Regex("^0"), "") } == values[i]) {
@@ -122,14 +126,14 @@ class AvailabilityFromFilterDelegate {
     }
 
     private fun setHourlyTitle(view: TextView, time: String) {
-        val date = iso8601InDateFormatter.parse(time)
+        val date = iso8601DateFormatter.parse(time)
         onSetTitleFromTime(view, date)
     }
 
     fun setDailyTitlesFromFilter(startView: TextView, endView: TextView, filter: BrowseCarsFilter) {
         try {
-            val startDate = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
-            val endDate = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            val startDate = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val endDate = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
             onSetTitleFromDate(startView, startDate)
             onSetTitleFromDate(endView, endDate)
             filter.pickupTime?.let { onAttachTimingToTitle(startView, it) }
@@ -156,7 +160,7 @@ class AvailabilityFromFilterDelegate {
     fun onSetTitleFromTime(view: TextView, dateString: String?, includingLast: Boolean = true) {
         dateString ?: return
         try {
-            val date = iso8601InDateFormatter.parse(dateString)
+            val date = iso8601DateFormatter.parse(dateString)
             onSetTitleFromTime(view, date, includingLast)
         } catch (ex: ParseException) {
         }
@@ -181,7 +185,7 @@ class AvailabilityFromFilterDelegate {
 
     fun onAttachTimingToTitle(view: TextView, isoTime: String) {
         try {
-            val date = isoInTimeFormatter.parse(isoTime)
+            val date = isoTimeFormatter.parse(isoTime)
             val timeString = shortTimeFormatter.format(date)
             onSetTiming(view, timeString.run { replace(Regex("^0"), "") })
         } catch (ex: ParseException) {
@@ -265,8 +269,8 @@ class AvailabilityFromFilterDelegate {
 
     private fun buildDailyRangeTitle(filter: BrowseCarsFilter): String {
         try {
-            val dateBegin = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
-            val dateEnd = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            val dateBegin = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val dateEnd = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
             if (filter.pickupTime == null && filter.returnTime == null) {
                 if (isSingleMonth(dateBegin, dateEnd)) {
                     return buildSingleMonthString(dateBegin, dateEnd)
@@ -275,8 +279,8 @@ class AvailabilityFromFilterDelegate {
             var pickupTime: Date? = null
             var returnTime: Date? = null
             if (filter.pickupTime != null) {
-                pickupTime = isoInTimeFormatter.parse(filter.pickupTime)
-                returnTime = isoInTimeFormatter.parse(filter.returnTime)
+                pickupTime = isoTimeFormatter.parse(filter.pickupTime)
+                returnTime = isoTimeFormatter.parse(filter.returnTime)
             }
             return buildDaysString(dateBegin, dateEnd, pickupTime, returnTime)
         } catch (ex: ParseException) {
@@ -286,8 +290,8 @@ class AvailabilityFromFilterDelegate {
 
     private fun buildHourlyRangeTitle(filter: BrowseCarsFilter): String {
         try {
-            val dateBegin = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
-            val dateEndIncluded = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            val dateBegin = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val dateEndIncluded = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
             calendar.time = dateEndIncluded
             calendar.add(Calendar.HOUR, 1)
             val dateEnd = calendar.time
@@ -384,8 +388,8 @@ class AvailabilityFromFilterDelegate {
             return
         }
         try {
-            val beginDate = iso8601InDateFormatter.parse(filter.rentalPeriodBegin)
-            val endDate = iso8601InDateFormatter.parse(filter.rentalPeriodEnd)
+            val beginDate = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val endDate = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
             when (hourly) {
                 true -> {
                     val hourCount = countHours(beginDate, endDate)
