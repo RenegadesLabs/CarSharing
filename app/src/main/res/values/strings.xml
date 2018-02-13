@@ -570,6 +570,8 @@
     <string name="availability_pickup_suffix">onwards</string>
     <string name="availability_return_prefix">Return car by</string>
     <string name="availability_return_suffix">(next day)</string>
+    <string name="availability_from">Available from</string>
+    <string name="availability_to">to</string>
     <string name="daily_timing_dialog_title">Pickup and return timing</string>
     <string name="hourly_timing_dialog_title">Availability timing</string>
     <string name="title_save">Save</string>

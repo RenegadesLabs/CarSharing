@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.cardee.BuildConfig
 import com.cardee.R
 import com.cardee.auth.preview.PreviewActivity
 import com.cardee.data_source.remote.service.AccountManager
