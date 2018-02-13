@@ -2,7 +2,6 @@ package com.cardee.util;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.cardee.R;
@@ -68,7 +67,7 @@ public class DateStringDelegate {
         calendar.setTimeZone(singaporeTimeZone);
         dateViewString.setTimeZone(singaporeTimeZone);
         dateFormatter.setTimeZone(singaporeTimeZone);
-//        dateShortViewTitleFormatter.setTimeZone(timeZone);
+//        dateShortViewTitleFormatter.setTimeZone(singaporeTimeZone);
         dateViewFormatter.setTimeZone(singaporeTimeZone);
         dateViewWithoutTimeFormatter.setTimeZone(singaporeTimeZone);
         creationDateViewFormatter.setTimeZone(singaporeTimeZone);
@@ -310,8 +309,11 @@ public class DateStringDelegate {
         try {
             Date date = dateFormatter.parse(time);
             Calendar cal = Calendar.getInstance();
+            cal.setTimeZone(singaporeTimeZone);
             cal.setTime(date);
-            cal.add(Calendar.DATE, 1); // adds one day
+            if (cal.get(Calendar.AM_PM) == Calendar.AM) {
+                cal.add(Calendar.DATE, 1); // adds one day
+            }
             date = cal.getTime();
             return dateShortViewTitleFormatter.format(date);
         } catch (ParseException e) {
