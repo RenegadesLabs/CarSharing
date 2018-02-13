@@ -90,6 +90,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 intent.putExtra("end", mState.availabilityHourlyEnd)
             } else {
                 intent.putExtra("availability", mState.availabilityDaily)
+                intent.putExtra("pickup", mState.availabilityDailyPickup)
+                intent.putExtra("return", mState.availabilityDailyReturn)
             }
             startActivityForResult(intent, PERIOD_REQUEST_CODE)
             overridePendingTransition(R.anim.enter_up, 0)
@@ -128,7 +130,11 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             startActivity(intent)
         }
         bookButton.setOnClickListener {
-            mPresenter.requestBooking(mState)
+            if ((mState.accVerified.get() || mState.accVerifAllFieldsFilled.get()) &&
+                    mState.paymentSelected.get() &&
+                    mState.rentalTermsAgreed.get()) {
+                mPresenter.requestBooking(mState)
+            }
         }
     }
 

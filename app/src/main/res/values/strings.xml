@@ -774,6 +774,7 @@
     <string name="collection_pick_title">Collection</string>
     <string name="collect_from">Collect from:</string>
     <string name="payment_title">Payment Method</string>
+    <string name="not_specified">Not Specified</string>
 
     <!-- Book Car Message to Owner -->
     <string name="book_message_title">Message To Owner</string>
