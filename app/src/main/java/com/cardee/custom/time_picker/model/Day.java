@@ -13,8 +13,6 @@ import java.util.Locale;
 
 public class Day {
 
-    private static final String[] MONTHES = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"};
-    private static final String[] DAYZ = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_hh", Locale.US);
     private static final SimpleDateFormat titleFormat = new SimpleDateFormat("dd MMMM, EEEE", Locale.US);
 
