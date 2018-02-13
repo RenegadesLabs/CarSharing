@@ -39,7 +39,7 @@ class DateRepresentationDelegate(context: Context) {
     init {
         formatter = SimpleDateFormat(ISO_8601_DATE_TIME_PATTERN, Locale.US)
         formatter.timeZone = CardeeApp.getTimeZone()
-        val symbols = DateFormatSymbols(Locale.US)
+        val symbols = DateFormatSymbols(Locale.US) //Overrides locale previously passed to formatter constructor
         symbols.amPmStrings = arrayOf("am", "pm")
         formatter.dateFormatSymbols = symbols
         calendar = Calendar.getInstance(CardeeApp.getTimeZone())
