@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.cardee.BuildConfig
 import com.cardee.R
 import com.cardee.auth.preview.PreviewActivity
 import com.cardee.data_source.remote.service.AccountManager
@@ -40,6 +39,8 @@ import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 
 class RenterCarDetailsActivity(private val delegate: LocationClient = LocationClientImpl()) :
         AppCompatActivity(), View.OnClickListener, OnMapReadyCallback, RenterCarDetailsContract.View, LocationClient by delegate {
+    private val shareLink = "http://labracode.itg5.com/offers/link"
+
     private var mCarId: Int? = null
     private var favorite: Boolean? = null
     private var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
@@ -250,7 +251,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     private fun shareCar() {
-        val link = BuildConfig.BASE_URL + "offers/link" + mCarId
+        val link =  shareLink + mCarId
         val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, link)
