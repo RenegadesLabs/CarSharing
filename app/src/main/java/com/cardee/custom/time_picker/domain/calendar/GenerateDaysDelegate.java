@@ -1,5 +1,6 @@
 package com.cardee.custom.time_picker.domain.calendar;
 
+import com.cardee.CardeeApp;
 import com.cardee.custom.time_picker.model.Hour;
 import com.cardee.custom.time_picker.model.Day;
 
@@ -12,6 +13,7 @@ class GenerateDaysDelegate {
 
     List<Day> onGenerateFromCurrent(int range) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(new Date());
         return onGenerateMonths(range, calendar);
     }
