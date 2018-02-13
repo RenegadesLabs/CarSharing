@@ -222,6 +222,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private fun fillToolBar() {
         mActivity.toolbar_title.text = renterDetailedCar?.carTitle
         mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
+        mActivity.ivRenterCarDetailsToolbarFavoritesImg.setImageResource(if (renterDetailedCar?.favorite == true) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
     }
 
     private fun fillMapAddressBar() {
