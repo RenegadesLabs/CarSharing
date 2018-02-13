@@ -170,8 +170,8 @@
         <activity android:name=".renter_notifications.view.RenterNotifActivity" />
         <activity
             android:name=".renter_car_details.view.RenterCarDetailsActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.DarkTheme">
             <tools:validation testUrl="http://labracode.itg5.com/offers/link" />
             <intent-filter>
@@ -181,9 +181,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="labracode.itg5.com"
-                    android:pathPrefix="/offers/link" />
+                    android:pathPrefix="/offers/link"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
@@ -232,7 +232,10 @@
         <activity android:name=".renter_book_car.collection.CollectionAreaActivity" />
         <activity android:name=".renter_book_car.payment.BookPaymentActivity" />
         <activity android:name=".renter_car_details.reviews.RenterCarReviewsActivity" />
-        <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity"/>
+        <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity" />
+        <activity
+            android:name=".owner_credit_balance.CreditBalanceActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
