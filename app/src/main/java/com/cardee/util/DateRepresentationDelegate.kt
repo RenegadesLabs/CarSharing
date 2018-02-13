@@ -142,6 +142,21 @@ class DateRepresentationDelegate(context: Context) {
         return null
     }
 
+    fun formatMonthDayHour(date: Date?): String? {
+        date ?: return null
+        return convertTo(date, MONTH_DAY_HOUR_PATTERN)
+    }
+
+    fun convertToDate(time: String?): Date? {
+        time ?: return null
+        try {
+            parseDate(time, ISO_8601_TIME_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
     private fun convert(dateString: String, formatFrom: String, formatTo: String): String? {
         try {
             val date = parseDate(dateString, formatFrom)

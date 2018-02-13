@@ -65,11 +65,11 @@ class RentalPeriodActivity : AppCompatActivity() {
         mHourlyAdapter = TimePickerAdapter()
         mHourlyAdapter?.setSelectionListener { it ->
             val end = addOneHour(it.lastOrNull())
-            timeBegin = dateDelegate?.getGMTTimeString(it.firstOrNull())
-            timeEnd = dateDelegate?.getGMTTimeString(end)
+            timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
+            timeEnd = dateDelegate.formatAsIsoDate(end)
             if (timeBegin != null) {
-                dateHourFrom.text = dateDelegate?.getTimeForHourly(timeBegin)
-                dateHourTo.text = dateDelegate?.getTimeForHourly(timeEnd)
+                dateHourFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
+                dateHourTo.text = dateDelegate.formatMonthDayHour(timeEnd)
             } else {
                 dateHourFrom.text = resources.getString(R.string.not_specified)
                 dateHourTo.text = resources.getString(R.string.not_specified)
@@ -96,8 +96,8 @@ class RentalPeriodActivity : AppCompatActivity() {
         dailyView.calendar.setSelectionAdapter(mDailyAdapter)
         mDailyAdapter?.setSelectionListener {
 
-            timeBegin = dateDelegate?.getGMTTimeString(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
-            timeEnd = dateDelegate?.getGMTTimeString(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
+            timeBegin = dateDelegate.formatMonthDayHour(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
+            timeEnd = dateDelegate.formatMonthDayHour(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
             if (timeBegin != null) {
                 dateFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
                 dateTo.text = dateDelegate.formatMonthDayHour(timeEnd, 1)
@@ -124,7 +124,7 @@ class RentalPeriodActivity : AppCompatActivity() {
     private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
         val calendar = Calendar.getInstance()
         calendar.time = date ?: return null
-        val tempDate: Date = dateDelegate.getTimeDate(pickupTime) ?: calendar.time
+        val tempDate: Date = dateDelegate.convertToDate(pickupTime) ?: calendar.time
         val tempCal = GregorianCalendar()
         tempCal.time = tempDate
         calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))
