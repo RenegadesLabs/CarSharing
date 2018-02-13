@@ -135,6 +135,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                     LOCATION_REQUEST_CODE)
         } else {
             val location = LocationServices.FusedLocationApi.getLastLocation(obtainClient())
+            location ?: return
             mCarId?.let { id ->
                 renderCurrentLocation(LatLng(location.longitude, location.longitude))
                 presenter.fetchDistance(id, location.latitude, location.longitude)
@@ -166,7 +167,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED
+                        PackageManager.PERMISSION_GRANTED
     }
 
     override fun onStart() {

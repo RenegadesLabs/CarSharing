@@ -18,7 +18,7 @@ import com.cardee.owner_car_details.presenter.AvailabilityPresenter;
 import com.cardee.owner_car_details.view.adapter.AvailabilityCalendarAdapter;
 import com.cardee.owner_car_details.view.config.AvailabilityConfig;
 import com.cardee.owner_car_details.view.listener.AvailabilityCalendarListener;
-import com.cardee.util.DateStringDelegate;
+import com.cardee.util.StringFormatDelegate;
 
 import java.util.Date;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     private AvailabilityCalendarAdapter adapter;
     private View progress;
     private AvailabilityPresenter presenter;
-    private DateStringDelegate titleDelegate;
+    private StringFormatDelegate stringFormatDelegate;
 
     private Toast currentToast;
 
@@ -57,7 +57,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
         adapter = new AvailabilityCalendarAdapter();
         adapter.setListener(this);
         calendarView.setSelectionAdapter(adapter);
-        titleDelegate = new DateStringDelegate(this);
+        stringFormatDelegate = new StringFormatDelegate(this);
         progress = findViewById(R.id.progress_layout);
         initState();
     }
@@ -105,7 +105,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
 
     @Override
     public void onSelectedDatesChange(List<Date> dates) {
-        titleDelegate.onTitleChanged(buttonSave, dates == null ? 0 : dates.size());
+        stringFormatDelegate.onDateCountTitleChange(buttonSave, dates == null ? 0 : dates.size());
     }
 
     @Override
@@ -131,7 +131,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     @Override
     public void onDatesRetrieved(List<Date> dates) {
         adapter.setDates(dates);
-        titleDelegate.onTitleChanged(buttonSave, dates == null ? 0 : dates.size());
+        stringFormatDelegate.onDateCountTitleChange(buttonSave, dates == null ? 0 : dates.size());
     }
 
     @Override
@@ -143,4 +143,5 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
     public void onSaved() {
         finish();
     }
+
 }

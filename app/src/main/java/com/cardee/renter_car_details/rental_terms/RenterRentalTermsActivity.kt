@@ -13,7 +13,6 @@ import com.cardee.R
 import kotlinx.android.synthetic.main.activity_renter_rental_terms.*
 
 class RenterRentalTermsActivity : AppCompatActivity(), RenterRentalTermsView {
-
     private var mCurrentToast: Toast? = null
     private var mPresenter = RenterRentalTermsPresenter()
     private var mCarId: Int? = null
@@ -39,9 +38,9 @@ class RenterRentalTermsActivity : AppCompatActivity(), RenterRentalTermsView {
         if (!mAgree) {
             agreeButton.visibility = View.GONE
         }
-        val more = SpannableString(resources.getString(R.string.security_deposit_hint_second))
-        more.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorPrimaryDark)), 0, more.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        depositHint.append(more)
+        val moreDeposit = SpannableString(resources.getString(R.string.security_deposit_hint_second))
+        moreDeposit.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorPrimaryDark)), 0, moreDeposit.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        depositHint.append(moreDeposit)
 
         val moreIns = SpannableString(resources.getString(R.string.insurance_excess_hint_second))
         moreIns.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorPrimaryDark)), 0, moreIns.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -81,6 +80,10 @@ class RenterRentalTermsActivity : AppCompatActivity(), RenterRentalTermsView {
 
     override fun hideRules() {
         carRulesText.visibility = View.GONE
+    }
+
+    override fun hideInsurance() {
+        insuranceText.visibility = View.GONE
     }
 
     override fun showProgress(show: Boolean) {

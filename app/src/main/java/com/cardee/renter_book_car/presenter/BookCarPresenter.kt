@@ -119,6 +119,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         state.acceptCashHourly.set(acceptCashHourly ?: false)
         state.acceptCashDaily.set(acceptCashDaily ?: false)
         state.availabilityDaily = offer.carAvailabilityDaily
+        state.availabilityDailyPickup = offer.orderDailyDetails?.timePickup
+        state.availabilityDailyReturn = offer.orderDailyDetails?.timeReturn
         state.availabilityHourly = offer.carAvailabilityHourly
         state.availabilityHourlyBegin = offer.carAvailabilityTimeBegin
         state.availabilityHourlyEnd = offer.carAvailabilityTimeEnd

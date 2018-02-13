@@ -183,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/car_rental_info_instant"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="@id/settings"
                     app:layout_constraintTop_toTopOf="@id/icon_instant"

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
@@ -21,7 +22,7 @@ import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.reviews.RenterCarReviewsActivity
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
-import com.cardee.util.DateStringDelegate
+import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.glide.CircleTransform
 import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
@@ -34,6 +35,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
     private var renterDetailedCar: RenterDetailedCar? = null
     private var hourly: Boolean? = true
+    private val dateDelegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(mActivity) }
 
     init {
         mActivity.tlRenterCarDetails.apply {
@@ -143,7 +145,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.carDetailsInfoView.apply {
             if (hourly) {
                 tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
-                setPickupAndReturnTime(this@apply)
+                setPickupAndReturnTime(this.rootView.tv_renterCarDetailsTimingText)
             } else {
                 tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
                 AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(mActivity, this.tv_renterCarDetailsTimingText, renterDetailedCar)
@@ -168,12 +170,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         }
     }
 
-    private fun setPickupAndReturnTime(root: View) {
-        DateStringDelegate(mActivity).apply {
-            val text: String = getPickupTime(renterDetailedCar?.orderDailyDetails?.timePickup) + "\n" +
-                    getReturnTime(renterDetailedCar?.orderDailyDetails?.timeReturn)
-            root.tv_renterCarDetailsTimingText.text = text
-        }
+    private fun setPickupAndReturnTime(view: TextView) {
+        val pickupTime = renterDetailedCar?.orderDailyDetails?.timePickup ?: return
+        val returnTime = renterDetailedCar?.orderDailyDetails?.timeReturn ?: return
+        dateDelegate.onSetPickupReturnTime(view, pickupTime, returnTime)
     }
 
     private fun setFuelPolicyText(hourly: Boolean, root: View) {
@@ -248,9 +248,9 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         setTripsCount()
         if (renterDetailedCar?.reviews?.isNotEmpty() == true) {
             mActivity.tvRenterCarDetailsCommentName.text = renterDetailedCar?.reviews?.get(0)?.profile?.name
-            val dateText = mActivity.getString(R.string.renter_car_details_review_date_prefix) + " " +
-                    DateStringDelegate(mActivity).getDateWithoutTimeString(renterDetailedCar?.reviews?.get(0)?.dateCreated)
-            mActivity.tvRenterCarDetailsCommentDate.text = dateText
+            renterDetailedCar?.reviews?.get(0)?.dateCreated?.let { date ->
+                dateDelegate.onSetMonthDayYear(mActivity.tvRenterCarDetailsCommentDate, date)
+            }
             mActivity.tvRenterCarDetailsComment.text = renterDetailedCar?.reviews?.get(0)?.comment
             val readMoreText = mActivity.getString(R.string.renter_car_details_review_more_prefix) + " " +
                     renterDetailedCar?.reviews?.size + " " +

@@ -3,12 +3,10 @@ package com.cardee.owner_home.view.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,8 +18,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
-import com.cardee.util.DateStringDelegate;
+import com.cardee.util.DateRepresentationDelegate;
 import com.cardee.owner_home.OwnerCarListContract;
+import com.cardee.util.StringFormatDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
 
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
-    private final DateStringDelegate stringDelegate;
+    private final StringFormatDelegate stringDelegate;
+    private final DateRepresentationDelegate dateDelegate;
 
     private SparseArray<CarListItemViewHolder> mHolders;
 
@@ -49,13 +49,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
         mEventObservable = PublishSubject.create();
-        stringDelegate = new DateStringDelegate(context);
+        stringDelegate = new StringFormatDelegate(context);
+        dateDelegate = new DateRepresentationDelegate(context);
     }
 
     @Override
     public CarListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.item_list_owner_car, parent, false);
-        return new CarListItemViewHolder(itemView, stringDelegate);
+        return new CarListItemViewHolder(itemView, dateDelegate, stringDelegate);
     }
 
     @Override
@@ -84,11 +85,15 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
         private final ProgressBar mLoadingIndicator;
 
         private String notAvailable;
-        private DateStringDelegate delegate;
+        private DateRepresentationDelegate dateDelegate;
+        private StringFormatDelegate stringDelegate;
 
-        public CarListItemViewHolder(View itemView, DateStringDelegate delegate) {
+        public CarListItemViewHolder(View itemView,
+                                     DateRepresentationDelegate dateDelegate,
+                                     StringFormatDelegate stringDeletage) {
             super(itemView);
-            this.delegate = delegate;
+            this.dateDelegate = dateDelegate;
+            this.stringDelegate = stringDeletage;
 
             mTitleView = itemView.findViewById(R.id.car_title);
             mPrimaryImage = itemView.findViewById(R.id.car_primary_image);
@@ -159,10 +164,10 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                             model.getCarAvailabilityHourlyDates().length == 0)) {
                 mHourlyView.setText(notAvailable);
             } else {
-                delegate.onSetHourlyShortTitle(mHourlyView,
+                stringDelegate.onSetHourlyTitle(mHourlyView,
                         model.getCarAvailabilityHourlyDates().length,
-                        model.getCarAvailabilityTimeBegin(),
-                        model.getCarAvailabilityTimeEnd());
+                        dateDelegate.formatHour(model.getCarAvailabilityTimeBegin()),
+                        dateDelegate.formatHour(model.getCarAvailabilityTimeEnd()));
             }
             mDailyView.setEnabled(model.isAvailableDaily());
             if (!model.isAvailableDaily() ||
@@ -170,7 +175,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.CarListI
                             model.getCarAvailabilityDailyDates().length == 0)) {
                 mDailyView.setText(notAvailable);
             } else {
-                delegate.onSetValue(mDailyView, model.getCarAvailabilityDailyDates().length);
+                stringDelegate.onDateCountValueChange(mDailyView, model.getCarAvailabilityDailyDates().length);
             }
             mLocationView.setText(model.getAddress());
         }

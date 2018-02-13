@@ -21,13 +21,15 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", '"http://192.168.88.58:5550/api/dev/"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
+            buildConfigField("String", "TIME_ZONE", '"GMT+08:00"')
         }
         debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", '"http://192.168.88.58:5550/api/dev/"')
+            buildConfigField("String", "BASE_URL", '"http://labracode.itg5.com/api/dev/"')
+            buildConfigField("String", "TIME_ZONE", '"GMT+08:00"')
         }
     }
     compileOptions {

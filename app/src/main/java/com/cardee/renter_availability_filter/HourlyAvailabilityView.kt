@@ -5,8 +5,6 @@ import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import com.cardee.util.AvailabilityFromFilterDelegate
-import com.cardee.util.DateStringDelegate
-import kotlinx.android.synthetic.main.view_daily_availability.view.*
 import kotlinx.android.synthetic.main.view_hourly_availability.view.*
 import java.util.*
 
