@@ -191,12 +191,31 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 endString = resources.getString(R.string.rental_period_to)
             } else {
                 beginString = delegate.formatMonthDayHour(mState.timeBeginDaily ?: return)
-                endString = delegate.formatMonthDayHour(mState.timeEndDaily, 1)
+                val beginDate = delegate.convertDateToDate(mState.timeBeginDaily)
+                val endDate = delegate.convertDateToDate(mState.timeEndDaily)
+
+                endString = if (isNextDay(beginDate, endDate) == true) {
+                    delegate.formatMonthDayHour(mState.timeEndDaily, 1)
+                } else {
+                    delegate.formatMonthDayHour(mState.timeEndDaily)
+                }
             }
         }
         bookingStart?.text = beginString
         bookingEnd?.text = endString
         mPresenter.saveSate(mState)
+    }
+
+    private fun isNextDay(begin: Date?, end: Date?): Boolean? {
+        val calBegin = Calendar.getInstance(Locale.US)
+        calBegin.timeZone = TimeZone.getTimeZone("GMT+8")
+        calBegin.time = begin ?: return null
+
+        val calEnd = Calendar.getInstance(Locale.US)
+        calEnd.timeZone = TimeZone.getTimeZone("GMT+8")
+        calEnd.time = end ?: return null
+
+        return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
     }
 
     override fun onStop() {

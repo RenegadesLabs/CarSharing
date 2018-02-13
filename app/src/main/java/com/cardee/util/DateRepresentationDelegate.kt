@@ -37,7 +37,7 @@ class DateRepresentationDelegate(context: Context) {
     init {
         formatter = SimpleDateFormat(ISO_8601_DATE_TIME_PATTERN, Locale.US)
         formatter.timeZone = CardeeApp.getTimeZone()
-        val symbols = DateFormatSymbols()
+        val symbols = DateFormatSymbols(Locale.US)
         symbols.amPmStrings = arrayOf("am", "pm")
         formatter.dateFormatSymbols = symbols
         calendar = Calendar.getInstance(CardeeApp.getTimeZone())
@@ -91,13 +91,15 @@ class DateRepresentationDelegate(context: Context) {
 
     fun formatMonthDayYearHour(isoDate: String?): String? {
         isoDate ?: return null
-        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN) ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN)
+                ?: return null
         return dropStartZero(dateString)
     }
 
     fun formatMonthDayYearHourMinute(isoDate: String?): String? {
         isoDate ?: return null
-        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN) ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN)
+                ?: return null
         return dropStartZero(dateString)
     }
 
@@ -125,16 +127,17 @@ class DateRepresentationDelegate(context: Context) {
 
     fun formatMonthDayHour(isoDate: String?): String? {
         isoDate ?: return null
-        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN) ?: return null
+        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN)
+                ?: return null
         return dropStartZero(timeString)
     }
 
-    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
+    fun formatMonthDayHour(isoDate: String?, dayOffset: Int): String? {
         isoDate ?: return null
         try {
             val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
             calendar.time = date
-            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
+            calendar.add(Calendar.DATE, dayOffset)
             return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
@@ -147,10 +150,20 @@ class DateRepresentationDelegate(context: Context) {
         return convertTo(date, MONTH_DAY_HOUR_PATTERN)
     }
 
-    fun convertToDate(time: String?): Date? {
+    fun convertTimeToDate(time: String?): Date? {
         time ?: return null
         try {
-            parseDate(time, ISO_8601_TIME_PATTERN)
+            return parseDate(time, ISO_8601_TIME_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
+    fun convertDateToDate(date: String?): Date? {
+        date ?: return null
+        try {
+            return parseDate(date, ISO_8601_DATE_TIME_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
         }
