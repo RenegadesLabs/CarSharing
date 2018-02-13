@@ -43,7 +43,7 @@ class DateRepresentationDelegate(context: Context) {
         symbols.amPmStrings = arrayOf("am", "pm")
         formatter.dateFormatSymbols = symbols
         calendar = Calendar.getInstance(CardeeApp.getTimeZone())
-        startZeroRegex = Regex("(\\s0)|(^0)")
+        startZeroRegex = Regex("\\b0")
 
         availabilityPickupPrefix = context.getString(R.string.availability_pickup_prefix)
         availabilityPickupSuffix = context.getString(R.string.availability_pickup_suffix)
@@ -76,15 +76,15 @@ class DateRepresentationDelegate(context: Context) {
 
     fun onSetPickupTime(view: TextView, isoTime: String?) {
         isoTime ?: return
-        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
-        val pickupTimeString = "$availabilityPickupPrefix $timeString $availabilityPickupSuffix"
+        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN) ?: return
+        val pickupTimeString = "$availabilityPickupPrefix ${dropStartZero(timeString)} $availabilityPickupSuffix"
         view.text = pickupTimeString
     }
 
     fun onSetReturnTime(view: TextView, isoTime: String?) {
         isoTime ?: return
-        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
-        val returnTimeString = "$availabilityReturnPrefix $timeString $availabilityReturnSuffix"
+        val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN) ?: return
+        val returnTimeString = "$availabilityReturnPrefix ${dropStartZero(timeString)} $availabilityReturnSuffix"
         view.text = returnTimeString
     }
 
