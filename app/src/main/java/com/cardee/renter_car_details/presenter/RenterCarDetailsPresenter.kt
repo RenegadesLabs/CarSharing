@@ -117,7 +117,6 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
 
             override fun onError(error: Error) {
                 view?.showMessage(R.string.error_occurred)
-//                handleError(error)
             }
         })
     }

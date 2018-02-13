@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cardee">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -170,7 +171,22 @@
         <activity
             android:name=".renter_car_details.view.RenterCarDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.DarkTheme" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.DarkTheme">
+            <tools:validation testUrl="http://labracode.itg5.com/offers/link" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="labracode.itg5.com"
+                    android:pathPrefix="/offers/link" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".owner_bookings.ChecklistActivity"
             android:screenOrientation="portrait"
