@@ -117,7 +117,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             } else {
                 paymentIntent.putExtra("acceptCash", mState.acceptCashDaily.get())
             }
-            paymentIntent.putExtra("card", paymentChoose.text)
+            paymentIntent.putExtra("cardToken", mState.paymentToken)
             startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
         }
         rentalTermsAgree.setOnClickListener {
