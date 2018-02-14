@@ -1,7 +1,6 @@
 package com.cardee.owner_credit_balance
 
 import com.cardee.R
-import com.cardee.mvp.BaseView
 
 
 interface CreditBalanceParent {
@@ -15,9 +14,11 @@ interface CreditBalanceParent {
         fun onDestroy()
     }
 
-    interface View : BaseView {
+    interface View {
 
         fun initState(state: State)
+
+        fun onResult(balance: String)
     }
 }
 
@@ -37,7 +38,7 @@ interface BalanceTransactions {
         fun <T> fetchHistory(view: View<T>)
     }
 
-    interface View<in T> : BaseView {
+    interface View<in T> {
 
         fun getData(data: T)
 

@@ -87,6 +87,10 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="CardeeProgressWhite" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/bg_main</item>
+    </style>
+
     <style name="RoundedButton">
         <item name="android:background">@drawable/bg_button_rounded</item>
         <item name="android:textSize">@dimen/text_regular</item>

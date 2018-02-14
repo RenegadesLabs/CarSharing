@@ -801,7 +801,7 @@
     
     <!-- Credit/Deposit -->
     <string name="credit_balance_placeholder">XZXZX</string>
-    <string name="title_credit">Credit</string>
+    <string name="title_credit">Credits</string>
     <string name="title_top_up">Top-up</string>
     <string name="title_transaction_history">Transaction History</string>
     <string name="current_balance">Current Balance</string>

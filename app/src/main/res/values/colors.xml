@@ -42,8 +42,8 @@
     <color name="add_car_item_vehicle_inactive">#979797</color>
     <color name="item_secondary_txt">#7A8794</color>
 
-    <color name="colorPrimary">#419CED</color>
-    <color name="colorPrimaryDark">#1283E8</color>
+    <color name="colorPrimary">#3683e1</color>
+    <color name="colorPrimaryDark">#2a67b1</color>
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
@@ -70,4 +70,5 @@
     <color name="selector_view">#e5edf4</color>
 
     <color name="search_area_circle">#334285F4</color>
+    <color name="text_blue_subtitle">#8abbed</color>
 </resources>
