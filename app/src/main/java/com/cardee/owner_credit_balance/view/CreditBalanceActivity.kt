@@ -37,6 +37,7 @@ class CreditBalanceActivity(val presenter: CreditBalanceParent.Presenter = Credi
     }
 
     override fun onResult(balance: String) {
+        balanceValue.text = balance
         if (balanceValue.visibility != View.VISIBLE) {
             balanceValue.visibility = View.VISIBLE
             balanceTitle.visibility = View.VISIBLE
