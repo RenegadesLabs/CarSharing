@@ -798,6 +798,28 @@
     <string name="insurance_excess_hint_first">Excess is the maximum payable amount in case of accident.\u0020</string>
     <string name="insurance_excess_hint_second">Learn\u00A0more</string>
     <string name="agree_rental_terms">Agree Rental Terms</string>
-
-
+    
+    <!-- Credit/Deposit -->
+    <string name="credit_balance_placeholder">XZXZX</string>
+    <string name="title_credit">Credit</string>
+    <string name="title_top_up">Top-up</string>
+    <string name="title_transaction_history">Transaction History</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="top_up_with_bank_transfer">Top-up with Bank Transfer</string>
+    <string name="top_up_with_card">Top-up with Card</string>
+    <string name="transaction_fee_amount">XZXZX% transaction fee applicable</string>
+    <string name="check_transaction_history">Check Transaction History</string>
+    <string name="transaction_fee_caution">Service fees will be deducted from your credit balance for Cash Bookings.</string>
+    <string name="minimum_balance_caution">You need a minimum of XZXZX in your credit balance to accept Cash Bookings.</string>
+    <string name="bank_pre_transfer_message">To top-up through bank transfer, please transfer desired top-up amount to</string>
+    <string name="bank_post_transfer_message">Once done, input transaction details below</string>
+    <string name="date_of_transfer">Date of transfer</string>
+    <string name="transaction_number">Transaction number</string>
+    <string name="minimum_top_up">Minimum top-up XZXZX per transaction</string>
+    <string name="top_up_amount">Top-up Amount</string>
+    <string name="input_top_up_amount">Input Top-up Amount</string>
+    <string name="transaction_fee_charge_caution">XZXZX% transaction fee will be applicable.\nA total of XZXZX will be charged to your card</string>
+    <string name="top_up_with">Top-up with</string>
+    <string name="add_new_card">Add New Card</string>
+    <string name="balance_amount">Balance XZXZX</string>
 </resources>

@@ -234,7 +234,7 @@
         <activity android:name=".renter_car_details.reviews.RenterCarReviewsActivity" />
         <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity" />
         <activity
-            android:name=".owner_credit_balance.CreditBalanceActivity"
+            android:name=".owner_credit_balance.view.CreditBalanceActivity"
             android:screenOrientation="portrait" />
     </application>
 
