@@ -233,7 +233,10 @@
         <activity android:name=".renter_book_car.payment.BookPaymentActivity" />
         <activity android:name=".renter_car_details.reviews.RenterCarReviewsActivity" />
         <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity" />
-        <activity android:name=".account_verify.view.VerifyAccountActivity"></activity>
+        <activity android:name=".account_verify.view.VerifyAccountActivity" />
+        <activity
+            android:name=".account_verify.particulars.ParticularsActivity"
+            android:theme="@style/ChatStyle" />
     </application>
 
 </manifest>

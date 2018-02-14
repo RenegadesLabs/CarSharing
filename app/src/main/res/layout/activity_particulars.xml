@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cardee.account_verify.particulars.ParticularsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/particulars_title" />
+
+            <TextView
+                android:id="@+id/toolbarAction"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/title_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/nameInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/large_margin"
+                android:theme="@style/CardeeTextInputStyle"
+                app:errorEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/nameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/particulars_name_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/text_owner_profile_name"
+                    android:textSize="@dimen/text_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/identityInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:theme="@style/CardeeTextInputStyle"
+                app:errorEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/identityInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/particulars_identity_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="15"
+                    android:textColor="@color/text_owner_profile_name"
+                    android:textSize="@dimen/text_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/addressInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:theme="@style/CardeeTextInputStyle"
+                app:errorEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/addressInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_full_address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="15"
+                    android:textColor="@color/text_owner_profile_name"
+                    android:textSize="@dimen/text_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                style="@style/TextSettingsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:text="@string/particulars_mobile_number"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/countryInputLayout"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CardeeTextInputStyle"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/countryInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="+1234567890"
+                        android:hint="@string/cad_add_contact_country"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="4"
+                        android:text="+65"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_regular" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/phoneInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:theme="@style/CardeeTextInputStyle"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/phoneInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="1234567890-"
+                        android:hint="@string/cad_add_contact_number"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:textColor="@color/text_owner_profile_name"
+                        android:textSize="@dimen/text_regular" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextSettingsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:text="@string/particulars_birth_date"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/birthDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="18dp"
+                android:hint="@string/car_add_info_please_select"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:textColor="@color/text_owner_profile_name"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
+
+            <TextView
+                style="@style/TextSettingsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:text="@string/license_effective_date"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/licenseDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/large_margin"
+                android:layout_marginStart="18dp"
+                android:hint="@string/car_add_info_please_select"
+                android:imeOptions="actionDone"
+                android:inputType="date"
+                android:textColor="@color/text_owner_profile_name"
+                android:textSize="@dimen/text_regular"
+                android:theme="@style/CardeeEditTextStyle"
+                app:errorEnabled="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.cardee.custom.CardeeButton
+        android:id="@+id/nextActivityButton"
+        style="@style/RoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:text="@string/car_add_next"
+        app:drawableEndCompat="@drawable/ic_arrow_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

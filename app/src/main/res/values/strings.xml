@@ -801,5 +801,21 @@
 
     <!-- Verify Account-->
     <string name="verify_account_title">Verify Account</string>
+    <string name="chat_with_us">Need help? Chat with us!</string>
+    <string name="verify_particulars_title">1. Your Particulars</string>
+    <string name="verify_identity_title">2. Identity Card</string>
+    <string name="verify_license_title">3. Driving License</string>
+    <string name="verify_photo_title">4. Your Photo</string>
+    <string name="verify_credit_title">5. Credit Card</string>
+    <string name="verify_deposit_title">6. Deposit</string>
+    <string name="particulars_title">Your Particulars</string>
+    <string name="particulars_name_hint">Full Name</string>
+    <string name="particulars_identity_hint">NRIC / FIN / Identity Card No.</string>
+    <string name="particulars_address_hint">Full Address</string>
+    <string name="particulars_mobile_number">Mobile number</string>
+    <string name="particulars_birth_date">Birth date</string>
+    <string name="license_effective_date">Class 3 license effective date</string>
+    <string name="hint_full_address">Full Address</string>
+
 
 </resources>

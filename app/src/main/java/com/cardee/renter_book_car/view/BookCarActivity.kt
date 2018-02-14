@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.view.VerifyAccountActivity
 import com.cardee.databinding.ActivityBookCarBinding
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
@@ -109,8 +110,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
         verifyAccButton.setOnClickListener {
-//            val intent = Intent(this, VerifyAccountActivity::class.java)
-//            startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
+            val intent = Intent(this, VerifyAccountActivity::class.java)
+            startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
 
             mState.accVerified.set(true)
         }
