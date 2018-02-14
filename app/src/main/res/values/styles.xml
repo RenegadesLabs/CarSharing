@@ -286,6 +286,13 @@
         <item name="android:textSize">@dimen/text_xlarge</item>
     </style>
 
+    <style name="BookingsTabItemTextStyle">
+        <item name="android:textColor">@color/bg_main</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
     <style name="InboxTabItemImageStyle">
         <item name="android:layout_width">18dp</item>
         <item name="android:layout_height">18dp</item>

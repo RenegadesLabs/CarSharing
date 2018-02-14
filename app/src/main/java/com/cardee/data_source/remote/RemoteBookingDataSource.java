@@ -72,8 +72,17 @@ public class RemoteBookingDataSource implements BookingDataSource {
     }
 
     @Override
-    public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
-
+    public void obtainRenterBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
+        try {
+            Response<BookingResponse> response = api.getRenterBookings(filter, sort).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                bookingsCallback.onSuccess(response.body().getBookings(), true);
+                return;
+            }
+            handleErrorResponse(response.body(), bookingsCallback);
+        } catch (IOException ex) {
+            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
+        }
     }
 
     @Override
