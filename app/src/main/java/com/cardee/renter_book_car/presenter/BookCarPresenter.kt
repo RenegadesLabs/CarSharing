@@ -49,14 +49,16 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
 
         val request: BookingRequest = if (mState.bookingHourly == true) {
             BookingRequest(mCarId ?: return, mState.timeBeginHourly ?: return,
-                    mState.timeEndHourly ?: return, mState.hourlyCurbsideDelivery.get(),
+                    mState.timeEndHourly
+                            ?: return, mState.hourlyCurbsideDelivery.get() && mState.collectionPicked.get(),
                     mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
                     mState.paymentToken, mState.bookingHourly?.not() ?: return,
                     mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
                     mState.noteText)
         } else {
-            BookingRequest(mCarId ?: return, mState.timeBeginDaily?.dropLast(15) ?: return,
-                    mState.timeEndDaily?.dropLast(15) ?: return, mState.dailyCurbsideDelivery.get(),
+            BookingRequest(mCarId ?: return, mState.timeBeginDaily ?: return,
+                    mState.timeEndDaily
+                            ?: return, mState.dailyCurbsideDelivery.get() && mState.collectionPicked.get(),
                     mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
                     mState.paymentToken, mState.bookingHourly?.not() ?: return,
                     mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
@@ -149,8 +151,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         } else {
             timeBegin = state.timeBeginDaily ?: return
             timeEnd = state.timeEndDaily ?: return
-            timeBegin = timeBegin.dropLast(15)
-            timeEnd = timeEnd.dropLast(15)
+//            timeBegin = timeBegin.dropLast(15)
+//            timeEnd = timeEnd.dropLast(15)
         }
 
         var curbDel = if (state.bookingHourly == true) state.hourlyCurbsideDelivery.get() else state.dailyCurbsideDelivery.get()

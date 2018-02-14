@@ -762,7 +762,7 @@
     <string name="see_cost_breakdown">See cost breakdown</string>
     <string name="promo_code">Promo Code</string>
     <string name="steps_left">STEPS LEFT TO BOOK</string>
-    <string name="verify_account_title">1. Verify Account</string>
+    <string name="book_car_verify_account_title">1. Verify Account</string>
     <string name="verify">Verify</string>
     <string name="payment_by">Payment By</string>
     <string name="choose">Choose</string>
@@ -799,5 +799,7 @@
     <string name="insurance_excess_hint_second">Learn\u00A0more</string>
     <string name="agree_rental_terms">Agree Rental Terms</string>
 
+    <!-- Verify Account-->
+    <string name="verify_account_title">Verify Account</string>
 
 </resources>

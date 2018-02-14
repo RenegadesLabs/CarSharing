@@ -29,6 +29,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     private val LOCATION_REQUEST_CODE = 912
     private val PAYMENT_REQUEST_CODE = 913
     private val RENTAL_TERMS_REQUEST_CODE = 914
+    private val VERIFY_ACC_REQUEST_CODE = 915
 
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
@@ -108,6 +109,9 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
         verifyAccButton.setOnClickListener {
+//            val intent = Intent(this, VerifyAccountActivity::class.java)
+//            startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
+
             mState.accVerified.set(true)
         }
         paymentChoose.setOnClickListener {
