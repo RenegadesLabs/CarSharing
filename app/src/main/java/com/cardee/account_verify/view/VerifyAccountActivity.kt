@@ -34,12 +34,12 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
     }
 
     private fun setListeners() {
-        particularsAdd.setOnClickListener(this)
-        identityAdd.setOnClickListener(this)
-        licenseAdd.setOnClickListener(this)
-        photoAdd.setOnClickListener(this)
-        creditAdd.setOnClickListener(this)
-        depositAdd.setOnClickListener(this)
+        particularsContainer.setOnClickListener(this)
+        identityContainer.setOnClickListener(this)
+        licenseContainer.setOnClickListener(this)
+        photoContainer.setOnClickListener(this)
+        creditContainer.setOnClickListener(this)
+        depositContainer.setOnClickListener(this)
     }
 
     private fun initToolBar() {
@@ -50,7 +50,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
 
     override fun onClick(view: View?) {
         when (view) {
-            particularsAdd -> {
+            particularsContainer -> {
                 val intent = Intent(this, ParticularsActivity::class.java)
                 startActivity(intent)
             }

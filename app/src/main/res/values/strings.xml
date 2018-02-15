@@ -816,6 +816,8 @@
     <string name="particulars_birth_date">Birth date</string>
     <string name="license_effective_date">Class 3 license effective date</string>
     <string name="hint_full_address">Full Address</string>
+    <string name="particulars_birthday_dialog_title">Birth date</string>
+    <string name="particulars_license_dialog_title">License effective date</string>
 
 
 </resources>

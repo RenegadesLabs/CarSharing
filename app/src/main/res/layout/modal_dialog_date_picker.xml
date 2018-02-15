@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/dateDialogTitle"
+        style="@style/ModalMenuTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_title_height"
+        android:background="@android:color/transparent"
+        android:text="@string/particulars_birthday_dialog_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dateDialogContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_top_without_div"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/widget_padding_mid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateDialogTitle">
+
+        <View
+            android:id="@+id/dateSelector"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_regular"
+            app:layout_constraintBottom_toBottomOf="@+id/datePicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/datePicker" />
+
+        <NumberPicker
+            android:id="@id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            app:layout_constraintEnd_toStartOf="@+id/monthPicker"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <NumberPicker
+            android:id="@id/monthPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintBottom_toTopOf="@id/saveButton"
+            app:layout_constraintEnd_toStartOf="@+id/yearPicker"
+            app:layout_constraintStart_toEndOf="@id/datePicker"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <NumberPicker
+            android:id="@id/yearPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/monthPicker"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@id/saveButton"
+            style="@style/RegularButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_regular_height"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginEnd="@dimen/widget_margin_small"
+            android:layout_marginStart="@dimen/widget_margin_small"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/title_save"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

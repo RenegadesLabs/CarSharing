@@ -1,19 +1,16 @@
 package com.cardee.account_verify.particulars
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.DatePicker
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.custom.modal.DatePickerMenuFragment
+import com.cardee.custom.modal.DatePickerMenuFragment.Companion.DATETYPE
 import com.cardee.mvp.BaseView
 import kotlinx.android.synthetic.main.activity_particulars.*
 
-class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerDialog.OnDateSetListener {
-    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-
-    }
+class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerMenuFragment.DialogOnClickListener {
 
     private var mCurrentToast: Toast? = null
 
@@ -22,8 +19,14 @@ class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerDialog.OnDa
         setContentView(R.layout.activity_particulars)
         initToolBar()
         birthDateInput.setOnClickListener {
-            val dialog = DatePickerDialog(this, this, 2018, 1, 1)
-            dialog.show()
+            val menu = DatePickerMenuFragment.newInstance(DATETYPE.BIRTHDAY, 1990, 1, 1)
+            menu.show(supportFragmentManager, DatePickerMenuFragment::class.java.simpleName)
+            menu.setOnSaveClickListener(this)
+        }
+        licenseDateInput.setOnClickListener {
+            val menu = DatePickerMenuFragment.newInstance(DATETYPE.LICENSE, 2010, 1, 1)
+            menu.show(supportFragmentManager, DatePickerMenuFragment::class.java.simpleName)
+            menu.setOnSaveClickListener(this)
         }
     }
 
@@ -33,6 +36,16 @@ class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerDialog.OnDa
         supportActionBar?.title = null
     }
 
+    override fun onSaveClicked(type: DatePickerMenuFragment.Companion.DATETYPE, value: String) {
+        when (type) {
+            DATETYPE.BIRTHDAY -> {
+                birthDateInput.setText(value)
+            }
+            DATETYPE.LICENSE -> {
+                licenseDateInput.setText(value)
+            }
+        }
+    }
 
     override fun showProgress(show: Boolean) {
 
