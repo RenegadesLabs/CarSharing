@@ -17,7 +17,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.cardee.R;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.service.FragmentFactory;
-import com.cardee.renter_bookings.view.RenterBookingsFragment;
+import com.cardee.renter_bookings.view.RenterBookingsListFragment;
 import com.cardee.renter_browse_cars.view.RenterBrowseCarsFragment;
 import com.cardee.renter_home.view.listener.RenterMoreTabEventListener;
 
@@ -77,7 +77,7 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
                 fragmentClazz = RenterBrowseCarsFragment.class;
                 break;
             case 1:
-                fragmentClazz = RenterBookingsFragment.class;
+                fragmentClazz = RenterBookingsListFragment.class;
                 break;
             case 3:
                 fragmentClazz = RenterProfileFragment.class;

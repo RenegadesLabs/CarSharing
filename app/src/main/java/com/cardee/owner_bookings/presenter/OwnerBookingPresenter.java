@@ -32,12 +32,14 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     private final UseCaseExecutor executor;
     private final GetBooking getBooking;
     private final ChangeBookingState changeBookingState;
+    private boolean isRenter = false;
 
-    public OwnerBookingPresenter(int bookingId) {
+    public OwnerBookingPresenter(int bookingId, boolean isRenter) {
         this.bookingId = bookingId;
         executor = UseCaseExecutor.getInstance();
         getBooking = new GetBooking();
         changeBookingState = new ChangeBookingState();
+        this.isRenter = isRenter;
     }
 
     @Override
@@ -88,10 +90,10 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
             }
             switch (state) {
                 case NEW:
-                    strategy = new NewBookingStrategy(bookingView, this);
+                    strategy = new NewBookingStrategy(bookingView, this, isRenter);
                     break;
                 case CONFIRMED:
-                    strategy = new ConfirmedStrategy(bookingView, this);
+                    strategy = new ConfirmedStrategy(bookingView, this, isRenter);
                     break;
                 case COLLECTING:
                     strategy = new HandingOverStrategy(bookingView, this);

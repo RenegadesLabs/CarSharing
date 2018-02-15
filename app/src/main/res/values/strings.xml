@@ -653,6 +653,7 @@
     <!--Bookings-->
     <string name="booking_state_all">All</string>
     <string name="booking_state_new">New Request</string>
+    <string name="booking_state_new_renter">Request Sent</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
     <string name="booking_state_collected">Handed Over</string>
@@ -671,9 +672,12 @@
     <string name="booking_sort_amount">Booking amount</string>
 
     <string name="booking_message_accept">Accept request to confirm booking</string>
+    <string name="booking_message_accept_renter">Waiting for owner to accept request…</string>
     <string name="booking_message_handover">Hangover car to fill checklist upon car collection</string>
-    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist...</string>
+    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist…</string>
     <string name="booking_message_handover_complete">Tap "Car returned" to complete booking</string>
+
+    <string name="booking_message_confirmed_renter">Pay to owner upon car collection</string>
 
     <string name="booking_payment_card">Card</string>
     <string name="booking_payment_cash">Cash</string>
@@ -681,6 +685,7 @@
     <string name="booking_title_decline">Decline Request</string>
     <string name="booking_title_accept">Accept Request</string>
     <string name="booking_title_cancel">Cancel Booking</string>
+    <string name="booking_title_cancel_renter">Cancel Request</string>
     <string name="booking_title_handover">Handover Car</string>
     <string name="booking_title_cancel_handover">Cancel Handover</string>
     <string name="booking_title_complete">Car Returned</string>
@@ -702,6 +707,14 @@
     <string name="cost_nett">Booking Cost</string>
     <string name="cost_service_fee">Service Fee</string>
     <string name="cost_nett_earnings">Nett Earnings</string>
+    <string name="booking_request_title">Requested by</string>
+    <string name="booking_owner_title">Owned by</string>
+    <string name="booking_handover_on_title">Handover on</string>
+    <string name="booking_pickup_on_title">Pickup on or after</string>
+    <string name="booking_handover_at_title">Handover at</string>
+    <string name="booking_pickup_at_title">Pickup at</string>
+    <string name="booking_deliver_to_title">Deliver to</string>
+
 
     <!-- Browse Cars Filters-->
     <string name="filters">Filters</string>

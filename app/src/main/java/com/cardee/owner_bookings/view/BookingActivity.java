@@ -21,6 +21,7 @@ import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
 public class BookingActivity extends AppCompatActivity {
 
     public static final String ACTION_CHECKLIST = "action_cardee_checklist_changed_by_owner";
+    public static final String IS_RENTER = "flag_cardee_is_renter";
 
     OwnerBookingContract.Presenter presenter;
     OwnerBookingContract.View view;
@@ -33,7 +34,7 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle args = getIntent().getExtras();
         bookingId = args.getInt(OwnerBookingContract.BOOKING_ID);
-        presenter = new OwnerBookingPresenter(bookingId);
+        presenter = new OwnerBookingPresenter(bookingId, args.getBoolean(IS_RENTER, false));
         Toolbar toolbar;
         BookingView bookingView = (BookingView) LayoutInflater
                 .from(this)

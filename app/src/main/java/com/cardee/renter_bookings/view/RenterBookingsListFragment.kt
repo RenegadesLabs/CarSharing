@@ -12,15 +12,15 @@ import android.view.ViewGroup
 import com.cardee.R
 import com.cardee.domain.bookings.BookingState
 import com.cardee.domain.bookings.usecase.ObtainBookings
+import com.cardee.owner_bookings.OwnerBookingContract
 import com.cardee.owner_bookings.OwnerBookingListContract
+import com.cardee.owner_bookings.view.BookingActivity
 import com.cardee.owner_bookings.view.BookingListAdapter
 import com.cardee.renter_bookings.presenter.RenterBookingsListPresenter
-import com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity
 import com.cardee.settings.SettingsManager
-import kotlinx.android.synthetic.main.fragment_renter_bookings.*
 import kotlinx.android.synthetic.main.fragment_renter_bookings.view.*
 
-class RenterBookingsFragment : Fragment(), OwnerBookingListContract.View {
+class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
 
     private var presenter: OwnerBookingListContract.Presenter? = null
     private var adapter: BookingListAdapter? = null
@@ -71,7 +71,7 @@ class RenterBookingsFragment : Fragment(), OwnerBookingListContract.View {
             })
         }
         root?.booking_list?.apply {
-            adapter = this@RenterBookingsFragment.adapter
+            adapter = this@RenterBookingsListFragment.adapter
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
@@ -105,12 +105,17 @@ class RenterBookingsFragment : Fragment(), OwnerBookingListContract.View {
     }
 
     override fun openBooking(bookingId: Int?) {
-
+        val intent = Intent(activity, BookingActivity::class.java)
+        intent.apply {
+            putExtra(OwnerBookingContract.BOOKING_ID, bookingId)
+            putExtra(BookingActivity.IS_RENTER, true)
+        }
+        activity.startActivity(intent)
     }
 
     companion object {
-        fun newInstance(): RenterBookingsFragment {
-            return RenterBookingsFragment()
+        fun newInstance(): RenterBookingsListFragment {
+            return RenterBookingsListFragment()
         }
     }
 
