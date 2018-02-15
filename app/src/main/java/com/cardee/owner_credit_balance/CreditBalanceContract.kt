@@ -16,7 +16,7 @@ interface CreditBalanceParent {
 
     interface View {
 
-        fun initState(state: State)
+        fun initState()
 
         fun onResult(balance: String)
     }
@@ -46,9 +46,18 @@ interface BalanceTransactions {
     }
 }
 
-enum class State(val titleId: Int) {
-    HOME(R.string.title_credit),
-    BANK(R.string.title_top_up),
-    CARD(R.string.title_top_up),
-    HISTORY(R.string.title_transaction_history);
+interface ChildListener {
+
+    fun onStateChanged(state: State)
+
+    fun onChangeState(state: State)
+
+    fun onTaskDone()
+}
+
+enum class State(val titleId: Int, val tag: String) {
+    HOME(R.string.title_credit, "balance_home"),
+    BANK(R.string.title_top_up, "bank_transfer"),
+    CARD(R.string.title_top_up, "card_transaction"),
+    HISTORY(R.string.title_transaction_history, "transaction_history");
 }

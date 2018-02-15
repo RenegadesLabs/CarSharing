@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/btnBankTransfer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_clickable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="@dimen/widget_padding_large"
+        android:paddingEnd="20dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/bankTransferTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/top_up_with_bank_transfer"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular" />
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_regular"
+            android:layout_height="@dimen/item_icon_side_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnCardTransaction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_clickable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="@dimen/widget_padding_large"
+        android:paddingEnd="20dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBankTransfer">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cardTransactionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_margin_xx_small"
+                android:text="@string/top_up_with_card"
+                android:textColor="@color/text_regular"
+                android:textSize="@dimen/text_regular" />
+
+            <TextView
+                android:id="@+id/cardTransactionSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_fee_amount"
+                android:textColor="@color/text_subtitle_alt"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_regular"
+            android:layout_height="@dimen/item_icon_side_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnTransactionHistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_clickable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="@dimen/widget_padding_large"
+        android:paddingEnd="20dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCardTransaction">
+
+        <TextView
+            android:id="@+id/transactionHistoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/check_transaction_history"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular" />
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_regular"
+            android:layout_height="@dimen/item_icon_side_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/balanceCaution"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/widget_margin_regular"
+        android:layout_marginEnd="@dimen/widget_margin_large"
+        android:layout_marginStart="@dimen/widget_margin_large"
+        android:text="@string/minimum_balance_caution"
+        android:textColor="@color/text_subtitle_alt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/balanceCautionAdditional"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/widget_margin_small"
+        android:layout_marginEnd="@dimen/widget_margin_large"
+        android:layout_marginStart="@dimen/widget_margin_large"
+        android:text="@string/transaction_fee_caution"
+        android:textColor="@color/text_subtitle_alt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toTopOf="@id/balanceCaution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

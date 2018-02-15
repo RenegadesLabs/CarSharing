@@ -3,7 +3,6 @@ package com.cardee.owner_credit_balance.presenter
 import com.cardee.domain.balance.FetchCreditBalance
 import com.cardee.domain.rx.Request
 import com.cardee.owner_credit_balance.CreditBalanceParent
-import com.cardee.owner_credit_balance.State
 import com.cardee.owner_credit_balance.view.BaseActionsView
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -16,7 +15,7 @@ class CreditBalancePresenter(val fetchUseCase: FetchCreditBalance = FetchCreditB
 
     override fun attachView(view: CreditBalanceParent.View) {
         weakView = WeakReference(view)
-        weakView.get()?.initState(State.HOME)
+        weakView.get()?.initState()
     }
 
     override fun fetchCurrentBalance() {
