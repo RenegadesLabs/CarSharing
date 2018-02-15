@@ -72,7 +72,6 @@
                 android:id="@+id/cardTransactionSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/transaction_fee_amount"
                 android:textColor="@color/text_subtitle_alt"
                 android:textSize="@dimen/text_small" />
         </LinearLayout>
@@ -125,7 +124,6 @@
         android:layout_marginBottom="@dimen/widget_margin_regular"
         android:layout_marginEnd="@dimen/widget_margin_large"
         android:layout_marginStart="@dimen/widget_margin_large"
-        android:text="@string/minimum_balance_caution"
         android:textColor="@color/text_subtitle_alt"
         android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -139,7 +137,6 @@
         android:layout_marginBottom="@dimen/widget_margin_small"
         android:layout_marginEnd="@dimen/widget_margin_large"
         android:layout_marginStart="@dimen/widget_margin_large"
-        android:text="@string/transaction_fee_caution"
         android:textColor="@color/text_subtitle_alt"
         android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toTopOf="@id/balanceCaution"

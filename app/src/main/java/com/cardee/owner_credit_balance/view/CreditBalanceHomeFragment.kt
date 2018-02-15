@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_balance_home.*
 
 class CreditBalanceHomeFragment : Fragment(), View.OnClickListener {
 
+    val feePlug = 4 //PLUG
+    val minimumDepositPlug = "$20" //PLUG
+
     companion object {
 
         fun newInstance(): Fragment {
@@ -48,7 +51,13 @@ class CreditBalanceHomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initInfo() {
-
+        val placeholder = activity.getString(R.string.credit_balance_placeholder)
+        val cardFeeInfo = activity.getString(R.string.transaction_fee_amount)
+        val cardFeeCaution = activity.getString(R.string.transaction_fee_caution)
+        val minimumBalanceCaution = activity.getString(R.string.minimum_balance_caution)
+        cardTransactionSubtitle.text = cardFeeInfo.replace(placeholder, feePlug.toString())
+        balanceCaution.text = minimumBalanceCaution.replace(placeholder, minimumDepositPlug)
+        balanceCautionAdditional.text = cardFeeCaution
     }
 
     override fun onClick(view: View?) {
