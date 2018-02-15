@@ -6,12 +6,21 @@ import com.cardee.owner_credit_balance.CreditBalanceParent
 import com.cardee.owner_credit_balance.view.BaseActionsView
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 
-class CreditBalancePresenter(val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) : CreditBalanceParent.Presenter {
+class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) :
+        CreditBalanceParent.Presenter {
 
     private lateinit var weakView: WeakReference<CreditBalanceParent.View>
     private var balanceFormatter: DecimalFormat = DecimalFormat("######0.00")
+
+    init {
+        val symbols = DecimalFormatSymbols(Locale.US)
+        symbols.decimalSeparator = '.'
+        balanceFormatter.decimalFormatSymbols = symbols
+    }
 
     override fun attachView(view: CreditBalanceParent.View) {
         weakView = WeakReference(view)

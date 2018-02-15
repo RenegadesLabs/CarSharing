@@ -35,8 +35,7 @@ class CreditBalanceHomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater?.inflate(R.layout.fragment_balance_home, container, false)
-        return root
+        return inflater?.inflate(R.layout.fragment_balance_home, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -45,6 +44,11 @@ class CreditBalanceHomeFragment : Fragment(), View.OnClickListener {
         btnBankTransfer.setOnClickListener(this)
         btnCardTransaction.setOnClickListener(this)
         btnTransactionHistory.setOnClickListener(this)
+        initInfo()
+    }
+
+    private fun initInfo() {
+
     }
 
     override fun onClick(view: View?) {
