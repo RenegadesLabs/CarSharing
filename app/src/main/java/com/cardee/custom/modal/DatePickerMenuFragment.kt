@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.NumberPicker
 import com.cardee.CardeeApp
 import com.cardee.R
+import com.cardee.util.DateRepresentationDelegate
 import kotlinx.android.synthetic.main.modal_dialog_date_picker.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,7 +73,9 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
             val month = monthValues[rootView.monthPicker.value]
             val date = dateValues[rootView.datePicker.value]
 
-            mListener?.onSaveClicked(curentType, "$date $month $year")
+            val dateDelegate = DateRepresentationDelegate(this.context)
+            val isoDate = dateDelegate.formatDayMonthYear("$date $month $year")
+            mListener?.onSaveClicked(curentType, isoDate ?: "")
             dismiss()
         }
         val params = (rootView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
@@ -120,17 +123,17 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         root.yearPicker.value = args.getInt(YEAR) - 1900
 
         val month = args.getInt(MONTH)
-        if (month < 1 || month > 12) {
+        if (month < 0 || month > 11) {
             root.monthPicker.value = 0
         } else {
-            root.monthPicker.value = month - 1
+            root.monthPicker.value = month
         }
 
         val date = args.getInt(DATE)
         if (date < 1 || date > 31) {
             root.datePicker.value = 0
         } else {
-            root.datePicker.value = date - 1
+            root.datePicker.value = date
         }
 
         setDividerColor(root.yearPicker, activity.resources.getColor(android.R.color.transparent))
@@ -146,6 +149,17 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = calendar.get(Calendar.MONTH)
         val currentDate = calendar.get(Calendar.DATE)
+
+        if (curentType == DATETYPE.LICENSE) {
+            if (currentYear == root.yearPicker.value + 1900) {
+                monthValues = getAvailableMonths(currentMonth)
+                setMonthValues(root)
+                if (currentMonth == root.monthPicker.value) {
+                    dateValues = getAvailableDays(currentDate)
+                    setDateValues(root)
+                }
+            }
+        }
 
         setYearListener(root, currentYear, currentMonth, currentDate)
         setMonthListener(root, currentYear, currentMonth, currentDate)

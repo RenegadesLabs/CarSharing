@@ -7,27 +7,52 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.custom.modal.DatePickerMenuFragment
 import com.cardee.custom.modal.DatePickerMenuFragment.Companion.DATETYPE
-import com.cardee.mvp.BaseView
+import com.cardee.util.DateRepresentationDelegate
 import kotlinx.android.synthetic.main.activity_particulars.*
+import java.util.*
 
-class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerMenuFragment.DialogOnClickListener {
+class ParticularsActivity : AppCompatActivity(), ParticularsView, DatePickerMenuFragment.DialogOnClickListener {
 
-    private var mCurrentToast: Toast? = null
+    private var currentToast: Toast? = null
+    private var presenter: ParticularsPresenter? = null
+    private var dateDelegate: DateRepresentationDelegate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_particulars)
         initToolBar()
+        presenter = ParticularsPresenter(this)
+        dateDelegate = DateRepresentationDelegate(this)
         birthDateInput.setOnClickListener {
-            val menu = DatePickerMenuFragment.newInstance(DATETYPE.BIRTHDAY, 1990, 1, 1)
+            val date = dateDelegate?.convertDayMonthYearToDate(birthDateInput.text.toString())
+            val cal = GregorianCalendar()
+            if (date != null) {
+                cal.time = date
+            }
+
+            val year = if (date == null) 1990 else cal.get(Calendar.YEAR)
+            val month = if (date == null) 0 else cal.get(Calendar.MONTH)
+            val day = if (date == null) 1 else cal.get(Calendar.DATE)
+            val menu = DatePickerMenuFragment.newInstance(DATETYPE.BIRTHDAY, year, month, day)
             menu.show(supportFragmentManager, DatePickerMenuFragment::class.java.simpleName)
             menu.setOnSaveClickListener(this)
         }
         licenseDateInput.setOnClickListener {
-            val menu = DatePickerMenuFragment.newInstance(DATETYPE.LICENSE, 2010, 1, 1)
+            val date = dateDelegate?.convertDayMonthYearToDate(licenseDateInput.text.toString())
+            val cal = GregorianCalendar()
+            if (date != null) {
+                cal.time = date
+            }
+
+            val year = if (date == null) 2010 else cal.get(Calendar.YEAR)
+            val month = if (date == null) 0 else cal.get(Calendar.MONTH)
+            val day = if (date == null) 1 else cal.get(Calendar.DATE)
+            val menu = DatePickerMenuFragment.newInstance(DATETYPE.LICENSE, year, month, day)
             menu.show(supportFragmentManager, DatePickerMenuFragment::class.java.simpleName)
             menu.setOnSaveClickListener(this)
         }
+        presenter?.setCountryTextWatcher(countryInput)
+        presenter?.setPhoneTextWatcher(phoneInput)
     }
 
     private fun initToolBar() {
@@ -39,10 +64,10 @@ class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerMenuFragmen
     override fun onSaveClicked(type: DatePickerMenuFragment.Companion.DATETYPE, value: String) {
         when (type) {
             DATETYPE.BIRTHDAY -> {
-                birthDateInput.setText(value)
+                dateDelegate?.setMonthDayYear(birthDateInput, value)
             }
             DATETYPE.LICENSE -> {
-                licenseDateInput.setText(value)
+                dateDelegate?.setMonthDayYear(licenseDateInput, value)
             }
         }
     }
@@ -52,9 +77,9 @@ class ParticularsActivity : AppCompatActivity(), BaseView, DatePickerMenuFragmen
     }
 
     override fun showMessage(message: String?) {
-        mCurrentToast?.cancel()
-        mCurrentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        mCurrentToast?.show()
+        currentToast?.cancel()
+        currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        currentToast?.show()
     }
 
     override fun showMessage(messageId: Int) {

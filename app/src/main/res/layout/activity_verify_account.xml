@@ -212,7 +212,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="10dp"
-                        android:visibility="@{state.phototAdded.get() ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{state.photoAdded.get() ? View.VISIBLE : View.GONE}"
                         app:layout_constraintBottom_toBottomOf="@id/photoTitle"
                         app:layout_constraintStart_toEndOf="@id/photoTitle"
                         app:layout_constraintTop_toTopOf="@id/photoTitle"
@@ -223,7 +223,7 @@
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{state.phototAdded.get() ? state.statusStrings[0] : state.statusStrings[1]}"
+                        android:text="@{state.photoAdded.get() ? state.statusStrings[0] : state.statusStrings[1]}"
                         android:textColor="@color/blue"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </android.support.constraint.ConstraintLayout>
