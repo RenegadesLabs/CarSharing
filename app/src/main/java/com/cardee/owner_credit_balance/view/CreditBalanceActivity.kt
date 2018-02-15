@@ -18,16 +18,17 @@ class CreditBalanceActivity(val presenter: CreditBalanceParent.Presenter = Credi
         AppCompatActivity(), CreditBalanceParent.View, ChildListener, BaseActionsView by baseActionDelegate {
 
     private var hasFragment: Boolean = false
-    private val addFragmentAction = { fragment: Fragment ->
+    private val addFragmentAction = { fragment: Fragment, tag: String ->
         supportFragmentManager
                 .beginTransaction()
-                .add(fragmentContainer.id, fragment)
+                .add(fragmentContainer.id, fragment, tag)
                 .commit()
     }
-    private val replaceFragmentAction = { fragment: Fragment ->
+    private val replaceFragmentAction = { fragment: Fragment, tag: String ->
         supportFragmentManager
                 .beginTransaction()
-                .replace(fragmentContainer.id, fragment)
+                .replace(fragmentContainer.id, fragment, tag)
+                .addToBackStack(tag)
                 .commit()
     }
 
@@ -79,9 +80,9 @@ class CreditBalanceActivity(val presenter: CreditBalanceParent.Presenter = Credi
             State.HISTORY -> TransactionHistoryFragment.newInstance()
         }
         if (hasFragment.not()) {
-            addFragmentAction.invoke(fragment)
+            addFragmentAction.invoke(fragment, state.tag)
         } else {
-            replaceFragmentAction.invoke(fragment)
+            replaceFragmentAction.invoke(fragment, state.tag)
         }
     }
 
