@@ -818,6 +818,7 @@
     <string name="hint_full_address">Full Address</string>
     <string name="particulars_birthday_dialog_title">Birth date</string>
     <string name="particulars_license_dialog_title">License effective date</string>
-
+    <string name="identity_card_description">Upload an image of the front of your identity card.</string>
+    <string name="identity_card_photo_title">Identity Card</string>
 
 </resources>
