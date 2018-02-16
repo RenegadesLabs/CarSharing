@@ -9,18 +9,22 @@ import android.view.View
 import android.widget.Toast
 import com.cardee.R
 import com.cardee.account_verify.particulars.ParticularsActivity
+import com.cardee.account_verify.presenter.VerifyAccountPresenter
 import com.cardee.databinding.ActivityVerifyAccountBinding
-import com.cardee.domain.account.entity.VerifyAccountState
+import com.cardee.domain.profile.entity.VerifyAccountState
 import kotlinx.android.synthetic.main.activity_verify_account.*
 
 class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnClickListener {
 
-    private var mCurrentToast: Toast? = null
+    private var currentToast: Toast? = null
+    private var presenter: VerifyAccountPresenter? = null
     lateinit var binding: ActivityVerifyAccountBinding
     lateinit var state: VerifyAccountState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        presenter = VerifyAccountPresenter()
+        presenter?.init(this)
         bindView()
         initToolBar()
         setListeners()
@@ -28,7 +32,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
 
     private fun bindView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_verify_account)
-        state = VerifyAccountState()
+        state = presenter?.getState() ?: VerifyAccountState()
         binding.state = state
         binding.executePendingBindings()
     }
@@ -48,6 +52,12 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
         supportActionBar?.title = null
     }
 
+    override fun onStart() {
+        super.onStart()
+        state = presenter?.getState() ?: VerifyAccountState()
+        binding.state = state
+    }
+
     override fun onClick(view: View?) {
         when (view) {
             particularsContainer -> {
@@ -62,9 +72,9 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
     }
 
     override fun showMessage(message: String?) {
-        mCurrentToast?.cancel()
-        mCurrentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        mCurrentToast?.show()
+        currentToast?.cancel()
+        currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        currentToast?.show()
     }
 
     override fun showMessage(messageId: Int) {

@@ -3,9 +3,23 @@ package com.cardee.account_verify.particulars
 import android.support.design.widget.TextInputEditText
 import android.text.Editable
 import android.text.TextWatcher
+import com.cardee.domain.profile.entity.VerifyAccountState
+import com.cardee.domain.profile.usecase.GetVerifyAccState
+import com.cardee.domain.profile.usecase.SaveVerifyAccState
 
 
 class ParticularsPresenter(val view: ParticularsView) {
+
+    private val saveStateUseCase = SaveVerifyAccState()
+    private val getStateUseCase = GetVerifyAccState()
+
+    fun saveState(state: VerifyAccountState) {
+        saveStateUseCase.saveVerifyState(state)
+    }
+
+    fun getState(): VerifyAccountState {
+        return getStateUseCase.getVerifyState()
+    }
 
     fun setCountryTextWatcher(countryInput: TextInputEditText) {
         countryInput.addTextChangedListener(object : TextWatcher {

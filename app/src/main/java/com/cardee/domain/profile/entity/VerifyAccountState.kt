@@ -1,4 +1,4 @@
-package com.cardee.domain.account.entity
+package com.cardee.domain.profile.entity
 
 import android.databinding.BaseObservable
 import android.databinding.ObservableBoolean

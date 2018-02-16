@@ -160,6 +160,11 @@ class DateRepresentationDelegate(context: Context) {
         return convert(date, DAY_MONTH_YEAR_PATTERN, ISO_8601_DATE_TIME_PATTERN) ?: return null
     }
 
+    fun formatShortDayMonthYear(date: String?): String? {
+        date ?: return null
+        return convert(date, MONTH_DAY_YEAR_PATTERN, ISO_8601_DATE_TIME_PATTERN) ?: return null
+    }
+
     fun formatMonthDayHour(date: Date?): String? {
         date ?: return null
         return convertTo(date, MONTH_DAY_HOUR_PATTERN)

@@ -237,6 +237,7 @@
         <activity
             android:name=".account_verify.particulars.ParticularsActivity"
             android:theme="@style/ChatStyle" />
+        <activity android:name=".account_verify.identity_card.IdentityCardActivity"></activity>
     </application>
 
 </manifest>

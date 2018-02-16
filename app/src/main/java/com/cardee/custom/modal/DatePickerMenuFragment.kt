@@ -46,7 +46,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
     private var yearValues: Array<String> = arrayOf("")
     private var monthValues: Array<String> = arrayOf("")
     private var dateValues: Array<String> = arrayOf("")
-    lateinit var curentType: DATETYPE
+    lateinit var currentType: DATETYPE
     private val currentDate = Date()
     private var fullDateValues: Array<String> = arrayOf("")
     private var fullMonthValues: Array<String> = arrayOf("")
@@ -75,7 +75,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
 
             val dateDelegate = DateRepresentationDelegate(this.context)
             val isoDate = dateDelegate.formatDayMonthYear("$date $month $year")
-            mListener?.onSaveClicked(curentType, isoDate ?: "")
+            mListener?.onSaveClicked(currentType, isoDate ?: "")
             dismiss()
         }
         val params = (rootView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
@@ -93,12 +93,12 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         val args = arguments
         when (args.getSerializable(TYPE)) {
             DATETYPE.BIRTHDAY -> {
-                curentType = DATETYPE.BIRTHDAY
+                currentType = DATETYPE.BIRTHDAY
                 root.dateDialogTitle.text = CardeeApp.context.resources.getString(R.string.particulars_birthday_dialog_title)
                 yearValues = initBirthdayYears()
             }
             DATETYPE.LICENSE -> {
-                curentType = DATETYPE.LICENSE
+                currentType = DATETYPE.LICENSE
                 root.dateDialogTitle.text = CardeeApp.context.resources.getString(R.string.particulars_license_dialog_title)
                 yearValues = initLicenseYears()
             }
@@ -133,7 +133,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         if (date < 1 || date > 31) {
             root.datePicker.value = 0
         } else {
-            root.datePicker.value = date
+            root.datePicker.value = date - 1
         }
 
         setDividerColor(root.yearPicker, activity.resources.getColor(android.R.color.transparent))
@@ -150,7 +150,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         val currentMonth = calendar.get(Calendar.MONTH)
         val currentDate = calendar.get(Calendar.DATE)
 
-        if (curentType == DATETYPE.LICENSE) {
+        if (currentType == DATETYPE.LICENSE) {
             if (currentYear == root.yearPicker.value + 1900) {
                 monthValues = getAvailableMonths(currentMonth)
                 setMonthValues(root)
@@ -167,7 +167,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
 
     private fun setMonthListener(root: View, currentYear: Int, currentMonth: Int, currentDate: Int) {
         root.monthPicker.setOnValueChangedListener { numberPicker: NumberPicker, oldValue: Int, newValue: Int ->
-            if (curentType == DATETYPE.LICENSE) {
+            if (currentType == DATETYPE.LICENSE) {
                 if (currentMonth == newValue) {
                     if (currentYear == root.yearPicker.value + 1900) {
                         dateValues = getAvailableDays(currentDate)
@@ -186,7 +186,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
 
     private fun setYearListener(root: View, currentYear: Int, currentMonth: Int, currentDate: Int) {
         root.yearPicker.setOnValueChangedListener { numberPicker: NumberPicker, oldValue: Int, newValue: Int ->
-            if (curentType == DATETYPE.LICENSE) {
+            if (currentType == DATETYPE.LICENSE) {
                 if (currentYear == newValue + 1900) {
                     monthValues = getAvailableMonths(currentMonth)
                     setMonthValues(root)

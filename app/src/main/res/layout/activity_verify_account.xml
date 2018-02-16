@@ -9,7 +9,7 @@
 
         <variable
             name="state"
-            type="com.cardee.domain.account.entity.VerifyAccountState" />
+            type="com.cardee.domain.profile.entity.VerifyAccountState" />
     </data>
 
     <android.support.constraint.ConstraintLayout

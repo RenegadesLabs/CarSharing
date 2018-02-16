@@ -105,8 +105,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_full_address"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:maxLength="15"
+                    android:inputType="textPostalAddress"
+                    android:maxLength="90"
                     android:textColor="@color/text_owner_profile_name"
                     android:textSize="@dimen/text_regular" />
             </android.support.design.widget.TextInputLayout>
