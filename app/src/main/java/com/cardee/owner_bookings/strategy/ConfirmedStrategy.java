@@ -61,6 +61,7 @@ public class ConfirmedStrategy extends PresentationStrategy implements View.OnCl
         if (!isRenter) {
             bookingView.acceptMessage.setText(R.string.booking_message_handover);
             bookingView.btnAccept.setText(R.string.booking_title_handover);
+            bookingView.btnAccept.setOnClickListener(this);
         } else {
             ConstraintSet set = new ConstraintSet();
             set.clone(bookingView.findViewById(R.id.booking_container));
@@ -74,7 +75,7 @@ public class ConfirmedStrategy extends PresentationStrategy implements View.OnCl
         bookingView.renterCall.setOnClickListener(this);
         bookingView.renterChat.setOnClickListener(this);
         bookingView.btnCancel.setOnClickListener(this);
-        bookingView.btnAccept.setOnClickListener(this);
+
     }
 
     @Override

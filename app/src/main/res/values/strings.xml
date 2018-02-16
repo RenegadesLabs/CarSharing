@@ -657,7 +657,9 @@
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
     <string name="booking_state_collected">Handed Over</string>
+    <string name="booking_state_collected_renter">Collected</string>
     <string name="booking_state_collecting">Handing Over</string>
+    <string name="booking_state_collecting_renter">Collecting…</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
@@ -675,7 +677,9 @@
     <string name="booking_message_accept_renter">Waiting for owner to accept request…</string>
     <string name="booking_message_handover">Hangover car to fill checklist upon car collection</string>
     <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist…</string>
+    <string name="booking_message_handover_wait_renter">Waiting for owner to acknowledge changes…</string>
     <string name="booking_message_handover_complete">Tap "Car returned" to complete booking</string>
+    <string name="booking_message_handover_complete_renter">Consider all owner requests before complete</string>
 
     <string name="booking_message_confirmed_renter">Pay to owner upon car collection</string>
 
@@ -688,7 +692,9 @@
     <string name="booking_title_cancel_renter">Cancel Request</string>
     <string name="booking_title_handover">Handover Car</string>
     <string name="booking_title_cancel_handover">Cancel Handover</string>
+    <string name="booking_title_cancel_handover_renter">Cancel Collection</string>
     <string name="booking_title_complete">Car Returned</string>
+    <string name="booking_title_extend">Extend Booking</string>
 
     <string name="booking_rating_title">You rated</string>
     <string name="booking_rating_edit">edit</string>

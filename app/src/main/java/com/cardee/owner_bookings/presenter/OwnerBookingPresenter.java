@@ -21,6 +21,7 @@ import com.cardee.owner_bookings.strategy.NewBookingStrategy;
 import com.cardee.owner_bookings.strategy.PresentationStrategy;
 import com.cardee.owner_bookings.view.BookingView;
 import com.cardee.owner_home.view.OwnerHomeActivity;
+import com.cardee.renter_home.view.RenterHomeActivity;
 
 
 public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
@@ -69,7 +70,7 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                     if (BookingState.COMPLETED.equals(strategy.getType())) {
                         requestAdditionalState();
                     }
-                    view.bind(booking);
+                    view.bind(booking, isRenter);
                 }
             }
 
@@ -96,10 +97,10 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                     strategy = new ConfirmedStrategy(bookingView, this, isRenter);
                     break;
                 case COLLECTING:
-                    strategy = new HandingOverStrategy(bookingView, this);
+                    strategy = new HandingOverStrategy(bookingView, this, isRenter);
                     break;
                 case COLLECTED:
-                    strategy = new HandedOverStrategy(bookingView, this);
+                    strategy = new HandedOverStrategy(bookingView, this, isRenter);
                     break;
                 case CANCELED:
                     strategy = new CanceledStrategy(bookingView, this);
@@ -149,6 +150,10 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onCompleted() {
+        if (isRenter) {
+            view.showMessage("Coming soon");
+            return;
+        }
         Intent completeIntent = new Intent(bookingView.getContext(), CarReturnedActivity.class);
         completeIntent.putExtra("booking_id", bookingId);
         bookingView.getContext().startActivity(completeIntent);
@@ -184,6 +189,11 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                 break;
             case COMPLETED:
             case CANCELED:
+                if (isRenter) {
+                    Intent homeIntent = new Intent(bookingView.getContext(), RenterHomeActivity.class);
+                    bookingView.getContext().startActivity(homeIntent);
+                    return;
+                }
                 Intent homeIntent = new Intent(bookingView.getContext(), OwnerHomeActivity.class);
                 bookingView.getContext().startActivity(homeIntent);
         }
