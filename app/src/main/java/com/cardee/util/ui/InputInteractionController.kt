@@ -24,7 +24,12 @@ class InputInteractionController {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 weakInput.get()?.let { input ->
-                    map[input.id]?.execute(input, p0.toString())
+                    val watcher = this
+                    map[input.id]?.apply {
+                        input.removeTextChangedListener(watcher)
+                        execute(input, p0.toString())
+                        input.addTextChangedListener(watcher)
+                    }
                 }
             }
         })
