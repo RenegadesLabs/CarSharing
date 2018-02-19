@@ -37,8 +37,8 @@ class PriceStrategy(private val currencySymbol: String) : InputStrategy {
     }
 
     override fun valueOf(input: EditText): String {
-
-        return input.text.toString()
+        val inputValue = input.text.toString()
+        return inputValue.replace(Regex("(\\$currencySymbol)|(\\.$)"), "")
     }
 
     private fun classify(inputValue: String): Int {
