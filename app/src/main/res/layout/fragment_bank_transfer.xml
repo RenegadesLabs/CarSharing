@@ -67,7 +67,7 @@
                 android:layout_marginStart="@dimen/widget_margin_mid"
                 android:layout_marginTop="@dimen/widget_margin_mid"
                 android:background="@drawable/bg_input"
-                android:hint="@string/top_up_amount"
+                android:hint="@string/input_top_up_amount"
                 android:inputType="numberDecimal"
                 android:theme="@style/AccentTheme"
                 android:paddingEnd="@dimen/widget_padding_xx_large"
