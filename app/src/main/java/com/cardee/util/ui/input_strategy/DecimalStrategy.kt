@@ -5,34 +5,41 @@ import android.widget.EditText
 class DecimalStrategy(private val decimals: Int,
                       private val callback: (String) -> Unit) : InputStrategy {
 
-    private companion object {
-        private val EMPTY = 0
-        private val VALID = 1
-        private val INVALID = 2
-    }
+    private val zeroStartPattern = Regex("^0\\d+")
+    private val delimiterStartPattern = Regex("^\\.\\d*")
 
     override fun execute(input: EditText, newText: String) {
-        val validValue = when (classify(newText)) {
-            INVALID -> newText.run {
+
+        var validValue: String? = newText.run {
+            if (zeroStartPattern.matches(this)) {
+                replace(Regex("^0+"), "0.")
+            } else this
+        }
+
+        validValue = validValue?.run {
+            if (delimiterStartPattern.matches(this)) {
+                "0$this"
+            } else this
+        }
+
+        validValue = validValue?.run {
+            if (substringAfterLast('.', "").length > decimals) {
                 val decimal = substringAfterLast('.', "")
-                if (decimal.isEmpty()) return
                 val suffix = decimal.substring(decimals)
                 removeSuffix(suffix)
-            }
-            else -> newText
+            } else this
         }
-        input.setText(validValue)
-        callback.invoke(validValue)
+
+        validValue?.let {
+            input.setText(it)
+            input.setSelection(it.length)
+        }
+
+        callback.invoke(input.text.toString())
     }
 
     override fun valueOf(input: EditText): String {
         val inputValue = input.text.toString()
         return inputValue.replace(Regex("\\.$"), "")
-    }
-
-    private fun classify(inputValue: String): Int {
-        if (inputValue.substringAfterLast('.', "").length <= decimals) return VALID
-        if (inputValue.isNullOrEmpty()) return EMPTY
-        return INVALID
     }
 }

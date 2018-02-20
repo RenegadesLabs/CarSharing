@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.cardee.R
 import com.cardee.owner_credit_balance.presenter.TransactionsPresenter
 import com.cardee.util.ui.InputInteractionController
@@ -42,7 +43,7 @@ class BankTransferFragment : Fragment() {
     private fun initRes(context: Context) {
         context.resources.apply {
             paddingLeft = getDimensionPixelSize(R.dimen.widget_padding_mid)
-            paddingLeftLarge = getDimensionPixelOffset(R.dimen.widget_padding_large)
+            paddingLeftLarge = getDimensionPixelOffset(R.dimen.widget_padding_x_large)
             paddingRight = getDimensionPixelSize(R.dimen.widget_padding_xx_large)
         }
     }
@@ -91,6 +92,24 @@ class BankTransferFragment : Fragment() {
 
 
     private fun initViewClickInteraction() {
+        transferAmountClear.setOnClickListener { view ->
+            transferAmount.text = null
+            hideKeyboard(view)
+        }
+        transferDateClear.setOnClickListener { clearDateInput() }
+        transferNumber.setOnClickListener { view ->
+            transferNumber.text = null
+            hideKeyboard(view)
+        }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun clearDateInput() {
+        transferDate.setText(R.string.top_up_amount)
 
     }
 }

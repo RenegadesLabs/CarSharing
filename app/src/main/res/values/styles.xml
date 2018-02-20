@@ -136,6 +136,10 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="AccentTheme" parent="AppTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="Switch" parent="AppTheme">
         <item name="colorAccent">@color/main_enabled</item>
     </style>

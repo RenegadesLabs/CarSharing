@@ -235,7 +235,8 @@
         <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity" />
         <activity
             android:name=".owner_credit_balance.view.CreditBalanceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
