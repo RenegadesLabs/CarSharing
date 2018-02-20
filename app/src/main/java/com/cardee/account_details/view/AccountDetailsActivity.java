@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.account_details.presenter.AccountDetailsPresenter;
+import com.cardee.account_verify.credit_card.CreditCardActivity;
+import com.cardee.account_verify.view.VerifyAccountActivity;
 import com.cardee.auth.preview.PreviewActivity;
 import com.cardee.data_source.remote.service.AccountManager;
-import com.cardee.account_details.presenter.AccountDetailsPresenter;
 import com.cardee.owner_change_pass.view.ChangePassActivity;
 
 import butterknife.BindView;
@@ -120,7 +122,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @OnClick(R.id.verify_card)
     public void verifyClicked() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(this, VerifyAccountActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.log_out_card)
@@ -134,7 +137,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
     @OnClick(R.id.add_card_card)
     public void addCardClicked() {
-        showMessage("Coming soon");
+        Intent intent = new Intent(this, CreditCardActivity.class);
+        startActivity(intent);
     }
 
     @Override

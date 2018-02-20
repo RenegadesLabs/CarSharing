@@ -826,5 +826,7 @@
     <string name="license_back_description">Upload an image of the back of your driving license.</string>
     <string name="profile_photo_title">Your Photo</string>
     <string name="profile_photo_description">Upload a picture of yourself, showing your face clearly. (Similar to a passport photo)</string>
+    <string name="credit_card_title">Add Card</string>
+    <string name="credit_card_description">Add your credit card details</string>
 
 </resources>

@@ -25,5 +25,9 @@ class VerifyAccountPresenter {
         return getStateUseCase.getVerifyState()
     }
 
+    fun saveProgress() {
+        // TODO
+    }
+
 
 }

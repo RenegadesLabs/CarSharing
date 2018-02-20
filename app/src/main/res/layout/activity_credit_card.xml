@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cardee.account_verify.credit_card.CreditCardActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/credit_card_title" />
+
+            <TextView
+                android:id="@+id/toolbarAction"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/title_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/credit_card_description"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/card_number"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_credit_card_inactive"
+        android:hint="Card Number"
+        android:paddingEnd="14dp"
+        android:paddingStart="14dp"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/card_expiration"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_credit_card_inactive"
+        android:hint="MM / YY"
+        android:paddingEnd="14dp"
+        android:paddingStart="14dp"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/card_cvv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_number" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@id/card_cvv"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_credit_card_inactive"
+        android:hint="CVV"
+        android:paddingEnd="14dp"
+        android:paddingStart="14dp"
+        android:textColor="@color/text_owner_profile_name"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_expiration"
+        app:layout_constraintTop_toBottomOf="@id/card_number" />
+
+</android.support.constraint.ConstraintLayout>

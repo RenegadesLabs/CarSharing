@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.credit_card.CreditCardActivity
 import com.cardee.account_verify.identity_card.IdentityCardActivity
 import com.cardee.account_verify.license.LicenseActivity
 import com.cardee.account_verify.particulars.ParticularsActivity
@@ -47,6 +48,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
         photoContainer.setOnClickListener(this)
         creditContainer.setOnClickListener(this)
         depositContainer.setOnClickListener(this)
+        saveProgress.setOnClickListener(this)
         chatButton.setOnClickListener(this)
     }
 
@@ -80,8 +82,16 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
                 val intent = Intent(this, ProfilePhotoActivity::class.java)
                 startActivity(intent)
             }
+            creditContainer -> {
+                val intent = Intent(this, CreditCardActivity::class.java)
+                startActivity(intent)
+            }
             chatButton -> {
                 showMessage("Coming soon")
+            }
+            saveProgress -> {
+                presenter?.saveProgress()
+                onBackPressed()
             }
         }
     }

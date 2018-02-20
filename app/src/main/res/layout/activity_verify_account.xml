@@ -366,7 +366,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="17dp"
             android:background="@drawable/chat_bubble"
             android:text="@string/chat_with_us"
             android:textAlignment="center"
