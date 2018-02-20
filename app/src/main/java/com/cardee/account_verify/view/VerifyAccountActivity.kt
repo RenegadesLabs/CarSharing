@@ -8,8 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.identity_card.IdentityCardActivity
+import com.cardee.account_verify.license.LicenseActivity
 import com.cardee.account_verify.particulars.ParticularsActivity
 import com.cardee.account_verify.presenter.VerifyAccountPresenter
+import com.cardee.account_verify.profilePhoto.ProfilePhotoActivity
 import com.cardee.databinding.ActivityVerifyAccountBinding
 import com.cardee.domain.profile.entity.VerifyAccountState
 import kotlinx.android.synthetic.main.activity_verify_account.*
@@ -44,6 +47,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
         photoContainer.setOnClickListener(this)
         creditContainer.setOnClickListener(this)
         depositContainer.setOnClickListener(this)
+        chatButton.setOnClickListener(this)
     }
 
     private fun initToolBar() {
@@ -63,6 +67,21 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
             particularsContainer -> {
                 val intent = Intent(this, ParticularsActivity::class.java)
                 startActivity(intent)
+            }
+            identityContainer -> {
+                val intent = Intent(this, IdentityCardActivity::class.java)
+                startActivity(intent)
+            }
+            licenseContainer -> {
+                val intent = Intent(this, LicenseActivity::class.java)
+                startActivity(intent)
+            }
+            photoContainer -> {
+                val intent = Intent(this, ProfilePhotoActivity::class.java)
+                startActivity(intent)
+            }
+            chatButton -> {
+                showMessage("Coming soon")
             }
         }
     }

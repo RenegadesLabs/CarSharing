@@ -28,4 +28,16 @@ object ProfileRepository : ProfileDataSource {
         return remoteDataSource.saveIdentityFront(back, callback)
     }
 
+    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return remoteDataSource.saveLicenseFront(front, callback)
+    }
+
+    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return remoteDataSource.saveLicenseBack(back, callback)
+    }
+
+    override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return remoteDataSource.saveProfilePhoto(photoUri, callback)
+    }
+
 }

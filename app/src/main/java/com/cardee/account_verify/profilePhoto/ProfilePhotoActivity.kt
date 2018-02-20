@@ -1,4 +1,4 @@
-package com.cardee.account_verify.identity_card
+package com.cardee.account_verify.profilePhoto
 
 import android.app.Activity
 import android.content.Intent
@@ -9,28 +9,25 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.cardee.R
-import com.cardee.account_verify.license.LicenseActivity
 import com.cardee.account_verify.view.VerifyAccountActivity
 import com.cardee.util.display.ActivityHelper
-import kotlinx.android.synthetic.main.activity_identity_card.*
+import kotlinx.android.synthetic.main.activity_profile_photo.*
 
-class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
-
+class ProfilePhotoActivity : AppCompatActivity(), ProfilePhotoView {
 
     private var currentToast: Toast? = null
-    private var presenter: IdentityCardPresenter? = null
+    private var presenter: ProfilePhotoPresenter? = null
 
     companion object {
-        const val PICK_FRONT_IMAGE_REQUEST_CODE = 1437
-        const val PICK_BACK_IMAGE_REQUEST_CODE = 1438
+        const val PICK_PROFILE_IMAGE_REQUEST_CODE = 1437
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_identity_card)
+        setContentView(R.layout.activity_profile_photo)
         initToolBar()
         setListeners()
-        presenter = IdentityCardPresenter(this)
+        presenter = ProfilePhotoPresenter(this)
     }
 
     private fun initToolBar() {
@@ -40,16 +37,13 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
     }
 
     private fun setListeners() {
-        identityCardFrontUpload.setOnClickListener {
-            ActivityHelper.pickImageIntent(this, PICK_FRONT_IMAGE_REQUEST_CODE)
-        }
-        identityCardBackUpload.setOnClickListener {
-            ActivityHelper.pickImageIntent(this, PICK_BACK_IMAGE_REQUEST_CODE)
+        profileUpload.setOnClickListener {
+            ActivityHelper.pickImageIntent(this, PICK_PROFILE_IMAGE_REQUEST_CODE)
         }
         nextActivityButton.setOnClickListener {
             saveState()
-            val intent = Intent(this, LicenseActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, AddCardActivity::class.java)
+//            startActivity(intent)
         }
         toolbarAction.setOnClickListener {
             saveState()
@@ -61,32 +55,21 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
 
     private fun saveState() {
         val state = presenter?.getState()
-        if (state?.identityAdded?.get() == false) {
-            state.identityAdded.set(presenter?.isIdentityAdded() ?: false)
+        if (state?.photoAdded?.get() == false) {
+            state.photoAdded.set(presenter?.isPhotoAdded() ?: false)
         }
         presenter?.saveState(state ?: return)
     }
 
-    override fun setFrontPhoto(pictureUri: Uri?) {
+    override fun setPhoto(uri: Uri) {
         Glide.with(this)
-                .load(pictureUri)
+                .load(uri)
                 .centerCrop()
-                .into(identityCardFrontSample)
-    }
-
-    override fun setBackPhoto(pictureUri: Uri?) {
-        Glide.with(this)
-                .load(pictureUri)
-                .centerCrop()
-                .into(identityCardBackSample)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.onDestroy()
+                .into(profileSample)
     }
 
     override fun showProgress(show: Boolean) {
+
     }
 
     override fun showMessage(message: String?) {
@@ -99,6 +82,11 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
         showMessage(getString(messageId))
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDestroy()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
@@ -109,16 +97,10 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PICK_FRONT_IMAGE_REQUEST_CODE -> {
-                    val frontUri = data?.data
-                    if (frontUri != null) {
-                        presenter?.setFrontImage(frontUri)
-                    }
-                }
-                PICK_BACK_IMAGE_REQUEST_CODE -> {
-                    val backUri = data?.data
-                    if (backUri != null) {
-                        presenter?.setBackImage(backUri)
+                PICK_PROFILE_IMAGE_REQUEST_CODE -> {
+                    val uri = data?.data
+                    if (uri != null) {
+                        presenter?.setProfileImage(uri)
                     }
                 }
             }

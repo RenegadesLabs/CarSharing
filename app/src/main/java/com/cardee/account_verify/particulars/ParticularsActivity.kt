@@ -38,10 +38,14 @@ class ParticularsActivity : AppCompatActivity(), ParticularsView, DatePickerMenu
         identityInput.setText(state?.identityCard)
         addressInput.setText(state?.address)
 
-        val phone = state?.phone?.takeLast(12)
-        val code = state?.phone?.dropLast(12)
-        countryInput.setText(if (code == null || code == "") "+65" else code)
-        phoneInput.setText(phone)
+        if (state?.phone?.length ?: 0 > 14) {
+            val phone = state?.phone?.takeLast(12)
+            val code = state?.phone?.dropLast(12)
+            phoneInput.setText(phone)
+            countryInput.setText(if (code == null || code == "") "+65" else code)
+        } else {
+            countryInput.setText("+65")
+        }
 
         dateDelegate?.setMonthDayYear(birthDateInput, state?.birthDate ?: "")
         dateDelegate?.setMonthDayYear(licenseDateInput, state?.licenseDate ?: "")

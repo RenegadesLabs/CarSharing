@@ -8,36 +8,25 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
 object LocalProfileDataSource : ProfileDataSource {
+    override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
+    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
+
+    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
     override fun saveIdentityFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return Observable.just(null).subscribeWith(object : DisposableObserver<Any>() {
-            override fun onNext(t: Any) {
-
-            }
-
-            override fun onComplete() {
-            }
-
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        return emptyDisposable()
     }
 
     override fun saveIdentityBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return Observable.just(null).subscribeWith(object : DisposableObserver<Any>() {
-            override fun onNext(t: Any) {
-
-            }
-
-            override fun onComplete() {
-            }
-
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        return emptyDisposable()
     }
 
     private var verifyAccState: VerifyAccountState? = null
@@ -48,6 +37,22 @@ object LocalProfileDataSource : ProfileDataSource {
 
     override fun saveVerifyAccState(state: VerifyAccountState) {
         verifyAccState = state
+    }
+
+    private fun emptyDisposable(): Disposable {
+        return Observable.just(null).subscribeWith(object : DisposableObserver<Any>() {
+            override fun onNext(t: Any) {
+
+            }
+
+            override fun onComplete() {
+            }
+
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
     }
 
 }

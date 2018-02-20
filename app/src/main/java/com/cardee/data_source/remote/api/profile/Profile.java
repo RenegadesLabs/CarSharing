@@ -82,4 +82,14 @@ public interface Profile {
     @POST("profiles/verify/identity")
     @Headers("Content-Type: application/json")
     Maybe<NoDataResponse> uploadIdentityPhoto(@Part MultipartBody.Part request);
+
+    @Multipart
+    @POST("profiles/verify/licence")
+    @Headers("Content-Type: application/json")
+    Maybe<NoDataResponse> uploadLicensePhoto(@Part MultipartBody.Part request);
+
+    @Multipart
+    @POST("profiles/verify/photo")
+    @Headers("Content-Type: application/json")
+    Maybe<NoDataResponse> uploadProfilePhoto(@Part MultipartBody.Part request);
 }

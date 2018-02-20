@@ -236,8 +236,11 @@
         <activity android:name=".account_verify.view.VerifyAccountActivity" />
         <activity
             android:name=".account_verify.particulars.ParticularsActivity"
-            android:theme="@style/ChatStyle" />
-        <activity android:name=".account_verify.identity_card.IdentityCardActivity"></activity>
+            android:theme="@style/ChatStyle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".account_verify.identity_card.IdentityCardActivity" />
+        <activity android:name=".account_verify.license.LicenseActivity" />
+        <activity android:name=".account_verify.profilePhoto.ProfilePhotoActivity"></activity>
     </application>
 
 </manifest>

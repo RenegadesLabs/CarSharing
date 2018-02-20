@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cardee.account_verify.identity_card.IdentityCardActivity">
+    tools:context="com.cardee.account_verify.license.LicenseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbarLayout"
@@ -24,7 +24,7 @@
                 style="@style/ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/identity_card_photo_title" />
+                android:text="@string/license_photo_title" />
 
             <TextView
                 android:id="@+id/toolbarAction"
@@ -53,30 +53,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/large_margin"
-                android:text="@string/identity_card_description"
+                android:text="@string/license_description"
                 android:textColor="@color/text_owner_profile_name"
                 android:textSize="@dimen/text_large"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/identityCardFrontSample"
+                android:id="@+id/licenseCardFrontSample"
                 android:layout_width="150dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="@dimen/large_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/licenseFrontPhotoDesc"
-                app:srcCompat="@drawable/identity_front" />
+                app:srcCompat="@drawable/license_front" />
 
             <FrameLayout
-                android:id="@+id/identityCardFrontUpload"
+                android:id="@+id/licenseCardFrontUpload"
                 android:layout_width="150dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="@dimen/large_margin"
                 android:background="@drawable/bg_dash_rect"
                 android:clickable="true"
                 android:focusable="true"
-                app:layout_constraintStart_toEndOf="@id/identityCardFrontSample"
+                app:layout_constraintStart_toEndOf="@id/licenseCardFrontSample"
                 app:layout_constraintTop_toBottomOf="@id/licenseFrontPhotoDesc">
 
                 <TextView
@@ -95,36 +95,36 @@
                 android:layout_height="3dp"
                 android:layout_marginTop="24dp"
                 android:background="@color/bg_regular"
-                app:layout_constraintTop_toBottomOf="@id/identityCardFrontUpload" />
+                app:layout_constraintTop_toBottomOf="@id/licenseCardFrontUpload" />
 
             <TextView
                 android:id="@+id/licenseBackPhotoDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/large_margin"
-                android:text="@string/identity_card_back_description"
+                android:text="@string/license_back_description"
                 android:textColor="@color/text_owner_profile_name"
                 android:textSize="@dimen/text_large"
                 app:layout_constraintTop_toBottomOf="@id/divider" />
 
             <ImageView
-                android:id="@+id/identityCardBackSample"
+                android:id="@+id/licenseCardBackSample"
                 android:layout_width="150dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="@dimen/large_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/licenseBackPhotoDesc"
-                app:srcCompat="@drawable/identity_back" />
+                app:srcCompat="@drawable/license_back" />
 
             <FrameLayout
-                android:id="@+id/identityCardBackUpload"
+                android:id="@+id/licenseCardBackUpload"
                 android:layout_width="150dp"
                 android:layout_height="94dp"
                 android:layout_marginStart="@dimen/large_margin"
                 android:background="@drawable/bg_dash_rect"
                 android:clickable="true"
                 android:focusable="true"
-                app:layout_constraintStart_toEndOf="@id/identityCardBackSample"
+                app:layout_constraintStart_toEndOf="@id/licenseCardBackSample"
                 app:layout_constraintTop_toBottomOf="@id/licenseBackPhotoDesc">
 
                 <TextView
@@ -150,4 +150,5 @@
         app:drawableEndCompat="@drawable/ic_arrow_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

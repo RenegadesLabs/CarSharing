@@ -819,6 +819,12 @@
     <string name="particulars_birthday_dialog_title">Birth date</string>
     <string name="particulars_license_dialog_title">License effective date</string>
     <string name="identity_card_description">Upload an image of the front of your identity card.</string>
+    <string name="identity_card_back_description">Upload an image of the back of your identity card.</string>
     <string name="identity_card_photo_title">Identity Card</string>
+    <string name="license_photo_title">Driving License</string>
+    <string name="license_description">Upload an image of the front of your driving license.</string>
+    <string name="license_back_description">Upload an image of the back of your driving license.</string>
+    <string name="profile_photo_title">Your Photo</string>
+    <string name="profile_photo_description">Upload a picture of yourself, showing your face clearly. (Similar to a passport photo)</string>
 
 </resources>

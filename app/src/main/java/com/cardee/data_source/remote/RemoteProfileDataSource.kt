@@ -92,6 +92,90 @@ class RemoteProfileDataSource : ProfileDataSource {
                 })
     }
 
+    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        val imageFile = getImageFile(front, callback) ?: return emptyDisposable()
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("licence_front",
+                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                imageFile))
+        return api.uploadLicensePhoto(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
+                    override fun onSuccess(response: NoDataResponse) {
+                        imageFile.deleteOnExit()
+                        if (response.isSuccessful) {
+                            callback.onSuccess()
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        imageFile.deleteOnExit()
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
+    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        val imageFile = getImageFile(back, callback) ?: return emptyDisposable()
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("licence_back",
+                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                imageFile))
+        return api.uploadLicensePhoto(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
+                    override fun onSuccess(response: NoDataResponse) {
+                        imageFile.deleteOnExit()
+                        if (response.isSuccessful) {
+                            callback.onSuccess()
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        imageFile.deleteOnExit()
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
+    override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        val imageFile = getImageFile(photoUri, callback) ?: return emptyDisposable()
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("face_photo",
+                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                imageFile))
+        return api.uploadProfilePhoto(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
+                    override fun onSuccess(response: NoDataResponse) {
+                        imageFile.deleteOnExit()
+                        if (response.isSuccessful) {
+                            callback.onSuccess()
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        imageFile.deleteOnExit()
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
     private fun getImageFile(uri: Uri, callback: ProfileDataSource.NoDataCallback): File? {
         val split = uri.path.split("/")
         val imageFile = File(CardeeApp.context.cacheDir, split.last())
