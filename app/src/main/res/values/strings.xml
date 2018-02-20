@@ -822,4 +822,5 @@
     <string name="top_up_with">Top-up with</string>
     <string name="add_new_card">Add New Card</string>
     <string name="balance_amount">Balance XZXZX</string>
+    <string name="currency">$</string>
 </resources>

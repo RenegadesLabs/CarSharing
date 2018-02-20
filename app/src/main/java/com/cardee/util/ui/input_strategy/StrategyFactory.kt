@@ -5,12 +5,12 @@ class StrategyFactory {
 
     companion object {
 
-        fun newPriceStrategy(currencySymbol: String = "$"): InputStrategy {
-            return PriceStrategy(currencySymbol)
+        fun newPriceStrategy(decimals: Int = 2, callback: (String) -> Unit = {}): InputStrategy {
+            return DecimalStrategy(decimals, callback)
         }
 
-        fun newNumberStrategy(): InputStrategy {
-            return NumberStrategy()
+        fun newNumberStrategy(callback: (String) -> Unit = {}): InputStrategy {
+            return NumberStrategy(callback)
         }
     }
 
