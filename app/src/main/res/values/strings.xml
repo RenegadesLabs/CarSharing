@@ -451,6 +451,7 @@
     <string name="owner_handover_checklist_photos_add">Add Photo</string>
     <string name="owner_handover_checklist_photos_add_rem">Add remarks here…</string>
     <string name="owner_handover_checklist_info">Renter must be present during handover. Ensure checklist information is accurate and complete at the time of handover.</string>
+    <string name="owner_handover_checklist_info_renter">Ensure checklist information is accurate and complete before submit.</string>
     <string name="owner_handover_checklist_button">Handover Car</string>
     <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
     <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>

@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,11 +26,12 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
     private var presenter: OwnerBookingListContract.Presenter? = null
     private var adapter: BookingListAdapter? = null
     private var progress: View? = null
+    private var list: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = RenterBookingsListPresenter(this, SettingsManager.getInstance(activity).obtainSettings())
-        adapter = BookingListAdapter(presenter, activity)
+        adapter = BookingListAdapter(presenter, activity, true)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -70,7 +72,7 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
                 }
             })
         }
-        root?.booking_list?.apply {
+        list = root?.booking_list?.apply {
             adapter = this@RenterBookingsListFragment.adapter
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
@@ -81,9 +83,11 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
     override fun showProgress(show: Boolean) {
         if (show) {
             progress?.visibility = View.VISIBLE
+            list?.alpha = .5f
             return
         }
         progress?.visibility = View.GONE
+        list?.alpha = 1f
     }
 
     override fun showMessage(message: String?) {
