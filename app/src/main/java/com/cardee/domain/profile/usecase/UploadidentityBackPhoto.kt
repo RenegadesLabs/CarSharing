@@ -7,13 +7,11 @@ import com.cardee.data_source.ProfileRepository
 import com.cardee.domain.RxUseCase
 import io.reactivex.disposables.Disposable
 
-
-class UploadIdentityFrontPhoto : RxUseCase<UploadIdentityFrontPhoto.RequestValues, UploadIdentityFrontPhoto.ResponseValues> {
-
+class UploadidentityBackPhoto : RxUseCase<UploadidentityBackPhoto.RequestValues, UploadidentityBackPhoto.ResponseValues> {
     private val repository = ProfileRepository
 
     override fun execute(values: RequestValues, callback: RxUseCase.Callback<ResponseValues>): Disposable {
-        return repository.saveIdentityFront(values.front, object : ProfileDataSource.NoDataCallback {
+        return repository.saveIdentityBack(values.back, object : ProfileDataSource.NoDataCallback {
             override fun onSuccess() {
                 callback.onSuccess(ResponseValues())
             }
@@ -25,6 +23,6 @@ class UploadIdentityFrontPhoto : RxUseCase<UploadIdentityFrontPhoto.RequestValue
 
     }
 
-    class RequestValues(val front: Uri) : RxUseCase.RequestValues
+    class RequestValues(val back: Uri) : RxUseCase.RequestValues
     class ResponseValues : RxUseCase.ResponseValues
 }

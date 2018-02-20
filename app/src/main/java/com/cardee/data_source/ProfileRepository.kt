@@ -1,10 +1,10 @@
 package com.cardee.data_source
 
+import android.net.Uri
 import com.cardee.data_source.cache.LocalProfileDataSource
 import com.cardee.data_source.remote.RemoteProfileDataSource
 import com.cardee.domain.profile.entity.VerifyAccountState
 import io.reactivex.disposables.Disposable
-import java.io.File
 
 
 object ProfileRepository : ProfileDataSource {
@@ -20,11 +20,11 @@ object ProfileRepository : ProfileDataSource {
         localDataSource.saveVerifyAccState(state)
     }
 
-    override fun saveIdentityFront(front: File, callback: ProfileDataSource.NoDataCallback): Disposable {
+    override fun saveIdentityFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
         return remoteDataSource.saveIdentityFront(front, callback)
     }
 
-    override fun saveIdentityBack(back: File, callback: ProfileDataSource.NoDataCallback): Disposable {
+    override fun saveIdentityBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
         return remoteDataSource.saveIdentityFront(back, callback)
     }
 

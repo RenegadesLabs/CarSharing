@@ -7,19 +7,21 @@ import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
-import com.cardee.data_source.remote.api.profile.request.UploadPhotoRequest;
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
 import io.reactivex.Maybe;
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface Profile {
@@ -76,8 +78,8 @@ public interface Profile {
     @Headers("Content-Type: application/json")
     Single<NoDataResponse> changePhone(@Body ChangePhoneRequest request);
 
-
+    @Multipart
     @POST("profiles/verify/identity")
     @Headers("Content-Type: application/json")
-    Maybe<NoDataResponse> uploadIdentityPhoto(@Body UploadPhotoRequest request);
+    Maybe<NoDataResponse> uploadIdentityPhoto(@Part MultipartBody.Part request);
 }

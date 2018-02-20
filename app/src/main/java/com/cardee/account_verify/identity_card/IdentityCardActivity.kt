@@ -2,6 +2,7 @@ package com.cardee.account_verify.identity_card
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
@@ -34,6 +35,9 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
         identityCardFrontUpload.setOnClickListener {
             ActivityHelper.pickImageIntent(this, PICK_FRONT_IMAGE_REQUEST_CODE)
         }
+        identityCardBackUpload.setOnClickListener {
+            ActivityHelper.pickImageIntent(this, PICK_BACK_IMAGE_REQUEST_CODE)
+        }
     }
 
     private fun initToolBar() {
@@ -42,11 +46,18 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
         supportActionBar?.title = null
     }
 
-    override fun setFrontPhoto(pictureByteArray: ByteArray?) {
+    override fun setFrontPhoto(pictureUri: Uri?) {
         Glide.with(this)
-                .load(pictureByteArray)
+                .load(pictureUri)
                 .centerCrop()
                 .into(identityCardFrontSample)
+    }
+
+    override fun setBackPhoto(pictureUri: Uri?) {
+        Glide.with(this)
+                .load(pictureUri)
+                .centerCrop()
+                .into(identityCardBackSample)
     }
 
     override fun onDestroy() {
@@ -82,6 +93,12 @@ class IdentityCardActivity : AppCompatActivity(), IdentityCardView {
                     val frontUri = data?.data
                     if (frontUri != null) {
                         presenter?.setFrontImage(frontUri)
+                    }
+                }
+                PICK_BACK_IMAGE_REQUEST_CODE -> {
+                    val backUri = data?.data
+                    if (backUri != null) {
+                        presenter?.setBackImage(backUri)
                     }
                 }
             }
