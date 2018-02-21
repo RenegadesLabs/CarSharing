@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/transactionDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="date"
+        app:layout_constraintEnd_toStartOf="@+id/transactionType"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/transactionType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="type"
+        app:layout_constraintEnd_toStartOf="@+id/transactionAmount"
+        app:layout_constraintStart_toEndOf="@id/transactionDate"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/transactionAmount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/transactionType"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/transactionId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/transactionNumber"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transactionDate" />
+
+    <TextView
+        android:id="@id/transactionNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/balanceAmount"
+        app:layout_constraintStart_toEndOf="@id/transactionId" />
+
+    <TextView
+        android:id="@id/balanceAmount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="balanca"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/transactionNumber" />
+</android.support.constraint.ConstraintLayout>
