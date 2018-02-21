@@ -1,7 +1,6 @@
 package com.cardee.util
 
 import android.content.Context
-import android.icu.text.DateFormat
 import android.util.Log
 import android.widget.TextView
 import com.cardee.CardeeApp
@@ -39,7 +38,7 @@ class DateRepresentationDelegate(context: Context) {
     init {
         formatter = SimpleDateFormat(ISO_8601_DATE_TIME_PATTERN, Locale.US)
         formatter.timeZone = CardeeApp.getTimeZone()
-        val symbols = DateFormatSymbols(Locale.US)
+        val symbols = DateFormatSymbols(Locale.US) //Overrides locale previously passed to formatter constructor
         symbols.amPmStrings = arrayOf("am", "pm")
         formatter.dateFormatSymbols = symbols
         calendar = Calendar.getInstance(CardeeApp.getTimeZone())
@@ -134,12 +133,12 @@ class DateRepresentationDelegate(context: Context) {
         return dropStartZero(timeString)
     }
 
-    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
+    fun formatMonthDayHour(isoDate: String?, dayOffset: Int): String? {
         isoDate ?: return null
         try {
             val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
             calendar.time = date
-            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
+            calendar.add(Calendar.DATE, dayOffset)
             return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
@@ -152,10 +151,20 @@ class DateRepresentationDelegate(context: Context) {
         return convertTo(date, MONTH_DAY_HOUR_PATTERN)
     }
 
-    fun convertToDate(time: String?): Date? {
+    fun convertTimeToDate(time: String?): Date? {
         time ?: return null
         try {
             return parseDate(time, ISO_8601_TIME_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
+    fun convertDateToDate(date: String?): Date? {
+        date ?: return null
+        try {
+            return parseDate(date, ISO_8601_DATE_TIME_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
         }

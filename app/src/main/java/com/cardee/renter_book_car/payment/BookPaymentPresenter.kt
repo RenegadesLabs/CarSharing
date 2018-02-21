@@ -26,7 +26,6 @@ class BookPaymentPresenter(view: BookPaymentView) {
             override fun onSuccess(response: GetCardsUseCase.ResponseValues) {
                 val dataList = response.cards.map { Pair(it.brand + " " + it.cardNumber, it.paymentToken) }.toList()
                 mAdapter?.setData(dataList)
-
             }
 
             override fun onError(error: Error) {

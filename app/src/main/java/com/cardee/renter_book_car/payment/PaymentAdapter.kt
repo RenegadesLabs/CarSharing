@@ -31,7 +31,7 @@ class PaymentAdapter(context: Context, acceptCash: Boolean, selected: String) : 
 
     fun getItem(id: Int): Pair<String, String> {
         if (id == 0) {
-            return Pair("Cash", "")
+            return Pair("Cash", "cash_token")
         }
         return mData?.get(id - 1) ?: Pair("", "")
     }
@@ -41,13 +41,22 @@ class PaymentAdapter(context: Context, acceptCash: Boolean, selected: String) : 
             holder?.textView?.text = "Cash"
             if (!mAcceptCash) {
                 holder?.textView?.setTextColor(CardeeApp.context.resources.getColor(R.color.text_disabled))
+                showCheckMark(false, holder ?: return)
+            } else {
+                showCheckMark(mSelected == "cash_token", holder ?: return)
             }
         } else {
             val item = mData?.get(position - 1) ?: return
             holder?.textView?.text = item.first
+            showCheckMark((mSelected == mData?.get(position - 1)?.second), holder ?: return)
         }
-        if (mSelected == holder?.textView?.text) {
+    }
+
+    private fun showCheckMark(show: Boolean, holder: PaymentViewHolder) {
+        if (show) {
             holder.checkMarck?.visibility = View.VISIBLE
+        } else {
+            holder.checkMarck?.visibility = View.GONE
         }
     }
 

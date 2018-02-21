@@ -3,6 +3,7 @@ package com.cardee.custom.calendar.model;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cardee.CardeeApp;
 import com.cardee.custom.calendar.domain.criteria.SelectionState;
 
 import java.text.ParseException;
@@ -21,6 +22,11 @@ public class Day implements Comparable<Day> {
     private static final SimpleDateFormat COMPARE_DATE_FORMAT =
             new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 
+    static {
+        NEW_DATE_FORMAT.setTimeZone(CardeeApp.getTimeZone());
+        COMPARE_DATE_FORMAT.setTimeZone(CardeeApp.getTimeZone());
+    }
+
     private final Calendar calendar;
     private final String dateTitle;
     private final int dayOfWeek;
@@ -32,6 +38,7 @@ public class Day implements Comparable<Day> {
 
     private Day(@NonNull Date date) {
         this.calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);
         dateTitle = String.valueOf(calendar.get(Calendar.DATE));
         dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -151,6 +158,7 @@ public class Day implements Comparable<Day> {
 
     private int compareTo(Date date) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);
         return compareTo(calendar);
     }
