@@ -1,110 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollCardContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ScrollView
-        android:id="@+id/scrollCardContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/widget_margin_xx_large">
-
-            <TextView
-                android:id="@+id/transferAmountTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/widget_margin_mid"
-                android:text="@string/top_up_amount"
-                android:textColor="@color/text_regular"
-                android:textSize="@dimen/text_regular"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/transferAmount"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_regular_height"
-                android:layout_marginEnd="@dimen/widget_margin_mid"
-                android:layout_marginStart="@dimen/widget_margin_mid"
-                android:layout_marginTop="@dimen/widget_margin_small"
-                android:background="@drawable/bg_input"
-                android:hint="@string/input_top_up_amount"
-                android:inputType="numberDecimal"
-                android:paddingEnd="@dimen/widget_padding_xx_large"
-                android:paddingStart="@dimen/widget_padding_mid"
-                android:textColor="@color/text_regular"
-                android:textColorHint="@color/text_disabled"
-                android:textSize="@dimen/text_regular"
-                android:theme="@style/AccentTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/transferAmountTitle" />
-
-            <TextView
-                android:id="@+id/transferAmountCaution"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/widget_margin_small"
-                android:paddingEnd="@dimen/widget_padding_x_small"
-                android:paddingStart="@dimen/widget_padding_x_small"
-                android:text="@string/transaction_fee_charge_caution"
-                android:textColor="@color/red_error"
-                android:textSize="@dimen/text_small"
-                app:layout_constraintEnd_toEndOf="@id/transferAmount"
-                app:layout_constraintStart_toStartOf="@id/transferAmount"
-                app:layout_constraintTop_toBottomOf="@id/transferAmount" />
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    android:layout_height="match_parent"
+    android:scrollbars="horizontal"
+    android:overScrollMode="never"
+    android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/scrollCardContainer">
-
-        <TextView
-            android:id="@+id/selectCardTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/top_up_with"
-            android:textColor="@color/text_regular"
-            android:textSize="@dimen/text_regular"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/btnAddNewCard"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/widget_margin_small"
-            android:layout_marginEnd="@dimen/widget_margin_mid"
-            android:layout_marginStart="@dimen/widget_margin_mid"
-            android:layout_marginTop="@dimen/widget_margin_small"
-            android:background="@drawable/bg_input_normal"
-            android:gravity="center"
-            android:paddingEnd="@dimen/widget_padding_xx_large"
-            android:paddingStart="@dimen/widget_padding_mid"
-            android:text="@string/add_new_card"
-            android:textColor="@color/text_disabled"
-            android:textSize="@dimen/text_regular"
-            app:layout_constraintBottom_toTopOf="@+id/submitCaution"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/btnSubmit"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/button_regular_height"
             android:background="@drawable/bg_clickable_regular"
             android:clickable="true"
@@ -119,10 +29,10 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@id/submitCaution"
-            android:layout_width="0dp"
+            android:id="@+id/submitCaution"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/widget_margin_regular"
+            android:layout_marginBottom="@dimen/widget_margin_small"
             android:gravity="center"
             android:text="@string/minimum_top_up"
             android:textColor="@color/text_subtitle_alt"
@@ -130,5 +40,91 @@
             app:layout_constraintBottom_toTopOf="@id/btnSubmit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/transferAmountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="@string/top_up_amount"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/transferAmount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_regular_height"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@drawable/bg_input"
+            android:hint="@string/input_top_up_amount"
+            android:inputType="numberDecimal"
+            android:paddingEnd="@dimen/widget_padding_xx_large"
+            android:paddingStart="@dimen/widget_padding_mid"
+            android:textColor="@color/text_regular"
+            android:textColorHint="@color/text_disabled"
+            android:textSize="@dimen/text_regular"
+            android:theme="@style/AccentTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferAmountTitle" />
+
+        <TextView
+            android:id="@+id/transferAmountCaution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/widget_padding_small"
+            android:paddingEnd="@dimen/widget_padding_x_small"
+            android:paddingStart="@dimen/widget_padding_x_small"
+            android:text="@string/transaction_fee_charge_caution"
+            android:textColor="@color/red_error"
+            android:textSize="@dimen/text_small"
+            android:clickable="true"
+            android:background="@color/bg_main"
+            app:layout_constraintEnd_toEndOf="@id/transferAmount"
+            app:layout_constraintStart_toStartOf="@id/transferAmount"
+            app:layout_constraintTop_toBottomOf="@id/transferAmount" />
+
+        <TextView
+            android:id="@+id/selectCardTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/widget_padding_xx_large"
+            android:paddingBottom="@dimen/widget_padding_small"
+            android:text="@string/top_up_with"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:background="@color/bg_main"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferAmountCaution" />
+
+        <TextView
+            android:id="@+id/btnAddNewCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:background="@drawable/bg_input_normal"
+            android:gravity="center"
+            android:text="@string/add_new_card"
+            android:textColor="@color/text_disabled"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintHeight_min="200dp"
+            app:layout_constraintHeight_default="spread"
+            app:layout_constraintBottom_toTopOf="@id/submitCaution"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
+
     </android.support.constraint.ConstraintLayout>
-</RelativeLayout>
+</ScrollView>

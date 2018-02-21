@@ -198,7 +198,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/btnSubmit"
-            android:layout_marginBottom="@dimen/widget_margin_regular"
+            android:layout_marginBottom="@dimen/widget_margin_small"
             android:gravity="center"
             android:text="@string/minimum_top_up"
             android:textColor="@color/text_subtitle_alt"
