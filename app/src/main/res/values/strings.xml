@@ -818,7 +818,7 @@
     <string name="minimum_top_up">Minimum top-up XZXZX per transaction</string>
     <string name="top_up_amount">Top-up Amount</string>
     <string name="input_top_up_amount">Input Top-up Amount</string>
-    <string name="transaction_fee_charge_caution">XZXZX% transaction fee will be applicable.\nA total of XZXZX will be charged to your card</string>
+    <string name="transaction_fee_charge_caution">XZXZX% transaction fee will be applicable.\nA total of XZXZX will be charged to your card.</string>
     <string name="top_up_with">Top-up with</string>
     <string name="add_new_card">Add New Card</string>
     <string name="balance_amount">Balance XZXZX</string>

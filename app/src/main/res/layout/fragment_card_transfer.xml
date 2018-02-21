@@ -5,14 +5,15 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/scrollContainer"
+        android:id="@+id/scrollCardContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/widget_margin_xx_large">
 
             <TextView
                 android:id="@+id/transferAmountTitle"
@@ -61,52 +62,50 @@
                 app:layout_constraintStart_toStartOf="@id/transferAmount"
                 app:layout_constraintTop_toBottomOf="@id/transferAmount" />
 
-            <TextView
-                android:id="@+id/selectCardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/widget_margin_xx_large"
-                android:text="@string/top_up_with"
-                android:textColor="@color/text_regular"
-                android:textSize="@dimen/text_regular"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/transferAmountCaution" />
-
-            <TextView
-                android:id="@+id/btnAddNewCard"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_regular_height"
-                android:layout_marginEnd="@dimen/widget_margin_mid"
-                android:layout_marginStart="@dimen/widget_margin_mid"
-                android:layout_marginTop="@dimen/widget_margin_small"
-                android:background="@drawable/bg_input_normal"
-                android:gravity="center"
-                android:paddingEnd="@dimen/widget_padding_xx_large"
-                android:paddingStart="@dimen/widget_padding_mid"
-                android:text="@string/add_new_card"
-                android:textColor="@color/text_disabled"
-                android:textSize="@dimen/text_regular"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
-
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/scrollContainer"
-        android:orientation="vertical">
+        android:layout_below="@id/scrollCardContainer">
+
+        <TextView
+            android:id="@+id/selectCardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_up_with"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btnAddNewCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@drawable/bg_input_normal"
+            android:gravity="center"
+            android:paddingEnd="@dimen/widget_padding_xx_large"
+            android:paddingStart="@dimen/widget_padding_mid"
+            android:text="@string/add_new_card"
+            android:textColor="@color/text_disabled"
+            android:textSize="@dimen/text_regular"
+            app:layout_constraintBottom_toTopOf="@+id/submitCaution"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
 
         <TextView
             android:id="@+id/btnSubmit"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/bg_clickable_regular"
             android:clickable="true"
             android:focusable="true"
@@ -114,16 +113,22 @@
             android:text="@string/car_add_submit"
             android:textColor="@color/bg_main"
             android:textSize="@dimen/text_large"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@id/submitCaution"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_above="@id/btnSubmit"
             android:layout_marginBottom="@dimen/widget_margin_regular"
             android:gravity="center"
             android:text="@string/minimum_top_up"
             android:textColor="@color/text_subtitle_alt"
-            android:textSize="@dimen/text_x_small" />
-    </RelativeLayout>
+            android:textSize="@dimen/text_x_small"
+            app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </RelativeLayout>

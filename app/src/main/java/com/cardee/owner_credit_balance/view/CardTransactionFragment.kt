@@ -5,7 +5,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import com.cardee.R
+import kotlinx.android.synthetic.main.fragment_bank_transfer.*
+import kotlinx.android.synthetic.main.fragment_card_transfer.*
 
 
 class CardTransactionFragment : Fragment() {
@@ -28,5 +31,9 @@ class CardTransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }
