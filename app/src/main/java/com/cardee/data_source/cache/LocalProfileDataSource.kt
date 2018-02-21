@@ -8,24 +8,15 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
 object LocalProfileDataSource : ProfileDataSource {
+    override fun saveLicensePhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
+    override fun saveIdentityPhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
     override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return emptyDisposable()
-    }
-
-    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return emptyDisposable()
-    }
-
-
-    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return emptyDisposable()
-    }
-
-    override fun saveIdentityFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return emptyDisposable()
-    }
-
-    override fun saveIdentityBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
         return emptyDisposable()
     }
 

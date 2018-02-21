@@ -5,6 +5,5 @@ import com.cardee.mvp.BaseView
 
 
 interface IdentityCardView : BaseView {
-    fun setFrontPhoto(pictureUri: Uri?)
-    fun setBackPhoto(pictureUri: Uri?)
+    fun onPhotosUploaded()
 }

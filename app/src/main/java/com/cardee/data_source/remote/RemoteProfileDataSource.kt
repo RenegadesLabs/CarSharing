@@ -24,7 +24,7 @@ import java.io.File
 
 class RemoteProfileDataSource : ProfileDataSource {
 
-    private val api = CardeeApp.retrofit.create(Profile::class.java)
+    private val api = CardeeApp.retrofitMultipart.create(Profile::class.java)
     private val imageProcessor = ImageProcessor()
 
     companion object {
@@ -38,16 +38,21 @@ class RemoteProfileDataSource : ProfileDataSource {
     override fun saveVerifyAccState(state: VerifyAccountState) {
     }
 
-    override fun saveIdentityFront(uri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        val imageFile = getImageFile(uri, callback) ?: return emptyDisposable()
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("identity_front",
-                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
-                imageFile))
-        return api.uploadIdentityPhoto(body).subscribeOn(Schedulers.io())
+    override fun saveIdentityPhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        val frontImage = getImageFile(front, callback) ?: return emptyDisposable()
+        val backImage = getImageFile(back, callback) ?: return emptyDisposable()
+        val frontBody: MultipartBody.Part = MultipartBody.Part.createFormData("identity_front",
+                frontImage.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                frontImage))
+        val backBody: MultipartBody.Part = MultipartBody.Part.createFormData("identity_back",
+                backImage.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                backImage))
+        return api.uploadIdentityPhoto(frontBody, backBody).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
                     override fun onSuccess(response: NoDataResponse) {
-                        imageFile.deleteOnExit()
+                        frontImage.deleteOnExit()
+                        backImage.deleteOnExit()
                         if (response.isSuccessful) {
                             callback.onSuccess()
                             return
@@ -60,21 +65,26 @@ class RemoteProfileDataSource : ProfileDataSource {
                     }
 
                     override fun onError(e: Throwable) {
-                        imageFile.deleteOnExit()
+                        frontImage.deleteOnExit()
                         callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
                     }
                 })
     }
 
-    override fun saveIdentityBack(uri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        val imageFile = getImageFile(uri, callback) ?: return emptyDisposable()
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("identity_back",
-                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
-                imageFile))
-        return api.uploadIdentityPhoto(body).subscribeOn(Schedulers.io())
+    override fun saveLicensePhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        val frontImage = getImageFile(front, callback) ?: return emptyDisposable()
+        val backImage = getImageFile(back, callback) ?: return emptyDisposable()
+        val frontBody: MultipartBody.Part = MultipartBody.Part.createFormData("licence_front",
+                frontImage.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                frontImage))
+        val backBody: MultipartBody.Part = MultipartBody.Part.createFormData("licence_back",
+                backImage.name, RequestBody.create(MediaType.parse("application/octet-stream"),
+                backImage))
+        return api.uploadLicensePhoto(frontBody, backBody).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
                     override fun onSuccess(response: NoDataResponse) {
+                        frontImage.deleteOnExit()
                         if (response.isSuccessful) {
                             callback.onSuccess()
                             return
@@ -87,62 +97,7 @@ class RemoteProfileDataSource : ProfileDataSource {
                     }
 
                     override fun onError(e: Throwable) {
-                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
-                    }
-                })
-    }
-
-    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        val imageFile = getImageFile(front, callback) ?: return emptyDisposable()
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("licence_front",
-                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
-                imageFile))
-        return api.uploadLicensePhoto(body).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
-                    override fun onSuccess(response: NoDataResponse) {
-                        imageFile.deleteOnExit()
-                        if (response.isSuccessful) {
-                            callback.onSuccess()
-                            return
-                        }
-                        handleErrorResponse(callback, response)
-                    }
-
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        imageFile.deleteOnExit()
-                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
-                    }
-                })
-    }
-
-    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        val imageFile = getImageFile(back, callback) ?: return emptyDisposable()
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("licence_back",
-                imageFile.name, RequestBody.create(MediaType.parse("application/octet-stream"),
-                imageFile))
-        return api.uploadLicensePhoto(body).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
-                    override fun onSuccess(response: NoDataResponse) {
-                        imageFile.deleteOnExit()
-                        if (response.isSuccessful) {
-                            callback.onSuccess()
-                            return
-                        }
-                        handleErrorResponse(callback, response)
-                    }
-
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        imageFile.deleteOnExit()
+                        frontImage.deleteOnExit()
                         callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
                     }
                 })

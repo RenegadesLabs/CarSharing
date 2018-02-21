@@ -1,6 +1,8 @@
 package com.cardee.account_verify.profilePhoto
 
 import android.net.Uri
+import com.cardee.CardeeApp
+import com.cardee.R
 import com.cardee.data_source.Error
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.profile.entity.VerifyAccountState
@@ -33,6 +35,7 @@ class ProfilePhotoPresenter(var view: ProfilePhotoView?) {
         savePhotoDisposable = saveProfilePhoto.execute(UploadProfilePhoto.RequestValues(uri),
                 object : RxUseCase.Callback<UploadProfilePhoto.ResponseValues> {
                     override fun onSuccess(response: UploadProfilePhoto.ResponseValues) {
+                        view?.showMessage(CardeeApp.context.getString(R.string.your_photo_added))
                         view?.setPhoto(uri)
                         photoAdded = true
                     }
@@ -50,6 +53,4 @@ class ProfilePhotoPresenter(var view: ProfilePhotoView?) {
     fun onDestroy() {
         view = null
     }
-
-
 }

@@ -1,20 +1,19 @@
 package com.cardee.account_verify.license
 
 import android.net.Uri
+import com.cardee.CardeeApp
+import com.cardee.R
 import com.cardee.data_source.Error
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.profile.entity.VerifyAccountState
 import com.cardee.domain.profile.usecase.GetVerifyAccState
 import com.cardee.domain.profile.usecase.SaveVerifyAccState
-import com.cardee.domain.profile.usecase.UploadLicenseBack
-import com.cardee.domain.profile.usecase.UploadLicenseFront
+import com.cardee.domain.profile.usecase.UploadLicensePhotos
 import io.reactivex.disposables.Disposable
 
 class LicensePresenter(var view: LicenseView?) {
-    private val uploadFrontUseCase = UploadLicenseFront()
-    private val uploadBackUseCase = UploadLicenseBack()
-    private var frontDisposable: Disposable? = null
-    private var backDisposable: Disposable? = null
+    private val uploadPhotosUseCase = UploadLicensePhotos()
+    private var disposable: Disposable? = null
     private val saveStateUseCase = SaveVerifyAccState()
     private val getStateUseCase = GetVerifyAccState()
     private var licenseAdded: Boolean = false
@@ -27,37 +26,23 @@ class LicensePresenter(var view: LicenseView?) {
         return getStateUseCase.getVerifyState()
     }
 
-    fun setFrontImage(frontUri: Uri) {
-        if (frontDisposable?.isDisposed == false) {
-            frontDisposable?.dispose()
+    fun setLicenseImages(frontUri: Uri, backUri: Uri) {
+        view?.showProgress(true)
+        if (disposable?.isDisposed == false) {
+            disposable?.dispose()
         }
 
-        frontDisposable = uploadFrontUseCase.execute(UploadLicenseFront.RequestValues(frontUri),
-                object : RxUseCase.Callback<UploadLicenseFront.ResponseValues> {
-                    override fun onSuccess(response: UploadLicenseFront.ResponseValues) {
-                        view?.setFrontPhoto(frontUri)
+        disposable = uploadPhotosUseCase.execute(UploadLicensePhotos.RequestValues(frontUri, backUri),
+                object : RxUseCase.Callback<UploadLicensePhotos.ResponseValues> {
+                    override fun onSuccess(response: UploadLicensePhotos.ResponseValues) {
+                        view?.showProgress(false)
+                        view?.showMessage(CardeeApp.context.getString(R.string.license_added))
                         licenseAdded = true
+                        view?.onPhotosUploaded()
                     }
 
                     override fun onError(error: Error) {
-                        view?.showMessage(error.message)
-                    }
-                })
-    }
-
-    fun setBackImage(backUri: Uri) {
-        if (backDisposable?.isDisposed == false) {
-            backDisposable?.dispose()
-        }
-
-        backDisposable = uploadBackUseCase.execute(UploadLicenseBack.RequestValues(backUri),
-                object : RxUseCase.Callback<UploadLicenseBack.ResponseValues> {
-                    override fun onSuccess(response: UploadLicenseBack.ResponseValues) {
-                        view?.setBackPhoto(backUri)
-                        licenseAdded = true
-                    }
-
-                    override fun onError(error: Error) {
+                        view?.showProgress(false)
                         view?.showMessage(error.message)
                     }
                 })

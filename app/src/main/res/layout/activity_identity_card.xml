@@ -36,6 +36,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
+        android:id="@+id/identityContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -150,4 +151,17 @@
         app:drawableEndCompat="@drawable/ic_arrow_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/identityProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

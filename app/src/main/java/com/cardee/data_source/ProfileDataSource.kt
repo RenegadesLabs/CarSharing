@@ -11,13 +11,9 @@ interface ProfileDataSource {
 
     fun saveVerifyAccState(state: VerifyAccountState)
 
-    fun saveIdentityFront(front: Uri, callback: NoDataCallback): Disposable
+    fun saveIdentityPhotos(front: Uri, back: Uri, callback: NoDataCallback): Disposable
 
-    fun saveIdentityBack(back: Uri, callback: NoDataCallback): Disposable
-
-    fun saveLicenseFront(front: Uri, callback: NoDataCallback): Disposable
-
-    fun saveLicenseBack(back: Uri, callback: NoDataCallback): Disposable
+    fun saveLicensePhotos(front: Uri, back: Uri, callback: NoDataCallback): Disposable
 
     fun saveProfilePhoto(photoUri: Uri, callback: NoDataCallback): Disposable
 

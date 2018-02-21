@@ -821,11 +821,14 @@
     <string name="identity_card_description">Upload an image of the front of your identity card.</string>
     <string name="identity_card_back_description">Upload an image of the back of your identity card.</string>
     <string name="identity_card_photo_title">Identity Card</string>
+    <string name="identity_card_added">Identity card added</string>
     <string name="license_photo_title">Driving License</string>
     <string name="license_description">Upload an image of the front of your driving license.</string>
     <string name="license_back_description">Upload an image of the back of your driving license.</string>
+    <string name="license_added">Driving license added</string>
     <string name="profile_photo_title">Your Photo</string>
     <string name="profile_photo_description">Upload a picture of yourself, showing your face clearly. (Similar to a passport photo)</string>
+    <string name="your_photo_added">Your photo added</string>
     <string name="credit_card_title">Add Card</string>
     <string name="credit_card_description">Add your credit card details</string>
 

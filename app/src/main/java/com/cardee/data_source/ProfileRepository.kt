@@ -9,6 +9,7 @@ import io.reactivex.disposables.Disposable
 
 object ProfileRepository : ProfileDataSource {
 
+
     private val localDataSource: ProfileDataSource = LocalProfileDataSource
     private val remoteDataSource: ProfileDataSource = RemoteProfileDataSource()
 
@@ -20,20 +21,12 @@ object ProfileRepository : ProfileDataSource {
         localDataSource.saveVerifyAccState(state)
     }
 
-    override fun saveIdentityFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return remoteDataSource.saveIdentityFront(front, callback)
+    override fun saveIdentityPhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return remoteDataSource.saveIdentityPhotos(front, back, callback)
     }
 
-    override fun saveIdentityBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return remoteDataSource.saveIdentityFront(back, callback)
-    }
-
-    override fun saveLicenseFront(front: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return remoteDataSource.saveLicenseFront(front, callback)
-    }
-
-    override fun saveLicenseBack(back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return remoteDataSource.saveLicenseBack(back, callback)
+    override fun saveLicensePhotos(front: Uri, back: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return remoteDataSource.saveLicensePhotos(front, back, callback)
     }
 
     override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
