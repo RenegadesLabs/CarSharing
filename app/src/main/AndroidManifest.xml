@@ -241,7 +241,10 @@
         <activity android:name=".account_verify.identity_card.IdentityCardActivity" />
         <activity android:name=".account_verify.license.LicenseActivity" />
         <activity android:name=".account_verify.profilePhoto.ProfilePhotoActivity" />
-        <activity android:name=".account_verify.credit_card.CreditCardActivity"></activity>
+        <activity
+            android:name=".account_verify.credit_card.CreditCardActivity"
+            android:theme="@style/ChatStyle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
     </application>
 
 </manifest>

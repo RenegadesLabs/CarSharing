@@ -831,5 +831,8 @@
     <string name="your_photo_added">Your photo added</string>
     <string name="credit_card_title">Add Card</string>
     <string name="credit_card_description">Add your credit card details</string>
+    <string name="credit_card_set_primary">Set as primary card</string>
+    <string name="credit_card_terms_first">By adding your debit / credit card, you agree to the\u0020</string>
+    <string name="credit_card_terms_second">Terms\u00A0&amp;\u00A0Conditions</string>
 
 </resources>

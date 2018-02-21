@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.cardee.R
+import com.cardee.account_verify.credit_card.CreditCardActivity
 import com.cardee.account_verify.view.VerifyAccountActivity
 import com.cardee.util.display.ActivityHelper
 import kotlinx.android.synthetic.main.activity_profile_photo.*
@@ -42,8 +43,8 @@ class ProfilePhotoActivity : AppCompatActivity(), ProfilePhotoView {
         }
         nextActivityButton.setOnClickListener {
             saveState()
-//            val intent = Intent(this, AddCardActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(this, CreditCardActivity::class.java)
+            startActivity(intent)
         }
         toolbarAction.setOnClickListener {
             saveState()
