@@ -138,6 +138,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @OnClick(R.id.add_card_card)
     public void addCardClicked() {
         Intent intent = new Intent(this, CreditCardActivity.class);
+        intent.putExtra("isVerify", false);
         startActivity(intent);
     }
 

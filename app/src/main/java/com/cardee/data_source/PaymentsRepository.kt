@@ -2,6 +2,7 @@ package com.cardee.data_source
 
 import com.cardee.data_source.cache.LocalPaymentsDataSource
 import com.cardee.data_source.remote.RemotePaymentsDataSource
+import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -26,6 +27,10 @@ class PaymentsRepository : PaymentsDataSource {
             }
         }))
         return disposable
+    }
+
+    override fun saveCard(request: CardRequest, callback: PaymentsDataSource.NoDataCallback): Disposable {
+        return remoteSource.saveCard(request, callback)
     }
 
 }

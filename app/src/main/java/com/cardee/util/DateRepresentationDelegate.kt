@@ -21,6 +21,7 @@ class DateRepresentationDelegate(context: Context) {
         private const val MONTH_DAY_YEAR_PATTERN = "d MMM, yyyy"
         private const val MONTH_DAY_HOUR_PATTERN = "d\u00a0MMM,\u00a0ha"
         private const val DAY_MONTH_YEAR_PATTERN = "d MMMMM yyyy"
+        private const val MONTH_YEAR_PATTERN = "MMyy"
         private const val HOUR_PATTERN = "hha"
     }
 
@@ -158,6 +159,11 @@ class DateRepresentationDelegate(context: Context) {
     fun formatDayMonthYear(date: String?): String? {
         date ?: return null
         return convert(date, DAY_MONTH_YEAR_PATTERN, ISO_8601_DATE_TIME_PATTERN) ?: return null
+    }
+
+    fun dateFromMonthYear(date: String?): Date? {
+        date ?: return null
+        return parseDate(date, MONTH_YEAR_PATTERN)
     }
 
     fun formatShortDayMonthYear(date: String?): String? {

@@ -35,128 +35,137 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:text="@string/credit_card_description"
-        android:textColor="@color/text_owner_profile_name"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout" />
-
-    <com.cardee.custom.edit_text_credit.EditCard
-        android:id="@+id/cardNumber"
-        android:layout_width="0dp"
-        android:layout_height="46dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_credit_edittext"
-        android:digits="0123456789-"
-        android:hint="Card Number"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLines="1"
-        android:paddingEnd="40dp"
-        android:paddingStart="14dp"
-        android:textColor="@color/text_owner_profile_name"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description" />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/clearButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/cardNumber"
-        app:layout_constraintEnd_toEndOf="@id/cardNumber"
-        app:layout_constraintTop_toTopOf="@id/cardNumber"
-        app:srcCompat="@drawable/ic_clear_button" />
-
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/cardExpiration"
-        android:layout_width="0dp"
-        android:layout_height="46dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_credit_edittext"
-        android:digits="0123456789/ "
-        android:hint="MM / YY"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLength="7"
-        android:maxLines="1"
-        android:paddingEnd="14dp"
-        android:paddingStart="14dp"
-        android:textColor="@color/text_owner_profile_name"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/card_cvv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardNumber" />
-
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@id/card_cvv"
-        android:layout_width="0dp"
-        android:layout_height="46dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_credit_edittext"
-        android:hint="CVV"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:maxLength="3"
-        android:maxLines="1"
-        android:paddingEnd="14dp"
-        android:paddingStart="14dp"
-        android:textColor="@color/text_owner_profile_name"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardExpiration"
-        app:layout_constraintTop_toBottomOf="@id/cardNumber" />
-
-    <TextView
-        android:id="@+id/setPrimaryDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
-        android:text="@string/credit_card_set_primary"
-        android:textColor="@color/text_owner_profile_name"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardExpiration" />
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/setPrimarySwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/setPrimaryDesc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/setPrimaryDesc" />
-
-    <TextView
-        android:id="@+id/termsConditions"
-        style="@style/FilterTabTextAppearance"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cardContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/credit_card_terms_first"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/setPrimaryDesc" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/credit_card_description"
+            android:textColor="@color/text_owner_profile_name"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.cardee.custom.edit_text_credit.EditCard
+            android:id="@+id/cardNumber"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_credit_edittext"
+            android:digits="0123456789-"
+            android:hint="Card Number"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingEnd="40dp"
+            android:paddingStart="14dp"
+            android:textColor="@color/text_owner_profile_name"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/clearButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cardNumber"
+            app:layout_constraintEnd_toEndOf="@id/cardNumber"
+            app:layout_constraintTop_toTopOf="@id/cardNumber"
+            app:srcCompat="@drawable/ic_clear_button" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/cardExpiration"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_credit_edittext"
+            android:digits="0123456789/ "
+            android:hint="MM / YY"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="7"
+            android:maxLines="1"
+            android:paddingEnd="14dp"
+            android:paddingStart="14dp"
+            android:textColor="@color/text_owner_profile_name"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/cardCvv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardNumber" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@id/cardCvv"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_credit_edittext"
+            android:hint="CVV"
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:maxLength="3"
+            android:maxLines="1"
+            android:paddingEnd="14dp"
+            android:paddingStart="14dp"
+            android:textColor="@color/text_owner_profile_name"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardExpiration"
+            app:layout_constraintTop_toBottomOf="@id/cardNumber" />
+
+        <TextView
+            android:id="@+id/setPrimaryDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:text="@string/credit_card_set_primary"
+            android:textColor="@color/text_owner_profile_name"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardExpiration" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/setPrimarySwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/setPrimaryDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/setPrimaryDesc" />
+
+        <TextView
+            android:id="@+id/termsConditions"
+            style="@style/FilterTabTextAppearance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="52dp"
+            android:text="@string/credit_card_terms_first"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/setPrimaryDesc" />
+    </android.support.constraint.ConstraintLayout>
 
     <com.cardee.custom.CardeeButton
         android:id="@+id/nextActivityButton"
@@ -171,4 +180,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/creditProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -4,4 +4,5 @@ import com.cardee.mvp.BaseView
 
 
 interface CreditCardView : BaseView{
+    fun onCardSaved()
 }

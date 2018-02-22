@@ -84,6 +84,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
             }
             creditContainer -> {
                 val intent = Intent(this, CreditCardActivity::class.java)
+                intent.putExtra("isVerify", true)
                 startActivity(intent)
             }
             chatButton -> {

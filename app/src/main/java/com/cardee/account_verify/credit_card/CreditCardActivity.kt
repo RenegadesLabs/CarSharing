@@ -1,5 +1,6 @@
 package com.cardee.account_verify.credit_card
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -13,21 +14,35 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.view.VerifyAccountActivity
+import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.display.ActivityHelper
 import kotlinx.android.synthetic.main.activity_credit_card.*
+import java.util.*
 
 class CreditCardActivity : AppCompatActivity(), CreditCardView {
 
     private var presenter: CreditCardPresenter? = null
     private var currentToast: Toast? = null
+    private var dateDelegate: DateRepresentationDelegate? = null
+    private var action: Action? = null
+    private var verify: Boolean = false
+
+    enum class Action { NEXT, SAVE }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credit_card)
         initToolBar()
         setListeners()
+        getIntentData()
         initView()
         presenter = CreditCardPresenter(this)
+        dateDelegate = DateRepresentationDelegate(this)
+    }
+
+    private fun getIntentData() {
+        verify = intent.getBooleanExtra("isVerify", false)
     }
 
     private fun initToolBar() {
@@ -57,27 +72,43 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
             cardNumber.setText("")
         }
 
-        card_cvv.setOnEditorActionListener { _, actionId, _ ->
+        cardCvv.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                card_cvv.clearFocus()
+                cardCvv.clearFocus()
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
         }
 
         cardExpiration.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            internal var lengthBefore = 0
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, position: Int, before: Int, action: Int) {
-                if (position == 1) {
-                    if (!s.toString().endsWith(" ")) {
-                        cardExpiration.append(" / ")
+            override fun afterTextChanged(s: Editable) {
+                if (lengthBefore < s.length) {
+                    if (s.length == 2) {
+                        s.append(" / ")
+                    }
+                    if (s.length > 2) {
+                        if (Character.isDigit(s[2]))
+                            s.insert(2, " / ")
+                    }
+                    if (s.length > 3) {
+                        if (Character.isDigit(s[3]))
+                            s.insert(3, "/ ")
+                    }
+                    if (s.length > 4) {
+                        if (Character.isDigit(s[4]))
+                            s.insert(4, " ")
                     }
                 }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, p1: Int, p2: Int, p3: Int) {
+                lengthBefore = s.length
+            }
+
+            override fun onTextChanged(s: CharSequence, position: Int, before: Int, action: Int) {
+
             }
         })
 
@@ -86,10 +117,66 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
                 ActivityHelper.hideSoftKeyboard(this)
             }
         }
+
+        toolbarAction.setOnClickListener {
+            action = Action.SAVE
+            ActivityHelper.hideSoftKeyboard(this)
+            trySaveCard()
+        }
+
+        nextActivityButton.setOnClickListener {
+            action = Action.NEXT
+            trySaveCard()
+        }
+    }
+
+    private fun trySaveCard() {
+        if (isInputValid()) {
+            val state = presenter?.getState()
+            val dateString = cardExpiration.text.toString().filter { it.isDigit() }
+            state?.let {
+                state.apply {
+                    expMonth = dateString.substring(0, 2).toInt()
+                    expYear = dateString.takeLast(2).toInt() + 2000
+                    creditCardNum = cardNumber.text.toString().replace("-", "")
+                    cvv = cardCvv.text.toString().toInt()
+                    primaryCard = setPrimarySwitch.isChecked
+                }
+                presenter?.saveState(state)
+                presenter?.saveCard()
+            }
+        }
+    }
+
+    private fun isInputValid(): Boolean {
+        if (!cardNumber.isValid) {
+            cardNumber.error = resources.getString(R.string.credit_card_invalid_card)
+            return false
+        }
+        if (cardExpiration.text.isNullOrEmpty() || cardExpiration.text.length < 7) {
+            cardExpiration.error = resources.getString(R.string.credit_card_no_expiration)
+            return false
+        }
+        val dateString = cardExpiration.text.toString().filter { it.isDigit() }
+        val expDate = dateDelegate?.dateFromMonthYear(dateString)
+        val currentDate = Date()
+        if (expDate?.before(currentDate) == true) {
+            cardExpiration.error = resources.getString(R.string.credit_card_expired)
+            return false
+        }
+        if (cardCvv.text.isNullOrEmpty() || cardCvv.text.length < 3) {
+            cardCvv.error = resources.getString(R.string.credit_card_no_cvv)
+            return false
+        }
+        return true
     }
 
     private fun initView() {
         cardNumber.requestFocus()
+
+        if (verify) {
+            nextActivityButton.visibility = View.VISIBLE
+        }
 
         val termsCond = SpannableString(resources.getString(R.string.credit_card_terms_second))
         termsCond.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorPrimaryDark)), 0, termsCond.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -109,8 +196,34 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
         }
     }
 
-    override fun showProgress(show: Boolean) {
+    override fun onCardSaved() {
+        saveState()
+        when (action) {
+            Action.NEXT -> {
+                showMessage("Coming soon")
+//                val intent = Intent(this, DepositActivity::class.java)
+//                startActivity(intent)
+            }
+            Action.SAVE -> {
 
+                val intent = Intent(this, VerifyAccountActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun saveState() {
+        val state = presenter?.getState()
+        if (state?.creditAdded?.get() == false) {
+            state.creditAdded.set(presenter?.isCreditAdded() ?: false)
+        }
+        presenter?.saveState(state ?: return)
+    }
+
+    override fun showProgress(show: Boolean) {
+        creditProgress.visibility = if (show) View.VISIBLE else View.GONE
+        cardContainer.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showMessage(message: String?) {

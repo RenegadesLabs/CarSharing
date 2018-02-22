@@ -44,6 +44,7 @@ class ProfilePhotoActivity : AppCompatActivity(), ProfilePhotoView {
         nextActivityButton.setOnClickListener {
             saveState()
             val intent = Intent(this, CreditCardActivity::class.java)
+            intent.putExtra("isVerify", true)
             startActivity(intent)
         }
         toolbarAction.setOnClickListener {

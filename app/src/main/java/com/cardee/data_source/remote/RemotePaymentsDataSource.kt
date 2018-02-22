@@ -4,7 +4,9 @@ import com.cardee.CardeeApp
 import com.cardee.data_source.Error
 import com.cardee.data_source.PaymentsDataSource
 import com.cardee.data_source.remote.api.BaseResponse
+import com.cardee.data_source.remote.api.NoDataResponse
 import com.cardee.data_source.remote.api.payments.Payments
+import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.PaymentCardsResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -39,7 +41,33 @@ class RemotePaymentsDataSource : PaymentsDataSource {
                 })
     }
 
-    private fun handleErrorResponse(callback: PaymentsDataSource.BaseCallback, response: PaymentCardsResponse) {
+    override fun saveCard(request: CardRequest, callback: PaymentsDataSource.NoDataCallback): Disposable {
+        return api.saveCard(request).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
+                    override fun onSuccess(response: NoDataResponse) {
+                        if (response.isSuccessful) {
+                            callback.onSuccess()
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+                        if (e.message == "HTTP 500 INTERNAL SERVER ERROR") {
+                            callback.onError(Error(Error.Type.INTERNAL, Error.Message.INVALID_CARD))
+                            return
+                        }
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
+    private fun handleErrorResponse(callback: PaymentsDataSource.BaseCallback, response: BaseResponse) {
         when {
             response.responseCode == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR -> callback.onError(Error(Error.Type.SERVER, "Server error"))
             response.responseCode == BaseResponse.ERROR_CODE_UNAUTHORIZED -> callback.onError(Error(Error.Type.AUTHORIZATION, "Unauthorized"))
