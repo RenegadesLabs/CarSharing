@@ -140,6 +140,6 @@ public class PetrolView extends ConstraintLayout implements View.OnClickListener
     }
 
     public int getMileage() {
-        return Integer.parseInt(mMileageValue.getText().toString());
+        return Integer.parseInt(!mMileageValue.getText().toString().equals("") ? mMileageValue.getText().toString() : "0");
     }
 }
