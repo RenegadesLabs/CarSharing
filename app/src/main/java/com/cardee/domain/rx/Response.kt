@@ -1,6 +1,6 @@
 package com.cardee.domain.rx
 
-data class Response<out T>(val body: T?, val errorCode: Int?, val errorMessage: String?) {
+data class Response<out T>(val body: T?, val errorCode: Int? = null, val errorMessage: String? = null) {
     val success: Boolean
         get() = errorCode == null
 

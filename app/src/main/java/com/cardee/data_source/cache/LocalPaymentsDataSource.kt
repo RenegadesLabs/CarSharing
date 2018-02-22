@@ -2,7 +2,9 @@ package com.cardee.data_source.cache
 
 import com.cardee.data_source.PaymentsDataSource
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
+import com.cardee.domain.rx.balance.Transaction
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
@@ -24,6 +26,10 @@ object LocalPaymentsDataSource : PaymentsDataSource {
 
                     }
                 })
+    }
+
+    override fun getTransactions(): Single<List<Transaction>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun saveCache(data: List<CardsResponseBody>) {

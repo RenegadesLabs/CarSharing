@@ -3,6 +3,9 @@ package com.cardee.data_source
 import com.cardee.data_source.cache.LocalPaymentsDataSource
 import com.cardee.data_source.remote.RemotePaymentsDataSource
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
+import com.cardee.domain.rx.balance.Transaction
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -26,6 +29,10 @@ class PaymentsRepository : PaymentsDataSource {
             }
         }))
         return disposable
+    }
+
+    override fun getTransactions(): Single<List<Transaction>> {
+        return remoteSource.getTransactions()
     }
 
 }

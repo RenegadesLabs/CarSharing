@@ -6,6 +6,9 @@ import com.cardee.data_source.PaymentsDataSource
 import com.cardee.data_source.remote.api.BaseResponse
 import com.cardee.data_source.remote.api.payments.Payments
 import com.cardee.data_source.remote.api.payments.response.PaymentCardsResponse
+import com.cardee.domain.rx.balance.Transaction
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableMaybeObserver
@@ -37,6 +40,10 @@ class RemotePaymentsDataSource : PaymentsDataSource {
                         callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
                     }
                 })
+    }
+
+    override fun getTransactions(): Single<List<Transaction>> {
+        return api.obtainTransactions().toSingle().flatMap { response -> Single.just(response.transactions) }
     }
 
     private fun handleErrorResponse(callback: PaymentsDataSource.BaseCallback, response: PaymentCardsResponse) {

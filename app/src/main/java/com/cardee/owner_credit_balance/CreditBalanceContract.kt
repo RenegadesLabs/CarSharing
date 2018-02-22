@@ -1,6 +1,7 @@
 package com.cardee.owner_credit_balance
 
 import com.cardee.R
+import com.cardee.domain.rx.balance.Transaction
 
 
 interface CreditBalanceParent {
@@ -35,14 +36,20 @@ interface BalanceTransactions {
 
         fun <T> onCardChargeSubmit(view: View<T>)
 
-        fun <T> fetchHistory(view: View<T>)
+        fun fetchHistory(view: View<List<Transaction>>)
     }
 
-    interface View<in T> {
+    interface View<T> {
 
-        fun getData(data: T)
+        fun getData(callback: (T) -> Unit)
 
-        fun onResul(result: T)
+        fun onResult(result: T)
+
+        fun showProgress(isShowing: Boolean)
+
+        fun onError(message: String?)
+
+        fun onEmpty()
     }
 }
 

@@ -35,7 +35,7 @@ class BankTransferFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = TransactionsPresenter()
+        presenter = TransactionsPresenter.useInstance()
         controller = InputInteractionController()
         initRes(activity)
     }

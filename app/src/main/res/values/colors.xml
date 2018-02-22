@@ -72,4 +72,7 @@
 
     <color name="search_area_circle">#334285F4</color>
     <color name="text_blue_subtitle">#8abbed</color>
+
+    <color name="negative_value_red">#ee6964</color>
+    <color name="positive_value_green">#65be71</color>
 </resources>
