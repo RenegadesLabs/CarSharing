@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class SocialAuthResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private Data body;
 
     public class Data {

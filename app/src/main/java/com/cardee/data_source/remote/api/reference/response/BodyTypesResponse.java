@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class BodyTypesResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private BodyType[] types;
 
     public BodyTypesResponse(){

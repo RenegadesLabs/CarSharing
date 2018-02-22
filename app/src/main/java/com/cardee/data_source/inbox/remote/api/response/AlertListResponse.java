@@ -10,7 +10,7 @@ import java.util.List;
 public class AlertListResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private List<AlertRemote> mRemoteList;
 
     public AlertListResponse() {

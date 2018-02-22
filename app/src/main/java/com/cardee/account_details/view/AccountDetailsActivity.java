@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.account_details.adapter.CardsAdapter;
 import com.cardee.account_details.presenter.AccountDetailsPresenter;
 import com.cardee.account_verify.credit_card.CreditCardActivity;
 import com.cardee.account_verify.view.VerifyAccountActivity;
@@ -65,6 +68,9 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @BindView(R.id.add_card_card)
     CardView mAddCard;
 
+    @BindView(R.id.cardsList)
+    RecyclerView cardsList;
+
     @BindView(R.id.account_progress)
     ProgressBar mProgressBar;
 
@@ -77,8 +83,10 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
         initToolBar();
         initPresenter();
+        initCardsList();
 
         mPresenter.getOwnerInfo();
+        mPresenter.getCards();
     }
 
     @Override
@@ -98,6 +106,13 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         getSupportActionBar().setTitle(null);
     }
 
+    private void initCardsList() {
+        cardsList.setHasFixedSize(true);
+        CardsAdapter adapter = new CardsAdapter(this);
+        cardsList.setAdapter(adapter);
+        mPresenter.setAdapter(adapter);
+        cardsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
 
     @OnClick(R.id.name_card)
     public void nameClicked() {
@@ -204,6 +219,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void showMessage(int messageId) {
         showMessage(getString(messageId));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
     }
 
     @Override

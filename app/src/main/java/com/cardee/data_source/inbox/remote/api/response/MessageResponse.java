@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class MessageResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private NewMessage mNewMessage;
 
     public MessageResponse() {

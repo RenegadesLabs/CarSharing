@@ -216,7 +216,7 @@ public class Chat implements Comparable<Chat> {
             mChat = new Chat();
         }
 
-        //base data
+        //base dataList
 
         public Chat.Builder withChatId(Integer chatId) {
             mChat.chatId = chatId;
@@ -238,7 +238,7 @@ public class Chat implements Comparable<Chat> {
             return this;
         }
 
-        //inbox chat data
+        //inbox chat dataList
         public Chat.Builder withName(String name) {
             mChat.recipientName = name;
             return this;
@@ -264,7 +264,7 @@ public class Chat implements Comparable<Chat> {
             return this;
         }
 
-        //car data
+        //car dataList
         public Chat.Builder withCarTitle(String carTitle) {
             mChat.mCarTitle = carTitle;
             return this;

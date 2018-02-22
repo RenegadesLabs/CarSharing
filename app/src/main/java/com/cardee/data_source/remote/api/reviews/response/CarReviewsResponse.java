@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class CarReviewsResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private CarReviews carReviews;
 
     public CarReviewsResponse() {
