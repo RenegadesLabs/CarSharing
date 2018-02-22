@@ -45,7 +45,7 @@ public class BookingDeserializer implements JsonDeserializer<BookingResponse> {
         response.setMessage(messageElement == null ? null : messageElement.getAsString());
         response.setResponseCode(codeElement == null ? null : codeElement.getAsInt());
 
-        JsonElement dataElement = jsonObject.get("data");
+        JsonElement dataElement = jsonObject.get("dataList");
         try {
             JsonArray bookingArray = dataElement.getAsJsonArray();
             List<BookingEntity> bookings = gson.fromJson(bookingArray, bookingListType);

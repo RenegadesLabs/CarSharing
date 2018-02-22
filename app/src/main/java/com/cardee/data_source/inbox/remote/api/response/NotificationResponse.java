@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class NotificationResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private NotificationData mNotificationData;
 
     public NotificationResponse() {

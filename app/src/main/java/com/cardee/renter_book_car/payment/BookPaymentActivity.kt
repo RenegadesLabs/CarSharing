@@ -35,7 +35,7 @@ class BookPaymentActivity : AppCompatActivity(), BookPaymentView, PaymentAdapter
 
     private fun getIntentData() {
         mAcceptCash = intent.getBooleanExtra("acceptCash", false)
-        mSelectedCard = intent.getStringExtra("card")
+        mSelectedCard = intent.getStringExtra("cardToken")
     }
 
     private fun initList() {

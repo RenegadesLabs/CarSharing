@@ -12,7 +12,7 @@ public class CarsResponse extends BaseResponse {
      * Doesn't have ErrorResponseBody implementation because of using an array
      */
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private CarEntity[] cars;
 
     public CarsResponse() {

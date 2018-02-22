@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cardee.account_verify.identity_card.IdentityCardActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:theme="@style/CardeeToolbar"
+            app:titleTextColor="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/identity_card_photo_title" />
+
+            <TextView
+                android:id="@+id/toolbarAction"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/title_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/identityContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/large_margin">
+
+            <TextView
+                android:id="@+id/licenseFrontPhotoDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/large_margin"
+                android:text="@string/identity_card_description"
+                android:textColor="@color/text_owner_profile_name"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/identityCardFrontSample"
+                android:layout_width="150dp"
+                android:layout_height="94dp"
+                android:layout_marginStart="@dimen/large_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/licenseFrontPhotoDesc"
+                app:srcCompat="@drawable/identity_front" />
+
+            <FrameLayout
+                android:id="@+id/identityCardFrontUpload"
+                android:layout_width="150dp"
+                android:layout_height="94dp"
+                android:layout_marginStart="@dimen/large_margin"
+                android:background="@drawable/bg_dash_rect"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toEndOf="@id/identityCardFrontSample"
+                app:layout_constraintTop_toBottomOf="@id/licenseFrontPhotoDesc">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/upload"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_large" />
+
+            </FrameLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/bg_regular"
+                app:layout_constraintTop_toBottomOf="@id/identityCardFrontUpload" />
+
+            <TextView
+                android:id="@+id/licenseBackPhotoDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/large_margin"
+                android:text="@string/identity_card_back_description"
+                android:textColor="@color/text_owner_profile_name"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <ImageView
+                android:id="@+id/identityCardBackSample"
+                android:layout_width="150dp"
+                android:layout_height="94dp"
+                android:layout_marginStart="@dimen/large_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/licenseBackPhotoDesc"
+                app:srcCompat="@drawable/identity_back" />
+
+            <FrameLayout
+                android:id="@+id/identityCardBackUpload"
+                android:layout_width="150dp"
+                android:layout_height="94dp"
+                android:layout_marginStart="@dimen/large_margin"
+                android:background="@drawable/bg_dash_rect"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toEndOf="@id/identityCardBackSample"
+                app:layout_constraintTop_toBottomOf="@id/licenseBackPhotoDesc">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/upload"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_large" />
+
+            </FrameLayout>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <com.cardee.custom.CardeeButton
+        android:id="@+id/nextActivityButton"
+        style="@style/RoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_regular_height"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:text="@string/car_add_next"
+        app:drawableEndCompat="@drawable/ic_arrow_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/identityProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/image_loading_indicator_side"
+        android:layout_height="@dimen/image_loading_indicator_side"
+        android:theme="@style/LoadingIndicator"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

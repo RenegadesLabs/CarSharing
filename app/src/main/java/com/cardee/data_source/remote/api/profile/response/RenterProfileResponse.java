@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class RenterProfileResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private RenterProfile renterProfile;
 
     public RenterProfileResponse() {

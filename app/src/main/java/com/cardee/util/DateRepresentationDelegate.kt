@@ -1,7 +1,6 @@
 package com.cardee.util
 
 import android.content.Context
-import android.icu.text.DateFormat
 import android.util.Log
 import android.widget.TextView
 import com.cardee.CardeeApp
@@ -21,6 +20,8 @@ class DateRepresentationDelegate(context: Context) {
         private const val MONTH_DAY_YEAR_HOUR_PATTERN = "d\u00a0MMM yyyy,\u00a0ha"
         private const val MONTH_DAY_YEAR_PATTERN = "d MMM, yyyy"
         private const val MONTH_DAY_HOUR_PATTERN = "d\u00a0MMM,\u00a0ha"
+        private const val DAY_MONTH_YEAR_PATTERN = "d MMMMM yyyy"
+        private const val MONTH_YEAR_PATTERN = "MMyy"
         private const val HOUR_PATTERN = "hha"
     }
 
@@ -94,15 +95,22 @@ class DateRepresentationDelegate(context: Context) {
         view.text = dateString
     }
 
+    fun setMonthDayYear(view: TextView, isoDate: String) {
+        val date = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_PATTERN) ?: return
+        view.text = date
+    }
+
     fun formatMonthDayYearHour(isoDate: String?): String? {
         isoDate ?: return null
-        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN) ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_PATTERN)
+                ?: return null
         return dropStartZero(dateString)
     }
 
     fun formatMonthDayYearHourMinute(isoDate: String?): String? {
         isoDate ?: return null
-        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN) ?: return null
+        val dateString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN)
+                ?: return null
         return dropStartZero(dateString)
     }
 
@@ -130,16 +138,17 @@ class DateRepresentationDelegate(context: Context) {
 
     fun formatMonthDayHour(isoDate: String?): String? {
         isoDate ?: return null
-        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN) ?: return null
+        val timeString = convert(isoDate, ISO_8601_DATE_TIME_PATTERN, MONTH_DAY_HOUR_PATTERN)
+                ?: return null
         return dropStartZero(timeString)
     }
 
-    fun formatMonthDayHour(isoDate: String?, hourOffset: Int): String? {
+    fun formatMonthDayHour(isoDate: String?, dayOffset: Int): String? {
         isoDate ?: return null
         try {
             val date = parseDate(isoDate, ISO_8601_DATE_TIME_PATTERN)
             calendar.time = date
-            calendar.add(Calendar.HOUR_OF_DAY, hourOffset)
+            calendar.add(Calendar.DATE, dayOffset)
             return convertTo(calendar.time, MONTH_DAY_HOUR_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
@@ -147,15 +156,50 @@ class DateRepresentationDelegate(context: Context) {
         return null
     }
 
+    fun formatDayMonthYear(date: String?): String? {
+        date ?: return null
+        return convert(date, DAY_MONTH_YEAR_PATTERN, ISO_8601_DATE_TIME_PATTERN) ?: return null
+    }
+
+    fun dateFromMonthYear(date: String?): Date? {
+        date ?: return null
+        return parseDate(date, MONTH_YEAR_PATTERN)
+    }
+
+    fun formatShortDayMonthYear(date: String?): String? {
+        date ?: return null
+        return convert(date, MONTH_DAY_YEAR_PATTERN, ISO_8601_DATE_TIME_PATTERN) ?: return null
+    }
+
     fun formatMonthDayHour(date: Date?): String? {
         date ?: return null
         return convertTo(date, MONTH_DAY_HOUR_PATTERN)
     }
 
-    fun convertToDate(time: String?): Date? {
+    fun convertTimeToDate(time: String?): Date? {
         time ?: return null
         try {
             return parseDate(time, ISO_8601_TIME_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
+    fun convertDateToDate(date: String?): Date? {
+        date ?: return null
+        try {
+            return parseDate(date, ISO_8601_DATE_TIME_PATTERN)
+        } catch (ex: ParseException) {
+            Log.e(LOG_TAG, ex.message)
+        }
+        return null
+    }
+
+    fun convertDayMonthYearToDate(date: String?): Date? {
+        date ?: return null
+        try {
+            return parseDate(date, MONTH_DAY_YEAR_PATTERN)
         } catch (ex: ParseException) {
             Log.e(LOG_TAG, ex.message)
         }

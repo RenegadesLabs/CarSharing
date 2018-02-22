@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class TransmissionTypesResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("data")
+    @SerializedName("dataList")
     private Transmission[] types;
 
     public TransmissionTypesResponse(){

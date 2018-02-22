@@ -11,12 +11,17 @@ import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface Profile {
@@ -72,4 +77,16 @@ public interface Profile {
     @PUT("profiles/details")
     @Headers("Content-Type: application/json")
     Single<NoDataResponse> changePhone(@Body ChangePhoneRequest request);
+
+    @Multipart
+    @POST("profiles/verify/identity")
+    Maybe<NoDataResponse> uploadIdentityPhoto(@Part MultipartBody.Part front, @Part MultipartBody.Part back);
+
+    @Multipart
+    @POST("profiles/verify/licence")
+    Maybe<NoDataResponse> uploadLicensePhoto(@Part MultipartBody.Part front, @Part MultipartBody.Part back);
+
+    @Multipart
+    @POST("profiles/verify/photo")
+    Maybe<NoDataResponse> uploadProfilePhoto(@Part MultipartBody.Part request);
 }

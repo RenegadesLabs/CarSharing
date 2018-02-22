@@ -6,16 +6,26 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 import com.cardee.R;
+import com.cardee.account_details.adapter.CardsAdapter;
+import com.cardee.account_details.view.AccountDetailsView;
 import com.cardee.data_source.Error;
+import com.cardee.data_source.remote.api.payments.response.CardsResponseBody;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 import com.cardee.data_source.util.DialogHelper;
+import com.cardee.domain.RxUseCase;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.usecase.ChangeEmail;
 import com.cardee.domain.owner.usecase.ChangeName;
 import com.cardee.domain.owner.usecase.ChangePhone;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
-import com.cardee.account_details.view.AccountDetailsView;
+import com.cardee.domain.payments.usecase.GetCardsUseCase;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 public class AccountDetailsPresenter {
 
@@ -29,12 +39,16 @@ public class AccountDetailsPresenter {
     private final String mPassLengthKey;
     private final String mSocialLoggedInKey;
     private final String mDefaultPhoneText;
+    private CardsAdapter mAdapter;
+    private GetCardsUseCase getCards = null;
+    private Disposable disposable = null;
 
     public AccountDetailsPresenter(AccountDetailsView view) {
         mGetInfoUseCase = new GetOwnerInfo();
         mChangeName = new ChangeName();
         mChangeEmail = new ChangeEmail();
         mChangePhone = new ChangePhone();
+        getCards = new GetCardsUseCase();
         mExecutor = UseCaseExecutor.getInstance();
         mView = view;
         Context context = (Context) mView;
@@ -185,5 +199,35 @@ public class AccountDetailsPresenter {
                         dialog.dismiss();
                     }
                 }).show();
+    }
+
+    public void getCards() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+
+        disposable = getCards.execute(new GetCardsUseCase.RequestValues(), new RxUseCase.Callback<GetCardsUseCase.ResponseValues>() {
+            @Override
+            public void onError(@NotNull Error error) {
+                if (mView != null) {
+                    mView.showMessage(error.getMessage());
+                }
+            }
+
+            @Override
+            public void onSuccess(GetCardsUseCase.ResponseValues response) {
+                List<CardsResponseBody> dataList = response.getCards();
+                mAdapter.setData(dataList);
+            }
+        });
+    }
+
+    public void setAdapter(CardsAdapter adapter) {
+        mAdapter = adapter;
+    }
+
+    public void onDestroy() {
+        mView = null;
+        mAdapter.onDestroy();
     }
 }

@@ -2,6 +2,9 @@ package com.cardee.data_source;
 
 import android.support.annotation.NonNull;
 
+import com.cardee.CardeeApp;
+import com.cardee.R;
+
 public class Error {
 
     private final Type mType;
@@ -33,6 +36,8 @@ public class Error {
         public final static String WRONG_AUTHENTICATION = "Wrong password.";
 
         public final static String CONNECTION_LOST = "Connection lost";
+
+        public final static String INVALID_CARD = CardeeApp.context.getString(R.string.credit_card_invalid_card);
     }
 
     public Error(@NonNull Type type, @NonNull String message) {

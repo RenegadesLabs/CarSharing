@@ -71,6 +71,8 @@
     <color name="selector_view">#e5edf4</color>
 
     <color name="search_area_circle">#334285F4</color>
+    <color name="bg_fab_chat">#FF0074B0</color>
+
     <color name="text_blue_subtitle">#8abbed</color>
 
     <color name="negative_value_red">#ee6964</color>

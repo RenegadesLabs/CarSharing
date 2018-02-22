@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.view.VerifyAccountActivity
 import com.cardee.databinding.ActivityBookCarBinding
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.renter_book_car.BookCarContract
@@ -29,6 +30,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
     private val LOCATION_REQUEST_CODE = 912
     private val PAYMENT_REQUEST_CODE = 913
     private val RENTAL_TERMS_REQUEST_CODE = 914
+    private val VERIFY_ACC_REQUEST_CODE = 915
 
     private var mCurrentToast: Toast? = null
     lateinit var binding: ActivityBookCarBinding
@@ -108,6 +110,9 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
         verifyAccButton.setOnClickListener {
+            val intent = Intent(this, VerifyAccountActivity::class.java)
+            startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
+
             mState.accVerified.set(true)
         }
         paymentChoose.setOnClickListener {
@@ -117,7 +122,7 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             } else {
                 paymentIntent.putExtra("acceptCash", mState.acceptCashDaily.get())
             }
-            paymentIntent.putExtra("card", paymentChoose.text)
+            paymentIntent.putExtra("cardToken", mState.paymentToken)
             startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
         }
         rentalTermsAgree.setOnClickListener {
@@ -191,12 +196,31 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                 endString = resources.getString(R.string.rental_period_to)
             } else {
                 beginString = delegate.formatMonthDayHour(mState.timeBeginDaily ?: return)
-                endString = delegate.formatMonthDayHour(mState.timeEndDaily, 1)
+                val beginDate = delegate.convertDateToDate(mState.timeBeginDaily)
+                val endDate = delegate.convertDateToDate(mState.timeEndDaily)
+
+                endString = if (isNextDay(beginDate, endDate) == true) {
+                    delegate.formatMonthDayHour(mState.timeEndDaily, 1)
+                } else {
+                    delegate.formatMonthDayHour(mState.timeEndDaily)
+                }
             }
         }
         bookingStart?.text = beginString
         bookingEnd?.text = endString
         mPresenter.saveSate(mState)
+    }
+
+    private fun isNextDay(begin: Date?, end: Date?): Boolean? {
+        val calBegin = Calendar.getInstance(Locale.US)
+        calBegin.timeZone = TimeZone.getTimeZone("GMT+8")
+        calBegin.time = begin ?: return null
+
+        val calEnd = Calendar.getInstance(Locale.US)
+        calEnd.timeZone = TimeZone.getTimeZone("GMT+8")
+        calEnd.time = end ?: return null
+
+        return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
     }
 
     override fun onStop() {

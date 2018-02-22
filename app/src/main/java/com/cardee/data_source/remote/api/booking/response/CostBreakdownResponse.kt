@@ -6,4 +6,4 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class CostBreakdownResponse(@Expose @SerializedName("data") val costBreakdown: BookingCost) : BaseResponse()
+data class CostBreakdownResponse(@Expose @SerializedName("dataList") val costBreakdown: BookingCost) : BaseResponse()

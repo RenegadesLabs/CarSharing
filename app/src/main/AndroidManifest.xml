@@ -174,6 +174,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.DarkTheme">
             <tools:validation testUrl="http://labracode.itg5.com/offers/link" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -186,7 +187,6 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".owner_bookings.ChecklistActivity"
             android:screenOrientation="portrait"
@@ -233,6 +233,18 @@
         <activity android:name=".renter_book_car.payment.BookPaymentActivity" />
         <activity android:name=".renter_car_details.reviews.RenterCarReviewsActivity" />
         <activity android:name=".renter_car_details.rental_terms.RenterRentalTermsActivity" />
+        <activity android:name=".account_verify.view.VerifyAccountActivity" />
+        <activity
+            android:name=".account_verify.particulars.ParticularsActivity"
+            android:theme="@style/ChatStyle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".account_verify.identity_card.IdentityCardActivity" />
+        <activity android:name=".account_verify.license.LicenseActivity" />
+        <activity android:name=".account_verify.profilePhoto.ProfilePhotoActivity" />
+        <activity
+            android:name=".account_verify.credit_card.CreditCardActivity"
+            android:theme="@style/ChatStyle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".owner_credit_balance.view.CreditBalanceActivity"
             android:screenOrientation="portrait"

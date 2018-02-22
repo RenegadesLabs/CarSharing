@@ -95,12 +95,17 @@ class RentalPeriodActivity : AppCompatActivity() {
         mDailyAdapter = CalendarAdapter()
         dailyView.calendar.setSelectionAdapter(mDailyAdapter)
         mDailyAdapter?.setSelectionListener {
-
-            timeBegin = dateDelegate.formatMonthDayHour(setHoursToDate(it.firstOrNull(), mAvailabilityPickup))
-            timeEnd = dateDelegate.formatMonthDayHour(setHoursToDate(it.lastOrNull(), mAvailabilityReturn))
+            val beginDate = setHoursToDate(it.firstOrNull(), mAvailabilityPickup)
+            timeBegin = dateDelegate.formatAsIsoDate(beginDate)
+            val endDate = setHoursToDate(it.lastOrNull(), mAvailabilityReturn)
+            timeEnd = dateDelegate.formatAsIsoDate(endDate)
             if (timeBegin != null) {
                 dateFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
-                dateTo.text = dateDelegate.formatMonthDayHour(timeEnd, 1)
+                dateTo.text = if (isNextDay(beginDate, endDate) == true) {
+                    dateDelegate.formatMonthDayHour(timeEnd, 1)
+                } else {
+                    dateDelegate.formatMonthDayHour(timeEnd)
+                }
             } else {
                 dateFrom.text = resources.getString(R.string.not_specified)
                 dateTo.text = resources.getString(R.string.not_specified)
@@ -121,11 +126,25 @@ class RentalPeriodActivity : AppCompatActivity() {
         }
     }
 
+    private fun isNextDay(begin: Date?, end: Date?): Boolean? {
+        val calBegin = Calendar.getInstance(Locale.US)
+        calBegin.timeZone = TimeZone.getTimeZone("GMT+8")
+        calBegin.time = begin ?: return null
+
+        val calEnd = Calendar.getInstance(Locale.US)
+        calEnd.timeZone = TimeZone.getTimeZone("GMT+8")
+        calEnd.time = end ?: return null
+
+        return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
+    }
+
     private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance(Locale.US)
+        calendar.timeZone = TimeZone.getTimeZone("GMT+8")
         calendar.time = date ?: return null
-        val tempDate: Date = dateDelegate.convertToDate(pickupTime) ?: calendar.time
-        val tempCal = GregorianCalendar()
+        val tempDate: Date = dateDelegate.convertTimeToDate(pickupTime) ?: calendar.time
+        val tempCal = GregorianCalendar(Locale.US)
+        tempCal.timeZone = TimeZone.getTimeZone("GMT+8")
         tempCal.time = tempDate
         calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))
         calendar.set(Calendar.MINUTE, tempCal.get(Calendar.MINUTE))
