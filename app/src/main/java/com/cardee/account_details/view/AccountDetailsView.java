@@ -15,4 +15,6 @@ public interface AccountDetailsView extends BaseView {
     void setPassChangeState(boolean b);
 
     void hidePassword();
+
+    void setVerified(boolean verified);
 }

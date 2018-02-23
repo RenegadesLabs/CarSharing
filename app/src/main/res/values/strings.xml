@@ -841,5 +841,7 @@
     <string name="credit_card_no_cvv">Please insert valid CVV code.</string>
     <string name="add_card_success">Credit card saved</string>
     <string name="credit_card_template">••••\u0020%s</string>
+    <string name="progress_saved">Progress saved</string>
+    <string name="verified">Verified</string>
 
 </resources>

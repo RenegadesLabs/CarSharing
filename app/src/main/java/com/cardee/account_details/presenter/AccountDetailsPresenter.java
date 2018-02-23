@@ -11,6 +11,7 @@ import com.cardee.account_details.view.AccountDetailsView;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody;
 import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
+import com.cardee.data_source.remote.api.profile.response.entity.VerifyState;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.domain.RxUseCase;
 import com.cardee.domain.UseCase;
@@ -20,6 +21,7 @@ import com.cardee.domain.owner.usecase.ChangeName;
 import com.cardee.domain.owner.usecase.ChangePhone;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
 import com.cardee.domain.payments.usecase.GetCardsUseCase;
+import com.cardee.domain.profile.usecase.GetVerifyDetails;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +43,8 @@ public class AccountDetailsPresenter {
     private final String mDefaultPhoneText;
     private CardsAdapter mAdapter;
     private GetCardsUseCase getCards = null;
+    private GetVerifyDetails getVerifyState = null;
+    private Disposable verifyDisposable = null;
     private Disposable disposable = null;
 
     public AccountDetailsPresenter(AccountDetailsView view) {
@@ -49,6 +53,7 @@ public class AccountDetailsPresenter {
         mChangeEmail = new ChangeEmail();
         mChangePhone = new ChangePhone();
         getCards = new GetCardsUseCase();
+        getVerifyState = new GetVerifyDetails();
         mExecutor = UseCaseExecutor.getInstance();
         mView = view;
         Context context = (Context) mView;
@@ -229,5 +234,34 @@ public class AccountDetailsPresenter {
     public void onDestroy() {
         mView = null;
         mAdapter.onDestroy();
+    }
+
+    public void getVerifyState() {
+        if (verifyDisposable != null && !verifyDisposable.isDisposed()) {
+            verifyDisposable.dispose();
+        }
+        verifyDisposable = getVerifyState.execute(new GetVerifyDetails.RequestValues(), new RxUseCase.Callback<GetVerifyDetails.ResponseValues>() {
+            @Override
+            public void onError(@NotNull Error error) {
+                if (mView != null) {
+                    mView.showMessage(error.getMessage());
+                }
+            }
+
+            @Override
+            public void onSuccess(GetVerifyDetails.ResponseValues response) {
+                VerifyState s = response.getVerifyState();
+                if (s.component1() &&
+                        s.component2() &&
+                        s.component3() &&
+                        s.component4() &&
+                        s.component5() &&
+                        s.component6()) {
+                    if (mView != null) {
+                        mView.setVerified(true);
+                    }
+                }
+            }
+        });
     }
 }

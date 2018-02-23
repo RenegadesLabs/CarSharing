@@ -112,8 +112,6 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         verifyAccContainer.setOnClickListener {
             val intent = Intent(this, VerifyAccountActivity::class.java)
             startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
-
-            mState.accVerified.set(true)
         }
         paymentContainer.setOnClickListener {
             val paymentIntent = Intent(this, BookPaymentActivity::class.java)
@@ -304,6 +302,12 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             RENTAL_TERMS_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     mState.rentalTermsAgreed.set(true)
+                    mPresenter.saveSate(mState)
+                }
+            }
+            VERIFY_ACC_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    mState.accVerified.set(true)
                     mPresenter.saveSate(mState)
                 }
             }

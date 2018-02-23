@@ -13,6 +13,7 @@ import com.cardee.domain.RxUseCase
 import com.cardee.domain.bookings.entity.BookCarState
 import com.cardee.domain.bookings.usecase.GetCostBreakdown
 import com.cardee.domain.bookings.usecase.RequestBooking
+import com.cardee.domain.profile.usecase.GetVerifyDetails
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.usecase.GetBookState
 import com.cardee.domain.renter.usecase.GetFilter
@@ -30,10 +31,12 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
     private val getBookState = GetBookState()
     private val saveBookState = SaveBookState()
     private val requestBookingCase = RequestBooking()
+    private val getVerifyState = GetVerifyDetails()
 
     private var mGetOfferDisposable: Disposable? = null
     private var mGetCostDisposable: Disposable? = null
     private var mBookDisposable: Disposable? = null
+    private var verifyDisposable: Disposable? = null
     private var mCostBreakdown: BookingCost? = null
     private var mCarId: Int? = null
     private var showBreakdown: Boolean = false
@@ -95,6 +98,25 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
             override fun onSuccess(response: GetOfferById.ResponseValues) {
                 val offer = response.offer ?: return
                 setView(offer, state)
+            }
+
+            override fun onError(error: Error) {
+                mView?.showMessage(error.message)
+            }
+        })
+
+        if (verifyDisposable?.isDisposed == false) {
+            verifyDisposable?.dispose()
+        }
+        verifyDisposable = getVerifyState.execute(GetVerifyDetails.RequestValues(), object : RxUseCase.Callback<GetVerifyDetails.ResponseValues> {
+            override fun onSuccess(response: GetVerifyDetails.ResponseValues) {
+                val resp = response.verifyState
+                state.accVerified.set(resp.particularsVerified &&
+                        resp.identityCardVerified &&
+                        resp.driverLicenceVerified &&
+                        resp.driverPhotoVerified &&
+                        resp.creditCardVerified &&
+                        resp.depositVerified)
             }
 
             override fun onError(error: Error) {

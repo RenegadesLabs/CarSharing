@@ -7,9 +7,11 @@ import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
+import com.cardee.data_source.remote.api.profile.request.UploadParticularsRequest;
 import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 import com.cardee.data_source.remote.api.profile.response.OwnerProfileResponse;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
+import com.cardee.data_source.remote.api.profile.response.VerifyResponse;
 
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -89,4 +91,12 @@ public interface Profile {
     @Multipart
     @POST("profiles/verify/photo")
     Maybe<NoDataResponse> uploadProfilePhoto(@Part MultipartBody.Part request);
+
+    @POST("profiles/verify/particulars")
+    @Headers("Content-Type: application/json")
+    Maybe<NoDataResponse> uploadParticulars(@Body UploadParticularsRequest request);
+
+    @GET("profiles/verify")
+    @Headers("Content-Type: application/json")
+    Maybe<VerifyResponse> getVerifyState();
 }

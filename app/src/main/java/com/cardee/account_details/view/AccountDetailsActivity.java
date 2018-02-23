@@ -72,6 +72,9 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @BindView(R.id.cardsList)
     RecyclerView cardsList;
 
+    @BindView(R.id.verifyText)
+    TextView verifyText;
+
     @BindView(R.id.account_progress)
     ProgressBar mProgressBar;
 
@@ -88,6 +91,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
         mPresenter.getOwnerInfo();
         mPresenter.getCards();
+        mPresenter.getVerifyState();
     }
 
     @Override
@@ -199,6 +203,11 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void hidePassword() {
         mPassCard.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setVerified(boolean verified) {
+        verifyText.setText(R.string.verified);
     }
 
     @Override

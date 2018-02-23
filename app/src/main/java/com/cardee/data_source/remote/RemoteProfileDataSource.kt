@@ -8,6 +8,8 @@ import com.cardee.data_source.ProfileDataSource
 import com.cardee.data_source.remote.api.BaseResponse
 import com.cardee.data_source.remote.api.NoDataResponse
 import com.cardee.data_source.remote.api.profile.Profile
+import com.cardee.data_source.remote.api.profile.request.UploadParticularsRequest
+import com.cardee.data_source.remote.api.profile.response.VerifyResponse
 import com.cardee.domain.profile.entity.VerifyAccountState
 import com.cardee.util.ImageProcessor
 import io.reactivex.Observable
@@ -131,6 +133,50 @@ class RemoteProfileDataSource : ProfileDataSource {
                 })
     }
 
+    override fun saveParticulars(particulars: UploadParticularsRequest, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return api.uploadParticulars(particulars)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<NoDataResponse>() {
+                    override fun onSuccess(response: NoDataResponse) {
+                        if (response.isSuccessful) {
+                            callback.onSuccess()
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+                    }
+
+                    override fun onError(e: Throwable) {
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
+    override fun getVerifyDetails(callback: ProfileDataSource.VerifyCallback): Disposable {
+        return api.verifyState
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableMaybeObserver<VerifyResponse>() {
+                    override fun onSuccess(response: VerifyResponse) {
+                        if (response.isSuccessful) {
+                            callback.onSuccess(response.verifyState)
+                            return
+                        }
+                        handleErrorResponse(callback, response)
+                    }
+
+                    override fun onComplete() {
+                    }
+
+                    override fun onError(e: Throwable) {
+                        callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
+                    }
+                })
+    }
+
     private fun getImageFile(uri: Uri, callback: ProfileDataSource.NoDataCallback): File? {
         val split = uri.path.split("/")
         val imageFile = File(CardeeApp.context.cacheDir, split.last())
@@ -168,7 +214,7 @@ class RemoteProfileDataSource : ProfileDataSource {
         })
     }
 
-    private fun handleErrorResponse(callback: ProfileDataSource.NoDataCallback, response: NoDataResponse) {
+    private fun handleErrorResponse(callback: ProfileDataSource.BaseCallback, response: BaseResponse) {
         when {
             response.responseCode == BaseResponse.ERROR_CODE_INTERNAL_SERVER_ERROR -> callback.onError(Error(Error.Type.SERVER, "Server error"))
             response.responseCode == BaseResponse.ERROR_CODE_UNAUTHORIZED -> callback.onError(Error(Error.Type.AUTHORIZATION, "Unauthorized"))

@@ -1,5 +1,6 @@
 package com.cardee.account_verify.view
 
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -32,6 +33,7 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
         bindView()
         initToolBar()
         setListeners()
+        presenter?.loadVerifyState()
     }
 
     private fun bindView() {
@@ -60,6 +62,10 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
 
     override fun onStart() {
         super.onStart()
+        updateState()
+    }
+
+    override fun updateState() {
         state = presenter?.getState() ?: VerifyAccountState()
         binding.state = state
     }
@@ -92,13 +98,25 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
             }
             saveProgress -> {
                 presenter?.saveProgress()
-                onBackPressed()
             }
         }
     }
 
-    override fun showProgress(show: Boolean) {
+    override fun onProgressSaved() {
+        if (state.particularsAdded.get() &&
+                state.identityAdded.get() &&
+                state.licenseAdded.get() &&
+                state.photoAdded.get() &&
+                state.creditAdded.get() &&
+                state.depositAdded.get()) {
+            setResult(Activity.RESULT_OK)
+        }
+        onBackPressed()
+    }
 
+    override fun showProgress(show: Boolean) {
+        verifyProgress.visibility = if (show) View.VISIBLE else View.GONE
+        verifyContainer.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showMessage(message: String?) {
