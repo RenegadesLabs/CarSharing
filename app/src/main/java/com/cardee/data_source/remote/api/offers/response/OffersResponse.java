@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class OffersResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     OfferResponseBody[] mOfferResponseBody;
 
     public OfferResponseBody[] getOffersResponseBody() {

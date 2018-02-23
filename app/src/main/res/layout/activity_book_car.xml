@@ -284,8 +284,8 @@
                         style="@style/TextSettingsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="23dp"
                         android:paddingBottom="5dp"
+                        android:paddingTop="23dp"
                         android:text="@string/promo_code"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -346,6 +346,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp"
+                    android:background="?android:attr/selectableItemBackground"
                     android:paddingTop="22dp"
                     android:visibility="@{state.accVerified ? View.GONE : View.VISIBLE}">
 
@@ -382,6 +383,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingBottom="22dp"
                     android:paddingTop="22dp">
 
                     <TextView
@@ -424,10 +427,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginBottom="22dp"
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp"
-                    android:layout_marginTop="22dp"
                     android:background="@color/add_car_divider" />
 
                 <android.support.constraint.ConstraintLayout
@@ -435,7 +436,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="23dp"
-                    android:layout_marginStart="23dp">
+                    android:layout_marginStart="23dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingBottom="22dp"
+                    android:paddingTop="22dp">
 
                     <TextView
                         android:id="@+id/rentalTermsCounter"
@@ -477,19 +481,20 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginBottom="22dp"
+
                     android:layout_marginEnd="23dp"
                     android:layout_marginStart="23dp"
-                    android:layout_marginTop="22dp"
                     android:background="@color/add_car_divider" />
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/noteContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="22dp"
                     android:layout_marginEnd="23dp"
-                    android:layout_marginStart="23dp">
+                    android:layout_marginStart="23dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingBottom="22dp"
+                    android:paddingTop="22dp">
 
                     <TextView
                         android:id="@+id/noteCounter"

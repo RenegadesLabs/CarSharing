@@ -256,7 +256,7 @@ public class UserRepository implements UserDataSource {
 
                 String loginError = "";
                 try {
-                    JSONArray loginErrorObj = errorBodyObj.getJSONObject("dataList")
+                    JSONArray loginErrorObj = errorBodyObj.getJSONObject("data")
                             .getJSONObject("errors")
                             .getJSONArray("login");
                     loginError = (Error.Message.LOGIN_DO_EXIST.equals(loginErrorObj.getString(0))
@@ -267,7 +267,7 @@ public class UserRepository implements UserDataSource {
 
                 String passError = "";
                 try {
-                    JSONArray passErrorObj = errorBodyObj.getJSONObject("dataList")
+                    JSONArray passErrorObj = errorBodyObj.getJSONObject("data")
                             .getJSONObject("errors")
                             .getJSONArray("password");
                     passError = (Error.Message.PASSWORD_LENGTH.equals(passErrorObj.getString(0))
@@ -283,7 +283,7 @@ public class UserRepository implements UserDataSource {
             case BaseResponse.ERROR_CODE_UNAUTHORIZED:
                 String authError = "";
                 try {
-                    authError = errorBodyObj.getJSONObject("dataList")
+                    authError = errorBodyObj.getJSONObject("data")
                             .getJSONObject("errors")
                             .getJSONArray("authentication")
                             .getString(0);

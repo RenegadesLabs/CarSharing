@@ -17,7 +17,7 @@ public class ResponseDeserializer implements JsonDeserializer<NoDataResponse> {
     @Override
     public NoDataResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
-        JsonElement dataElement = json.getAsJsonObject().get("dataList");
+        JsonElement dataElement = json.getAsJsonObject().get("data");
         if (dataElement.isJsonObject()) {
             Gson gson = new Gson();
             return gson.fromJson(json, NoDataResponse.class);
@@ -37,7 +37,7 @@ public class ResponseDeserializer implements JsonDeserializer<NoDataResponse> {
             return response;
         } else {
             Log.d("ResultsDeserializerJson", dataElement.toString());
-            throw new JsonParseException("Unsupported type of dataList element");
+            throw new JsonParseException("Unsupported type of data element");
         }
     }
 }

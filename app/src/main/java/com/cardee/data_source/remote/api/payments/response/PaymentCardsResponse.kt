@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class PaymentCardsResponse(@Expose @SerializedName("dataList") val cardsResponse: List<CardsResponseBody>) : BaseResponse()
+data class PaymentCardsResponse(@Expose @SerializedName("data") val cardsResponse: List<CardsResponseBody>) : BaseResponse()
 
 data class CardsResponseBody(@Expose @SerializedName("exp_month") val expMonth: Int,
                              @Expose @SerializedName("exp_year") val expYear: Int,

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -112,6 +113,10 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         cardsList.setAdapter(adapter);
         mPresenter.setAdapter(adapter);
         cardsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
+                LinearLayoutManager.VERTICAL);
+        cardsList.addItemDecoration(dividerItemDecoration);
+        cardsList.setNestedScrollingEnabled(false);
     }
 
     @OnClick(R.id.name_card)

@@ -109,13 +109,13 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         costBreakdown.setOnClickListener { mPresenter.showCostBreakdown(this, mState) }
         promoCodeText.setOnClickListener { mState.promocodeClicked.set(true) }
         submitCode.setOnClickListener { mState.promocodeClicked.set(false) }
-        verifyAccButton.setOnClickListener {
+        verifyAccContainer.setOnClickListener {
             val intent = Intent(this, VerifyAccountActivity::class.java)
             startActivityForResult(intent, VERIFY_ACC_REQUEST_CODE)
 
             mState.accVerified.set(true)
         }
-        paymentChoose.setOnClickListener {
+        paymentContainer.setOnClickListener {
             val paymentIntent = Intent(this, BookPaymentActivity::class.java)
             if (mState.bookingHourly == true) {
                 paymentIntent.putExtra("acceptCash", mState.acceptCashHourly.get())
@@ -125,13 +125,13 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
             paymentIntent.putExtra("cardToken", mState.paymentToken)
             startActivityForResult(paymentIntent, PAYMENT_REQUEST_CODE)
         }
-        rentalTermsAgree.setOnClickListener {
+        rentalTermsContainer.setOnClickListener {
             val intent = Intent(this, RenterRentalTermsActivity::class.java)
             intent.putExtra("carId", mCarId)
             intent.putExtra("agree", true)
             startActivityForResult(intent, RENTAL_TERMS_REQUEST_CODE)
         }
-        addNote.setOnClickListener {
+        noteContainer.setOnClickListener {
             val intent = Intent(this, BookMessageActivity::class.java)
             startActivity(intent)
         }

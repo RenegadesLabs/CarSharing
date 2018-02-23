@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("return-dataList", true);
+            cropIntent.putExtra("return-data", true);
             startActivityForResult(cropIntent, CROP_IMAGE);
 
         } catch (ActivityNotFoundException ex) {
@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
             case CROP_IMAGE:
                 if (data.getExtras() != null) {
                     Bundle extras = data.getExtras();
-                    Bitmap bitmap = extras.getParcelable("dataList");
+                    Bitmap bitmap = extras.getParcelable("data");
                     if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
                         mFinalStepFragment.setUserPhoto(bitmap);
                     }

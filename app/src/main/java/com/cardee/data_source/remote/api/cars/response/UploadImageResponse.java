@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class UploadImageResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private UploadImageResponseBody body;
 
     public UploadImageResponse(){

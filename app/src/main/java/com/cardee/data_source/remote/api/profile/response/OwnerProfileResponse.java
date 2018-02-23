@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class OwnerProfileResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private OwnerProfile ownerProfile;
 
     public OwnerProfileResponse() {

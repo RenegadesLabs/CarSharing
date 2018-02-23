@@ -834,10 +834,11 @@
     <string name="credit_card_set_primary">Set as primary card</string>
     <string name="credit_card_terms_first">By adding your debit / credit card, you agree to the\u0020</string>
     <string name="credit_card_terms_second">Terms\u00A0&amp;\u00A0Conditions</string>
-    <string name="credit_card_invalid_card">Warning! Please insert valid card number.</string>
-    <string name="credit_card_no_expiration">Warning! Please insert valid expiration date.</string>
-    <string name="credit_card_expired">Warning! Your card is expired.</string>
-    <string name="credit_card_no_cvv">Warning!  Please insert valid CVV code.</string>
+    <string name="credit_card_invalid_card">Please insert valid card number.</string>
+    <string name="credit_card_invalid_card_warning">Card is invalid</string>
+    <string name="credit_card_no_expiration">Please insert valid expiration date.</string>
+    <string name="credit_card_expired">Your card is expired.</string>
+    <string name="credit_card_no_cvv">Please insert valid CVV code.</string>
     <string name="add_card_success">Credit card saved</string>
     <string name="credit_card_template">••••\u0020%s</string>
 

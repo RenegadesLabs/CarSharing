@@ -37,7 +37,7 @@ public class Error {
 
         public final static String CONNECTION_LOST = "Connection lost";
 
-        public final static String INVALID_CARD = CardeeApp.context.getString(R.string.credit_card_invalid_card);
+        public final static String INVALID_CARD = CardeeApp.context.getString(R.string.credit_card_invalid_card_warning);
     }
 
     public Error(@NonNull Type type, @NonNull String message) {

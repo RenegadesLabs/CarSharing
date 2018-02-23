@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class VehicleTypesResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private VehicleType[] types;
 
     public VehicleTypesResponse(){

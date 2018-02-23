@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class CreateCarResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private CreateCarResponseBody responseBody;
 
     public CreateCarResponse() {
