@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import com.cardee.R;
-import com.cardee.owner_bookings.ChecklistActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
@@ -20,20 +19,24 @@ import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
 
 public class BookingActivity extends AppCompatActivity {
 
-    public static final String ACTION_CHECKLIST = "action_cardee_checklist_changed_by_owner";
+    public static final String ACTION_CHECKLIST_OWNER = "action_cardee_checklist_changed_by_owner";
+    public static final String ACTION_CHECKLIST_RENTER = "action_cardee_checklist_changed_by_renter";
+    public static final String IS_RENTER = "flag_cardee_is_renter";
 
     OwnerBookingContract.Presenter presenter;
     OwnerBookingContract.View view;
     private ChecklistReceiver checklistReceiver;
     private PendingChecklistStorage pendingChecklists;
     private int bookingId;
+    private boolean isRenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getIntent().getExtras();
         bookingId = args.getInt(OwnerBookingContract.BOOKING_ID);
-        presenter = new OwnerBookingPresenter(bookingId);
+        isRenter = args.getBoolean(IS_RENTER, false);
+        presenter = new OwnerBookingPresenter(bookingId, isRenter);
         Toolbar toolbar;
         BookingView bookingView = (BookingView) LayoutInflater
                 .from(this)
@@ -62,7 +65,11 @@ public class BookingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         checklistReceiver = new ChecklistReceiver();
-        registerReceiver(checklistReceiver, new IntentFilter(ACTION_CHECKLIST));
+        if (isRenter) {
+            registerReceiver(checklistReceiver, new IntentFilter(ACTION_CHECKLIST_RENTER));
+        } else {
+            registerReceiver(checklistReceiver, new IntentFilter(ACTION_CHECKLIST_OWNER));
+        }
         presenter.init();
     }
 
@@ -91,7 +98,8 @@ public class BookingActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (ACTION_CHECKLIST.equals(intent.getAction())) {
+            if (ACTION_CHECKLIST_OWNER.equals(intent.getAction())
+                    || ACTION_CHECKLIST_RENTER.equals(intent.getAction())) {
                 int alertBookingId = intent.getIntExtra(OwnerBookingContract.BOOKING_ID, 0);
 //                if (alertBookingId != bookingId) {
 //                    return;

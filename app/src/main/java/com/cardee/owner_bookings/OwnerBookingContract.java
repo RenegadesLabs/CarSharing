@@ -15,7 +15,7 @@ public interface OwnerBookingContract {
 
         void setPresenter(Presenter presenter);
 
-        void bind(Booking booking);
+        void bind(Booking booking, boolean isRenter);
 
         void bind();
 

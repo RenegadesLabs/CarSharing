@@ -18,7 +18,7 @@ public interface BookingDataSource {
 
     void obtainOwnerBookings(String filter, String sort, boolean forceUpdate, BookingsCallback callback);
 
-    void obtainRenterBookings(String filter, String sort, BookingsCallback callback);
+    void obtainRenterBookings(String filter, String sort, boolean forceUpdate, BookingsCallback callback);
 
     void obtainBookingById(int id, BookingCallback callback);
 

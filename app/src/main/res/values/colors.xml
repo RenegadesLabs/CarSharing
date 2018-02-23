@@ -70,6 +70,8 @@
     <color name="payment_cash">#4fae4f</color>
     <color name="selector_view">#e5edf4</color>
 
+    <color name="edit_checklist_toolbar">#F2B632</color>
+
     <color name="search_area_circle">#334285F4</color>
     <color name="bg_fab_chat">#FF0074B0</color>
 

@@ -15,14 +15,15 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
 
     private final BookingView bookingView;
 
-    public HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandingOverStrategy(@NonNull View view, @NonNull ActionListener listener, boolean isRenter) {
         super(view, listener);
         bookingView = (BookingView) view;
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_collecting);
 
         bookingView.bookingStatus.setBackgroundColor(statusColor);
-        bookingView.bookingStatus.setText(R.string.booking_state_collecting);
+        bookingView.bookingStatus.setText(isRenter ? R.string.booking_state_collecting_renter : R.string.booking_state_collecting);
         bookingView.renterNameTitle.setVisibility(View.VISIBLE);
+        bookingView.renterNameTitle.setText(isRenter ? R.string.booking_owner_title : R.string.booking_request_title);
         bookingView.renterName.setVisibility(View.VISIBLE);
         bookingView.renterPhoto.setVisibility(View.VISIBLE);
         bookingView.bookingPayment.setVisibility(View.VISIBLE);
@@ -53,8 +54,8 @@ public class HandingOverStrategy extends PresentationStrategy implements View.On
         bookingView.ratingBar.setVisibility(View.GONE);
         bookingView.ratingEdit.setVisibility(View.GONE);
 
-        bookingView.cancelMessage.setText(R.string.booking_message_handover_wait);
-        bookingView.btnCancel.setText(R.string.booking_title_cancel_handover);
+        bookingView.cancelMessage.setText(isRenter ? R.string.booking_message_handover_wait_renter : R.string.booking_message_handover_wait);
+        bookingView.btnCancel.setText(isRenter ? R.string.booking_title_cancel_handover_renter : R.string.booking_title_cancel_handover);
 
         bookingView.renterPhoto.setOnClickListener(this);
         bookingView.renterCall.setOnClickListener(this);

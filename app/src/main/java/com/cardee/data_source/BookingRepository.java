@@ -62,8 +62,26 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
-    public void obtainRenterBookings(String filter, String sort, BookingsCallback bookingsCallback) {
+    public void obtainRenterBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
+        if (!forceUpdate && !cache.isDirty()) {
+            bookingsCallback.onSuccess(cache.obtainAll(), false);
+            return;
+        }
+        if (!cache.isDirty()) {
+            bookingsCallback.onSuccess(cache.obtainAll(), false);
+        }
+        remoteDataSource.obtainRenterBookings(filter, sort, forceUpdate, new BookingsCallback() {
+            @Override
+            public void onSuccess(List<BookingEntity> bookingEntities, boolean updated) {
+                cache.updateCache(bookingEntities);
+                bookingsCallback.onSuccess(bookingEntities, updated);
+            }
 
+            @Override
+            public void onError(Error error) {
+                bookingsCallback.onError(error);
+            }
+        });
     }
 
     @Override

@@ -28,16 +28,19 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
     private final RequestManager imageRequestManager;
     private final LayoutInflater inflater;
 
-    public BookingListAdapter(OwnerBookingListContract.Presenter presenter, Context context) {
+    private boolean isRenter;
+
+    public BookingListAdapter(OwnerBookingListContract.Presenter presenter, Context context, boolean isRenter) {
         this.presenter = presenter;
         imageRequestManager = Glide.with(context);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.isRenter = isRenter;
     }
 
     @Override
     public BookingItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = inflater.inflate(R.layout.item_owner_booking_list, parent, false);
-        return new BookingItemHolder(rootView, imageRequestManager);
+        return new BookingItemHolder(rootView, imageRequestManager, isRenter);
     }
 
     @Override
@@ -56,6 +59,8 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
         private RequestManager imageRequestManager;
 
+        private boolean isRenter;
+
         private TextView bookingStatus;
         private TextView bookingPeriod;
         private ImageView bookingCarPicture;
@@ -66,9 +71,10 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         private TextView bookingAmount;
         private ProgressBar bookingLoadingIndicator;
 
-        BookingItemHolder(View itemView, RequestManager imageRequestManager) {
+        BookingItemHolder(View itemView, RequestManager imageRequestManager, boolean isRenter) {
             super(itemView);
             this.imageRequestManager = imageRequestManager;
+            this.isRenter = isRenter;
             bookingStatus = itemView.findViewById(R.id.booking_status);
             bookingPeriod = itemView.findViewById(R.id.booking_period);
             bookingCarPicture = itemView.findViewById(R.id.booking_car_picture);
@@ -83,7 +89,8 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         public void bind(Booking booking) {
             BookingState status = booking.getBookingStateType();
             bookingStatus.setBackgroundResource(status != null ? status.getColorId() : DEFAULT_STATE_COLOR);
-            bookingStatus.setText(status != null ? status.getTitleId() : DEFAULT_STATE);
+//            bookingStatus.setText(status != null ? status.getTitleId() : DEFAULT_STATE);
+            setStatusText(booking);
             String timeBegin = booking.getTimeBegin();
             String timeEnd = booking.getTimeEnd();
             String timePeriod = null;
@@ -116,5 +123,39 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                     .error(R.drawable.img_no_car)
                     .into(bookingCarPicture);
         }
+
+        private void setStatusText(Booking booking) {
+            BookingState status = booking.getBookingStateType();
+            if (status == null) {
+               bookingStatus.setText(DEFAULT_STATE);
+               return;
+            }
+
+            if (isRenter) {
+                switch (status.getTitleId()) {
+                    case R.string.booking_state_new:
+                        bookingStatus.setText(R.string.booking_state_new_renter);
+                        break;
+                    case R.string.booking_state_canceled:
+                        bookingStatus.setText(status.getTitleId());
+                        break;
+                    case R.string.booking_state_confirmed:
+                        bookingStatus.setText(status.getTitleId());
+                        break;
+                    case R.string.booking_state_collecting:
+                        bookingStatus.setText(R.string.booking_state_collecting_renter);
+                        break;
+                    case R.string.booking_state_collected:
+                        bookingStatus.setText(R.string.booking_state_collected_renter);
+                        break;
+                    default:
+                        bookingStatus.setText(DEFAULT_STATE);
+                        break;
+                }
+                return;
+            }
+            bookingStatus.setText(status.getTitleId());
+        }
     }
+
 }

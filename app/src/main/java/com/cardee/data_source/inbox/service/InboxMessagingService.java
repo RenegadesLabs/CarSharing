@@ -25,12 +25,9 @@ public class InboxMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData() == null) return;
 
-        mRepositoryController.updateInbox(remoteMessage, new ControllerCallback() {
-            @Override
-            public void notifyUser(Notification notificationData) {
-                mNotificationBuilder.createNotification(InboxMessagingService.this, notificationData);
-                mNotificationBuilder.showNotification(InboxMessagingService.this, notificationData);
-            }
+        mRepositoryController.updateInbox(remoteMessage, notificationData -> {
+            mNotificationBuilder.createNotification(InboxMessagingService.this, notificationData);
+            mNotificationBuilder.showNotification(InboxMessagingService.this, notificationData);
         });
     }
 }

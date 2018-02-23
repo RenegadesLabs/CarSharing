@@ -219,6 +219,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public void showProgress(boolean show) {
         if (mProgressBar != null) {
             mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            mCarsListView.setAlpha(show ? .5f : 1f);
         }
     }
 

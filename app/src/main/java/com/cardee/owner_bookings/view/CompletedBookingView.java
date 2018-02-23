@@ -114,7 +114,7 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
     }
 
     @Override
-    public void bind(Booking booking) {
+    public void bind(Booking booking, boolean isRenter) {
         toolbarTitle.setText(booking.getBookingNum());
         loadImageIntoView(booking.getPrimaryImage().getLink(),
                 R.drawable.img_no_car, carPhotoView, imgProgress, false);
