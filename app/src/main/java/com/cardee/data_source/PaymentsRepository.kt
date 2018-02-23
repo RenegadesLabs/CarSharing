@@ -5,7 +5,6 @@ import com.cardee.data_source.remote.RemotePaymentsDataSource
 import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import com.cardee.domain.rx.balance.Transaction
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

@@ -43,10 +43,6 @@ class TransactionHistoryFragment : Fragment(), BalanceTransactions.View<List<Tra
         presenter.fetchHistory(this)
     }
 
-    override fun getData(callback: (List<Transaction>) -> Unit) {
-        //Needless to implement
-    }
-
     override fun onResult(result: List<Transaction>) {
         transactionAdapter.addItems(result)
     }

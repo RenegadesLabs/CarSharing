@@ -114,7 +114,6 @@
             android:layout_marginBottom="@dimen/widget_margin_small"
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:layout_marginStart="@dimen/widget_margin_mid"
-            android:background="@drawable/bg_input_normal"
             app:layout_constraintBottom_toTopOf="@id/submitCaution"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

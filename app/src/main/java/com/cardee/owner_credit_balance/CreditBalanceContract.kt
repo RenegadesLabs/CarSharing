@@ -1,6 +1,8 @@
 package com.cardee.owner_credit_balance
 
+import android.os.Bundle
 import com.cardee.R
+import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import com.cardee.domain.rx.balance.Transaction
 
 
@@ -32,16 +34,16 @@ interface BalanceTransactions {
 
     interface Presenter {
 
-        fun <T> onTransferSubmit(view: View<T>)
+        fun <T> onTransferSubmit(view: View<T>, args: Bundle)
 
-        fun <T> onCardChargeSubmit(view: View<T>)
+        fun <T> onCardChargeSubmit(view: View<T>, args: Bundle)
+
+        fun fetchCards(view: View<List<CardsResponseBody>>)
 
         fun fetchHistory(view: View<List<Transaction>>)
     }
 
-    interface View<T> {
-
-        fun getData(callback: (T) -> Unit)
+    interface View<in T> {
 
         fun onResult(result: T)
 

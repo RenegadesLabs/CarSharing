@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height">
+
+    <ImageView
+        android:id="@+id/cardVendorImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_visa" />
+
+    <TextView
+        android:id="@+id/cardNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="4356 4577"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cardVendorImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cardPrimary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="Primary"
+        android:textColor="@color/text_disabled"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardSelected"
+        app:layout_constraintStart_toEndOf="@id/cardNumber"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@id/cardSelected"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_check" />
+</android.support.constraint.ConstraintLayout>
