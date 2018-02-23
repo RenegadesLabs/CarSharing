@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class NoDataResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private ErrorResponseBody errors;
 
     public NoDataResponse() {

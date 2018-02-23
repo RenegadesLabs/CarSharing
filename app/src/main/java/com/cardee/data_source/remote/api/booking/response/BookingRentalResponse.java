@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class BookingRentalResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private BookingRentalTerms rentalTerms;
 
     public BookingRentalResponse(){

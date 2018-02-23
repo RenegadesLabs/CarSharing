@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class BaseAuthResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     @JsonAdapter(JsonToAuthResponseAdapter.class)
     private BaseAuthResponseBody body;
 

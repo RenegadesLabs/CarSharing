@@ -11,7 +11,7 @@ import com.cardee.data_source.remote.api.offers.response.entity.OfferCarReview
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class OfferByIdResponse(@Expose @SerializedName("dataList") val offerResponse: OfferByIdResponseBody?) : BaseResponse()
+data class OfferByIdResponse(@Expose @SerializedName("data") val offerResponse: OfferByIdResponseBody?) : BaseResponse()
 
 data class OfferByIdResponseBody(@Expose @SerializedName("car_details") val carDetails: OfferByIdCarDetails? = null,
                                  @Expose @SerializedName("order_daily_details") val orderDailyDetails: OrderDailyDetailsEntity? = null,

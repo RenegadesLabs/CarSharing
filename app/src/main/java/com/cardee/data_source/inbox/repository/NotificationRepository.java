@@ -54,7 +54,7 @@ public class NotificationRepository implements NotificationContract {
                 .subscribeOn(Schedulers.io())
                 .filter(notificationResponse -> notificationResponse != null && notificationResponse.isSuccessful())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::proceedResponse, throwable -> Log.d(TAG, "Connection error while obtaining notification dataList"));
+                .subscribe(this::proceedResponse, throwable -> Log.d(TAG, "Connection error while obtaining notification data"));
     }
 
     private void proceedResponse(NotificationResponse notificationResponse) {

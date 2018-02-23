@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class ChatMessagesResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private ChatRemoteMessage[] mMessages;
 
     public ChatMessagesResponse() {

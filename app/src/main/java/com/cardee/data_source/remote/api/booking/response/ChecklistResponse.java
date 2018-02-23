@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class ChecklistResponse extends BaseResponse {
 
     @Expose
-    @SerializedName("dataList")
+    @SerializedName("data")
     private ChecklistEntity mChecklist;
 
     public ChecklistResponse() {

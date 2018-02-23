@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/btnSubmit"
+            android:id="@+id/btnCardSubmit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_regular_height"
             android:background="@drawable/bg_clickable_regular"
@@ -37,7 +37,7 @@
             android:text="@string/minimum_top_up"
             android:textColor="@color/text_subtitle_alt"
             android:textSize="@dimen/text_x_small"
-            app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+            app:layout_constraintBottom_toTopOf="@id/btnCardSubmit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/transferAmount"
+            android:id="@+id/cardTransferAmount"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
             android:layout_marginEnd="@dimen/widget_margin_mid"
@@ -86,9 +86,9 @@
             android:text="@string/transaction_fee_charge_caution"
             android:textColor="@color/red_error"
             android:textSize="@dimen/text_small"
-            app:layout_constraintEnd_toEndOf="@id/transferAmount"
-            app:layout_constraintStart_toStartOf="@id/transferAmount"
-            app:layout_constraintTop_toBottomOf="@id/transferAmount" />
+            app:layout_constraintEnd_toEndOf="@id/cardTransferAmount"
+            app:layout_constraintStart_toStartOf="@id/cardTransferAmount"
+            app:layout_constraintTop_toBottomOf="@id/cardTransferAmount" />
 
         <TextView
             android:id="@+id/selectCardTitle"
@@ -118,6 +118,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
+
+        <FrameLayout
+            android:id="@+id/loadingIndicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/bg_main"
+            app:layout_constraintTop_toTopOf="@id/selectCardList"
+            app:layout_constraintBottom_toBottomOf="@id/selectCardList"
+            app:layout_constraintStart_toStartOf="@id/selectCardList"
+            app:layout_constraintEnd_toEndOf="@id/selectCardList">
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:theme="@style/LoadingIndicator"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
