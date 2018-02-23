@@ -6,15 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.cardee.R
-import com.cardee.owner_credit_balance.BalanceParent
 import com.cardee.owner_credit_balance.ChildListener
+import com.cardee.owner_credit_balance.BalanceParent
 import com.cardee.owner_credit_balance.State
 import com.cardee.owner_credit_balance.presenter.CreditBalancePresenter
 import kotlinx.android.synthetic.main.activity_current_balance.*
 
-
-class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalancePresenter(),
-                            baseActionDelegate: BaseActionsView = BaseActionDelegate()) :
+class DepositBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalancePresenter(),
+                             baseActionDelegate: BaseActionsView = BaseActionDelegate()) :
         AppCompatActivity(), BalanceParent.View, ChildListener, BaseActionsView by baseActionDelegate {
 
     private var hasFragment: Boolean = false

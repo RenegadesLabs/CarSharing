@@ -2,7 +2,7 @@ package com.cardee.owner_credit_balance.presenter
 
 import com.cardee.domain.balance.FetchCreditBalance
 import com.cardee.domain.rx.Request
-import com.cardee.owner_credit_balance.CreditBalanceParent
+import com.cardee.owner_credit_balance.BalanceParent
 import com.cardee.owner_credit_balance.view.BaseActionsView
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -11,9 +11,9 @@ import java.util.*
 
 
 class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) :
-        CreditBalanceParent.Presenter {
+        BalanceParent.Presenter {
 
-    private lateinit var weakView: WeakReference<CreditBalanceParent.View>
+    private lateinit var weakView: WeakReference<BalanceParent.View>
     private var balanceFormatter: DecimalFormat = DecimalFormat("######0.00")
 
     init {
@@ -22,9 +22,13 @@ class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = Fetc
         balanceFormatter.decimalFormatSymbols = symbols
     }
 
-    override fun attachView(view: CreditBalanceParent.View) {
+    override fun attachView(view: BalanceParent.View) {
         weakView = WeakReference(view)
         weakView.get()?.initState()
+    }
+
+    override fun fetchCurrentDeposit() {
+
     }
 
     override fun fetchCurrentBalance() {

@@ -15,7 +15,6 @@ import com.cardee.owner_credit_balance.presenter.TransactionsPresenter
 import com.cardee.util.SimpleIso8601DateFormatter
 import com.cardee.util.ui.InputInteractionController
 import com.cardee.util.ui.input_strategy.StrategyFactory
-import kotlinx.android.synthetic.main.activity_pass_change.view.*
 import kotlinx.android.synthetic.main.fragment_bank_transfer.*
 import java.lang.ref.WeakReference
 import java.util.*
@@ -130,7 +129,7 @@ class BankTransferFragment : Fragment(), BalanceTransactions.View<Boolean> {
             hideKeyboard(view)
         }
         transferDateClear.setOnClickListener { clearDateInput() }
-        transferNumber.setOnClickListener { view ->
+        transferNumberClear.setOnClickListener { view ->
             transferNumber.text = null
             hideKeyboard(view)
         }

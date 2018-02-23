@@ -6,13 +6,15 @@ import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import com.cardee.domain.rx.balance.Transaction
 
 
-interface CreditBalanceParent {
+interface BalanceParent {
 
     interface Presenter {
 
         fun attachView(view: View)
 
         fun fetchCurrentBalance()
+
+        fun fetchCurrentDeposit()
 
         fun onDestroy()
     }
