@@ -7,16 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.cardee.R
+import com.cardee.custom.modal.DatePickerMenuFragment
 import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.presenter.TransactionsPresenter
+import com.cardee.util.SimpleIso8601DateFormatter
 import com.cardee.util.ui.InputInteractionController
 import com.cardee.util.ui.input_strategy.StrategyFactory
+import kotlinx.android.synthetic.main.activity_pass_change.view.*
 import kotlinx.android.synthetic.main.fragment_bank_transfer.*
 import java.lang.ref.WeakReference
+import java.util.*
 
 
-class BankTransferFragment : Fragment() {
+class BankTransferFragment : Fragment(), BalanceTransactions.View<Boolean> {
 
     companion object {
 
@@ -32,12 +37,12 @@ class BankTransferFragment : Fragment() {
     private lateinit var presenter: TransactionsPresenter
     private lateinit var controller: InputInteractionController
     private lateinit var mode: BalanceTransactions.Mode
+    private var toast: Toast? = null
     private var paddingLeft: Int = 0
     private var paddingLeftLarge: Int = 0
     private var paddingTop = 0
     private var paddingRight = 0
     private var paddingBottom = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +99,28 @@ class BankTransferFragment : Fragment() {
     }
 
     private fun initDateDialogAppearance() {
+        transferDate.setOnClickListener {
+            val dateString = transferDate.text.toString()
+            parseDate(dateString, { year, month, day ->
+                val menu = DatePickerMenuFragment.newInstance(DatePickerMenuFragment.Companion.DATETYPE.TRANSACTION, year, month, day)
+                menu.show(activity.supportFragmentManager, DatePickerMenuFragment::class.java.simpleName)
+                menu.setOnSaveClickListener(object : DatePickerMenuFragment.DialogOnClickListener {
+                    override fun onSaveClicked(type: DatePickerMenuFragment.Companion.DATETYPE, value: String) {
+                        transferDate.text = formatIsoDate(value)
+                    }
+                })
+            })
+        }
+    }
 
+    private fun formatIsoDate(isoDate: String): String? {
+        return SimpleIso8601DateFormatter.useInstance().format(isoDate, "dd MMM yyyy")
+    }
+
+    private fun parseDate(dateString: String, callback: (Int, Int, Int) -> Unit) {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date()
+        callback.invoke(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
     }
 
 
@@ -108,6 +134,35 @@ class BankTransferFragment : Fragment() {
             transferNumber.text = null
             hideKeyboard(view)
         }
+        btnSubmit.setOnClickListener { submit() }
+    }
+
+    private fun submit() {
+        val amountString = transferAmount.text.toString()
+        if (amountString.isEmpty()) {
+            onError("Please enter transaction amount")
+            return
+        }
+        val isoDate = transferDate.text.toString().takeIf { it.isNotEmpty() }?.run {
+            SimpleIso8601DateFormatter.useInstance().formatToIso(this, "dd MMM yyyy")
+        }
+        if (isoDate == null) {
+            onError("Please enter transfer date")
+            return
+        }
+        val number = transferNumber.text.toString()
+        if (number.isEmpty()) {
+            onError("Please enter transaction number")
+            return
+        }
+        val amount = (amountString.toDouble() * 100).toLong()
+
+        val args = Bundle()
+        args.putLong(TransactionsPresenter.AMOUNT, amount)
+        args.putString(TransactionsPresenter.DATE, isoDate)
+        args.putString(TransactionsPresenter.NUMBER, number)
+        args.putSerializable(TransactionsPresenter.MODE, mode)
+        presenter.onTransferSubmit(this, args)
     }
 
     private fun hideKeyboard(view: View) {
@@ -117,6 +172,27 @@ class BankTransferFragment : Fragment() {
 
     private fun clearDateInput() {
         transferDate.setText(R.string.top_up_amount)
+    }
 
+    override fun onResult(result: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFinish() {
+        activity.onBackPressed()
+    }
+
+    override fun showProgress(isShowing: Boolean) {
+
+    }
+
+    override fun onError(message: String?) {
+        toast?.cancel()
+        toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+        toast?.show()
+    }
+
+    override fun onEmpty() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

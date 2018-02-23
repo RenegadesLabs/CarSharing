@@ -34,19 +34,28 @@ class SimpleIso8601DateFormatter private constructor() {
     }
 
     fun format(isoDate: String, format: String): String? {
-        return parseDate(isoDate)?.let { date ->
+        return parseDate(isoDate, ISO8601_DATE_FORMAT)?.let { date ->
             formatter.applyPattern(format)
             return@let formatter.format(date)
         }
     }
 
-    private fun parseDate(date: String): Date? {
-        try {
+    fun formatToIso(dateString: String, format: String): String? {
+        return parseDate(dateString, format)?.let { date ->
             formatter.applyPattern(ISO8601_DATE_FORMAT)
+            return@let formatter.format(date)
+        }
+    }
+
+    private fun parseDate(date: String, format: String): Date? {
+        try {
+            formatter.applyPattern(format)
             return formatter.parse(date)
         } catch (ex: ParseException) {
             ex.printStackTrace()
         }
         return null
     }
+
+
 }

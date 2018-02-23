@@ -27,7 +27,7 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
         const val TYPE = "type"
 
         enum class DATETYPE {
-            BIRTHDAY, LICENSE
+            BIRTHDAY, LICENSE, TRANSACTION
         }
 
         fun newInstance(type: DATETYPE, year: Int, month: Int, date: Int): DatePickerMenuFragment {
@@ -100,6 +100,11 @@ class DatePickerMenuFragment : BottomSheetDialogFragment() {
             DATETYPE.LICENSE -> {
                 currentType = DATETYPE.LICENSE
                 root.dateDialogTitle.text = CardeeApp.context.resources.getString(R.string.particulars_license_dialog_title)
+                yearValues = initLicenseYears()
+            }
+            DATETYPE.TRANSACTION -> {
+                currentType = DATETYPE.LICENSE
+                root.dateDialogTitle.text = CardeeApp.context.resources.getString(R.string.date_of_transfer)
                 yearValues = initLicenseYears()
             }
             else -> {

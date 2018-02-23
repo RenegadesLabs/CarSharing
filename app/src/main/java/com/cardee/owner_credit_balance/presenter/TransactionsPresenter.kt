@@ -27,6 +27,8 @@ class TransactionsPresenter private constructor(
         const val AMOUNT = "card_transfer_amount"
         const val TOKEN = "card_payment_token"
         const val MODE = "credit_deposit"
+        const val DATE = "transaction_date"
+        const val NUMBER = "transaction_number"
 
         @Volatile
         private var instance: TransactionsPresenter? = null
@@ -40,7 +42,35 @@ class TransactionsPresenter private constructor(
     }
 
     override fun <T> onTransferSubmit(view: BalanceTransactions.View<T>, args: Bundle) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val amount = args.getLong(AMOUNT)
+        val isoDate = args.getString(DATE)
+        val number = args.getString(NUMBER)
+        val mode: BalanceTransactions.Mode? = args.getSerializable(MODE) as BalanceTransactions.Mode
+
+        val type = when (mode) {
+            BalanceTransactions.Mode.CREDIT -> PerformBankTransaction.BankTransferRequest.Type.CREDIT
+            BalanceTransactions.Mode.DEPOSIT -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            else -> throw IllegalStateException("Illegal View mode: $mode")
+        }
+
+        view.showProgress(true)
+        val weakView = WeakReference(view)
+        performBankTransaction.execute(PerformBankTransaction.BankTransferRequest(amount, isoDate, number, type), { result ->
+            weakView.get()?.let { view ->
+                view.showProgress(false)
+                if (result.success) {
+                    view.onError("Top-up successfully enrolled")
+                    view.onFinish()
+                } else {
+                    view.onError(result.errorMessage)
+                }
+            }
+        }, { error ->
+            weakView.get()?.let { view ->
+                view.showProgress(false)
+                view.onError(error.message)
+            }
+        })
     }
 
     override fun <T> onCardChargeSubmit(view: BalanceTransactions.View<T>, args: Bundle) {
