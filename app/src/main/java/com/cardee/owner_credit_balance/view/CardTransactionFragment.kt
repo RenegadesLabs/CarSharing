@@ -30,9 +30,18 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
 
     companion object {
 
-        fun newInstance(): Fragment {
-            return CardTransactionFragment()
+        fun newInstance(mode: BalanceTransactions.Mode = BalanceTransactions.Mode.CREDIT): Fragment {
+            val fragment = CardTransactionFragment()
+            val args = Bundle()
+            args.putSerializable(TransactionsPresenter.MODE, mode)
+            fragment.arguments = args
+            return fragment
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mode = arguments.getSerializable(TransactionsPresenter.MODE) as BalanceTransactions.Mode
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,7 +52,6 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
         }
         cardAdapter.selectListener = { token ->
             paymentToken = token
-
         }
         return inflater.inflate(R.layout.fragment_card_transfer, container, false)
     }

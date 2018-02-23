@@ -63,7 +63,7 @@ class TransactionsPresenter private constructor(
             weakView.get()?.let { view ->
                 view.showProgress(false)
                 if (result.success) {
-                    view.onError("Transaction was sent to server")
+                    view.onError("Top-up successfully enrolled")
                     view.onFinish()
                 } else {
                     view.onError(result.errorMessage)

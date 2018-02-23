@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.cardee.R
+import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.presenter.TransactionsPresenter
 import com.cardee.util.ui.InputInteractionController
 import com.cardee.util.ui.input_strategy.StrategyFactory
@@ -19,13 +20,18 @@ class BankTransferFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(): Fragment {
-            return BankTransferFragment()
+        fun newInstance(mode: BalanceTransactions.Mode = BalanceTransactions.Mode.CREDIT): Fragment {
+            val fragment = BankTransferFragment()
+            val args = Bundle()
+            args.putSerializable(TransactionsPresenter.MODE, mode)
+            fragment.arguments = args
+            return fragment
         }
     }
 
     private lateinit var presenter: TransactionsPresenter
     private lateinit var controller: InputInteractionController
+    private lateinit var mode: BalanceTransactions.Mode
     private var paddingLeft: Int = 0
     private var paddingLeftLarge: Int = 0
     private var paddingTop = 0
@@ -37,6 +43,7 @@ class BankTransferFragment : Fragment() {
         super.onCreate(savedInstanceState)
         presenter = TransactionsPresenter.useInstance()
         controller = InputInteractionController()
+        mode = arguments.getSerializable(TransactionsPresenter.MODE) as BalanceTransactions.Mode
         initRes(activity)
     }
 

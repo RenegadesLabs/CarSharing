@@ -28,6 +28,7 @@ class CardListAdapter(private val items: MutableList<CardWrapper> = mutableListO
         set(value) {
             items.find { card -> card.selected }?.card?.
                     paymentToken?.let { token -> value.invoke(token) }
+            field = value
         }
     var addCardListener: () -> Unit = {}
 
