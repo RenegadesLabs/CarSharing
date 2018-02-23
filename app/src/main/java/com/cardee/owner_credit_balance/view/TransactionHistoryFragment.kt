@@ -47,6 +47,10 @@ class TransactionHistoryFragment : Fragment(), BalanceTransactions.View<List<Tra
         transactionAdapter.addItems(result)
     }
 
+    override fun onFinish() {
+
+    }
+
     override fun showProgress(isShowing: Boolean) {
 
     }

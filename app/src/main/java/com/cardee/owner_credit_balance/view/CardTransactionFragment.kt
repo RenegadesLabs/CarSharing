@@ -23,6 +23,7 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
     private val presenter = TransactionsPresenter.useInstance()
     private lateinit var cardAdapter: CardListAdapter
     private lateinit var controller: InputInteractionController
+    private lateinit var mode: BalanceTransactions.Mode
     private var toast: Toast? = null
     private var paymentToken: String? = null
     private var amount: Long? = null
@@ -67,6 +68,9 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
         presenter.fetchCards(this)
 
         btnCardSubmit.setOnClickListener {
+            if (loadingIndicator.visibility == View.VISIBLE) {
+                return@setOnClickListener
+            }
             if (amount == null || amount == 0L) {
                 onError("Please enter transaction amount")
                 return@setOnClickListener
@@ -78,12 +82,17 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
             val args = Bundle()
             args.putLong(TransactionsPresenter.AMOUNT, amount!!)
             args.putString(TransactionsPresenter.TOKEN, paymentToken)
+            args.putSerializable(TransactionsPresenter.MODE, mode)
             presenter.onCardChargeSubmit(this, args)
         }
     }
 
     override fun onResult(result: List<CardsResponseBody>) {
         cardAdapter.addItems(result)
+    }
+
+    override fun onFinish() {
+        activity.onBackPressed()
     }
 
     override fun showProgress(isShowing: Boolean) {

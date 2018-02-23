@@ -15,14 +15,6 @@ class InputInteractionController {
         val weakInput = WeakReference(input)
         input.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 weakInput.get()?.let { input ->
                     val watcher = this
                     map[input.id]?.apply {
@@ -31,6 +23,14 @@ class InputInteractionController {
                         input.addTextChangedListener(watcher)
                     }
                 }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
         })
     }

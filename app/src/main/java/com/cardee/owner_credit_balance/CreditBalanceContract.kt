@@ -27,6 +27,8 @@ interface CreditBalanceParent {
 
 interface BalanceTransactions {
 
+    enum class Mode { CREDIT, DEPOSIT }
+
     companion object {
         const val SUCCESS: Int = 200
         const val FAILED: Int = 202
@@ -46,6 +48,8 @@ interface BalanceTransactions {
     interface View<in T> {
 
         fun onResult(result: T)
+
+        fun onFinish()
 
         fun showProgress(isShowing: Boolean)
 

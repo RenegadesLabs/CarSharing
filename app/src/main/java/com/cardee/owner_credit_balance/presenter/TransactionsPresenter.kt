@@ -7,6 +7,8 @@ import com.cardee.domain.RxUseCase
 import com.cardee.domain.UseCase
 import com.cardee.domain.payments.usecase.GetCardsUseCase
 import com.cardee.domain.rx.Request
+import com.cardee.domain.rx.balance.PerformBankTransaction
+import com.cardee.domain.rx.balance.PerformCardTransaction
 import com.cardee.domain.rx.balance.RetrieveTransactionHistory
 import com.cardee.domain.rx.balance.Transaction
 import com.cardee.owner_credit_balance.BalanceTransactions
@@ -15,13 +17,16 @@ import java.lang.ref.WeakReference
 
 class TransactionsPresenter private constructor(
         private val transactionSource: RetrieveTransactionHistory = RetrieveTransactionHistory(),
-        private val cardsSource: GetCardsUseCase = GetCardsUseCase()) :
+        private val cardsSource: GetCardsUseCase = GetCardsUseCase(),
+        private val performCardTransaction: PerformCardTransaction = PerformCardTransaction(),
+        private val performBankTransaction: PerformBankTransaction = PerformBankTransaction()) :
         BalanceTransactions.Presenter {
 
     companion object {
 
         const val AMOUNT = "card_transfer_amount"
         const val TOKEN = "card_payment_token"
+        const val MODE = "credit_deposit"
 
         @Volatile
         private var instance: TransactionsPresenter? = null
@@ -39,7 +44,49 @@ class TransactionsPresenter private constructor(
     }
 
     override fun <T> onCardChargeSubmit(view: BalanceTransactions.View<T>, args: Bundle) {
+        val amount = args.getLong(AMOUNT)
+        val token = args.getString(TOKEN)
+        val mode: BalanceTransactions.Mode? = args.getSerializable(MODE) as BalanceTransactions.Mode
+        if (validate(view, amount, token).not()) {
+            return
+        }
 
+        val type = when (mode) {
+            BalanceTransactions.Mode.CREDIT -> PerformCardTransaction.CardTransactionRequest.Type.CREDIT
+            BalanceTransactions.Mode.DEPOSIT -> PerformCardTransaction.CardTransactionRequest.Type.DEPOSIT
+            else -> throw IllegalStateException("Illegal View mode: $mode")
+        }
+
+        view.showProgress(true)
+        val weakView = WeakReference(view)
+        performCardTransaction.execute(PerformCardTransaction.CardTransactionRequest(amount, token, type), { result ->
+            weakView.get()?.let { view ->
+                view.showProgress(false)
+                if (result.success) {
+                    view.onError("Transaction was sent to server")
+                    view.onFinish()
+                } else {
+                    view.onError(result.errorMessage)
+                }
+            }
+        }, { error ->
+            weakView.get()?.let { view ->
+                view.showProgress(false)
+                view.onError(error.message)
+            }
+        })
+    }
+
+    private fun <T> validate(view: BalanceTransactions.View<T>, amount: Long?, token: String?): Boolean {
+        if (amount == null || amount == 0L) {
+            view.onError("Please enter transaction amount")
+            return false
+        }
+        if (token.isNullOrEmpty()) {
+            view.onError("Please select card or add new")
+            return false
+        }
+        return true
     }
 
     override fun fetchCards(view: BalanceTransactions.View<List<CardsResponseBody>>) {
@@ -65,7 +112,6 @@ class TransactionsPresenter private constructor(
                             view.onError(error.message)
                         }
                     }
-
                 })
     }
 

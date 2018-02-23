@@ -4,6 +4,8 @@ import com.cardee.data_source.cache.LocalPaymentsDataSource
 import com.cardee.data_source.remote.RemotePaymentsDataSource
 import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
+import com.cardee.domain.rx.balance.BankTransfer
+import com.cardee.domain.rx.balance.CardPayment
 import com.cardee.domain.rx.balance.Transaction
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -39,4 +41,19 @@ class PaymentsRepository : PaymentsDataSource {
         return remoteSource.getTransactions()
     }
 
+    override fun payCreditWithCard(payment: CardPayment): Single<Boolean> {
+        return remoteSource.payCreditWithCard(payment)
+    }
+
+    override fun payCreditWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        return remoteSource.payCreditWithBankTransfer(transfer)
+    }
+
+    override fun payDepositWithCard(payment: CardPayment): Single<Boolean> {
+        return remoteSource.payDepositWithCard(payment)
+    }
+
+    override fun payDepositWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        return remoteSource.payDepositWithBankTransfer(transfer)
+    }
 }
