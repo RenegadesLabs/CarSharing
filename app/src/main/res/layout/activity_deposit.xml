@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/depositToolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/depositToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:titleTextColor="@color/bg_main">
+
+            <TextView
+                android:id="@+id/depositToolbarTitle"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/deposit_title" />
+
+            <TextView
+                android:id="@+id/depositToolbarAction"
+                style="@style/ToolbarAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/title_save" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/bgHeader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_underlined_large"
+        app:layout_constraintBottom_toBottomOf="@+id/depositInfoLink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/depositInfo" />
+
+    <TextView
+        android:id="@id/depositInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_mid"
+        android:paddingTop="@dimen/widget_padding_large"
+        android:text="@string/deposit_info"
+        android:textColor="@color/text_regular"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/depositToolbarLayout" />
+
+    <TextView
+        android:id="@id/depositInfoLink"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/widget_padding_large"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_mid"
+        android:paddingTop="@dimen/widget_padding_large"
+        android:text="@string/deposit_info_link"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/depositInfo" />
+
+    <RelativeLayout
+        android:id="@+id/btnDepositBankTransfer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_clickable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="22dp"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_large"
+        android:paddingTop="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bgHeader">
+
+        <TextView
+            android:id="@+id/depositBankTransferTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/deposit_bank_payment"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular" />
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_regular"
+            android:layout_height="@dimen/item_icon_side_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnDepositCardTransaction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_clickable_bottom_line"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="22dp"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_large"
+        android:paddingTop="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDepositBankTransfer">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/depositCardTransactionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_margin_xx_small"
+                android:text="@string/deposit_card_payment"
+                android:textColor="@color/text_regular"
+                android:textSize="@dimen/text_regular" />
+
+            <TextView
+                android:id="@+id/depositCardTransactionSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_fee_amount"
+                android:textColor="@color/text_subtitle_alt"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/item_icon_side_regular"
+            android:layout_height="@dimen/item_icon_side_regular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/depositContactPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/widget_padding_mid"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_mid"
+        android:text="@string/deposit_contact_phone"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/depositCashInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/widget_padding_mid"
+        android:paddingStart="@dimen/widget_padding_mid"
+        android:text="@string/deposit_cash_payment"
+        android:textColor="@color/text_subtitle_alt"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toTopOf="@id/depositContactPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

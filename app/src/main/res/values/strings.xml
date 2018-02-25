@@ -890,4 +890,12 @@
     <string name="add_new_card">Add New Card</string>
     <string name="balance_amount">Balance XZXZX</string>
     <string name="currency">$</string>
+    <string name="deposit_info">To maintain the quality of our community and to prevent users from abusing our platform,
+    a refundable deposit of 100$ is required.</string>
+    <string name="deposit_info_link">Learn more</string>
+    <string name="deposit_bank_payment">Pay deposit with Bank Transfer</string>
+    <string name="deposit_card_payment">Pay deposit with Card</string>
+    <string name="deposit_cash_payment">If your would like to pay by cash instead, contact us at</string>
+    <string name="deposit_contact_phone">+65 8179 8186</string>
+    <string name="deposit_title">Deposit</string>
 </resources>

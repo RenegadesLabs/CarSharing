@@ -16,6 +16,7 @@ import com.cardee.account_verify.presenter.VerifyAccountPresenter
 import com.cardee.account_verify.profilePhoto.ProfilePhotoActivity
 import com.cardee.databinding.ActivityVerifyAccountBinding
 import com.cardee.domain.profile.entity.VerifyAccountState
+import com.cardee.owner_credit_balance.view.DepositActivity
 import kotlinx.android.synthetic.main.activity_verify_account.*
 
 class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnClickListener {
@@ -93,6 +94,10 @@ class VerifyAccountActivity : AppCompatActivity(), VerifyAccountView, View.OnCli
             saveProgress -> {
                 presenter?.saveProgress()
                 onBackPressed()
+            }
+            depositContainer -> {
+                val intent = Intent(this, DepositActivity::class.java)
+                startActivity(intent)
             }
         }
     }
