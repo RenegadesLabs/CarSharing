@@ -1,5 +1,7 @@
 package com.cardee.owner_credit_balance.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.account_verify.credit_card.CreditCardActivity
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.presenter.TransactionsPresenter
@@ -30,6 +33,8 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
 
     companion object {
 
+        const val ADD_CARD_REQUEST = 101
+
         fun newInstance(mode: BalanceTransactions.Mode = BalanceTransactions.Mode.CREDIT): Fragment {
             val fragment = CardTransactionFragment()
             val args = Bundle()
@@ -48,7 +53,8 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
         cardAdapter = CardListAdapter(inflater = inflater)
         controller = InputInteractionController()
         cardAdapter.addCardListener = {
-
+            val addCardIntent = Intent(activity, CreditCardActivity::class.java)
+            startActivityForResult(addCardIntent, ADD_CARD_REQUEST)
         }
         cardAdapter.selectListener = { token ->
             paymentToken = token
@@ -93,6 +99,13 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
             args.putSerializable(TransactionsPresenter.MODE, mode)
             presenter.onCardChargeSubmit(this, args)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADD_CARD_REQUEST && resultCode == Activity.RESULT_OK) {
+            presenter.fetchCards(this)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResult(result: List<CardsResponseBody>) {

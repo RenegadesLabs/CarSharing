@@ -1,5 +1,6 @@
 package com.cardee.account_verify.credit_card
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -27,12 +28,21 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
     private var dateDelegate: DateRepresentationDelegate? = null
     private var action: Action? = null
     private var verify: Boolean = false
+    private var forResult = false
+
+    companion object {
+        const val RESULT = "started_for_result"
+    }
 
     enum class Action { NEXT, SAVE }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credit_card)
+        intent.extras?.apply {
+            forResult = containsKey(RESULT)
+        }
+        if(forResult) nextActivityButton.visibility = View.GONE
         initToolBar()
         setListeners()
         getIntentData()
@@ -205,10 +215,14 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
 //                startActivity(intent)
             }
             Action.SAVE -> {
-
-                val intent = Intent(this, VerifyAccountActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
+                if (forResult) {
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                } else {
+                    val intent = Intent(this, VerifyAccountActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
             }
         }
     }
