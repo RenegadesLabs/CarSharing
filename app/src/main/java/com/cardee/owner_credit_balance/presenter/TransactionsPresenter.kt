@@ -47,10 +47,20 @@ class TransactionsPresenter private constructor(
         val number = args.getString(NUMBER)
         val mode: BalanceTransactions.Mode? = args.getSerializable(MODE) as BalanceTransactions.Mode
 
+        val resultMessage: String
         val type = when (mode) {
-            BalanceTransactions.Mode.CREDIT -> PerformBankTransaction.BankTransferRequest.Type.CREDIT
-            BalanceTransactions.Mode.DEPOSIT_BANK -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
-            BalanceTransactions.Mode.DEPOSIT_CARD -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            BalanceTransactions.Mode.CREDIT -> {
+                resultMessage = "Top-up successfully enrolled"
+                PerformBankTransaction.BankTransferRequest.Type.CREDIT
+            }
+            BalanceTransactions.Mode.DEPOSIT_BANK -> {
+                resultMessage = "Deposit successfully enrolled"
+                PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            }
+            BalanceTransactions.Mode.DEPOSIT_CARD -> {
+                resultMessage = "Deposit successfully enrolled"
+                PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            }
             else -> throw IllegalStateException("Illegal View mode: $mode")
         }
 
@@ -60,7 +70,7 @@ class TransactionsPresenter private constructor(
             weakView.get()?.let { view ->
                 view.showProgress(false)
                 if (result.success) {
-                    view.onError("Top-up successfully enrolled")
+                    view.onError(resultMessage)
                     view.onFinish()
                 } else {
                     view.onError(result.errorMessage)

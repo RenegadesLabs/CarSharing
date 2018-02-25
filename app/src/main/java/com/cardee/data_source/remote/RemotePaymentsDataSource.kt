@@ -85,11 +85,11 @@ class RemotePaymentsDataSource : PaymentsDataSource {
     }
 
     override fun payDepositWithCard(payment: CardPayment): Single<Boolean> {
-        return api.topUpCard(payment).toSingle().flatMap { response -> Single.just(response.success) }
+        return api.depositCard(payment).toSingle().flatMap { response -> Single.just(response.success) }
     }
 
     override fun payDepositWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
-        return api.topUpBank(transfer).toSingle().flatMap { response -> Single.just(response.success) }
+        return api.depositBank(transfer).toSingle().flatMap { response -> Single.just(response.success) }
     }
 
     private fun handleErrorResponse(callback: PaymentsDataSource.BaseCallback, response: BaseResponse) {

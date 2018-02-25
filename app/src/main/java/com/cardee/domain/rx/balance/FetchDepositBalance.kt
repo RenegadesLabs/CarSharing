@@ -20,7 +20,7 @@ class FetchDepositBalance(private val repository: RemoteRenterProfileDataSource 
         return Observable.create<Response<Double>> { emitter ->
             repository.loadRenterProfile(object : RenterProfileDataSource.ProfileCallback {
                 override fun onSuccess(renterProfile: RenterProfile?) {
-                    emitter.onNext(Response(0.0))
+                    emitter.onNext(Response(100.0))
                 }
 
                 override fun onError(error: Error?) {

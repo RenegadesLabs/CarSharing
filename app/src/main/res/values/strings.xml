@@ -891,7 +891,7 @@
     <string name="balance_amount">Balance XZXZX</string>
     <string name="currency">$</string>
     <string name="deposit_info">To maintain the quality of our community and to prevent users from abusing our platform,
-    a refundable deposit of 100$ is required.</string>
+    a refundable deposit of $100 is required.</string>
     <string name="deposit_info_link">Learn more</string>
     <string name="deposit_bank_payment">Pay deposit with Bank Transfer</string>
     <string name="deposit_card_payment">Pay deposit with Card</string>
