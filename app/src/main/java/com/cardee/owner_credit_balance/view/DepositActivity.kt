@@ -1,10 +1,12 @@
 package com.cardee.owner_credit_balance.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.cardee.R
+import com.cardee.owner_credit_balance.BalanceTransactions
 import kotlinx.android.synthetic.main.activity_deposit.*
 
 
@@ -35,8 +37,14 @@ class DepositActivity : AppCompatActivity(), View.OnClickListener {
         view ?: return
         when (view) {
             btnDepositBankTransfer -> {
+                val bankIntent = Intent(this, BalanceActivity::class.java)
+                bankIntent.putExtra(BalanceActivity.MODE, BalanceTransactions.Mode.DEPOSIT_BANK)
+                startActivity(bankIntent)
             }
             btnDepositCardTransaction -> {
+                val cardIntent = Intent(this, BalanceActivity::class.java)
+                cardIntent.putExtra(BalanceActivity.MODE, BalanceTransactions.Mode.DEPOSIT_CARD)
+                startActivity(cardIntent)
             }
             depositToolbarAction -> onBackPressed()
         }

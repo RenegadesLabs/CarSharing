@@ -3,6 +3,7 @@ package com.cardee.owner_credit_balance.presenter
 import com.cardee.domain.balance.FetchCreditBalance
 import com.cardee.domain.rx.Request
 import com.cardee.owner_credit_balance.BalanceParent
+import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.view.BaseActionsView
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -10,7 +11,7 @@ import java.text.DecimalFormatSymbols
 import java.util.*
 
 
-class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) :
+class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) :
         BalanceParent.Presenter {
 
     private lateinit var weakView: WeakReference<BalanceParent.View>
@@ -27,12 +28,16 @@ class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = Fetc
         weakView.get()?.initState()
     }
 
-    override fun fetchCurrentDeposit() {
-
+    override fun fetchCurrentBalance(mode: BalanceTransactions.Mode) {
+        fetchUseCase.stop()
+        when (mode) {
+            BalanceTransactions.Mode.CREDIT -> fetchCredit()
+            BalanceTransactions.Mode.DEPOSIT_BANK -> fetchDeposit()
+            BalanceTransactions.Mode.DEPOSIT_CARD -> fetchDeposit()
+        }
     }
 
-    override fun fetchCurrentBalance() {
-        fetchUseCase.stop()
+    private fun fetchCredit() {
         fetchUseCase.execute(object : Request {}, { response ->
             if (response.success) {
                 weakView.get()?.onResult(balanceFormatter.format(response.body))
@@ -42,6 +47,10 @@ class CreditBalancePresenter(private val fetchUseCase: FetchCreditBalance = Fetc
         }, { throwable ->
             showMessage(throwable.message)
         })
+    }
+
+    private fun fetchDeposit() {
+
     }
 
     fun showMessage(message: String?) {

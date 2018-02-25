@@ -12,9 +12,7 @@ interface BalanceParent {
 
         fun attachView(view: View)
 
-        fun fetchCurrentBalance()
-
-        fun fetchCurrentDeposit()
+        fun fetchCurrentBalance(mode: BalanceTransactions.Mode)
 
         fun onDestroy()
     }
@@ -29,7 +27,7 @@ interface BalanceParent {
 
 interface BalanceTransactions {
 
-    enum class Mode { CREDIT, DEPOSIT }
+    enum class Mode { CREDIT, DEPOSIT_CARD, DEPOSIT_BANK }
 
     companion object {
         const val SUCCESS: Int = 200

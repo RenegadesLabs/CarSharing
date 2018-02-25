@@ -7,16 +7,22 @@ import android.view.MenuItem
 import android.view.View
 import com.cardee.R
 import com.cardee.owner_credit_balance.BalanceParent
+import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.ChildListener
 import com.cardee.owner_credit_balance.State
-import com.cardee.owner_credit_balance.presenter.CreditBalancePresenter
+import com.cardee.owner_credit_balance.presenter.BalancePresenter
 import kotlinx.android.synthetic.main.activity_current_balance.*
 
 
-class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalancePresenter(),
-                            baseActionDelegate: BaseActionsView = BaseActionDelegate()) :
+class BalanceActivity(val presenter: BalanceParent.Presenter = BalancePresenter(),
+                      baseActionDelegate: BaseActionsView = BaseActionDelegate()) :
         AppCompatActivity(), BalanceParent.View, ChildListener, BaseActionsView by baseActionDelegate {
 
+    companion object {
+        const val MODE = "balance_mode"
+    }
+
+    private lateinit var mode: BalanceTransactions.Mode
     private var hasFragment: Boolean = false
     private val addFragmentAction = { fragment: Fragment, tag: String ->
         supportFragmentManager
@@ -35,6 +41,7 @@ class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalan
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_balance)
+        mode = intent.getSerializableExtra(MODE) as BalanceTransactions.Mode
         supportActionBar ?: initToolbar()
         initProgressView(loadingIndicator)
         presenter.attachView(this)
@@ -50,7 +57,7 @@ class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalan
 
     override fun onStart() {
         super.onStart()
-        presenter.fetchCurrentBalance()
+        presenter.fetchCurrentBalance(mode)
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
@@ -69,14 +76,18 @@ class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalan
     }
 
     override fun initState() {
-        onChangeState(State.HOME)
+        when (mode) {
+            BalanceTransactions.Mode.CREDIT -> onChangeState(State.HOME)
+            BalanceTransactions.Mode.DEPOSIT_CARD -> onChangeState(State.CARD)
+            BalanceTransactions.Mode.DEPOSIT_BANK -> onChangeState(State.BANK)
+        }
     }
 
     override fun onChangeState(state: State) {
         val fragment = when (state) {
             State.HOME -> CreditBalanceHomeFragment.newInstance()
-            State.BANK -> BankTransferFragment.newInstance()
-            State.CARD -> CardTransactionFragment.newInstance()
+            State.BANK -> BankTransferFragment.newInstance(mode)
+            State.CARD -> CardTransactionFragment.newInstance(mode)
             State.HISTORY -> TransactionHistoryFragment.newInstance()
         }
         if (hasFragment.not()) {
@@ -92,7 +103,7 @@ class CreditBalanceActivity(val presenter: BalanceParent.Presenter = CreditBalan
 
     override fun onTaskDone() {
         supportFragmentManager.popBackStack()
-        presenter.fetchCurrentBalance()
+        presenter.fetchCurrentBalance(mode)
     }
 
     override fun onDestroy() {

@@ -246,7 +246,7 @@
             android:theme="@style/ChatStyle"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name=".owner_credit_balance.view.CreditBalanceActivity"
+            android:name=".owner_credit_balance.view.BalanceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity

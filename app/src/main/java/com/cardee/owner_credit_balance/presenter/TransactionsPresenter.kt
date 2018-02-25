@@ -49,7 +49,8 @@ class TransactionsPresenter private constructor(
 
         val type = when (mode) {
             BalanceTransactions.Mode.CREDIT -> PerformBankTransaction.BankTransferRequest.Type.CREDIT
-            BalanceTransactions.Mode.DEPOSIT -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            BalanceTransactions.Mode.DEPOSIT_BANK -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
+            BalanceTransactions.Mode.DEPOSIT_CARD -> PerformBankTransaction.BankTransferRequest.Type.DEPOSIT
             else -> throw IllegalStateException("Illegal View mode: $mode")
         }
 
@@ -83,7 +84,8 @@ class TransactionsPresenter private constructor(
 
         val type = when (mode) {
             BalanceTransactions.Mode.CREDIT -> PerformCardTransaction.CardTransactionRequest.Type.CREDIT
-            BalanceTransactions.Mode.DEPOSIT -> PerformCardTransaction.CardTransactionRequest.Type.DEPOSIT
+            BalanceTransactions.Mode.DEPOSIT_BANK -> PerformCardTransaction.CardTransactionRequest.Type.DEPOSIT
+            BalanceTransactions.Mode.DEPOSIT_CARD -> PerformCardTransaction.CardTransactionRequest.Type.DEPOSIT
             else -> throw IllegalStateException("Illegal View mode: $mode")
         }
 
