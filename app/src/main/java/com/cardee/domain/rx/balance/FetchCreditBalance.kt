@@ -1,4 +1,4 @@
-package com.cardee.domain.balance
+package com.cardee.domain.rx.balance
 
 import com.cardee.data_source.Error
 import com.cardee.data_source.OwnerProfileDataSource

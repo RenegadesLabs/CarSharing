@@ -1,7 +1,8 @@
 package com.cardee.owner_credit_balance.presenter
 
-import com.cardee.domain.balance.FetchCreditBalance
+import com.cardee.domain.rx.balance.FetchCreditBalance
 import com.cardee.domain.rx.Request
+import com.cardee.domain.rx.balance.FetchDepositBalance
 import com.cardee.owner_credit_balance.BalanceParent
 import com.cardee.owner_credit_balance.BalanceTransactions
 import com.cardee.owner_credit_balance.view.BaseActionsView
@@ -11,7 +12,8 @@ import java.text.DecimalFormatSymbols
 import java.util.*
 
 
-class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCreditBalance()) :
+class BalancePresenter(private val fetchCreditUseCase: FetchCreditBalance = FetchCreditBalance(),
+                       private val fetchDepositUseCase: FetchDepositBalance = FetchDepositBalance()) :
         BalanceParent.Presenter {
 
     private lateinit var weakView: WeakReference<BalanceParent.View>
@@ -29,7 +31,7 @@ class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCredi
     }
 
     override fun fetchCurrentBalance(mode: BalanceTransactions.Mode) {
-        fetchUseCase.stop()
+        fetchCreditUseCase.stop()
         when (mode) {
             BalanceTransactions.Mode.CREDIT -> fetchCredit()
             BalanceTransactions.Mode.DEPOSIT_BANK -> fetchDeposit()
@@ -38,7 +40,7 @@ class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCredi
     }
 
     private fun fetchCredit() {
-        fetchUseCase.execute(object : Request {}, { response ->
+        fetchCreditUseCase.execute(object : Request {}, { response ->
             if (response.success) {
                 weakView.get()?.onResult(balanceFormatter.format(response.body))
             } else {
@@ -50,7 +52,15 @@ class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCredi
     }
 
     private fun fetchDeposit() {
-
+        fetchDepositUseCase.execute(object : Request {}, { response ->
+            if (response.success) {
+                weakView.get()?.onResult(balanceFormatter.format(response.body))
+            } else {
+                showMessage(response.errorMessage)
+            }
+        }, { throwable ->
+            showMessage(throwable.message)
+        })
     }
 
     fun showMessage(message: String?) {
@@ -61,7 +71,7 @@ class BalancePresenter(private val fetchUseCase: FetchCreditBalance = FetchCredi
     }
 
     override fun onDestroy() {
-        fetchUseCase.stop()
+        fetchCreditUseCase.stop()
         weakView.clear()
     }
 }
