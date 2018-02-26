@@ -72,5 +72,6 @@ enum class State(val titleId: Int, val tag: String) {
     HOME(R.string.title_credit, "balance_home"),
     BANK(R.string.title_top_up, "bank_transfer"),
     CARD(R.string.title_top_up, "card_transaction"),
-    HISTORY(R.string.title_transaction_history, "transaction_history");
+    HISTORY(R.string.title_transaction_history, "transaction_history"),
+    DEPOSIT(R.string.deposit_title, "deposit_balance")
 }
