@@ -197,6 +197,9 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         stackBuilder.addNextIntent(bookingIntent);
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case INIT_CHECKLIST:
+                        PendingChecklistStorage.addChecklist(context, objectId);
+
+
                         //TODO: checkList();
                         break;
                     case OWNER_REVIEW:
