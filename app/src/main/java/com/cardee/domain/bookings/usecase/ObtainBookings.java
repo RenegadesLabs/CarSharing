@@ -75,7 +75,7 @@ public class ObtainBookings implements UseCase<ObtainBookings.RequestValues, Obt
                 repository.obtainOwnerBookings(filter, sort, forceUpdate, repositoryCallback);
                 break;
             case RENTER:
-                repository.obtainRenterBookings(filter, sort, repositoryCallback);
+                repository.obtainRenterBookings(filter, sort, forceUpdate, repositoryCallback);
                 break;
         }
     }

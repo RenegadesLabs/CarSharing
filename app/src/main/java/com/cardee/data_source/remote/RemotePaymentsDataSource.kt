@@ -8,6 +8,11 @@ import com.cardee.data_source.remote.api.NoDataResponse
 import com.cardee.data_source.remote.api.payments.Payments
 import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.PaymentCardsResponse
+import com.cardee.domain.rx.balance.BankTransfer
+import com.cardee.domain.rx.balance.CardPayment
+import com.cardee.domain.rx.balance.Transaction
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableMaybeObserver
@@ -65,6 +70,26 @@ class RemotePaymentsDataSource : PaymentsDataSource {
                         callback.onError(Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST))
                     }
                 })
+    }
+
+    override fun getTransactions(): Single<List<Transaction>> {
+        return api.obtainTransactions().toSingle().flatMap { response -> Single.just(response.transactions) }
+    }
+
+    override fun payCreditWithCard(payment: CardPayment): Single<Boolean> {
+        return api.topUpCard(payment).toSingle().flatMap { response -> Single.just(response.success) }
+    }
+
+    override fun payCreditWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        return api.topUpBank(transfer).toSingle().flatMap { response -> Single.just(response.success) }
+    }
+
+    override fun payDepositWithCard(payment: CardPayment): Single<Boolean> {
+        return api.depositCard(payment).toSingle().flatMap { response -> Single.just(response.success) }
+    }
+
+    override fun payDepositWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        return api.depositBank(transfer).toSingle().flatMap { response -> Single.just(response.success) }
     }
 
     private fun handleErrorResponse(callback: PaymentsDataSource.BaseCallback, response: BaseResponse) {

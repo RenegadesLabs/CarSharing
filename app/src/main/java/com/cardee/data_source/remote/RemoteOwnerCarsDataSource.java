@@ -1,7 +1,5 @@
 package com.cardee.data_source.remote;
 
-import android.util.Log;
-
 import com.cardee.CardeeApp;
 import com.cardee.data_source.Error;
 import com.cardee.data_source.OwnerCarsDataSource;
@@ -11,7 +9,6 @@ import com.cardee.data_source.remote.api.profile.response.CarsResponse;
 
 import java.io.IOException;
 
-import io.reactivex.functions.Consumer;
 import retrofit2.Response;
 
 public class RemoteOwnerCarsDataSource implements OwnerCarsDataSource {

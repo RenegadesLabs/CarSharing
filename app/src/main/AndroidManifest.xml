@@ -245,6 +245,13 @@
             android:name=".account_verify.credit_card.CreditCardActivity"
             android:theme="@style/ChatStyle"
             android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".owner_credit_balance.view.BalanceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".owner_credit_balance.view.DepositActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

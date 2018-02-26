@@ -42,7 +42,7 @@ public class BookingListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Settings settings = SettingsManager.getInstance(getActivity()).obtainSettings();
         presenter = new OwnerBookingListPresenter(this, settings);
-        adapter = new BookingListAdapter(presenter, getActivity());
+        adapter = new BookingListAdapter(presenter, getActivity(), false);
     }
 
     @Nullable

@@ -40,7 +40,7 @@ public class OwnerProfile extends ErrorResponseBody {
     private String socialNetwork;
     @Expose
     @SerializedName("credit_balance")
-    private Float creditBalance;
+    private Double creditBalance;
     @Expose
     @SerializedName("car_cnt")
     private Integer carCount;
@@ -200,11 +200,11 @@ public class OwnerProfile extends ErrorResponseBody {
         this.phone = phone;
     }
 
-    public Float getCreditBalance() {
+    public Double getCreditBalance() {
         return creditBalance;
     }
 
-    public void setCreditBalance(Float creditBalance) {
+    public void setCreditBalance(Double creditBalance) {
         this.creditBalance = creditBalance;
     }
 }

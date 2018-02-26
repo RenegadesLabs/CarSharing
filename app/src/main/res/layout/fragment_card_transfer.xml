@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollCardContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="horizontal">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/btnCardSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_regular_height"
+            android:background="@drawable/bg_clickable_regular"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/car_add_submit"
+            android:textColor="@color/bg_main"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/submitCaution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:gravity="center"
+            android:text="@string/minimum_top_up"
+            android:textColor="@color/text_subtitle_alt"
+            android:textSize="@dimen/text_x_small"
+            app:layout_constraintBottom_toTopOf="@id/btnCardSubmit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/transferAmountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_mid"
+            android:text="@string/top_up_amount"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/cardTransferAmount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_regular_height"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            android:layout_marginTop="@dimen/widget_margin_small"
+            android:background="@drawable/bg_input"
+            android:hint="@string/input_top_up_amount"
+            android:inputType="numberDecimal"
+            android:paddingEnd="@dimen/widget_padding_xx_large"
+            android:paddingStart="@dimen/widget_padding_mid"
+            android:textColor="@color/text_regular"
+            android:textColorHint="@color/text_disabled"
+            android:textSize="@dimen/text_regular"
+            android:theme="@style/AccentTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferAmountTitle" />
+
+        <TextView
+            android:id="@+id/transferAmountCaution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_main"
+            android:clickable="true"
+            android:paddingEnd="@dimen/widget_padding_x_small"
+            android:paddingStart="@dimen/widget_padding_x_small"
+            android:paddingTop="@dimen/widget_padding_small"
+            android:text="@string/transaction_fee_charge_caution"
+            android:textColor="@color/red_error"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="@id/cardTransferAmount"
+            app:layout_constraintStart_toStartOf="@id/cardTransferAmount"
+            app:layout_constraintTop_toBottomOf="@id/cardTransferAmount" />
+
+        <TextView
+            android:id="@+id/selectCardTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_main"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/widget_padding_small"
+            android:paddingTop="@dimen/widget_padding_xx_large"
+            android:text="@string/top_up_with"
+            android:textColor="@color/text_regular"
+            android:textSize="@dimen/text_regular"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferAmountCaution" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/selectCardList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/widget_margin_small"
+            android:layout_marginEnd="@dimen/widget_margin_mid"
+            android:layout_marginStart="@dimen/widget_margin_mid"
+            app:layout_constraintBottom_toTopOf="@id/submitCaution"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectCardTitle" />
+
+        <FrameLayout
+            android:id="@+id/loadingIndicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@color/bg_main"
+            app:layout_constraintTop_toTopOf="@id/selectCardList"
+            app:layout_constraintBottom_toBottomOf="@id/selectCardList"
+            app:layout_constraintStart_toStartOf="@id/selectCardList"
+            app:layout_constraintEnd_toEndOf="@id/selectCardList">
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/image_loading_indicator_side"
+                android:layout_height="@dimen/image_loading_indicator_side"
+                android:theme="@style/LoadingIndicator"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

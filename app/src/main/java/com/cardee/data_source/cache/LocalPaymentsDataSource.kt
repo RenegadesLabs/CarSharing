@@ -3,7 +3,11 @@ package com.cardee.data_source.cache
 import com.cardee.data_source.PaymentsDataSource
 import com.cardee.data_source.remote.api.payments.request.CardRequest
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
+import com.cardee.domain.rx.balance.BankTransfer
+import com.cardee.domain.rx.balance.CardPayment
+import com.cardee.domain.rx.balance.Transaction
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
@@ -31,8 +35,28 @@ object LocalPaymentsDataSource : PaymentsDataSource {
                 })
     }
 
+    override fun getTransactions(): Single<List<Transaction>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     fun saveCache(data: List<CardsResponseBody>) {
         cardsList = data
+    }
+
+    override fun payCreditWithCard(payment: CardPayment): Single<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun payCreditWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun payDepositWithCard(payment: CardPayment): Single<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun payDepositWithBankTransfer(transfer: BankTransfer): Single<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun emptyDisposable(): Disposable {

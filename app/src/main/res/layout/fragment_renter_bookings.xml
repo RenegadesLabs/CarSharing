@@ -3,21 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cardee.renter_home.view.RenterBookingsFragment">
+    tools:context="com.cardee.renter_bookings.view.RenterBookingsListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_button_regular"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp"
-        android:text="Show Rate rental experience"
-        android:textColor="@color/bg_main"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/renterBookingsTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/bg_widget"
+            app:tabTextAppearance="@style/BookingsTabItemTextStyle"
+            app:tabTextColor="@color/bg_widget_pressed">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/renterBookingsCurrentTab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/item_tab_r_bookings_current"/>
+
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/renterBookingsPastTab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/item_tab_r_bookings_past" />
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/inbox_fragment_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_appbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/booking_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/widget_padding_mid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_appbar" />
+
+    <FrameLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/booking_list"
+        app:layout_constraintEnd_toEndOf="@id/booking_list"
+        app:layout_constraintStart_toStartOf="@id/booking_list"
+        app:layout_constraintTop_toTopOf="@id/booking_list">
+
+        <ProgressBar
+            android:id="@+id/home_progress"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/image_loading_indicator_side"
+            android:layout_height="@dimen/image_loading_indicator_side"
+            android:layout_gravity="center"
+            android:theme="@style/LoadingIndicator" />
+    </FrameLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--<Button-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/bg_button_regular"-->
+        <!--android:paddingEnd="12dp"-->
+        <!--android:paddingStart="12dp"-->
+        <!--android:text="Show Rate rental experience"-->
+        <!--android:textColor="@color/bg_main"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>

@@ -33,6 +33,7 @@
     <color name="text_picture_overlaid">#ffffff</color>
     <color name="text_blue">@color/colorPrimaryDark</color>
     <color name="text_subtitle">#838d99</color>
+    <color name="text_subtitle_alt">#a3aab3</color>
     <color name="text_owner_profile_name">#353739</color>
     <color name="text_more_tab_item">#282A2B</color>
     <color name="text_account_settings">#9C9FA1</color>
@@ -42,8 +43,8 @@
     <color name="add_car_item_vehicle_inactive">#979797</color>
     <color name="item_secondary_txt">#7A8794</color>
 
-    <color name="colorPrimary">#419CED</color>
-    <color name="colorPrimaryDark">#1283E8</color>
+    <color name="colorPrimary">#3683e1</color>
+    <color name="colorPrimaryDark">#2a67b1</color>
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorLemon">#FFF285</color>
@@ -69,7 +70,13 @@
     <color name="payment_cash">#4fae4f</color>
     <color name="selector_view">#e5edf4</color>
 
+    <color name="edit_checklist_toolbar">#F2B632</color>
+
     <color name="search_area_circle">#334285F4</color>
     <color name="bg_fab_chat">#FF0074B0</color>
 
+    <color name="text_blue_subtitle">#8abbed</color>
+
+    <color name="negative_value_red">#ee6964</color>
+    <color name="positive_value_green">#65be71</color>
 </resources>

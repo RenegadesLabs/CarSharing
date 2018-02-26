@@ -59,11 +59,12 @@ public class NotificationRepository implements NotificationContract {
 
     private void proceedResponse(NotificationResponse notificationResponse) {
         NotificationData data = notificationResponse.getNotificationData();
-        mNotificationData.setOwnerAlertMessages(data.getOwnerAlertMessages());
-        mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
-        mNotificationData.setRenterAlertMessages(data.getRenterAlertMessages());
-        mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
-
+        if (data != null) {
+            mNotificationData.setOwnerAlertMessages(data.getOwnerAlertMessages());
+            mNotificationData.setOwnerChatMessages(data.getOwnerChatMessages());
+            mNotificationData.setRenterAlertMessages(data.getRenterAlertMessages());
+            mNotificationData.setRenterChatMessages(data.getRenterChatMessages());
+        }
         saveSessionData();
         publishAllData();
     }

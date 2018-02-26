@@ -451,6 +451,7 @@
     <string name="owner_handover_checklist_photos_add">Add Photo</string>
     <string name="owner_handover_checklist_photos_add_rem">Add remarks here…</string>
     <string name="owner_handover_checklist_info">Renter must be present during handover. Ensure checklist information is accurate and complete at the time of handover.</string>
+    <string name="owner_handover_checklist_info_renter">Ensure checklist information is accurate and complete before submit.</string>
     <string name="owner_handover_checklist_button">Handover Car</string>
     <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
     <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
@@ -653,10 +654,13 @@
     <!--Bookings-->
     <string name="booking_state_all">All</string>
     <string name="booking_state_new">New Request</string>
+    <string name="booking_state_new_renter">Request Sent</string>
     <string name="booking_state_canceled">Canceled</string>
     <string name="booking_state_confirmed">Confirmed</string>
     <string name="booking_state_collected">Handed Over</string>
+    <string name="booking_state_collected_renter">Collected</string>
     <string name="booking_state_collecting">Handing Over</string>
+    <string name="booking_state_collecting_renter">Collecting…</string>
     <string name="booking_state_completed">Completed</string>
     <string name="yesterday">Yesterday</string>
     <string name="chat_notification_channel_id">cardee_chat_chanel</string>
@@ -671,9 +675,14 @@
     <string name="booking_sort_amount">Booking amount</string>
 
     <string name="booking_message_accept">Accept request to confirm booking</string>
+    <string name="booking_message_accept_renter">Waiting for owner to accept request…</string>
     <string name="booking_message_handover">Hangover car to fill checklist upon car collection</string>
-    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist...</string>
+    <string name="booking_message_handover_wait">Waiting for renter to acknowledge checklist…</string>
+    <string name="booking_message_handover_wait_renter">Waiting for owner to acknowledge changes…</string>
     <string name="booking_message_handover_complete">Tap "Car returned" to complete booking</string>
+    <string name="booking_message_handover_complete_renter">Consider all owner requests before complete</string>
+
+    <string name="booking_message_confirmed_renter">Pay to owner upon car collection</string>
 
     <string name="booking_payment_card">Card</string>
     <string name="booking_payment_cash">Cash</string>
@@ -681,9 +690,12 @@
     <string name="booking_title_decline">Decline Request</string>
     <string name="booking_title_accept">Accept Request</string>
     <string name="booking_title_cancel">Cancel Booking</string>
+    <string name="booking_title_cancel_renter">Cancel Request</string>
     <string name="booking_title_handover">Handover Car</string>
     <string name="booking_title_cancel_handover">Cancel Handover</string>
+    <string name="booking_title_cancel_handover_renter">Cancel Collection</string>
     <string name="booking_title_complete">Car Returned</string>
+    <string name="booking_title_extend">Extend Booking</string>
 
     <string name="booking_rating_title">You rated</string>
     <string name="booking_rating_edit">edit</string>
@@ -702,6 +714,14 @@
     <string name="cost_nett">Booking Cost</string>
     <string name="cost_service_fee">Service Fee</string>
     <string name="cost_nett_earnings">Nett Earnings</string>
+    <string name="booking_request_title">Requested by</string>
+    <string name="booking_owner_title">Owned by</string>
+    <string name="booking_handover_on_title">Handover on</string>
+    <string name="booking_pickup_on_title">Pickup on or after</string>
+    <string name="booking_handover_at_title">Handover at</string>
+    <string name="booking_pickup_at_title">Pickup at</string>
+    <string name="booking_deliver_to_title">Deliver to</string>
+
 
     <!-- Browse Cars Filters-->
     <string name="filters">Filters</string>
@@ -798,6 +818,10 @@
     <string name="insurance_excess_hint_first">Excess is the maximum payable amount in case of accident.\u0020</string>
     <string name="insurance_excess_hint_second">Learn\u00A0more</string>
     <string name="agree_rental_terms">Agree Rental Terms</string>
+    
+    <!--Renter Bookings-->
+    <string name="renter_bookings_current">Current</string>
+    <string name="renter_bookings_past">Past</string>
 
     <!-- Verify Account-->
     <string name="verify_account_title">Verify Account</string>
@@ -844,4 +868,37 @@
     <string name="progress_saved">Progress saved</string>
     <string name="verified">Verified</string>
 
+
+    <!-- Credit/Deposit -->
+    <string name="credit_balance_placeholder">XZXZX</string>
+    <string name="title_credit">Credits</string>
+    <string name="title_top_up">Top-up</string>
+    <string name="title_transaction_history">Transaction History</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="top_up_with_bank_transfer">Top-up with Bank Transfer</string>
+    <string name="top_up_with_card">Top-up with Card</string>
+    <string name="transaction_fee_amount">XZXZX% transaction fee applicable</string>
+    <string name="check_transaction_history">Check Transaction History</string>
+    <string name="transaction_fee_caution">Service fees will be deducted from your credit balance for Cash Bookings.</string>
+    <string name="minimum_balance_caution">You need a minimum of XZXZX in your credit balance to accept Cash Bookings.</string>
+    <string name="bank_pre_transfer_message">To top-up through bank transfer, please transfer desired top-up amount to</string>
+    <string name="bank_post_transfer_message">Once done, input transaction details below</string>
+    <string name="date_of_transfer">Date of transfer</string>
+    <string name="transaction_number">Transaction number</string>
+    <string name="minimum_top_up">Minimum top-up XZXZX per transaction</string>
+    <string name="top_up_amount">Top-up Amount</string>
+    <string name="input_top_up_amount">Input Top-up Amount</string>
+    <string name="transaction_fee_charge_caution">XZXZX% transaction fee will be applicable.\nA total of XZXZX will be charged to your card.</string>
+    <string name="top_up_with">Top-up with</string>
+    <string name="add_new_card">Add New Card</string>
+    <string name="balance_amount">Balance XZXZX</string>
+    <string name="currency">$</string>
+    <string name="deposit_info">To maintain the quality of our community and to prevent users from abusing our platform,
+    a refundable deposit of $100 is required.</string>
+    <string name="deposit_info_link">Learn more</string>
+    <string name="deposit_bank_payment">Pay deposit with Bank Transfer</string>
+    <string name="deposit_card_payment">Pay deposit with Card</string>
+    <string name="deposit_cash_payment">If your would like to pay by cash instead, contact us at</string>
+    <string name="deposit_contact_phone">+65 8179 8186</string>
+    <string name="deposit_title">Deposit</string>
 </resources>

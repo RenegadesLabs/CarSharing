@@ -15,15 +15,16 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
 
     private final BookingView bookingView;
 
-    public HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public HandedOverStrategy(@NonNull View view, @NonNull ActionListener listener, boolean isRenter) {
         super(view, listener);
         bookingView = (BookingView) view;
 
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_collected);
 
         bookingView.bookingStatus.setBackgroundColor(statusColor);
-        bookingView.bookingStatus.setText(R.string.booking_state_collected);
+        bookingView.bookingStatus.setText(isRenter ? R.string.booking_state_collected_renter : R.string.booking_state_collected);
         bookingView.renterNameTitle.setVisibility(View.VISIBLE);
+        bookingView.renterNameTitle.setText(isRenter ? R.string.booking_owner_title : R.string.booking_request_title);
         bookingView.renterName.setVisibility(View.VISIBLE);
         bookingView.renterPhoto.setVisibility(View.VISIBLE);
         bookingView.bookingPayment.setVisibility(View.VISIBLE);
@@ -44,23 +45,29 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
         bookingView.renterCall.setVisibility(View.VISIBLE);
         bookingView.renterChatTitle.setVisibility(View.VISIBLE);
         bookingView.renterChat.setVisibility(View.VISIBLE);
-        bookingView.cancelMessage.setVisibility(View.GONE);
-        bookingView.acceptMessage.setVisibility(View.VISIBLE);
-        bookingView.btnCancel.setVisibility(View.GONE);
-        bookingView.btnAccept.setVisibility(View.VISIBLE);
+        bookingView.cancelMessage.setVisibility(isRenter ? View.VISIBLE : View.GONE);
+        bookingView.acceptMessage.setVisibility(isRenter ? View.GONE : View.VISIBLE);
+        bookingView.btnCancel.setVisibility(isRenter ? View.VISIBLE : View.GONE);
+        bookingView.btnAccept.setVisibility(isRenter ? View.GONE : View.VISIBLE);
         bookingView.renterPhotoCompleted.setVisibility(View.GONE);
         bookingView.ratingBlock.setVisibility(View.GONE);
         bookingView.ratingTitle.setVisibility(View.GONE);
         bookingView.ratingBar.setVisibility(View.GONE);
         bookingView.ratingEdit.setVisibility(View.GONE);
 
-        bookingView.acceptMessage.setText(R.string.booking_message_handover_complete);
-        bookingView.btnAccept.setText(R.string.booking_title_complete);
+        if (!isRenter) {
+            bookingView.acceptMessage.setText(R.string.booking_message_handover_complete);
+            bookingView.btnAccept.setText(R.string.booking_title_complete);
+            bookingView.btnAccept.setOnClickListener(this);
+        } else {
+            bookingView.cancelMessage.setText(R.string.booking_message_handover_complete_renter);
+            bookingView.btnCancel.setText(R.string.booking_title_extend);
+            bookingView.btnCancel.setOnClickListener(this);
+        }
 
         bookingView.renterPhoto.setOnClickListener(this);
         bookingView.renterCall.setOnClickListener(this);
         bookingView.renterChat.setOnClickListener(this);
-        bookingView.btnAccept.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +81,9 @@ public class HandedOverStrategy extends PresentationStrategy implements View.OnC
                 listener.onShowProfile();
                 break;
             case R.id.btn_accept:
+                listener.onCompleted();
+                break;
+            case R.id.btn_cancel:
                 listener.onCompleted();
                 break;
             case R.id.renter_call:

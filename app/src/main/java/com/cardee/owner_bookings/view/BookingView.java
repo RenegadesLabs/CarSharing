@@ -27,6 +27,7 @@ import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
+import com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity;
 import com.cardee.util.glide.CircleTransform;
 
 import butterknife.BindView;
@@ -197,7 +198,7 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
     }
 
     @Override
-    public void bind(Booking booking) {
+    public void bind(Booking booking, boolean isRenter) {
         toolbarTitle.setText(booking.getBookingNum());
         loadImageIntoView(booking.getPrimaryImage().getLink(),
                 R.drawable.img_no_car, carPhotoView, imgProgress, false);
@@ -230,6 +231,12 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
             ratingBar.setScore(rating);
         }
         ratingEdit.setOnClickListener(view -> {
+            if (isRenter) {
+                Intent intent = new Intent(getContext(), RateRentalExpActivity.class);
+                intent.putExtra("booking_id", booking.getBookingId());
+                getContext().startActivity(intent);
+                return;
+            }
             Intent intent = new Intent(getContext(), CarReturnedActivity.class);
             intent.putExtra("booking_id", booking.getBookingId());
             getContext().startActivity(intent);

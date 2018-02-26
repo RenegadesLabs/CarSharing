@@ -10,14 +10,16 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             app:navigationIcon="@drawable/ic_close"
-            app:titleTextColor="@color/bg_main">
+            app:titleTextColor="@color/bg_main"
+            android:background="@color/edit_checklist_toolbar">
 
             <TextView
                 android:id="@+id/toolbar_title"

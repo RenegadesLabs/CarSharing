@@ -173,12 +173,21 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case OWNER_CHECKLIST_UPD:
                         //TODO:  editedCheckList();
-                        break;
+                        PendingChecklistStorage.addChecklist(context, objectId);
+                        Intent showRenterCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST_RENTER);
+                        showRenterCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(showRenterCheckListIntent);
+
+                        Intent bookingRenterIntent = new Intent(context, BookingActivity.class);
+                        bookingRenterIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        bookingRenterIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(bookingRenterIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case RENTER_CHECKLIST_UPD:
                         PendingChecklistStorage.addChecklist(context, objectId);
 
                         // if in BookingActivity shows CheckList
-                        Intent showCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST);
+                        Intent showCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST_OWNER);
                         showCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(showCheckListIntent);
 
