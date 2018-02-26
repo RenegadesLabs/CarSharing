@@ -274,6 +274,9 @@ public class SelectionManager implements
 
     @Override
     public void onAvailableDatesSet(List<Hour> availableHourz) {
+        if(availableHourz.isEmpty()) {
+            return;
+        }
         new Thread(() -> {
             Hour lastHour = availableHourz.get(availableHourz.size() - 1);
             for (int i = 0; i < allDayz.size(); i++) {
