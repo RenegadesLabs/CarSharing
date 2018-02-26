@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_regular"
     tools:context="com.cardee.owner_cardee.view.OwnerCardeeActivity">
 
     <android.support.design.widget.AppBarLayout

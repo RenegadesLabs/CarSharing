@@ -208,6 +208,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void setVerified(boolean verified) {
         verifyText.setText(R.string.verified);
+        verifyText.setTextColor(getResources().getColor(R.color.text_owner_profile_name));
+        mVerifyCard.setOnClickListener(null);
     }
 
     @Override

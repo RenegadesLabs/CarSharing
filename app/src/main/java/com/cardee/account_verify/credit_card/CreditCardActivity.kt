@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.cardee.R
 import com.cardee.account_verify.view.VerifyAccountActivity
+import com.cardee.owner_credit_balance.view.DepositActivity
 import com.cardee.util.DateRepresentationDelegate
 import com.cardee.util.display.ActivityHelper
 import kotlinx.android.synthetic.main.activity_credit_card.*
@@ -42,7 +43,7 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
         intent.extras?.apply {
             forResult = containsKey(RESULT)
         }
-        if(forResult) nextActivityButton.visibility = View.GONE
+        if (forResult) nextActivityButton.visibility = View.GONE
         initToolBar()
         setListeners()
         getIntentData()
@@ -211,8 +212,8 @@ class CreditCardActivity : AppCompatActivity(), CreditCardView {
         when (action) {
             Action.NEXT -> {
                 showMessage("Coming soon")
-//                val intent = Intent(this, DepositActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, DepositActivity::class.java)
+                startActivity(intent)
             }
             Action.SAVE -> {
                 if (forResult) {
