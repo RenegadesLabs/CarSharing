@@ -372,26 +372,21 @@
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_card_card" />
             <TextView
                 android:id="@+id/userDeposit"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/toolbar_height"
+                android:background="@drawable/bg_clickable_top_line"
+                android:elevation="1dp"
                 android:gravity="center_vertical"
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp"
-                android:textColor="@color/blue"
-                android:background="@drawable/bg_clickable_top_line"
-                android:textSize="@dimen/text_regular"
                 android:text="@string/deposit_title"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardsList" />
+                app:layout_constraintTop_toBottomOf="@id/add_card_card" />
 
             <TextView
                 android:id="@+id/userDepositState"
@@ -403,6 +398,12 @@
                 app:layout_constraintEnd_toEndOf="@id/userDeposit"
                 app:layout_constraintTop_toTopOf="@id/userDeposit" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userDeposit" />
 
         </android.support.constraint.ConstraintLayout>
 

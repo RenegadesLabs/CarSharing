@@ -9,6 +9,20 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
 object LocalProfileDataSource : ProfileDataSource {
+    private var verifyAccState: VerifyAccountState? = null
+
+    override fun getVerifyAccState(): VerifyAccountState {
+        return verifyAccState ?: VerifyAccountState()
+    }
+
+    override fun saveVerifyAccState(state: VerifyAccountState) {
+        verifyAccState = state
+    }
+
+    override fun saveParticulars(particulars: UploadParticularsRequest, callback: ProfileDataSource.NoDataCallback): Disposable {
+        return emptyDisposable()
+    }
+
     override fun getVerifyDetails(callback: ProfileDataSource.VerifyCallback): Disposable {
         return emptyDisposable()
     }
@@ -22,20 +36,6 @@ object LocalProfileDataSource : ProfileDataSource {
     }
 
     override fun saveProfilePhoto(photoUri: Uri, callback: ProfileDataSource.NoDataCallback): Disposable {
-        return emptyDisposable()
-    }
-
-    private var verifyAccState: VerifyAccountState? = null
-
-    override fun getVerifyAccState(): VerifyAccountState {
-        return verifyAccState ?: VerifyAccountState()
-    }
-
-    override fun saveVerifyAccState(state: VerifyAccountState) {
-        verifyAccState = state
-    }
-
-    override fun saveParticulars(particulars: UploadParticularsRequest, callback: ProfileDataSource.NoDataCallback): Disposable {
         return emptyDisposable()
     }
 

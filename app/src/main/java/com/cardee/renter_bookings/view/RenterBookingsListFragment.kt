@@ -37,11 +37,6 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater?.inflate(R.layout.fragment_renter_bookings, container, false)
-//        button?.setOnClickListener { view ->
-//            val intent = Intent(activity, RateRentalExpActivity::class.java)
-//            intent.putExtra("booking_id", 430)
-//            startActivity(intent)
-//        }
         initViews(root)
         return root
     }

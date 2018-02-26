@@ -26,7 +26,6 @@ public class BookingActivity extends AppCompatActivity {
     OwnerBookingContract.Presenter presenter;
     OwnerBookingContract.View view;
     private ChecklistReceiver checklistReceiver;
-    private PendingChecklistStorage pendingChecklists;
     private int bookingId;
     private boolean isRenter;
 
@@ -49,8 +48,7 @@ public class BookingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        pendingChecklists = new PendingChecklistStorage();
-        if (pendingChecklists.containsChecklist(this, bookingId)) {
+        if (PendingChecklistStorage.containsChecklist(this, bookingId)) {
             openCheckListActivity();
         }
     }
