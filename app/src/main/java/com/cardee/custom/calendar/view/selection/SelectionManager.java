@@ -276,6 +276,9 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
 
     @Override
     public void onAvailableDatesSet(List<Day> availableDayz) {
+        if(availableDayz.isEmpty()){
+            return;
+        }
         new Thread(() -> {
             for (int i = 0; i < allDayz.size(); i++) {
                 Day day = allDayz.get(i);

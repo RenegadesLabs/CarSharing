@@ -35,6 +35,9 @@ public class RenterProfile {
     @SerializedName("state")
     @Expose
     private String state;
+    @Expose
+    @SerializedName("deposit")
+    private DepositState deposit;
     @SerializedName("social_net")
     @Expose
     private String socialNet;
@@ -157,6 +160,14 @@ public class RenterProfile {
 
     public void setYearsDrivingExp(Integer yearsDrivingExp) {
         this.yearsDrivingExp = yearsDrivingExp;
+    }
+
+    public DepositState getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(DepositState deposit) {
+        this.deposit = deposit;
     }
 
     public Integer getAge() {

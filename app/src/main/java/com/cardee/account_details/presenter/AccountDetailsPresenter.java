@@ -22,12 +22,19 @@ import com.cardee.domain.owner.usecase.ChangePhone;
 import com.cardee.domain.owner.usecase.GetOwnerInfo;
 import com.cardee.domain.payments.usecase.GetCardsUseCase;
 import com.cardee.domain.profile.usecase.GetVerifyDetails;
+import com.cardee.domain.rx.Request;
+import com.cardee.domain.rx.Response;
+import com.cardee.domain.rx.balance.FetchDepositBalance;
 
 import org.jetbrains.annotations.NotNull;
+import org.reactivestreams.Subscriber;
 
 import java.util.List;
 
+import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import kotlin.Unit;
 
 public class AccountDetailsPresenter {
 
@@ -35,6 +42,7 @@ public class AccountDetailsPresenter {
     private final ChangeName mChangeName;
     private final ChangeEmail mChangeEmail;
     private final ChangePhone mChangePhone;
+    private final FetchDepositBalance fetchDepositBalance;
     private UseCaseExecutor mExecutor;
     private AccountDetailsView mView;
     private SharedPreferences mSharedPref;
@@ -51,6 +59,7 @@ public class AccountDetailsPresenter {
         mGetInfoUseCase = new GetOwnerInfo();
         mChangeName = new ChangeName();
         mChangeEmail = new ChangeEmail();
+        fetchDepositBalance = new FetchDepositBalance();
         mChangePhone = new ChangePhone();
         getCards = new GetCardsUseCase();
         getVerifyState = new GetVerifyDetails();
@@ -223,6 +232,45 @@ public class AccountDetailsPresenter {
             public void onSuccess(GetCardsUseCase.ResponseValues response) {
                 List<CardsResponseBody> dataList = response.getCards();
                 mAdapter.setData(dataList);
+            }
+        });
+    }
+
+    public void getDepositStatus() {
+        fetchDepositBalance.execute(new Request() {
+        }, new Observer<Response<Double>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Response<Double> doubleResponse) {
+                if (mView == null) {
+                    return;
+                }
+                if (doubleResponse.getSuccess()) {
+                    double deposit = doubleResponse.getBody() == null ? 0 : doubleResponse.getBody();
+                    if (deposit < 100) {
+                        mView.setDepositStatus(AccountDetailsView.DepositStatus.NOT_PAID);
+                    } else {
+                        mView.setDepositStatus(AccountDetailsView.DepositStatus.PAID);
+                    }
+                    return;
+                }
+                mView.showMessage(doubleResponse.getErrorMessage());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (mView != null) {
+                    mView.showMessage(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }
