@@ -109,6 +109,7 @@ class BankTransferFragment : Fragment(), BalanceTransactions.View<Boolean> {
 
         initDateDialogAppearance()
         initViewClickInteraction()
+        initCautions()
     }
 
     private fun initDateDialogAppearance() {
@@ -148,6 +149,13 @@ class BankTransferFragment : Fragment(), BalanceTransactions.View<Boolean> {
             hideKeyboard(view)
         }
         btnSubmit.setOnClickListener { submit() }
+    }
+
+    private fun initCautions() {
+        val placeholder = activity.getString(R.string.credit_balance_placeholder)
+        val minTopUpString = activity.getString(R.string.minimum_top_up)
+        val formatedValue = minTopUpString.replace(placeholder, "$10")
+        minimumBankTopUp.text = formatedValue
     }
 
     override fun onStart() {

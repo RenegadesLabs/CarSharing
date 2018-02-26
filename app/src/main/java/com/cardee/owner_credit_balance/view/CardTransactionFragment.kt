@@ -113,6 +113,18 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
             args.putSerializable(TransactionsPresenter.MODE, mode)
             presenter.onCardChargeSubmit(this, args)
         }
+
+        initCautions()
+    }
+
+    private fun initCautions(){
+        val placeholder = activity.getString(R.string.credit_balance_placeholder)
+        val minTopUpString = activity.getString(R.string.minimum_top_up)
+        val cardFeeString = activity.getString(R.string.transaction_fee_charge_caution)
+        val formattedMinValue = minTopUpString.replace(placeholder, "$10")
+        val formattedFeeValue = cardFeeString.replace(placeholder, "4")
+        submitCaution.text = formattedMinValue
+        transferAmountCaution.text = formattedFeeValue
     }
 
     override fun onStart() {
