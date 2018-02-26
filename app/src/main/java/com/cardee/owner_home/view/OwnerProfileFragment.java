@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.cardee.R;
 import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.owner_cardee.view.OwnerCardeeActivity;
+import com.cardee.owner_credit_balance.BalanceTransactions;
 import com.cardee.owner_credit_balance.view.BalanceActivity;
 import com.cardee.owner_home.OwnerProfileContract;
 import com.cardee.owner_home.presenter.OwnerMoreTabPresenter;
@@ -125,6 +126,7 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     @Override
     public void openCreditBalance() {
         Intent intent = new Intent(getActivity(), BalanceActivity.class);
+        intent.putExtra(BalanceActivity.MODE, BalanceTransactions.Mode.CREDIT);
         startActivity(intent);
     }
 

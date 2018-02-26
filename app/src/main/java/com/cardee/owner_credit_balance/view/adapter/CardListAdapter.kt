@@ -82,8 +82,8 @@ class CardListAdapter(private val items: MutableList<CardWrapper> = mutableListO
     }
 
     fun addItems(newItems: List<CardsResponseBody>) {
-        val index = items.indexOfFirst { item -> item.viewType == ADD_CARD }
-        items.addAll(index, newItems.flatMap { card ->
+        items.removeAll { item -> item.viewType != ADD_CARD }
+        items.addAll(0, newItems.flatMap { card ->
             listOf(CardWrapper(card, selected = card.default))
         })
         items.find { card -> card.selected }?.card?.paymentToken?.let(selectListener)
