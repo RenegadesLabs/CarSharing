@@ -17,6 +17,7 @@ class DepositActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_deposit)
         supportActionBar ?: initToolbar()
         initClickBehaviour()
+        initCautions()
     }
 
     private fun initToolbar() {
@@ -31,6 +32,13 @@ class DepositActivity : AppCompatActivity(), View.OnClickListener {
         btnDepositBankTransfer.setOnClickListener(this)
         btnDepositCardTransaction.setOnClickListener(this)
         depositToolbarAction.setOnClickListener(this)
+    }
+
+    private fun initCautions() {
+        val placeholder = getString(R.string.credit_balance_placeholder)
+        val feeCautionString = getString(R.string.transaction_fee_amount)
+        val formattedValue = feeCautionString.replace(placeholder, "4")
+        depositCardTransactionSubtitle.text = formattedValue
     }
 
     override fun onClick(view: View?) {

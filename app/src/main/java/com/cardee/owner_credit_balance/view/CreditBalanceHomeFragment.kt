@@ -67,4 +67,9 @@ class CreditBalanceHomeFragment : Fragment(), View.OnClickListener {
             btnTransactionHistory -> parent?.onChangeState(State.HISTORY)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        parent?.onStateChanged(State.HOME)
+    }
 }

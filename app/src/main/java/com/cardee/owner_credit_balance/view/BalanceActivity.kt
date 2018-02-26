@@ -89,6 +89,7 @@ class BalanceActivity(val presenter: BalanceParent.Presenter = BalancePresenter(
             State.BANK -> BankTransferFragment.newInstance(mode)
             State.CARD -> CardTransactionFragment.newInstance(mode)
             State.HISTORY -> TransactionHistoryFragment.newInstance()
+            else -> throw IllegalArgumentException("Illegal state $state")
         }
         if (hasFragment.not()) {
             addFragmentAction.invoke(fragment, state.tag)
