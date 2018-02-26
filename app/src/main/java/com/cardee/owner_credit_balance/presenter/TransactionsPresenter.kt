@@ -4,8 +4,10 @@ import android.os.Bundle
 import com.cardee.data_source.Error
 import com.cardee.data_source.remote.api.payments.response.CardsResponseBody
 import com.cardee.domain.RxUseCase
-import com.cardee.domain.UseCase
 import com.cardee.domain.payments.usecase.GetCardsUseCase
+import com.cardee.domain.profile.entity.VerifyAccountState
+import com.cardee.domain.profile.usecase.GetVerifyAccState
+import com.cardee.domain.profile.usecase.SaveVerifyAccState
 import com.cardee.domain.rx.Request
 import com.cardee.domain.rx.balance.PerformBankTransaction
 import com.cardee.domain.rx.balance.PerformCardTransaction
@@ -41,6 +43,9 @@ class TransactionsPresenter private constructor(
         }
     }
 
+    private val saveStateUseCase = SaveVerifyAccState()
+    private val getStateUseCase = GetVerifyAccState()
+
     override fun <T> onTransferSubmit(view: BalanceTransactions.View<T>, args: Bundle) {
         val amount = args.getLong(AMOUNT)
         val isoDate = args.getString(DATE)
@@ -70,6 +75,10 @@ class TransactionsPresenter private constructor(
             weakView.get()?.let { view ->
                 view.showProgress(false)
                 if (result.success) {
+                    val state = getState()
+                    state.depositAdded.set(true)
+                    saveState(state)
+
                     view.onError(resultMessage)
                     view.onFinish()
                 } else {
@@ -105,6 +114,10 @@ class TransactionsPresenter private constructor(
             weakView.get()?.let { view ->
                 view.showProgress(false)
                 if (result.success) {
+                    val state = getState()
+                    state.depositAdded.set(true)
+                    saveState(state)
+
                     view.onError("Top-up successfully enrolled")
                     view.onFinish()
                 } else {
@@ -181,5 +194,13 @@ class TransactionsPresenter private constructor(
                 view.onError(error.message)
             }
         })
+    }
+
+    fun saveState(state: VerifyAccountState) {
+        saveStateUseCase.saveVerifyState(state)
+    }
+
+    fun getState(): VerifyAccountState {
+        return getStateUseCase.getVerifyState()
     }
 }
