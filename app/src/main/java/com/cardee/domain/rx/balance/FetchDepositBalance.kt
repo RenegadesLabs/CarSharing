@@ -3,6 +3,7 @@ package com.cardee.domain.rx.balance
 import com.cardee.data_source.Error
 import com.cardee.data_source.RenterProfileDataSource
 import com.cardee.data_source.remote.RemoteRenterProfileDataSource
+import com.cardee.data_source.remote.api.profile.response.entity.DepositState
 import com.cardee.data_source.remote.api.profile.response.entity.RenterProfile
 import com.cardee.domain.rx.Request
 import com.cardee.domain.rx.Response
@@ -20,7 +21,10 @@ class FetchDepositBalance(private val repository: RemoteRenterProfileDataSource 
         return Observable.create<Response<Double>> { emitter ->
             repository.loadRenterProfile(object : RenterProfileDataSource.ProfileCallback {
                 override fun onSuccess(renterProfile: RenterProfile?) {
-                    emitter.onNext(Response(100.0))
+                    when (renterProfile?.deposit) {
+                        DepositState.SUCCESS -> emitter.onNext(Response(100.0))
+                        else -> emitter.onNext(Response(0.0))
+                    }
                 }
 
                 override fun onError(error: Error?) {

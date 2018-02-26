@@ -818,7 +818,7 @@
     <string name="insurance_excess_hint_first">Excess is the maximum payable amount in case of accident.\u0020</string>
     <string name="insurance_excess_hint_second">Learn\u00A0more</string>
     <string name="agree_rental_terms">Agree Rental Terms</string>
-    
+
     <!--Renter Bookings-->
     <string name="renter_bookings_current">Current</string>
     <string name="renter_bookings_past">Past</string>
@@ -898,4 +898,6 @@
     <string name="deposit_cash_payment">If your would like to pay by cash instead, contact us at</string>
     <string name="deposit_contact_phone">+65 8179 8186</string>
     <string name="deposit_title">Deposit</string>
+    <string name="deposit_paid">Paid</string>
+    <string name="deposit_not_paid">Not paid</string>
 </resources>

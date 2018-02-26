@@ -3,6 +3,7 @@ package com.cardee.account_details.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.cardee.account_verify.view.VerifyAccountActivity;
 import com.cardee.auth.preview.PreviewActivity;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.owner_change_pass.view.ChangePassActivity;
+import com.cardee.owner_credit_balance.view.DepositActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +76,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @BindView(R.id.account_progress)
     ProgressBar mProgressBar;
 
+    @BindView(R.id.userDeposit)
+    View userDeposit;
+
+    @BindView(R.id.userDepositState)
+    TextView userDepositStatus;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +95,8 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
 
         mPresenter.getOwnerInfo();
         mPresenter.getCards();
+        mPresenter.getDepositStatus();
+
     }
 
     @Override
@@ -100,7 +110,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     }
 
     private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
@@ -157,6 +167,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
         startActivity(intent);
     }
 
+    @OnClick(R.id.userDeposit)
+    public void toUserDeposit() {
+        Intent intent = new Intent(this, DepositActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void setName(String name) {
         mProfileName.setText(name);
@@ -180,12 +196,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void setPassChangeState(boolean clickable) {
         if (clickable) {
-            mPassCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    passClicked();
-                }
-            });
+            mPassCard.setOnClickListener(view -> passClicked());
         } else {
             mPassCard.setOnClickListener(null);
         }
@@ -194,6 +205,12 @@ public class AccountDetailsActivity extends AppCompatActivity implements Account
     @Override
     public void hidePassword() {
         mPassCard.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setDepositStatus(DepositStatus status) {
+        userDepositStatus.setTextColor(ContextCompat.getColor(this, status.textColorId));
+        userDepositStatus.setText(getString(status.textId));
     }
 
     @Override

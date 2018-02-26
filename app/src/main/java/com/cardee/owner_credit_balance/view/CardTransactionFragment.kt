@@ -117,7 +117,7 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
         initCautions()
     }
 
-    private fun initCautions(){
+    private fun initCautions() {
         val placeholder = activity.getString(R.string.credit_balance_placeholder)
         val minTopUpString = activity.getString(R.string.minimum_top_up)
         val cardFeeString = activity.getString(R.string.transaction_fee_charge_caution)
@@ -152,6 +152,7 @@ class CardTransactionFragment : Fragment(), BalanceTransactions.View<List<CardsR
     }
 
     override fun showProgress(isShowing: Boolean) {
+        loadingIndicator ?: return
         loadingIndicator.visibility = if (isShowing) View.VISIBLE else View.GONE
     }
 

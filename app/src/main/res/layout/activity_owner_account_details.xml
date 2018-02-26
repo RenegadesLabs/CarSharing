@@ -363,9 +363,30 @@
             </android.support.v7.widget.CardView>
 
             <TextView
+                android:id="@+id/userDeposit"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/toolbar_height"
+                android:gravity="center_vertical"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:textColor="@color/blue"
+                android:background="@drawable/bg_clickable_top_line"
+                android:textSize="@dimen/text_regular"
+                android:text="@string/deposit_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardsList" />
+
+            <TextView
+                android:id="@+id/userDepositState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/add_card_card" />
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/positive_value_green"
+                app:layout_constraintBottom_toBottomOf="@id/userDeposit"
+                app:layout_constraintEnd_toEndOf="@id/userDeposit"
+                app:layout_constraintTop_toTopOf="@id/userDeposit" />
+
 
         </android.support.constraint.ConstraintLayout>
 
