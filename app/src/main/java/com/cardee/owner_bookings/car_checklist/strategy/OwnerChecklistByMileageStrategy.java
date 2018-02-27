@@ -8,13 +8,13 @@ import android.view.View;
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
 
-public class ChecklistByMileageStrategy extends PresentationStrategy implements View.OnClickListener {
+public class OwnerChecklistByMileageStrategy extends PresentationStrategy implements View.OnClickListener {
 
     private ChecklistView mChecklistView;
     private ActionListener mActionListener;
 
 
-    public ChecklistByMileageStrategy(View view, ActionListener listener) {
+    public OwnerChecklistByMileageStrategy(View view, ActionListener listener) {
         super(view, listener);
 
         mChecklistView = (ChecklistView) view;

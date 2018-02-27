@@ -3,18 +3,19 @@ package com.cardee.owner_bookings.car_checklist.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 
 import com.cardee.R;
-import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
+import com.cardee.owner_bookings.car_checklist.presenter.OwnerChecklistContract;
 import com.cardee.owner_bookings.car_checklist.presenter.OwnerRenterUpdatedChecklistPresenter;
 
 
 public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity implements OwnerRenterUpdatedChecklistPresenter.View {
 
-    private ChecklistContract.Presenter mPresenter;
+    private OwnerChecklistContract.Presenter mPresenter;
 
-    private ChecklistContract.View mView;
+    private OwnerChecklistContract.View mView;
 
     public final static String KEY_BOOKING_ID = "booking_id";
 
@@ -24,16 +25,17 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity imple
         super.onCreate(savedInstanceState);
         ChecklistView view = (ChecklistView) LayoutInflater
                 .from(this).inflate(R.layout.activity_owner_handover_checklist, null);
-        mView.setPresenter(mPresenter);
         mView = view;
         int bookingId = getIntent().getIntExtra(KEY_BOOKING_ID, -1);
         mPresenter = new OwnerRenterUpdatedChecklistPresenter(bookingId);
+        mView.setPresenter(mPresenter);
         mPresenter.setView(mView);
         mPresenter.setViewRenterUpdatedCallbacks(this);
         setContentView(view);
-        setSupportActionBar(view.getToolbar());
+        Toolbar toolbar = view.getToolbar();
+        toolbar.setNavigationIcon(null);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

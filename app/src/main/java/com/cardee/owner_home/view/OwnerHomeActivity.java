@@ -41,6 +41,8 @@ public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
         CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener, OwnerHomeContract.View {
 
+    public static final String TAB_TO_SELECT = "tab_to_select";
+
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
     private static final int ADD_NEW_CAR_REQUEST_CODE = 101;
 
@@ -68,7 +70,9 @@ public class OwnerHomeActivity extends AppCompatActivity
         AHBottomNavigation bottomMenu = findViewById(R.id.bottom_menu);
         BottomNavigationHelper.prepareForOwner(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
-        bottomMenu.setCurrentItem(1);
+
+        int tabToSelect = getIntent().getIntExtra(TAB_TO_SELECT, 1);
+        bottomMenu.setCurrentItem(tabToSelect);
         initPresenter(bottomMenu);
     }
 

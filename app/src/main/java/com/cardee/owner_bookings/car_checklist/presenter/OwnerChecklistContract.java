@@ -6,7 +6,7 @@ import com.cardee.mvp.BasePresenter;
 import com.cardee.mvp.BaseView;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
 
-public interface ChecklistContract {
+public interface OwnerChecklistContract {
 
     interface View extends BaseView {
 
@@ -24,7 +24,7 @@ public interface ChecklistContract {
 
         void setView(View view);
 
-        void setViewCallbacks(OwnerChecklistPresenter.View callbacks);
+        void setViewCallbacks(ChecklistPresenter.View callbacks);
 
         void setViewRenterUpdatedCallbacks(OwnerRenterUpdatedChecklistPresenter.View callbacks);
 

@@ -456,7 +456,7 @@
     <string name="owner_handover_checklist_renter_changed">Renter has made changes</string>
     <string name="owner_handover_checklist_are_accurate">Are the checklist information accurate and complete at the time of handover?</string>
     <string name="owner_handover_progress">Handing over…</string>
-    <string name="owner_handover_tank_filled">tankText filled.</string>
+    <string name="owner_handover_tank_filled">tank filled.\u0020</string>
 
     <!--Car Reviews-->
     <string name="car_reviews_condition">Condition &amp; Cleanliness</string>
@@ -903,4 +903,12 @@
     <string name="deposit_title">Deposit</string>
     <string name="deposit_paid">Paid</string>
     <string name="deposit_not_paid">Not paid</string>
+
+    <!--Renter Checklist-->
+    <string name="renter_checklist_title">Handover Checklist</string>
+    <string name="renter_checklist_bottom_hint">Are the checklist information accurate and complete at the time of car collection?</string>
+    <string name="renter_checklist_edit_title">Edit Checklist</string>
+    <string name="renter_checklist_update_button">Update Checklist</string>
+    <string name="renter_checklist_edit_bottom_hint">Ensure checklist information is accurate and complete before submit.</string>
+
 </resources>

@@ -19,9 +19,9 @@ import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
 
 import java.util.Arrays;
 
-public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.Presenter {
+public class OwnerRenterUpdatedChecklistPresenter implements OwnerChecklistContract.Presenter {
 
-    private ChecklistContract.View mView;
+    private OwnerChecklistContract.View mView;
     private ChecklistView mChecklistView;
 
     private PresentationStrategy mStrategy;
@@ -41,7 +41,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
     }
 
     @Override
-    public void setView(ChecklistContract.View view) {
+    public void setView(OwnerChecklistContract.View view) {
         mView = view;
         if (view instanceof ChecklistView) {
             mChecklistView = (ChecklistView) view;
@@ -50,7 +50,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
     }
 
     @Override
-    public void setViewCallbacks(OwnerChecklistPresenter.View callbacks) {
+    public void setViewCallbacks(ChecklistPresenter.View callbacks) {
 
     }
 
@@ -182,13 +182,13 @@ public class OwnerRenterUpdatedChecklistPresenter implements ChecklistContract.P
                     mChecklistView.getContext().getString(R.string.car_rental_fuel_policy_by_mileage) + ".";
             mChecklistView.setMileagePetrolDesc(s);
         } else {
-            String s = mChecklist.getMasterMileage() + " " +
+            String s = mChecklist.getTankText() + " " +
                     mChecklistView.getContext().getString(R.string.owner_handover_tank_filled) +
                     mChecklistView.getContext().getString(R.string.car_rental_fuel_policy_similar_lvl) + ".";
             mChecklistView.setMileagePetrolDesc(s);
         }
         mChecklistView.setFirstTitle(mChecklist.isByMileage());
-        CarSquareImagesAdapter adapter = new CarSquareImagesAdapter(mChecklistView.getContext());
+        CarSquareImagesAdapter adapter = new CarSquareImagesAdapter(mChecklistView.getContext(), false);
         adapter.setItems(Arrays.asList(mChecklist.getImages()));
         mChecklistView.setImagesAdapter(adapter);
 

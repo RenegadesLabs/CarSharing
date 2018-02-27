@@ -23,6 +23,8 @@ import com.cardee.renter_home.view.listener.RenterMoreTabEventListener;
 
 public class RenterHomeActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, RenterMoreTabEventListener {
 
+    public static final String TAB_TO_SELECT = "tab_to_select";
+
     private static final String TAG = RenterHomeActivity.class.getSimpleName();
     private boolean mHasFragment;
     private ProgressBar mProgress;
@@ -44,7 +46,9 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
         BottomNavigationHelper.prepareForRenter(bottomMenu);
         bottomMenu.setOnTabSelectedListener(this);
         bottomMenu.disableItemAtPosition(2); //Just for demo
-        bottomMenu.setCurrentItem(0);
+
+        int tabToSelect = getIntent().getIntExtra(TAB_TO_SELECT, 0);
+        bottomMenu.setCurrentItem(tabToSelect);
 
     }
 

@@ -10,7 +10,7 @@ import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetBooking;
 import com.cardee.owner_bookings.OwnerBookingContract;
-import com.cardee.owner_bookings.car_checklist.view.OwnerChecklistActivity;
+import com.cardee.owner_bookings.car_checklist.view.ChecklistActivity;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.owner_bookings.strategy.CanceledStrategy;
 import com.cardee.owner_bookings.strategy.CompletedStrategy;
@@ -23,10 +23,13 @@ import com.cardee.owner_bookings.view.BookingView;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
 
+import static com.cardee.domain.bookings.BookingState.COLLECTING;
+
 
 public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     private OwnerBookingContract.View view;
+    private OwnerBookingContract.ParentView parentView;
     private BookingView bookingView;
     private PresentationStrategy strategy;
     private final int bookingId;
@@ -52,6 +55,11 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     }
 
     @Override
+    public void setParentView(OwnerBookingContract.ParentView parentView) {
+        this.parentView = parentView;
+    }
+
+    @Override
     public void setStrategy(PresentationStrategy strategy) {
         this.strategy = strategy;
     }
@@ -66,6 +74,12 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                 if (view != null) {
                     view.showProgress(false);
                     Booking booking = response.getBooking();
+
+                    if (isRenter && booking.getBookingStateType().equals(COLLECTING)) {
+                        parentView.showRenterCheckList();
+                        return;
+                    }
+
                     changeStrategyFrom(booking.getBookingStateType());
                     if (BookingState.COMPLETED.equals(strategy.getType())) {
                         requestAdditionalState();
@@ -119,6 +133,7 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     public void onDestroy() {
         view = null;
         bookingView = null;
+        parentView = null;
     }
 
     @Override
@@ -138,8 +153,8 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
 
     @Override
     public void onHandOver() {
-        Intent i = new Intent(bookingView.getContext(), OwnerChecklistActivity.class);
-        i.putExtra(OwnerChecklistActivity.KEY_BOOKING_ID, bookingId);
+        Intent i = new Intent(bookingView.getContext(), ChecklistActivity.class);
+        i.putExtra(ChecklistActivity.KEY_BOOKING_ID, bookingId);
         bookingView.getContext().startActivity(i);
     }
 

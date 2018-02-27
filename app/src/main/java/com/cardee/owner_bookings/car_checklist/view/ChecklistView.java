@@ -16,14 +16,17 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
-import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
+import com.cardee.owner_bookings.car_checklist.presenter.OwnerChecklistContract;
+import com.cardee.owner_bookings.car_checklist.presenter.RenterChecklistContract;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ChecklistView extends ConstraintLayout implements ChecklistContract.View {
+public class ChecklistView extends ConstraintLayout implements OwnerChecklistContract.View, RenterChecklistContract.View {
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
@@ -66,7 +69,9 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
 
     private Unbinder mUnbinder;
 
-    private ChecklistContract.Presenter mPresenter;
+    private OwnerChecklistContract.Presenter mPresenter;
+
+    private RenterChecklistContract.Presenter renterPresenter;
 
     public ChecklistView(Context context) {
         super(context);
@@ -95,14 +100,20 @@ public class ChecklistView extends ConstraintLayout implements ChecklistContract
     }
 
     @Override
-    public void setPresenter(ChecklistContract.Presenter presenter) {
+    public void setPresenter(OwnerChecklistContract.Presenter presenter) {
         mPresenter = presenter;
         mPresenter.setView(this);
     }
 
     @Override
+    public void setPresenter(RenterChecklistContract.Presenter presenter) {
+        renterPresenter = presenter;
+    }
+
+    @Override
     public void onDestroy() {
         mPresenter = null;
+        renterPresenter = null;
         mUnbinder.unbind();
     }
 

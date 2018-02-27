@@ -12,9 +12,11 @@ import com.cardee.domain.bookings.usecase.GetChecklist;
 import com.cardee.domain.bookings.usecase.SaveChecklist;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
-import com.cardee.owner_bookings.car_checklist.strategy.ChecklistByMileageStrategy;
-import com.cardee.owner_bookings.car_checklist.strategy.ChecklistStrategy;
+import com.cardee.owner_bookings.car_checklist.strategy.OwnerChecklistByMileageStrategy;
+import com.cardee.owner_bookings.car_checklist.strategy.OwnerChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
+import com.cardee.owner_bookings.car_checklist.strategy.RenterChecklistByMileageStrategy;
+import com.cardee.owner_bookings.car_checklist.strategy.RenterEditChecklistStrategy;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
 import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
@@ -23,12 +25,13 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class OwnerChecklistPresenter implements ChecklistContract.Presenter, ImageViewListener {
+public class ChecklistPresenter implements OwnerChecklistContract.Presenter, ImageViewListener {
 
-    private ChecklistContract.View mView;
+    private OwnerChecklistContract.View mView;
     private ChecklistView mChecklistView;
 
     private int mBookingId;
+    private boolean isRenter;
     private final UseCaseExecutor mExecutor;
     private boolean isNotFetched = true;
     private PresentationStrategy mStrategy;
@@ -41,19 +44,20 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
     private View mCallbacks;
 
-    public OwnerChecklistPresenter(int bookingId) {
+    public ChecklistPresenter(int bookingId, boolean renter) {
         mBookingId = bookingId;
+        isRenter = renter;
         mExecutor = UseCaseExecutor.getInstance();
         mImageIdsList = new ArrayList<>();
         mImages = new ArrayList<>();
     }
 
     @Override
-    public void setView(ChecklistContract.View view) {
+    public void setView(OwnerChecklistContract.View view) {
         mView = view;
         if (view instanceof ChecklistView) {
             mChecklistView = (ChecklistView) view;
-            mAdapter = new CarSquareImagesAdapter(mChecklistView.getContext());
+            mAdapter = new CarSquareImagesAdapter(mChecklistView.getContext(), true);
             mAdapter.setImageViewListener(this);
         }
     }
@@ -146,10 +150,18 @@ public class OwnerChecklistPresenter implements ChecklistContract.Presenter, Ima
 
     private void chooseStrategy() {
         if (mChecklistObj.isByMileage()) {
-            mStrategy = new ChecklistByMileageStrategy(mChecklistView, this);
+            if (isRenter) {
+                mStrategy = new RenterChecklistByMileageStrategy(mChecklistView, this);
+            } else {
+                mStrategy = new OwnerChecklistByMileageStrategy(mChecklistView, this);
+            }
             mChecklistView.setMasterMileageValue(String.valueOf(mChecklistObj.getMasterMileage()));
         } else {
-            mStrategy = new ChecklistStrategy(mChecklistView, this);
+            if (isRenter) {
+                mStrategy = new RenterEditChecklistStrategy(mChecklistView, this);
+            } else {
+                mStrategy = new OwnerChecklistStrategy(mChecklistView, this);
+            }
             mChecklistView.setPetrolValue(mChecklistObj.getTankText());
         }
         mImages.addAll(Arrays.asList(mChecklistObj.getImages()));

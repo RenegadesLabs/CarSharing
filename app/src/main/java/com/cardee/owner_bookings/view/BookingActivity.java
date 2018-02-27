@@ -15,9 +15,10 @@ import com.cardee.R;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
+import com.cardee.owner_bookings.car_checklist.view.RenterChecklistActivity;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
 
-public class BookingActivity extends AppCompatActivity {
+public class BookingActivity extends AppCompatActivity implements OwnerBookingContract.ParentView {
 
     public static final String ACTION_CHECKLIST_OWNER = "action_cardee_checklist_changed_by_owner";
     public static final String ACTION_CHECKLIST_RENTER = "action_cardee_checklist_changed_by_renter";
@@ -45,6 +46,7 @@ public class BookingActivity extends AppCompatActivity {
         toolbar = bookingView.getToolbar();
         view.setPresenter(presenter);
         presenter.setView(view);
+        presenter.setParentView(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,6 +58,12 @@ public class BookingActivity extends AppCompatActivity {
     private void openCheckListActivity() {
         Intent intent = new Intent(this, OwnerRenterUpdatedChecklistActivity.class);
         intent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, bookingId);
+        startActivity(intent);
+    }
+
+    private void openRenterCheckListActivity() {
+        Intent intent = new Intent(this, RenterChecklistActivity.class);
+        intent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, bookingId);
         startActivity(intent);
     }
 
@@ -90,6 +98,11 @@ public class BookingActivity extends AppCompatActivity {
         super.onDestroy();
         presenter.onDestroy();
         view.onDestroy();
+    }
+
+    @Override
+    public void showRenterCheckList() {
+        openRenterCheckListActivity();
     }
 
     public class ChecklistReceiver extends BroadcastReceiver {

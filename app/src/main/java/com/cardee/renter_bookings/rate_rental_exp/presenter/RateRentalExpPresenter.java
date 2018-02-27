@@ -62,11 +62,13 @@ public class RateRentalExpPresenter implements BasePresenter {
                         @Override
                         public void onSuccess(GetBooking.ResponseValues response) {
                             Booking booking = response.getBooking();
-                            setCarTitle(booking.getCarTitle(), booking.getPlateNumber());
-                            setRentalPeriod(booking);
-                            setCarPhoto(booking);
-                            mView.setOwnerPhoto(booking.getOwnerPhoto());
-                            mProfileId = booking.getOwnerId();
+                            if (booking != null) {
+                                setCarTitle(booking.getCarTitle(), booking.getPlateNumber());
+                                setRentalPeriod(booking);
+                                setCarPhoto(booking);
+                                mView.setOwnerPhoto(booking.getOwnerPhoto());
+                                mProfileId = booking.getOwnerId();
+                            }
                         }
 
                         @Override

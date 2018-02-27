@@ -14,29 +14,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
-
 import com.cardee.R;
-import com.cardee.owner_bookings.car_checklist.presenter.ChecklistContract;
-import com.cardee.owner_bookings.car_checklist.presenter.OwnerChecklistPresenter;
+import com.cardee.owner_bookings.car_checklist.presenter.ChecklistPresenter;
+import com.cardee.owner_bookings.car_checklist.presenter.OwnerChecklistContract;
+import com.cardee.owner_home.view.OwnerHomeActivity;
+import com.cardee.renter_home.view.RenterHomeActivity;
 
 
-public class OwnerChecklistActivity extends AppCompatActivity implements OwnerChecklistPresenter.View {
+public class ChecklistActivity extends AppCompatActivity implements ChecklistPresenter.View {
 
     private static final int IMAGE_REQUEST_CODE = 102;
     private static final int REQUEST_PERMISSION_CODE = 103;
 
     public final static String KEY_BOOKING_ID = "booking_id";
+    public final static String KEY_IS_RENTER = "is_renter";
 
-    private ChecklistContract.Presenter mPresenter;
+    private OwnerChecklistContract.Presenter mPresenter;
 
-    private ChecklistContract.View mView;
+    private OwnerChecklistContract.View mView;
+    private boolean isRenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ChecklistView view = (ChecklistView) LayoutInflater
                 .from(this).inflate(R.layout.activity_owner_handover_checklist, null);
-        mPresenter = new OwnerChecklistPresenter(getIntent().getIntExtra(KEY_BOOKING_ID, -1));
+        isRenter = getIntent().getBooleanExtra(KEY_IS_RENTER, false);
+        mPresenter = new ChecklistPresenter(getIntent().getIntExtra(KEY_BOOKING_ID, -1), isRenter);
         mView = view;
         mView.setPresenter(mPresenter);
         mPresenter.setView(mView);
@@ -105,7 +109,17 @@ public class OwnerChecklistActivity extends AppCompatActivity implements OwnerCh
 
     @Override
     public void onHandover(int bookingId) {
-        finish();
+        if (isRenter) {
+            Intent intent = new Intent(this, RenterHomeActivity.class);
+            intent.putExtra(RenterHomeActivity.TAB_TO_SELECT, 1);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, OwnerHomeActivity.class);
+            intent.putExtra(OwnerHomeActivity.TAB_TO_SELECT, 2);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 
     private boolean hasPermission() {

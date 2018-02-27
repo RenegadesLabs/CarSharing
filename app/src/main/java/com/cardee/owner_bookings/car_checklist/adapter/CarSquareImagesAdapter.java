@@ -29,11 +29,13 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private final List<ImageItemWrapper> items;
     private final LayoutInflater inflater;
     private final RequestManager glideRequestManager;
+    private final boolean addButtonNeeded;
 
-    public CarSquareImagesAdapter(Context context) {
+    public CarSquareImagesAdapter(Context context, boolean addButNeeded) {
         items = new ArrayList<>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         glideRequestManager = Glide.with(context);
+        addButtonNeeded = addButNeeded;
     }
 
     public void setItems(List<Image> images) {
@@ -41,7 +43,9 @@ public class CarSquareImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         for (Image image : images) {
             items.add(ImageItemWrapper.newImageItem(image));
         }
-        items.add(ImageItemWrapper.newAddButtonItem());
+        if (addButtonNeeded) {
+            items.add(ImageItemWrapper.newAddButtonItem());
+        }
         notifyDataSetChanged();
 //        if (items.isEmpty()) {
 //            items.add(ImageItemWrapper.newAddButtonItem());

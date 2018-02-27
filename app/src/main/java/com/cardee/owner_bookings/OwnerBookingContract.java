@@ -11,6 +11,10 @@ public interface OwnerBookingContract {
     String BOOKING_ID = "_booking_id";
     String BOOKING_STATE = "_booking_state";
 
+    interface ParentView {
+        void showRenterCheckList();
+    }
+
     interface View extends BaseView {
 
         void setPresenter(Presenter presenter);
@@ -30,5 +34,6 @@ public interface OwnerBookingContract {
 
         void onDestroy();
 
+        void setParentView(ParentView parentView);
     }
 }

@@ -199,7 +199,7 @@ class CarViewHolder(itemView: View,
                 .into(imgCar)
 
         title.text = car.title
-        info.text = " ${INFO_STRING_DOT} ${car?.yearOfManufacture} ${INFO_STRING_STAR}"
+        handover_info.text = " ${INFO_STRING_DOT} ${car?.yearOfManufacture} ${INFO_STRING_STAR}"
         car.isFavorite?.let { favorite ->
             imgFavorite.setImageDrawable(if (favorite) favIconSelected else favIcon)
         }
