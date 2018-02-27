@@ -1,6 +1,7 @@
 package com.cardee.renter_car_details.view
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import com.cardee.R
 import com.cardee.auth.preview.PreviewActivity
 import com.cardee.data_source.remote.service.AccountManager
 import com.cardee.domain.renter.entity.RenterDetailedCar
+import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
 import com.cardee.renter_book_car.view.BookCarActivity
 import com.cardee.renter_browse_cars.RenterEventBus
 import com.cardee.renter_browse_cars_map.LocationClient
@@ -51,6 +53,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     companion object {
         const val LOCATION_REQUEST_CODE = 101
+        const val PERIOD_REQUEST_CODE = 911
     }
 
     override fun onClick(p0: View?) {
@@ -75,7 +78,32 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                 intent.putExtra("agree", false)
                 startActivity(intent)
             }
+            btnCheckAvailability -> {
+                val intent = Intent(this, RentalPeriodActivity::class.java)
+                val hourly = viewHolder?.isHourly() ?: false
+                val details = viewHolder?.getDetails() ?: return
+                intent.putExtra("hourly", hourly)
+                if (hourly) {
+                    intent.putExtra("availability", details.carAvailabilityHourly)
+                    intent.putExtra("begin", details.carAvailabilityTimeBegin)
+                    intent.putExtra("end", details.carAvailabilityTimeEnd)
+                } else {
+                    val dailyDetails = details.orderDailyDetails ?: return
+                    intent.putExtra("availability", details.carAvailabilityDaily)
+                    intent.putExtra("pickup", dailyDetails.timePickup)
+                    intent.putExtra("return", dailyDetails.timeReturn)
+                }
+                startActivityForResult(intent, PERIOD_REQUEST_CODE)
+                overridePendingTransition(R.anim.enter_up, 0)
+            }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PERIOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,6 +231,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         ivRenterCarDetailsToolbarFavoritesImg.setOnClickListener(this)
         bBookCar.setOnClickListener(this)
         rentalTermsButton.setOnClickListener(this)
+        btnCheckAvailability.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -252,7 +281,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
     private fun shareCar() {
-        val link =  shareLink + mCarId
+        val link = shareLink + mCarId
         val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, link)

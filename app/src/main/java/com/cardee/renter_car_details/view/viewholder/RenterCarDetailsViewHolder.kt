@@ -307,6 +307,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         mActivity.iv_bookButtonInstant.visibility = View.GONE
     }
 
+    fun getDetails(): RenterDetailedCar? {
+        return renterDetailedCar
+    }
+
     fun isHourly(): Boolean? {
         return hourly
     }
