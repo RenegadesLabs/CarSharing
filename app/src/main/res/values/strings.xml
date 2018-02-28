@@ -911,4 +911,8 @@
     <string name="renter_checklist_update_button">Update Checklist</string>
     <string name="renter_checklist_edit_bottom_hint">Ensure checklist information is accurate and complete before submit.</string>
 
+    <!--Extend booking-->
+    <string name="extend_daily_booking_title">Select new return date</string>
+    <string name="extend_hourly_booking_title">Select new return time</string>
+
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import com.cardee.R
@@ -183,6 +184,7 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
+
         overridePendingTransition(0, R.anim.exit_down)
     }
 }

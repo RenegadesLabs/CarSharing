@@ -1,5 +1,6 @@
 package com.cardee.owner_bookings.view;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,19 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.extend_booking.ExtendBookingActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
 import com.cardee.owner_bookings.car_checklist.view.RenterChecklistActivity;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
+import com.cardee.renter_book_car.rental_period.RentalPeriodActivity;
 
 public class BookingActivity extends AppCompatActivity implements OwnerBookingContract.ParentView {
 
     public static final String ACTION_CHECKLIST_OWNER = "action_cardee_checklist_changed_by_owner";
     public static final String ACTION_CHECKLIST_RENTER = "action_cardee_checklist_changed_by_renter";
     public static final String IS_RENTER = "flag_cardee_is_renter";
+    private static final int EXTEND_BOOKING_REQUEST = 101;
 
     OwnerBookingContract.Presenter presenter;
     OwnerBookingContract.View view;
@@ -103,6 +108,21 @@ public class BookingActivity extends AppCompatActivity implements OwnerBookingCo
     @Override
     public void showRenterCheckList() {
         openRenterCheckListActivity();
+    }
+
+    @Override
+    public void showExtendBookingDialog() {
+        Intent intent = new Intent(this, ExtendBookingActivity.class);
+        startActivityForResult(intent, EXTEND_BOOKING_REQUEST);
+        overridePendingTransition(R.anim.enter_up, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EXTEND_BOOKING_REQUEST && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "In process", Toast.LENGTH_SHORT).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public class ChecklistReceiver extends BroadcastReceiver {

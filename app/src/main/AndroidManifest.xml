@@ -229,6 +229,10 @@
             android:name=".renter_book_car.rental_period.RentalPeriodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTranslucent" />
+        <activity
+            android:name=".extend_booking.ExtendBookingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTranslucent" />
         <activity android:name=".renter_book_car.collection.CollectionAreaActivity" />
         <activity android:name=".renter_book_car.payment.BookPaymentActivity" />
         <activity android:name=".renter_car_details.reviews.RenterCarReviewsActivity" />

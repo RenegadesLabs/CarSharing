@@ -27,6 +27,7 @@ import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
 import com.cardee.domain.bookings.entity.Booking;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
+import com.cardee.renter_book_car.rental_period.RentalPeriodActivity;
 import com.cardee.renter_bookings.rate_rental_exp.view.RateRentalExpActivity;
 import com.cardee.util.glide.CircleTransform;
 
@@ -306,7 +307,9 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
 
     @Override
     public void bind() {
-
+        Intent intent = new Intent(getContext(), RentalPeriodActivity.class);
+        intent.putExtra("isHourly", false);
+        getContext().startActivity(intent);
     }
 
     private void loadImageIntoView(String imgUrl, int placeholderRes, ImageView view, ProgressBar progress, boolean circle) {

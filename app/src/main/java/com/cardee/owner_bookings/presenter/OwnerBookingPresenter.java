@@ -166,7 +166,9 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
     @Override
     public void onCompleted() {
         if (isRenter) {
-            view.showMessage("Coming soon");
+            if (parentView != null) {
+                parentView.showExtendBookingDialog();
+            }
             return;
         }
         Intent completeIntent = new Intent(bookingView.getContext(), CarReturnedActivity.class);
