@@ -30,7 +30,7 @@ import com.cardee.owner_car_details.AvailabilityContract;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 import com.cardee.owner_car_details.view.CarDetailsEditActivity;
 import com.cardee.owner_car_details.view.OwnerCarDetailsActivity;
-import com.cardee.owner_home.presenter.OwnerHomeContract;
+import com.cardee.owner_home.presenter.HomeContract;
 import com.cardee.owner_home.presenter.OwnerHomePresenterImp;
 import com.cardee.owner_home.view.helper.BottomNavigationHelper;
 import com.cardee.owner_home.view.listener.CarListItemEventListener;
@@ -39,14 +39,14 @@ import com.cardee.owner_home.view.service.FragmentFactory;
 
 public class OwnerHomeActivity extends AppCompatActivity
         implements AHBottomNavigation.OnTabSelectedListener,
-        CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener, OwnerHomeContract.View {
+        CarListItemEventListener, MoreTabItemEventListener, View.OnClickListener, HomeContract.View {
 
     public static final String TAB_TO_SELECT = "tab_to_select";
 
     private static final String TAG = OwnerHomeActivity.class.getSimpleName();
     private static final int ADD_NEW_CAR_REQUEST_CODE = 101;
 
-    private OwnerHomeContract.Presenter mPresenter;
+    private HomeContract.Presenter mPresenter;
     private boolean mHasFragment;
     private TextView mTitle;
     private View mAddCarAction;

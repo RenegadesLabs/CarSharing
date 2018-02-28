@@ -18,6 +18,7 @@ import com.cardee.inbox.alert.list.adapter.AlertListAdapter;
 import com.cardee.inbox.alert.list.presenter.AlertListContract;
 import com.cardee.inbox.alert.list.presenter.AlertListPresenterImp;
 import com.cardee.owner_bookings.OwnerBookingContract;
+import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
 import com.cardee.owner_bookings.car_checklist.view.RenterChecklistActivity;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
@@ -126,18 +127,21 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
                         startActivity(renterRateIntent);
                         break;
                     case OWNER_CHECKLIST_UPD:
+                        PendingChecklistStorage.remove(getActivity(), objectId);
                         Intent ownerEditIntent = new Intent(getActivity(), RenterChecklistActivity.class);
                         ownerEditIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
                         ownerEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(ownerEditIntent);
                         break;
                     case RENTER_CHECKLIST_UPD:
+                        PendingChecklistStorage.remove(getActivity(), objectId);
                         Intent renterEditIntent = new Intent(getActivity(), OwnerRenterUpdatedChecklistActivity.class);
                         renterEditIntent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, objectId);
                         renterEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(renterEditIntent);
                         break;
                     case INIT_CHECKLIST:
+                        PendingChecklistStorage.remove(getActivity(), objectId);
                         Intent checklistIntent = new Intent(getActivity(), RenterChecklistActivity.class);
                         checklistIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
                         checklistIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
