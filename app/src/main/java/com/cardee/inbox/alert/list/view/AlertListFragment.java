@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
@@ -75,9 +77,16 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
     }
 
     private void initRecycler() {
-        mAlertRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mAlertRecycler.setLayoutManager(layoutManager);
         mAlertRecycler.setHasFixedSize(true);
         mAlertRecycler.setAdapter(mAlertAdapter);
+        mAlertAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                layoutManager.scrollToPositionWithOffset(0, 0);
+            }
+        });
     }
 
     @Override
@@ -105,10 +114,14 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
                     case RETURN_REMINDER:
                         if (session.equals(AccountManager.OWNER_SESSION)) {
                             Intent intent = new Intent(getActivity(), BookingActivity.class);
+                            intent.putExtra(BookingActivity.IS_RENTER, false);
                             intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
                             startActivity(intent);
                         } else if (session.equals(AccountManager.RENTER_SESSION)) {
-                            //TODO: implement for Renter
+                            Intent intent = new Intent(getActivity(), BookingActivity.class);
+                            intent.putExtra(BookingActivity.IS_RENTER, true);
+                            intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                            startActivity(intent);
                         }
                         break;
                     case USER_VERIFICATION:
@@ -122,42 +135,122 @@ public class AlertListFragment extends Fragment implements AlertListContract.Vie
                         break;
                     case RENTER_REVIEW_REMINDER:
                     case RENTER_REVIEW:
-                        Intent renterRateIntent = new Intent(getActivity(), RateRentalExpActivity.class);
-                        renterRateIntent.putExtra("booking_id", objectId);
-                        startActivity(renterRateIntent);
+                        if (session.equals(AccountManager.OWNER_SESSION)) {
+                            AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
+
+                            Intent renterRateIntent = new Intent(getActivity(), RateRentalExpActivity.class);
+                            renterRateIntent.putExtra("booking_id", objectId);
+                            renterRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                            stackBuilder.addNextIntentWithParentStack(renterRateIntent);
+                            stackBuilder.startActivities();
+                        } else {
+                            Intent renterRateIntent = new Intent(getActivity(), RateRentalExpActivity.class);
+                            renterRateIntent.putExtra("booking_id", objectId);
+                            startActivity(renterRateIntent);
+                        }
                         break;
                     case OWNER_CHECKLIST_UPD:
-                        PendingChecklistStorage.remove(getActivity(), objectId);
-                        Intent ownerEditIntent = new Intent(getActivity(), RenterChecklistActivity.class);
-                        ownerEditIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
-                        ownerEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(ownerEditIntent);
+                        if (alert.isNewBooking()) {
+                            PendingChecklistStorage.remove(getActivity(), objectId);
+
+                            if (session.equals(AccountManager.OWNER_SESSION)) {
+                                AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
+
+                                Intent ownerEditIntent = new Intent(getActivity(), RenterChecklistActivity.class);
+                                ownerEditIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
+                                ownerEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                                stackBuilder.addNextIntentWithParentStack(ownerEditIntent);
+                                stackBuilder.startActivities();
+                            } else {
+                                PendingChecklistStorage.remove(getActivity(), objectId);
+                                Intent ownerEditIntent = new Intent(getActivity(), RenterChecklistActivity.class);
+                                ownerEditIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
+                                ownerEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(ownerEditIntent);
+                            }
+                        }
                         break;
                     case RENTER_CHECKLIST_UPD:
-                        PendingChecklistStorage.remove(getActivity(), objectId);
-                        Intent renterEditIntent = new Intent(getActivity(), OwnerRenterUpdatedChecklistActivity.class);
-                        renterEditIntent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, objectId);
-                        renterEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(renterEditIntent);
+                        if (alert.isNewBooking()) {
+                            PendingChecklistStorage.remove(getActivity(), objectId);
+
+                            if (session.equals(AccountManager.RENTER_SESSION)) {
+                                AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
+
+                                Intent renterEditIntent = new Intent(getActivity(), OwnerRenterUpdatedChecklistActivity.class);
+                                renterEditIntent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, objectId);
+                                renterEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                                stackBuilder.addNextIntentWithParentStack(renterEditIntent);
+                                stackBuilder.startActivities();
+                            } else {
+                                PendingChecklistStorage.remove(getActivity(), objectId);
+                                Intent renterEditIntent = new Intent(getActivity(), OwnerRenterUpdatedChecklistActivity.class);
+                                renterEditIntent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, objectId);
+                                renterEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(renterEditIntent);
+                            }
+                        }
                         break;
                     case INIT_CHECKLIST:
-                        PendingChecklistStorage.remove(getActivity(), objectId);
-                        Intent checklistIntent = new Intent(getActivity(), RenterChecklistActivity.class);
-                        checklistIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
-                        checklistIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(checklistIntent);
+                        if (alert.isNewBooking()) {
+                            PendingChecklistStorage.remove(getActivity(), objectId);
+
+                            Intent checklistIntent = new Intent(getActivity(), RenterChecklistActivity.class);
+                            checklistIntent.putExtra(RenterChecklistActivity.KEY_BOOKING_ID, objectId);
+                            checklistIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            if (session.equals(AccountManager.OWNER_SESSION)) {
+                                AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
+
+                                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                                stackBuilder.addNextIntentWithParentStack(checklistIntent);
+                                stackBuilder.startActivities();
+                            } else {
+                                startActivity(checklistIntent);
+                            }
+                        }
                         break;
                     case OWNER_REVIEW:
                     case OWNER_REVIEW_REMINDER:
-                        Intent ownerRateIntent = new Intent(getContext(), CarReturnedActivity.class);
-                        ownerRateIntent.putExtra("booking_id", objectId);
-                        startActivity(ownerRateIntent);
+                        if (session.equals(AccountManager.RENTER_SESSION)) {
+                            AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
+
+                            Intent ownerRateIntent = new Intent(getContext(), CarReturnedActivity.class);
+                            ownerRateIntent.putExtra("booking_id", objectId);
+                            ownerRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                            stackBuilder.addNextIntentWithParentStack(ownerRateIntent);
+                            stackBuilder.startActivities();
+                        } else {
+                            Intent ownerRateIntent = new Intent(getContext(), CarReturnedActivity.class);
+                            ownerRateIntent.putExtra("booking_id", objectId);
+                            startActivity(ownerRateIntent);
+                        }
                         break;
                     case CAR_VERIFICATION:
                     case CAR_STATE_CHANGE:
-                        Intent ownerCarIntent = new Intent(getContext(), OwnerCarDetailsActivity.class);
-                        ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
-                        startActivity(ownerCarIntent);
+                        if (session.equals(AccountManager.RENTER_SESSION)) {
+                            AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
+
+                            Intent ownerCarIntent = new Intent(getContext(), OwnerCarDetailsActivity.class);
+                            ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
+                            ownerCarIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                            stackBuilder.addNextIntentWithParentStack(ownerCarIntent);
+                            stackBuilder.startActivities();
+                        } else {
+                            Intent ownerCarIntent = new Intent(getContext(), OwnerCarDetailsActivity.class);
+                            ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
+                            startActivity(ownerCarIntent);
+                        }
                         break;
                     case SYSTEM_MESSAGES:
                         // ignore;

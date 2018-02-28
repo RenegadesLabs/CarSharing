@@ -1,12 +1,15 @@
 package com.cardee.owner_bookings.car_checklist.strategy;
 
+import android.app.Activity;
+import android.os.Build;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
-import com.cardee.owner_car_details.view.adapter.CarImagesAdapter;
 
 
 public class RenterUpdatedChecklistStrategy extends PresentationStrategy implements View.OnClickListener {
@@ -26,6 +29,12 @@ public class RenterUpdatedChecklistStrategy extends PresentationStrategy impleme
         mChecklistView.toolbar.setBackgroundColor(mChecklistView.getResources().getColor(R.color.rate_star));
         mChecklistView.toolbarTitle.setText(R.string.owner_handover_checklist_renter_changed);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = ((Activity) view.getContext()).getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(mChecklistView.getResources().getColor(R.color.status_bar_secondary));
+        }
+
         mChecklistView.petrolMileageView.setVisibility(View.GONE);
         mChecklistView.petrolDescTV.setVisibility(View.VISIBLE);
         mChecklistView.imagesGrid.setLayoutManager(new GridLayoutManager(mChecklistView.getContext(), 4,
@@ -38,14 +47,6 @@ public class RenterUpdatedChecklistStrategy extends PresentationStrategy impleme
         mChecklistView.viewAccurateContainer.setVisibility(View.VISIBLE);
         mChecklistView.completeYesB.setOnClickListener(this);
         mChecklistView.completeNoB.setOnClickListener(this);
-
-    }
-
-    public void setRemarksText(String txt) {
-        if (mChecklistView == null) {
-            return;
-        }
-        mChecklistView.remarksText.setText(txt);
     }
 
     @Override

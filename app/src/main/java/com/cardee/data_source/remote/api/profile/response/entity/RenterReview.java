@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class RenterReview {
-    @SerializedName("comment")
+    @SerializedName("review")
     @Expose
     private String review;
     @SerializedName("review_date")

@@ -51,11 +51,16 @@ public class BookingActivity extends AppCompatActivity implements OwnerBookingCo
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (PendingChecklistStorage.containsChecklist(this, bookingId)) {
-            openCheckListActivity();
+            PendingChecklistStorage.remove(this, bookingId);
+            if (isRenter) {
+                openRenterCheckListActivity();
+            } else {
+                openOwnerCheckListActivity();
+            }
         }
     }
 
-    private void openCheckListActivity() {
+    private void openOwnerCheckListActivity() {
         Intent intent = new Intent(this, OwnerRenterUpdatedChecklistActivity.class);
         intent.putExtra(OwnerRenterUpdatedChecklistActivity.KEY_BOOKING_ID, bookingId);
         startActivity(intent);
@@ -109,13 +114,16 @@ public class BookingActivity extends AppCompatActivity implements OwnerBookingCo
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (ACTION_CHECKLIST_OWNER.equals(intent.getAction())
-                    || ACTION_CHECKLIST_RENTER.equals(intent.getAction())) {
-                int alertBookingId = intent.getIntExtra(OwnerBookingContract.BOOKING_ID, 0);
-//                if (alertBookingId != bookingId) {
-//                    return;
-//                }
-                openCheckListActivity();
+            int alertBookingId = intent.getIntExtra(OwnerBookingContract.BOOKING_ID, 0);
+            if (alertBookingId != bookingId) {
+                return;
+            }
+
+            PendingChecklistStorage.remove(BookingActivity.this, bookingId);
+            if (ACTION_CHECKLIST_OWNER.equals(intent.getAction())) {
+                openOwnerCheckListActivity();
+            } else if (ACTION_CHECKLIST_RENTER.equals(intent.getAction())) {
+                openRenterCheckListActivity();
             }
         }
     }

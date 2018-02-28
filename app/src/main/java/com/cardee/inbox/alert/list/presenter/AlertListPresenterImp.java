@@ -74,6 +74,7 @@ public class AlertListPresenterImp implements AlertListContract.Presenter {
         if (mView != null) {
             mView.showAlert(alert);
         }
+
         if (alert.isNewBooking()) {
             List<Integer> alerts = new ArrayList<>();
             alerts.add(alert.getAlertId());
