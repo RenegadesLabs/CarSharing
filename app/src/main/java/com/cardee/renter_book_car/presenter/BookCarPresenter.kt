@@ -60,7 +60,8 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
                     mState.noteText)
         } else {
             BookingRequest(mCarId ?: return, mState.timeBeginDaily ?: return,
-                    mState.timeEndDaily ?: return, mState.dailyCurbsideDelivery.get(),
+                    mState.timeEndDaily
+                            ?: return, mState.dailyCurbsideDelivery.get() && mState.collectionPicked.get(),
                     mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
                     mState.paymentToken, mState.bookingHourly?.not() ?: return,
                     mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
