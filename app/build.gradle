@@ -111,6 +111,9 @@ dependencies {
     // Custom seek bar
     compile 'com.crystal:crystalrangeseekbar:1.1.3'
 
+    //Custom toggle button
+    compile 'com.zcw:togglebutton-library:1.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
