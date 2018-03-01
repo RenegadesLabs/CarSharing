@@ -114,6 +114,13 @@ class DateRepresentationDelegate(context: Context) {
         return dropStartZero(dateString)
     }
 
+    fun formatAsIsoBooking(notIsoDate: String?): String? {
+        notIsoDate ?: return null
+        val dateString = convert(notIsoDate, MONTH_DAY_YEAR_HOUR_MINUTE_PATTERN, ISO_8601_DATE_TIME_PATTERN)
+                ?: return null
+        return dropStartZero(dateString)
+    }
+
     fun formatAsIsoDate(date: Date?): String? {
         date ?: return null
         formatter.applyPattern(ISO_8601_DATE_TIME_PATTERN)

@@ -103,6 +103,12 @@ public class InboxRepository implements InboxContract {
                 .subscribeOn(Schedulers.io());
     }
 
+    @Override
+    public void addNewChat(Chat chat) {
+        mChatLocalSource.addChat(chat).subscribe(() -> Log.e(TAG, "New chat obtained"),
+                responseError -> Log.d(TAG, "Error while creating new chat"));
+    }
+
     private void getNewChat(ChatNotification chatNotification, CompletableEmitter emitter) {
         mChatRemoteSource.getSingleChat(chatNotification.getChatId(), chatNotification.getChatAttachment())
                 .subscribe(chat -> mChatLocalSource.addChat(chat)

@@ -2,7 +2,8 @@
 <com.cardee.owner_bookings.view.BookingView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_layout"
@@ -396,6 +397,7 @@
             android:layout_marginStart="@dimen/widget_margin_mid"
             android:background="@drawable/bg_btn_round"
             android:clickable="true"
+            android:focusable="true"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/renter_photo"

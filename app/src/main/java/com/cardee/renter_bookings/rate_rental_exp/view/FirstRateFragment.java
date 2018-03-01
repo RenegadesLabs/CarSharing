@@ -59,6 +59,10 @@ public class FirstRateFragment extends Fragment {
             mOwner = (byte) ownerBar.getScore();
             mOverall = (byte) overallBar.getScore();
 
+            if (mCondition == 0 || mComfort == 0 || mOwner == 0 || mOverall == 0) {
+                return;
+            }
+            
             mListener.onFirstSubmitClicked(mCondition, mComfort, mOwner, mOverall);
         });
         return root;

@@ -146,7 +146,10 @@ public class CarReturnedActivity extends AppCompatActivity implements CarReturne
             comment = "";
         }
         byte rate = (byte) mRatingBar.getScore();
-        mPresenter.omSubmitClicked(comment, rate, mBookingId);
+
+        if (rate != 0) {
+            mPresenter.omSubmitClicked(comment, rate, mBookingId);
+        }
     }
 
     @Override

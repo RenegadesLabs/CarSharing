@@ -28,6 +28,7 @@ public class ChatRepository implements ChatContract {
 
     private int chatId;
     private String attachment;
+    private NewMessage tempMessage;
 
     public static ChatRepository getInstance() {
         if (INSTANCE == null) {
@@ -83,10 +84,16 @@ public class ChatRepository implements ChatContract {
     }
 
     private boolean isLastInboxMessageDidNotRead(List<ChatMessage> messageList) {
+        if (messageList == null || messageList.isEmpty()) {
+            return false;
+        }
         return getLastMessage(messageList).getInbox() && !getLastMessage(messageList).getIsRead();
     }
 
     private int getLastMessageId(List<ChatMessage> messageList) {
+        if (messageList == null || messageList.isEmpty()) {
+            return 0;
+        }
         return getLastMessage(messageList).getMessageId();
     }
 
@@ -104,14 +111,20 @@ public class ChatRepository implements ChatContract {
         return Single.create(emitter -> mRemoteSource.sendMessage(messageText, chatId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(newMessage -> {
-                    emitter.onSuccess(newMessage.getMessageId());
                     fetchMessageData(messageText, newMessage);
-                    mLocalSource.addOutputMessage(newMessage);
-                    mLocalSource.updateChatLastMessage(newMessage);
+                    tempMessage = newMessage;
+                    emitter.onSuccess(newMessage.getMessageId());
                 }, throwable -> {
                     emitter.onError(throwable);
                     Log.d(TAG, "Server connection lost");
                 }));
+    }
+
+    @Override
+    public void saveMessageLocally() {
+        mLocalSource.addOutputMessage(tempMessage);
+        mLocalSource.updateChatLastMessage(tempMessage);
+        tempMessage = null;
     }
 
     private void fetchMessageData(String messageText, NewMessage newMessage) {

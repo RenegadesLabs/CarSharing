@@ -67,7 +67,10 @@ public class RateRentalExpPresenter implements BasePresenter {
                                 setRentalPeriod(booking);
                                 setCarPhoto(booking);
                                 mView.setOwnerPhoto(booking.getOwnerPhoto());
-                                mProfileId = booking.getOwnerId();
+                                Integer id = booking.getOwnerId();
+                                if (id != null) {
+                                    mProfileId = id;
+                                }
                             }
                         }
 

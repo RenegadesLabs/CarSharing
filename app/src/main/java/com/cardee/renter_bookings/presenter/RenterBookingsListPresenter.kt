@@ -10,7 +10,7 @@ import com.cardee.domain.bookings.usecase.ObtainBookings
 import com.cardee.owner_bookings.OwnerBookingListContract
 import com.cardee.settings.Settings
 
-class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val settings: Settings): OwnerBookingListContract.Presenter {
+class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val settings: Settings) : OwnerBookingListContract.Presenter {
 
     private var bookings: List<Booking>? = null
     private var executor: UseCaseExecutor? = null
@@ -27,8 +27,9 @@ class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val 
 
     private fun obtainBookings(showProgress: Boolean) {
         view?.showProgress(showProgress)
-        executor?.execute(obtainBookings, ObtainBookings.RequestValues(ObtainBookings.Strategy.RENTER, filter, null, initialized?.not()?: true),
-                object: UseCase.Callback<ObtainBookings.ResponseValues> {
+        executor?.execute(obtainBookings, ObtainBookings.RequestValues(ObtainBookings.Strategy.RENTER, filter, null, initialized?.not()
+                ?: true),
+                object : UseCase.Callback<ObtainBookings.ResponseValues> {
                     override fun onSuccess(response: ObtainBookings.ResponseValues?) {
                         if (bookings?.isEmpty() == true || response?.isUpdated == true) {
                             bookings = response?.bookings
@@ -41,6 +42,7 @@ class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val 
                     }
 
                     override fun onError(error: Error?) {
+                        view?.showMessage(error?.message)
                         view?.showProgress(false)
                     }
                 })
@@ -70,17 +72,18 @@ class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val 
 
     override fun onItemClick(item: Booking?) {
         val bookingId = item?.bookingId
-        bookingId?: throw IllegalArgumentException("Invalid bookingId: " + bookingId!!) as Throwable
+        bookingId
+                ?: throw IllegalArgumentException("Invalid bookingId: " + bookingId!!) as Throwable
 
         view?.openBooking(bookingId)
     }
 
     override fun count(): Int {
-        return bookings?.size?: 0
+        return bookings?.size ?: 0
     }
 
     override fun init() {
-        obtainBookings(bookings?.isEmpty()?: true)
+        obtainBookings(bookings?.isEmpty() ?: true)
     }
 
 }

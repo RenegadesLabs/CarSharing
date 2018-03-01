@@ -28,4 +28,6 @@ public interface ChatContract {
     void addNewMessage(ChatNotification chatNotification);
 
     Single<List<ChatMessage>> getNewChat();
+
+    void saveMessageLocally();
 }

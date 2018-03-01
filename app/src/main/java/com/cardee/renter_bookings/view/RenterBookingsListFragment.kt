@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.cardee.R
 import com.cardee.domain.bookings.BookingState
 import com.cardee.domain.bookings.usecase.ObtainBookings
@@ -27,6 +28,7 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
     private var adapter: BookingListAdapter? = null
     private var progress: View? = null
     private var list: RecyclerView? = null
+    private var currentToast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     tab.customView?.alpha = 1f
-                    when(tab.position) {
+                    when (tab.position) {
                         0 -> presenter?.setFilter(null)
                         1 -> presenter?.setFilter(BookingState.COMPLETED)
                     }
@@ -86,9 +88,13 @@ class RenterBookingsListFragment : Fragment(), OwnerBookingListContract.View {
     }
 
     override fun showMessage(message: String?) {
+        currentToast?.cancel()
+        currentToast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+        currentToast?.show()
     }
 
     override fun showMessage(messageId: Int) {
+        showMessage(getString(messageId))
     }
 
     override fun invalidate() {

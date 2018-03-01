@@ -86,12 +86,6 @@ public class BookingRepository implements BookingDataSource {
 
     @Override
     public void obtainBookingById(int id, BookingCallback callback) {
-        if (!cache.isDirty()) {
-            BookingEntity cachedBooking = cache.obtain(id);
-            if (cachedBooking != null) {
-                callback.onSuccess(cachedBooking);
-            }
-        }
         remoteDataSource.obtainBookingById(id, new BookingCallback() {
             @Override
             public void onSuccess(BookingEntity bookingEntity) {

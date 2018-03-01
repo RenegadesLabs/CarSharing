@@ -30,7 +30,7 @@ public interface Bookings {
     Call<BookingResponse> getOwnerBookings(@Query("state") String filter, @Query("order") String sort);
 
     @GET("bookings/renter")
-    Call<BookingResponse> getRenterBookings(@Query("state") String filter, @Query("order") String sort);
+    Single<BookingResponse> getRenterBookings(@Query("state") String filter, @Query("order") String sort);
 
     @GET("bookings/{id}")
     Single<BookingByIdResponse> getBookingById(@Path("id") int id);
