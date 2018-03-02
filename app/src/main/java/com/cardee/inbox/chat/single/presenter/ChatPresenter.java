@@ -48,6 +48,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     private int chatId;
     private int chatUnreadCount;
     private String attachment;
+    private boolean chatFromBooking;
     private boolean chatNew;
     private Booking mBooking;
 
@@ -63,6 +64,7 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void init(Bundle bundle, View activityView) {
+        chatNew = false;
         mViewHolder = new ChatViewHolder(activityView, this);
         mViewHolder.initAdapter(activityView.getContext());
         subscribeToUserInput();
@@ -70,7 +72,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         chatId = bundle.getInt(Chat.CHAT_SERVER_ID, -1);
         attachment = bundle.getString(Chat.CHAT_ATTACHMENT, "");
         chatUnreadCount = bundle.getInt(Chat.CHAT_UNREAD_COUNT, 0);
-        chatNew = bundle.getBoolean(Chat.IS_NEW_CHAT, false);
+        chatFromBooking = bundle.getBoolean(Chat.CHAT_FROM_BOOKING, false);
     }
 
     private void subscribeToUserInput() {
@@ -79,7 +81,7 @@ public class ChatPresenter implements ChatContract.Presenter {
                 .subscribe(realMessageId -> {
                             mViewHolder.updateMessagePreview(realMessageId);
 
-                            if (chatNew) {
+                            if (chatFromBooking && chatNew) {
                                 Chat newChat = new Chat();
                                 newChat.setChatId(chatId);
                                 newChat.setChatAttachment(attachment);
@@ -122,7 +124,7 @@ public class ChatPresenter implements ChatContract.Presenter {
     private void getLocalChatData() {
         mChatRepository.sendChatIdentifier(chatId, attachment);
 
-        if (chatNew) {
+        if (chatFromBooking) {
             getDataFromBooking();
         } else {
             mChatRepository.getChatInfo()
@@ -166,7 +168,7 @@ public class ChatPresenter implements ChatContract.Presenter {
         mChatRepository.getLocalMessages()
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
-                .filter(messageList -> messageList != null && !messageList.isEmpty())
+//                .filter(messageList -> messageList != null && !messageList.isEmpty())
                 .subscribe(this::showAllMessages);
     }
 
@@ -194,6 +196,10 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     private void showAllMessages(List<ChatMessage> messageList) {
+        if (messageList == null || messageList.isEmpty()) {
+            chatNew = true;
+            return;
+        }
         if (mViewHolder != null) {
             mViewHolder.setMessageList(messageList);
         }

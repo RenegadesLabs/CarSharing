@@ -40,7 +40,7 @@ import butterknife.Unbinder;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
-import static com.cardee.data_source.inbox.local.chat.entity.Chat.IS_NEW_CHAT;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_FROM_BOOKING;
 
 public class BookingView extends CoordinatorLayout implements OwnerBookingContract.View {
 
@@ -290,7 +290,7 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
             args.putInt(CHAT_SERVER_ID, booking.getBookingId());
             args.putString(CHAT_ATTACHMENT, attachment);
             args.putInt(CHAT_UNREAD_COUNT, 0);
-            args.putBoolean(IS_NEW_CHAT, true);
+            args.putBoolean(CHAT_FROM_BOOKING, true);
 
             Intent intent = new Intent(this.getContext(), ChatActivity.class);
             intent.putExtras(args);

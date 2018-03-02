@@ -13,7 +13,6 @@ import com.cardee.domain.inbox.usecase.chat.GetChats;
 import java.util.List;
 
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
-import static com.cardee.data_source.inbox.local.chat.entity.Chat.IS_NEW_CHAT;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
 
