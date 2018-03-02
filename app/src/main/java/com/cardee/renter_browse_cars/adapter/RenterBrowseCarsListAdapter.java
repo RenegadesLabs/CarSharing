@@ -1,10 +1,13 @@
 package com.cardee.renter_browse_cars.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +24,6 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.renter.entity.OfferCar;
-import com.cardee.renter_book_car.view.BookCarActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.util.glide.CircleTransform;
 
@@ -76,7 +78,6 @@ public class RenterBrowseCarsListAdapter
 
         private final ImageView mAvatar;
         private final TextView mTitle;
-        private final TextView mYear;
         private final TextView mLocation;
         private final TextView mType;
         private final CustomRatingBar mRating;
@@ -95,7 +96,6 @@ public class RenterBrowseCarsListAdapter
 
             mAvatar = itemView.findViewById(R.id.iv_renterCarItemAvatar);
             mTitle = itemView.findViewById(R.id.tv_renterCarItemTitle);
-            mYear = itemView.findViewById(R.id.tv_renterCarItemYear);
             mLocation = itemView.findViewById(R.id.tv_renterCarItemLocationText);
             mType = itemView.findViewById(R.id.tv_renterCarItemType);
             mRating = itemView.findViewById(R.id.rb_renterCatItemRating);
@@ -154,8 +154,14 @@ public class RenterBrowseCarsListAdapter
                         .into(mPrimaryCarImage);
             }
 
-            mTitle.setText(model.getTitle());
-            mYear.setText(model.getYearOfManufacture());
+            SpannableString title = new SpannableString(model.getTitle());
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTitle.setText(title);
+
+            SpannableString year = new SpannableString("   " + model.getYearOfManufacture());
+            year.setSpan(new RelativeSizeSpan(0.9f), 0, year.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTitle.append(year);
+
             String location = model.getDistance() <= 0 ? model.getAddress() : model.getDistance() + "m \u2022 " + model.getAddress();
             mLocation.setText(location);
             String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());

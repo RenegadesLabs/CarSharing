@@ -2,9 +2,14 @@ package com.cardee.renter_car_details.view.viewholder
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.support.annotation.DrawableRes
 import android.support.design.widget.TabLayout
 import android.support.v4.view.PagerAdapter
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -220,9 +225,16 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun fillToolBar() {
-        mActivity.toolbar_title.text = renterDetailedCar?.carTitle
-        mActivity.tvRenterCarDetailsTitleYear.text = renterDetailedCar?.year
         mActivity.ivRenterCarDetailsToolbarFavoritesImg.setImageResource(if (renterDetailedCar?.favorite == true) R.drawable.ic_favorite_filled else R.drawable.ic_favorite)
+
+        val title = SpannableString(renterDetailedCar?.carTitle ?: return)
+        title.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mActivity.toolbar_title.text = title
+
+        val year = SpannableString("   " + renterDetailedCar?.year ?: return)
+        year.setSpan(RelativeSizeSpan(0.9f), 0, year.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mActivity.toolbar_title.append(year)
+
     }
 
     private fun fillMapAddressBar() {
@@ -235,6 +247,8 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 renterDetailedCar?.carEngineCapacity + " " + renterDetailedCar?.carTransmission
         mActivity.tvRenterCarDetailsAboutCarTitle.text = text
         mActivity.tvRenterCarDetailsAboutCarDesc.text = renterDetailedCar?.description ?: ""
+        mActivity.tvRenterCarDetailsAboutCarDesc.visibility =
+                if (renterDetailedCar?.description == null) View.GONE else View.VISIBLE
     }
 
     private fun setTripsCount() {
@@ -262,6 +276,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 intent.putExtra("carId", renterDetailedCar?.carId)
                 mActivity.startActivity(intent)
             }
+            mActivity.clReviewContainer.visibility = View.VISIBLE
             return
         }
         mActivity.clReviewContainer.visibility = View.GONE

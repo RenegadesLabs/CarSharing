@@ -38,9 +38,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_FROM_BOOKING;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
 import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
-import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_FROM_BOOKING;
 
 public class BookingView extends CoordinatorLayout implements OwnerBookingContract.View {
 
@@ -232,15 +232,15 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         if (isRenter) {
             renterName.setText(booking.getOwnerName());
             loadImageIntoView(booking.getOwnerPhoto(),
-                    R.drawable.placeholder_user_img, renterPhoto, null, true);
+                    R.drawable.ic_photo_placeholder, renterPhoto, null, true);
             loadImageIntoView(booking.getOwnerPhoto(),
-                    R.drawable.placeholder_user_img, renterPhotoCompleted, null, true);
+                    R.drawable.ic_photo_placeholder, renterPhotoCompleted, null, true);
         } else {
             renterName.setText(booking.getRenterName());
             loadImageIntoView(booking.getRenterPhoto(),
-                    R.drawable.placeholder_user_img, renterPhoto, null, true);
+                    R.drawable.ic_photo_placeholder, renterPhoto, null, true);
             loadImageIntoView(booking.getRenterPhoto(),
-                    R.drawable.placeholder_user_img, renterPhotoCompleted, null, true);
+                    R.drawable.ic_photo_placeholder, renterPhotoCompleted, null, true);
         }
 
         Integer rating = null;

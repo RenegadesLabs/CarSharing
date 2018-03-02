@@ -191,12 +191,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="26dp"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:text=""
+                    android:layout_marginTop="14dp"
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvRenterCarDetailsAboutCarTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/tvRenterCarDetailsAboutCarTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/about_ic" />
 
                 <View
                     android:id="@+id/divider1"
@@ -222,9 +221,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/large_margin"
-                    app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
-                    app:layout_constraintStart_toEndOf="@+id/rating_ic"
-                    app:layout_constraintTop_toTopOf="@+id/rating_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/rating_ic"
+                    app:layout_constraintStart_toEndOf="@id/rating_ic"
+                    app:layout_constraintTop_toTopOf="@id/rating_ic"
                     app:maxStars="5"
                     app:onlyForDisplay="true" />
 
@@ -236,9 +235,9 @@
                     android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_large"
-                    app:layout_constraintBottom_toBottomOf="@+id/rating_ic"
-                    app:layout_constraintStart_toEndOf="@+id/rbRenterCarDetailsRating"
-                    app:layout_constraintTop_toTopOf="@+id/rating_ic" />
+                    app:layout_constraintBottom_toBottomOf="@id/rating_ic"
+                    app:layout_constraintStart_toEndOf="@id/rbRenterCarDetailsRating"
+                    app:layout_constraintTop_toTopOf="@id/rating_ic" />
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/clReviewContainer"
@@ -247,17 +246,17 @@
                     android:layout_marginEnd="@dimen/large_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/rbRenterCarDetailsRating"
-                    app:layout_constraintTop_toBottomOf="@+id/rbRenterCarDetailsRating">
+                    app:layout_constraintTop_toBottomOf="@id/rating_ic">
 
                     <TextView
                         android:id="@+id/by"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="16dp"
                         android:text="@string/renter_car_details_by"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/text_small" />
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvRenterCarDetailsCommentName"
@@ -446,49 +445,46 @@
             app:titleTextColor="@color/bg_main">
 
             <android.support.constraint.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/bg_main"
                     android:textSize="@dimen/text_xlarge"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivRenterCarDetailsToolbarShare"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvRenterCarDetailsTitleYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/widget_margin_small"
-                    android:text=""
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBaseline_toBaselineOf="@id/toolbar_title"
-                    app:layout_constraintStart_toEndOf="@id/toolbar_title" />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/ivRenterCarDetailsToolbarFavoritesImg"
+                    style="@style/ToolbarActionIcon"
+                    android:layout_width="@dimen/item_icon_side_large"
+                    android:layout_height="@dimen/item_icon_side_large"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/padding_x_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_favorites_toolbar" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/ivRenterCarDetailsToolbarShare"
+                    style="@style/ToolbarActionIcon"
+                    android:layout_width="@dimen/item_icon_side_large"
+                    android:layout_height="@dimen/item_icon_side_large"
+                    android:padding="@dimen/padding_x_small"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivRenterCarDetailsToolbarFavoritesImg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_share" />
             </android.support.constraint.ConstraintLayout>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/ivRenterCarDetailsToolbarFavoritesImg"
-                style="@style/ToolbarActionIcon"
-                android:layout_width="@dimen/item_icon_side_large"
-                android:layout_height="@dimen/item_icon_side_large"
-                android:background="@android:color/transparent"
-                android:padding="@dimen/padding_x_small"
-                app:srcCompat="@drawable/ic_favorites_toolbar" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/ivRenterCarDetailsToolbarShare"
-                style="@style/ToolbarActionIcon"
-                android:layout_width="@dimen/item_icon_side_large"
-                android:layout_height="@dimen/item_icon_side_large"
-                android:padding="@dimen/padding_x_small"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_share" />
-
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

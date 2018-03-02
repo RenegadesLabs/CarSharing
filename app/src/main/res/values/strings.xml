@@ -522,7 +522,7 @@
     <string name="renter_car_details_response">Response</string>
     <string name="renter_car_details_book">Book Car</string>
     <string name="renter_car_details_book_instantly">Book Instantly</string>
-    <string name="renter_car_details_seats_suffix">-seater \u2022</string>
+    <string name="renter_car_details_seats_suffix">-seater \u2022\u00a0</string>
     <string name="renter_car_details_review_date_prefix">on</string>
     <string name="renter_car_details_review_more_prefix">Read</string>
     <string name="renter_car_details_review_more_suffix">reviews</string>
