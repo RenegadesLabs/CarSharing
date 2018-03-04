@@ -34,6 +34,8 @@ public interface BookingDataSource {
 
     void saveChecklist(int bookingId, String remarks, float tank, int masterMileage, Integer[] imagesIds, SimpleCallback callback);
 
+    void extendBooking(int bookingId, String iso8601TimeEnd, SimpleCallback callback);
+
     void uploadImage(Integer bookingId, Uri uri, ImageCallback callback);
 
     Disposable getCostBreakdown(CostRequest request, CostCallback callback);

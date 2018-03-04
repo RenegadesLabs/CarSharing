@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.extend_booking.ExtendBookingActivity;
+import com.cardee.extend_booking.ExtendBookingContract;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
@@ -113,6 +114,8 @@ public class BookingActivity extends AppCompatActivity implements OwnerBookingCo
     @Override
     public void showExtendBookingDialog() {
         Intent intent = new Intent(this, ExtendBookingActivity.class);
+        intent.putExtra(ExtendBookingContract.MODE, ExtendBookingContract.Mode.DAILY);
+        intent.putExtra(ExtendBookingContract.ID, bookingId);
         startActivityForResult(intent, EXTEND_BOOKING_REQUEST);
         overridePendingTransition(R.anim.enter_up, 0);
     }

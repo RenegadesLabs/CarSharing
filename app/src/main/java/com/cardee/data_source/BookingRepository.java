@@ -206,6 +206,11 @@ public class BookingRepository implements BookingDataSource {
     }
 
     @Override
+    public void extendBooking(int bookingId, String iso8601TimeEnd, SimpleCallback callback) {
+        remoteDataSource.extendBooking(bookingId, iso8601TimeEnd, callback);
+    }
+
+    @Override
     public void uploadImage(Integer bookingId, Uri uri, ImageCallback callback) {
         remoteDataSource.uploadImage(bookingId, uri, new ImageCallback() {
             @Override
