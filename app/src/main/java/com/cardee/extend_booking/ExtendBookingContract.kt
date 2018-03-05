@@ -36,6 +36,8 @@ interface ExtendBookingContract {
 
         fun init(intent: Intent)
 
+        fun requestData()
+
         fun save()
 
         fun onDestroy()

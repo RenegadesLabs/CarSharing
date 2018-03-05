@@ -230,7 +230,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTranslucent" />
         <activity
-            android:name=".extend_booking.ExtendBookingActivity"
+            android:name=".extend_booking.view.ExtendBookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTranslucent" />
         <activity android:name=".renter_book_car.collection.CollectionAreaActivity" />

@@ -14,14 +14,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cardee.R;
-import com.cardee.extend_booking.ExtendBookingActivity;
+import com.cardee.extend_booking.view.ExtendBookingActivity;
 import com.cardee.extend_booking.ExtendBookingContract;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity;
 import com.cardee.owner_bookings.car_checklist.view.RenterChecklistActivity;
 import com.cardee.owner_bookings.presenter.OwnerBookingPresenter;
-import com.cardee.renter_book_car.rental_period.RentalPeriodActivity;
 
 public class BookingActivity extends AppCompatActivity implements OwnerBookingContract.ParentView {
 
