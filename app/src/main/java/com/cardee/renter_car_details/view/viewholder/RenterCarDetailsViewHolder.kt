@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
-import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_car_details.reviews.RenterCarReviewsActivity
@@ -55,6 +54,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         this.renterDetailedCar = renterDetailedCar
         fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
+        mActivity.tabDots?.setupWithViewPager(mActivity.car_image_pager)
         toggleHourlyDailyTabs(hourlyBooking)
         when (hourlyBooking) {
             true -> {
@@ -196,36 +196,27 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun setFuelPolicyText(hourly: Boolean, root: View) {
-        root.tv_renterCarDetailsFuelText.text = if (!hourly) {
-            val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar?.orderDailyDetails?.fuelPolicy
-            when (fuelPolicyEntity?.fuelPolicyId) {
-                1 -> {
-                    fuelPolicyEntity.fuelPolicyName
-                }
-                2 -> {
-                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
-                            " " + mActivity.getString(R.string.car_rental_rates_per_km)
-                }
-                else -> {
-                    fuelPolicyEntity?.fuelPolicyName
-                }
-            }
-
+        val mileagePay: String? = DecimalFormat("#.##")
+                .format(renterDetailedCar?.orderHourlyDetails?.amntPayMileage
+                        ?: 0)
+        val fuelPolicyEntity = if (hourly) {
+            renterDetailedCar?.orderHourlyDetails?.fuelPolicy
         } else {
-            val fuelPolicyEntity: FuelPolicyEntity? = renterDetailedCar?.orderHourlyDetails?.fuelPolicy
-            when (fuelPolicyEntity?.fuelPolicyId) {
-                1 -> {
-                    fuelPolicyEntity.fuelPolicyName
-                }
-                2 -> {
-                    fuelPolicyEntity.fuelPolicyName + " @ \$" + fuelPolicyEntity.amountPayMileage?.toString() +
-                            " " + mActivity.getString(R.string.car_rental_rates_per_km)
-                }
-                else -> {
-                    fuelPolicyEntity?.fuelPolicyName
-                }
-            }
+            renterDetailedCar?.orderDailyDetails?.fuelPolicy
         }
+        root.tv_renterCarDetailsFuelText.text =
+                when (fuelPolicyEntity?.fuelPolicyId) {
+                    0 -> {
+                        fuelPolicyEntity.fuelPolicyName + " @ \$" + mileagePay + " " +
+                                mActivity.getString(R.string.car_rental_rates_per_km)
+                    }
+                    1 -> {
+                        fuelPolicyEntity.fuelPolicyName
+                    }
+                    else -> {
+                        fuelPolicyEntity?.fuelPolicyName
+                    }
+                }
     }
 
     private fun setDeliveryRates(hourly: Boolean, root: View) {

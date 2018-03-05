@@ -41,7 +41,7 @@ public class DailyRentalDetails {
     private String returnTime;
     @Expose
     @SerializedName("amnt_pay_mileage")
-    private String amountPayMileage;
+    private Float amountPayMileage;
 
     public DailyRentalDetails(){
 
@@ -103,11 +103,11 @@ public class DailyRentalDetails {
         this.returnTime = returnTime;
     }
 
-    public String getAmountPayMileage() {
+    public Float getAmountPayMileage() {
         return amountPayMileage;
     }
 
-    public void setAmountPayMileage(String amountPayMileage) {
+    public void setAmountPayMileage(Float amountPayMileage) {
         this.amountPayMileage = amountPayMileage;
     }
 

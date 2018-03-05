@@ -22,11 +22,29 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintDimensionRatio="15:11"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabDots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/car_image_pager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabBackground="@drawable/bg_round_tab"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/bg_regular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/car_image_pager" />
 
             <TextView
                 android:id="@+id/rental_info_title"
@@ -65,7 +83,7 @@
                     app:tabIndicatorHeight="3dp"
                     app:tabMode="scrollable"
                     app:tabSelectedTextColor="@color/text_enabled"
-                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    app:tabTextAppearance="@style/CarDetailsTabItemStyle"
                     app:tabTextColor="@color/text_disabled" />
 
                 <include
@@ -141,6 +159,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/car_info_container" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/bg_regular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_renterDetailsMap" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_shadow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/v_renterDetailsMap" />
 
             <TextView
                 android:id="@+id/about_title"
