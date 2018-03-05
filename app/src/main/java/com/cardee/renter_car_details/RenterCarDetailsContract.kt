@@ -8,7 +8,7 @@ interface RenterCarDetailsContract {
 
     interface View : BaseView {
 
-        fun setDetailedCar(renterDetailedCar: RenterDetailedCar)
+        fun setDetailedCar(renterDetailedCar: RenterDetailedCar, hourly: Boolean)
 
         fun setFavorite(favorite: Boolean)
 

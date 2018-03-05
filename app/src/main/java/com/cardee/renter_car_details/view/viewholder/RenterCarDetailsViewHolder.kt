@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_renter_car_details.*
 import kotlinx.android.synthetic.main.view_renter_book_car.*
 import kotlinx.android.synthetic.main.view_renter_car_details_info_page.view.*
 import kotlinx.android.synthetic.main.view_renter_car_details_map.*
+import java.text.DecimalFormat
 
 class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) : TabLayout.OnTabSelectedListener {
 
@@ -50,12 +51,21 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         }
     }
 
-    fun bind(renterDetailedCar: RenterDetailedCar) {
+    fun bind(renterDetailedCar: RenterDetailedCar, hourlyBooking: Boolean) {
         this.renterDetailedCar = renterDetailedCar
         fillToolBar()
         mActivity.car_image_pager.adapter = ImagePagerAdapter(mActivity, renterDetailedCar.images)
-        toggleHourlyDailyTabs(true)
-        toggleBookInstantly(renterDetailedCar.orderHourlyDetails?.instantBooking ?: false)
+        toggleHourlyDailyTabs(hourlyBooking)
+        when (hourlyBooking) {
+            true -> {
+                hourly = true
+                toggleBookInstantly(renterDetailedCar.orderHourlyDetails?.instantBooking ?: false)
+            }
+            false -> {
+                hourly = false
+                toggleBookInstantly(renterDetailedCar.orderDailyDetails?.instantBooking ?: false)
+            }
+        }
         fillAboutInfo()
         fillReview()
         fillOwner()
@@ -148,12 +158,16 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
 
     private fun toggleHourlyDailyTabs(hourly: Boolean) {
         mActivity.carDetailsInfoView.apply {
-            if (hourly) {
-                tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
-                setPickupAndReturnTime(this.rootView.tv_renterCarDetailsTimingText)
-            } else {
-                tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
-                AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(mActivity, this.tv_renterCarDetailsTimingText, renterDetailedCar)
+            when (hourly) {
+                true -> {
+                    tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing_available)
+                    AvailabilityFromFilterDelegate().setHourlyAvailabilityRange(
+                            mActivity, this.tv_renterCarDetailsTimingText, renterDetailedCar)
+                }
+                false -> {
+                    tv_renterCarDetailsTimingTitle.setText(R.string.renter_car_details_timing)
+                    setPickupAndReturnTime(this.rootView.tv_renterCarDetailsTimingText)
+                }
             }
             setRentalRates(hourly, this@apply)
             setDeliveryRates(hourly, this@apply)
@@ -215,13 +229,19 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun setDeliveryRates(hourly: Boolean, root: View) {
-        root.tv_renterCarDetailsDeliveryText.text = if (!hourly) {
-            mActivity.getString(R.string.car_rental_delivery_rates_prefix) + " @ \$" + renterDetailedCar?.deliveryRates?.baseRate +
-                    " + $" + renterDetailedCar?.deliveryRates?.distanceRate +
-                    mActivity.getString(R.string.car_rental_rates_per_km)
-        } else {
-            mActivity.getString(R.string.car_rental_delivery_rates_self)
-        }
+        root.tv_renterCarDetailsDeliveryText.text =
+                when {
+                    hourly && renterDetailedCar?.orderHourlyDetails?.curbsideDelivery == true ||
+                            !hourly && renterDetailedCar?.orderDailyDetails?.curbsideDelivery == true -> {
+                        val base = DecimalFormat("#.##").format(renterDetailedCar?.deliveryRates?.baseRate
+                                ?: 0)
+                        val distance = DecimalFormat("#.##").format(renterDetailedCar?.deliveryRates?.distanceRate
+                                ?: 0)
+                        mActivity.getString(R.string.car_rental_delivery_rates_template)
+                                .format(base, distance)
+                    }
+                    else -> mActivity.getString(R.string.car_rental_delivery_rates_self)
+                }
     }
 
     private fun fillToolBar() {

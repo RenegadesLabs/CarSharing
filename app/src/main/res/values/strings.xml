@@ -227,7 +227,7 @@
 
     <!--Car Delivery Rates-->
     <string name="car_rental_delivery_rates_title">Delivery Rates</string>
-    <string name="car_rental_delivery_rates_prefix">Delivery</string>
+    <string name="car_rental_delivery_rates_template">Delivery @ $%s + $%s per km</string>
     <string name="car_rental_delivery_rates_self">Self-collect only</string>
     <string name="car_rental_delivery_rates_base">Base Rate</string>
     <string name="car_rental_delivery_rates_distance">Distance Rate</string>
@@ -512,8 +512,8 @@
     <string name="renter_car_details_rental_info">Rental info</string>
     <string name="renter_car_details_timing">Pickup and return timing</string>
     <string name="renter_car_details_timing_available">Available timing</string>
-    <string name="renter_car_details_timing_available_from">Available from</string>
-    <string name="renter_car_details_timing_available_to">to</string>
+    <string name="renter_car_details_timing_available_from">Available from\u00a0</string>
+    <string name="renter_car_details_timing_available_to">\u00a0to\u00a0</string>
     <string name="renter_car_details_read">Read</string>
     <string name="renter_car_details_check">Check</string>
     <string name="renter_car_details_about">About the car</string>

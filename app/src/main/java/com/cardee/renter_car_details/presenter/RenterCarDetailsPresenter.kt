@@ -9,6 +9,7 @@ import com.cardee.domain.UseCaseExecutor
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.domain.renter.entity.mapper.OfferResponseByIdToRenterDetailedCar
 import com.cardee.domain.renter.usecase.AddCarToFavorites
+import com.cardee.domain.renter.usecase.GetFilter
 import com.cardee.domain.renter.usecase.GetOfferById
 import com.cardee.domain.renter.usecase.GetOfferDistance
 import com.cardee.renter_car_details.RenterCarDetailsContract
@@ -25,6 +26,7 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     private val executor: UseCaseExecutor = UseCaseExecutor.getInstance()
     private val getOfferById = GetOfferById()
     private val getOfferDistance = GetOfferDistance()
+    private val getFilter = GetFilter()
     private var mGetOfferDisposable: Disposable? = null
     private var mGetDistanceDisposable: Disposable? = null
     private var distance: Int? = null
@@ -64,19 +66,22 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
         }
         mGetOfferDisposable = getOfferById.execute(GetOfferById.RequestValues(carId!!, lat, lng),
                 object : RxUseCase.Callback<GetOfferById.ResponseValues> {
-            override fun onSuccess(response: GetOfferById.ResponseValues) {
-                val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer
-                        ?: return)
-                view?.setDetailedCar(offerDetails)
-                val locationString = composeAddressString(offerDetails.address, distance)
-                view?.setLocationString(locationString)
-                initLocation(offerDetails)
-            }
+                    override fun onSuccess(response: GetOfferById.ResponseValues) {
+                        val offerDetails = OfferResponseByIdToRenterDetailedCar().transform(response.offer
+                                ?: return)
 
-            override fun onError(error: Error) {
-                view?.showMessage(error.message)
-            }
-        })
+                        val hourly = getFilter.getFilter().bookingHourly ?: true
+                        view?.setDetailedCar(offerDetails, hourly)
+
+                        val locationString = composeAddressString(offerDetails.address, distance)
+                        view?.setLocationString(locationString)
+                        initLocation(offerDetails)
+                    }
+
+                    override fun onError(error: Error) {
+                        view?.showMessage(error.message)
+                    }
+                })
     }
 
     fun initLocation(rentalDetails: RenterDetailedCar) {
@@ -86,7 +91,9 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     }
 
     private fun composeAddressString(address: String?, distance: Int?): String =
-            "${address ?: ""} ${if (address == null || distance == null) "" else "•"} ${formatDistance(distance) ?: ""}"
+            "${address
+                    ?: ""} ${if (address == null || distance == null) "" else "•"} ${formatDistance(distance)
+                    ?: ""}"
 
     private fun formatDistance(meters: Int?): String? {
         meters ?: return null

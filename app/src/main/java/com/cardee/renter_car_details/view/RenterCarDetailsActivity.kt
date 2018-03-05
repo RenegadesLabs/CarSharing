@@ -195,7 +195,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED
+                PackageManager.PERMISSION_GRANTED
     }
 
     override fun onStart() {
@@ -249,8 +249,9 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     }
 
 
-    override fun setDetailedCar(renterDetailedCar: RenterDetailedCar) {
-        viewHolder?.bind(renterDetailedCar)
+    override fun setDetailedCar(renterDetailedCar: RenterDetailedCar, hourly: Boolean) {
+        tlRenterCarDetails.getTabAt(if (hourly) 0 else 1)?.select()
+        viewHolder?.bind(renterDetailedCar, hourly)
         this.favorite = renterDetailedCar.favorite
     }
 

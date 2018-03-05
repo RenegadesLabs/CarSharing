@@ -307,10 +307,9 @@ class AvailabilityFromFilterDelegate {
 
     fun setHourlyAvailabilityRange(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar?) {
         try {
-            renterDetailedCar?.carAvailabilityTimeBegin ?: return
-            renterDetailedCar?.carAvailabilityTimeEnd ?: return
-            val timeBegin = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeBegin)
-            val timeEnd = shortTimeFormatter.parse(renterDetailedCar.carAvailabilityTimeEnd)
+            val timeBegin = isoTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeBegin
+                    ?: "")
+            val timeEnd = isoTimeFormatter.parse(renterDetailedCar?.carAvailabilityTimeEnd ?: "")
             if (isSingleDay(timeBegin, timeEnd)) {
                 val timeBeginString = shortTimeFormatter.format(timeBegin)
                 val timeEndString = shortTimeFormatter.format(timeEnd)
@@ -319,7 +318,9 @@ class AvailabilityFromFilterDelegate {
                         timeEndString
                 textView.text = dropStartZero(timingText)
             }
-        } catch (e: ParseException) {}
+        } catch (e: ParseException) {
+            textView.text = ""
+        }
     }
 
     fun setDailyPickupAndReturnTiming(context: Context, textView: TextView, renterDetailedCar: RenterDetailedCar) {
