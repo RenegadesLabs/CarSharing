@@ -66,6 +66,6 @@ public interface Bookings {
     Maybe<NoDataResponse> requestBooking(@Body BookingRequest request);
 
     @POST("bookings/{id}/extension/")
-    @Headers("COntent-Type: application/json")
+    @Headers("Content-Type: application/json")
     Maybe<NoDataResponse> extendBooking(@Path("id") int id, @Body BookingExtension request);
 }

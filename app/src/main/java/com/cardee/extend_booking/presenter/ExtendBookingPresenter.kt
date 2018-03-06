@@ -56,7 +56,21 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
     }
 
     override fun save(extension: Date) {
-
+        endDate?.let { base ->
+            view?.showProgress(true)
+            val request = ChangeBookingReturnTime.ExtensionRequest(bookingId, extension)
+            saveDataUseCase.execute(request, { response ->
+                view?.let { view ->
+                    view.showProgress(false)
+                    view.onFinish()
+                }
+            }, { error ->
+                view?.let { view ->
+                    view.showProgress(false)
+                    view.showMessage(error.message)
+                }
+            })
+        }
     }
 
     override fun onDestroy() {

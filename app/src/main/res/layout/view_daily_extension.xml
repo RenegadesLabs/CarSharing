@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/dateFrom"
+        android:id="@+id/dailyDateFrom"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/toolbar_height"
         android:gravity="center"
@@ -26,13 +26,13 @@
         android:text="to"
         android:textColor="@color/text_regular"
         android:textSize="@dimen/text_regular"
-        app:layout_constraintBottom_toBottomOf="@id/dateFrom"
-        app:layout_constraintEnd_toStartOf="@+id/dateTo"
-        app:layout_constraintStart_toEndOf="@id/dateFrom"
-        app:layout_constraintTop_toTopOf="@id/dateFrom" />
+        app:layout_constraintBottom_toBottomOf="@id/dailyDateFrom"
+        app:layout_constraintEnd_toStartOf="@+id/dailyDateTo"
+        app:layout_constraintStart_toEndOf="@id/dailyDateFrom"
+        app:layout_constraintTop_toTopOf="@id/dailyDateFrom" />
 
     <TextView
-        android:id="@id/dateTo"
+        android:id="@id/dailyDateTo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/toolbar_height"
         android:gravity="center"
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnDailyExtensionSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateFrom"
+        app:layout_constraintTop_toBottomOf="@id/dailyDateFrom"
         app:selection_color="@color/light_blue"
         app:title_background="@android:color/transparent"
         app:title_gravity="start" />
