@@ -15,8 +15,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 class GetFullBookingAvailability(executor: ThreadExecutor = ThreadExecutor.getInstance()!!,
                                  responseThread: Scheduler = AndroidSchedulers.mainThread(),
-                                 val carsRepository: RenterCarsRepository = RenterCarsRepository.getInstance(),
-                                 val bookingsRepository: BookingRepository = BookingRepository.getInstance())
+                                 private val carsRepository: RenterCarsRepository = RenterCarsRepository.getInstance(),
+                                 private val bookingsRepository: BookingRepository = BookingRepository.getInstance())
     : UseCase<AvailabilityState>(executor, responseThread) {
 
     override fun buildUseCaseObserver(request: Request): Observable<Response<AvailabilityState>> {

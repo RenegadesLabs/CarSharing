@@ -3,6 +3,7 @@ package com.cardee.extend_booking
 import android.content.Intent
 import android.support.annotation.StringRes
 import com.cardee.R
+import com.cardee.domain.bookings.entity.AvailabilityState
 import com.cardee.mvp.BaseView
 
 
@@ -22,7 +23,7 @@ interface ExtendBookingContract {
 
     interface View : BaseView {
 
-        fun onDataReady()
+        fun onDataReady(data: AvailabilityState)
 
         fun onInitMode(mode: Mode)
 

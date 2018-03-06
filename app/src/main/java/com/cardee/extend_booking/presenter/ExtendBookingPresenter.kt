@@ -30,10 +30,23 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
     }
 
     override fun requestData() {
+        view?.showProgress(true)
         if (bookingId == -1)
             throw IllegalArgumentException("Illegal bookingId value: -1")
-
-
+        val hourly = currentMode == ExtendBookingContract.Mode.HOURLY
+        fetchDataUseCase.execute(GetFullBookingAvailability.BookingAvailabilityRequest(bookingId, hourly), { response ->
+            view?.showProgress(false)
+            if (response.success) {
+                view?.onDataReady(response.body!!)
+                return@execute
+            }
+            view?.showMessage(response.errorMessage)
+        }, { error ->
+            view?.let { view ->
+                view.showProgress(false)
+                view.showMessage(error.message)
+            }
+        })
     }
 
     override fun save() {
@@ -42,5 +55,6 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
 
     override fun onDestroy() {
         view = null
+        fetchDataUseCase.stop()
     }
 }
