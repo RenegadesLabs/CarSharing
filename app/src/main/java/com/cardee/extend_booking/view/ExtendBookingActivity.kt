@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.domain.bookings.entity.AvailabilityState
 import com.cardee.extend_booking.ExtendBookingContract
 import com.cardee.extend_booking.presenter.ExtendBookingPresenter
 import com.cardee.extend_booking.view.adapter.CalendarExtensionAdapter
@@ -64,7 +65,7 @@ class ExtendBookingActivity : AppCompatActivity(), ExtendBookingContract.View {
         showMessage(getString(messageId))
     }
 
-    override fun onDataReady() {
+    override fun onDataReady(data: AvailabilityState) {
 
     }
 
