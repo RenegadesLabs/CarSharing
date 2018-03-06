@@ -32,7 +32,12 @@ class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val 
                 object : UseCase.Callback<ObtainBookings.ResponseValues> {
                     override fun onSuccess(response: ObtainBookings.ResponseValues?) {
                         if (bookings?.isEmpty() == true || response?.isUpdated == true) {
-                            bookings = response?.bookings
+
+                            bookings = when (filter) {
+                                null -> response?.bookings?.filter { it.bookingStateType != BookingState.COMPLETED }
+                                else -> response?.bookings
+                            }
+
                             view?.apply {
                                 showProgress(false)
                                 invalidate()
@@ -73,7 +78,7 @@ class RenterBookingsListPresenter(val view: OwnerBookingListContract.View?, val 
     override fun onItemClick(item: Booking?) {
         val bookingId = item?.bookingId
         bookingId
-                ?: throw IllegalArgumentException("Invalid bookingId: " + bookingId!!) as Throwable
+                ?: throw IllegalArgumentException("Invalid bookingId: " + bookingId!!)
 
         view?.openBooking(bookingId)
     }
