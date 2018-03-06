@@ -495,9 +495,10 @@
             android:layout_width="@dimen/booking_renter_image"
             android:layout_height="@dimen/booking_renter_image"
             android:layout_marginEnd="@dimen/widget_margin_large"
+            android:layout_marginTop="1dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/booking_car_picture"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/booking_car_title" />
 
         <View
             android:id="@+id/rating_block"
@@ -785,7 +786,5 @@
                 android:layout_gravity="center"
                 android:theme="@style/LoadingIndicator" />
         </FrameLayout>
-
     </android.support.constraint.ConstraintLayout>
-
 </com.cardee.owner_bookings.view.BookingView>

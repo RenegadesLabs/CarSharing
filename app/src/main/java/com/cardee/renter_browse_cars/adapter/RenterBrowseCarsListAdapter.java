@@ -27,6 +27,7 @@ import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.util.glide.CircleTransform;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,7 +170,7 @@ public class RenterBrowseCarsListAdapter
             mRating.setScore(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);
-            String price = "$" + String.valueOf(model.getCost());
+            String price = "$" + new DecimalFormat("#.##").format(model.getCost());
             mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
             mHeart.setOnClickListener(view -> {
                 observable.onNext(new RenterBrowseCarListContract.CarEvent(model,

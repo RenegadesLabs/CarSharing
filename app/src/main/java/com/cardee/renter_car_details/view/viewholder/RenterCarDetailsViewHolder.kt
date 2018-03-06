@@ -177,14 +177,18 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
 
     private fun setRentalRates(hourly: Boolean, root: View) {
         root.tv_renterCarDetailsRatesText.text = if (hourly) {
-            "$" + renterDetailedCar?.orderHourlyDetails?.amntRateFirst.toString() + " " +
+            "$" + DecimalFormat("#.##")
+                    .format(renterDetailedCar?.orderHourlyDetails?.amntRateFirst ?: 0) + " " +
                     mActivity.getString(R.string.car_rental_rates_per_hour_peak) + "\n" +
-                    "$" + renterDetailedCar?.orderHourlyDetails?.amntRateSecond.toString() + " " +
+                    "$" + DecimalFormat("#.##")
+                    .format(renterDetailedCar?.orderHourlyDetails?.amntRateSecond ?: 0) + " " +
                     mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
         } else {
-            "$" + renterDetailedCar?.orderDailyDetails?.amntRateFirst.toString() + " " +
+            "$" + DecimalFormat("#.##")
+                    .format(renterDetailedCar?.orderDailyDetails?.amntRateFirst ?: 0) + " " +
                     mActivity.getString(R.string.car_rental_rates_per_day_weekday) + "\n" +
-                    "$" + renterDetailedCar?.orderDailyDetails?.amntRateSecond.toString() + " " +
+                    "$" + DecimalFormat("#.##")
+                    .format(renterDetailedCar?.orderDailyDetails?.amntRateSecond ?: 0) + " " +
                     mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
         }
     }
@@ -316,9 +320,14 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun updateRate() {
-        val rateText = if (hourly == true) "$" + renterDetailedCar?.orderHourlyDetails?.amntRateFirst + " " +
+        val rateText = if (hourly == true) "$" +
+                DecimalFormat("#.##").format(
+                        renterDetailedCar?.orderHourlyDetails?.amntRateFirst
+                                ?: 0) + " " +
                 mActivity.getString(R.string.car_rental_rates_per_hour)
-        else "$" + renterDetailedCar?.orderDailyDetails?.amntRateFirst + " " +
+        else "$" + DecimalFormat("#.##").format(
+                renterDetailedCar?.orderDailyDetails?.amntRateFirst
+                        ?: 0) + " " +
                 mActivity.getString(R.string.car_rental_rates_per_day)
         mActivity.tvBookCarRate.text = rateText
     }
