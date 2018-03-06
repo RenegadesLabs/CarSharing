@@ -13,6 +13,7 @@ interface BookCarContract {
         fun setTotalCost(total: String)
         fun resetCost()
         fun setRentalPeriod()
+        fun onRequestSuccess()
     }
 
     interface BookCarPresenter {

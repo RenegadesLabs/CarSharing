@@ -51,28 +51,39 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         }
 
         val request: BookingRequest = if (mState.bookingHourly == true) {
-            BookingRequest(mCarId ?: return, mState.timeBeginHourly ?: return,
-                    mState.timeEndHourly
-                            ?: return, mState.hourlyCurbsideDelivery.get() && mState.collectionPicked.get(),
-                    mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
-                    if (mState.paymentSource == "cash") null else mState.paymentToken, mState.bookingHourly?.not()
-                    ?: return,
-                    mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
+            BookingRequest(mCarId ?: return,
+                    mState.timeBeginHourly ?: return,
+                    mState.timeEndHourly ?: return,
+                    mState.hourlyCurbsideDelivery.get() && mState.collectionPicked.get(),
+                    mState.latitude,
+                    mState.longitude,
+                    mState.deliveryAddress,
+                    mState.paymentSource,
+                    if (mState.paymentSource == "cash") null else mState.paymentToken,
+                    mState.bookingHourly?.not() ?: return,
+                    mState.amountTotal ?: return,
+                    mState.amountDiscount ?: 0f,
                     mState.noteText)
         } else {
-            BookingRequest(mCarId ?: return, mState.timeBeginDaily ?: return,
-                    mState.timeEndDaily
-                            ?: return, mState.dailyCurbsideDelivery.get() && mState.collectionPicked.get(),
-                    mState.latitude, mState.longitude, mState.deliveryAddress, mState.paymentSource,
-                    if (mState.paymentSource == "cash") null else mState.paymentToken, mState.bookingHourly?.not()
-                    ?: return,
-                    mState.amountTotal ?: return, mState.amountDiscount ?: 0f,
+            BookingRequest(mCarId ?: return,
+                    mState.timeBeginDaily ?: return,
+                    mState.timeEndDaily ?: return,
+                    mState.dailyCurbsideDelivery.get() && mState.collectionPicked.get(),
+                    mState.latitude,
+                    mState.longitude,
+                    mState.deliveryAddress,
+                    mState.paymentSource,
+                    if (mState.paymentSource == "cash") null else mState.paymentToken,
+                    mState.bookingHourly?.not() ?: return,
+                    mState.amountTotal ?: return,
+                    mState.amountDiscount ?: 0f,
                     mState.noteText)
         }
 
         mBookDisposable = requestBookingCase.execute(RequestBooking.RequestValues(request), object : RxUseCase.Callback<RequestBooking.ResponseValues> {
             override fun onSuccess(response: RequestBooking.ResponseValues) {
                 mView?.showMessage("Request sent")
+                mView?.onRequestSuccess()
             }
 
             override fun onError(error: Error) {

@@ -18,6 +18,7 @@ import com.cardee.renter_book_car.payment.BookPaymentActivity
 import com.cardee.renter_book_car.presenter.BookCarPresenter
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
 import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
+import com.cardee.renter_home.view.RenterHomeActivity
 import com.cardee.util.DateRepresentationDelegate
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_book_car.*
@@ -25,7 +26,6 @@ import java.util.*
 
 
 class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
-
     private val PERIOD_REQUEST_CODE = 911
     private val LOCATION_REQUEST_CODE = 912
     private val PAYMENT_REQUEST_CODE = 913
@@ -207,6 +207,12 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         bookingStart?.text = beginString
         bookingEnd?.text = endString
         mPresenter.saveSate(mState)
+    }
+
+    override fun onRequestSuccess() {
+        val homeIntent = Intent(this, RenterHomeActivity::class.java)
+        homeIntent.putExtra(RenterHomeActivity.TAB_TO_SELECT, 1)
+        startActivity(homeIntent)
     }
 
     private fun isNextDay(begin: Date?, end: Date?): Boolean? {
