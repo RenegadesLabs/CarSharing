@@ -323,7 +323,7 @@
     </style>
 
     <style name="FilterTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorPrimaryDark</item>
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
         <item name="tabTextAppearance">@style/FilterTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/text_owner_profile_name</item>
     </style>

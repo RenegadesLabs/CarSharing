@@ -1,7 +1,12 @@
 package com.cardee.owner_bookings.view;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +70,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         private TextView bookingPeriod;
         private ImageView bookingCarPicture;
         private TextView bookingCarTitle;
-        private TextView bookingCarYear;
         private TextView bookingCarPlateNumber;
         private TextView bookingCreatedDate;
         private TextView bookingAmount;
@@ -79,7 +83,6 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             bookingPeriod = itemView.findViewById(R.id.booking_period);
             bookingCarPicture = itemView.findViewById(R.id.booking_car_picture);
             bookingCarTitle = itemView.findViewById(R.id.booking_car_title);
-            bookingCarYear = itemView.findViewById(R.id.booking_car_year);
             bookingCarPlateNumber = itemView.findViewById(R.id.booking_car_plate_number);
             bookingCreatedDate = itemView.findViewById(R.id.booking_date_created);
             bookingAmount = itemView.findViewById(R.id.booking_amount);
@@ -98,8 +101,15 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
                 timePeriod = timeBegin + " - " + timeEnd; //'to' changed to '-' for better UX
             }
             bookingPeriod.setText(timePeriod);
-            bookingCarTitle.setText(booking.getCarTitle());
-            bookingCarYear.setText(booking.getManufactureYear());
+
+            SpannableString title = new SpannableString(booking.getCarTitle());
+            title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            bookingCarTitle.setText(title);
+
+            SpannableString year = new SpannableString("   " + booking.getManufactureYear());
+            year.setSpan(new RelativeSizeSpan(0.9f), 0, year.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            bookingCarTitle.append(year);
+
             bookingCarPlateNumber.setText(booking.getPlateNumber());
             String amountString = booking.getTotalAmount() == null ? "$0" : "$" + booking.getTotalAmount();
             bookingCreatedDate.setText(booking.getDateCreated());
@@ -127,8 +137,8 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         private void setStatusText(Booking booking) {
             BookingState status = booking.getBookingStateType();
             if (status == null) {
-               bookingStatus.setText(DEFAULT_STATE);
-               return;
+                bookingStatus.setText(DEFAULT_STATE);
+                return;
             }
 
             if (isRenter) {

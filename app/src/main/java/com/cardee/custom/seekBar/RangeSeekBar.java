@@ -799,7 +799,7 @@ public class RangeSeekBar extends View {
         canvas.drawBitmap(image, rect.left, rect.top, paint);
 
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        paint.setColor(getResources().getColor(R.color.colorPrimary));
         paint.setTextSize(14 * getResources().getDisplayMetrics().density);
         paint.setFakeBoldText(true);
 
