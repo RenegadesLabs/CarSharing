@@ -39,7 +39,7 @@ public class OrderHourlyDetailsEntity {
     private FuelPolicyEntity fuelPolicy;
     @Expose
     @SerializedName("amnt_pay_mileage")
-    private String amntPayMileage;
+    private Float amntPayMileage;
 
     public OrderHourlyDetailsEntity() {
 
@@ -125,11 +125,11 @@ public class OrderHourlyDetailsEntity {
         this.fuelPolicy = fuelPolicy;
     }
 
-    public String getAmntPayMileage() {
+    public Float getAmntPayMileage() {
         return amntPayMileage;
     }
 
-    public void setAmntPayMileage(String amntPayMileage) {
+    public void setAmntPayMileage(Float amntPayMileage) {
         this.amntPayMileage = amntPayMileage;
     }
 }

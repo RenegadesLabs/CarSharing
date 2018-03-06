@@ -68,27 +68,26 @@ public class RemoteBookingDataSource implements BookingDataSource {
             }
             handleErrorResponse(response.body(), bookingsCallback);
         } catch (IOException ex) {
-            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
+            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, ex.getMessage()));
         }
     }
 
     @Override
     public void obtainRenterBookings(String filter, String sort, boolean forceUpdate, BookingsCallback bookingsCallback) {
-        try {
-            Response<BookingResponse> response = api.getRenterBookings(filter, sort).execute();
-            if (response.isSuccessful() && response.body() != null) {
-                bookingsCallback.onSuccess(response.body().getBookings(), true);
+        api.getRenterBookings(filter, sort).subscribe(response -> {
+            if (response.isSuccessful()) {
+                bookingsCallback.onSuccess(response.getBookings(), true);
                 return;
             }
-            handleErrorResponse(response.body(), bookingsCallback);
-        } catch (IOException ex) {
-            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, "Internet connection lost"));
-        }
+            handleErrorResponse(response, bookingsCallback);
+        }, throwable -> {
+            Log.e(TAG, throwable.getMessage());
+            bookingsCallback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
     }
 
     @Override
     public void obtainBookingById(int id, BookingCallback callback) {
-
         api.getBookingById(id).subscribe(response -> {
             if (response.isSuccessful()) {
                 callback.onSuccess(response.getBooking());
@@ -97,7 +96,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
             handleErrorResponse(response, callback);
         }, throwable -> {
             Log.e(TAG, throwable.getMessage());
-            callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
         });
     }
 
@@ -253,7 +252,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                        callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
                     }
 
                     @Override
@@ -279,7 +278,7 @@ public class RemoteBookingDataSource implements BookingDataSource {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onError(new Error(Error.Type.LOST_CONNECTION, Error.Message.CONNECTION_LOST));
+                        callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
                     }
 
                     @Override

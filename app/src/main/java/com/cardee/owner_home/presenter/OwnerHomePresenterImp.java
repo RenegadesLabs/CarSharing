@@ -5,13 +5,11 @@ import com.cardee.CardeeApp;
 import com.cardee.data_source.inbox.repository.NotificationRepository;
 import com.cardee.data_source.remote.service.AccountManager;
 
-import io.reactivex.functions.Consumer;
-
-public class OwnerHomePresenterImp implements OwnerHomeContract.Presenter {
+public class OwnerHomePresenterImp implements HomeContract.Presenter {
 
     private final NotificationRepository mRepository;
 
-    private OwnerHomeContract.View mView;
+    private HomeContract.View mView;
     private AHBottomNavigation mBottomView;
     private int barPosition;
 
@@ -20,7 +18,7 @@ public class OwnerHomePresenterImp implements OwnerHomeContract.Presenter {
     }
 
     @Override
-    public void init(OwnerHomeContract.View view, AHBottomNavigation bottomView) {
+    public void init(HomeContract.View view, AHBottomNavigation bottomView) {
         barPosition = AccountManager.getInstance(CardeeApp.context).getSessionInfo().equals(AccountManager.OWNER_SESSION) ? 0 : 2;
         mView = view;
         mBottomView = bottomView;
@@ -35,5 +33,6 @@ public class OwnerHomePresenterImp implements OwnerHomeContract.Presenter {
     @Override
     public void onDestroy() {
         mRepository.saveSessionData();
+        mView = null;
     }
 }

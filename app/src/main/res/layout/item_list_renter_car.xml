@@ -32,26 +32,17 @@
 
             <TextView
                 android:id="@+id/tv_renterCarItemTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/xsmall_margin"
                 android:layout_marginStart="@dimen/medium_margin"
-                android:text="Audi A6"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_large"
-                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv_renterCarItemType"
                 app:layout_constraintStart_toEndOf="@+id/iv_renterCarItemAvatar"
                 app:layout_constraintTop_toTopOf="@+id/iv_renterCarItemAvatar" />
-
-            <TextView
-                android:id="@+id/tv_renterCarItemYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginBottom="1dp"
-                android:text="2015"
-                android:textColor="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemTitle"
-                app:layout_constraintStart_toEndOf="@+id/tv_renterCarItemTitle" />
 
             <LinearLayout
                 android:id="@+id/location_info_container"
@@ -73,19 +64,17 @@
                     android:id="@+id/tv_renterCarItemLocationText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:text="200 m . fghfghfghhhhhhhh"
+                    android:maxLines="1"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_renterCarItemType"
+                android:id="@id/tv_renterCarItemType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:text="SUV 5-seater"
                 android:textColor="@color/item_secondary_txt"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemTitle"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -95,9 +84,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/location_info_container"
                 app:layout_constraintEnd_toEndOf="@+id/tv_renterCarItemType"
-                app:layout_constraintTop_toBottomOf="@+id/tv_renterCarItemType"
-                app:layout_constraintBottom_toBottomOf="@+id/location_info_container">
+                app:layout_constraintTop_toBottomOf="@+id/tv_renterCarItemType">
 
                 <com.cardee.custom.CustomRatingBar
                     android:id="@+id/rb_renterCatItemRating"
@@ -105,18 +94,17 @@
                     android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/xsmall_margin"
                     app:halfStars="true"
-                    app:maxStars="5"
-                    app:onlyForDisplay="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemRatingCount"
                     app:layout_constraintTop_toTopOf="@+id/tv_renterCarItemRatingCount"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_renterCarItemRatingCount"/>
+                    app:maxStars="5"
+                    app:onlyForDisplay="true" />
 
                 <TextView
                     android:id="@+id/tv_renterCarItemRatingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(10)"
                     android:textColor="@color/item_secondary_txt"
-                    app:layout_constraintStart_toEndOf="@id/rb_renterCatItemRating"/>
+                    app:layout_constraintStart_toEndOf="@id/rb_renterCatItemRating" />
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 

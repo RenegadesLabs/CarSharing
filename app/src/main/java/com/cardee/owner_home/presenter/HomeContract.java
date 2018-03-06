@@ -2,11 +2,11 @@ package com.cardee.owner_home.presenter;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 
-public interface OwnerHomeContract {
+public interface HomeContract {
 
     interface Presenter {
 
-        void init(OwnerHomeContract.View view, AHBottomNavigation bottomView);
+        void init(HomeContract.View view, AHBottomNavigation bottomView);
 
         void onSubscribeToNotifications();
 

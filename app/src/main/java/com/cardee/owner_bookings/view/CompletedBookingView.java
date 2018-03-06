@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
 import com.cardee.domain.bookings.entity.Booking;
+import com.cardee.domain.bookings.entity.Rate;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.util.glide.CircleTransform;
 
@@ -134,6 +135,13 @@ public class CompletedBookingView extends CoordinatorLayout implements OwnerBook
         loadImageIntoView(booking.getRenterPhoto(),
                 R.drawable.placeholder_user_img, renterPhoto, null, true);
         Integer rating = booking.getRenterRating();
+//        Integer rating = null;
+//        Rate[] rates = booking.getOwnerRates();
+//        for (Rate rate : rates) {
+//            if (rate.getRateName().equals("overall_rental_experience")) {
+//                rating = rate.getRating();
+//            }
+//        }
         if (rating != null) {
             ratingBar.setScore(rating);
         }

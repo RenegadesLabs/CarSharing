@@ -109,8 +109,8 @@ class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
     }
 
     private fun setCars(response: GetOwnerInfo.ResponseValues) {
-        val cars = response.cars
-        if (cars.isNotEmpty()) {
+        val cars: MutableList<Car>? = response.cars
+        if (cars?.isNotEmpty() == true) {
             mView?.setCars(cars)
         }
     }

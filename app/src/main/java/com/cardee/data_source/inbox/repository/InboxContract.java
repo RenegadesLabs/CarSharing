@@ -31,4 +31,6 @@ public interface InboxContract {
     void addAlert(AlertNotification alert);
 
     Single markAsRead(List<Integer> alerts);
+
+    void addNewChat(Chat chat);
 }

@@ -79,11 +79,6 @@ public class ChatViewHolder implements ActivityViewHolder {
     public void initAdapter(Context context) {
         mAdapter = new SingleChatAdapter();
         mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.addOnLayoutChangeListener((view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-//            if (bottom < oldBottom) {
-//                mRecyclerView.post(() -> mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1));
-//            }
-//        });
         mRecyclerView.setLayoutManager(getLayoutManager(context));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -122,6 +117,12 @@ public class ChatViewHolder implements ActivityViewHolder {
     @Override
     public void setCarBookingData(String mStartDate, String mEndDate) {
         String availability = mDateFormatter.formatDate(mStartDate) + mDateFormatter.getDivider() + mDateFormatter.formatDate(mEndDate);
+        mCarAvailability.setText(availability);
+    }
+
+    @Override
+    public void setFormattedCarBookingData(String timeBegin, String timeEnd) {
+        String availability = timeBegin + mDateFormatter.getDivider() + timeEnd;
         mCarAvailability.setText(availability);
     }
 

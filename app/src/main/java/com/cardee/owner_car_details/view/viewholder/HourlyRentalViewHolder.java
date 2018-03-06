@@ -300,7 +300,12 @@ public class HourlyRentalViewHolder extends BaseViewHolder<RentalDetails>
         stringDelegate.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.getHourlyAmountRateSecond());
         stringDelegate.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.getHourlyAmountRateFirst());
         stringDelegate.onSetRentalMinimum(rentalMinimum, rentalDetails.getHourlyMinRentalDuration());
-        stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), rentalDetails.getHourlyAmountPayMileage());
+        Float amtMileage = rentalDetails.getHourlyAmountPayMileage();
+        if (amtMileage == null) {
+            stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), null);
+        } else {
+            stringDelegate.onSetFuelPolicy(fuelPolicyValue, rentalDetails.getHourlyFuelPolicyName(), amtMileage.toString());
+        }
         setInstantBookingState(rentalDetails);
         int hours = rentalDetails.getHourlyInstantBookingCount();
         String template = "%d hours";

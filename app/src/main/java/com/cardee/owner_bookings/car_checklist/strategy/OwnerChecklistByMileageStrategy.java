@@ -1,9 +1,13 @@
 package com.cardee.owner_bookings.car_checklist.strategy;
 
 
+import android.app.Activity;
+import android.os.Build;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.cardee.R;
 import com.cardee.owner_bookings.car_checklist.view.ChecklistView;
@@ -20,6 +24,12 @@ public class OwnerChecklistByMileageStrategy extends PresentationStrategy implem
         mChecklistView = (ChecklistView) view;
         mActionListener = listener;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = ((Activity) view.getContext()).getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(mChecklistView.getResources().getColor(R.color.status_bar_secondary));
+        }
+
         mChecklistView.toolbarTitle.setText(R.string.owner_handover_checklist_title);
         mChecklistView.title1.setText(R.string.owner_handover_checklist_master_title);
         mChecklistView.petrolMileageView.setButtonsVisibility(View.INVISIBLE);
@@ -28,7 +38,6 @@ public class OwnerChecklistByMileageStrategy extends PresentationStrategy implem
                 GridLayoutManager.VERTICAL, false));
         mChecklistView.imagesGrid.setItemAnimator(new DefaultItemAnimator());
         mChecklistView.handoverB.setOnClickListener(this);
-
     }
 
     @Override

@@ -15,11 +15,13 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.account_details.view.AccountDetailsActivity;
 import com.cardee.data_source.inbox.local.alert.entity.Alert;
 import com.cardee.data_source.inbox.service.model.AlertNotification;
 import com.cardee.data_source.inbox.service.model.Notification;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.inbox.chat.single.view.ChatActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
@@ -147,13 +149,18 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         if (alertNotification.isOwnerSession()) {
                             Intent intent = new Intent(context, BookingActivity.class);
                             intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                            intent.putExtra(BookingActivity.IS_RENTER, false);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             stackBuilder.addNextIntent(intent);
                             return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                         } else {
-                            //TODO: implement for Renter
+                            Intent intent = new Intent(context, BookingActivity.class);
+                            intent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                            intent.putExtra(BookingActivity.IS_RENTER, true);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            stackBuilder.addNextIntent(intent);
+                            return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                         }
-                        break;
                     case USER_VERIFICATION:
                     case RENTER_STATE_CHANGE:
                     case OWNER_STATE_CHANGE:
@@ -166,24 +173,31 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         break;
                     case RENTER_REVIEW_REMINDER:
                     case RENTER_REVIEW:
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
+
                         Intent renterRateIntent = new Intent(context, RateRentalExpActivity.class);
                         renterRateIntent.putExtra("booking_id", objectId);
                         renterRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         stackBuilder.addNextIntent(renterRateIntent);
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case OWNER_CHECKLIST_UPD:
-                        //TODO:  editedCheckList();
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
                         PendingChecklistStorage.addChecklist(context, objectId);
+
+                        // if in BookingActivity shows CheckList
                         Intent showRenterCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST_RENTER);
                         showRenterCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(showRenterCheckListIntent);
 
-                        Intent bookingRenterIntent = new Intent(context, BookingActivity.class);
-                        bookingRenterIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
-                        bookingRenterIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        stackBuilder.addNextIntent(bookingRenterIntent);
+
+                        Intent ownerEditIntent = new Intent(context, BookingActivity.class);
+                        ownerEditIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        ownerEditIntent.putExtra(BookingActivity.IS_RENTER, true);
+                        ownerEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(ownerEditIntent);
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case RENTER_CHECKLIST_UPD:
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
                         PendingChecklistStorage.addChecklist(context, objectId);
 
                         // if in BookingActivity shows CheckList
@@ -191,19 +205,31 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         showCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(showCheckListIntent);
 
-                        Intent bookingIntent = new Intent(context, BookingActivity.class);
-                        bookingIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
-                        bookingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        stackBuilder.addNextIntent(bookingIntent);
+                        Intent renterEditIntent = new Intent(context, BookingActivity.class);
+                        renterEditIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        renterEditIntent.putExtra(BookingActivity.IS_RENTER, false);
+                        renterEditIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(renterEditIntent);
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case INIT_CHECKLIST:
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.RENTER_SESSION);
                         PendingChecklistStorage.addChecklist(context, objectId);
 
+                        // if in BookingActivity shows CheckList
+                        Intent showInitCheckListIntent = new Intent(BookingActivity.ACTION_CHECKLIST_RENTER);
+                        showInitCheckListIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(showInitCheckListIntent);
 
-                        //TODO: checkList();
-                        break;
+                        Intent checklistIntent = new Intent(context, BookingActivity.class);
+                        checklistIntent.putExtra(OwnerBookingContract.BOOKING_ID, objectId);
+                        checklistIntent.putExtra(BookingActivity.IS_RENTER, true);
+                        checklistIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        stackBuilder.addNextIntent(checklistIntent);
+                        return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case OWNER_REVIEW:
                     case OWNER_REVIEW_REMINDER:
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
+
                         Intent ownerRateIntent = new Intent(context, CarReturnedActivity.class);
                         ownerRateIntent.putExtra("booking_id", objectId);
                         ownerRateIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -211,6 +237,8 @@ public class FcmNotificationBuilder implements NotificationBuilder {
                         return stackBuilder.getPendingIntent(FCM_NOTIFICATION_REQUEST_CODE, PendingIntent.FLAG_ONE_SHOT);
                     case CAR_VERIFICATION:
                     case CAR_STATE_CHANGE:
+                        AccountManager.getInstance(CardeeApp.context).setSession(AccountManager.OWNER_SESSION);
+
                         Intent ownerCarIntent = new Intent(context, OwnerCarDetailsActivity.class);
                         ownerCarIntent.putExtra(OwnerCarDetailsContract.CAR_ID, objectId);
                         ownerCarIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

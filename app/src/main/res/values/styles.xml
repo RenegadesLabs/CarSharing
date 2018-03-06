@@ -334,4 +334,9 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="CarDetailsTabItemStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -227,7 +227,7 @@
 
     <!--Car Delivery Rates-->
     <string name="car_rental_delivery_rates_title">Delivery Rates</string>
-    <string name="car_rental_delivery_rates_prefix">Delivery</string>
+    <string name="car_rental_delivery_rates_template">Delivery @ $%s + $%s per km</string>
     <string name="car_rental_delivery_rates_self">Self-collect only</string>
     <string name="car_rental_delivery_rates_base">Base Rate</string>
     <string name="car_rental_delivery_rates_distance">Distance Rate</string>
@@ -315,7 +315,7 @@
     <!--Car Rental Fuel Policy-->
     <string name="car_rental_fuel_policy_petrol">Petrol Upon Return</string>
     <string name="car_rental_fuel_policy_similar_lvl">Return with similar level</string>
-    <string name="car_rental_fuel_policy_by_mileage">Payment by masterMileage</string>
+    <string name="car_rental_fuel_policy_by_mileage">Payment by mileage</string>
     <string name="car_rental_fuel_policy_cost">Cost per km</string>
     <string name="car_rental_fuel_policy_cost_info">Suitable for car with average petrol consumption of 13 to 15 km per litre</string>
     <string name="car_rental_fuel_modal_title">Petrol cost</string>
@@ -512,8 +512,8 @@
     <string name="renter_car_details_rental_info">Rental info</string>
     <string name="renter_car_details_timing">Pickup and return timing</string>
     <string name="renter_car_details_timing_available">Available timing</string>
-    <string name="renter_car_details_timing_available_from">Available from</string>
-    <string name="renter_car_details_timing_available_to">to</string>
+    <string name="renter_car_details_timing_available_from">Available from\u00a0</string>
+    <string name="renter_car_details_timing_available_to">\u00a0to\u00a0</string>
     <string name="renter_car_details_read">Read</string>
     <string name="renter_car_details_check">Check</string>
     <string name="renter_car_details_about">About the car</string>
@@ -522,7 +522,7 @@
     <string name="renter_car_details_response">Response</string>
     <string name="renter_car_details_book">Book Car</string>
     <string name="renter_car_details_book_instantly">Book Instantly</string>
-    <string name="renter_car_details_seats_suffix">-seater \u2022</string>
+    <string name="renter_car_details_seats_suffix">-seater \u2022\u00a0</string>
     <string name="renter_car_details_review_date_prefix">on</string>
     <string name="renter_car_details_review_more_prefix">Read</string>
     <string name="renter_car_details_review_more_suffix">reviews</string>

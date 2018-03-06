@@ -61,7 +61,9 @@
         <activity
             android:name=".owner_home.view.OwnerHomeActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".owner_car_details.view.OwnerCarDetailsActivity" />
+        <activity
+            android:name=".owner_car_details.view.OwnerCarDetailsActivity"
+            android:parentActivityName=".owner_home.view.OwnerHomeActivity" />
         <activity android:name=".owner_car_details.view.CarDetailsEditActivity" />
         <activity
             android:name=".owner_car_rental_info.delivery.RentalDeliveryRatesActivity"
@@ -90,6 +92,7 @@
         <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
         <activity
             android:name=".renter_bookings.rate_rental_exp.view.RateRentalExpActivity"
+            android:parentActivityName=".renter_home.view.RenterHomeActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -163,6 +166,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".owner_bookings.car_checklist.view.OwnerRenterUpdatedChecklistActivity"
+            android:parentActivityName=".owner_home.view.OwnerHomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".renter_home.view.RenterHomeActivity" />
@@ -196,6 +200,7 @@
             android:theme="@style/ChatStyle" />
         <activity
             android:name=".owner_bookings.car_returned.view.CarReturnedActivity"
+            android:parentActivityName=".owner_home.view.OwnerHomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".renter_browse_cars.filter.view.FilterActivity"
@@ -256,8 +261,9 @@
         <activity
             android:name=".owner_credit_balance.view.DepositActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".owner_bookings.car_checklist.view.RenterChecklistActivity" />
-        <activity android:name=".owner_bookings.car_checklist.view.RenterEditChecklistActivity"></activity>
+        <activity
+            android:name=".owner_bookings.car_checklist.view.RenterChecklistActivity"
+            android:parentActivityName=".renter_home.view.RenterHomeActivity" />
     </application>
 
 </manifest>

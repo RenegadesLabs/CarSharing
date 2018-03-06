@@ -86,8 +86,9 @@ public class CarReviewsAdapter extends RecyclerView.Adapter<CarReviewsAdapter.Re
 
         public void setImage(String link, RequestManager imageRequestManager, Context context) {
             imageRequestManager.load(link)
+                    .placeholder(R.drawable.placeholder_user_img)
                     .transform(new CircleTransform(context))
-                    .error(R.drawable.img_no_car)
+                    .error(R.drawable.placeholder_user_img)
                     .into(mProfileImage);
         }
 

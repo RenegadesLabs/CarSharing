@@ -2,8 +2,7 @@ package com.cardee.owner_bookings.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.StringRes;
-import android.support.constraint.ConstraintLayout;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,11 @@ import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
 import com.cardee.data_source.remote.api.booking.response.entity.BookingCost;
+import com.cardee.data_source.remote.service.AccountManager;
+import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Booking;
+import com.cardee.domain.bookings.entity.Rate;
+import com.cardee.inbox.chat.single.view.ChatActivity;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.car_returned.view.CarReturnedActivity;
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity;
@@ -34,6 +37,11 @@ import com.cardee.util.glide.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_ATTACHMENT;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_FROM_BOOKING;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_SERVER_ID;
+import static com.cardee.data_source.inbox.local.chat.entity.Chat.CHAT_UNREAD_COUNT;
 
 public class BookingView extends CoordinatorLayout implements OwnerBookingContract.View {
 
@@ -222,30 +230,85 @@ public class BookingView extends CoordinatorLayout implements OwnerBookingContra
         returnBy.setText(timeEnd);
         handoverAt.setText(booking.getDeliveryAddress());
         renterMessage.setText(booking.getNote());
-        renterName.setText(booking.getRenterName());
-        loadImageIntoView(booking.getRenterPhoto(),
-                R.drawable.placeholder_user_img, renterPhoto, null, true);
-        loadImageIntoView(booking.getRenterPhoto(),
-                R.drawable.placeholder_user_img, renterPhotoCompleted, null, true);
-        Integer rating = booking.getRenterRating();
+        if (isRenter) {
+            renterName.setText(booking.getOwnerName());
+            loadImageIntoView(booking.getOwnerPhoto(),
+                    R.drawable.ic_photo_placeholder, renterPhoto, null, true);
+            loadImageIntoView(booking.getOwnerPhoto(),
+                    R.drawable.ic_photo_placeholder, renterPhotoCompleted, null, true);
+        } else {
+            renterName.setText(booking.getRenterName());
+            loadImageIntoView(booking.getRenterPhoto(),
+                    R.drawable.ic_photo_placeholder, renterPhoto, null, true);
+            loadImageIntoView(booking.getRenterPhoto(),
+                    R.drawable.ic_photo_placeholder, renterPhotoCompleted, null, true);
+        }
+
+        Integer rating = null;
+        if (isRenter) {
+            Rate[] rates = booking.getOwnerRates();
+            if (rates != null) {
+                for (Rate rate : rates) {
+                    if (rate.getRateName().equals("overall_rental_experience")) {
+                        rating = rate.getRating();
+                    }
+                }
+            }
+        } else {
+            rating = booking.getRenterRating();
+        }
         if (rating != null) {
             ratingBar.setScore(rating);
+            if (rating.equals(0)) {
+                if (isRenter) {
+                    startRateRentalActivity(booking.getBookingId());
+                }
+            }
+        } else {
+            if (booking.getBookingStateType().equals(BookingState.COMPLETED)) {
+                if (isRenter) {
+                    startRateRentalActivity(booking.getBookingId());
+                }
+            }
         }
+
         ratingEdit.setOnClickListener(view -> {
             if (isRenter) {
-                Intent intent = new Intent(getContext(), RateRentalExpActivity.class);
-                intent.putExtra("booking_id", booking.getBookingId());
-                getContext().startActivity(intent);
-                return;
+                startRateRentalActivity(booking.getBookingId());
+            } else {
+                startCarReturnedActivity(booking.getBookingId());
             }
-            Intent intent = new Intent(getContext(), CarReturnedActivity.class);
-            intent.putExtra("booking_id", booking.getBookingId());
-            getContext().startActivity(intent);
         });
         if (booking.getCost() != null) {
             bindCostTitles(booking.getCost(), booking.isBookingByDays());
             bindCost(booking.getCost());
         }
+
+        renterChat.setOnClickListener(view -> {
+            String attachment = AccountManager.getInstance(this.getContext()).getSessionInfo();
+
+            Bundle args = new Bundle();
+            args.putInt(CHAT_SERVER_ID, booking.getBookingId());
+            args.putString(CHAT_ATTACHMENT, attachment);
+            args.putInt(CHAT_UNREAD_COUNT, 0);
+            args.putBoolean(CHAT_FROM_BOOKING, true);
+
+            Intent intent = new Intent(this.getContext(), ChatActivity.class);
+            intent.putExtras(args);
+            this.getContext().startActivity(intent);
+        });
+    }
+
+    private void startRateRentalActivity(int bookingId) {
+        Intent intent = new Intent(getContext(), RateRentalExpActivity.class);
+        intent.putExtra("booking_id", bookingId);
+        getContext().startActivity(intent);
+    }
+
+    private void startCarReturnedActivity(int bookingId) {
+        Intent intent = new Intent(getContext(), CarReturnedActivity.class);
+        intent.putExtra("booking_id", bookingId);
+        getContext().startActivity(intent);
     }
 
     private void bindCostTitles(BookingCost cost, boolean bookingByDays) {

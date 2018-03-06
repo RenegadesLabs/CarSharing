@@ -1,5 +1,6 @@
 package com.cardee.owner_bookings.car_checklist.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity imple
     private OwnerChecklistContract.View mView;
 
     public final static String KEY_BOOKING_ID = "booking_id";
+    public int bookingId;
 
 
     @Override
@@ -26,7 +28,7 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity imple
         ChecklistView view = (ChecklistView) LayoutInflater
                 .from(this).inflate(R.layout.activity_owner_handover_checklist, null);
         mView = view;
-        int bookingId = getIntent().getIntExtra(KEY_BOOKING_ID, -1);
+        bookingId = getIntent().getIntExtra(KEY_BOOKING_ID, -1);
         mPresenter = new OwnerRenterUpdatedChecklistPresenter(bookingId);
         mView.setPresenter(mPresenter);
         mPresenter.setView(mView);
@@ -58,6 +60,10 @@ public class OwnerRenterUpdatedChecklistActivity extends AppCompatActivity imple
 
     @Override
     public void onCancelled() {
+        Intent intent = new Intent(this, ChecklistActivity.class);
+        intent.putExtra(ChecklistActivity.KEY_BOOKING_ID, bookingId);
+        intent.putExtra(ChecklistActivity.KEY_IS_RENTER, false);
+        startActivity(intent);
         finish();
     }
 }

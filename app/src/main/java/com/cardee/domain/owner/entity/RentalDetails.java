@@ -40,7 +40,7 @@ public class RentalDetails {
     private Float hourlyAmountDiscountFirst;
     private Float hourlyAmountDiscountSecond;
     private Integer hourlyMinRentalDuration;
-    private String hourlyAmountPayMileage;
+    private Float hourlyAmountPayMileage;
     private Integer hourlyFuelPolicyId;
     private String hourlyFuelPolicyName;
 
@@ -296,11 +296,11 @@ public class RentalDetails {
         this.hourlyMinRentalDuration = hourlyMinRentalDuration;
     }
 
-    public String getHourlyAmountPayMileage() {
+    public Float getHourlyAmountPayMileage() {
         return hourlyAmountPayMileage;
     }
 
-    public void setHourlyAmountPayMileage(String hourlyAmountPayMileage) {
+    public void setHourlyAmountPayMileage(Float hourlyAmountPayMileage) {
         this.hourlyAmountPayMileage = hourlyAmountPayMileage;
     }
 

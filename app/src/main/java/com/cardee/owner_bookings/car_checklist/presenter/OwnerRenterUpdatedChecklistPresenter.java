@@ -10,7 +10,6 @@ import com.cardee.domain.bookings.BookingState;
 import com.cardee.domain.bookings.entity.Checklist;
 import com.cardee.domain.bookings.usecase.ChangeBookingState;
 import com.cardee.domain.bookings.usecase.GetChecklist;
-import com.cardee.domain.bookings.usecase.SaveChecklist;
 import com.cardee.owner_bookings.car_checklist.adapter.CarSquareImagesAdapter;
 import com.cardee.owner_bookings.car_checklist.service.PendingChecklistStorage;
 import com.cardee.owner_bookings.car_checklist.strategy.PresentationStrategy;
@@ -116,34 +115,7 @@ public class OwnerRenterUpdatedChecklistPresenter implements OwnerChecklistContr
 
     @Override
     public void onAccurateCancel() {
-
-        if (mView != null) {
-            mView.showProgress(true);
-        }
-
-        SaveChecklist.RequestValues values = new SaveChecklist.RequestValues(mBookingId, mChecklist.getRemarks(),
-                mChecklist.getTank(), mChecklist.getMasterMileage(), mChecklist.getImageIds());
-
-        mExecutor.execute(new SaveChecklist(), values,
-                new UseCase.Callback<SaveChecklist.ResponseValues>() {
-                    @Override
-                    public void onSuccess(SaveChecklist.ResponseValues response) {
-                        if (mView != null && response.isSuccess()) {
-                            mView.showProgress(false);
-                            mView.showMessage(R.string.saved_successfully);
-                            PendingChecklistStorage.remove(mChecklistView.getContext(), mBookingId);
-                            mCallbacks.onCancelled();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-                        if (mView != null) {
-                            mView.showProgress(false);
-                            mView.showMessage(R.string.error_occurred);
-                        }
-                    }
-                });
+        mCallbacks.onCancelled();
     }
 
     @Override

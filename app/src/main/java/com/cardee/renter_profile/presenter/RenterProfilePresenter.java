@@ -138,6 +138,7 @@ public class RenterProfilePresenter {
                 String text = review.getReview();
                 if (text == null || text.isEmpty()) {
                     iterator.remove();
+                    continue;
                 }
                 review.setReview(review.getReview().trim());
             }

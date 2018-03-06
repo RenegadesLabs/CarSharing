@@ -25,4 +25,6 @@ public interface ActivityViewHolder {
     void updateMessagePreview(int messageId);
 
     void subscribeToInput(Consumer<String> consumer);
+
+    void setFormattedCarBookingData(String timeBegin, String timeEnd);
 }

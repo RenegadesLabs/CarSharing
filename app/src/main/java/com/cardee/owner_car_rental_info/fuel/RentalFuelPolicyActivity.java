@@ -20,7 +20,6 @@ import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_rental_info.RentalContract;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,7 +70,7 @@ public class RentalFuelPolicyActivity extends AppCompatActivity implements View.
         ButterKnife.bind(this);
         Intent i = getIntent();
         mMode = i.getIntExtra(OwnerCarRentalFragment.MODE, 0);
-        mPickerSelectedVal = "$" + i.getStringExtra(AMOUNT_MILEAGE);
+        mPickerSelectedVal = "$" + i.getFloatExtra(AMOUNT_MILEAGE, 0f);
         mFuelPolicyId = i.getIntExtra(POLICY_ID, 1);
         mPresenter = new RentalFuelPolicyPresenter(this);
         mProgress = DialogHelper.getProgressDialog(this, getString(R.string.loading), false);
