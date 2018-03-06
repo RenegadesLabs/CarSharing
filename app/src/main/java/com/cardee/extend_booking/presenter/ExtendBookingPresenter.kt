@@ -4,6 +4,7 @@ import android.content.Intent
 import com.cardee.domain.bookings.usecase.ChangeBookingReturnTime
 import com.cardee.domain.bookings.usecase.GetFullBookingAvailability
 import com.cardee.extend_booking.ExtendBookingContract
+import java.util.*
 
 
 class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailability = GetFullBookingAvailability(),
@@ -12,6 +13,7 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
 
     private var currentMode = ExtendBookingContract.Mode.DAILY
     private var view: ExtendBookingContract.View? = null
+    private var endDate: Date? = null
     private var bookingId: Int = -1
 
     override fun onAttachView(view: ExtendBookingContract.View) {
@@ -35,9 +37,13 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
             throw IllegalArgumentException("Illegal bookingId value: -1")
         val hourly = currentMode == ExtendBookingContract.Mode.HOURLY
         fetchDataUseCase.execute(GetFullBookingAvailability.BookingAvailabilityRequest(bookingId, hourly), { response ->
+            endDate = response.body?.timeEnd
             view?.showProgress(false)
             if (response.success) {
-                view?.onDataReady(response.body!!)
+                when (currentMode) {
+                    ExtendBookingContract.Mode.HOURLY -> view?.bindHourly(response.body!!)
+                    ExtendBookingContract.Mode.DAILY -> view?.bindDaily(response.body!!)
+                }
                 return@execute
             }
             view?.showMessage(response.errorMessage)
@@ -49,7 +55,7 @@ class ExtendBookingPresenter(private val fetchDataUseCase: GetFullBookingAvailab
         })
     }
 
-    override fun save() {
+    override fun save(extension: Date) {
 
     }
 

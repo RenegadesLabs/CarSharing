@@ -5,6 +5,7 @@ import android.support.annotation.StringRes
 import com.cardee.R
 import com.cardee.domain.bookings.entity.AvailabilityState
 import com.cardee.mvp.BaseView
+import java.util.*
 
 
 interface ExtendBookingContract {
@@ -23,7 +24,9 @@ interface ExtendBookingContract {
 
     interface View : BaseView {
 
-        fun onDataReady(data: AvailabilityState)
+        fun bindHourly(data: AvailabilityState)
+
+        fun bindDaily(data: AvailabilityState)
 
         fun onInitMode(mode: Mode)
 
@@ -39,7 +42,7 @@ interface ExtendBookingContract {
 
         fun requestData()
 
-        fun save()
+        fun save(extension: Date)
 
         fun onDestroy()
     }

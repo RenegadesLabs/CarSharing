@@ -2,8 +2,10 @@ package com.cardee.custom.time_picker.view.selection;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cardee.custom.ChangeStrategy;
 import com.cardee.custom.time_picker.domain.UseCase;
 import com.cardee.custom.time_picker.domain.calendar.ApplyInitialSelection;
 import com.cardee.custom.time_picker.domain.criteria.CriteriaFactory;
@@ -35,6 +37,9 @@ public class SelectionManager implements
     private final List<Hour> selectedDayz;
     private final List<Hour> allDayz;
     private final DayAdapter adapter;
+    private ChangeStrategy changeStrategy = ChangeStrategy.ANY;
+    private Date fixedDate;
+    private TimePicker.OnMessageListener messageListener;
 
     private SelectionAdapter selectionAdapter;
     private Hour rangeStart;
@@ -50,6 +55,15 @@ public class SelectionManager implements
         executor = new UseCaseExecutor();
         applySelection = new ApplyInitialSelection();
         this.adapter = adapter;
+    }
+
+    public void setMessageListener(TimePicker.OnMessageListener messageListener) {
+        this.messageListener = messageListener;
+    }
+
+    public void setChangeStrategy(ChangeStrategy strategy, @Nullable Date fixedDate){
+        this.changeStrategy = strategy;
+        this.fixedDate = fixedDate;
     }
 
     public void addToPeriod(List<Day> days) {
@@ -73,6 +87,13 @@ public class SelectionManager implements
         if (selectionMode == TimePicker.MODE_MULTISELECT) {
             proceedMultiselectModeSelection(hour, view);
         } else if (selectionMode == TimePicker.MODE_RANGE) {
+            if (ChangeStrategy.EXTENSION_ONLY.equals(changeStrategy) && fixedDate != null) {
+                if (hour.compareTo(fixedDate) < 0) {
+                    messageListener.onMessage("You can only extend current period");
+                    return;
+                }
+                lastBound = RangeBound.START;
+            }
             proceedRangeModeSelection(hour, view);
         }
     }
@@ -101,6 +122,10 @@ public class SelectionManager implements
             if (!rangeStart.equals(rangeEnd) && checkWholeRangeAvailable(rangeStart, rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
+                if(ChangeStrategy.EXTENSION_ONLY.equals(changeStrategy)){
+                    messageListener.onMessage("Cannot extend range. Car is not available at this period of time");
+                    return;
+                }
                 clearSelection();
                 adapter.notifyDataSetChanged();
                 selectSingleDayRange(hour, view);

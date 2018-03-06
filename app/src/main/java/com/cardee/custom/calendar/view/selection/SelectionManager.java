@@ -2,8 +2,10 @@ package com.cardee.custom.calendar.view.selection;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cardee.custom.ChangeStrategy;
 import com.cardee.custom.calendar.domain.UseCase;
 import com.cardee.custom.calendar.domain.calendar.ApplyInitialSelection;
 import com.cardee.custom.calendar.domain.criteria.CriteriaFactory;
@@ -35,6 +37,9 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
     private final List<Day> selectedDayz;
     private final List<Day> allDayz;
     private final MonthAdapter adapter;
+    private ChangeStrategy changeStrategy = ChangeStrategy.ANY; //Will be ignored in multiselect mode
+    private Date fixedDate;
+    private CalendarView.OnMessageListener messageListener;
 
     private SelectionAdapter selectionAdapter;
     private Day rangeStart;
@@ -50,6 +55,15 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
         executor = new UseCaseExecutor();
         applySelection = new ApplyInitialSelection();
         this.adapter = adapter;
+    }
+
+    public void setMessageListener(CalendarView.OnMessageListener listener) {
+        messageListener = listener;
+    }
+
+    public void setChangeStrategy(ChangeStrategy strategy, @Nullable Date fixedDate) {
+        this.changeStrategy = strategy;
+        this.fixedDate = fixedDate;
     }
 
     public void addToPeriod(List<Month> months) {
@@ -73,7 +87,15 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
         if (selectionMode == CalendarView.MODE_MULTISELECT) {
             proceedMultiselectModeSelection(day, view);
         } else if (selectionMode == CalendarView.MODE_RANGE) {
+            if (ChangeStrategy.EXTENSION_ONLY.equals(changeStrategy) && fixedDate != null) {
+                if (day.compareTo(fixedDate) < 0) {
+                    messageListener.onMessage("You can only extend current period");
+                    return;
+                }
+                lastBound = RangeBound.START;
+            }
             proceedRangeModeSelection(day, view);
+
         }
     }
 
@@ -101,6 +123,10 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
             if (!rangeStart.equals(rangeEnd) && checkWholeRangeAvailable(rangeStart, rangeEnd)) {
                 selectRange(rangeStart, rangeEnd);
             } else {
+                if(ChangeStrategy.EXTENSION_ONLY.equals(changeStrategy)){
+                    messageListener.onMessage("Cannot extend range. Car is not available at this period of time");
+                    return;
+                }
                 clearSelection();
                 adapter.notifyDataSetChanged();
                 selectSingleDayRange(day, view);
@@ -276,7 +302,7 @@ public class SelectionManager implements OnViewClickListener<DayView>, Selection
 
     @Override
     public void onAvailableDatesSet(List<Day> availableDayz) {
-        if(availableDayz.isEmpty()){
+        if (availableDayz.isEmpty()) {
             return;
         }
         new Thread(() -> {

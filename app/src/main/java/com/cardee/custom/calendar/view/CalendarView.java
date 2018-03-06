@@ -21,8 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.ChangeStrategy;
 import com.cardee.custom.calendar.model.Month;
 import com.cardee.custom.calendar.view.adapter.MonthAdapter;
 import com.cardee.custom.calendar.view.config.BodyConfig;
@@ -30,6 +32,7 @@ import com.cardee.custom.calendar.view.config.HeaderConfig;
 import com.cardee.custom.calendar.view.selection.SelectionAdapter;
 import com.cardee.custom.calendar.view.selection.SelectionManager;
 
+import java.util.Date;
 import java.util.List;
 
 public class CalendarView extends LinearLayout {
@@ -85,6 +88,7 @@ public class CalendarView extends LinearLayout {
         adapter = new MonthAdapter(bodyConfig);
         bodyRecyclerView = createBody(context, adapter);
         selectionManager = new SelectionManager(adapter);
+        selectionManager.setMessageListener(message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show());
         bodyConfig.setDayClickListener(selectionManager.getDayClickListener());
         addView(createHeader(headerConfig));
         addView(bodyRecyclerView);
@@ -195,6 +199,14 @@ public class CalendarView extends LinearLayout {
         if (selectionManager.isReady()) {
             this.onReadyListener.onReady();
         }
+    }
+
+    public void setChangeStrategy(ChangeStrategy strategy, @Nullable Date fixedDate) {
+        selectionManager.setChangeStrategy(strategy, fixedDate);
+    }
+
+    public interface OnMessageListener {
+        void onMessage(String message);
     }
 
     public interface OnReadyListener {

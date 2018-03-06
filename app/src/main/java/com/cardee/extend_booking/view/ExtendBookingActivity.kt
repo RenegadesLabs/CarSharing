@@ -4,11 +4,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.cardee.R
+import com.cardee.custom.ChangeStrategy
 import com.cardee.domain.bookings.entity.AvailabilityState
 import com.cardee.extend_booking.ExtendBookingContract
 import com.cardee.extend_booking.presenter.ExtendBookingPresenter
@@ -17,11 +17,15 @@ import com.cardee.extend_booking.view.adapter.TimePickerExtensionAdapter
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_extension.*
 import kotlinx.android.synthetic.main.view_hourly_extesion.*
+import java.util.*
 
 class ExtendBookingActivity : AppCompatActivity(), ExtendBookingContract.View {
 
     private val presenter: ExtendBookingContract.Presenter
     private var toast: Toast? = null
+    private var newEndDate: Date? = null
+    private var dailyAdapter: CalendarExtensionAdapter? = null
+    private var hourlyAdapter: TimePickerExtensionAdapter? = null
 
     init {
         presenter = ExtendBookingPresenter()
@@ -65,8 +69,20 @@ class ExtendBookingActivity : AppCompatActivity(), ExtendBookingContract.View {
         showMessage(getString(messageId))
     }
 
-    override fun onDataReady(data: AvailabilityState) {
+    override fun bindDaily(data: AvailabilityState) {
+        dailyAdapter?.setAvailableDates(data.availableDates)
+        if (data.timeStart != null && data.timeEnd != null) {
+            extensionDailyCalendar.setChangeStrategy(ChangeStrategy.EXTENSION_ONLY, data.timeEnd)
+            dailyAdapter?.setRange(data.timeStart, data.timeEnd)
+        }
+    }
 
+    override fun bindHourly(data: AvailabilityState) {
+        hourlyAdapter?.setAvailableDates(data.availableDates)
+        if (data.timeStart != null && data.timeEnd != null) {
+            extensionTimePiker.setChangeStrategy(ChangeStrategy.EXTENSION_ONLY, data.timeEnd)
+            hourlyAdapter?.setRange(data.timeStart, data.timeEnd)
+        }
     }
 
     override fun onInitMode(mode: ExtendBookingContract.Mode) {
@@ -85,21 +101,28 @@ class ExtendBookingActivity : AppCompatActivity(), ExtendBookingContract.View {
             ExtendBookingContract.Mode.DAILY -> initDailyView()
             ExtendBookingContract.Mode.HOURLY -> initHourlyView()
         }
+        presenter.requestData()
     }
 
     private fun initHourlyView() = with(extensionTimePiker) {
-        val adapter = TimePickerExtensionAdapter()
-        setSelectionAdapter(adapter)
-        adapter.listener = { selection ->
-            Log.e("HOURLY_SELECTION", "Count: ${selection.size}")
+        hourlyAdapter = TimePickerExtensionAdapter()
+        setSelectionAdapter(hourlyAdapter)
+        hourlyAdapter?.listener = { selection ->
+            newEndDate = selection.last()
+        }
+        btnHourlyExtensionSave.setOnClickListener {
+            newEndDate?.let { date -> presenter.save(date) }
         }
     }
 
     private fun initDailyView() = with(extensionDailyCalendar) {
-        val adapter = CalendarExtensionAdapter()
-        setSelectionAdapter(adapter)
-        adapter.listener = { selection ->
-            Log.e("DAILY_SELECTION", "Count: ${selection.size}")
+        dailyAdapter = CalendarExtensionAdapter()
+        setSelectionAdapter(dailyAdapter)
+        dailyAdapter?.listener = { selection ->
+            newEndDate = selection.last()
+        }
+        btnDailyExtensionSave.setOnClickListener {
+            newEndDate?.let { date -> presenter.save(date) }
         }
     }
 

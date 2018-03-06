@@ -13,6 +13,9 @@ import com.cardee.util.DateRepresentationDelegate
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class GetFullBookingAvailability(executor: ThreadExecutor = ThreadExecutor.getInstance()!!,
@@ -21,10 +24,12 @@ class GetFullBookingAvailability(executor: ThreadExecutor = ThreadExecutor.getIn
                                  private val bookingsRepository: BookingRepository = BookingRepository.getInstance())
     : UseCase<AvailabilityState>(executor, responseThread) {
 
-    private val formatter: DateRepresentationDelegate
+    private val timeFormatter: DateRepresentationDelegate
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
     init {
-        formatter = DateRepresentationDelegate(CardeeApp.context)
+        timeFormatter = DateRepresentationDelegate(CardeeApp.context)
+        dateFormatter.timeZone = CardeeApp.getTimeZone()
     }
 
     override fun buildUseCaseObserver(request: Request): Observable<Response<AvailabilityState>> {
@@ -38,8 +43,8 @@ class GetFullBookingAvailability(executor: ThreadExecutor = ThreadExecutor.getIn
                         emitter.onNext(Response(null, Response.SOCKET_ERROR, "Bad response"))
                         return
                     }
-                    val timeBegin = formatter.convertDateToDate(bookingEntity.timeBegin)
-                    val timeEnd = formatter.convertDateToDate(bookingEntity.timeEnd)
+                    val timeBegin = timeFormatter.convertDateToDate(bookingEntity.timeBegin)
+                    val timeEnd = timeFormatter.convertDateToDate(bookingEntity.timeEnd)
 
                     carsRepository.getOfferById(carId, object : RenterCarsDataSource.OfferCallback {
                         override fun onSuccess(response: OfferByIdResponseBody?) {
@@ -50,9 +55,16 @@ class GetFullBookingAvailability(executor: ThreadExecutor = ThreadExecutor.getIn
                             val availabilityRange = when (hourly) {
                                 true -> response.carAvailabilityHourly
                                 false -> response.carAvailabilityDaily
-                            }
+                            }?.flatMap { dateString ->
+                                try {
+                                    val date = dateFormatter.parse(dateString)
+                                    listOf(date)
+                                } catch (ex: ParseException) {
+                                    emptyList<Date>()
+                                }
+                            }?.toTypedArray()
                             emitter.onNext(Response(AvailabilityState(
-                                    availabilityRange?.asList() ?: listOf(), timeBegin, timeEnd)))
+                                    availabilityRange ?: emptyArray(), timeBegin, timeEnd)))
                         }
 
                         override fun onError(error: Error?) {

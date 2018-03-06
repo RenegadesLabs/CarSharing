@@ -3,4 +3,4 @@ package com.cardee.domain.bookings.entity
 import java.util.*
 
 
-data class AvailabilityState(val availableDates: List<String>, val timeStart: Date?, val timeEnd: Date?)
+data class AvailabilityState(val availableDates: Array<Date>, val timeStart: Date?, val timeEnd: Date?)
