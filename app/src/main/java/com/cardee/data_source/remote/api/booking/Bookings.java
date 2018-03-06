@@ -2,6 +2,7 @@ package com.cardee.data_source.remote.api.booking;
 
 
 import com.cardee.data_source.remote.api.NoDataResponse;
+import com.cardee.data_source.remote.api.booking.request.BookingExtension;
 import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
@@ -63,4 +64,8 @@ public interface Bookings {
     @POST("bookings/")
     @Headers("Content-Type: application/json")
     Maybe<NoDataResponse> requestBooking(@Body BookingRequest request);
+
+    @POST("bookings/{id}/extension/")
+    @Headers("Content-Type: application/json")
+    Maybe<NoDataResponse> extendBooking(@Path("id") int id, @Body BookingExtension request);
 }

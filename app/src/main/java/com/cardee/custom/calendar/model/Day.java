@@ -156,7 +156,7 @@ public class Day implements Comparable<Day> {
         return compareTo(day.calendar);
     }
 
-    private int compareTo(Date date) {
+    public int compareTo(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);

@@ -13,6 +13,8 @@ public interface OwnerBookingContract {
 
     interface ParentView {
         void showRenterCheckList();
+
+        void showExtendBookingDialog();
     }
 
     interface View extends BaseView {

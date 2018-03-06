@@ -11,6 +11,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.booking.Bookings;
 import com.cardee.data_source.remote.api.booking.Upload;
+import com.cardee.data_source.remote.api.booking.request.BookingExtension;
 import com.cardee.data_source.remote.api.booking.request.BookingRequest;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsOwner;
 import com.cardee.data_source.remote.api.booking.request.ReviewAsRenter;
@@ -288,13 +289,26 @@ public class RemoteBookingDataSource implements BookingDataSource {
 
     @Override
     public void changeBookingState(int bookingId, String state, SimpleCallback callback) {
-        api.changeBookingState(bookingId, state).subscribe(response -> {
+        Disposable disposable = api.changeBookingState(bookingId, state).subscribe(response -> {
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;
             }
             handleErrorResponse(response, callback);
         }, throwable -> callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage())));
+    }
+
+    @Override
+    public void extendBooking(int bookingId, String iso8601TimeEnd, SimpleCallback callback) {
+        Disposable disposable = api.extendBooking(bookingId, new BookingExtension(iso8601TimeEnd)).subscribe(response -> {
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response, callback);
+        }, throwable -> {
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, throwable.getMessage()));
+        });
     }
 
     private void handleErrorResponse(BaseResponse response, BaseCallback bookingsCallback) {

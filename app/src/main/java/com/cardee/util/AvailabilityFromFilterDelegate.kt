@@ -145,6 +145,16 @@ class AvailabilityFromFilterDelegate {
         }
     }
 
+    fun setDailyTitlesFromDates(startView: TextView, endView: TextView, dateBegin: Date?, dateEnd: Date?) {
+        if (dateBegin != null && dateEnd != null) {
+            onSetTitleFromDate(startView, dateBegin)
+            onSetTitleFromDate(endView, dateEnd)
+        } else {
+            startView.text = noValue
+            endView.text = noValue
+        }
+    }
+
     fun onSetTitleFromDate(view: TextView, date: Date?) {
         if (date == null) {
             view.text = noValue

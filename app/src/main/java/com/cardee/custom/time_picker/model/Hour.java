@@ -109,7 +109,7 @@ public class Hour implements Comparable<Hour> {
         return compareTo(hour.calendar);
     }
 
-    private int compareTo(Date date) {
+    public int compareTo(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(CardeeApp.getTimeZone());
         calendar.setTime(date);

@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +14,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.ChangeStrategy;
 import com.cardee.custom.calendar.view.CalendarView;
 import com.cardee.custom.time_picker.model.Day;
 import com.cardee.custom.time_picker.view.adapter.DayAdapter;
@@ -22,6 +25,7 @@ import com.cardee.custom.time_picker.view.config.BodyConfig;
 import com.cardee.custom.time_picker.view.selection.SelectionAdapter;
 import com.cardee.custom.time_picker.view.selection.SelectionManager;
 
+import java.util.Date;
 import java.util.List;
 
 public class TimePicker extends LinearLayout {
@@ -73,6 +77,7 @@ public class TimePicker extends LinearLayout {
         adapter = new DayAdapter(bodyConfig);
         bodyRecyclerView = createBody(context, adapter);
         selectionManager = new SelectionManager(adapter);
+        selectionManager.setMessageListener(message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show());
         bodyConfig.setDayClickListener(selectionManager.getDayClickListener());
         addView(bodyRecyclerView);
         presenter.retrieveDays();
@@ -147,6 +152,14 @@ public class TimePicker extends LinearLayout {
         if (selectionManager.isReady()) {
             this.onReadyListener.onReady();
         }
+    }
+
+    public void setChangeStrategy(ChangeStrategy strategy, @Nullable Date fixedDate) {
+        selectionManager.setChangeStrategy(strategy, fixedDate);
+    }
+
+    public interface OnMessageListener {
+        void onMessage(String message);
     }
 
     public interface OnReadyListener {

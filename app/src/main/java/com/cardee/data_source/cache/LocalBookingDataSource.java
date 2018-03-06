@@ -77,6 +77,11 @@ public class LocalBookingDataSource implements BookingDataSource {
     }
 
     @Override
+    public void extendBooking(int bookingId, String iso8601TimeEnd, SimpleCallback callback) {
+
+    }
+
+    @Override
     public Disposable getCostBreakdown(CostRequest request, CostCallback callback) {
         return null;
     }
