@@ -874,8 +874,6 @@
                         app:layout_constraintStart_toEndOf="@id/autoButton"
                         app:layout_constraintTop_toBottomOf="@id/transmissionTitle" />
                 </android.support.constraint.ConstraintLayout>
-
-
             </LinearLayout>
         </ScrollView>
 
