@@ -52,6 +52,8 @@ public interface RenterBrowseCarListContract {
 
         void getCarsByFilter(BrowseCarsFilter filter);
 
+        void getCarsByFilterWithoutProgress(BrowseCarsFilter filter);
+
         BrowseCarsFilter getFilter();
 
         void saveFilter(BrowseCarsFilter filter);

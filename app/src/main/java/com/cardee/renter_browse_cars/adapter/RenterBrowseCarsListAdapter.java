@@ -163,7 +163,13 @@ public class RenterBrowseCarsListAdapter
             year.setSpan(new RelativeSizeSpan(0.9f), 0, year.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             mTitle.append(year);
 
-            String location = model.getDistance() <= 0 ? model.getAddress() : model.getDistance() + "m \u2022 " + model.getAddress();
+            String location;
+            int distance = model.getDistance();
+            if (distance > 999) {
+                location = new DecimalFormat("#.#").format(distance / 1000f) + "km \u2022 " + model.getAddress();
+            } else {
+                location = distance <= 0 ? model.getAddress() : distance + "m \u2022 " + model.getAddress();
+            }
             mLocation.setText(location);
             String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());
             mType.setText(type);

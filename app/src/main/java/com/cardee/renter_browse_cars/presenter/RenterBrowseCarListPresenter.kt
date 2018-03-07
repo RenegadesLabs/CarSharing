@@ -111,6 +111,24 @@ class RenterBrowseCarListPresenter(private var mView: RenterBrowseCarListContrac
                 })
     }
 
+    override fun getCarsByFilterWithoutProgress(filter: BrowseCarsFilter) {
+        if (mDisposable?.isDisposed == false) {
+            mDisposable?.dispose()
+        }
+
+        mDisposable = mGetFilteredCars.execute(GetFilteredCars.RequestValues(
+                ToFilterRequestMapper().transform(filter)),
+                object : RxUseCase.Callback<GetFilteredCars.ResponseValues> {
+                    override fun onError(error: Error) {
+                        handleError(error)
+                    }
+
+                    override fun onSuccess(response: GetFilteredCars.ResponseValues) {
+                        mView?.setItems(response.cars)
+                    }
+                })
+    }
+
     override fun getFilter(): BrowseCarsFilter {
         return mGetFilter.getFilter()
     }

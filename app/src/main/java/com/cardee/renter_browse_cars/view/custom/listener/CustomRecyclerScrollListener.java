@@ -14,12 +14,13 @@ public abstract class CustomRecyclerScrollListener extends RecyclerView.OnScroll
         super.onScrolled(recyclerView, dx, dy);
 
         if (isVisible && scrollDist > MINIMUM) {
-            hide();
+            show();
+
             scrollDist = 0;
             isVisible = false;
         }
         else if (!isVisible && scrollDist < - MINIMUM) {
-            show();
+            hide();
             scrollDist = 0;
             isVisible = true;
         }

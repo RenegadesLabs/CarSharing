@@ -18,10 +18,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.cardee.R
 import com.cardee.owner_car_details.service.FetchAddressService
+import com.cardee.service.delegate.HideAnimationDelegate
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.places.Places
+import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -39,11 +43,12 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     private val ADDRESS_BY_LOCATION_CODE = 201
     private val MY_ADDRESS_BY_LOCATION_CODE = 202
     private val MY_ADDRESS_BY_LOCATION_UPDATE_CODE = 203
+    private val SEARCH_ADDRESS_REQUEST_CODE = 204
     private val KEY_CAMERA_POSITION = "camera_position"
     private val KEY_LOCATION = "location"
     private val SINGAPORE_LAT = 1.352083
     private val SINGAPORE_LNG = 103.81983600000001
-    private val DEFAULT_ZOOM = 9f
+    private val DEFAULT_ZOOM = 13f
     private val TAG = this.javaClass.simpleName.toString()
 
     @DrawableRes
@@ -65,6 +70,12 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
     private var mCameraPosition: CameraPosition? = null
     private var circle: Circle? = null
     private var currentAddress: String? = null
+    private var hideDelegate: HideAnimationDelegate? = null
+    private var firstEnter: Boolean = true
+
+    companion object {
+        const val LOCATION = "location"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +88,7 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
         searchAreaMap.onCreate(savedInstanceState)
         initToolBar()
         initViews()
+        hideDelegate = HideAnimationDelegate(addressCard)
         setListeners()
         addressReceiver = AddressResultReceiver(handler)
     }
@@ -98,6 +110,24 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
+        }
+        addressCard.setOnClickListener {
+            if (hideDelegate?.isAnimating == true) {
+                return@setOnClickListener
+            }
+            try {
+                val intent = PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                        .build(this)
+                startActivityForResult(intent, SEARCH_ADDRESS_REQUEST_CODE)
+                if (hideDelegate?.isHidden == false) {
+                    hideDelegate?.hide()
+                }
+            } catch (e: GooglePlayServicesRepairableException) {
+                e.printStackTrace()
+            } catch (e: GooglePlayServicesNotAvailableException) {
+                e.printStackTrace()
+            }
+
         }
     }
 
@@ -141,8 +171,11 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
                 .strokeWidth(0f)
                 .fillColor(resources.getColor(R.color.search_area_circle)))
 
-        val myCurrentLocation = LatLng(mLastKnownLocation?.latitude ?: return,
-                mLastKnownLocation?.longitude ?: return)
+        val loc = intent.getParcelableExtra<LatLng>(LOCATION)
+        val myCurrentLocation = loc
+                ?: LatLng(
+                        mLastKnownLocation?.latitude ?: return,
+                        mLastKnownLocation?.longitude ?: return)
         requestAddressByLocation(myCurrentLocation, MY_ADDRESS_BY_LOCATION_CODE)
     }
 
@@ -157,12 +190,25 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
 
     private fun getDeviceLocation() {
         mLastKnownLocation = getLocation()
-        when {
-            mCameraPosition != null -> mMap?.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition))
-            mLastKnownLocation != null -> mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    LatLng(mLastKnownLocation?.latitude ?: return,
-                            mLastKnownLocation?.longitude ?: return), DEFAULT_ZOOM))
-            else -> mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM))
+        val loc = intent.getParcelableExtra<LatLng>(LOCATION)
+        if (firstEnter && loc != null) {
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, DEFAULT_ZOOM))
+            firstEnter = false
+        } else {
+
+            when {
+                mCameraPosition != null -> mMap?.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition))
+                mLastKnownLocation != null -> {
+                    mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            LatLng(mLastKnownLocation?.latitude ?: return,
+                                    mLastKnownLocation?.longitude ?: return), DEFAULT_ZOOM))
+                }
+                else -> {
+                    mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            mDefaultLocation,
+                            DEFAULT_ZOOM))
+                }
+            }
         }
     }
 
@@ -325,26 +371,48 @@ class SearchAreaActivity : AppCompatActivity(), SearchAreaView, OnMapReadyCallba
                 currentAddressString.equals(myCurrentAddressString, ignoreCase = true)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SEARCH_ADDRESS_REQUEST_CODE) {
+            if (hideDelegate?.isHidden == true) {
+                hideDelegate?.show()
+            }
+            if (resultCode == RESULT_OK) {
+                val place = PlaceAutocomplete.getPlace(this, data)
+                updateCurrent(place.latLng, ADDRESS_BY_LOCATION_CODE)
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                val status = PlaceAutocomplete.getStatus(this, data)
+                Log.e(TAG, status.statusMessage)
+            }
+        }
+    }
+
     private inner class AddressResultReceiver(handler: Handler) : ResultReceiver(handler) {
 
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
             if (resultCode == FetchAddressService.CODE_SUCCESS) {
                 val address = resultData.getParcelable<Address>(FetchAddressService.ADDRESS)
                 val requestCode = resultData.getInt(FetchAddressService.REQUEST_CODE)
-                val addressString = address.thoroughfare ?: address.getAddressLine(0)
-                currentAddress = addressString
+                val shortAddressString = address.thoroughfare ?: address.getAddressLine(0)
+                var longAddressString = ""
+                for (add in 0..(address?.maxAddressLineIndex ?: 0)) {
+                    longAddressString += "${address.getAddressLine(add)} "
+                }
+                longAddressString.trim()
+
+                currentAddress = shortAddressString
                 when (requestCode) {
                     MY_ADDRESS_BY_LOCATION_UPDATE_CODE -> {
-                        myCurrentAddressString = addressString
-                        addressText.text = addressString
-                        currentAddressString = addressString
+                        myCurrentAddressString = shortAddressString
+                        addressText.text = longAddressString
+                        currentAddressString = shortAddressString
                     }
                     ADDRESS_BY_LOCATION_CODE -> {
-                        addressText.text = addressString
-                        currentAddressString = addressString
+                        addressText.text = longAddressString
+                        currentAddressString = shortAddressString
                     }
                     MY_ADDRESS_BY_LOCATION_CODE -> {
-                        myCurrentAddressString = addressString
+                        addressText.text = longAddressString
+                        myCurrentAddressString = shortAddressString
                     }
                 }
             }

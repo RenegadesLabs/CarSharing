@@ -15,12 +15,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +37,6 @@ import android.widget.TextView;
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.OfferCar;
-import com.cardee.owner_home.CarViewUpdateEventBus;
 import com.cardee.renter_availability_filter.AvailabilityDialogActivity;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
 import com.cardee.renter_browse_cars.RenterEventBus;
@@ -48,6 +50,7 @@ import com.cardee.renter_browse_cars_map.BrowseCarsMapActivity;
 import com.cardee.settings.Settings;
 import com.cardee.settings.SettingsManager;
 import com.cardee.util.AvailabilityFromFilterDelegate;
+import com.cardee.util.display.ActivityHelper;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -105,6 +108,10 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     public TextView availabilityPeriod;
     @BindView(R.id.tv_browseCarsPeriodSubtitle)
     public TextView availabilityValue;
+    @BindView(R.id.swiperefresh)
+    public SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.clear_icon)
+    public AppCompatImageView clearIcon;
 
     private boolean favoritesSelected = false;
     private boolean search = false;
@@ -160,7 +167,33 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             mSearchAreaRadius.setText(radiusText);
         }
         refreshAvailabilityTitle(mFilter);
+
+        swipeRefresh.setOnRefreshListener(this::refreshCarList);
+        mSearchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                    clearIcon.setVisibility(View.GONE);
+                } else {
+                    clearIcon.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         return rootView;
+    }
+
+    private void refreshCarList() {
+        mPresenter.getCarsByFilterWithoutProgress(mFilter);
     }
 
     private void addOnScrollListener() {
@@ -213,6 +246,9 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         super.onDestroy();
         mUnbinder.unbind();
         mPresenter.onDestroy();
+        if (swipeRefresh != null) {
+            swipeRefresh.setEnabled(false);
+        }
     }
 
     @Override
@@ -236,7 +272,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
     @Override
     public void setItems(List<OfferCar> cars) {
         mCarsListAdapter.insert(cars);
-
+        swipeRefresh.setRefreshing(false);
     }
 
     @Override
@@ -346,7 +382,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             R.id.ll_browseCarsFloatingSortBtn,
             R.id.ll_renterBrowseCarsType,
             R.id.fl_renterCarsToolbarFilter,
-            R.id.ll_browseCarsHeaderRadius})
+            R.id.ll_browseCarsHeaderRadius,
+            R.id.clear_icon})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_browseCarsHeaderPeriod:
@@ -375,10 +412,17 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                 break;
             case R.id.ll_browseCarsHeaderRadius:
                 Intent searchAreaIntent = new Intent(getActivity(), SearchAreaActivity.class);
+                if (mFilter.getLatitude() != 0d) {
+                    LatLng location = new LatLng(mFilter.getLatitude(), mFilter.getLongitude());
+                    searchAreaIntent.putExtra(SearchAreaActivity.LOCATION, location);
+                }
                 startActivityForResult(searchAreaIntent, LOCATION_REQUEST_CODE);
                 break;
             case R.id.ll_renterBrowseCarsType:
                 mPresenter.showType(getActivity());
+                break;
+            case R.id.clear_icon:
+                mSearchInput.setText("");
                 break;
         }
     }
@@ -388,8 +432,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mToolbar.setVisibility(search ? View.GONE : View.VISIBLE);
         mSearchView.setVisibility(search ? View.VISIBLE : View.GONE);
         if (!search) {
+            ActivityHelper.hideSoftKeyboard(getActivity());
             mSearchInput.setText("");
             mPresenter.getCarsByFilter(mPresenter.getFilter());
+        } else {
+            ActivityHelper.showSoftKeyboard(mSearchInput, getActivity());
         }
     }
 
