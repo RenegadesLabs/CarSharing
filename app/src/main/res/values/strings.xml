@@ -292,6 +292,9 @@
     <string name="car_rental_rates_per_hour">per hour</string>
     <string name="car_rental_rates_per_hour_peak">per hour (peak)</string>
     <string name="car_rental_rates_per_hour_off_peak">per hour (non-peak)</string>
+    <string name="car_rental_rates_template_first">$%s %s</string>
+    <string name="car_rental_rates_template_second">\n$%s %s</string>
+    <string name="car_rental_rates_template_next">\n%s %s</string>
     <string name="car_rental_rates_per_km">per km</string>
     <string name="car_rental_rates_weekdays">Weekdays</string>
     <string name="car_rental_rates_weekends">Weekends and public holidays</string>

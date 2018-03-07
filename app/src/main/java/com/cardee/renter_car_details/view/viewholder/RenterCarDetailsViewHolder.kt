@@ -176,20 +176,67 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun setRentalRates(hourly: Boolean, root: View) {
-        root.tv_renterCarDetailsRatesText.text = if (hourly) {
-            "$" + DecimalFormat("#.##")
-                    .format(renterDetailedCar?.orderHourlyDetails?.amntRateFirst ?: 0) + " " +
-                    mActivity.getString(R.string.car_rental_rates_per_hour_peak) + "\n" +
-                    "$" + DecimalFormat("#.##")
-                    .format(renterDetailedCar?.orderHourlyDetails?.amntRateSecond ?: 0) + " " +
-                    mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
-        } else {
-            "$" + DecimalFormat("#.##")
-                    .format(renterDetailedCar?.orderDailyDetails?.amntRateFirst ?: 0) + " " +
-                    mActivity.getString(R.string.car_rental_rates_per_day_weekday) + "\n" +
-                    "$" + DecimalFormat("#.##")
-                    .format(renterDetailedCar?.orderDailyDetails?.amntRateSecond ?: 0) + " " +
-                    mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
+        val decFormat = DecimalFormat("#.##")
+        root.tv_renterCarDetailsRatesText.apply {
+            if (hourly) {
+                renterDetailedCar?.orderHourlyDetails?.let {
+                    text = mActivity.getString(R.string.car_rental_rates_template_first).format(
+                            decFormat.format(it.amntRateFirst ?: 0),
+                            mActivity.getString(R.string.car_rental_rates_per_hour_peak))
+
+                    append(mActivity.getString(R.string.car_rental_rates_template_second).format(
+                            decFormat.format(it.amntRateSecond ?: 0),
+                            mActivity.getString(R.string.car_rental_rates_per_hour_off_peak)
+                    ))
+
+                    it.amntDiscountFirst?.let {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_discount_4_hours),
+                                "$it%"))
+                    }
+
+                    it.amntDiscountSecond?.let {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_discount_8_hours),
+                                "$it%"))
+                    }
+
+                    if (it.minRentalDuration > 1) {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_minimum),
+                                "${it.minRentalDuration} hours"))
+                    }
+                }
+            } else {
+                renterDetailedCar?.orderDailyDetails?.let {
+                    text = mActivity.getString(R.string.car_rental_rates_template_first).format(
+                            decFormat.format(it.amntRateFirst ?: 0),
+                            mActivity.getString(R.string.car_rental_rates_per_day_weekday))
+
+                    append(mActivity.getString(R.string.car_rental_rates_template_second).format(
+                            decFormat.format(it.amntRateSecond ?: 0),
+                            mActivity.getString(R.string.car_rental_rates_per_day_weekday_and)
+                    ))
+
+                    it.amntDiscountFirst?.let {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_discount_3_days),
+                                "$it%"))
+                    }
+
+                    it.amntDiscountSecond?.let {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_discount_weekly),
+                                "$it%"))
+                    }
+
+                    if (it.minRentalDuration > 1) {
+                        append(mActivity.getString(R.string.car_rental_rates_template_next).format(
+                                mActivity.getString(R.string.car_rental_rates_minimum),
+                                "${it.minRentalDuration} days"))
+                    }
+                }
+            }
         }
     }
 
