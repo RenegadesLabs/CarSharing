@@ -17,7 +17,6 @@ import com.cardee.databinding.ActivityFilterBinding
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.FilterStringHolder
 import com.cardee.domain.renter.entity.OfferCar
-import com.cardee.renter_availability_filter.AvailabilityDialogActivity
 import com.cardee.renter_availability_filter.DailyFilterActivity
 import com.cardee.renter_availability_filter.HourlyFilterActivity
 import com.cardee.renter_browse_cars.filter.presenter.CarsFilterPresenter
@@ -74,20 +73,31 @@ class FilterActivity : AppCompatActivity(), FilterView {
             filter.bookingHourly = false
         }
 
+        changeRentalPeriodTitle()
+
         if (filter.byLocation) {
             var address = filter.address
-            if (address == "") {
-                address = resources.getString(R.string.current)
-            }
-            searchAreaAddress.text = String.format(
-                    resources.getString(R.string.filter_search_area_template), address, filter.radius / 1000)
+            val radiusKm = filter.radius / 1000
+            setSearchAreaText(address, radiusKm)
 
         } else {
             searchAreaAddress.text = resources.getString(R.string.default_search_area)
         }
 
         priceRangeSeekBar.setValueFormatter("$%d")
+        if (filter.minPrice != 0 && filter.maxPrice != 0) {
+            priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+            priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
+            priceRangeSeekBar.apply()
+        }
+
         carAgeSeekBar.setValueFormatter("%d yr")
+        if (filter.minYears != 0 && filter.maxYears != 0) {
+            carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+            carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+            carAgeSeekBar.apply()
+        }
+
         submitButtonText.setFactory {
             val t = TextView(this@FilterActivity)
             t.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -101,32 +111,67 @@ class FilterActivity : AppCompatActivity(), FilterView {
         submitButtonText.setCurrentText(resources.getString(R.string.submit_btn_text))
     }
 
+    private fun setSearchAreaText(address: String?, radiusKm: Int?) {
+        var ad = address ?: ""
+        if (ad == "") {
+            ad = resources.getString(R.string.current)
+        }
+
+        var radiusText = resources.getString(R.string.cars_browse_search_area_template)
+                .format(radiusKm ?: 0)
+        if (radiusKm == 30) {
+            radiusText = resources.getString(R.string.cars_browse_search_area_default_long)
+        }
+
+        searchAreaAddress.text = resources.getString(R.string.filter_search_area_template)
+                .format(ad, radiusText)
+    }
+
     private fun setListeners() {
         toolbarAction.setOnClickListener {
             // Reset filter
             vehicleType.getTabAt(0)?.select()
             filter.vehicleTypeId = 1
-            filter.byLocation = false
-            searchAreaAddress.text = resources.getString(R.string.default_search_area)
             filter.bookingHourly = false
-            priceRangeSeekBar.apply()
-            carAgeSeekBar.apply()
+            filter.rentalPeriodBegin = null
+            filter.rentalPeriodEnd = null
+            filter.pickupTime = null
+            filter.returnTime = null
+            changeRentalPeriodTitle()
+            filter.byLocation = false
+            filter.latitude = 0.0
+            filter.longitude = 0.0
+            filter.radius = 0
+            searchAreaAddress.text = resources.getString(R.string.default_search_area)
+
             filter.maxPrice = 201
             filter.minPrice = 20
+            filter.maxYears = 11
+            filter.minYears = 1
+
+            priceRangeSeekBar.minValue = filter.minPrice.toFloat()
+            priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
+            priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+            priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
+            carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+            carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+            priceRangeSeekBar.apply()
+            carAgeSeekBar.apply()
+
             filter.instantBooking = false
             filter.curbsideDelivery = false
             filter.bodyTypeId = 0
             filter.transmissionAuto = true
             filter.transmissionManual = true
             transmissionText.text = resources.getString(R.string.any)
+            mPresenter?.saveFilter(filter)
             mPresenter?.getFilteredCars(filter)
         }
         rentalPeriodButton.setOnClickListener {
-            val intent: Intent
-            if (filter.bookingHourly == true) {
-                intent = Intent(this, HourlyFilterActivity::class.java)
+            val intent: Intent = if (filter.bookingHourly == true) {
+                Intent(this, HourlyFilterActivity::class.java)
             } else {
-                intent = Intent(this, DailyFilterActivity::class.java)
+                Intent(this, DailyFilterActivity::class.java)
             }
             startActivityForResult(intent, AVAILABILITY_REQUEST_CODE)
         }
@@ -157,25 +202,49 @@ class FilterActivity : AppCompatActivity(), FilterView {
         bookHourly.setOnClickListener {
             if (filter.bookingHourly == false) {
                 filter.bookingHourly = true
-                priceRangeSeekBar.apply()
-                carAgeSeekBar.apply()
                 filter.maxPrice = 41
                 filter.minPrice = 2
+                filter.maxYears = 11
+                filter.minYears = 1
+
+                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
+                priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
+                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+                priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
+                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+                carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+                priceRangeSeekBar.apply()
+                carAgeSeekBar.apply()
+
                 mPresenter?.getFilteredCars(filter)
             }
         }
         bookDaily.setOnClickListener {
             if (filter.bookingHourly == true) {
                 filter.bookingHourly = false
-                priceRangeSeekBar.apply()
-                carAgeSeekBar.apply()
                 filter.maxPrice = 201
                 filter.minPrice = 20
+                filter.maxYears = 11
+                filter.minYears = 1
+
+                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
+                priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
+                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+                priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
+                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+                carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+                priceRangeSeekBar.apply()
+                carAgeSeekBar.apply()
+
                 mPresenter?.getFilteredCars(filter)
             }
         }
         searchAreaButton.setOnClickListener {
             val intent = Intent(this, SearchAreaActivity::class.java)
+            if (filter.latitude != 0.0) {
+                val location = LatLng(filter.latitude, filter.longitude)
+                intent.putExtra(SearchAreaActivity.LOCATION, location)
+            }
             startActivityForResult(intent, LOCATION_REQUEST_CODE)
         }
         instantBookingSwitch.setOnCheckedChangeListener { _, _ ->
@@ -285,7 +354,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
         submitButton.setOnClickListener {
             val intent = Intent()
-            val list: ArrayList<OfferCar>? = ArrayList(mCars)
+            val list: ArrayList<OfferCar>? = ArrayList(mCars ?: return@setOnClickListener)
             intent.putParcelableArrayListExtra("cars", list)
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -330,8 +399,9 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 val address = data?.getStringExtra("address")
                 val radius = data?.getIntExtra("radius", 0)
                 val location = data?.getParcelableExtra<LatLng>("location")
-                searchAreaAddress.text = String.format(
-                        resources.getString(R.string.filter_search_area_template), address, radius)
+
+                setSearchAreaText(address, radius)
+
                 filter.byLocation = true
                 filter.latitude = location?.latitude ?: return
                 filter.longitude = location.longitude

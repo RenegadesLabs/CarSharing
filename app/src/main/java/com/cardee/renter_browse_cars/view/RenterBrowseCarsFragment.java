@@ -525,7 +525,12 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
                                 radiusText = getResources().getString(R.string.cars_browse_search_area_default);
                             }
                             mSearchAreaRadius.setText(radiusText);
+                        } else {
+                            mSearchAreaAddress.setText(getResources().getString(R.string.current));
+                            mSearchAreaRadius.setText(getResources().getString(R.string.cars_browse_search_area_default));
                         }
+
+                        refreshAvailabilityTitle(mFilter);
                     }
                 }
                 break;

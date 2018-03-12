@@ -169,6 +169,7 @@ public class OfferCar implements Parcelable {
         mRateSecond = in.readFloat();
         mDiscountFirst = in.readFloat();
         mDiscountSecond = in.readFloat();
+        mCost = in.readFloat();
         mMinRentalDuration = in.readInt();
         mPickupTime = in.readString();
         mReturnTime = in.readString();
@@ -226,6 +227,7 @@ public class OfferCar implements Parcelable {
         parcel.writeFloat(mRateSecond);
         parcel.writeFloat(mDiscountFirst);
         parcel.writeFloat(mDiscountSecond);
+        parcel.writeFloat(mCost);
         parcel.writeInt(mMinRentalDuration);
         parcel.writeString(mPickupTime);
         parcel.writeString(mReturnTime);

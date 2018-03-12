@@ -503,6 +503,7 @@
     <string name="cars_browse_search_hint">Search brand, models etc.</string>
     <string name="cars_browse_search_area_template">Within %dkm</string>
     <string name="cars_browse_search_area_default">Within SG</string>
+    <string name="cars_browse_search_area_default_long">Within Singapore</string>
     <string name="cars_browse_vehicle_type">Select vehicle type</string>
     <string name="cars_browse_vehicle_type_personal">Personal Car</string>
     <string name="cars_browse_vehicle_type_personal_desc">Passenger cars for personal use</string>
@@ -765,7 +766,7 @@
     <string name="auto">Auto</string>
     <string name="manual">Manual</string>
     <string name="submit_btn_text">View 0 Cars</string>
-    <string name="filter_search_area_template">%1$s\u0020\u0020\u2022\u0020\u0020Within %2$dkm</string>
+    <string name="filter_search_area_template">%1$s\u0020\u0020\u2022\u0020\u0020%2$s</string>
     <string name="pickup_on">Pickup on</string>
     <string name="return_by">Return by</string>
     <string name="no_offers_found">No offers found</string>
@@ -773,7 +774,7 @@
     <!-- Browse Cars Search Area-->
     <string name="search_from">Search from:</string>
     <string name="my_current_location">My Current Location</string>
-    <string name="default_search_area">Current \u0020\u2022\u0020 Within SG</string>
+    <string name="default_search_area">Current \u0020\u2022\u0020 Within Singapore</string>
     <string name="current">Current</string>
 
     <!-- Renter Book Car-->

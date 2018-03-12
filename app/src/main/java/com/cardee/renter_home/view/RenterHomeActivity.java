@@ -114,6 +114,8 @@ public class RenterHomeActivity extends AppCompatActivity implements AHBottomNav
             return;
         }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+
         if (mHasFragment) {
             transaction.replace(R.id.fragment_container, fragment, fragment.getClass().getName());
         } else {
