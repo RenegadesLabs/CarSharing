@@ -425,6 +425,32 @@ class AvailabilityFromFilterDelegate {
         view.text = defaultTitle
     }
 
+    fun onSetDaysCount(view: TextView, filter: BrowseCarsFilter) {
+        try {
+            val beginDate = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val endDate = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
+            val dayCount = countDays(beginDate, endDate)
+            val daySuffix = if (dayCount == 1L) day else days
+            val dailyTitle = "$dayCount $daySuffix"
+            view.text = dailyTitle
+        } catch (ex: ParseException) {
+            view.text = ""
+        }
+    }
+
+    fun onSetHoursCount(view: TextView, filter: BrowseCarsFilter) {
+        try {
+            val beginDate = iso8601DateFormatter.parse(filter.rentalPeriodBegin)
+            val endDate = iso8601DateFormatter.parse(filter.rentalPeriodEnd)
+            val hourCount = countHours(beginDate, endDate)
+            val hourSuffix = if (hourCount == 1L) hour else hours
+            val hourlyTitle = "$hourCount $hourSuffix"
+            view.text = hourlyTitle
+        } catch (ex: ParseException) {
+            view.text = ""
+        }
+    }
+
     private fun countDays(begin: Date, end: Date): Long {
         val difMillis = end.time - begin.time
         return TimeUnit.DAYS.convert(difMillis, TimeUnit.MILLISECONDS) + 1

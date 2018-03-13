@@ -133,11 +133,9 @@ class FilterActivity : AppCompatActivity(), FilterView {
             vehicleType.getTabAt(0)?.select()
             filter.vehicleTypeId = 1
             filter.bookingHourly = false
-            filter.rentalPeriodBegin = null
-            filter.rentalPeriodEnd = null
-            filter.pickupTime = null
-            filter.returnTime = null
-            changeRentalPeriodTitle()
+
+            dropRentalPeriod()
+
             filter.byLocation = false
             filter.latitude = 0.0
             filter.longitude = 0.0
@@ -216,6 +214,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
 
+                dropRentalPeriod()
+
                 mPresenter?.getFilteredCars(filter)
             }
         }
@@ -235,6 +235,8 @@ class FilterActivity : AppCompatActivity(), FilterView {
                 carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
+
+                dropRentalPeriod()
 
                 mPresenter?.getFilteredCars(filter)
             }
@@ -361,6 +363,15 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
     }
 
+    private fun dropRentalPeriod() {
+        filter.rentalPeriodBegin = null
+        filter.rentalPeriodEnd = null
+        filter.pickupTime = null
+        filter.returnTime = null
+
+        changeRentalPeriodTitle()
+    }
+
     private fun initPresenter() {
         mPresenter = CarsFilterPresenter(this)
     }
@@ -430,15 +441,18 @@ class FilterActivity : AppCompatActivity(), FilterView {
             if (filter.rentalPeriodBegin == null || filter.rentalPeriodEnd == null) {
                 rental_period_from.text = getString(R.string.rental_period_from)
                 rental_period_to.text = getString(R.string.rental_period_to)
+                rentalPeriodText.text = ""
                 return@let
             }
             when (hourly) {
                 true -> {
                     delegate.onSetTitleFromTime(rental_period_from, filter.rentalPeriodBegin)
                     delegate.onSetTitleFromTime(rental_period_to, filter.rentalPeriodEnd, false)
+                    delegate.onSetHoursCount(rentalPeriodText, filter)
                 }
                 false -> {
                     delegate.setDailyTitlesFromFilter(rental_period_from, rental_period_to, filter)
+                    delegate.onSetDaysCount(rentalPeriodText, filter)
                 }
             }
         }
