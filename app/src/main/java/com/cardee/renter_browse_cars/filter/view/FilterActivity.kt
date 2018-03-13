@@ -76,7 +76,7 @@ class FilterActivity : AppCompatActivity(), FilterView {
         changeRentalPeriodTitle()
 
         if (filter.byLocation) {
-            var address = filter.address
+            val address = filter.address
             val radiusKm = filter.radius / 1000
             setSearchAreaText(address, radiusKm)
 
@@ -85,14 +85,14 @@ class FilterActivity : AppCompatActivity(), FilterView {
         }
 
         priceRangeSeekBar.setValueFormatter("$%d")
-        if (filter.minPrice != 0 && filter.maxPrice != 0) {
+        if (filter.maxPrice != 0) {
             priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
             priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
             priceRangeSeekBar.apply()
         }
 
         carAgeSeekBar.setValueFormatter("%d yr")
-        if (filter.minYears != 0 && filter.maxYears != 0) {
+        if (filter.maxYears != 0) {
             carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
             carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
             carAgeSeekBar.apply()
@@ -145,16 +145,16 @@ class FilterActivity : AppCompatActivity(), FilterView {
             searchAreaAddress.text = resources.getString(R.string.default_search_area)
 
             filter.maxPrice = 201
-            filter.minPrice = 20
+            filter.minPrice = 0
             filter.maxYears = 11
-            filter.minYears = 1
+            filter.minYears = 0
 
-            priceRangeSeekBar.minValue = filter.minPrice.toFloat()
             priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
-            priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+            priceRangeSeekBar.minValue = filter.minPrice.toFloat()
             priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
-            carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+            priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
             carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+            carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
             priceRangeSeekBar.apply()
             carAgeSeekBar.apply()
 
@@ -203,16 +203,16 @@ class FilterActivity : AppCompatActivity(), FilterView {
             if (filter.bookingHourly == false) {
                 filter.bookingHourly = true
                 filter.maxPrice = 41
-                filter.minPrice = 2
+                filter.minPrice = 0
                 filter.maxYears = 11
-                filter.minYears = 1
+                filter.minYears = 0
 
-                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
                 priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
-                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
                 priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
-                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
                 carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
 
@@ -223,16 +223,16 @@ class FilterActivity : AppCompatActivity(), FilterView {
             if (filter.bookingHourly == true) {
                 filter.bookingHourly = false
                 filter.maxPrice = 201
-                filter.minPrice = 20
+                filter.minPrice = 0
                 filter.maxYears = 11
-                filter.minYears = 1
+                filter.minYears = 0
 
-                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
                 priceRangeSeekBar.maxValue = filter.maxPrice.toFloat()
-                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
+                priceRangeSeekBar.minValue = filter.minPrice.toFloat()
                 priceRangeSeekBar.setMaxStartValue(filter.maxPrice.toFloat())
-                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
+                priceRangeSeekBar.setMinStartValue(filter.minPrice.toFloat())
                 carAgeSeekBar.setMaxStartValue(filter.maxYears.toFloat())
+                carAgeSeekBar.setMinStartValue(filter.minYears.toFloat())
                 priceRangeSeekBar.apply()
                 carAgeSeekBar.apply()
 
