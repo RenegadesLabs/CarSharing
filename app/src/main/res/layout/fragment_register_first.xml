@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -36,37 +35,45 @@
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/et_emailRegister"
+        style="@style/CardeeLoginEditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/CardeeLoginEditTextStyle"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="30dp"
-        android:textColor="@color/colorAccent"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:textColor="@color/colorAccent"
+        android:paddingEnd="12dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/et_passwordRegister"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/l_registerPassword"
+        style="@style/CardeeLoginTextInputStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:theme="@style/CardeeLoginEditTextStyle"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/password"
-        android:textColor="@color/colorAccent"
-        android:inputType="textPassword"
+        android:layout_marginEnd="@dimen/xlarge_margin"
+        android:layout_marginStart="@dimen/xlarge_margin"
+        android:layout_marginTop="@dimen/small_margin"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_emailRegister"
-        />
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccent">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_passwordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/colorAccent" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/b_registerSignup"
@@ -82,7 +89,7 @@
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_passwordRegister" />
+        app:layout_constraintTop_toBottomOf="@id/l_registerPassword" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -91,40 +98,40 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/tv_registerTermsOfService"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/b_registerSignup"
-        app:layout_constraintBottom_toTopOf="@+id/tv_registerTermsOfService">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b_registerSignup">
 
         <com.cardee.custom.CardeeButton
             android:id="@+id/b_registerFacebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/medium_margin"
-            android:paddingEnd="@dimen/medium_margin"
             android:layout_marginBottom="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:background="@drawable/button_facebook_bg"
+            android:paddingEnd="@dimen/medium_margin"
+            android:paddingStart="@dimen/medium_margin"
             android:text="@string/auth_signup_facebook"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
-            app:drawableStartCompat="@drawable/ic_facebook"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_facebook" />
 
         <com.cardee.custom.CardeeButton
             android:id="@+id/b_registerGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:background="@drawable/button_google_bg"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:text="@string/auth_signup_google"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
-            app:drawableStartCompat="@drawable/ic_googleplus"/>
+            app:drawableStartCompat="@drawable/ic_googleplus" />
     </LinearLayout>
 
 
@@ -135,10 +142,10 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:visibility="invisible"
         android:gravity="center_horizontal"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_small"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

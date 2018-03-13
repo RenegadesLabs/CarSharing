@@ -33,10 +33,12 @@
         <activity
             android:name=".auth.login.view.LoginActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CardeeLogin"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".auth.register.view.RegisterActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CardeeLogin"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".auth.pass_recover.send_email.SendEmailActivity"

@@ -2,13 +2,16 @@ package com.cardee.auth.login.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.cardee.CardeeApp;
@@ -25,7 +28,6 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import butterknife.BindView;
@@ -66,6 +68,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         initProgress();
         initFacebookApi();
         initGoogleApi();
+        initEditText();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -135,6 +138,47 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     private void initGoogleApi() {
         mGoogleClient = CardeeApp.initLoginGoogleApi(this,
                 connectionResult -> showMessage(connectionResult.getErrorMessage()));
+    }
+
+    private void initEditText() {
+        loginEmailEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                    loginEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } else {
+                    loginEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+                }
+            }
+        });
+
+        loginEmailEdit.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_LEFT = 0;
+            final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            final int DRAWABLE_BOTTOM = 3;
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                Drawable drawRight = loginEmailEdit.getCompoundDrawables()[DRAWABLE_RIGHT];
+                if (drawRight != null) {
+                    if (motionEvent.getRawX() >= (loginEmailEdit.getRight() - drawRight.getBounds().width()) - loginEmailEdit.getPaddingEnd()) {
+                        loginEmailEdit.setText("");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
     }
 
     private boolean isFieldsNotEmpty() {

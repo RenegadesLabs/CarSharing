@@ -1,15 +1,19 @@
 package com.cardee.auth.register.view;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -46,6 +50,7 @@ public class RegisterFirstStepFragment extends Fragment {
 
         mUnbinder = ButterKnife.bind(this, v);
         setTermsOfServiceText();
+        initEditText();
 
         return v;
     }
@@ -118,6 +123,47 @@ public class RegisterFirstStepFragment extends Fragment {
         regTermsOfServiceTV.setText(userTermsOfServiceText);
         regTermsOfServiceTV.setMovementMethod(LinkMovementMethod.getInstance());
         regTermsOfServiceTV.setHighlightColor(Color.TRANSPARENT);
+    }
+
+    private void initEditText() {
+        regEmailEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                    regEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } else {
+                    regEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+                }
+            }
+        });
+
+        regEmailEdit.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_LEFT = 0;
+            final int DRAWABLE_TOP = 1;
+            final int DRAWABLE_RIGHT = 2;
+            final int DRAWABLE_BOTTOM = 3;
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                Drawable drawRight = regEmailEdit.getCompoundDrawables()[DRAWABLE_RIGHT];
+                if (drawRight != null) {
+                    if (motionEvent.getRawX() >= (regEmailEdit.getRight() - drawRight.getBounds().width()) - regEmailEdit.getPaddingEnd()) {
+                        regEmailEdit.setText("");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
     }
 
     private boolean isFieldsNotEmpty() {

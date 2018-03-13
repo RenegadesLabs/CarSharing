@@ -49,6 +49,11 @@
         <item name="android:textColorSecondary">@color/bg_main</item>
     </style>
 
+    <style name="CardeeLogin" parent="AppTheme">
+        <item name="colorControlNormal">@color/white_opacity60</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
     <style name="CardeeLoginEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/white_opacity60</item>
         <item name="textColorError">@color/red_error</item>
