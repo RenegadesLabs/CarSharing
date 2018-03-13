@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import com.cardee.R
@@ -76,9 +75,13 @@ class RentalPeriodActivity : AppCompatActivity() {
                 dateHourTo.text = resources.getString(R.string.not_specified)
             }
         }
-        mAvailability?.let {
-            mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
+
+        hourlyView.timePicker.setOnReadyListener {
+            mAvailability?.let {
+                mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
+            }
         }
+
         hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
         hourlyView.btnHourReset.setOnClickListener {
             hourlyView.timePicker.reset()
@@ -94,6 +97,13 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     private fun initDailyView(dailyView: ConstraintLayout) {
         mDailyAdapter = CalendarAdapter()
+
+        dailyView.calendar.setOnReadyListener {
+            mAvailability?.let {
+                mDailyAdapter?.setAvailabilityRange(it)
+            }
+        }
+
         dailyView.calendar.setSelectionAdapter(mDailyAdapter)
         mDailyAdapter?.setSelectionListener {
             val beginDate = setHoursToDate(it.firstOrNull(), mAvailabilityPickup)
@@ -112,9 +122,7 @@ class RentalPeriodActivity : AppCompatActivity() {
                 dateTo.text = resources.getString(R.string.not_specified)
             }
         }
-        mAvailability?.let {
-            mDailyAdapter?.setAvailabilityRange(it)
-        }
+
         dailyView.btnReset.setOnClickListener {
             dailyView.calendar.reset()
         }
