@@ -36,7 +36,7 @@
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/et_emailRegister"
         style="@style/CardeeLoginEditTextStyle"
-        android:layout_width="0dp"
+        android:layout_width="0dp"true
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"

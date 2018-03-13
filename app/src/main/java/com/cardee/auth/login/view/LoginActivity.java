@@ -108,6 +108,8 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 mPresenter.loginGoogle(result);
+            } else {
+                showMessage(R.string.auth_error);
             }
         }
     }
@@ -203,7 +205,9 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     @Override
     public void showProgress(boolean show) {
         if (show) {
-            mProgress.show();
+            if (!mProgress.isShowing()) {
+                mProgress.show();
+            }
         } else {
             mProgress.dismiss();
         }

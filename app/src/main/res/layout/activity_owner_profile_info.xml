@@ -63,12 +63,16 @@
 
                 <TextView
                     android:id="@+id/profile_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="26dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/text_owner_profile_name"
                     android:textSize="22sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/profile_image"
                     app:layout_constraintTop_toTopOf="@id/profile_image" />
 

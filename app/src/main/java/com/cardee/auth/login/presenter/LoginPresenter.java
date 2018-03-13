@@ -113,6 +113,10 @@ public class LoginPresenter {
     public void loginGoogle(GoogleSignInResult result) {
         GoogleSignInAccount acc = result.getSignInAccount();
         if (acc != null) {
+            if (mView != null){
+                mView.showProgress(true);
+            }
+
             String code = acc.getServerAuthCode();
             OkHttpClient client = new OkHttpClient();
             RequestBody requestBody = new FormBody.Builder()
@@ -129,7 +133,10 @@ public class LoginPresenter {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                    if (mView != null){
+                        mView.showProgress(false);
+                        mView.showMessage(R.string.auth_error);
+                    }
                 }
 
                 @Override
