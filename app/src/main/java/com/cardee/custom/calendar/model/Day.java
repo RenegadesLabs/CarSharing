@@ -142,13 +142,16 @@ public class Day implements Comparable<Day> {
             return false;
         }
         Day target = (Day) obj;
-        return equalsDate(target.calendar.getTime());
+        return equalsDate(target.calendar);
     }
 
-    public boolean equalsDate(Date date) {
-        String targetDate = COMPARE_DATE_FORMAT.format(date);
-        String currentDate = COMPARE_DATE_FORMAT.format(calendar.getTime());
-        return currentDate.equals(targetDate);
+    private boolean equalsDate(Calendar cal) {
+        return calendar.get(Calendar.YEAR) == cal.get(Calendar.YEAR) &&
+                calendar.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
+                calendar.get(Calendar.DATE) == cal.get(Calendar.DATE);
+//        String targetDate = COMPARE_DATE_FORMAT.format(date);
+//        String currentDate = COMPARE_DATE_FORMAT.format(calendar.getTime());
+//        return currentDate.equals(targetDate);
     }
 
     @Override

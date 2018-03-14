@@ -1,8 +1,8 @@
 package com.cardee.custom.time_picker.domain.calendar;
 
 import com.cardee.custom.time_picker.domain.UseCase;
-import com.cardee.custom.time_picker.model.Error;
 import com.cardee.custom.time_picker.model.Day;
+import com.cardee.custom.time_picker.model.Error;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class GenerateTimeModel
 
     public static class RequestValues implements UseCase.RequestValues {
 
-        public static final int DAY_COUNT = 90;
+        public static final int DAY_COUNT = 7;
 
         private final int range;
 

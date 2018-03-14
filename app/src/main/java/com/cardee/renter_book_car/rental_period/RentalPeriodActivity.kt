@@ -61,8 +61,29 @@ class RentalPeriodActivity : AppCompatActivity() {
         prepareWindow()
     }
 
+    private fun getIntentData() {
+        mHourly = intent.getBooleanExtra("hourly", true)
+        mAvailability = intent.getStringArrayExtra("availability")
+        if (mHourly == true) {
+            mAvailabilityBegin = intent.getStringExtra("begin")
+            mAvailabilityEnd = intent.getStringExtra("end")
+        } else {
+            mAvailabilityPickup = intent.getStringExtra("pickup")
+            mAvailabilityReturn = intent.getStringExtra("return")
+        }
+    }
+
     private fun initHourlyView(hourlyView: ConstraintLayout) {
         mHourlyAdapter = TimePickerAdapter()
+
+        hourlyView.timePicker.setOnReadyListener {
+            mAvailability?.let {
+                mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
+            }
+        }
+
+        hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
+
         mHourlyAdapter?.setSelectionListener { it ->
             val end = addOneHour(it.lastOrNull())
             timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
@@ -76,16 +97,10 @@ class RentalPeriodActivity : AppCompatActivity() {
             }
         }
 
-        hourlyView.timePicker.setOnReadyListener {
-            mAvailability?.let {
-                mHourlyAdapter?.setAvailabilityRange(it, mAvailabilityBegin, mAvailabilityEnd)
-            }
-        }
-
-        hourlyView.timePicker.setSelectionAdapter(mHourlyAdapter)
         hourlyView.btnHourReset.setOnClickListener {
             hourlyView.timePicker.reset()
         }
+
         hourlyView.btnHourSave.setOnClickListener {
             intent = Intent()
             intent.putExtra("begin", timeBegin)
@@ -105,6 +120,7 @@ class RentalPeriodActivity : AppCompatActivity() {
         }
 
         dailyView.calendar.setSelectionAdapter(mDailyAdapter)
+
         mDailyAdapter?.setSelectionListener {
             val beginDate = setHoursToDate(it.firstOrNull(), mAvailabilityPickup)
             timeBegin = dateDelegate.formatAsIsoDate(beginDate)
@@ -126,6 +142,7 @@ class RentalPeriodActivity : AppCompatActivity() {
         dailyView.btnReset.setOnClickListener {
             dailyView.calendar.reset()
         }
+
         dailyView.btnSave.setOnClickListener {
             intent = Intent()
             intent.putExtra("begin", timeBegin)
@@ -166,18 +183,6 @@ class RentalPeriodActivity : AppCompatActivity() {
         calendar.time = end ?: return null
         calendar.add(Calendar.HOUR_OF_DAY, 1)
         return calendar.time
-    }
-
-    private fun getIntentData() {
-        mHourly = intent.getBooleanExtra("hourly", true)
-        mAvailability = intent.getStringArrayExtra("availability")
-        if (mHourly == true) {
-            mAvailabilityBegin = intent.getStringExtra("begin")
-            mAvailabilityEnd = intent.getStringExtra("end")
-        } else {
-            mAvailabilityPickup = intent.getStringExtra("pickup")
-            mAvailabilityReturn = intent.getStringExtra("return")
-        }
     }
 
     private fun prepareWindow() {

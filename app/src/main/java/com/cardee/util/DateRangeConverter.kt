@@ -1,8 +1,8 @@
 package com.cardee.util
 
+import com.cardee.CardeeApp
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +17,11 @@ class DateRangeConverter {
 
     private val isoDateFormatter = SimpleDateFormat(ISO_8601_DATE_PATTERN, Locale.US)
     private val isoTimeFormatter = SimpleDateFormat(ISO_TIME_PATTERN, Locale.US)
+
+    init {
+        isoDateFormatter.timeZone = CardeeApp.getTimeZone()
+        isoTimeFormatter.timeZone = CardeeApp.getTimeZone()
+    }
 
     fun convertToDailyDateList(dateArray: Array<String?>, consumer: (List<Date>) -> Unit) {
         val subscription = Single.just(dateArray)
@@ -62,6 +67,7 @@ class DateRangeConverter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap { wrapper ->
                     val calendar = Calendar.getInstance()
+                    calendar.timeZone = CardeeApp.getTimeZone()
                     val timeBeginDate = isoTimeFormatter.parse(timeBegin ?: "00:00:00+08:00")
                     val timeEndDate = isoTimeFormatter.parse(timeEnd ?: "23:59:59+08:00")
                     calendar.time = timeBeginDate

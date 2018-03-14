@@ -99,9 +99,10 @@ public class Hour implements Comparable<Hour> {
     }
 
     public boolean equalsDate(Date date) {
-        String targetDate = COMPARE_TIME_FORMAT.format(date);
-        String currentDate = COMPARE_TIME_FORMAT.format(calendar.getTime());
-        return currentDate.equals(targetDate);
+        return calendar.getTime().equals(date);
+//        String targetDate = COMPARE_TIME_FORMAT.format(date);
+//        String currentDate = COMPARE_TIME_FORMAT.format(calendar.getTime());
+//        return currentDate.equals(targetDate);
     }
 
     @Override
