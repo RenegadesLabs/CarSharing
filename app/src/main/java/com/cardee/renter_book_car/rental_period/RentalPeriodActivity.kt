@@ -12,8 +12,10 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.FrameLayout
 import com.cardee.R
+import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.renter_availability_filter.CalendarAdapter
 import com.cardee.renter_availability_filter.TimePickerAdapter
+import com.cardee.util.AvailabilityFromFilterDelegate
 import com.cardee.util.DateRepresentationDelegate
 import kotlinx.android.synthetic.main.activity_rental_period.*
 import kotlinx.android.synthetic.main.view_daily_no_time.*
@@ -30,11 +32,14 @@ class RentalPeriodActivity : AppCompatActivity() {
     var mAvailabilityEnd: String? = null
     var mAvailabilityPickup: String? = null
     var mAvailabilityReturn: String? = null
+    var rentalBegin: String? = null
+    var rentalEnd: String? = null
     var mDailyAdapter: CalendarAdapter? = null
     var mHourlyAdapter: TimePickerAdapter? = null
     var timeBegin: String? = null
     var timeEnd: String? = null
     val dateDelegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(this) }
+    private val delegate: AvailabilityFromFilterDelegate = AvailabilityFromFilterDelegate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +67,8 @@ class RentalPeriodActivity : AppCompatActivity() {
     }
 
     private fun getIntentData() {
+        rentalBegin = intent.getStringExtra("rentalBegin")
+        rentalEnd = intent.getStringExtra("rentalEnd")
         mHourly = intent.getBooleanExtra("hourly", true)
         mAvailability = intent.getStringArrayExtra("availability")
         if (mHourly == true) {
@@ -87,18 +94,25 @@ class RentalPeriodActivity : AppCompatActivity() {
         mHourlyAdapter?.setSelectionListener { it ->
             val end = addOneHour(it.lastOrNull())
             timeBegin = dateDelegate.formatAsIsoDate(it.firstOrNull())
-            timeEnd = dateDelegate.formatAsIsoDate(end)
+            timeEnd = dateDelegate.formatAsIsoDate(it.lastOrNull())
             if (timeBegin != null) {
                 dateHourFrom.text = dateDelegate.formatMonthDayHour(timeBegin)
-                dateHourTo.text = dateDelegate.formatMonthDayHour(timeEnd)
+                dateHourTo.text = dateDelegate.formatMonthDayHour(dateDelegate.formatAsIsoDate(end))
             } else {
                 dateHourFrom.text = resources.getString(R.string.not_specified)
                 dateHourTo.text = resources.getString(R.string.not_specified)
             }
+
+            delegate.onSetSubmitTitle(
+                    btnHourSave,
+                    BrowseCarsFilter(rentalPeriodBegin = timeBegin, rentalPeriodEnd = timeEnd),
+                    true)
         }
 
         hourlyView.btnHourReset.setOnClickListener {
             hourlyView.timePicker.reset()
+            timeBegin = null
+            timeEnd = null
         }
 
         hourlyView.btnHourSave.setOnClickListener {
@@ -108,6 +122,11 @@ class RentalPeriodActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+
+        delegate.onInitPickerSelection(
+                mHourlyAdapter ?: return,
+                rentalBegin ?: return,
+                rentalEnd ?: return)
     }
 
     private fun initDailyView(dailyView: ConstraintLayout) {
@@ -137,6 +156,16 @@ class RentalPeriodActivity : AppCompatActivity() {
                 dateFrom.text = resources.getString(R.string.not_specified)
                 dateTo.text = resources.getString(R.string.not_specified)
             }
+
+            delegate.onSetSubmitTitle(
+                    btnSave,
+                    BrowseCarsFilter(rentalPeriodBegin = timeBegin,
+                            rentalPeriodEnd = if (isNextDay(beginDate, endDate) == true) {
+                                addOneDay(timeEnd)
+                            } else {
+                                timeEnd
+                            }),
+                    false)
         }
 
         dailyView.btnReset.setOnClickListener {
@@ -150,6 +179,11 @@ class RentalPeriodActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+
+        delegate.onInitCalendarSelection(
+                mDailyAdapter ?: return,
+                rentalBegin ?: return,
+                rentalEnd ?: return)
     }
 
     private fun isNextDay(begin: Date?, end: Date?): Boolean? {
@@ -183,6 +217,16 @@ class RentalPeriodActivity : AppCompatActivity() {
         calendar.time = end ?: return null
         calendar.add(Calendar.HOUR_OF_DAY, 1)
         return calendar.time
+    }
+
+    private fun addOneDay(date: String?): String? {
+        val time = dateDelegate.convertDateToDate(date)
+
+        val calendar = Calendar.getInstance()
+        calendar.time = time ?: return null
+        calendar.add(Calendar.DATE, 1)
+
+        return dateDelegate.formatAsIsoDate(calendar.time)
     }
 
     private fun prepareWindow() {

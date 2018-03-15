@@ -26,6 +26,7 @@ import com.cardee.renter_car_details.RenterCarDetailsContract
 import com.cardee.renter_car_details.presenter.RenterCarDetailsPresenter
 import com.cardee.renter_car_details.rental_terms.RenterRentalTermsActivity
 import com.cardee.renter_car_details.view.viewholder.RenterCarDetailsViewHolder
+import com.cardee.util.DateRepresentationDelegate
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,6 +42,7 @@ import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 
 class RenterCarDetailsActivity(private val delegate: LocationClient = LocationClientImpl()) :
         AppCompatActivity(), View.OnClickListener, OnMapReadyCallback, RenterCarDetailsContract.View, LocationClient by delegate {
+
     private val shareLink = "http://labracode.itg5.com/offers/link"
 
     private var mCarId: Int? = null
@@ -50,6 +52,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     private var map: GoogleMap? = null
     private var markerIcon: Bitmap? = null
     private var currentLocationIcon: Bitmap? = null
+    private val dateDelegate: DateRepresentationDelegate by lazy { DateRepresentationDelegate(this) }
 
     companion object {
         const val LOCATION_REQUEST_CODE = 101
@@ -82,6 +85,8 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                 val intent = Intent(this, RentalPeriodActivity::class.java)
                 val hourly = viewHolder?.isHourly() ?: false
                 val details = viewHolder?.getDetails() ?: return
+                intent.putExtra("rentalBegin", presenter.getFilter().rentalPeriodBegin)
+                intent.putExtra("rentalEnd", presenter.getFilter().rentalPeriodEnd)
                 intent.putExtra("hourly", hourly)
                 if (hourly) {
                     intent.putExtra("availability", details.carAvailabilityHourly)
@@ -97,13 +102,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                 overridePendingTransition(R.anim.enter_up, 0)
             }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PERIOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
-        }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -255,6 +253,10 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         this.favorite = renterDetailedCar.favorite
     }
 
+    override fun getDateReprDelegate(): DateRepresentationDelegate? {
+        return dateDelegate
+    }
+
     override fun showProgress(show: Boolean) {
     }
 
@@ -279,6 +281,25 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         disconnect()
         presenter.onDestroy()
         carLocationMap.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PERIOD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val timeBegin = data?.getStringExtra("begin")
+            val timeEnd = data?.getStringExtra("end")
+            if (timeBegin != null && timeEnd != null) {
+                val filter = presenter.getFilter()
+                filter.rentalPeriodBegin = timeBegin
+                filter.rentalPeriodEnd = timeEnd
+                presenter.saveFilter(filter)
+            } else {
+                val filter = presenter.getFilter()
+                filter.rentalPeriodBegin = null
+                filter.rentalPeriodEnd = null
+                presenter.saveFilter(filter)
+            }
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     private fun shareCar() {

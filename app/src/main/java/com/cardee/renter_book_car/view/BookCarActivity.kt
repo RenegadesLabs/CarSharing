@@ -86,6 +86,8 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         }
         bookingPeriodContainer.setOnClickListener {
             val intent = Intent(this, RentalPeriodActivity::class.java)
+            intent.putExtra("rentalBegin", mPresenter.getFilter().rentalPeriodBegin)
+            intent.putExtra("rentalEnd", mPresenter.getFilter().rentalPeriodEnd)
             intent.putExtra("hourly", mState.bookingHourly)
             if (mState.bookingHourly == true) {
                 intent.putExtra("availability", mState.availabilityHourly)
@@ -227,6 +229,10 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
         return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
     }
 
+    override fun getDateDelegate(): DateRepresentationDelegate {
+        return delegate
+    }
+
     override fun onStop() {
         super.onStop()
         mPresenter.saveSate(mState)
@@ -293,15 +299,41 @@ class BookCarActivity : AppCompatActivity(), BookCarContract.BookCarView {
                     val timeBegin = data?.getStringExtra("begin")
                     val timeEnd = data?.getStringExtra("end")
                     if (timeBegin != null && timeEnd != null) {
+                        val filter = mPresenter.getFilter()
+                        filter.rentalPeriodBegin = timeBegin
+                        filter.rentalPeriodEnd = timeEnd
+                        mPresenter.saveFilter(filter)
+
                         if (mState.bookingHourly == true) {
                             mState.timeBeginHourly = timeBegin
-                            mState.timeEndHourly = timeEnd
+
+                            var endDate = delegate.convertDateToDate(timeEnd)
+                            endDate = mPresenter.addOneHour(endDate)
+
+                            mState.timeEndHourly = delegate.formatAsIsoDate(endDate)
                         } else {
                             mState.timeBeginDaily = timeBegin
                             mState.timeEndDaily = timeEnd
                         }
                         setRentalPeriod()
                         mPresenter.getCost(mCarId ?: return, mState, null)
+                    } else {
+                        val filter = mPresenter.getFilter()
+                        filter.rentalPeriodBegin = null
+                        filter.rentalPeriodEnd = null
+                        mPresenter.saveFilter(filter)
+                        when (mState.bookingHourly) {
+                            true -> {
+                                mState.timeBeginHourly = null
+                                mState.timeEndHourly = null
+                            }
+                            false -> {
+                                mState.timeBeginDaily = null
+                                mState.timeEndDaily = null
+                            }
+                        }
+                        setRentalPeriod()
+                        resetCost()
                     }
                 }
             }

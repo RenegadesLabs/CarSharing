@@ -1,7 +1,9 @@
 package com.cardee.renter_car_details
 
+import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.mvp.BaseView
+import com.cardee.util.DateRepresentationDelegate
 import com.google.android.gms.maps.model.LatLng
 
 interface RenterCarDetailsContract {
@@ -13,6 +15,7 @@ interface RenterCarDetailsContract {
         fun setFavorite(favorite: Boolean)
 
         fun setLocationString(locationString: String)
+        fun getDateReprDelegate(): DateRepresentationDelegate?
 
     }
 
@@ -31,5 +34,9 @@ interface RenterCarDetailsContract {
         fun getCachedCar(): RenterDetailedCar?
 
         fun onDestroy()
+
+        fun getFilter(): BrowseCarsFilter
+
+        fun saveFilter(filter: BrowseCarsFilter)
     }
 }

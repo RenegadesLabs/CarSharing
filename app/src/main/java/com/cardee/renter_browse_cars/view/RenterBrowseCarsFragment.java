@@ -166,7 +166,11 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
             }
             mSearchAreaRadius.setText(radiusText);
         }
-        refreshAvailabilityTitle(mFilter);
+
+        if (mFilter.getBookingHourly() == null) {
+            mFilter.setBookingHourly(false);
+            mPresenter.saveFilter(mFilter);
+        }
 
         swipeRefresh.setOnRefreshListener(this::refreshCarList);
         mSearchInput.addTextChangedListener(new TextWatcher() {
@@ -230,6 +234,8 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         if (event != null && event.getUpdated()) {
             mPresenter.getCarsByFilter(mFilter);
         }
+        mFilter = mPresenter.getFilter();
+        refreshAvailabilityTitle(mFilter);
     }
 
     @Override

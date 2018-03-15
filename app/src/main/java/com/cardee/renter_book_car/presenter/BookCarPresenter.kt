@@ -15,19 +15,19 @@ import com.cardee.domain.bookings.usecase.GetCostBreakdown
 import com.cardee.domain.bookings.usecase.RequestBooking
 import com.cardee.domain.profile.usecase.GetVerifyDetails
 import com.cardee.domain.renter.entity.BrowseCarsFilter
-import com.cardee.domain.renter.usecase.GetBookState
-import com.cardee.domain.renter.usecase.GetFilter
-import com.cardee.domain.renter.usecase.GetOfferById
-import com.cardee.domain.renter.usecase.SaveBookState
+import com.cardee.domain.renter.usecase.*
 import com.cardee.renter_book_car.BookCarContract
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.dialog_cost_breakdown.view.*
+import java.util.*
 
 class BookCarPresenter : BookCarContract.BookCarPresenter {
+
     private var mView: BookCarContract.BookCarView? = null
     private val getOfferById = GetOfferById()
     private val getCostBreakdown = GetCostBreakdown()
     private val getFilter = GetFilter()
+    private val saveFilter = SaveFilter()
     private val getBookState = GetBookState()
     private val saveBookState = SaveBookState()
     private val requestBookingCase = RequestBooking()
@@ -97,7 +97,12 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         val filter = getFilter.getFilter()
         if (getHourly(filter)) {
             state.timeBeginHourly = filter.rentalPeriodBegin
-            state.timeEndHourly = filter.rentalPeriodEnd
+
+            val delegate = mView?.getDateDelegate()
+            var endDate = delegate?.convertDateToDate(filter.rentalPeriodEnd)
+            endDate = addOneHour(endDate)
+
+            state.timeEndHourly = delegate?.formatAsIsoDate(endDate)
         } else {
             state.timeBeginDaily = filter.rentalPeriodBegin
             state.timeEndDaily = filter.rentalPeriodEnd
@@ -311,6 +316,21 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
 
     override fun saveSate(state: BookCarState) {
         saveBookState.saveBookState(state)
+    }
+
+    override fun getFilter(): BrowseCarsFilter {
+        return getFilter.getFilter()
+    }
+
+    override fun saveFilter(filter: BrowseCarsFilter) {
+        saveFilter.saveFilter(filter)
+    }
+
+    override fun addOneHour(end: Date?): Date? {
+        val calendar = Calendar.getInstance()
+        calendar.time = end ?: return null
+        calendar.add(Calendar.HOUR_OF_DAY, 1)
+        return calendar.time
     }
 
     override fun onDestroy() {
