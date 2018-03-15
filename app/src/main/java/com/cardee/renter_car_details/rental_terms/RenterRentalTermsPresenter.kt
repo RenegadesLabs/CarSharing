@@ -43,19 +43,19 @@ class RenterRentalTermsPresenter {
         val insurance = offer.carDetails?.compensationExcess
 
         mView?.setRequirements(CardeeApp.context.resources.getString(R.string.requirements_template).format(minAge, maxAge, minExp))
-        if (rules == null) {
+        if (rules.isNullOrBlank()) {
             mView?.hideRules()
         } else {
             mView?.setRules(rules)
         }
 
-        if (offer.carDetails?.requireSecurityDeposit == false || deposit.isNullOrEmpty()) {
+        if (offer.carDetails?.requireSecurityDeposit == false || deposit.isNullOrBlank()) {
             mView?.hideDeposit()
         } else {
             mView?.setDeposit(CardeeApp.context.resources.getString(R.string.security_deposit_template).format(deposit))
         }
 
-        if (insurance == null) {
+        if (insurance.isNullOrBlank()) {
             mView?.hideInsurance()
         } else {
             mView?.setInsurance(insurance)

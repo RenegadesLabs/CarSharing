@@ -66,6 +66,7 @@
                 android:text="@string/requirements_template" />
 
             <TextView
+                android:id="@+id/carRulesTitle"
                 style="@style/TextSettingsSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
                 android:paddingTop="16dp" />
 
             <TextView
+                android:id="@+id/depositTitle"
                 style="@style/TextSettingsSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,6 +119,7 @@
                 android:text="@string/security_deposit_hint_first" />
 
             <TextView
+                android:id="@+id/insuranceTitle"
                 style="@style/TextSettingsSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

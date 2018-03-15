@@ -75,15 +75,20 @@ class RenterRentalTermsActivity : AppCompatActivity(), RenterRentalTermsView {
     }
 
     override fun hideDeposit() {
+        depositTitle.visibility = View.GONE
         depositText.visibility = View.GONE
+        depositHint.visibility = View.GONE
     }
 
     override fun hideRules() {
         carRulesText.visibility = View.GONE
+        carRulesTitle.visibility = View.GONE
     }
 
     override fun hideInsurance() {
         insuranceText.visibility = View.GONE
+        insuranceTitle.visibility = View.GONE
+        insuranceHint.visibility = View.GONE
     }
 
     override fun showProgress(show: Boolean) {
