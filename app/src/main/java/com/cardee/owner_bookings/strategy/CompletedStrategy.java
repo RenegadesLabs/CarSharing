@@ -12,46 +12,50 @@ public class CompletedStrategy extends PresentationStrategy {
 
     private final BookingView bookingView;
 
-    public CompletedStrategy(@NonNull View view, @NonNull ActionListener listener) {
+    public CompletedStrategy(@NonNull View view, @NonNull ActionListener listener, boolean isRenter) {
         super(view, listener);
         bookingView = (BookingView) view;
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_completed);
 
-        bookingView.bookingStatus.setBackgroundColor(statusColor);
-        bookingView.bookingStatus.setText(R.string.booking_state_completed);
-        bookingView.bookingPayment.setVisibility(View.VISIBLE);
-        bookingView.rentalPeriodTitle.setVisibility(View.VISIBLE);
-        bookingView.rentalPeriod.setVisibility(View.VISIBLE);
+        bookingView.getBookingStatus().setBackgroundColor(statusColor);
+        bookingView.getBookingStatus().setText(R.string.booking_state_completed);
+        bookingView.getBookingPayment().setVisibility(View.VISIBLE);
+        bookingView.getRentalPeriodTitle().setVisibility(View.VISIBLE);
+        bookingView.getRentalPeriod().setVisibility(View.VISIBLE);
 
-        bookingView.renterPhotoCompleted.setVisibility(View.VISIBLE);
-        bookingView.ratingBlock.setVisibility(View.VISIBLE);
-        bookingView.ratingTitle.setVisibility(View.VISIBLE);
-        bookingView.ratingBar.setVisibility(View.VISIBLE);
-        bookingView.ratingEdit.setVisibility(View.VISIBLE);
-        bookingView.earningsContainer.setVisibility(View.VISIBLE);
+        bookingView.getRenterPhotoCompleted().setVisibility(View.VISIBLE);
+        bookingView.getRatingBlock().setVisibility(View.VISIBLE);
+        bookingView.getRatingTitle().setVisibility(View.VISIBLE);
+        bookingView.getRatingBar().setVisibility(View.VISIBLE);
+        bookingView.getRatingEdit().setVisibility(View.VISIBLE);
+        if (isRenter) {
+            bookingView.getReceiptsContainer().setVisibility(View.VISIBLE);
+        } else {
+            bookingView.getEarningsContainer().setVisibility(View.VISIBLE);
+        }
 
-        bookingView.renterNameTitle.setVisibility(View.GONE);
-        bookingView.renterName.setVisibility(View.GONE);
-        bookingView.renterPhoto.setVisibility(View.GONE);
-        bookingView.deliverToTitle.setVisibility(View.GONE);
-        bookingView.deliverTo.setVisibility(View.GONE);
-        bookingView.handoverOnTitle.setVisibility(View.GONE);
-        bookingView.handoverOn.setVisibility(View.GONE);
-        bookingView.returnByTitle.setVisibility(View.GONE);
-        bookingView.returnBy.setVisibility(View.GONE);
-        bookingView.handoverAtTitle.setVisibility(View.GONE);
-        bookingView.handoverAt.setVisibility(View.GONE);
-        bookingView.totalCostTitle.setVisibility(View.GONE);
-        bookingView.totalCost.setVisibility(View.GONE);
-        bookingView.renterMessage.setVisibility(View.GONE);
-        bookingView.renterCallTitle.setVisibility(View.GONE);
-        bookingView.renterCall.setVisibility(View.GONE);
-        bookingView.renterChatTitle.setVisibility(View.GONE);
-        bookingView.renterChat.setVisibility(View.GONE);
-        bookingView.cancelMessage.setVisibility(View.GONE);
-        bookingView.acceptMessage.setVisibility(View.GONE);
-        bookingView.btnCancel.setVisibility(View.GONE);
-        bookingView.btnAccept.setVisibility(View.GONE);
+        bookingView.getRenterNameTitle().setVisibility(View.GONE);
+        bookingView.getRenterName().setVisibility(View.GONE);
+        bookingView.getRenterPhoto().setVisibility(View.GONE);
+        bookingView.getDeliverToTitle().setVisibility(View.GONE);
+        bookingView.getDeliverTo().setVisibility(View.GONE);
+        bookingView.getHandoverOnTitle().setVisibility(View.GONE);
+        bookingView.getHandoverOn().setVisibility(View.GONE);
+        bookingView.getReturnByTitle().setVisibility(View.GONE);
+        bookingView.getReturnBy().setVisibility(View.GONE);
+        bookingView.getHandoverAtTitle().setVisibility(View.GONE);
+        bookingView.getHandoverAt().setVisibility(View.GONE);
+        bookingView.getTotalCostTitle().setVisibility(View.GONE);
+        bookingView.getTotalCost().setVisibility(View.GONE);
+        bookingView.getRenterMessage().setVisibility(View.GONE);
+        bookingView.getRenterCallTitle().setVisibility(View.GONE);
+        bookingView.getRenterCall().setVisibility(View.GONE);
+        bookingView.getRenterChatTitle().setVisibility(View.GONE);
+        bookingView.getRenterChat().setVisibility(View.GONE);
+        bookingView.getCancelMessage().setVisibility(View.GONE);
+        bookingView.getAcceptMessage().setVisibility(View.GONE);
+        bookingView.getBtnCancel().setVisibility(View.GONE);
+        bookingView.getBtnAccept().setVisibility(View.GONE);
     }
 
     @Override

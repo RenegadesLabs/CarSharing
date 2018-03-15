@@ -120,7 +120,7 @@ public class OwnerBookingPresenter implements OwnerBookingContract.Presenter {
                     strategy = new CanceledStrategy(bookingView, this);
                     break;
                 case COMPLETED:
-                    strategy = new CompletedStrategy(bookingView, this);
+                    strategy = new CompletedStrategy(bookingView, this, isRenter);
             }
         }
     }

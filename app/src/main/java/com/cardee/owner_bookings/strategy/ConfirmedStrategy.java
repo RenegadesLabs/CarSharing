@@ -22,59 +22,59 @@ public class ConfirmedStrategy extends PresentationStrategy implements View.OnCl
         bookingView = (BookingView) view;
         int statusColor = ContextCompat.getColor(view.getContext(), R.color.booking_state_confirmed);
 
-        bookingView.bookingStatus.setBackgroundColor(statusColor);
-        bookingView.bookingStatus.setText(R.string.booking_state_confirmed);
-        bookingView.renterNameTitle.setVisibility(View.VISIBLE);
-        bookingView.renterNameTitle.setText(isRenter ? R.string.booking_owner_title : R.string.booking_request_title);
-        bookingView.renterName.setVisibility(View.VISIBLE);
-        bookingView.renterPhoto.setVisibility(View.VISIBLE);
-        bookingView.bookingPayment.setVisibility(View.VISIBLE);
-        bookingView.rentalPeriodTitle.setVisibility(View.GONE);
-        bookingView.rentalPeriod.setVisibility(View.GONE);
-        bookingView.deliverToTitle.setVisibility(View.GONE);
-        bookingView.deliverTo.setVisibility(View.GONE);
-        bookingView.handoverOnTitle.setVisibility(View.VISIBLE);
-        bookingView.handoverOnTitle.setText(isRenter ? R.string.booking_pickup_on_title : R.string.booking_handover_on_title);
-        bookingView.handoverOn.setVisibility(View.VISIBLE);
-        bookingView.returnByTitle.setVisibility(View.VISIBLE);
-        bookingView.returnBy.setVisibility(View.VISIBLE);
-        bookingView.handoverAtTitle.setVisibility(View.VISIBLE);
-        bookingView.handoverAtTitle.setText(isRenter ? R.string.booking_pickup_at_title : R.string.booking_handover_at_title);
-        bookingView.handoverAt.setVisibility(View.VISIBLE);
-        bookingView.totalCostTitle.setVisibility(View.VISIBLE);
-        bookingView.totalCost.setVisibility(View.VISIBLE);
-        bookingView.renterMessage.setVisibility(View.GONE);
-        bookingView.renterCallTitle.setVisibility(View.VISIBLE);
-        bookingView.renterCall.setVisibility(View.VISIBLE);
-        bookingView.renterChatTitle.setVisibility(View.VISIBLE);
-        bookingView.renterChat.setVisibility(View.VISIBLE);
-        bookingView.cancelMessage.setVisibility(isRenter ? View.VISIBLE : View.GONE);
-        bookingView.acceptMessage.setVisibility(isRenter ? View.GONE : View.VISIBLE);
-        bookingView.btnCancel.setVisibility(View.VISIBLE);
-        bookingView.btnAccept.setVisibility(isRenter ? View.GONE : View.VISIBLE);
-        bookingView.renterPhotoCompleted.setVisibility(View.GONE);
-        bookingView.ratingBlock.setVisibility(View.GONE);
-        bookingView.ratingTitle.setVisibility(View.GONE);
-        bookingView.ratingBar.setVisibility(View.GONE);
-        bookingView.ratingEdit.setVisibility(View.GONE);
+        bookingView.getBookingStatus().setBackgroundColor(statusColor);
+        bookingView.getBookingStatus().setText(R.string.booking_state_confirmed);
+        bookingView.getRenterNameTitle().setVisibility(View.VISIBLE);
+        bookingView.getRenterNameTitle().setText(isRenter ? R.string.booking_owner_title : R.string.booking_request_title);
+        bookingView.getRenterName().setVisibility(View.VISIBLE);
+        bookingView.getRenterPhoto().setVisibility(View.VISIBLE);
+        bookingView.getBookingPayment().setVisibility(View.VISIBLE);
+        bookingView.getRentalPeriodTitle().setVisibility(View.GONE);
+        bookingView.getRentalPeriod().setVisibility(View.GONE);
+        bookingView.getDeliverToTitle().setVisibility(View.GONE);
+        bookingView.getDeliverTo().setVisibility(View.GONE);
+        bookingView.getHandoverOnTitle().setVisibility(View.VISIBLE);
+        bookingView.getHandoverOnTitle().setText(isRenter ? R.string.booking_pickup_on_title : R.string.booking_handover_on_title);
+        bookingView.getHandoverOn().setVisibility(View.VISIBLE);
+        bookingView.getReturnByTitle().setVisibility(View.VISIBLE);
+        bookingView.getReturnBy().setVisibility(View.VISIBLE);
+        bookingView.getHandoverAtTitle().setVisibility(View.VISIBLE);
+        bookingView.getHandoverAtTitle().setText(isRenter ? R.string.booking_pickup_at_title : R.string.booking_handover_at_title);
+        bookingView.getHandoverAt().setVisibility(View.VISIBLE);
+        bookingView.getTotalCostTitle().setVisibility(View.VISIBLE);
+        bookingView.getTotalCost().setVisibility(View.VISIBLE);
+        bookingView.getRenterMessage().setVisibility(View.GONE);
+        bookingView.getRenterCallTitle().setVisibility(View.VISIBLE);
+        bookingView.getRenterCall().setVisibility(View.VISIBLE);
+        bookingView.getRenterChatTitle().setVisibility(View.VISIBLE);
+        bookingView.getRenterChat().setVisibility(View.VISIBLE);
+        bookingView.getCancelMessage().setVisibility(isRenter ? View.VISIBLE : View.GONE);
+        bookingView.getAcceptMessage().setVisibility(isRenter ? View.GONE : View.VISIBLE);
+        bookingView.getBtnCancel().setVisibility(View.VISIBLE);
+        bookingView.getBtnAccept().setVisibility(isRenter ? View.GONE : View.VISIBLE);
+        bookingView.getRenterPhotoCompleted().setVisibility(View.GONE);
+        bookingView.getRatingBlock().setVisibility(View.GONE);
+        bookingView.getRatingTitle().setVisibility(View.GONE);
+        bookingView.getRatingBar().setVisibility(View.GONE);
+        bookingView.getRatingEdit().setVisibility(View.GONE);
 
         if (!isRenter) {
-            bookingView.acceptMessage.setText(R.string.booking_message_handover);
-            bookingView.btnAccept.setText(R.string.booking_title_handover);
-            bookingView.btnAccept.setOnClickListener(this);
+            bookingView.getAcceptMessage().setText(R.string.booking_message_handover);
+            bookingView.getBtnAccept().setText(R.string.booking_title_handover);
+            bookingView.getBtnAccept().setOnClickListener(this);
         } else {
             ConstraintSet set = new ConstraintSet();
             set.clone(bookingView.findViewById(R.id.booking_container));
             set.connect(R.id.renter_message, ConstraintSet.BOTTOM, R.id.booking_cancel_message, ConstraintSet.TOP);
             set.applyTo(bookingView.findViewById(R.id.booking_container));
-            bookingView.cancelMessage.setText(R.string.booking_message_confirmed_renter);
+            bookingView.getCancelMessage().setText(R.string.booking_message_confirmed_renter);
         }
-        bookingView.btnCancel.setText(R.string.booking_title_cancel);
+        bookingView.getBtnCancel().setText(R.string.booking_title_cancel);
 
-        bookingView.renterPhoto.setOnClickListener(this);
-        bookingView.renterCall.setOnClickListener(this);
-        bookingView.renterChat.setOnClickListener(this);
-        bookingView.btnCancel.setOnClickListener(this);
+        bookingView.getRenterPhoto().setOnClickListener(this);
+        bookingView.getRenterCall().setOnClickListener(this);
+        bookingView.getRenterChat().setOnClickListener(this);
+        bookingView.getBtnCancel().setOnClickListener(this);
 
     }
 

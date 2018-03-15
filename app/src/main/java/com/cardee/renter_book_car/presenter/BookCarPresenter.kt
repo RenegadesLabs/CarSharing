@@ -254,12 +254,12 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         if (nonPeakCount == null || nonPeakCount == 0) {
             root.non_peak_container.visibility = View.GONE
         } else {
-            val count = if (state.bookingHourly == true) {
+            var count = if (state.bookingHourly == true) {
                 "$nonPeakCount hour"
             } else {
                 "$nonPeakCount day"
             }
-            if (nonPeakCount != 1) count.plus("s")
+            if (nonPeakCount != 1) count += "s"
 
             root.non_peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_non_peak_template), count)
             root.non_peak_amount.text = "$%.2f".format(nonPeakCost)
@@ -268,12 +268,12 @@ class BookCarPresenter : BookCarContract.BookCarPresenter {
         if (peakCount == null || peakCount == 0) {
             root.peak_container.visibility = View.GONE
         } else {
-            val count = if (state.bookingHourly == true) {
+            var count = if (state.bookingHourly == true) {
                 "$peakCount hour"
             } else {
                 "$peakCount day"
             }
-            if (peakCount != 1) count.plus("s")
+            if (peakCount != 1) count += "s"
 
             root.peak_days.text = String.format(context.resources.getString(R.string.cost_breakdown_peak_template), count)
             root.peak_amount.text = "$%.2f".format(peakCost)
