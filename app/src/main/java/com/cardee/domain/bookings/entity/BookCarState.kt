@@ -47,7 +47,8 @@ class BookCarState(bookingHourly: Boolean? = true,
                    val noteAdded: ObservableBoolean = ObservableBoolean(),
                    var noteText: String? = null,
                    var amountTotal: Float? = null,
-                   var amountDiscount: Float? = null
+                   var amountDiscount: Float? = null,
+                   var paymentByMileage: ObservableBoolean = ObservableBoolean()
 
 ) : BaseObservable() {
 

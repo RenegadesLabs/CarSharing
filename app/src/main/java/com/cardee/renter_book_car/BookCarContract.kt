@@ -15,7 +15,7 @@ interface BookCarContract {
         fun setCarYear(carYear: String?)
         fun setTotalCost(total: String)
         fun resetCost()
-        fun setRentalPeriod()
+        fun displayRentalPeriod()
         fun onRequestSuccess()
         fun getDateDelegate(): DateRepresentationDelegate
     }

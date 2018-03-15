@@ -23,6 +23,7 @@ import com.bumptech.glide.request.target.Target
 import com.cardee.R
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
+import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity
 import com.cardee.renter_car_details.reviews.RenterCarReviewsActivity
 import com.cardee.renter_car_details.view.RenterCarDetailsActivity
 import com.cardee.util.AvailabilityFromFilterDelegate
@@ -306,11 +307,11 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     private fun fillAboutInfo() {
         val text = renterDetailedCar?.bodyType + " " + renterDetailedCar?.seatingCapacity +
                 mActivity.getString(R.string.renter_car_details_seats_suffix) +
-                renterDetailedCar?.carEngineCapacity + " " + renterDetailedCar?.carTransmission
+                renterDetailedCar?.carEngineCapacity + "L " + renterDetailedCar?.carTransmission
         mActivity.tvRenterCarDetailsAboutCarTitle.text = text
         mActivity.tvRenterCarDetailsAboutCarDesc.text = renterDetailedCar?.description ?: ""
         mActivity.tvRenterCarDetailsAboutCarDesc.visibility =
-                if (renterDetailedCar?.description == null) View.GONE else View.VISIBLE
+                if (renterDetailedCar?.description.isNullOrBlank()) View.GONE else View.VISIBLE
     }
 
     private fun setTripsCount() {
@@ -359,6 +360,13 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 if (renterDetailedCar?.owner?.responseTime ?: 0 > 1) mActivity.getString(R.string.owner_profile_info_minutes)
                 else mActivity.getString(R.string.owner_profile_info_minute)
         mActivity.tvRenterCarDetailsOwnerResponse.text = responseText
+
+        mActivity.ivRenterCarDetailsOwnerPicture.setOnClickListener {
+            val intent = Intent(mActivity, OwnerProfileInfoActivity::class.java)
+            intent.putExtra("editable", false)
+            intent.putExtra("profile_id", renterDetailedCar?.owner?.profileId)
+            mActivity.startActivity(intent)
+        }
     }
 
     private fun fillBookView() {
