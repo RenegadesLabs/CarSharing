@@ -21,6 +21,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.cardee.R
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost
 import com.cardee.domain.owner.entity.Image
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.owner_profile_info.view.OwnerProfileInfoActivity
@@ -36,7 +37,6 @@ import kotlinx.android.synthetic.main.view_renter_car_details_map.*
 import java.text.DecimalFormat
 
 class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity) : TabLayout.OnTabSelectedListener {
-
 
     private val mGlideRequestManager: RequestManager? = Glide.with(mActivity)
     private var renterDetailedCar: RenterDetailedCar? = null
@@ -374,7 +374,7 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
         updateRate()
     }
 
-    private fun updateRate() {
+    fun updateRate() {
         val formatter = DecimalFormat("#.##")
         val rateText = if (hourly == true) "$" +
                 formatter.format(renterDetailedCar?.orderHourlyDetails?.amntRateSecond ?: 0) +
@@ -386,10 +386,39 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
                 formatter.format(renterDetailedCar?.orderDailyDetails?.amntRateSecond ?: 0) +
                 " "
         mActivity.tvBookCarRate.text = rateText
+
         mActivity.tv_bookCarRatePeriod.text = if (hourly == true) {
             mActivity.getString(R.string.car_rental_rates_per_hour)
         } else {
             mActivity.getString(R.string.car_rental_rates_per_day)
+        }
+
+        val filter = mActivity.presenter.getFilter()
+        if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
+            mActivity.presenter.getCost(renterDetailedCar?.carId ?: return)
+        }
+    }
+
+    fun onBreakdownFetched(breakdown: BookingCost) {
+        val price = (breakdown.peakCost ?: 0f) +
+                (breakdown.nonPeakCost ?: 0f)
+        val priceText = "$${DecimalFormat("#.##").format(price)}"
+        mActivity.tvBookCarRate.text = priceText
+
+        val filter = mActivity.presenter.getFilter()
+        val delegate = AvailabilityFromFilterDelegate()
+        val hourly = filter.bookingHourly
+        if (hourly != null) {
+            if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
+                if (hourly) {
+                    delegate.onSetHoursCount(mActivity.tv_bookCarRatePeriod, filter)
+                } else {
+                    delegate.onSetDaysCount(mActivity.tv_bookCarRatePeriod, filter)
+                }
+                val periodText = "(${mActivity.tv_bookCarRatePeriod.text})"
+                mActivity.tv_bookCarRatePeriod.text = periodText
+                return
+            }
         }
     }
 

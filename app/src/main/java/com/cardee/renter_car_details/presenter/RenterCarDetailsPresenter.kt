@@ -3,9 +3,11 @@ package com.cardee.renter_car_details.presenter
 import android.util.Log
 import com.cardee.R
 import com.cardee.data_source.Error
+import com.cardee.data_source.remote.api.booking.response.entity.CostRequest
 import com.cardee.domain.RxUseCase
 import com.cardee.domain.UseCase
 import com.cardee.domain.UseCaseExecutor
+import com.cardee.domain.bookings.usecase.GetCostBreakdown
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.domain.renter.entity.mapper.OfferResponseByIdToRenterDetailedCar
@@ -27,6 +29,8 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
     private val getOfferDistance = GetOfferDistance()
     private val getFilter = GetFilter()
     private val saveFilter = SaveFilter()
+    private val getCostBreakdown = GetCostBreakdown()
+    private var mGetCostDisposable: Disposable? = null
     private var mGetOfferDisposable: Disposable? = null
     private var mGetDistanceDisposable: Disposable? = null
     private var distance: Int? = null
@@ -88,6 +92,38 @@ class RenterCarDetailsPresenter : RenterCarDetailsContract.Presenter {
                         view?.showMessage(error.message)
                     }
                 })
+    }
+
+    override fun getCost(carId: Int) {
+        val request = createRequest(carId)
+
+        if (mGetCostDisposable?.isDisposed == false) {
+            mGetCostDisposable?.dispose()
+        }
+
+        mGetCostDisposable = getCostBreakdown.execute(
+                GetCostBreakdown.RequestValues(request ?: return),
+                object : RxUseCase.Callback<GetCostBreakdown.ResponseValues> {
+                    override fun onSuccess(response: GetCostBreakdown.ResponseValues) {
+                        val breakdown = response.costBreakdown
+                        view?.onBreakdownFetched(breakdown)
+                    }
+
+                    override fun onError(error: Error) {
+                        view?.showMessage(error.message)
+                    }
+                })
+    }
+
+    private fun createRequest(carId: Int): CostRequest? {
+        val filter = getFilter.getFilter()
+        return CostRequest(carId,
+                filter.rentalPeriodBegin ?: return null,
+                filter.rentalPeriodEnd ?: return null,
+                false,
+                null,
+                null,
+                filter.bookingHourly == false)
     }
 
     private fun setPickupReturnTime(offerDetails: RenterDetailedCar, filter: BrowseCarsFilter) {

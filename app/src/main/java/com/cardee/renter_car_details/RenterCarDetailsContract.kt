@@ -1,5 +1,6 @@
 package com.cardee.renter_car_details
 
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.mvp.BaseView
@@ -16,6 +17,7 @@ interface RenterCarDetailsContract {
 
         fun setLocationString(locationString: String)
         fun getDateReprDelegate(): DateRepresentationDelegate?
+        fun onBreakdownFetched(breakdown: BookingCost)
 
     }
 
@@ -38,5 +40,6 @@ interface RenterCarDetailsContract {
         fun getFilter(): BrowseCarsFilter
 
         fun saveFilter(filter: BrowseCarsFilter)
+        fun getCost(carId: Int)
     }
 }

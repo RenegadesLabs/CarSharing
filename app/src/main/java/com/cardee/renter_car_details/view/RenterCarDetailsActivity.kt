@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import com.cardee.R
 import com.cardee.auth.preview.PreviewActivity
+import com.cardee.data_source.remote.api.booking.response.entity.BookingCost
 import com.cardee.data_source.remote.service.AccountManager
 import com.cardee.domain.renter.entity.RenterDetailedCar
 import com.cardee.renter_book_car.rental_period.RentalPeriodActivity
@@ -47,7 +48,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     private var mCarId: Int? = null
     private var favorite: Boolean? = null
-    private var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
+    var presenter: RenterCarDetailsContract.Presenter = RenterCarDetailsPresenter()
     private var viewHolder: RenterCarDetailsViewHolder? = null
     private var map: GoogleMap? = null
     private var markerIcon: Bitmap? = null
@@ -124,6 +125,8 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         }
         setListeners()
         initMarkerBitmap()
+
+        presenter.getDetailedCar(mCarId)
     }
 
     private fun initMarkerBitmap() {
@@ -198,7 +201,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
 
     override fun onStart() {
         super.onStart()
-        presenter.getDetailedCar(mCarId)
         carLocationMap.onStart()
     }
 
@@ -257,6 +259,10 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         return dateDelegate
     }
 
+    override fun onBreakdownFetched(breakdown: BookingCost) {
+        viewHolder?.onBreakdownFetched(breakdown)
+    }
+
     override fun showProgress(show: Boolean) {
     }
 
@@ -298,6 +304,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                 filter.rentalPeriodEnd = null
                 presenter.saveFilter(filter)
             }
+            viewHolder?.updateRate()
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
