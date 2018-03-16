@@ -23,8 +23,11 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.custom.CustomRatingBar;
+import com.cardee.domain.renter.entity.BrowseCarsFilter;
 import com.cardee.domain.renter.entity.OfferCar;
+import com.cardee.domain.renter.usecase.GetFilter;
 import com.cardee.renter_browse_cars.RenterBrowseCarListContract;
+import com.cardee.util.AvailabilityFromFilterDelegate;
 import com.cardee.util.glide.CircleTransform;
 
 import java.text.DecimalFormat;
@@ -43,6 +46,7 @@ public class RenterBrowseCarsListAdapter
     private final LayoutInflater mInflater;
     private final RequestManager mGlideRequestManager;
     private final Context mContext;
+    private final GetFilter mGetFilter;
 
     private SparseArray<RenterBrowseCarsListAdapter.RenterBrowseCarsListItemViewHolder> mHolders;
 
@@ -54,6 +58,7 @@ public class RenterBrowseCarsListAdapter
         mHolders = new SparseArray<>();
         mGlideRequestManager = Glide.with(context);
         mEventObservable = PublishSubject.create();
+        mGetFilter = new GetFilter();
         mContext = context;
     }
 
@@ -66,7 +71,8 @@ public class RenterBrowseCarsListAdapter
     @Override
     public void onBindViewHolder(RenterBrowseCarsListItemViewHolder holder, int position) {
         final OfferCar car = mOfferCars.get(position);
-        holder.bind(car, mGlideRequestManager, mEventObservable, mContext);
+        BrowseCarsFilter filter = mGetFilter.getFilter();
+        holder.bind(car, mGlideRequestManager, mEventObservable, mContext, filter);
         mHolders.put(car.getCarId(), holder);
     }
 
@@ -112,7 +118,7 @@ public class RenterBrowseCarsListAdapter
 
         private void bind(final OfferCar model,
                           RequestManager imageRequestManager,
-                          PublishSubject<RenterBrowseCarListContract.CarEvent> observable, Context context) {
+                          PublishSubject<RenterBrowseCarListContract.CarEvent> observable, Context context, BrowseCarsFilter filter) {
 
             if (imageRequestManager != null) {
 
@@ -171,23 +177,43 @@ public class RenterBrowseCarsListAdapter
                 location = distance <= 0 ? model.getAddress() : distance + "m \u2022 " + model.getAddress();
             }
             mLocation.setText(location);
-            String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity());
+            String type = model.getBodyType() + " " + String.valueOf(model.getSeatCapacity()) + context.getString(R.string.cars_browse_seater);
             mType.setText(type);
             mRating.setScore(model.getRating());
             String ratingCount = "(" + model.getRatingCount() + ")";
             mRatingCount.setText(ratingCount);
+
+            setPricePeriod(mPeriod, filter);
+
             String price = "$" + new DecimalFormat("#.##").format(model.getCost());
+            mPrice.setText(price);
+
             mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite_filled : R.drawable.ic_favorite);
             mHeart.setOnClickListener(view -> {
                 observable.onNext(new RenterBrowseCarListContract.CarEvent(model,
                         RenterBrowseCarListContract.Action.FAVORITE));
                 mHeart.setImageResource(model.isFavorite() ? R.drawable.ic_favorite : R.drawable.ic_favorite_filled);
             });
-            mPrice.setText(price);
             mInstant.setVisibility(model.isInstantBooking() ? View.VISIBLE : View.GONE);
             mCurbside.setVisibility(model.isCurbsideDelivery() ? View.VISIBLE : View.GONE);
             mPrimaryCarImage.setOnClickListener(view ->
                     observable.onNext(new RenterBrowseCarListContract.CarEvent(model, RenterBrowseCarListContract.Action.OPEN)));
+        }
+
+        private void setPricePeriod(TextView period, BrowseCarsFilter filter) {
+            AvailabilityFromFilterDelegate delegate = new AvailabilityFromFilterDelegate();
+            Boolean hourly = filter.getBookingHourly();
+            if (hourly != null) {
+                if (filter.getRentalPeriodBegin() != null && filter.getRentalPeriodEnd() != null) {
+                    if (hourly) {
+                        delegate.onSetHoursCount(period, filter);
+                    } else {
+                        delegate.onSetDaysCount(period, filter);
+                    }
+                    return;
+                }
+            }
+            period.setText("");
         }
     }
 
@@ -206,7 +232,8 @@ public class RenterBrowseCarsListAdapter
         mOfferCars.set(index, car);
         RenterBrowseCarsListItemViewHolder holder = mHolders.get(car.getCarId());
         if (holder != null) {
-            holder.bind(car, null, mEventObservable, mContext);
+            BrowseCarsFilter filter = mGetFilter.getFilter();
+            holder.bind(car, null, mEventObservable, mContext, filter);
             return;
         }
         notifyItemChanged(index);
@@ -225,6 +252,10 @@ public class RenterBrowseCarsListAdapter
         if (!mOfferCars.isEmpty()) {
             notifyDataSetChanged();
         }
+    }
+
+    public GetFilter getGetFilter() {
+        return mGetFilter;
     }
 
     public void recycle() {

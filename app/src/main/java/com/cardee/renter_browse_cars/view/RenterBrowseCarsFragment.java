@@ -120,6 +120,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
 
     private Unbinder mUnbinder;
     private Settings mSettings;
+    private boolean firstStart;
 
     public static Fragment newInstance() {
         return new RenterBrowseCarsFragment();
@@ -144,6 +145,7 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         mCarsListAdapter.subscribe(mPresenter);
         mFilter = mPresenter.getFilter();
         delegate = new AvailabilityFromFilterDelegate();
+        firstStart = true;
     }
 
     @Nullable
@@ -236,6 +238,12 @@ public class RenterBrowseCarsFragment extends Fragment implements RenterBrowseCa
         }
         mFilter = mPresenter.getFilter();
         refreshAvailabilityTitle(mFilter);
+
+//        if (firstStart) {
+//            firstStart = false;
+//        } else {
+//            mPresenter.getCarsByFilter(mFilter);
+//        }
     }
 
     @Override

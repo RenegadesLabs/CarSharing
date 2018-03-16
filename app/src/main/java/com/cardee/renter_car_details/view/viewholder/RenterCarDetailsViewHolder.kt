@@ -375,16 +375,22 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
     }
 
     private fun updateRate() {
+        val formatter = DecimalFormat("#.##")
         val rateText = if (hourly == true) "$" +
-                DecimalFormat("#.##").format(
-                        renterDetailedCar?.orderHourlyDetails?.amntRateFirst
-                                ?: 0) + " " +
-                mActivity.getString(R.string.car_rental_rates_per_hour)
-        else "$" + DecimalFormat("#.##").format(
-                renterDetailedCar?.orderDailyDetails?.amntRateFirst
-                        ?: 0) + " " +
-                mActivity.getString(R.string.car_rental_rates_per_day)
+                formatter.format(renterDetailedCar?.orderHourlyDetails?.amntRateSecond ?: 0) +
+                " - $" +
+                formatter.format(renterDetailedCar?.orderHourlyDetails?.amntRateFirst ?: 0) +
+                " "
+        else "$" + formatter.format(renterDetailedCar?.orderDailyDetails?.amntRateFirst ?: 0) +
+                " - $" +
+                formatter.format(renterDetailedCar?.orderDailyDetails?.amntRateSecond ?: 0) +
+                " "
         mActivity.tvBookCarRate.text = rateText
+        mActivity.tv_bookCarRatePeriod.text = if (hourly == true) {
+            mActivity.getString(R.string.car_rental_rates_per_hour)
+        } else {
+            mActivity.getString(R.string.car_rental_rates_per_day)
+        }
     }
 
     private fun toggleBookInstantly(instant: Boolean) {

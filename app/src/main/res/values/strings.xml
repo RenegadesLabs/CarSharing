@@ -511,6 +511,7 @@
     <string name="cars_browse_vehicle_type_private_desc">Private-hire cars registered for grab &amp; uber use</string>
     <string name="cars_browse_vehicle_type_commercial">Commercial Vehicles</string>
     <string name="cars_browse_vehicle_type_commercial_desc">Pickup, lorry, van, minibus etc.</string>
+    <string name="cars_browse_seater">-seater</string>
 
     <!--Renter Car Details-->
     <string name="renter_car_details_rental_info">Rental info</string>
@@ -585,6 +586,7 @@
     <string name="time_pickers_title">Between what time will the car be available for booking on the available dates</string>
     <string name="not_available">Currently not available</string>
     <string-array name="availability_time_titles">
+        <item>12am</item>
         <item>1am</item>
         <item>2am</item>
         <item>3am</item>
@@ -608,7 +610,6 @@
         <item>9pm</item>
         <item>10pm</item>
         <item>11pm</item>
-        <item>12am</item>
     </string-array>
     <string-array name="daily_timing_pickup_values">
         <item>6am</item>

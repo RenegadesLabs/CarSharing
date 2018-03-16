@@ -40,7 +40,7 @@ class HourlyAvailabilityView @JvmOverloads constructor(context: Context, attrs: 
                 if (hourly) {
                     if (filter.rentalPeriodBegin != null && filter.rentalPeriodEnd != null) {
                         delegate.onInitPickerSelection(adapter, filter.rentalPeriodBegin!!, filter.rentalPeriodEnd!!)
-                    }
+                    } else return@let
                     delegate.onSetTitlesFromFilter(dateHourFrom, dateHourTo, filter)
                     delegate.onSetSubmitTitle(btnHourSave, filter, true)
                 }

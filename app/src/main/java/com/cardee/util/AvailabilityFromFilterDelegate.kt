@@ -451,6 +451,7 @@ class AvailabilityFromFilterDelegate {
         }
     }
 
+
     private fun countDays(begin: Date, end: Date): Long {
         val difMillis = end.time - begin.time
         return TimeUnit.DAYS.convert(difMillis, TimeUnit.MILLISECONDS) + 1
