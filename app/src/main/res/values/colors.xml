@@ -32,7 +32,7 @@
     <color name="text_regular">#38393b</color>
     <color name="text_button_regular">#ffffff</color>
     <color name="text_picture_overlaid">#ffffff</color>
-    <color name="text_blue">@color/colorPrimaryDark</color>
+    <color name="text_blue">@color/colorPrimary</color>
     <color name="text_subtitle">#838d99</color>
     <color name="text_subtitle_alt">#a3aab3</color>
     <color name="text_owner_profile_name">#353739</color>
