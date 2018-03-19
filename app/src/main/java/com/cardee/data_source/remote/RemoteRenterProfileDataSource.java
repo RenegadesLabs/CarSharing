@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.profile.Profile;
 import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.response.RenterProfileResponse;
+import com.cardee.data_source.remote.api.profile.response.entity.RenterProfile;
 
 import io.reactivex.functions.Consumer;
 
@@ -18,6 +19,9 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
     private static final String TAG = RemoteRenterProfileDataSource.class.getSimpleName();
     private static RemoteRenterProfileDataSource instance;
     private final Profile mApi;
+
+    private RenterProfile cachedProfile;
+    private RenterProfile cachedProfileById;
 
     public RemoteRenterProfileDataSource() {
         mApi = CardeeApp.retrofit.create(Profile.class);
@@ -32,11 +36,17 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
 
     @Override
     public void loadRenterProfile(final ProfileCallback callback) {
+
+        if (cachedProfile != null) {
+            callback.onSuccess(cachedProfile);
+        }
+
         mApi.loadRenterProfile().subscribe(new Consumer<RenterProfileResponse>() {
             @Override
             public void accept(RenterProfileResponse renterProfileResponse) throws Exception {
                 if (renterProfileResponse.isSuccessful()) {
                     callback.onSuccess(renterProfileResponse.getRenterProfile());
+                    cachedProfile = renterProfileResponse.getRenterProfile();
                     return;
                 }
                 handleErrorResponse(callback, renterProfileResponse);
@@ -52,11 +62,17 @@ public class RemoteRenterProfileDataSource implements RenterProfileDataSource {
 
     @Override
     public void loadRenterById(int id, ProfileCallback profileCallback) {
+
+        if (cachedProfileById != null){
+            profileCallback.onSuccess(cachedProfileById);
+        }
+
         mApi.getRenterById(id).subscribe(new Consumer<RenterProfileResponse>() {
             @Override
             public void accept(RenterProfileResponse renterProfileResponse) throws Exception {
                 if (renterProfileResponse.isSuccessful()) {
                     profileCallback.onSuccess(renterProfileResponse.getRenterProfile());
+                    cachedProfileById = renterProfileResponse.getRenterProfile();
                     return;
                 }
                 handleErrorResponse(profileCallback, renterProfileResponse);

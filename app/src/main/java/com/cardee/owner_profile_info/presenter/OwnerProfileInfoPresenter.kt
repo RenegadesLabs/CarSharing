@@ -21,6 +21,7 @@ import com.cardee.domain.owner.usecase.GetOwnerInfoById
 import com.cardee.owner_profile_info.view.ProfileInfoView
 import io.reactivex.functions.Consumer
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
@@ -146,9 +147,12 @@ class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
         val address = profile.address
         if (!address.isNullOrEmpty()) {
             val geocoder = Geocoder(CardeeApp.context, Locale.getDefault())
-            var addressList = geocoder.getFromLocationName(address, 1)
-            if (addressList.isNotEmpty()) {
-                city = addressList[0].locality
+            try {
+                val addressList = geocoder.getFromLocationName(address, 1)
+                if (addressList.isNotEmpty()) {
+                    city = addressList[0].locality
+                }
+            } catch (e: IOException) {
             }
         }
         if (city.isNullOrEmpty()) {

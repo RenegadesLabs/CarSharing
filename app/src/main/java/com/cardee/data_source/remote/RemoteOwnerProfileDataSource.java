@@ -14,6 +14,7 @@ import com.cardee.data_source.remote.api.profile.request.ChangeNameRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangeNoteRequest;
 import com.cardee.data_source.remote.api.profile.request.ChangePhoneRequest;
 import com.cardee.data_source.remote.api.profile.request.PassChangeRequest;
+import com.cardee.data_source.remote.api.profile.response.entity.OwnerProfile;
 
 import io.reactivex.functions.Consumer;
 
@@ -22,6 +23,9 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
     private static final String TAG = RemoteOwnerProfileDataSource.class.getSimpleName();
     private static RemoteOwnerProfileDataSource instance;
     private final Profile mApi;
+
+    private OwnerProfile cachedProfile;
+    private OwnerProfile cachedProfileById;
 
     private RemoteOwnerProfileDataSource() {
         mApi = CardeeApp.retrofit.create(Profile.class);
@@ -36,9 +40,15 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
 
     @Override
     public void loadOwnerProfile(final ProfileCallback callback) {
+
+        if (cachedProfile != null) {
+            callback.onSuccess(cachedProfile);
+        }
+
         mApi.loadOwnerProfile().subscribe(ownerProfileResponse -> {
             if (ownerProfileResponse.isSuccessful()) {
                 callback.onSuccess(ownerProfileResponse.getOwnerProfile());
+                cachedProfile = ownerProfileResponse.getOwnerProfile();
                 return;
             }
             handleErrorResponse(callback, ownerProfileResponse);
@@ -50,9 +60,15 @@ public class RemoteOwnerProfileDataSource implements OwnerProfileDataSource {
 
     @Override
     public void getOwnerProfileById(int profileId, ProfileCallback callback) {
+
+        if (cachedProfileById != null) {
+            callback.onSuccess(cachedProfileById);
+        }
+
         mApi.getOwnerProfileById(profileId).subscribe(ownerProfileResponse -> {
             if (ownerProfileResponse.isSuccessful()) {
                 callback.onSuccess(ownerProfileResponse.getOwnerProfile());
+                cachedProfileById = ownerProfileResponse.getOwnerProfile();
                 return;
             }
             handleErrorResponse(callback, ownerProfileResponse);
