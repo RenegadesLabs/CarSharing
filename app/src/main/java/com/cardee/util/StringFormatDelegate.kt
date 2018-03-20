@@ -9,6 +9,7 @@ class StringFormatDelegate(context: Context) {
 
     private val saveSuffixes: Array<String> = context.resources.getStringArray(R.array.btn_save_title_suffixes)
     private val valueSuffixes: Array<String> = context.resources.getStringArray(R.array.days_availability_suffixes)
+    private val startZeroRegex: Regex = Regex("\\b0")
 
     fun onDateCountTitleChange(view: TextView, count: Int) {
         onChangeCountString(view, count, saveSuffixes)
@@ -72,8 +73,10 @@ class StringFormatDelegate(context: Context) {
         val prefix = if (index == 0) "" else "$daysCount "
         var title = "$prefix ${valueSuffixes[index]}"
         if (beginTime != null && endTime != null) {
-            title = "$title\n$beginTime - $endTime"
+            title = "$title\n${dropStartZero(beginTime)} - ${dropStartZero(endTime)}"
         }
         view.text = title
     }
+
+    private fun dropStartZero(time: String) = time.replace(startZeroRegex, "")
 }

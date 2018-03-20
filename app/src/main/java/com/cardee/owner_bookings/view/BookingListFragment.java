@@ -19,8 +19,8 @@ import com.cardee.domain.bookings.usecase.ObtainBookings;
 import com.cardee.owner_bookings.OwnerBookingContract;
 import com.cardee.owner_bookings.OwnerBookingListContract;
 import com.cardee.owner_bookings.presenter.OwnerBookingListPresenter;
-import com.cardee.settings.SettingsManager;
 import com.cardee.settings.Settings;
+import com.cardee.settings.SettingsManager;
 
 public class BookingListFragment extends Fragment
         implements View.OnClickListener, OwnerBookingListContract.View {
@@ -90,8 +90,10 @@ public class BookingListFragment extends Fragment
         if (currentToast != null) {
             currentToast.cancel();
         }
-        currentToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
-        currentToast.show();
+        if (getActivity() != null) {
+            currentToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+            currentToast.show();
+        }
     }
 
     @Override

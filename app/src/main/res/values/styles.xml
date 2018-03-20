@@ -141,6 +141,11 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="AvailabilitySelectorButton" parent="SelectorButton">
+        <item name="android:paddingStart">@dimen/widget_padding_mid</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_mid</item>
+    </style>
+
     <style name="AccentTheme" parent="AppTheme">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>

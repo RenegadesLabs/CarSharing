@@ -100,6 +100,8 @@
             android:layout_marginStart="@dimen/widget_margin_mid"
             android:text="@string/car_list_item_hourly_label"
             android:textSize="@dimen/list_item_control_title"
+            android:textStyle="bold"
+            android:textColor="@color/text_owner_profile_name"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/hourly_pseudo_view"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
@@ -116,13 +118,12 @@
 
         <Button
             android:id="@+id/car_hourly_selector"
-            style="@style/SelectorButton"
+            style="@style/AvailabilitySelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
             android:layout_marginEnd="@dimen/widget_margin_small"
             android:layout_marginStart="@dimen/widget_margin_mid"
             android:clickable="true"
-            android:visibility="gone"
             android:text="Currently not available"
             app:layout_constraintEnd_toStartOf="@+id/car_daily_selector"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +137,8 @@
             android:layout_marginStart="@dimen/widget_margin_small"
             android:text="@string/car_list_item_daily_label"
             android:textSize="@dimen/list_item_control_title"
+            android:textStyle="bold"
+            android:textColor="@color/text_owner_profile_name"
             app:layout_constraintStart_toStartOf="@id/daily_pseudo_view"
             app:layout_constraintTop_toBottomOf="@id/car_primary_image" />
 
@@ -151,13 +154,12 @@
 
         <Button
             android:id="@+id/car_daily_selector"
-            style="@style/SelectorButton"
+            style="@style/AvailabilitySelectorButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_regular_height"
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:clickable="true"
             android:text="6 available hours"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/car_daily_title"
             app:layout_constraintTop_toBottomOf="@id/car_daily_title" />
@@ -172,7 +174,6 @@
             android:layout_marginEnd="@dimen/widget_margin_mid"
             android:layout_marginBottom="@dimen/widget_margin_mid"
             android:clickable="true"
-            android:text="454 Hougang Ave 10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

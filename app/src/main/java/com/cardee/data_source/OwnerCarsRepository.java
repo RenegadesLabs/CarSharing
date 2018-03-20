@@ -56,8 +56,8 @@ public class OwnerCarsRepository implements OwnerCarsDataSource {
             public void onError(Error error) {
                 if (error.isConnectionError()) {
                     mDirtyCache = true;
-                    obtainCarsLocally(callback, error);
-                    return;
+//                    obtainCarsLocally(callback, error);
+//                    return;
                 }
                 callback.onError(error);
             }

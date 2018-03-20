@@ -59,7 +59,6 @@ public class OwnerCarsPresenter implements Consumer<OwnerCarListContract.CarEven
     }
 
     private void handleError(Error error) {
-
         if (error.isAuthError()) {
             mView.onUnauthorized();
         } else if (error.isConnectionError()) {

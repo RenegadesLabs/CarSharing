@@ -17,7 +17,7 @@ public class FragmentFactory {
             return InboxFragment.newInstance();
         }
         if (OwnerCarsFragment.class.getName().equals(clazz.getName())) {
-            return OwnerCarsFragment.newInstance();
+            return OwnerCarsFragment.Companion.newInstance();
         }
         if (OwnerProfileFragment.class.getName().equals(clazz.getName())) {
             return OwnerProfileFragment.newInstance();
