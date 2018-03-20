@@ -91,8 +91,10 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void setCar(Car car) {
-        mListener.onCarFetched(car);
-        mHolder.bind(car);
+        if (mListener != null) {
+            mListener.onCarFetched(car);
+            mHolder.bind(car);
+        }
     }
 
     @Override
