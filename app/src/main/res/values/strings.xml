@@ -2,8 +2,10 @@
     <string name="app_name">Cardee</string>
 
     <!--Facebook SDK-->
-    <string name="facebook_app_id">1969210599978942</string>
-    <string name="fb_login_protocol_scheme">fb1969210599978942</string>
+    <!--<string name="facebook_app_id">1969210599978942</string>-->
+    <!--<string name="fb_login_protocol_scheme">fb1969210599978942</string>  -->
+    <string name="facebook_app_id">2052454135080051</string>
+    <string name="fb_login_protocol_scheme">fb2052454135080051</string>
 
     <!--Google Web Server ID-->
     <string name="google_client_id">223677953401-12ltvoram5qhn2bva09bk46fmaopha20.apps.googleusercontent.com</string>

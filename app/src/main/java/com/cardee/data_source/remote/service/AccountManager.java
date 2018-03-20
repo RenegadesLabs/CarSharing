@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.cardee.data_source.inbox.remote.api.model.entity.NotificationData;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
@@ -97,10 +99,18 @@ public class AccountManager {
 
     public void onLogout() {
         mPrefs.edit().remove(AUTH_TOKEN).apply();
+
+        // Logout from Facebook
+        LoginManager.getInstance().logOut();
     }
 
     public boolean isLoggedIn() {
-        return !mPrefs.getString(AUTH_TOKEN, "").equals("");
+        return isLoggedInViaFacebook() || !mPrefs.getString(AUTH_TOKEN, "").equals("");
+    }
+
+    private boolean isLoggedInViaFacebook() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 
     public boolean isFcmTokenAuthenticated() {
