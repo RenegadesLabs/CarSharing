@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +19,6 @@ import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.presenter.RegisterPresenter;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
-import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
@@ -32,7 +30,6 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
@@ -218,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     @Override
     public void onBackToFirstStep() {
         mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
+                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.Companion.getTAG())
                 .commit();
     }
 
@@ -252,7 +249,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     @Override
     public void onSignUpAsOwner(String name, File picture) {
         mPresenter.setAccountState(OWNER_SESSION);
-        mPresenter.signUp(mLogin, mPass, name, picture,OWNER_SESSION);
+        mPresenter.signUp(mLogin, mPass, name, picture, OWNER_SESSION);
     }
 
     @Override

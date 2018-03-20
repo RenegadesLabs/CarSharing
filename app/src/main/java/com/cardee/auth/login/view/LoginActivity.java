@@ -30,6 +30,8 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.Collections;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -117,6 +119,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     private void initFacebookApi() {
         mFacebookCM = CallbackManager.Factory.create();
         mButtonFacebook = new LoginButton(this);
+        mButtonFacebook.setReadPermissions(Collections.singletonList("email"));
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

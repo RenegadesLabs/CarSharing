@@ -14,7 +14,7 @@
         android:layout_margin="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/login"
+        android:text="@string/go_to_login"
         android:textAllCaps="false"
         android:textColor="@color/colorLemon"
         android:textSize="@dimen/text_large"
@@ -34,21 +34,40 @@
         app:layout_constraintTop_toBottomOf="@+id/b_registerGoToLogin" />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/et_emailRegister"
+        android:id="@+id/et_nameRegister"
         style="@style/CardeeLoginEditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="30dp"
-        android:hint="@string/email"
+        android:hint="@string/signup_name_hint"
+        android:imeOptions="actionDone"
         android:inputType="textEmailAddress"
-        android:textColor="@color/colorAccent"
         android:paddingEnd="12dp"
+        android:textColor="@color/colorAccent"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_emailRegister"
+        style="@style/CardeeLoginEditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:hint="@string/email"
+        android:imeOptions="actionDone"
+        android:inputType="textEmailAddress"
+        android:paddingEnd="12dp"
+        android:textColor="@color/colorAccent"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_nameRegister" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/l_registerPassword"
@@ -57,7 +76,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/xlarge_margin"
         android:layout_marginStart="@dimen/xlarge_margin"
-        android:layout_marginTop="@dimen/small_margin"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +87,7 @@
             android:id="@+id/et_passwordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@color/colorAccent" />
@@ -81,7 +100,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/button_white_bg"
         android:text="@string/signup"
         android:textAllCaps="false"
@@ -100,7 +118,6 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/tv_registerTermsOfService"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/b_registerSignup">
 
@@ -131,6 +148,7 @@
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
+            android:visibility="gone"
             app:drawableStartCompat="@drawable/ic_googleplus" />
     </LinearLayout>
 
@@ -145,7 +163,6 @@
         android:gravity="center_horizontal"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_small"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

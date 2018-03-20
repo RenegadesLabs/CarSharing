@@ -22,6 +22,7 @@
     <string name="signup_add_photo">Add a photo of yourself!</string>
     <string name="signup_your_photo">Your photo</string>
     <string name="signup_name">What is your name?</string>
+    <string name="signup_name_hint">Your Name</string>
     <string name="signup_as">Login as</string>
     <string name="signup_terms_by">By signing up, you agree to Cardee\'s </string>
     <string name="signup_terms_terms">Terms of Service</string>
@@ -30,10 +31,12 @@
     <string name="signup_registration_success">You\'re registered successfully!</string>
     <string name="car_renter">Car Renter</string>
     <string name="car_owner">Car Owner</string>
+    <string name="pass_check_error">Password require at least 8 characters, and contain at least one letter and one number</string>
 
     <!--Login-->
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Log In</string>
+    <string name="go_to_login">Go To Login</string>
     <string name="login_process">Logging in…</string>
     <string name="preference_file_key">LOGIN_STORE</string>
     <string name="pass_length_key">PASSWORD_LENGTH</string>
@@ -71,9 +74,9 @@
     <string name="auth_error">Authentication error!</string>
     <string name="auth_wrong_cred">Wrong credentials!</string>
 
-    <string name="auth_facebook">Log in with Facebook</string>
+    <string name="auth_facebook">Log in with facebook</string>
     <string name="auth_google">Log in with Google+</string>
-    <string name="auth_signup_facebook">Sign up with Facebook</string>
+    <string name="auth_signup_facebook">Sign up with facebook</string>
     <string name="auth_signup_google">Sign up with Google+</string>
 
     <!--Bottom menu-->
