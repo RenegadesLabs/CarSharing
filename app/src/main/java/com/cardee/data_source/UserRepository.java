@@ -115,7 +115,7 @@ public class UserRepository implements UserDataSource {
     }
 
     private void pushFcTokenToServer() {
-        if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()){
+        if (AccountManager.getInstance(CardeeApp.context).isFcmTokenAuthenticated()) {
             return;
         }
         PushRequest pushRequest = new PushRequest();
@@ -260,7 +260,7 @@ public class UserRepository implements UserDataSource {
                             .getJSONObject("errors")
                             .getJSONArray("login");
                     loginError = (Error.Message.LOGIN_DO_EXIST.equals(loginErrorObj.getString(0))
-                            ? Error.Message.LOGIN_DO_EXIST : Error.Message.LOGIN_NOT_VALID);
+                            ? Error.Message.LOGIN_DO_EXIST_NEW : Error.Message.LOGIN_NOT_VALID);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

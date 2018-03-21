@@ -20,7 +20,7 @@ public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues,
         String login = values.getLogin();
         String password = values.getPassword();
 
-        if (login == null || password == null) {
+        if (login == null) {
             return;
         }
 
@@ -42,7 +42,7 @@ public class CheckUniqueLogin implements UseCase<CheckUniqueLogin.RequestValues,
         private final String mLogin;
         private final String mPassword;
 
-        public RequestValues(@NonNull String login, @NonNull String password) {
+        public RequestValues(@NonNull String login, String password) {
             mLogin = login;
             mPassword = password;
         }

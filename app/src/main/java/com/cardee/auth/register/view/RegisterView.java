@@ -35,4 +35,8 @@ public interface RegisterView extends BaseView {
     void loginAsRenter();
 
     void loginAsOwner();
+
+    void registerSocial();
+
+    void logOut();
 }

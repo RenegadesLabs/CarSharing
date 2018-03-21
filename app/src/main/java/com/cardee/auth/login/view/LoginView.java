@@ -8,4 +8,7 @@ public interface LoginView extends BaseView {
 
     void onProceedGoogleLogin(String accessToken);
 
+    void onValidationSuccess();
+
+    void logOut();
 }

@@ -21,6 +21,7 @@ import com.cardee.auth.login.presenter.LoginPresenter;
 import com.cardee.auth.pass_recover.send_email.SendEmailActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.RegexHelper;
 import com.facebook.CallbackManager;
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     private LoginButton mButtonFacebook;
 
     private GoogleApiClient mGoogleClient;
+    private LoginResult mLoginResult;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,9 +132,8 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                mLoginResult = loginResult;
                 setFacebookData(loginResult);
-                mPresenter.loginSocial(SocialLoginRequest.FACEBOOK,
-                        loginResult.getAccessToken().getToken());
             }
 
             @Override
@@ -158,6 +159,8 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
                         Log.i("Login" + "Email", email);
                         Log.i("Login" + "FirstName", firstName);
+
+                        mPresenter.checkUniqueLogin(email);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -296,5 +299,18 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     @Override
     public void onProceedGoogleLogin(final String accessToken) {
         runOnUiThread(() -> mPresenter.loginSocial(SocialLoginRequest.GOOGLE, accessToken));
+    }
+
+    @Override
+    public void onValidationSuccess() {
+        if (mLoginResult != null) {
+            mPresenter.loginSocial(SocialLoginRequest.FACEBOOK,
+                    mLoginResult.getAccessToken().getToken());
+        }
+    }
+
+    @Override
+    public void logOut() {
+        AccountManager.getInstance(this).onLogout();
     }
 }

@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.auth.login.view.LoginView;
 import com.cardee.data_source.Error;
-import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
+import com.cardee.domain.owner.usecase.CheckUniqueLogin;
 import com.cardee.domain.user.usecase.Login;
 import com.cardee.domain.user.usecase.SocialLogin;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -113,7 +112,7 @@ public class LoginPresenter {
     public void loginGoogle(GoogleSignInResult result) {
         GoogleSignInAccount acc = result.getSignInAccount();
         if (acc != null) {
-            if (mView != null){
+            if (mView != null) {
                 mView.showProgress(true);
             }
 
@@ -133,7 +132,7 @@ public class LoginPresenter {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    if (mView != null){
+                    if (mView != null) {
                         mView.showProgress(false);
                         mView.showMessage(R.string.auth_error);
                     }
@@ -150,5 +149,26 @@ public class LoginPresenter {
                 }
             });
         }
+    }
+
+    public void checkUniqueLogin(String email) {
+        if (mView != null)
+            mView.showProgress(true);
+
+        mExecutor.execute(new CheckUniqueLogin(), new CheckUniqueLogin.RequestValues(email, null),
+                new UseCase.Callback<CheckUniqueLogin.ResponseValues>() {
+                    @Override
+                    public void onSuccess(CheckUniqueLogin.ResponseValues response) {
+                        mView.showProgress(false);
+                        mView.onValidationSuccess();
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        mView.showProgress(false);
+                        mView.showMessage(error.getMessage());
+                        mView.logOut();
+                    }
+                });
     }
 }

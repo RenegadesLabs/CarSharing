@@ -38,7 +38,7 @@ public class RegisterPresenter {
         mExecutor = UseCaseExecutor.getInstance();
     }
 
-    public void checkUniqueLogin(final String login, final String password, final String name) {
+    public void checkUniqueLogin(final String login, final String password, final String name, final boolean socialLogin) {
         if (mView != null)
             mView.showProgress(true);
 
@@ -47,13 +47,19 @@ public class RegisterPresenter {
                     @Override
                     public void onSuccess(CheckUniqueLogin.ResponseValues response) {
                         mView.showProgress(false);
-                        mView.onValidationSuccess(login, password, name);
+
+                        if (socialLogin) {
+                            mView.registerSocial();
+                        } else {
+                            mView.onValidationSuccess(login, password, name);
+                        }
                     }
 
                     @Override
                     public void onError(Error error) {
                         mView.showProgress(false);
                         mView.showMessage(error.getMessage());
+                        mView.logOut();
                     }
                 });
     }

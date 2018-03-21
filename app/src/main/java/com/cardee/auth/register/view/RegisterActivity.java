@@ -59,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     private ProgressDialog mProgress;
 
     private String mLogin, mPass, mName;
+    private LoginResult mLoginResult;
 
     private GoogleApiClient mGoogleClient;
 
@@ -92,10 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                mLoginResult = loginResult;
                 setFacebookData(loginResult);
-                mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
-                        loginResult.getAccessToken().getToken());
-
             }
 
             @Override
@@ -123,6 +122,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
                         Log.i("Login" + "FirstName", firstName);
 
                         mName = firstName;
+                        mLogin = email;
+
+                        mPresenter.checkUniqueLogin(mLogin, null, null, true);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -131,6 +133,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         parameters.putString("fields", "email,first_name");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+
+    @Override
+    public void registerSocial() {
+        if (mLoginResult != null) {
+            mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
+                    mLoginResult.getAccessToken().getToken());
+        }
+    }
+
+    @Override
+    public void logOut() {
+        AccountManager.getInstance(this).onLogout();
     }
 
     private void initGoogleApi() {
@@ -227,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onSignUp(String login, String password, String name) {
-        mPresenter.checkUniqueLogin(login, password, name);
+        mPresenter.checkUniqueLogin(login, password, name, false);
     }
 
     @Override
@@ -237,7 +253,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onBackToFirstStep() {
-        AccountManager.getInstance(this).onLogout();
+        logOut();
 
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
