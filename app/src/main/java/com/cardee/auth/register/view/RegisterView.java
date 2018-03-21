@@ -29,4 +29,10 @@ public interface RegisterView extends BaseView {
     void onValidationSuccess(String login, String password, String name);
 
     void onRegistrationSuccess(String session);
+
+    void onSignUpSuccess();
+
+    void loginAsRenter();
+
+    void loginAsOwner();
 }

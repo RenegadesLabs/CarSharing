@@ -27,8 +27,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
-
 public class RegisterPresenter {
 
     private RegisterView mView;
@@ -79,6 +77,25 @@ public class RegisterPresenter {
                 });
     }
 
+    public void signUp(String login, String password, String name) {
+        mView.showProgress(true);
+        mExecutor.execute(new Register(), new Register.RequestValues(login, password, null, name),
+                new UseCase.Callback<Register.ResponseValues>() {
+                    @Override
+                    public void onSuccess(Register.ResponseValues response) {
+                        mView.showProgress(false);
+                        mView.showMessage(R.string.signup_registration_success);
+                        mView.onSignUpSuccess();
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        mView.showProgress(false);
+                        mView.showMessage(error.getMessage());
+                    }
+                });
+    }
+
     public void registerSocial(String provider, String token) {
         if (mView != null)
             mView.showProgress(true);
@@ -88,9 +105,7 @@ public class RegisterPresenter {
             public void onSuccess(SocialLogin.ResponseValues response) {
                 if (response.isSuccess()) {
                     mView.showProgress(false);
-
-                    // TODO: implement for renter also;
-                    mView.onRegistrationSuccess(OWNER_SESSION);
+                    mView.onSignUpSuccess();
                 }
             }
 

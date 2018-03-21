@@ -17,6 +17,7 @@ import com.cardee.R;
 import com.cardee.auth.login.view.LoginActivity;
 import com.cardee.auth.register.presenter.RegisterPresenter;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
+import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.renter_home.view.RenterHomeActivity;
@@ -24,13 +25,17 @@ import com.cardee.util.display.ActivityHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.util.Arrays;
 
 import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
 import static com.cardee.data_source.remote.service.AccountManager.RENTER_SESSION;
@@ -83,9 +88,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     private void initFacebookButton() {
         mFacebookCM = CallbackManager.Factory.create();
         mButtonFacebook = new LoginButton(this);
+        mButtonFacebook.setReadPermissions(Arrays.asList("public_profile", "email"));
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                setFacebookData(loginResult);
                 mPresenter.registerSocial(SocialLoginRequest.FACEBOOK,
                         loginResult.getAccessToken().getToken());
 
@@ -102,6 +109,28 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
                 Log.d("REGISTER FACEBOOK", error.getMessage());
             }
         });
+    }
+
+    private void setFacebookData(final LoginResult loginResult) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                (object, response) -> {
+                    try {
+                        String email = response.getJSONObject().getString("email");
+                        String firstName = response.getJSONObject().getString("first_name");
+
+                        Log.i("Login" + "Email", email);
+                        Log.i("Login" + "FirstName", firstName);
+
+                        mName = firstName;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "email,first_name");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
     private void initGoogleApi() {
@@ -208,6 +237,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void onBackToFirstStep() {
+        AccountManager.getInstance(this).onLogout();
+
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
                 .commit();
@@ -253,12 +284,39 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         mName = name;
         ActivityHelper.hideSoftKeyboard(this);
 
+        signUp();
+    }
+
+    private void signUp() {
+        mPresenter.signUp(mLogin, mPass, mName);
+    }
+
+    @Override
+    public void onSignUpSuccess() {
         mFinalStepFragment = RegisterFinalStepFragment.Companion.newInstance(mName);
         mFinalStepFragment.setViewListener(this);
 
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public void loginAsRenter() {
+        mPresenter.setAccountState(RENTER_SESSION);
+        Intent intent = new Intent(this, RenterHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void loginAsOwner() {
+        mPresenter.setAccountState(OWNER_SESSION);
+        Intent intent = new Intent(this, OwnerHomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override

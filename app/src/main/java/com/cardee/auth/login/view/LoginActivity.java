@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -21,16 +22,20 @@ import com.cardee.auth.pass_recover.send_email.SendEmailActivity;
 import com.cardee.auth.register.view.RegisterActivity;
 import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.owner_home.view.OwnerHomeActivity;
+import com.cardee.util.RegexHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.Collections;
+import org.json.JSONException;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +75,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         initProgress();
         initFacebookApi();
         initGoogleApi();
-        initEditText();
+        initEditTexts();
     }
 
     @OnClick(R.id.b_loginGoToRegister)
@@ -82,8 +87,10 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     @OnClick(R.id.b_loginLogin)
     public void onLoginClicked() {
         if (isFieldsNotEmpty()) {
-            mPresenter.login(loginEmailEdit.getText().toString(),
-                    loginPassEdit.getText().toString());
+            if (checkFields()) {
+                mPresenter.login(loginEmailEdit.getText().toString(),
+                        loginPassEdit.getText().toString());
+            }
         }
     }
 
@@ -119,10 +126,11 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     private void initFacebookApi() {
         mFacebookCM = CallbackManager.Factory.create();
         mButtonFacebook = new LoginButton(this);
-        mButtonFacebook.setReadPermissions(Collections.singletonList("email"));
+        mButtonFacebook.setReadPermissions(Arrays.asList("public_profile", "email"));
         mButtonFacebook.registerCallback(mFacebookCM, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                setFacebookData(loginResult);
                 mPresenter.loginSocial(SocialLoginRequest.FACEBOOK,
                         loginResult.getAccessToken().getToken());
             }
@@ -140,21 +148,44 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     }
 
+    private void setFacebookData(final LoginResult loginResult) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                (object, response) -> {
+                    try {
+                        String email = response.getJSONObject().getString("email");
+                        String firstName = response.getJSONObject().getString("first_name");
+
+                        Log.i("Login" + "Email", email);
+                        Log.i("Login" + "FirstName", firstName);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "email,first_name");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
     private void initGoogleApi() {
         mGoogleClient = CardeeApp.initLoginGoogleApi(this,
                 connectionResult -> showMessage(connectionResult.getErrorMessage()));
     }
 
-    private void initEditText() {
+    private void initEditTexts() {
+        initEmail();
+        initPass();
+    }
+
+    private void initEmail() {
         loginEmailEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -162,7 +193,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
                 if (editable.toString().equals("")) {
                     loginEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 } else {
-                    loginEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+                    loginEmailEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_clear_button_transparent, 0);
                 }
             }
         });
@@ -186,17 +217,45 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
         });
     }
 
+    private void initPass() {
+        loginPassEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!loginPassLayout.isPasswordVisibilityToggleEnabled()) {
+                    loginPassLayout.setPasswordVisibilityToggleEnabled(true);
+                }
+            }
+        });
+    }
+
     private boolean isFieldsNotEmpty() {
         String err = getResources().getString(R.string.email_pass_empty_error);
         if (loginEmailEdit.getText().toString().equals("")) {
             loginEmailEdit.setError(err);
             return false;
         } else if (loginPassEdit.getText().toString().equals("")) {
-            loginPassLayout.setError(err);
+            loginPassLayout.setPasswordVisibilityToggleEnabled(false);
+            loginPassEdit.setError(err);
             return false;
         } else {
             return true;
         }
+    }
+
+    private boolean checkFields() {
+        if (!loginEmailEdit.getText().toString().matches(RegexHelper.INSTANCE.getEmailRegex().getPattern())) {
+            loginEmailEdit.setError(getResources().getString(R.string.email_invalid_error));
+            return false;
+        }
+        return true;
     }
 
     private void initProgress() {

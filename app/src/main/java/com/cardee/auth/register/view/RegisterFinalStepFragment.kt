@@ -99,10 +99,10 @@ class RegisterFinalStepFragment : Fragment() {
 //        })
 
         loginAsRenter.setOnClickListener {
-            mViewListener?.onSignUpAsRenter(mNameText, null)
+            mViewListener?.loginAsRenter()
         }
         loginAsOwner.setOnClickListener {
-            mViewListener?.onSignUpAsOwner(mNameText, null)
+            mViewListener?.loginAsOwner()
         }
     }
 

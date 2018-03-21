@@ -17,6 +17,7 @@
 
     <!--Sign UP-->
     <string name="signup">Sign Up</string>
+    <string name="go_to_signup">Go To Sign Up</string>
     <string name="signup_starter">Hello! Sign up to get started.</string>
     <string name="signup_almost">Almost done!</string>
     <string name="signup_add_photo">Add a photo of yourself!</string>

@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.cardee.R
+import com.cardee.util.RegexHelper
 import kotlinx.android.synthetic.main.fragment_register_first.*
 
 class RegisterFirstStepFragment : Fragment() {
@@ -23,9 +24,6 @@ class RegisterFirstStepFragment : Fragment() {
     companion object {
         const val TAG = "RegisterFirstStepFragment"
     }
-
-    private val passRegex: Regex = Regex("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+\$).{8,}\$")
-    private val emailRegex: Regex = Regex("^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}\$")
 
     private var regEmailEdit: AppCompatEditText? = null
     private var regPassEdit: AppCompatEditText? = null
@@ -91,11 +89,11 @@ class RegisterFirstStepFragment : Fragment() {
 
     private fun checkFields(): Boolean {
         return when {
-            et_emailRegister?.text.toString().matches(emailRegex).not() -> {
+            et_emailRegister?.text.toString().matches(RegexHelper.emailRegex).not() -> {
                 et_emailRegister?.error = resources.getString(R.string.email_invalid_error)
                 false
             }
-            regPassEdit?.text.toString().matches(passRegex).not() -> {
+            regPassEdit?.text.toString().matches(RegexHelper.passRegex).not() -> {
                 l_registerPassword.isPasswordVisibilityToggleEnabled = false
                 regPassEdit?.error = getString(R.string.pass_check_error)
                 false
