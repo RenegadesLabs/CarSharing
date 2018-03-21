@@ -8,7 +8,7 @@ public interface RegisterView extends BaseView {
 
     void onLogin();
 
-    void onSignUp(String login, String password);
+    void onSignUp(String login, String password, String name);
 
     void onFacebook();
 
@@ -26,7 +26,7 @@ public interface RegisterView extends BaseView {
 
     void onSignUpAsRenter(String name, File picture);
 
-    void onValidationSuccess(String login, String password);
+    void onValidationSuccess(String login, String password, String name);
 
     void onRegistrationSuccess(String session);
 }

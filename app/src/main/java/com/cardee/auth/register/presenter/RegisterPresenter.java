@@ -40,7 +40,7 @@ public class RegisterPresenter {
         mExecutor = UseCaseExecutor.getInstance();
     }
 
-    public void checkUniqueLogin(final String login, final String password) {
+    public void checkUniqueLogin(final String login, final String password, final String name) {
         if (mView != null)
             mView.showProgress(true);
 
@@ -49,7 +49,7 @@ public class RegisterPresenter {
                     @Override
                     public void onSuccess(CheckUniqueLogin.ResponseValues response) {
                         mView.showProgress(false);
-                        mView.onValidationSuccess(login, password);
+                        mView.onValidationSuccess(login, password, name);
                     }
 
                     @Override

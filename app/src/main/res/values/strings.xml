@@ -23,6 +23,8 @@
     <string name="signup_your_photo">Your photo</string>
     <string name="signup_name">What is your name?</string>
     <string name="signup_name_hint">Your Name</string>
+    <string name="signup_what_now">What would you like to do now?</string>
+    <string name="signup_acc_created_template">Hi %s, your account has been created!</string>
     <string name="signup_as">Login as</string>
     <string name="signup_terms_by">By signing up, you agree to Cardee\'s </string>
     <string name="signup_terms_terms">Terms of Service</string>
@@ -32,6 +34,8 @@
     <string name="car_renter">Car Renter</string>
     <string name="car_owner">Car Owner</string>
     <string name="pass_check_error">Password require at least 8 characters, and contain at least one letter and one number</string>
+    <string name="login_as_renter">Login As Car Renter</string>
+    <string name="login_as_owner">Login As Car Owner</string>
 
     <!--Login-->
     <string name="login_forgot">Forgot your password?</string>

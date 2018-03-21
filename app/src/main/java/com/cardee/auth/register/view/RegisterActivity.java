@@ -3,10 +3,8 @@ package com.cardee.auth.register.view;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,7 +31,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
-import java.io.IOException;
 
 import static com.cardee.data_source.remote.service.AccountManager.OWNER_SESSION;
 import static com.cardee.data_source.remote.service.AccountManager.RENTER_SESSION;
@@ -77,9 +74,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
         mFirstStepFragment = new RegisterFirstStepFragment();
         mFirstStepFragment.setViewListener(this);
-
-        mFinalStepFragment = new RegisterFinalStepFragment();
-        mFinalStepFragment.setViewListener(this);
 
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFirstStepFragment)
@@ -145,29 +139,29 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         super.onActivityResult(requestCode, resultCode, data);
         mFacebookCM.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case ActivityHelper.PICK_IMAGE:
-                if (resultCode == RESULT_OK && data.getData() != null) {
-                    if (data.getExtras() != null) {
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                            if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
-                                mFinalStepFragment.setUserPhoto(bitmap);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                break;
-            case CROP_IMAGE:
-                if (data.getExtras() != null) {
-                    Bundle extras = data.getExtras();
-                    Bitmap bitmap = extras.getParcelable("data");
-                    if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
-                        mFinalStepFragment.setUserPhoto(bitmap);
-                    }
-                }
-                break;
+//            case ActivityHelper.PICK_IMAGE:
+//                if (resultCode == RESULT_OK && data.getData() != null) {
+//                    if (data.getExtras() != null) {
+//                        try {
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+//                            if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
+//                                mFinalStepFragment.setUserPhoto(bitmap);
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//                break;
+//            case CROP_IMAGE:
+//                if (data.getExtras() != null) {
+//                    Bundle extras = data.getExtras();
+//                    Bitmap bitmap = extras.getParcelable("data");
+//                    if (mFinalStepFragment != null && mFinalStepFragment.isVisible()) {
+//                        mFinalStepFragment.setUserPhoto(bitmap);
+//                    }
+//                }
+//                break;
             case RC_SIGN_IN:
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 if (result.isSuccess()) {
@@ -203,8 +197,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     }
 
     @Override
-    public void onSignUp(String login, String password) {
-        mPresenter.checkUniqueLogin(login, password);
+    public void onSignUp(String login, String password, String name) {
+        mPresenter.checkUniqueLogin(login, password, name);
     }
 
     @Override
@@ -253,10 +247,15 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     }
 
     @Override
-    public void onValidationSuccess(String login, String password) {
+    public void onValidationSuccess(String login, String password, String name) {
         mLogin = login;
         mPass = password;
+        mName = name;
         ActivityHelper.hideSoftKeyboard(this);
+
+        mFinalStepFragment = RegisterFinalStepFragment.Companion.newInstance(mName);
+        mFinalStepFragment.setViewListener(this);
+
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mFinalStepFragment, RegisterFinalStepFragment.TAG)
                 .commit();

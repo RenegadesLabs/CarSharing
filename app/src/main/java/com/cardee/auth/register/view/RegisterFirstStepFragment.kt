@@ -76,7 +76,7 @@ class RegisterFirstStepFragment : Fragment() {
         b_registerSignup.setOnClickListener {
             if (mViewListener != null && isFieldsNotEmpty)
                 if (checkFields()) {
-                    mViewListener?.onSignUp(regEmailEdit?.text.toString(), regPassEdit?.text.toString())
+                    mViewListener?.onSignUp(regEmailEdit?.text.toString(), regPassEdit?.text.toString(), et_nameRegister?.text.toString())
                 }
         }
 
