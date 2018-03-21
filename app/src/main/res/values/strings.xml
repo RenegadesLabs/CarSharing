@@ -71,6 +71,10 @@
     <string name="yes">Yes</string>
 
     <string name="email_pass_empty_error">You must fill this field</string>
+    <string name="email_empty_error">Email cannot be empty</string>
+    <string name="pass_empty_error">Password cannot be empty</string>
+    <string name="name_empty_error">Name cannot be empty</string>
+    <string name="email_invalid_error">Invalid email format</string>
     <string name="auth_error">Authentication error!</string>
     <string name="auth_wrong_cred">Wrong credentials!</string>
 

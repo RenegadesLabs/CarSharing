@@ -21,32 +21,32 @@ import kotlinx.android.synthetic.main.fragment_register_first.*
 class RegisterFirstStepFragment : Fragment() {
 
     companion object {
-        val TAG = "RegisterFirstStepFragment"
+        const val TAG = "RegisterFirstStepFragment"
     }
 
-    val passRegex: Regex = Regex("^(?=.*[0-9])(?=.*[a-z,A-Z])(?=\\S+\$).{8,}\$")
+    private val passRegex: Regex = Regex("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+\$).{8,}\$")
+    private val emailRegex: Regex = Regex("^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}\$")
 
-    var regEmailEdit: AppCompatEditText? = null
-    var regPassEdit: AppCompatEditText? = null
-    var regTermsOfServiceTV: TextView? = null
+    private var regEmailEdit: AppCompatEditText? = null
+    private var regPassEdit: AppCompatEditText? = null
+    private var regTermsOfServiceTV: TextView? = null
 
     private var mViewListener: RegisterView? = null
 
     private val isFieldsNotEmpty: Boolean
         get() {
-            val err = resources.getString(R.string.email_pass_empty_error)
             return when {
                 et_nameRegister.text.toString().isBlank() -> {
-                    et_nameRegister.error = err
+                    et_nameRegister.error = resources.getString(R.string.name_empty_error)
                     false
                 }
                 regEmailEdit?.text.toString().isBlank() -> {
-                    regEmailEdit?.error = err
+                    regEmailEdit?.error = resources.getString(R.string.email_empty_error)
                     false
                 }
                 regPassEdit?.text.toString().isBlank() -> {
                     l_registerPassword.isPasswordVisibilityToggleEnabled = false
-                    regPassEdit?.error = err
+                    regPassEdit?.error = resources.getString(R.string.pass_empty_error)
                     false
                 }
                 else -> true
@@ -91,6 +91,10 @@ class RegisterFirstStepFragment : Fragment() {
 
     private fun checkFields(): Boolean {
         return when {
+            et_emailRegister?.text.toString().matches(emailRegex).not() -> {
+                et_emailRegister?.error = resources.getString(R.string.email_invalid_error)
+                false
+            }
             regPassEdit?.text.toString().matches(passRegex).not() -> {
                 l_registerPassword.isPasswordVisibilityToggleEnabled = false
                 regPassEdit?.error = getString(R.string.pass_check_error)
@@ -154,7 +158,7 @@ class RegisterFirstStepFragment : Fragment() {
                 if (editable.toString() == "") {
                     et_nameRegister!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 } else {
-                    et_nameRegister!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0)
+                    et_nameRegister!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_clear_button_transparent, 0)
                 }
             }
         })
@@ -188,7 +192,7 @@ class RegisterFirstStepFragment : Fragment() {
                 if (editable.toString() == "") {
                     et_emailRegister?.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 } else {
-                    et_emailRegister?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0)
+                    et_emailRegister?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_clear_button_transparent, 0)
                 }
             }
         })

@@ -215,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     @Override
     public void onBackToFirstStep() {
         mFragmentManager.beginTransaction()
-                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.Companion.getTAG())
+                .replace(R.id.container, mFirstStepFragment, RegisterFirstStepFragment.TAG)
                 .commit();
     }
 
