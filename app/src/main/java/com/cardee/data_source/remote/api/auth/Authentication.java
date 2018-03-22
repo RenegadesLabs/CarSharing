@@ -31,7 +31,7 @@ public interface Authentication {
 
     @POST("auth/login")
     @Headers("Content-Type: application/json")
-    Observable<BaseAuthResponse> login(@Body LoginRequest request);
+    Call<BaseAuthResponse> login(@Body LoginRequest request);
 
     @POST("auth/login_social")
     @Headers("Content-Type: application/json")

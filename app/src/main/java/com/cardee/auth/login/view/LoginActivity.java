@@ -24,6 +24,7 @@ import com.cardee.data_source.remote.api.auth.request.SocialLoginRequest;
 import com.cardee.data_source.remote.service.AccountManager;
 import com.cardee.owner_home.view.OwnerHomeActivity;
 import com.cardee.util.RegexHelper;
+import com.cardee.util.display.ActivityHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     private GoogleApiClient mGoogleClient;
     private LoginResult mLoginResult;
+    private Toast currentToast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +92,7 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
     public void onLoginClicked() {
         if (isFieldsNotEmpty()) {
             if (checkFields()) {
+                ActivityHelper.hideSoftKeyboard(this);
                 mPresenter.login(loginEmailEdit.getText().toString(),
                         loginPassEdit.getText().toString());
             }
@@ -160,7 +163,8 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
                         Log.i("Login" + "Email", email);
                         Log.i("Login" + "FirstName", firstName);
 
-                        mPresenter.checkUniqueLogin(email);
+//                        mPresenter.checkUniqueLogin(email);
+                        onValidationSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -280,12 +284,20 @@ public class LoginActivity extends AppCompatActivity /*FragmentActivity*/ implem
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        currentToast.show();
     }
 
     @Override
     public void showMessage(int messageId) {
-        Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show();
+        if (currentToast != null) {
+            currentToast.cancel();
+        }
+        currentToast = Toast.makeText(this, messageId, Toast.LENGTH_SHORT);
+        currentToast.show();
     }
 
     @Override

@@ -65,11 +65,12 @@ public class LoginPresenter {
             @Override
             public void onError(Error error) {
                 mView.showProgress(false);
-                if (error.getErrorType() == Error.Type.WRONG_CREDENTIALS) {
-                    mView.showMessage(R.string.auth_wrong_cred);
-                } else {
-                    mView.showMessage(R.string.auth_error);
-                }
+                mView.showMessage(error.getMessage());
+//                if (error.getErrorType() == Error.Type.WRONG_CREDENTIALS) {
+//                    mView.showMessage(R.string.auth_wrong_cred);
+//                } else {
+//                    mView.showMessage(R.string.auth_error);
+//                }
             }
         });
 

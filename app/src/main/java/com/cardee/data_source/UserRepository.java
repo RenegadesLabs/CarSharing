@@ -54,29 +54,29 @@ public class UserRepository implements UserDataSource {
         LoginRequest req = new LoginRequest();
         req.setLogin(login);
         req.setPassword(password);
-        Observable<BaseAuthResponse> ob = api.login(req);
-        ob.subscribeWith(new DisposableObserver<BaseAuthResponse>() {
+        api.login(req).enqueue(new retrofit2.Callback<BaseAuthResponse>() {
             @Override
-            public void onNext(BaseAuthResponse baseAuthResponse) {
-                if (baseAuthResponse.getSuccess()) {
-                    AccountManager.getInstance(CardeeApp.context).saveToken(baseAuthResponse.getBody().getToken());
+            public void onResponse(Call<BaseAuthResponse> call, Response<BaseAuthResponse> response) {
+                if (response.isSuccessful()) {
+                    AccountManager.getInstance(CardeeApp.context).saveToken(response.body().getBody().getToken());
                     pushFcTokenToServer();
+                    callback.onSuccess(response.isSuccessful());
+                    return;
                 }
-                callback.onSuccess(baseAuthResponse.getSuccess());
+                try {
+                    handleErrors(response.code(), new JSONObject(response.errorBody().string()), callback);
+                } catch (JSONException | IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onFailure(Call<BaseAuthResponse> call, Throwable e) {
                 if (Error.Message.WRONG_CREDENTIALS.equals(e.getMessage())) {
                     callback.onError(new Error(Error.Type.WRONG_CREDENTIALS, e.getMessage()));
                     return;
                 }
                 callback.onError(new Error(Error.Type.AUTHORIZATION, e.getMessage()));
-            }
-
-            @Override
-            public void onComplete() {
-
             }
         });
     }

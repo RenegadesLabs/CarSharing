@@ -46,6 +46,7 @@
     <string name="preference_file_key">LOGIN_STORE</string>
     <string name="pass_length_key">PASSWORD_LENGTH</string>
     <string name="social_logged_key">SOCIAL_LOGIN</string>
+    <string name="acc_exists">Account already exists</string>
 
     <!--Send Email Password Recover-->
     <string name="send_email_title">Forgot Password</string>

@@ -28,7 +28,7 @@ public class Error {
         public final static String LOGIN_NOT_VALID = "Not a valid login";
 
         public final static String LOGIN_DO_EXIST = "Login do exist, please choose another one.";
-        public final static String LOGIN_DO_EXIST_NEW = "Account already exists exist";
+        public final static String LOGIN_DO_EXIST_NEW = CardeeApp.context.getString(R.string.acc_exists);
 
         public final static String PASSWORD_LENGTH = "Length must be between 3 and 36.";
 

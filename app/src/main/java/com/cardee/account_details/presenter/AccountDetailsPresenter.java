@@ -27,14 +27,11 @@ import com.cardee.domain.rx.Response;
 import com.cardee.domain.rx.balance.FetchDepositBalance;
 
 import org.jetbrains.annotations.NotNull;
-import org.reactivestreams.Subscriber;
 
 import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import kotlin.Unit;
 
 public class AccountDetailsPresenter {
 
@@ -94,15 +91,17 @@ public class AccountDetailsPresenter {
                             mView.hidePassword();
                         }
                     }
-                }
 
-                mView.showProgress(false);
+                    mView.showProgress(false);
+                }
             }
 
             @Override
             public void onError(Error error) {
-                mView.showProgress(false);
-                mView.showMessage(error.getMessage());
+                if (mView != null) {
+                    mView.showProgress(false);
+                    mView.showMessage(error.getMessage());
+                }
             }
         });
     }
