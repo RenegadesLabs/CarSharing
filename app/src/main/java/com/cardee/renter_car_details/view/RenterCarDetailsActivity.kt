@@ -60,6 +60,29 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
         const val PERIOD_REQUEST_CODE = 911
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_renter_car_details)
+
+        presenter.attachView(this)
+        init(this)
+        getData()
+        doOnConnect { requestCurrentLocation() }
+        setSupportActionBar(toolbar)
+        mapTouchWrapper.disableOnTouch(lockableScrollView)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = null
+        }
+        viewHolder = RenterCarDetailsViewHolder(this)
+        carLocationMap?.run {
+            onCreate(savedInstanceState)
+            getMapAsync(this@RenterCarDetailsActivity)
+        }
+        setListeners()
+        initMarkerBitmap()
+    }
+
     override fun onClick(p0: View?) {
         when (p0) {
             ivRenterCarDetailsToolbarShare -> {
@@ -103,30 +126,6 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
                 overridePendingTransition(R.anim.enter_up, 0)
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_renter_car_details)
-        presenter.attachView(this)
-        init(this)
-        getData()
-        doOnConnect { requestCurrentLocation() }
-        setSupportActionBar(toolbar)
-        mapTouchWrapper.disableOnTouch(lockableScrollView)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title = null
-        }
-        viewHolder = RenterCarDetailsViewHolder(this)
-        carLocationMap?.run {
-            onCreate(savedInstanceState)
-            getMapAsync(this@RenterCarDetailsActivity)
-        }
-        setListeners()
-        initMarkerBitmap()
-
-        presenter.getDetailedCar(mCarId)
     }
 
     private fun initMarkerBitmap() {
@@ -202,6 +201,7 @@ class RenterCarDetailsActivity(private val delegate: LocationClient = LocationCl
     override fun onStart() {
         super.onStart()
         carLocationMap.onStart()
+        presenter.getDetailedCar(mCarId)
     }
 
     override fun onResume() {

@@ -43,30 +43,24 @@ class OwnerProfileInfoPresenter(val mView: ProfileInfoView?) : Consumer<Car> {
     }
 
     fun getOwnerById(profileId: Int) {
-        mView?.showProgress(true)
         mExecutor.execute(mGetInfoById, GetOwnerInfoById.RequestValues(profileId), object : UseCase.Callback<GetOwnerInfoById.ResponseValues> {
             override fun onSuccess(response: GetOwnerInfoById.ResponseValues?) {
                 setProfileFields(response)
-                mView?.showProgress(false)
             }
 
             override fun onError(error: Error?) {
-                mView?.showProgress(false)
                 mView?.showMessage(error?.message)
             }
         })
     }
 
     fun getOwnerInfo() {
-        mView?.showProgress(true)
         mExecutor.execute(mGetInfoUseCase, null, object : UseCase.Callback<GetOwnerInfo.ResponseValues> {
             override fun onSuccess(response: GetOwnerInfo.ResponseValues?) {
-                mView?.showProgress(false)
                 setProfileFields(response)
             }
 
             override fun onError(error: Error?) {
-                mView?.showProgress(false)
                 mView?.showMessage(error?.message)
             }
         })

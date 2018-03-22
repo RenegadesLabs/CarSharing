@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.support.annotation.DrawableRes
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v4.view.PagerAdapter
 import android.text.Spannable
 import android.text.SpannableString
@@ -365,7 +367,10 @@ class RenterCarDetailsViewHolder(private val mActivity: RenterCarDetailsActivity
             val intent = Intent(mActivity, OwnerProfileInfoActivity::class.java)
             intent.putExtra("editable", false)
             intent.putExtra("profile_id", renterDetailedCar?.owner?.profileId)
-            mActivity.startActivity(intent)
+            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    mActivity, Pair.create(
+                    mActivity.ivRenterCarDetailsOwnerPicture, "profile_photo"))
+            mActivity.startActivity(intent, optionsCompat.toBundle())
         }
     }
 

@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,7 +110,9 @@ public class OwnerProfileFragment extends Fragment implements OwnerProfileContra
     public void openOwnerProfile() {
         Intent intent = new Intent(getActivity(), OwnerProfileInfoActivity.class);
         intent.putExtra("editable", true);
-        startActivityForResult(intent, GET_PICTURE_REQUEST);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), new Pair<View, String>(mProfileImage, "profile_photo"));
+        startActivityForResult(intent, GET_PICTURE_REQUEST, options.toBundle());
     }
 
     @Override

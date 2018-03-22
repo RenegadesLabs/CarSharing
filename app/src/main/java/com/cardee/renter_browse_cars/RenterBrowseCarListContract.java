@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.cardee.R;
 import com.cardee.domain.renter.entity.BrowseCarsFilter;
-import com.cardee.custom.modal.SortRenterOffersDialog;
 import com.cardee.domain.renter.entity.OfferCar;
 import com.cardee.mvp.BaseView;
 

@@ -1,8 +1,10 @@
 package com.cardee.renter_browse_cars.presenter
 
 import android.content.Intent
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.util.Pair
 import com.cardee.custom.modal.SortRenterOffersDialog
 import com.cardee.custom.modal.TypeRenterOffersDialog
 import com.cardee.data_source.Error

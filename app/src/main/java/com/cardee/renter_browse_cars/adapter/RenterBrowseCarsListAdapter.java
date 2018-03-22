@@ -197,7 +197,8 @@ public class RenterBrowseCarsListAdapter
             mInstant.setVisibility(model.isInstantBooking() ? View.VISIBLE : View.GONE);
             mCurbside.setVisibility(model.isCurbsideDelivery() ? View.VISIBLE : View.GONE);
             mPrimaryCarImage.setOnClickListener(view ->
-                    observable.onNext(new RenterBrowseCarListContract.CarEvent(model, RenterBrowseCarListContract.Action.OPEN)));
+                    observable.onNext(new RenterBrowseCarListContract.CarEvent(
+                            model, RenterBrowseCarListContract.Action.OPEN)));
         }
 
         private void setPricePeriod(TextView period, BrowseCarsFilter filter) {

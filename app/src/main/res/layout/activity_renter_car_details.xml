@@ -351,6 +351,7 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_marginStart="@dimen/medium_margin"
+                    android:transitionName="profile_photo"
                     android:layout_marginTop="@dimen/large_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider2" />

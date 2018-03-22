@@ -44,7 +44,6 @@ public class RenterProfilePresenter {
     }
 
     public void getRenterProfile() {
-        mView.showProgress(true);
         mExecutor.execute(mGetProfileUseCase, null, new UseCase.Callback<GetRenterProfile.ResponseValues>() {
             @Override
             public void onSuccess(GetRenterProfile.ResponseValues response) {
@@ -52,12 +51,10 @@ public class RenterProfilePresenter {
                 if (profile != null) {
                     setProfile(profile);
                 }
-                mView.showProgress(false);
             }
 
             @Override
             public void onError(Error error) {
-                mView.showProgress(false);
                 mView.showMessage(error.getMessage());
             }
         });
