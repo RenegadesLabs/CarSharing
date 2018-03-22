@@ -83,15 +83,15 @@ public class OwnerCarDetailsActivity extends AppCompatActivity
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        switch (tab.getPosition()) {
-            case 2:
-                mBtnRequests.setVisibility(View.GONE);
-                break;
-            default:
-                if (mBtnRequests.getVisibility() != View.VISIBLE) {
-                    mBtnRequests.setVisibility(View.VISIBLE);
-                }
-        }
+//        switch (tab.getPosition()) {
+//            case 2:
+//                mBtnRequests.setVisibility(View.GONE);
+//                break;
+//            default:
+//                if (mBtnRequests.getVisibility() != View.VISIBLE) {
+//                    mBtnRequests.setVisibility(View.VISIBLE);
+//                }
+//        }
     }
 
     @Override
