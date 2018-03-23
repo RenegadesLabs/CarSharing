@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -122,7 +124,6 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         initAdapters();
         initCarList(mCarsListView);
         initReviewList(mReviewsListView);
-        initEditableState();
 
         if (mEditable) {
             mPresenter.getOwnerInfo();
@@ -133,20 +134,36 @@ public class OwnerProfileInfoActivity extends AppCompatActivity implements Profi
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initEditableState();
+        initPhotoEditButton();
+    }
+
     private void initEditableState() {
         if (mEditable) {
-            mProfilePhotoEdit.setVisibility(View.VISIBLE);
-            mProfilePhotoEdit.setOnClickListener(view -> verifyPermissionAndChangeImage());
             mNoteEdit.setVisibility(View.VISIBLE);
             mNoteEdit.setOnClickListener(view -> mPresenter.changeNote(OwnerProfileInfoActivity.this));
             mCarsCard.setVisibility(View.VISIBLE);
         } else {
-            mProfilePhotoEdit.setOnClickListener(null);
-            mProfilePhotoEdit.setVisibility(View.GONE);
             mNoteEdit.setOnClickListener(null);
             mNoteEdit.setVisibility(View.GONE);
             mCarsCard.setVisibility(View.GONE);
         }
+    }
+
+    private void initPhotoEditButton() {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (mEditable) {
+                mProfilePhotoEdit.setVisibility(View.VISIBLE);
+                mProfilePhotoEdit.setOnClickListener(view -> verifyPermissionAndChangeImage());
+            } else {
+                mProfilePhotoEdit.setOnClickListener(null);
+                mProfilePhotoEdit.setVisibility(View.GONE);
+            }
+        }, 500);
+
     }
 
     private void getIntentExtras() {
