@@ -21,6 +21,7 @@ import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingCount;
 import com.cardee.data_source.remote.api.common.entity.InstantBookingEntity;
+import com.cardee.data_source.remote.api.common.entity.MinRentalDurationEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
@@ -184,6 +185,36 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
     public void updateRentalRatesHourly(Integer id, RentalRatesEntity ratesEntity, Callback callback) {
         try {
             Response<BaseResponse> response = carsApi.updateRentalRatesHourly(id, ratesEntity).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateMinRentDaily(Integer id, MinRentalDurationEntity durationEntity, final Callback callback) {
+        try {
+            Response<BaseResponse> response = carsApi.updateMinDurationDaily(id, durationEntity).execute();
+            if (response.isSuccessful()) {
+                callback.onSuccess();
+                return;
+            }
+            handleErrorResponse(response.body(), callback);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateMinRentHourly(Integer id, MinRentalDurationEntity durationEntity, final Callback callback) {
+        try {
+            Response<BaseResponse> response = carsApi.updateMinDurationHourly(id, durationEntity).execute();
             if (response.isSuccessful()) {
                 callback.onSuccess();
                 return;

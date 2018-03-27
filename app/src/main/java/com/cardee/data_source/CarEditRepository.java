@@ -11,6 +11,7 @@ import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.FuelPolicyEntity;
+import com.cardee.data_source.remote.api.common.entity.MinRentalDurationEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalRatesEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsAdditionalEntity;
 import com.cardee.data_source.remote.api.common.entity.RentalTermsInsuranceEntity;
@@ -181,6 +182,44 @@ public class CarEditRepository implements CarEditDataSource {
             return;
         }
         remoteDataSource.updateRentalRatesDaily(id, ratesEntity, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateMinRentHourly(Integer id, MinRentalDurationEntity durationEntity, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateMinRentHourly(id, durationEntity, new Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError(Error error) {
+                callback.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void updateMinRentDaily(Integer id, MinRentalDurationEntity durationEntity, final Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateMinRentDaily(id, durationEntity, new Callback() {
             @Override
             public void onSuccess() {
                 callback.onSuccess();

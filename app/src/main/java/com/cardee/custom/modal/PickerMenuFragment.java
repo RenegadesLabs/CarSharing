@@ -51,7 +51,8 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
 
     public enum Mode {
         YEAR_OF_MANUFACTURE, SEATING_CAPACITY, ENGINE_CAPACITY,
-        TRANSMISSION, BODY_TYPE, DRIVING_EXPERIENCE
+        TRANSMISSION, BODY_TYPE, DRIVING_EXPERIENCE, MINIMUM_RENTAL_DURATION_DAILY,
+        MINIMUM_RENTAL_DURATION_HOURLY
     }
 
     public interface DialogOnClickListener {
@@ -86,6 +87,12 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
                 break;
             case DRIVING_EXPERIENCE:
                 mValues = initExpValuesArray();
+                break;
+            case MINIMUM_RENTAL_DURATION_DAILY:
+                mValues = initMinRentDurationDays();
+                break;
+            case MINIMUM_RENTAL_DURATION_HOURLY:
+                mValues = initMinRentDurationHours();
                 break;
         }
         return fragment;
@@ -142,6 +149,12 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
                 break;
             case DRIVING_EXPERIENCE:
                 title.setText(R.string.car_rental_terms_requirements_experience);
+                break;
+            case MINIMUM_RENTAL_DURATION_DAILY:
+                title.setText(R.string.car_rental_info_minimum_booking_daily);
+                break;
+            case MINIMUM_RENTAL_DURATION_HOURLY:
+                title.setText(R.string.car_rental_info_minimum_booking_hourly);
                 break;
         }
 
@@ -225,6 +238,34 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
         for (int i = 0; i < hours.length; i++) {
             hours[i] = i;
             if (i == 1) {
+                values.add(String.valueOf(hours[i] + " hour"));
+            } else {
+                values.add(String.valueOf(hours[i] + " hours"));
+            }
+        }
+        return values.toArray(new String[values.size()]);
+    }
+
+    private static String[] initMinRentDurationDays() {
+        int[] days = new int[7];
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < days.length; i++) {
+            days[i] = i + 1;
+            if (i == 0) {
+                values.add(String.valueOf(days[i] + " day"));
+            } else {
+                values.add(String.valueOf(days[i] + " days"));
+            }
+        }
+        return values.toArray(new String[values.size()]);
+    }
+
+    private static String[] initMinRentDurationHours() {
+        int[] hours = new int[7];
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < hours.length; i++) {
+            hours[i] = i + 1;
+            if (i == 0) {
                 values.add(String.valueOf(hours[i] + " hour"));
             } else {
                 values.add(String.valueOf(hours[i] + " hours"));

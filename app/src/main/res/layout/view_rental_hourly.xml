@@ -185,7 +185,7 @@
                     android:id="@+id/iv_rentalHelp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="18dp"
+                    android:layout_marginStart="4dp"
                     app:layout_constraintBottom_toBottomOf="@id/icon_settings"
                     app:layout_constraintStart_toEndOf="@+id/settings_h"
                     app:layout_constraintTop_toTopOf="@id/icon_settings"
@@ -216,6 +216,7 @@
                     android:id="@+id/sw_rentalInstant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
                     android:theme="@style/Switch"
                     app:layout_constraintBottom_toBottomOf="@id/instant_booking"
                     app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp"
@@ -242,47 +243,83 @@
                     android:background="@color/divider"
                     app:layout_constraintTop_toBottomOf="@id/instant_booking" />
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/icon_curbside"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_margin="@dimen/large_margin"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/div3"
-                    app:srcCompat="@drawable/ic_curbside" />
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                <!--android:id="@+id/icon_curbside"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_margin="@dimen/large_margin"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/div3"-->
+                <!--app:srcCompat="@drawable/ic_curbside" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/curbside_delivery"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/large_margin"-->
+                <!--android:text="@string/car_rental_info_delivery"-->
+                <!--android:textColor="@color/text_regular"-->
+                <!--android:textSize="@dimen/text_regular"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintStart_toStartOf="@id/settings"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/div3" />-->
+
+                <!--<android.support.v7.widget.SwitchCompat-->
+                <!--android:id="@+id/sw_rentalDelivery"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:theme="@style/Switch"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/curbside_delivery"-->
+                <!--app:layout_constraintStart_toStartOf="@id/iv_rentalHelp"-->
+                <!--app:layout_constraintTop_toTopOf="@id/curbside_delivery" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_rentalCurbsideRatesEdit"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="@dimen/large_margin"-->
+                <!--android:background="@drawable/bg_item_transparent"-->
+                <!--android:paddingEnd="@dimen/small_margin"-->
+                <!--android:paddingStart="@dimen/small_margin"-->
+                <!--android:text="@string/rates"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintBaseline_toBaselineOf="@+id/curbside_delivery"-->
+                <!--app:layout_constraintEnd_toEndOf="parent" />-->
 
                 <TextView
-                    android:id="@+id/curbside_delivery"
+                    android:id="@+id/minimumBookingTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/large_margin"
-                    android:text="@string/car_rental_info_delivery"
+                    android:text="@string/car_rental_info_minimum_booking"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     app:layout_constraintStart_toStartOf="@id/settings"
                     app:layout_constraintTop_toBottomOf="@id/div3" />
 
                 <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/sw_rentalDelivery"
+                    android:id="@+id/minimumBookingSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
                     android:theme="@style/Switch"
-                    app:layout_constraintBottom_toBottomOf="@id/curbside_delivery"
+                    app:layout_constraintBottom_toBottomOf="@id/minimumBookingTitle"
                     app:layout_constraintStart_toStartOf="@id/iv_rentalHelp"
-                    app:layout_constraintTop_toTopOf="@id/curbside_delivery" />
+                    app:layout_constraintTop_toTopOf="@id/minimumBookingTitle" />
 
                 <TextView
-                    android:id="@+id/tv_rentalCurbsideRatesEdit"
+                    android:id="@+id/minimumBookingValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/large_margin"
                     android:background="@drawable/bg_item_transparent"
                     android:paddingEnd="@dimen/small_margin"
                     android:paddingStart="@dimen/small_margin"
-                    android:text="@string/rates"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/curbside_delivery"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/minimumBookingTitle"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <View
@@ -291,7 +328,7 @@
                     android:layout_height="1dp"
                     android:layout_margin="@dimen/large_margin"
                     android:background="@color/divider"
-                    app:layout_constraintTop_toBottomOf="@id/curbside_delivery" />
+                    app:layout_constraintTop_toBottomOf="@id/minimumBookingTitle" />
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/icon_cash"
@@ -318,6 +355,7 @@
                     android:id="@+id/sw_rentalCash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
                     android:theme="@style/Switch"
                     app:layout_constraintBottom_toBottomOf="@id/accept_cash"
                     app:layout_constraintStart_toStartOf="@+id/iv_rentalHelp"
@@ -329,7 +367,7 @@
                 android:id="@+id/div5"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_marginTop="@dimen/large_margin"
+                android:layout_marginTop="18dp"
                 android:background="@color/divider"
                 app:layout_constraintTop_toBottomOf="@id/accept_cash" />
 
@@ -424,7 +462,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="@color/divider"
-                app:layout_constraintTop_toBottomOf="@+id/tv_rentalDiscount" />
+                app:layout_constraintTop_toBottomOf="@id/tv_rentalDiscount" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
