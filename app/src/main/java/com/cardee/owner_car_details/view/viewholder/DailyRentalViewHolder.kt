@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.custom.modal.BookingPickerMenuFragment
 import com.cardee.custom.modal.DailyAvailabilityTimingFragment
+import com.cardee.custom.modal.MinRentDurationFragment
 import com.cardee.custom.modal.PickerMenuFragment
 import com.cardee.domain.owner.entity.RentalDetails
 import com.cardee.owner_car_details.AvailabilityContract
@@ -163,13 +164,17 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
                 }
             }
             R.id.minimumBookingValue -> {
-                val menu = PickerMenuFragment.getInstance(rootView.minimumBookingValue.text.toString(),
-                        PickerMenuFragment.Mode.MINIMUM_RENTAL_DURATION_DAILY)
+                val menu = MinRentDurationFragment.getInstance(rootView.minimumBookingValue.text.toString(),
+                        MinRentDurationFragment.Mode.DAILY)
                 menu.show(activity.supportFragmentManager, menu.tag)
-                menu.setOnDoneClickListener { value ->
+                menu.setOnDoneClickListener(PickerMenuFragment.DialogOnClickListener { value ->
                     rootView.minimumBookingValue.text = value
-                    presenter.updateDailyMinimumBooking(Integer.valueOf(value.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]))
-                }
+                    presenter.updateDailyMinimumBooking(
+                            Integer.valueOf(value
+                                    .split(" ".toRegex())
+                                    .dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()[0]))
+                })
             }
         //            case R.id.tv_rentalCurbsideRatesEdit:
         //                Intent iDelivery = new Intent(getActivity(), RentalDeliveryRatesActivity.class);

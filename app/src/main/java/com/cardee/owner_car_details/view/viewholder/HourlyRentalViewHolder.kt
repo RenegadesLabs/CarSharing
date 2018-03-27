@@ -17,6 +17,7 @@ import android.widget.Toast
 import com.cardee.R
 import com.cardee.custom.modal.BookingPickerMenuFragment
 import com.cardee.custom.modal.HourlyAvailabilityTimingFragment
+import com.cardee.custom.modal.MinRentDurationFragment
 import com.cardee.custom.modal.PickerMenuFragment
 import com.cardee.domain.owner.entity.RentalDetails
 import com.cardee.owner_car_details.AvailabilityContract
@@ -165,13 +166,17 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
                 }
             }
             R.id.minimumBookingValue -> {
-                val menu = PickerMenuFragment.getInstance(rootView.minimumBookingValue.text.toString(),
-                        PickerMenuFragment.Mode.MINIMUM_RENTAL_DURATION_HOURLY)
+                val menu = MinRentDurationFragment.getInstance(rootView.minimumBookingValue.text.toString(),
+                        MinRentDurationFragment.Mode.HOURLY)
                 menu.show(activity.supportFragmentManager, menu.tag)
-                menu.setOnDoneClickListener { value ->
+                menu.setOnDoneClickListener(PickerMenuFragment.DialogOnClickListener { value ->
                     rootView.minimumBookingValue.text = value
-                    presenter.updateHourlyMinimumBooking(Integer.valueOf(value.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]))
-                }
+                    presenter.updateHourlyMinimumBooking(
+                            Integer.valueOf(value
+                                    .split(" ".toRegex())
+                                    .dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()[0]))
+                })
             }
 //            R.id.tv_rentalCurbsideRatesEdit -> {
 //                val iDelivery = Intent(activity, RentalDeliveryRatesActivity::class.java)

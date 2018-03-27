@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/menu_title"
+        style="@style/ModalMenuTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/modal_menu_title_height"
+        android:background="@android:color/transparent"
+        android:text="@string/car_add_info_year"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/b_dialogNumberPickerCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_top_without_div"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_title">
+
+        <TextView
+            android:id="@+id/picker_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/medium_margin"
+            android:paddingEnd="@dimen/large_margin"
+            android:paddingStart="@dimen/large_margin"
+            android:paddingTop="@dimen/medium_margin"
+            android:text="@string/dialog_rent_duration_picker_daily"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:theme="@style/TextSettingsRegular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/timing_selector"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/bg_regular"
+            app:layout_constraintBottom_toBottomOf="@+id/np_dialogNumberPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/np_dialogNumberPicker" />
+
+        <NumberPicker
+            android:id="@id/np_dialogNumberPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picker_title" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_modal_menu_bottom"
+        android:padding="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@+id/menu_content">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/b_dialogNumberPickerDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_regular"
+            android:text="@string/car_add_save"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

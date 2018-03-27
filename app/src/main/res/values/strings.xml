@@ -242,6 +242,8 @@
     <string name="in_advance">in advance</string>
     <string name="dialog_hours_picker_text">How long in advance should hourly bookings be made to
         be confirmed automatically?</string>
+    <string name="dialog_rent_duration_picker_daily">The rental period for daily bookings have to be at least…</string>
+    <string name="dialog_rent_duration_picker_hourly">The rental period for hourly bookings have to be at least…</string>
 
     <!--Car Delivery Rates-->
     <string name="car_rental_delivery_rates_title">Delivery Rates</string>
