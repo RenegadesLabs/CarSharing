@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.FrameLayout
+import com.cardee.CardeeApp
 import com.cardee.R
 import com.cardee.domain.renter.entity.BrowseCarsFilter
 import com.cardee.renter_availability_filter.CalendarAdapter
@@ -188,11 +189,11 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     private fun isNextDay(begin: Date?, end: Date?): Boolean? {
         val calBegin = Calendar.getInstance(Locale.US)
-        calBegin.timeZone = TimeZone.getTimeZone("GMT+8")
+        calBegin.timeZone = CardeeApp.getTimeZone()
         calBegin.time = begin ?: return null
 
         val calEnd = Calendar.getInstance(Locale.US)
-        calEnd.timeZone = TimeZone.getTimeZone("GMT+8")
+        calEnd.timeZone = CardeeApp.getTimeZone()
         calEnd.time = end ?: return null
 
         return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
@@ -200,11 +201,11 @@ class RentalPeriodActivity : AppCompatActivity() {
 
     private fun setHoursToDate(date: Date?, pickupTime: String?): Date? {
         val calendar = Calendar.getInstance(Locale.US)
-        calendar.timeZone = TimeZone.getTimeZone("GMT+8")
+        calendar.timeZone = CardeeApp.getTimeZone()
         calendar.time = date ?: return null
         val tempDate: Date = dateDelegate.convertTimeToDate(pickupTime) ?: calendar.time
         val tempCal = GregorianCalendar(Locale.US)
-        tempCal.timeZone = TimeZone.getTimeZone("GMT+8")
+        tempCal.timeZone = CardeeApp.getTimeZone()
         tempCal.time = tempDate
         calendar.set(Calendar.HOUR_OF_DAY, tempCal.get(Calendar.HOUR_OF_DAY))
         calendar.set(Calendar.MINUTE, tempCal.get(Calendar.MINUTE))

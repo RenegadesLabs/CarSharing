@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
+import com.cardee.CardeeApp
 import com.cardee.R
 import com.cardee.custom.modal.*
 import com.cardee.domain.owner.entity.RentalDetails
@@ -299,7 +300,15 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
 
     override fun setData(rentalDetails: RentalDetails) {
         dateDeletage?.onSetPickupTime(timingPickup, rentalDetails.dailyTimePickup)
-        dateDeletage?.onSetReturnTime(timingReturn, rentalDetails.dailyTimeReturn)
+
+        val pickupTime = dateDeletage?.convertTimeToDate(rentalDetails.dailyTimePickup)
+        val returnTime = dateDeletage?.convertTimeToDate(rentalDetails.dailyTimeReturn)
+        if (isNextDay(pickupTime, returnTime) == true) {
+            dateDeletage?.onSetReturnTime(timingReturn, rentalDetails.dailyTimeReturn, true)
+        } else {
+            dateDeletage?.onSetReturnTime(timingReturn, rentalDetails.dailyTimeReturn, false)
+        }
+
         stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.dailyCount)
         stringDelegate?.onSetDailyRentalRateFirst(rentalRatesValueFirst, rentalDetails.dailyAmountRateFirst)
         stringDelegate?.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.dailyAmountRateSecond)
@@ -353,8 +362,28 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
     }
 
     override fun onSave(event: TimingSaveEvent) {
-        dateDeletage!!.onSetPickupTime(timingPickup, event.timeBegin)
-        dateDeletage!!.onSetReturnTime(timingReturn, event.timeEnd)
+        dateDeletage?.onSetPickupTime(timingPickup, event.timeBegin)
+
+        val pickupTime = dateDeletage?.convertTimeToDate(event.timeBegin)
+        val returnTime = dateDeletage?.convertTimeToDate(event.timeEnd)
+        if (isNextDay(pickupTime, returnTime) == true) {
+            dateDeletage?.onSetReturnTime(timingReturn, event.timeEnd, true)
+        } else {
+            dateDeletage?.onSetReturnTime(timingReturn, event.timeEnd, false)
+        }
+
         presenter.updateAvailabilityTiming(event.timeBegin, event.timeEnd)
+    }
+
+    private fun isNextDay(begin: Date?, end: Date?): Boolean? {
+        val calBegin = Calendar.getInstance(Locale.US)
+        calBegin.timeZone = CardeeApp.getTimeZone()
+        calBegin.time = begin ?: return null
+
+        val calEnd = Calendar.getInstance(Locale.US)
+        calEnd.timeZone = CardeeApp.getTimeZone()
+        calEnd.time = end ?: return null
+
+        return calBegin.get(Calendar.AM_PM) == calEnd.get(Calendar.AM_PM)
     }
 }

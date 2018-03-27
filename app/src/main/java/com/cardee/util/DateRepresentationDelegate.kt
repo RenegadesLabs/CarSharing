@@ -82,10 +82,14 @@ class DateRepresentationDelegate(context: Context) {
         view.text = pickupTimeString
     }
 
-    fun onSetReturnTime(view: TextView, isoTime: String?) {
+    fun onSetReturnTime(view: TextView, isoTime: String?, nextDay: Boolean) {
         isoTime ?: return
         val timeString = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN) ?: return
-        val returnTimeString = "$availabilityReturnPrefix ${dropStartZero(timeString)} $availabilityReturnSuffix"
+        val returnTimeString = if (nextDay) {
+            "$availabilityReturnPrefix ${dropStartZero(timeString)} $availabilityReturnSuffix"
+        } else {
+            "$availabilityReturnPrefix ${dropStartZero(timeString)}"
+        }
         view.text = returnTimeString
     }
 
