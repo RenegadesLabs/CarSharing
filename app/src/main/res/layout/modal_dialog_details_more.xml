@@ -24,7 +24,7 @@
         android:background="@drawable/bg_modal_menu_top"
         android:text="@string/car_details_more_listing"
         android:textSize="@dimen/text_large"
-        app:layout_constraintBottom_toTopOf="@+id/availability_days_of_week"
+        app:layout_constraintBottom_toTopOf="@+id/availability_always"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--<ImageView-->

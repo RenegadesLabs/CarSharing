@@ -2,7 +2,6 @@ package com.cardee.owner_car_details.view.viewholder
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -14,15 +13,11 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import com.cardee.R
-import com.cardee.custom.modal.BookingPickerMenuFragment
-import com.cardee.custom.modal.DailyAvailabilityTimingFragment
-import com.cardee.custom.modal.MinRentDurationFragment
-import com.cardee.custom.modal.PickerMenuFragment
+import com.cardee.custom.modal.*
 import com.cardee.domain.owner.entity.RentalDetails
 import com.cardee.owner_car_details.AvailabilityContract
 import com.cardee.owner_car_details.RentalDetailsContract
 import com.cardee.owner_car_details.presenter.StrategyRentalDetailPresenter
-import com.cardee.owner_car_details.view.AvailabilityCalendarActivity
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment
 import com.cardee.owner_car_details.view.eventbus.DailyTimingEventBus
 import com.cardee.owner_car_details.view.eventbus.TimingSaveEvent
@@ -142,12 +137,17 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
                 activity.startActivity(iFuel)
             }
             R.id.tv_rentalAvailabilityEdit -> {
-                val intent = Intent(activity, AvailabilityCalendarActivity::class.java)
-                val args = Bundle()
-                args.putInt(AvailabilityContract.CAR_ID, dailyRental!!.carId)
-                args.putSerializable(AvailabilityContract.CALENDAR_MODE, AvailabilityContract.Mode.DAILY)
-                intent.putExtras(args)
-                activity.startActivity(intent)
+                val menuFragment = AvailabilityMenuFragment
+                        .getInstance(dailyRental?.carId
+                                ?: return, AvailabilityContract.Mode.DAILY)
+                menuFragment.show(activity?.supportFragmentManager, menuFragment.tag)
+
+//                val intent = Intent(activity, AvailabilityCalendarActivity::class.java)
+//                val args = Bundle()
+//                args.putInt(AvailabilityContract.CAR_ID, dailyRental!!.carId)
+//                args.putSerializable(AvailabilityContract.CALENDAR_MODE, AvailabilityContract.Mode.DAILY)
+//                intent.putExtras(args)
+//                activity.startActivity(intent)
             }
             R.id.tv_rentalTimingEdit -> DailyAvailabilityTimingFragment.newInstance(
                     dateDeletage!!.formatHour(dailyRental!!.dailyTimePickup),

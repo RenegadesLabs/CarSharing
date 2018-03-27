@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_top"
-        android:text="@string/car_availability_one_time"
+        android:text="@string/car_availability_one_off"
         app:layout_constraintBottom_toTopOf="@+id/availability_calendar"
         app:layout_constraintTop_toBottomOf="@+id/availability_menu_title" />
 
@@ -41,7 +41,7 @@
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_mid"
         android:text="@string/car_availability_calendar"
-        app:layout_constraintBottom_toTopOf="@+id/availability_days_of_week"
+        app:layout_constraintBottom_toTopOf="@+id/availability_always"
         app:layout_constraintTop_toBottomOf="@+id/availability_one_time" />
 
     <ImageView
@@ -54,12 +54,12 @@
         app:srcCompat="@drawable/ic_arrow_right" />
 
     <TextView
-        android:id="@+id/availability_days_of_week"
+        android:id="@+id/availability_always"
         style="@style/ModalMenuItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/modal_menu_item_height"
         android:background="@drawable/bg_modal_menu_bottom"
-        android:text="@string/car_availability_days_of_week"
+        android:text="@string/car_availability_always"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/availability_calendar" />
 
@@ -67,9 +67,9 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="@dimen/widget_margin_x_small"
-        app:layout_constraintBottom_toBottomOf="@id/availability_days_of_week"
-        app:layout_constraintEnd_toEndOf="@id/availability_days_of_week"
-        app:layout_constraintTop_toTopOf="@id/availability_days_of_week"
+        app:layout_constraintBottom_toBottomOf="@id/availability_always"
+        app:layout_constraintEnd_toEndOf="@id/availability_always"
+        app:layout_constraintTop_toTopOf="@id/availability_always"
         app:srcCompat="@drawable/ic_arrow_right" />
 
 </android.support.constraint.ConstraintLayout>

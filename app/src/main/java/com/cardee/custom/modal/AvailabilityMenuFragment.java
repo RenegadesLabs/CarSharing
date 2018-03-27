@@ -3,10 +3,8 @@ package com.cardee.custom.modal;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
@@ -66,7 +64,7 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
     private void setClickListeners(View root) {
         root.findViewById(R.id.availability_one_time).setOnClickListener(this);
         root.findViewById(R.id.availability_calendar).setOnClickListener(this);
-        root.findViewById(R.id.availability_days_of_week).setOnClickListener(this);
+        root.findViewById(R.id.availability_always).setOnClickListener(this);
     }
 
 
@@ -81,7 +79,7 @@ public class AvailabilityMenuFragment extends BottomSheetDialogFragment
                 intent.putExtras(getArguments());
                 getActivity().startActivity(intent);
                 break;
-            case R.id.availability_days_of_week:
+            case R.id.availability_always:
                 showMessage("Coming soon");
                 break;
         }

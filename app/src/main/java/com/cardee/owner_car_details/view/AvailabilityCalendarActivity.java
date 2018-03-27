@@ -69,7 +69,7 @@ public class AvailabilityCalendarActivity extends AppCompatActivity
                     (AvailabilityContract.Mode) args.getSerializable(AvailabilityContract.CALENDAR_MODE);
             if (mode == AvailabilityContract.Mode.DAILY) {
                 titleView.setText(R.string.availability_calendar_daily);
-                calendarView.setIncludeCurrent(false);
+                calendarView.setIncludeCurrent(true);
             } else if (mode == AvailabilityContract.Mode.HOURLY) {
                 titleView.setText(R.string.availability_calendar_hourly);
                 calendarView.setIncludeCurrent(true);

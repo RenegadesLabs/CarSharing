@@ -22,7 +22,7 @@ class StringFormatDelegate(context: Context) {
     private fun onChangeCountString(view: TextView, count: Int, values: Array<String>) {
         val index = if (count > 1) 2 else count
         val prefix = if (index == 0) "" else "$count "
-        val title = "$prefix + ${values[index]}"
+        val title = "$prefix ${values[index]}"
         view.text = title
     }
 

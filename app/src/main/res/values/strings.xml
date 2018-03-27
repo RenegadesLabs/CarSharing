@@ -100,9 +100,9 @@
     <string name="car_list_item_daily_label">Daily</string>
 
     <string name="car_availability_title">Set availability by</string>
-    <string name="car_availability_one_time">One-Time</string>
+    <string name="car_availability_one_off">One-Off</string>
     <string name="car_availability_calendar">Calendar</string>
-    <string name="car_availability_days_of_week">Days Of Week</string>
+    <string name="car_availability_always">Always Available</string>
 
     <string name="car_details_tab_rental">Rental Info</string>
     <string name="car_details_tab_car">Car Info</string>
