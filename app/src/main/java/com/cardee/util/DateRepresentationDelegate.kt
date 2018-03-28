@@ -23,6 +23,8 @@ class DateRepresentationDelegate(context: Context) {
         private const val DAY_MONTH_YEAR_PATTERN = "d MMMMM yyyy"
         private const val MONTH_YEAR_PATTERN = "MMyy"
         private const val HOUR_PATTERN = "hha"
+        const val DATE_BEGIN_TIME = "00:00:00+08:00"
+        const val DATE_END_TIME = "23:59:59+08:00"
     }
 
     private val availabilityPickupPrefix: String
@@ -32,6 +34,7 @@ class DateRepresentationDelegate(context: Context) {
     private val availabilityHourlyPrefix: String
     private val availabilityTimeDivider: String
     private val reviewDatePrefix: String
+    private val availableFullDay: String
 
     private val formatter: SimpleDateFormat
     private val calendar: Calendar
@@ -53,6 +56,7 @@ class DateRepresentationDelegate(context: Context) {
         availabilityHourlyPrefix = context.getString(R.string.availability_from)
         availabilityTimeDivider = context.getString(R.string.availability_to)
         reviewDatePrefix = context.getString(R.string.renter_car_details_review_date_prefix)
+        availableFullDay = context.getString(R.string.available_full_day)
     }
 
     fun onSetTimeRangeString(view: TextView, timeStart: String?, timeEnd: String?) {
@@ -60,6 +64,12 @@ class DateRepresentationDelegate(context: Context) {
             view.text = availabilityHourlyPrefix
             return
         }
+
+        if (timeStart == DATE_BEGIN_TIME && timeEnd == DATE_END_TIME) {
+            view.text = availableFullDay
+            return
+        }
+
         val startString = convert(timeStart, ISO_8601_TIME_PATTERN, HOUR_PATTERN) ?: return
         val endString = convert(timeEnd, ISO_8601_TIME_PATTERN, HOUR_PATTERN) ?: return
         val rangeString = "$availabilityHourlyPrefix ${dropStartZero(startString)} " +

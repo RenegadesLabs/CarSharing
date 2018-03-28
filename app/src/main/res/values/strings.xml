@@ -244,6 +244,7 @@
         be confirmed automatically?</string>
     <string name="dialog_rent_duration_picker_daily">The rental period for daily bookings have to be at least…</string>
     <string name="dialog_rent_duration_picker_hourly">The rental period for hourly bookings have to be at least…</string>
+    <string name="error_time_range_not_valid">Please insert valid time</string>
 
     <!--Car Delivery Rates-->
     <string name="car_rental_delivery_rates_title">Delivery Rates</string>
@@ -631,6 +632,56 @@
         <item>10pm</item>
         <item>11pm</item>
     </string-array>
+    <string-array name="availability_time_begin_titles">
+        <item>Full Day</item>
+        <item>12am</item>
+        <item>1am</item>
+        <item>2am</item>
+        <item>3am</item>
+        <item>4am</item>
+        <item>5am</item>
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
+        <item>12pm</item>
+        <item>1pm</item>
+        <item>2pm</item>
+        <item>3pm</item>
+        <item>4pm</item>
+        <item>5pm</item>
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+    </string-array>
+    <string-array name="availability_time_end_titles">
+        <item>Full Day</item>
+        <item>4am</item>
+        <item>5am</item>
+        <item>6am</item>
+        <item>7am</item>
+        <item>8am</item>
+        <item>9am</item>
+        <item>10am</item>
+        <item>11am</item>
+        <item>12pm</item>
+        <item>1pm</item>
+        <item>2pm</item>
+        <item>3pm</item>
+        <item>4pm</item>
+        <item>5pm</item>
+        <item>6pm</item>
+        <item>7pm</item>
+        <item>8pm</item>
+        <item>9pm</item>
+        <item>10pm</item>
+        <item>11pm</item>
+    </string-array>
     <string-array name="daily_timing_pickup_values">
         <item>6am</item>
         <item>7am</item>
@@ -940,5 +991,6 @@
     <!--Extend booking-->
     <string name="extend_daily_booking_title">Select new return date</string>
     <string name="extend_hourly_booking_title">Select new return time</string>
+    <string name="available_full_day">Available Full Day</string>
 
 </resources>

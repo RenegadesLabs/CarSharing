@@ -27,6 +27,8 @@ import com.cardee.owner_car_rental_info.fuel.RentalFuelPolicyActivity
 import com.cardee.owner_car_rental_info.rates.RentalRatesActivity
 import com.cardee.owner_car_rental_info.terms.view.RentalTermsActivity
 import com.cardee.util.DateRepresentationDelegate
+import com.cardee.util.DateRepresentationDelegate.Companion.DATE_BEGIN_TIME
+import com.cardee.util.DateRepresentationDelegate.Companion.DATE_END_TIME
 import com.cardee.util.StringFormatDelegate
 import kotlinx.android.synthetic.main.view_rental_hourly.view.*
 import java.util.*
@@ -151,11 +153,21 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
 //                intent.putExtras(args)
 //                activity.startActivity(intent)
             }
-            R.id.tv_rentalTimingEdit -> HourlyAvailabilityTimingFragment.newInstance(
-                    dateDelegate!!.formatHour(hourlyRental!!.hourlyBeginTime),
-                    dateDelegate!!.formatHour(hourlyRental!!.hourlyEndTime))
-                    .show(activity.supportFragmentManager,
-                            HourlyAvailabilityTimingFragment::class.java.simpleName)
+            R.id.tv_rentalTimingEdit -> {
+                val begin = when (hourlyRental!!.hourlyBeginTime) {
+                    DATE_BEGIN_TIME -> DATE_BEGIN_TIME
+                    else -> dateDelegate!!.formatHour(hourlyRental!!.hourlyBeginTime)
+                }
+
+                val end = when (hourlyRental!!.hourlyEndTime) {
+                    DATE_END_TIME -> DATE_END_TIME
+                    else -> dateDelegate!!.formatHour(hourlyRental!!.hourlyEndTime)
+                }
+
+                HourlyAvailabilityTimingFragment.newInstance(begin, end)
+                        .show(activity.supportFragmentManager,
+                                HourlyAvailabilityTimingFragment::class.java.simpleName)
+            }
             R.id.tv_rentalInstantEdit -> {
                 val menu = BookingPickerMenuFragment.getInstance(instantBookingEdit.text.toString(),
                         BookingPickerMenuFragment.Mode.BOOKING_HOURS)
