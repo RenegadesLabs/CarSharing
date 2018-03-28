@@ -372,6 +372,8 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
             dateDeletage?.onSetReturnTime(timingReturn, event.timeEnd, false)
         }
 
+        dailyRental?.dailyTimePickup = event.timeBegin
+        dailyRental?.dailyTimeReturn = event.timeEnd
         presenter.updateAvailabilityTiming(event.timeBegin, event.timeEnd)
     }
 

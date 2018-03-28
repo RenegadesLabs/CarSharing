@@ -26,7 +26,8 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
     private static final String TIME_PICKUP = "time_pickup";
     private static final String TIME_RETURN = "time_return";
 
-    private String[] timeValues;
+    private String[] pickupTimeValues;
+    private String[] returnTimeValues;
     private NumberPicker pickupTimePicker;
     private NumberPicker returnTimePicker;
     private TimeFrameDelegate pickerDelegate;
@@ -74,7 +75,8 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
 
     private void init(View parent) {
         pickerDelegate = new TimeFrameDelegate(getContext());
-        timeValues = getContext().getResources().getStringArray(R.array.availability_time_titles);
+        pickupTimeValues = getContext().getResources().getStringArray(R.array.daily_timing_pickup_values);
+        returnTimeValues = getContext().getResources().getStringArray(R.array.daily_timing_return_values);
         pickupTimePicker = parent.findViewById(R.id.time_pickup_picker);
         returnTimePicker = parent.findViewById(R.id.time_return_picker);
 //        pickupTimePicker.setWrapSelectorWheel(false);
@@ -94,19 +96,31 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
         Bundle args = getArguments();
         String timePickup = args.getString(TIME_PICKUP);
         String timeReturn = args.getString(TIME_RETURN);
+
         int timePickupPosition = 0;
-        int timeReturnPosition = 0;
-        for (int i = 0; i < timeValues.length; i++) {
-            String timeValue = timeValues[i];
+        for (int i = 0; i < pickupTimeValues.length; i++) {
+            String timeValue = pickupTimeValues[i];
             if (timeValue.equals(timePickup)) {
                 timePickupPosition = i;
             }
-            if (timeValue.equals(timeReturn)) {
+        }
+
+        int timeReturnPosition = 0;
+        for (int i = 0; i < returnTimeValues.length; i++) {
+            String timeValue = returnTimeValues[i];
+            if (timeValue.equals(timeReturn) ||
+                    timeValue.equals(timeReturn +
+                            " " +
+                            getContext()
+                                    .getResources()
+                                    .getString(R.string.availability_return_suffix))) {
                 timeReturnPosition = i;
             }
         }
+
         pickupTimePicker.setValue(timePickupPosition);
         returnTimePicker.setValue(timeReturnPosition);
+        pickerDelegate.updateReturnRange(pickupTimePicker, returnTimePicker);
     }
 
     private void setDividerColor(NumberPicker picker, int color) {
