@@ -105,8 +105,8 @@ public class DailyAvailabilityTimingFragment extends BottomSheetDialogFragment i
                 timeReturnPosition = i;
             }
         }
-//        pickupTimePicker.setValue(timePickupPosition);
-//        returnTimePicker.setValue(timeReturnPosition);
+        pickupTimePicker.setValue(timePickupPosition);
+        returnTimePicker.setValue(timeReturnPosition);
     }
 
     private void setDividerColor(NumberPicker picker, int color) {

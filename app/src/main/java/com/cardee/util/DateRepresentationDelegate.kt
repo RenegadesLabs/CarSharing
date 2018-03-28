@@ -144,7 +144,8 @@ class DateRepresentationDelegate(context: Context) {
 
     fun formatHour(isoTime: String?): String? {
         isoTime ?: return null
-        return convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
+        val result = convert(isoTime, ISO_8601_TIME_PATTERN, HOUR_PATTERN)
+        return dropStartZero(result ?: return null)
     }
 
     fun formatMonthDayHour(isoDate: String?): String? {
@@ -237,5 +238,5 @@ class DateRepresentationDelegate(context: Context) {
         return formatter.format(date)
     }
 
-    private fun dropStartZero(time: String) = time.replace(startZeroRegex, "")
+    fun dropStartZero(time: String) = time.replace(startZeroRegex, "")
 }

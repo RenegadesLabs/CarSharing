@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/time_pickup_picker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/time_pickup_picker" />
+            app:layout_constraintTop_toTopOf="@id/time_pickup_picker" />
 
         <View
             android:id="@+id/divider"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <NumberPicker
-            android:id="@+id/time_pickup_picker"
+            android:id="@id/time_pickup_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -121,8 +121,6 @@ class MinRentDurationFragment : BottomSheetDialogFragment() {
             }
         }
 
-        rootView.findViewById<View>(R.id.b_dialogNumberPickerCancel).setOnClickListener { dismiss() }
-
         rootView.findViewById<View>(R.id.b_dialogNumberPickerDone).setOnClickListener(View.OnClickListener {
             if (mListener == null) {
                 return@OnClickListener
