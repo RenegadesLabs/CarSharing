@@ -35,29 +35,21 @@ class MinRentDurationFragment : BottomSheetDialogFragment() {
         }
 
         private fun initMinRentDurationDays(): Array<String> {
-            val days = IntArray(7)
+            val days = IntArray(6)
             val values = ArrayList<String>()
             for (i in days.indices) {
-                days[i] = i + 1
-                if (i == 0) {
-                    values.add(days[i].toString() + " day")
-                } else {
-                    values.add(days[i].toString() + " days")
-                }
+                days[i] = i + 2
+                values.add(days[i].toString() + " days")
             }
             return values.toTypedArray()
         }
 
         private fun initMinRentDurationHours(): Array<String> {
-            val hours = IntArray(7)
+            val hours = IntArray(6)
             val values = ArrayList<String>()
             for (i in hours.indices) {
-                hours[i] = i + 1
-                if (i == 0) {
-                    values.add(hours[i].toString() + " hour")
-                } else {
-                    values.add(hours[i].toString() + " hours")
-                }
+                hours[i] = i + 2
+                values.add(hours[i].toString() + " hours")
             }
             return values.toTypedArray()
         }
