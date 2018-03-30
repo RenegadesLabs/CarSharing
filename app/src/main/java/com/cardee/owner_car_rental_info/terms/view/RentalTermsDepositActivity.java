@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -26,10 +28,14 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
     public final static String REQ_SECURITY_DEPOSIT = "key_required_security_deposit";
     public final static String SECURITY_DEPOSIT_DESC = "key_security_deposit_description";
 
-    @BindView(R.id.sw_depositRequire)
-    public SwitchCompat depositRequireSW;
-    @BindView(R.id.et_depositValue)
-    public AppCompatEditText depositValueET;
+    //    @BindView(R.id.sw_depositRequire)
+//    public SwitchCompat depositRequireSW;
+//    @BindView(R.id.et_depositValue)
+//    public AppCompatEditText depositValueET;
+    @BindView(R.id.securityDeposit)
+    public AppCompatEditText securityDeposit;
+    @BindView(R.id.bottomHintText)
+    public TextView bottomHintText;
 
     private ProgressDialog mProgress;
     private RentalTermsDepositPresenter mPresenter;
@@ -60,8 +66,15 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
     }
 
     private void initViewState() {
-        depositRequireSW.setChecked(getIntent().getBooleanExtra(REQ_SECURITY_DEPOSIT, false));
-        depositValueET.setText(getIntent().getStringExtra(SECURITY_DEPOSIT_DESC));
+//        depositRequireSW.setChecked(getIntent().getBooleanExtra(REQ_SECURITY_DEPOSIT, false));
+//        depositValueET.setText(getIntent().getStringExtra(SECURITY_DEPOSIT_DESC));
+        securityDeposit.setText(getIntent().getStringExtra(SECURITY_DEPOSIT_DESC));
+
+        SpannableString span = new SpannableString(getResources().getString(R.string.deposit_info_link));
+        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)),
+                0, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        bottomHintText.append(" ");
+        bottomHintText.append(span);
     }
 
     @Override
@@ -79,8 +92,8 @@ public class RentalTermsDepositActivity extends AppCompatActivity implements Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_action:
-                mPresenter.save(depositRequireSW.isChecked(),
-                        depositValueET.getText().toString());
+//                mPresenter.save(depositRequireSW.isChecked(), depositValueET.getText().toString());
+                mPresenter.save(securityDeposit.getText().toString());
                 break;
         }
     }

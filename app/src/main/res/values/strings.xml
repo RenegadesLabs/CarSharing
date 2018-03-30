@@ -188,6 +188,8 @@
     <string name="car_add_info_body_convertible">+ Convertible</string>
 
     <string name="error_empty_field">Field(s) must be filled!</string>
+    <string name="error_wrong_discounts">Please insert valid discounts</string>
+    <string name="error_wrong_discount">Discount cannot be more than 50%</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
 
@@ -279,13 +281,11 @@
     <string name="car_rental_terms_rules_smoking">Smoking In Car</string>
     <string name="car_rental_terms_rules_malaysia">Driving To Malaysia</string>
     <string name="car_rental_terms_rules_dogs">Dogs On Car</string>
-    <string name="car_rental_terms_rules_own">Add your car rules here…\n\nSome examples
+    <string name="car_rental_terms_rules_own">Add your car rules here…\n\nExample
         \n\nNo smoking in car.
     \nNo driving to malaysia
     \n\nFor rental of 3 days or more, please wash and vacuum car before returning.
-    \n\nPump only 95 and above for petrol.
-    \n\nIf you have child, booster seats is required and can be provided for additional $5.
-    \n\nIf you have dogs, seats protector is required and can be provided at an additional $10.</string>
+    \n\nPump only 95 and above for petrol.</string>
     <string name="allow">Allow</string>
     <string name="no">No</string>
 
@@ -293,8 +293,10 @@
     <string name="car_rental_terms_security_deposit">Security Deposit</string>
     <string name="car_rental_terms_security_deposit_require">Require Security Deposit</string>
     <string name="car_rental_terms_security_deposit_enter">Enter deposit amount (SGD)</string>
-    <string name="car_rental_terms_security_deposit_info">Security deposit will be held by Cardee for up to 7 days
-    upon car collection. To make a claim from the deposit, contact Cardee.</string>
+    <string name="car_rental_terms_security_deposit_info">Cardee do not handle security deposit. All arrangements is directly between you and the renter.</string>
+    <string name="car_rental_terms_security_deposit_hint">If you require security deposit upon car collection, add information on the deposit amount, mode, and other descriptions here.
+\n\nExample
+\n\nSecurity deposit of $500 is payable upon car collection. Payment by cash or card.</string>
 
     <!--Car Rental Terms Insurance Excess-->
     <string name="car_rental_terms_insurance_excess_example">Example\nExcess payable per section - $1,000\nIf accident occurs in Malaysia - $2,000

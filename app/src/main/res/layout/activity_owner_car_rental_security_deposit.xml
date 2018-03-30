@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -16,11 +19,13 @@
             android:layout_height="@dimen/toolbar_height"
             app:navigationIcon="@drawable/ic_close"
             app:titleTextColor="@color/bg_main">
+
             <TextView
                 android:id="@+id/toolbar_title"
                 style="@style/ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
+
             <TextView
                 android:id="@+id/toolbar_action"
                 style="@style/ToolbarAction"
@@ -31,72 +36,100 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/require_container"
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--android:id="@+id/require_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/toolbar_layout">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="26dp"-->
+    <!--android:text="@string/car_rental_terms_security_deposit_require"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    <!--<android.support.v7.widget.SwitchCompat-->
+    <!--android:theme="@style/Switch"-->
+    <!--android:id="@+id/sw_depositRequire"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="26dp"-->
+    <!--android:checked="true"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="3dp"-->
+    <!--android:background="@color/divider"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+    <!--</android.support.constraint.ConstraintLayout>-->
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="254dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_margin="@dimen/xlarge_margin"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:padding="@dimen/small_margin"-->
+    <!--android:layout_below="@+id/require_container"-->
+    <!--android:background="@drawable/bg_security_deposit">-->
+
+    <!--<android.support.v7.widget.AppCompatEditText-->
+    <!--android:id="@+id/et_depositValue"-->
+    <!--style="@style/CardeeEditTextWithoutUnderlineStyle"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:inputType="numberDecimal"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:hint="@string/car_rental_terms_security_deposit_enter"-->
+    <!--android:textSize="@dimen/text_regular"/>-->
+    <!--</FrameLayout>-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_layout">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottomHint"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="26dp"
-            android:text="@string/car_rental_terms_security_deposit_require"
-            android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <android.support.v7.widget.SwitchCompat
-            android:theme="@style/Switch"
-            android:id="@+id/sw_depositRequire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="26dp"
-            android:checked="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/divider"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
-
-    <FrameLayout
-        android:layout_width="254dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/xlarge_margin"
-        android:layout_centerHorizontal="true"
-        android:padding="@dimen/small_margin"
-        android:layout_below="@+id/require_container"
-        android:background="@drawable/bg_security_deposit">
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_depositValue"
-            style="@style/CardeeEditTextWithoutUnderlineStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:textColor="@android:color/black"
-            android:hint="@string/car_rental_terms_security_deposit_enter"
-            android:textSize="@dimen/text_regular"/>
-    </FrameLayout>
+            android:background="@color/colorAccent"
+            android:padding="@dimen/large_margin">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/securityDeposit"
+                style="@style/CardeeEditTextWithoutUnderlineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:hint="@string/car_rental_terms_security_deposit_hint"
+                android:inputType="textMultiLine|textCapSentences"
+                android:text=""
+                android:textSize="@dimen/text_regular" />
+        </LinearLayout>
+    </LinearLayout>
 
     <FrameLayout
+        android:id="@id/bottomHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/bg_regular"
-        android:padding="@dimen/medium_margin">
+        android:padding="@dimen/medium_margin"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
+            android:id="@+id/bottomHintText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_small"
-            android:text="@string/car_rental_terms_security_deposit_info"/>
+            android:text="@string/car_rental_terms_security_deposit_info"
+            android:textSize="@dimen/text_small" />
 
     </FrameLayout>
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

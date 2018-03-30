@@ -21,15 +21,20 @@ public class RentalTermsDepositPresenter implements RentalContract.Presenter {
 
     @Override
     public void save(Object... objects) {
-        boolean require = (boolean) objects[0];
-        String amount = (String) objects[1];
+//        boolean require = (boolean) objects[0];
+//        String amount = (String) objects[1];
+        String amount = (String) objects[0];
 
         if (mView == null)
             return;
 
         mView.showProgress(true);
         mExecutor.execute(new UpdateRentalSecurityDeposit(),
-                new UpdateRentalSecurityDeposit.RequestValues(OwnerCarRepository.currentCarId(), require, amount),
+                new UpdateRentalSecurityDeposit.RequestValues(
+                        OwnerCarRepository.currentCarId(),
+//                        require,
+                        true,
+                        amount),
                 new UseCase.Callback<UpdateRentalSecurityDeposit.ResponseValues>() {
                     @Override
                     public void onSuccess(UpdateRentalSecurityDeposit.ResponseValues response) {

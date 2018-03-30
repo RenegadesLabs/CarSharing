@@ -135,8 +135,12 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
             }
             R.id.tv_rentalFuelEdit -> {
                 val iFuel = Intent(activity, RentalFuelPolicyActivity::class.java)
-                iFuel.putExtra(RentalFuelPolicyActivity.POLICY_ID, hourlyRental!!.hourlyFuelPolicyId)
-                iFuel.putExtra(RentalFuelPolicyActivity.AMOUNT_MILEAGE, hourlyRental!!.hourlyAmountPayMileage)
+                iFuel.putExtra(
+                        RentalFuelPolicyActivity.POLICY_ID,
+                        hourlyRental!!.hourlyFuelPolicyId ?: 1)
+                iFuel.putExtra(
+                        RentalFuelPolicyActivity.AMOUNT_MILEAGE,
+                        hourlyRental!!.hourlyAmountPayMileage ?: 0f)
                 iFuel.putExtra(OwnerCarRentalFragment.MODE, OwnerCarRentalFragment.HOURLY)
                 activity.startActivity(iFuel)
             }
@@ -311,18 +315,18 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
     }
 
     override fun setData(rentalDetails: RentalDetails) {
-        dateDelegate!!.onSetTimeRangeString(timing, rentalDetails.hourlyBeginTime, rentalDetails.hourlyEndTime)
-        stringDelegate!!.onDateCountValueChange(availabilityDays, rentalDetails.hourlyCount)
-        stringDelegate!!.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.hourlyAmountRateSecond)
-        stringDelegate!!.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.hourlyAmountRateFirst)
+        dateDelegate?.onSetTimeRangeString(timing, rentalDetails.hourlyBeginTime, rentalDetails.hourlyEndTime)
+        stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.hourlyCount)
+        stringDelegate?.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.hourlyAmountRateSecond)
+        stringDelegate?.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.hourlyAmountRateFirst)
 //        stringDelegate!!.onSetRentalMinimum(rentalMinimum, rentalDetails.hourlyMinRentalDuration)
         stringDelegate?.onSetHourlyRentalDiscount(rootView.tv_rentalDiscount, rentalDetails.hourlyAmountDiscountFirst)
         stringDelegate?.onSetHourlyRentalDiscountSecond(rootView.tv_rentalDiscountSecond, rentalDetails.hourlyAmountDiscountSecond)
         val amtMileage = rentalDetails.hourlyAmountPayMileage
         if (amtMileage == null) {
-            stringDelegate!!.onSetFuelPolicy(fuelPolicyValue, rentalDetails.hourlyFuelPolicyName, null)
+            stringDelegate?.onSetFuelPolicy(fuelPolicyValue, rentalDetails.hourlyFuelPolicyName, null)
         } else {
-            stringDelegate!!.onSetFuelPolicy(fuelPolicyValue, rentalDetails.hourlyFuelPolicyName, amtMileage.toString())
+            stringDelegate?.onSetFuelPolicy(fuelPolicyValue, rentalDetails.hourlyFuelPolicyName, "%.2f".format(Locale.US, amtMileage))
         }
         setInstantBookingState(rentalDetails)
         var hours = rentalDetails.hourlyInstantBookingCount ?: 0

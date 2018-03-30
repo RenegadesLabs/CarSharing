@@ -93,7 +93,8 @@ class StringFormatDelegate(context: Context) {
     fun onSetFuelPolicy(view: TextView, policyName: String?, payAmountMileage: String?) {
         policyName?.firstOrNull() ?: return
         val condition = !payAmountMileage.isNullOrEmpty() && policyName != "Return with similar level"
-        val fuelPolicyString = "$policyName ${if (condition) " @ $payAmountMileage per km" else ""}"
+        val fuelPolicyString = "$policyName ${if (condition) " @ $$payAmountMileage per km" else ""}"
+        "$policyName ${if (condition) " @ $payAmountMileage per km" else ""}"
         view.visibility = View.VISIBLE
         view.text = fuelPolicyString
     }

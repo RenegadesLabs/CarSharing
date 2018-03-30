@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -217,6 +216,18 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
             showMessage(R.string.error_empty_field);
             return;
         }
+
+        if (Float.valueOf(firstDiscount) > 50f ||
+                Float.valueOf(secondDiscount) > 50f) {
+            showMessage(R.string.error_wrong_discount);
+            return;
+        }
+
+        if (Float.valueOf(firstDiscount) > Float.valueOf(secondDiscount)) {
+            showMessage(R.string.error_wrong_discounts);
+            return;
+        }
+
         mPresenter.save(firstRate, secondRate, firstDiscount, secondDiscount, minRental, mMode);
     }
 

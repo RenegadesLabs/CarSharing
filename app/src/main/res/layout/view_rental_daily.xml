@@ -542,6 +542,7 @@
                     android:paddingStart="@dimen/small_margin"
                     android:text="@string/title_edit"
                     android:textColor="@color/colorPrimary"
+                    android:visibility="gone"
                     app:layout_constraintBaseline_toBaselineOf="@id/fuel"
                     app:layout_constraintEnd_toEndOf="parent" />
 
