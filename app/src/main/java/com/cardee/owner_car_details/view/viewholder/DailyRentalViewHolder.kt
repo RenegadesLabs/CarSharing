@@ -188,8 +188,8 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
             R.id.tv_rentalRentalRatesEdit -> {
                 val iRates = Intent(activity,
                         RentalRatesActivity::class.java)
-                iRates.putExtra(RentalRatesActivity.RATE_FIRST, dailyRental!!.dailyAmountRateFirst.toString())
-                iRates.putExtra(RentalRatesActivity.RATE_SECOND, dailyRental!!.dailyAmountRateSecond.toString())
+                iRates.putExtra(RentalRatesActivity.RATE_FIRST, "%.0f".format(dailyRental!!.dailyAmountRateFirst))
+                iRates.putExtra(RentalRatesActivity.RATE_SECOND, "%.0f".format(dailyRental!!.dailyAmountRateSecond))
                 iRates.putExtra(RentalRatesActivity.DISCOUNT_FIRST, Math.round(dailyRental!!.dailyAmountDiscountFirst!!).toString())
                 iRates.putExtra(RentalRatesActivity.DISCOUNT_SECOND, Math.round(dailyRental!!.dailyAmountDiscountSecond!!).toString())
                 iRates.putExtra(RentalRatesActivity.MIN_RENTAL, dailyRental!!.dailyMinRentalDuration)
@@ -313,6 +313,7 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
         stringDelegate?.onSetDailyRentalRateFirst(rentalRatesValueFirst, rentalDetails.dailyAmountRateFirst)
         stringDelegate?.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.dailyAmountRateSecond)
         stringDelegate?.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.dailyAmountDiscountFirst)
+        stringDelegate?.onSetDailyRentalDiscountSecond(rootView.tv_rentalDiscountSecond, rentalDetails.dailyAmountDiscountSecond)
         stringDelegate?.onSetFuelPolicy(fuelPolicyValue, rentalDetails.dailyFuelPolicyName, "")
         setInstantBookingState(rentalDetails)
         var days = rentalDetails.dailyInstantBookingCount ?: 0

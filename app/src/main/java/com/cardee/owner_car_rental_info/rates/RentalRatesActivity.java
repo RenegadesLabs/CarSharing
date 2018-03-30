@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -145,10 +146,30 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
         mProgress = DialogHelper.getProgressDialog(this,
                 getString(R.string.loading), false);
         ratesValue1ET.setText(mRateFirst);
+        ratesValue1ET.setSelection(ratesValue1ET.getText().length());
+        ratesValue1ET.setCursorVisible(false);
+        ratesValue1ET.setOnClickListener(view -> ratesValue1ET.setSelection(ratesValue1ET.getText().length()));
+
         ratesValue2ET.setText(mRateSecond);
+        ratesValue2ET.setSelection(ratesValue2ET.getText().length());
+        ratesValue2ET.setCursorVisible(false);
+        ratesValue2ET.setOnClickListener(view -> ratesValue2ET.setSelection(ratesValue2ET.getText().length()));
+
         ratesValue3ET.setText(mDiscountFirst);
+        ratesValue3ET.setSelection(ratesValue3ET.getText().length());
+        ratesValue3ET.setCursorVisible(false);
+        ratesValue3ET.setOnClickListener(view -> ratesValue3ET.setSelection(ratesValue3ET.getText().length()));
+
         ratesValue4ET.setText(mDiscountSecond);
+        ratesValue4ET.setSelection(ratesValue4ET.getText().length());
+        ratesValue4ET.setCursorVisible(false);
+        ratesValue4ET.setOnClickListener(view -> ratesValue4ET.setSelection(ratesValue4ET.getText().length()));
+
         ratesValue5ET.setText(String.valueOf(mMinRental));
+        ratesValue5ET.setSelection(ratesValue5ET.getText().length());
+        ratesValue5ET.setCursorVisible(false);
+        ratesValue5ET.setOnClickListener(view -> ratesValue5ET.setSelection(ratesValue5ET.getText().length()));
+
         switch (mMode) {
             case OwnerCarRentalFragment.HOURLY:
                 ratesTitleTV.setText(R.string.car_rental_rates_hourly);

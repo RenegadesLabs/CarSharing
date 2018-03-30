@@ -322,6 +322,8 @@
     <string name="car_rental_rates_discount">Discount</string>
     <string name="car_rental_rates_discount_3_days">3 days discount</string>
     <string name="car_rental_rates_discount_weekly">Weekly discount</string>
+    <string name="car_rental_rates_discount_3_days_template">3 days discount %.0f%%</string>
+    <string name="car_rental_rates_discount_weekly_template">Weekly discount %.0f%%</string>
     <string name="car_rental_rates_minimum">Minimum</string>
     <string name="car_rental_rates_minimum_duration">Minimum rental duration</string>
     <string name="hour">hour</string>
@@ -333,6 +335,8 @@
     <string name="car_rental_rates_peak_non_h">Non-peak hour</string>
     <string name="car_rental_rates_discount_4_hours">4 hours discount</string>
     <string name="car_rental_rates_discount_8_hours">8 hours discount</string>
+    <string name="car_rental_rates_discount_4_hours_template">4 hours discount %.0f%%</string>
+    <string name="car_rental_rates_discount_8_hours_template">8 hours discount %.0f%%</string>
     <string name="car_rental_rates_peak_desc">Friday 6:00pm to Sunday 11:59pm,\n6:00pm onwards on holiday eve,
     \nand whole hour on public holiday</string>
 

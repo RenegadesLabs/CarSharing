@@ -200,8 +200,8 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
 //            }
             R.id.tv_rentalRentalRatesEdit -> {
                 val iRates = Intent(activity, RentalRatesActivity::class.java)
-                iRates.putExtra(RentalRatesActivity.RATE_FIRST, hourlyRental!!.hourlyAmountRateFirst.toString())
-                iRates.putExtra(RentalRatesActivity.RATE_SECOND, hourlyRental!!.hourlyAmountRateSecond.toString())
+                iRates.putExtra(RentalRatesActivity.RATE_FIRST, "%.0f".format(hourlyRental!!.hourlyAmountRateFirst))
+                iRates.putExtra(RentalRatesActivity.RATE_SECOND, "%.0f".format(hourlyRental!!.hourlyAmountRateSecond))
                 iRates.putExtra(RentalRatesActivity.DISCOUNT_FIRST, Math.round(hourlyRental!!.hourlyAmountDiscountFirst!!).toString())
                 iRates.putExtra(RentalRatesActivity.DISCOUNT_SECOND, Math.round(hourlyRental!!.hourlyAmountDiscountSecond!!).toString())
                 iRates.putExtra(RentalRatesActivity.MIN_RENTAL, hourlyRental!!.hourlyMinRentalDuration)
@@ -315,7 +315,9 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
         stringDelegate!!.onDateCountValueChange(availabilityDays, rentalDetails.hourlyCount)
         stringDelegate!!.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.hourlyAmountRateSecond)
         stringDelegate!!.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.hourlyAmountRateFirst)
-        stringDelegate!!.onSetRentalMinimum(rentalMinimum, rentalDetails.hourlyMinRentalDuration)
+//        stringDelegate!!.onSetRentalMinimum(rentalMinimum, rentalDetails.hourlyMinRentalDuration)
+        stringDelegate?.onSetHourlyRentalDiscount(rootView.tv_rentalDiscount, rentalDetails.hourlyAmountDiscountFirst)
+        stringDelegate?.onSetHourlyRentalDiscountSecond(rootView.tv_rentalDiscountSecond, rentalDetails.hourlyAmountDiscountSecond)
         val amtMileage = rentalDetails.hourlyAmountPayMileage
         if (amtMileage == null) {
             stringDelegate!!.onSetFuelPolicy(fuelPolicyValue, rentalDetails.hourlyFuelPolicyName, null)

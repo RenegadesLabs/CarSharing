@@ -43,13 +43,43 @@ class StringFormatDelegate(context: Context) {
     }
 
     private fun onSetRentalRate(view: TextView, amount: Float, suffix: String) {
-        val value = "$$amount $suffix"
+        val value = "$%.0f %s".format(amount, suffix)
         view.visibility = View.VISIBLE
         view.text = value
     }
 
     fun onSetDailyRentalDiscount(view: TextView, discount: Float?) = discount?.let {
-        val discountString = "3 days discount $discount%"
+        if (discount == 0f) {
+            return@let
+        }
+        val discountString = view.context.getString(R.string.car_rental_rates_discount_3_days_template).format(discount)
+        view.visibility = View.VISIBLE
+        view.text = discountString
+    }
+
+    fun onSetDailyRentalDiscountSecond(view: TextView, discount: Float?) = discount?.let {
+        if (discount == 0f) {
+            return@let
+        }
+        val discountString = view.context.getString(R.string.car_rental_rates_discount_weekly_template).format(discount)
+        view.visibility = View.VISIBLE
+        view.text = discountString
+    }
+
+    fun onSetHourlyRentalDiscount(view: TextView, discount: Float?) = discount?.let {
+        if (discount == 0f) {
+            return@let
+        }
+        val discountString = view.context.getString(R.string.car_rental_rates_discount_4_hours_template).format(discount)
+        view.visibility = View.VISIBLE
+        view.text = discountString
+    }
+
+    fun onSetHourlyRentalDiscountSecond(view: TextView, discount: Float?) = discount?.let {
+        if (discount == 0f) {
+            return@let
+        }
+        val discountString = view.context.getString(R.string.car_rental_rates_discount_8_hours_template).format(discount)
         view.visibility = View.VISIBLE
         view.text = discountString
     }

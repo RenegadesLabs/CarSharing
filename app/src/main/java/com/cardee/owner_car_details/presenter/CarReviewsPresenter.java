@@ -48,19 +48,23 @@ public class CarReviewsPresenter implements Presenter {
         mExecutor.execute(mGetCarReviews, new GetCarReviews.RequestValues(mCarId), new UseCase.Callback<GetCarReviews.ResponseValues>() {
             @Override
             public void onSuccess(GetCarReviews.ResponseValues response) {
-                mView.showProgress(false);
-                CarReviews reviews = response.getCarReviews();
-                if (reviews != null) {
-                    setHeader(reviews);
-                    List<Review> carReviews = reviews.getReviews();
-                    mView.setCarReviews(carReviews);
+                if (mView != null) {
+                    mView.showProgress(false);
+                    CarReviews reviews = response.getCarReviews();
+                    if (reviews != null) {
+                        setHeader(reviews);
+                        List<Review> carReviews = reviews.getReviews();
+                        mView.setCarReviews(carReviews);
+                    }
                 }
             }
 
             @Override
             public void onError(Error error) {
-                mView.showProgress(false);
-                mView.showMessage(error.getMessage());
+                if (mView != null) {
+                    mView.showProgress(false);
+                    mView.showMessage(error.getMessage());
+                }
             }
         });
     }

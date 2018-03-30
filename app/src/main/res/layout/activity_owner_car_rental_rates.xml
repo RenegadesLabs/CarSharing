@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_regular">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_layout"
@@ -100,7 +101,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="@dimen/xsmall_margin"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
                 android:paddingBottom="@dimen/small_margin"
@@ -170,6 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/xsmall_margin"
                 android:gravity="center"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
                 android:paddingBottom="@dimen/small_margin"
@@ -257,6 +259,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="4"
                 android:paddingBottom="@dimen/small_margin"
@@ -315,6 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:maxLength="4"
                 android:paddingBottom="@dimen/small_margin"
@@ -339,6 +343,7 @@
         android:textAllCaps="true"
         android:textSize="@dimen/text_small"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/discount_container" />
 
@@ -348,6 +353,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_margin"
         android:background="@android:color/white"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/tv_minimumTitle">
 
         <TextView

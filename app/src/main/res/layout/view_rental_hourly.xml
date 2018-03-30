@@ -371,61 +371,68 @@
                 android:background="@color/divider"
                 app:layout_constraintTop_toBottomOf="@id/accept_cash" />
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/icon_rates"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_margin="@dimen/large_margin"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_bage" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/rates"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/car_rental_info_rates"
-                    android:textColor="@color/text_regular"
-                    android:textSize="@dimen/text_regular"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/icon_rates"
-                    app:layout_constraintStart_toEndOf="@+id/icon_rates"
-                    app:layout_constraintTop_toTopOf="@id/icon_rates" />
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/icon_rates"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="@dimen/large_margin"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_bage" />
 
-                <TextView
-                    android:id="@+id/rates_h"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/xsmall_margin"
-                    android:text="@string/car_rental_info_hourly_b"
-                    android:textColor="@color/text_additional_info"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/rates"
-                    app:layout_constraintStart_toEndOf="@+id/rates" />
+                    <TextView
+                        android:id="@+id/rates"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/car_rental_info_rates"
+                        android:textColor="@color/text_regular"
+                        android:textSize="@dimen/text_regular"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_rates"
+                        app:layout_constraintStart_toEndOf="@+id/icon_rates"
+                        app:layout_constraintTop_toTopOf="@id/icon_rates" />
 
-                <TextView
-                    android:id="@+id/tv_rentalRentalRatesEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/large_margin"
-                    android:background="@drawable/bg_item_transparent"
-                    android:paddingEnd="@dimen/small_margin"
-                    android:paddingStart="@dimen/small_margin"
-                    android:text="@string/title_edit"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/rates"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:id="@+id/rates_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xsmall_margin"
+                        android:text="@string/car_rental_info_hourly_b"
+                        android:textColor="@color/text_additional_info"
+                        android:textSize="@dimen/text_small"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/rates"
+                        app:layout_constraintStart_toEndOf="@+id/rates" />
+
+                    <TextView
+                        android:id="@+id/tv_rentalRentalRatesEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/large_margin"
+                        android:background="@drawable/bg_item_transparent"
+                        android:paddingEnd="@dimen/small_margin"
+                        android:paddingStart="@dimen/small_margin"
+                        android:text="@string/title_edit"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/rates"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </android.support.constraint.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_rentalValueFirst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
                     android:layout_marginTop="@dimen/small_margin"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
@@ -437,6 +444,7 @@
                     android:id="@+id/tv_rentalValueSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
                     android:layout_marginTop="@dimen/small_margin"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
@@ -448,19 +456,44 @@
                     android:id="@+id/tv_rentalMinimumValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
                     android:layout_marginTop="@dimen/small_margin"
                     android:textColor="@color/text_regular"
                     android:textSize="@dimen/text_regular"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/rates"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_rentalValueSecond" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_rentalValueSecond" />
 
-            </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_rentalDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:textColor="@color/text_regular"
+                    android:textSize="@dimen/text_regular"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@id/rates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rentalValueSecond" />
+
+                <TextView
+                    android:id="@+id/tv_rentalDiscountSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:textColor="@color/text_regular"
+                    android:textSize="@dimen/text_regular"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@id/rates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rentalDiscount" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/div6"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:layout_marginTop="@dimen/medium_margin"
                 android:background="@color/divider"
                 app:layout_constraintTop_toBottomOf="@id/tv_rentalDiscount" />
 
