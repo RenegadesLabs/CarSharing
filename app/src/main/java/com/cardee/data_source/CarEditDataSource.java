@@ -3,6 +3,7 @@ package com.cardee.data_source;
 
 import android.net.Uri;
 
+import com.cardee.data_source.remote.api.cars.request.CarTitleEntity;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
@@ -19,6 +20,8 @@ public interface CarEditDataSource {
     void updateLocation(Integer id, NewCarData carData, Callback callback);
 
     void updateInfo(Integer id, NewCarData carData, Callback callback);
+
+    void updateCarTitle(Integer id, CarTitleEntity title, Callback callback);
 
     void updateDescription(Integer id, String description, Callback callback);
 

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +108,24 @@ public class OwnerCarDetailsFragment extends Fragment
 
     @Override
     public void moveToSpecs(Bundle args) {
-        showMessage("Move to specs");
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View titleDialogView = factory.inflate(R.layout.dialog_edit_car_title, null);
+        final AlertDialog titleDialog = new AlertDialog.Builder(getActivity()).create();
+        titleDialog.setView(titleDialogView);
+        titleDialog.show();
+
+        TextInputEditText title = titleDialog.findViewById(R.id.catTitle);
+        mPresenter.initTitleEditText(title);
+
+        titleDialog.findViewById(R.id.bConfirm).setOnClickListener(view -> {
+            String titleText = title.getText().toString();
+            if (!titleText.isEmpty()) {
+                mPresenter.saveTitle(titleText);
+                titleDialog.dismiss();
+            }
+        });
+
+        titleDialog.findViewById(R.id.bCancel).setOnClickListener(view -> titleDialog.dismiss());
     }
 
     @Override
@@ -131,6 +150,11 @@ public class OwnerCarDetailsFragment extends Fragment
     @Override
     public void onConnectionLost() {
 
+    }
+
+    @Override
+    public void onTitleSaved() {
+        mPresenter.get();
     }
 
     public void setListener(OnCarFetchedListener listener) {

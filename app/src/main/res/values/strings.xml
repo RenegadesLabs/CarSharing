@@ -562,6 +562,10 @@
     <string name="renter_car_details_review_trips_suffix">\u00a0trips</string>
     <string name="renter_car_details_owner_by">Owned by</string>
     <string name="renter_car_details_added_to_fav">Added to favorites!</string>
+    <string name="renter_car_details_confirm">Confirm</string>
+    <string name="edit_car_title">Edit Car Title</string>
+    <string name="private_hire">Private-hire</string>
+    <string name="private_hire_car">Private-hire car</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -998,5 +1002,6 @@
     <string name="extend_daily_booking_title">Select new return date</string>
     <string name="extend_hourly_booking_title">Select new return time</string>
     <string name="available_full_day">Available Full Day</string>
+
 
 </resources>

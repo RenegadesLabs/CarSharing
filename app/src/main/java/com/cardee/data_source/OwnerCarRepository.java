@@ -41,7 +41,6 @@ public class OwnerCarRepository implements OwnerCarDataSource {
         CarResponseBody cachedCar = mCache.get(id);
         if (cachedCar != null) {
             callback.onSuccess(cachedCar);
-            return;
         }
 
         CarEntity cachedCarEntity = mCarsRepository.getCachedCar(id);

@@ -1,9 +1,9 @@
 package com.cardee.data_source.cache;
 
-
 import android.net.Uri;
 
 import com.cardee.data_source.CarEditDataSource;
+import com.cardee.data_source.remote.api.cars.request.CarTitleEntity;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.common.entity.CarRuleEntity;
 import com.cardee.data_source.remote.api.common.entity.DeliveryRatesEntity;
@@ -37,6 +37,11 @@ public class LocalCarEditDataSource implements CarEditDataSource {
 
     @Override
     public void updateInfo(Integer id, NewCarData carData, CarEditDataSource.Callback callback) {
+
+    }
+
+    @Override
+    public void updateCarTitle(Integer id, CarTitleEntity title, Callback callback) {
 
     }
 

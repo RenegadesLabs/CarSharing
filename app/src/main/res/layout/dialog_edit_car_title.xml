@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/editCarTitle"
+        style="@style/TextTitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/large_margin"
+        android:paddingStart="26dp"
+        android:paddingTop="@dimen/large_margin"
+        android:text="@string/edit_car_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/carTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/large_margin"
+        android:paddingStart="@dimen/large_margin"
+        android:theme="@style/NoteChangeTextInputStyle"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:layout_constraintTop_toBottomOf="@id/editCarTitle">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/catTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/carTitleLayout">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_grey"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/change_pass_cancel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_blue_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/renter_car_details_confirm"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

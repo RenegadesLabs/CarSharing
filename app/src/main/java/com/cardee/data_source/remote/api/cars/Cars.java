@@ -2,6 +2,7 @@ package com.cardee.data_source.remote.api.cars;
 
 import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.NoDataResponse;
+import com.cardee.data_source.remote.api.cars.request.CarTitleEntity;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponse;
@@ -50,6 +51,9 @@ public interface Cars {
 
     @PUT("cars/{id}/information")
     Call<BaseResponse> updateInfo(@Path("id") Integer carId, @Body NewCarData requestBody);
+
+    @PUT("cars/{id}/information")
+    Call<BaseResponse> updateCarTitle(@Path("id") Integer carId, @Body CarTitleEntity titleEntity);
 
     @PUT("cars/{id}/description")
     Call<BaseResponse> updateDescription(@Path("id") Integer carId, @Body DescriptionBody description);

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
-    android:paddingBottom="@dimen/scroll_bottom_padding"
     android:overScrollMode="never"
     android:scrollbars="none">
 
@@ -135,7 +134,6 @@
                 android:layout_marginEnd="@dimen/widget_margin_large"
                 android:padding="@dimen/widget_padding_xx_small"
                 android:text="@string/title_edit"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/car_details_model"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/car_details_model" />
@@ -160,7 +158,7 @@
 
             <TextView
                 android:id="@+id/car_location_title"
-                style="@style/TextTitle"
+                style="@style/TextTitleBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/widget_margin_large"
@@ -199,8 +197,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/widget_margin_regular">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/car_description_icon"
@@ -214,7 +211,7 @@
 
             <TextView
                 android:id="@+id/car_description_title"
-                style="@style/TextTitle"
+                style="@style/TextTitleBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/widget_margin_large"

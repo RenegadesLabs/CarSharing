@@ -27,6 +27,8 @@ public interface OwnerCarDetailsContract {
         void onUnauthorized();
 
         void onConnectionLost();
+
+        void onTitleSaved();
     }
 
     interface Presenter {

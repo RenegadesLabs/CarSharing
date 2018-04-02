@@ -16,15 +16,13 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.cardee.CardeeApp;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Car;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.owner_car_details.OwnerCarDetailsContract;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
 public class OwnerCarDetailViewHolder implements ViewPager.OnPageChangeListener {
@@ -222,7 +220,13 @@ public class OwnerCarDetailViewHolder implements ViewPager.OnPageChangeListener 
         }
         if (car.getTransmissionType() != null) {
             builder.append(car.getTransmissionType());
+            builder.append(" ");
         }
+        if (car.getVehicleType().equals(CardeeApp.context.getString(R.string.private_hire))) {
+            builder.append("\u2022 ");
+            builder.append(CardeeApp.context.getString(R.string.private_hire_car));
+        }
+
         return builder.toString();
     }
 

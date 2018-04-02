@@ -10,6 +10,7 @@ import com.cardee.data_source.remote.api.BaseResponse;
 import com.cardee.data_source.remote.api.NoDataResponse;
 import com.cardee.data_source.remote.api.cars.Cars;
 import com.cardee.data_source.remote.api.cars.Upload;
+import com.cardee.data_source.remote.api.cars.request.CarTitleEntity;
 import com.cardee.data_source.remote.api.cars.request.DescriptionBody;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.UploadImageResponse;
@@ -36,6 +37,7 @@ import java.io.InputStream;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.Response;
 
 
@@ -89,6 +91,26 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
             Log.e(TAG, e.getMessage());
             callback.onError(new Error(Error.Type.LOST_CONNECTION, e.getMessage()));
         }
+    }
+
+    @Override
+    public void updateCarTitle(Integer id, CarTitleEntity title, Callback callback) {
+        carsApi.updateCarTitle(id, title).enqueue(new retrofit2.Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                    return;
+                }
+                handleErrorResponse(response.body(), callback);
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+                callback.onError(new Error(Error.Type.LOST_CONNECTION, t.getMessage()));
+            }
+        });
     }
 
     @Override

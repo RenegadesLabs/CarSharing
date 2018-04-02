@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.cardee.data_source.cache.LocalCarEditDataSource;
 import com.cardee.data_source.remote.RemoteCarEditDataSource;
+import com.cardee.data_source.remote.api.cars.request.CarTitleEntity;
 import com.cardee.data_source.remote.api.cars.request.NewCarData;
 import com.cardee.data_source.remote.api.cars.response.CarResponseBody;
 import com.cardee.data_source.remote.api.common.entity.BaseCarEntity;
@@ -78,6 +79,15 @@ public class CarEditRepository implements CarEditDataSource {
             return;
         }
         remoteDataSource.updateInfo(id, carData, callback);
+    }
+
+    @Override
+    public void updateCarTitle(Integer id, CarTitleEntity title, Callback callback) {
+        if (id == null) {
+            callback.onError(new Error(Error.Type.INVALID_REQUEST, "Invalid ID: null"));
+            return;
+        }
+        remoteDataSource.updateCarTitle(id, title, callback);
     }
 
     @Override
