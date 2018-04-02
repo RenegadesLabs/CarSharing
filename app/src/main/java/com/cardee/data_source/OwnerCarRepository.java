@@ -41,12 +41,13 @@ public class OwnerCarRepository implements OwnerCarDataSource {
         CarResponseBody cachedCar = mCache.get(id);
         if (cachedCar != null) {
             callback.onSuccess(cachedCar);
+        } else {
+            CarEntity cachedCarEntity = mCarsRepository.getCachedCar(id);
+            if (cachedCarEntity != null) {
+                callback.onSuccess(CarResponseBody.from(cachedCarEntity));
+            }
         }
 
-        CarEntity cachedCarEntity = mCarsRepository.getCachedCar(id);
-        if (cachedCarEntity != null) {
-            callback.onSuccess(CarResponseBody.from(cachedCarEntity));
-        }
         mRemoteDataSource.obtainCar(id, new Callback() {
             @Override
             public void onSuccess(CarResponseBody carResponse) {

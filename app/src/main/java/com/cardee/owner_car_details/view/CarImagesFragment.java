@@ -110,15 +110,16 @@ public class CarImagesFragment extends Fragment
         imagesGrid.setAdapter(adapter);
         imagesGrid.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
         imagesGrid.setItemAnimator(new DefaultItemAnimator());
+
+        parentListener.onBind(binder);
+        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
+        presenter.init();
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        parentListener.onBind(binder);
-        parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
-        presenter.init();
     }
 
     @Override

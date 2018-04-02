@@ -124,6 +124,9 @@ public class CarDescriptionFragment extends Fragment
     @Override
     public void onDescriptionObtained(String description) {
         descriptionView.setText(description);
+        descriptionView.setSelection(descriptionView.getText().length());
+        descriptionView.setOnClickListener(view ->
+                descriptionView.setSelection(descriptionView.getText().length()));
     }
 
     @Override

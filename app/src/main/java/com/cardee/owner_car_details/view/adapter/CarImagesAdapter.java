@@ -15,8 +15,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.Image;
-import com.cardee.domain.util.ListUtil;
-import com.cardee.domain.util.Mapper;
 import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
 import java.util.ArrayList;
@@ -41,6 +39,10 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setItems(List<Image> images) {
         items.clear();
         for (Image image : images) {
+            if (image.isPrimary()) {
+                items.add(0, ImageItemWrapper.newImageItem(image));
+                continue;
+            }
             items.add(ImageItemWrapper.newImageItem(image));
         }
         items.add(ImageItemWrapper.newAddButtonItem());
