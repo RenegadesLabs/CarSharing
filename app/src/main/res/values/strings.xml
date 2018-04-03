@@ -137,8 +137,8 @@
     <string name="car_add_info">2. Car Info</string>
     <string name="car_add_image">3. Car Image</string>
     <string name="car_add_location">4. Car Location</string>
-    <string name="car_add_contact">5. Contact Info</string>
-    <string name="car_add_payment">6. Payment Account</string>
+    <string name="car_add_contact">4. Contact Info</string>
+    <string name="car_add_payment">5. Payment Account</string>
     <string name="car_add_add">Add</string>
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>

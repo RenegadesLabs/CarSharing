@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.annotation.StringRes;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.presenter.CarContactsPresenter;
 import com.cardee.owner_car_add.NewCarFormsContract;
+import com.cardee.owner_car_add.presenter.CarContactsPresenter;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -143,10 +143,11 @@ public class CarContactsFragment extends Fragment implements NewCarFormsContract
     }
 
     private boolean isValid() {
-        return !carOwnerPhone.getText().toString().isEmpty() &&
-                carOwnerCode.getText().toString().matches("\\+[0-9]{2,}") &&
-                !carOwnerName.getText().toString().isEmpty() &&
-                !carOwnerEmail.getText().toString().isEmpty();
+        return carOwnerPhone != null &&
+                !carOwnerPhone.getText().toString().isEmpty()
+                && carOwnerCode.getText().toString().matches("\\+[0-9]{2,}")
+                && !carOwnerName.getText().toString().isEmpty()
+                && !carOwnerEmail.getText().toString().isEmpty();
     }
 
     private void saveContactInfo() {

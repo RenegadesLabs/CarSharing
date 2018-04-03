@@ -14,10 +14,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.presenter.CarImagePresenter;
 import com.cardee.owner_car_add.NewCarFormsContract;
+import com.cardee.owner_car_add.presenter.CarImagePresenter;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -39,6 +42,10 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
 
     @BindView(R.id.iv_addCarImage)
     public ImageView addCarImage;
+
+    @BindView(R.id.newImage)
+    public ImageView newImage;
+
     private CarImagePresenter presenter;
     private SimpleBinder binder = new SimpleBinder() {
         @Override
@@ -109,18 +116,20 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     private void setUserPhoto(Uri uri) {
         Glide.with(getActivity())
                 .load(uri)
-                .placeholder(R.drawable.img_car_sample)
-                .into(addCarImage);
+                .centerCrop()
+                .into(newImage);
+        newImage.setVisibility(View.VISIBLE);
     }
 
     private void setUserPhoto(File file) {
         Glide.with(getActivity())
                 .load(file)
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .placeholder(R.drawable.img_car_sample)
-                .error(R.drawable.img_car_sample)
-                .into(addCarImage);
+                .error(R.drawable.img_no_car)
+                .into(newImage);
+        newImage.setVisibility(View.VISIBLE);
     }
 
     @Override

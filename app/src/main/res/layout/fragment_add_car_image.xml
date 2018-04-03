@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/car_image_desc"
-        android:padding="@dimen/medium_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_large"
+        android:padding="@dimen/medium_margin"
+        android:text="@string/car_add_image_desc"
         android:textColor="@android:color/black"
-        android:text="@string/car_add_image_desc"/>
+        android:textSize="@dimen/text_large" />
 
     <!--<android.support.v7.widget.RecyclerView-->
-        <!--andrchatLocalIdd:idchatLocalId@+id/rv_addCarImage"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginStart="@dimen/medium_margin"-->
-        <!--android:layout_marginEnd="@dimen/medium_margin"-->
-        <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
-        <!--app:layout_constraintTop_toBottomOfchatLocalId@+id/car_image_desc">-->
+    <!--andrchatLocalIdd:idchatLocalId@+id/rv_addCarImage"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:layout_marginStart="@dimen/medium_margin"-->
+    <!--android:layout_marginEnd="@dimen/medium_margin"-->
+    <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+    <!--app:layout_constraintTop_toBottomOfchatLocalId@+id/car_image_desc">-->
 
     <!--</android.support.v7.widget.RecyclerView>-->
 
@@ -29,8 +29,8 @@
         android:id="@+id/iv_addCarImage"
         android:layout_width="150dp"
         android:layout_height="94dp"
-        android:layout_marginTop="@dimen/medium_margin"
         android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
         android:src="@drawable/img_car_sample"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/car_image_desc" />
@@ -39,24 +39,33 @@
         android:id="@+id/fl_addCarUploadImage"
         android:layout_width="150dp"
         android:layout_height="94dp"
+        android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/medium_margin"
         android:background="@drawable/bg_dash_rect"
         android:clickable="true"
-        android:layout_marginStart="@dimen/small_margin"
+        android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/iv_addCarImage"
-        app:layout_constraintTop_toBottomOf="@+id/car_image_desc"
-        android:focusable="true">
+        app:layout_constraintTop_toBottomOf="@+id/car_image_desc">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/text_large"
-            android:textColor="@color/colorPrimary"
             android:text="@string/upload"
-            />
-
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_large" />
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/newImage"
+        android:layout_width="150dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:src="@drawable/img_no_car"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/iv_addCarImage"
+        app:layout_constraintTop_toBottomOf="@+id/car_image_desc" />
 
     <TextView
         android:layout_width="match_parent"
@@ -65,6 +74,6 @@
         android:padding="@dimen/medium_margin"
         android:text="@string/car_add_image_why"
         android:textColor="@color/item_secondary_txt"
-        app:layout_constraintTop_toBottomOf="@+id/iv_addCarImage"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_addCarImage" />
 
 </android.support.constraint.ConstraintLayout>

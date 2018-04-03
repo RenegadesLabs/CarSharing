@@ -61,6 +61,6 @@
         android:layout_alignParentBottom="true"
         android:clickable="true"
         android:visibility="gone"
-        android:text="@string/car_add_all_done" />
+        android:text="@string/done" />
 
 </RelativeLayout>

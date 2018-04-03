@@ -22,13 +22,13 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoMake"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_make_hint"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView
@@ -40,13 +40,13 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoModel"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_model_hint"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView
@@ -58,6 +58,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoYear"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -65,8 +66,7 @@
                 android:hint="@string/car_add_info_please_select"
                 android:inputType="none"
                 android:maxLines="1"
-                android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:textSize="@dimen/text_regular" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,6 +77,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoCarTitle"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_car_title_hint"
@@ -84,7 +85,6 @@
                 android:maxEms="20"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView
@@ -103,6 +103,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoLicense"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_license_hint"
@@ -110,7 +111,6 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView
@@ -122,6 +122,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoSeating"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -129,8 +130,7 @@
                 android:hint="@string/car_add_info_please_select"
                 android:inputType="none"
                 android:maxLines="1"
-                android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle" />
+                android:textSize="@dimen/text_regular" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,6 +146,7 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_addCarInfoEngine"
+                    style="@style/CardeeEditTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:focusable="false"
@@ -155,7 +156,6 @@
                     android:inputType="none"
                     android:maxLines="1"
                     android:textSize="@dimen/text_regular"
-                    android:theme="@style/CardeeEditTextStyle"
                     app:errorEnabled="true" />
 
                 <TextView
@@ -174,6 +174,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoTransmission"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -182,7 +183,6 @@
                 android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView
@@ -194,6 +194,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_addCarInfoBody"
+                style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -202,7 +203,6 @@
                 android:inputType="none"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
-                android:theme="@style/CardeeEditTextStyle"
                 app:errorEnabled="true" />
 
             <TextView

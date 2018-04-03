@@ -95,7 +95,8 @@
         <activity
             android:name=".owner_car_details.view.CarImagesActivity"
             android:theme="@style/BlackTheme" />
-        <activity android:name=".owner_car_add.view.NewCarFormsActivity" />
+        <activity android:name=".owner_car_add.view.NewCarFormsActivity"
+            android:theme="@style/ChatStyle"/>
         <activity
             android:name=".renter_bookings.rate_rental_exp.view.RateRentalExpActivity"
             android:parentActivityName=".renter_home.view.RenterHomeActivity"

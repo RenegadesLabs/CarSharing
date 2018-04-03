@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,8 +62,7 @@ public class CarImagesFragment extends Fragment
     private CarImagesAdapter adapter;
     private CarImagesPresenter presenter;
     private Toast currentToast;
-    private Bitmap mImageBitmap;
-    private String mCurrentPhotoPath;
+    private String currentPhotoPath;
 
     private int carId;
 
@@ -255,7 +253,7 @@ public class CarImagesFragment extends Fragment
                 storageDir
         );
 
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        currentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
 
@@ -267,7 +265,7 @@ public class CarImagesFragment extends Fragment
             return;
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            presenter.onAddNewImage(Uri.parse(mCurrentPhotoPath));
+            presenter.onAddNewImage(Uri.parse(currentPhotoPath));
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
