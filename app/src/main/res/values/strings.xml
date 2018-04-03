@@ -566,6 +566,8 @@
     <string name="edit_car_title">Edit Car Title</string>
     <string name="private_hire">Private-hire</string>
     <string name="private_hire_car">Private-hire car</string>
+    <string name="camera">Camera</string>
+    <string name="select_from_gallery">Select From Gallery</string>
 
     <!--Calendar-->
     <string-array name="days_of_week">
@@ -1002,6 +1004,5 @@
     <string name="extend_daily_booking_title">Select new return date</string>
     <string name="extend_hourly_booking_title">Select new return time</string>
     <string name="available_full_day">Available Full Day</string>
-
 
 </resources>

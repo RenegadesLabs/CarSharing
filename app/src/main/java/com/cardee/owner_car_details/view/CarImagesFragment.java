@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -22,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cardee.R;
+import com.cardee.custom.modal.SelectPictureFragment;
 import com.cardee.domain.owner.entity.Image;
 import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.CarImagesEditContract;
@@ -31,16 +35,24 @@ import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 import com.cardee.owner_car_details.view.listener.ImageViewListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
 import static com.cardee.owner_car_details.CarImagesEditContract.CAR_ID;
 
 
 public class CarImagesFragment extends Fragment
-        implements CarImagesEditContract.View, ImageViewListener {
+        implements CarImagesEditContract.View, ImageViewListener, SelectPictureFragment.DialogOnClickListener {
 
     private static final int IMAGE_REQUEST_CODE = 102;
-    private static final int REQUEST_PERMISSION_CODE = 103;
+    private static final int REQUEST_READ_PERMISSION_CODE = 103;
+    private static final int REQUEST_WRITE_PERMISSION_CODE = 104;
+    private static final int REQUEST_IMAGE_CAPTURE = 105;
 
     private DetailsChangedListener parentListener;
     private NewCarFormsContract.Action pendingAction;
@@ -51,6 +63,8 @@ public class CarImagesFragment extends Fragment
     private CarImagesAdapter adapter;
     private CarImagesPresenter presenter;
     private Toast currentToast;
+    private Bitmap mImageBitmap;
+    private String mCurrentPhotoPath;
 
     private int carId;
 
@@ -177,10 +191,42 @@ public class CarImagesFragment extends Fragment
 
     @Override
     public void onAddNewClick() {
-        if (!hasPermission()) {
+        SelectPictureFragment menu = new SelectPictureFragment();
+        menu.show(getActivity().getSupportFragmentManager(), menu.getTag());
+        menu.setListener(this);
+    }
+
+    @Override
+    public void onCameraClicked() {
+        if (!hasWritePermission()) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_PERMISSION_CODE);
+            return;
+        }
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            if (photoFile != null) {
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    @Override
+    public void onGalleryClicked() {
+        if (!hasReadPermission()) {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_CODE);
+                    REQUEST_READ_PERMISSION_CODE);
             return;
         }
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -188,9 +234,29 @@ public class CarImagesFragment extends Fragment
         startActivityForResult(photoPickerIntent, IMAGE_REQUEST_CODE);
     }
 
-    private boolean hasPermission() {
+    private boolean hasReadPermission() {
         int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
         return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean hasWritePermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
     }
 
     @Override
@@ -200,15 +266,25 @@ public class CarImagesFragment extends Fragment
             presenter.onAddNewImage(uri);
             return;
         }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            presenter.onAddNewImage(Uri.parse(mCurrentPhotoPath));
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (permissions[0] == Manifest.permission.READ_EXTERNAL_STORAGE &&
+        if (requestCode == REQUEST_READ_PERMISSION_CODE) {
+            if (permissions[0].equals(Manifest.permission.READ_EXTERNAL_STORAGE) &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                onAddNewClick();
+                onGalleryClicked();
+            }
+        }
+        if (requestCode == REQUEST_WRITE_PERMISSION_CODE) {
+            if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                onCameraClicked();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
