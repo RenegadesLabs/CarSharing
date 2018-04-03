@@ -35,6 +35,7 @@ public class CarDetailsEditActivity extends AppCompatActivity
     private static final String TAG = CarDetailsEditActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 101;
 
+    private Toolbar mToolbar;
     private TextView mTitleView;
     private View mBtnSave;
     private ProgressBar mProgress;
@@ -48,12 +49,12 @@ public class CarDetailsEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details_edit);
         if (getSupportActionBar() == null) {
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+            mToolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(null);
-            mTitleView = toolbar.findViewById(R.id.toolbar_title);
-            mBtnSave = toolbar.findViewById(R.id.toolbar_action);
+            mTitleView = mToolbar.findViewById(R.id.toolbar_title);
+            mBtnSave = mToolbar.findViewById(R.id.toolbar_action);
             mBtnSave.setOnClickListener(this);
         }
         mProgress = findViewById(R.id.details_progress);
@@ -107,6 +108,13 @@ public class CarDetailsEditActivity extends AppCompatActivity
     @Override
     public void onModeDisplayed(NewCarFormsContract.Mode mode) {
         mTitleView.setText(mode.getTitleId());
+        if (mode.equals(NewCarFormsContract.Mode.IMAGE)) {
+            mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+            mBtnSave.setVisibility(View.GONE);
+        } else {
+            mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_close));
+            mBtnSave.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
