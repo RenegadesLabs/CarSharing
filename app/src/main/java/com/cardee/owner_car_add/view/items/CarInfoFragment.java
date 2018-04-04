@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cardee.R;
+import com.cardee.custom.modal.PickerMenuFragment;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.presenter.CarInfoPresenter;
 import com.cardee.owner_car_add.NewCarFormsContract;
+import com.cardee.owner_car_add.presenter.CarInfoPresenter;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
-import com.cardee.custom.modal.PickerMenuFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -186,7 +186,7 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         PickerMenuFragment menu = PickerMenuFragment.getInstance(engineCapacityInput.getText().toString(),
                 PickerMenuFragment.Mode.ENGINE_CAPACITY);
         menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(value -> engineCapacityInput.setText(value));
+        menu.setOnDoneClickListener(value -> engineCapacityInput.setText(value.split(" ")[0]));
     }
 
     @OnClick(R.id.et_addCarInfoTransmission)

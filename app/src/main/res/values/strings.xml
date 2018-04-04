@@ -163,7 +163,7 @@
     <string name="car_add_vehicle_what">What type of vehicle are you listing?</string>
     <string name="car_add_vehicle_personal">Personal Car</string>
     <string name="car_add_vehicle_personal_expl">Passenger car for personal use</string>
-    <string name="car_add_vehicle_private">Private-Hire Vehicle</string>
+    <string name="car_add_vehicle_private">Private-Hire Car</string>
     <string name="car_add_vehicle_private_expl">Private-hire cars registered for Grab / Uber use.
         \n(Also can be rented out for personal use)</string>
     <string name="car_add_vehicle_commercial">Commercial Vehicle</string>
@@ -177,6 +177,7 @@
     <string name="car_add_info_model_hint">E.g. Altis, Camry, Prius etc.</string>
     <string name="car_add_info_year">Year of Manufacture</string>
     <string name="car_add_info_please_select">Please select</string>
+    <string name="car_add_info_year_hint">E.g. 2017</string>
     <string name="car_add_info_car_title">Car Title</string>
     <string name="car_add_info_car_title_hint">E.g. Toyota Camry, BMW 3 Hybrid etc.</string>
     <string name="car_add_info_car_title_desc">How you would like your car title to be displayed?

@@ -29,7 +29,7 @@ public class CarInfoPresenter extends NewCarPresenter {
                 .setManufactureYear(year == null ? null : Integer.valueOf(year))
                 .setTitle(title)
                 .setLicencePlateNumber(license)
-                .setSeatingCapacity(seatingCapacity)
+                .setSeatingCapacity(seatingCapacity.substring(0,1))
                 .setEngineCapacity(engineCapacity)
                 .setTransmissionId(transmissionId)
                 .setBodyType(bodyTypeId)

@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/car_add_vehicle_personal"
             android:textColor="@color/add_car_item_vehicle_inactive"
             android:textSize="@dimen/text_large" />
@@ -72,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/car_add_vehicle_private"
             android:textColor="@color/add_car_item_vehicle_inactive"
             android:textSize="@dimen/text_large" />
@@ -113,6 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/car_add_vehicle_commercial"
             android:textColor="@color/add_car_item_vehicle_inactive"
             android:textSize="@dimen/text_large" />

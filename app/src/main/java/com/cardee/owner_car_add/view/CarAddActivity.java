@@ -138,7 +138,6 @@ public class CarAddActivity extends AppCompatActivity
         AppCompatButton buttonClose = rootView.findViewById(R.id.buttonClose);
         buttonClose.setOnClickListener(view ->
                 dialog.dismiss());
-
         TextView textView = rootView.findViewById(R.id.text);
         SpannableString spannableString = new SpannableString(getResources().getString(R.string.car_add_dialog_text));
         spannableString.setSpan(new StyleSpan(Typeface.BOLD), 121, 143,

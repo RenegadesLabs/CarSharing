@@ -22,19 +22,34 @@ import java.util.List;
 
 public class PickerMenuFragment extends BottomSheetDialogFragment {
 
-    private final static String[] SEATS = {"2", "3", "4", "5", "6", "7", "8"};
+    private final static String[] SEATS = {
+            "2-seater",
+            "3-seater",
+            "4-seater",
+            "5-seater",
+            "6-seater",
+            "7-seater",
+            "8-seater"};
 
     private final static String[] ENGINES = {
-            "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6",
-            "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3",
-            "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0",
-            "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7",
-            "3.8", "3.9", "4.0", "4.1", "4.2", "4.3", "4.4",
-            "4.5", "4.6", "4.7", "4.8", "4.9", "5.0", "5.1",
-            "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8",
-            "5.9", "6.0", "6.1", "6.2", "6.3", "6.4", "6.5",
-            "6.6", "6.7", "6.8", "6.9", "7.0", "7.1", "7.2",
-            "7.3", "7.4", "7.5", "7.6", "7.7", "7.8", "7.9", "8.0"};
+            "1.0 litre", "1.1 litre", "1.2 litre", "1.3 litre",
+            "1.4 litre", "1.5 litre", "1.6 litre", "1.7 litre",
+            "1.8 litre", "1.9 litre", "2.0 litre", "2.1 litre",
+            "2.2 litre", "2.3 litre", "2.4 litre", "2.5 litre",
+            "2.6 litre", "2.7 litre", "2.8 litre", "2.9 litre",
+            "3.0 litre", "3.1 litre", "3.2 litre", "3.3 litre",
+            "3.4 litre", "3.5 litre", "3.6 litre", "3.7 litre",
+            "3.8 litre", "3.9 litre", "4.0 litre", "4.1 litre",
+            "4.2 litre", "4.3 litre", "4.4 litre", "4.5 litre",
+            "4.6 litre", "4.7 litre", "4.8 litre", "4.9 litre",
+            "5.0 litre", "5.1 litre", "5.2 litre", "5.3 litre",
+            "5.4 litre", "5.5 litre", "5.6 litre", "5.7 litre",
+            "5.8 litre", "5.9 litre", "6.0 litre", "6.1 litre",
+            "6.2 litre", "6.3 litre", "6.4 litre", "6.5 litre",
+            "6.6 litre", "6.7 litre", "6.8 litre", "6.9 litre",
+            "7.0 litre", "7.1 litre", "7.2 litre", "7.3 litre",
+            "7.4 litre", "7.5 litre", "7.6 litre", "7.7 litre",
+            "7.8 litre", "7.9 litre", "8.0 litre"};
 
     public final static String[] TRANSMISSION = {"Automatic", "Manual"};
 
@@ -166,9 +181,16 @@ public class PickerMenuFragment extends BottomSheetDialogFragment {
 
         if (mSelectedValue != null && !mSelectedValue.equals("")) {
             for (int i = 0; i < mValues.length; i++) {
-                if (mValues[i].equals(mSelectedValue)) {
-                    np.setValue(i);
-                    break;
+                if (mMode.equals(Mode.ENGINE_CAPACITY)) {
+                    if (mValues[i].equals(mSelectedValue + " litre")) {
+                        np.setValue(i);
+                        break;
+                    }
+                } else {
+                    if (mValues[i].equals(mSelectedValue)) {
+                        np.setValue(i);
+                        break;
+                    }
                 }
             }
         }

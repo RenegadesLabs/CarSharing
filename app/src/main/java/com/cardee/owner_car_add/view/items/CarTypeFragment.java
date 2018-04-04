@@ -14,8 +14,9 @@ import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
-import com.cardee.owner_car_add.presenter.CarTypePresenter;
+import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_add.NewCarFormsContract;
+import com.cardee.owner_car_add.presenter.CarTypePresenter;
 import com.cardee.owner_car_details.view.binder.SimpleBinder;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -120,7 +121,8 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
 
     @OnClick(R.id.fl_vehicleCommercial)
     public void onCommercialClicked(View view) {
-        view.requestFocus();
+        showMessage("Coming soon");
+//        view.requestFocus();
     }
 
     @OnFocusChange(R.id.fl_vehiclePersonal)
@@ -139,7 +141,7 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     public void onPrivateFocused(boolean isFocused) {
         if (isFocused) {
             value = 2;
-            vehiclePrivateIV.setImageResource(R.drawable.ic_private_hire_active);
+            vehiclePrivateIV.setImageResource(R.drawable.ic_grab);
             vehiclePrivateTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
         }
@@ -150,9 +152,10 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     @OnFocusChange(R.id.fl_vehicleCommercial)
     public void onCommercialFocused(boolean isFocused) {
         if (isFocused) {
-            value = 3;
-            vehicleCommercialIV.setImageResource(R.drawable.ic_truck_active);
-            vehicleCommercialTV.setTextColor(getResources().getColor(R.color.colorPrimary));
+            showMessage("Coming soon");
+//            value = 3;
+//            vehicleCommercialIV.setImageResource(R.drawable.ic_truck_active);
+//            vehicleCommercialTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
         }
         vehicleCommercialIV.setImageResource(R.drawable.ic_truck_inactive);
@@ -180,12 +183,12 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
 
     @Override
     public void showMessage(String message) {
-
+        ((BaseView) getActivity()).showMessage(message);
     }
 
     @Override
     public void showMessage(@StringRes int messageId) {
-
+        ((BaseView) getActivity()).showMessage(messageId);
     }
 
     public void onSave() {

@@ -84,6 +84,7 @@ public class NewCarFormsActivity extends AppCompatActivity
             titleView = toolbar.findViewById(R.id.toolbar_title);
             btnSave = toolbar.findViewById(R.id.toolbar_action);
             btnSave.setOnClickListener(this);
+            btnSave.setVisibility(View.GONE);
         }
         btnToNext = findViewById(R.id.btn_to_next);
         btnAllDone = findViewById(R.id.btn_all_done);

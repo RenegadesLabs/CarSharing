@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_make_hint"
                 android:inputType="textCapWords"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 app:errorEnabled="true" />
@@ -45,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_model_hint"
                 android:inputType="textCapWords"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 app:errorEnabled="true" />
@@ -61,12 +63,14 @@
                 style="@style/CardeeEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="@string/car_add_info_please_select"
-                android:inputType="none"
+                android:inputType="number"
+                android:maxLength="4"
                 android:maxLines="1"
-                android:textSize="@dimen/text_regular" />
+                android:textSize="@dimen/text_regular"
+                app:errorEnabled="true" />
+            <!--android:focusable="false"-->
+            <!--android:focusableInTouchMode="false"-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,6 +87,7 @@
                 android:hint="@string/car_add_info_car_title_hint"
                 android:inputType="textCapWords"
                 android:maxEms="20"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 app:errorEnabled="true" />
@@ -108,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/car_add_info_license_hint"
                 android:inputType="textCapCharacters"
-                android:maxLength="10"
+                android:maxLength="8"
                 android:maxLines="1"
                 android:textSize="@dimen/text_regular"
                 app:errorEnabled="true" />
