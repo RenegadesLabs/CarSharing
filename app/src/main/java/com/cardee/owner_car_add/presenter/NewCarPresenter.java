@@ -42,6 +42,7 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
                 if (view != null) {
                     view.showProgress(false);
                     view.showMessage(error.getMessage());
+                    view.onNoSavedCar();
                 }
             }
         });
@@ -49,8 +50,10 @@ public class NewCarPresenter implements NewCarFormsContract.Presenter {
 
     @Override
     public void onCarDataResponse(CarData carData) {
-        if (carData != null && view != null) {
-            view.setCarData(carData);
+        if (view != null) {
+            if (carData != null) {
+                view.setCarData(carData);
+            }
         }
     }
 

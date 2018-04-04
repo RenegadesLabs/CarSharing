@@ -1,11 +1,19 @@
 package com.cardee.owner_car_add.view;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -118,6 +126,26 @@ public class CarAddActivity extends AppCompatActivity
     public void onFinish() {
         setResult(NewCarFormsContract.CAR_CREATED);
         finish();
+    }
+
+    @Override
+    public void onNoSavedCar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View rootView = inflater.inflate(R.layout.dialog_add_car, null);
+        builder.setView(rootView);
+        Dialog dialog = builder.create();
+        AppCompatButton buttonClose = rootView.findViewById(R.id.buttonClose);
+        buttonClose.setOnClickListener(view ->
+                dialog.dismiss());
+
+        TextView textView = rootView.findViewById(R.id.text);
+        SpannableString spannableString = new SpannableString(getResources().getString(R.string.car_add_dialog_text));
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 121, 143,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(spannableString);
+
+        dialog.show();
     }
 
     @Override

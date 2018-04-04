@@ -169,6 +169,11 @@ public class CarContactsFragment extends Fragment implements NewCarFormsContract
         parentListener.onFinish(NewCarFormsContract.Mode.CONTACT, pendingAction);
     }
 
+    @Override
+    public void onNoSavedCar() {
+
+    }
+
     private TextWatcher textWatcherPhone = new TextWatcher() {
         int length_before = 0;
 

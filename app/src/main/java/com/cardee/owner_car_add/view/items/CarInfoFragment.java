@@ -319,4 +319,9 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
     public void onFinish() {
         parentListener.onFinish(NewCarFormsContract.Mode.INFO, pendingAction);
     }
+
+    @Override
+    public void onNoSavedCar() {
+
+    }
 }

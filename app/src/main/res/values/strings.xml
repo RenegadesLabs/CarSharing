@@ -149,6 +149,14 @@
     <string name="car_added_ok">Ok</string>
 
     <string name="car_location_address">Where should renter collect the car?</string>
+    <string name="car_add_close">Close</string>
+    <string name="quick_check">Quick Check</string>
+    <string name="car_add_dialog_text">To protect yourself and others against accidents and claims, do ensure your car have the required insurance coverage for unnamed/other drivers before proceeding.
+    \n\n
+        If unsure, check your policy details or contact your insurer.
+        \n\n
+        To upgrade your plan to include these coverage, contact your insurer.
+    </string>
 
     <!--Car Add Item Vehicle Type-->
     <string name="car_add_vehicle_title">Vehicle Type</string>

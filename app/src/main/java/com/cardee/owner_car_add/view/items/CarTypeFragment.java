@@ -198,6 +198,11 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     }
 
     @Override
+    public void onNoSavedCar() {
+
+    }
+
+    @Override
     public void setCarData(CarData carData) {
         if (carData != null && carData.getVehicleType() != null) {
             switch (carData.getVehicleType()) {

@@ -154,6 +154,7 @@ public interface NewCarFormsContract {
 
         void onFinish();
 
+        void onNoSavedCar();
     }
 
     interface Presenter extends BasePresenter {

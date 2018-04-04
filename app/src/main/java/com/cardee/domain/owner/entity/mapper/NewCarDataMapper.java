@@ -36,6 +36,8 @@ public class NewCarDataMapper {
                     .setContactName(carData.getContactName())
                     .setContactPhone(carData.getContactPhone())
                     .setContactEmail(carData.getContactEmail());
+        } else {
+            return null;
         }
         return builder.build();
     }

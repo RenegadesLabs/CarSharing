@@ -86,6 +86,11 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     }
 
     @Override
+    public void onNoSavedCar() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();

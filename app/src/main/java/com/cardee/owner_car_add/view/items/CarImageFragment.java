@@ -176,4 +176,9 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     public void onFinish() {
         parentListener.onFinish(NewCarFormsContract.Mode.IMAGE, pendingAction);
     }
+
+    @Override
+    public void onNoSavedCar() {
+
+    }
 }

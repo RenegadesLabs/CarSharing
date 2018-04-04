@@ -332,6 +332,11 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     @Override
+    public void onNoSavedCar() {
+
+    }
+
+    @Override
     public void onImageUpload() {
         SelectPictureFragment menu = new SelectPictureFragment();
         menu.show(getSupportFragmentManager(), menu.getTag());

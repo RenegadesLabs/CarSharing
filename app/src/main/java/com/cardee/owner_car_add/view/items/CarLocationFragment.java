@@ -462,6 +462,11 @@ public class CarLocationFragment extends Fragment
         }
     }
 
+    @Override
+    public void onNoSavedCar() {
+
+    }
+
     private class AddressResultReceiver extends ResultReceiver {
 
         public AddressResultReceiver(Handler handler) {
