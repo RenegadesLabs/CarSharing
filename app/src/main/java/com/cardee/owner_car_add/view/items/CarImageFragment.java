@@ -64,8 +64,8 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
                 case UPDATE:
                     if (args.containsKey(NewCarFormsContract.URI)) {
                         Uri uri = args.getParcelable(NewCarFormsContract.URI);
-                        setUserPhoto(uri);
                         presenter.saveCarImageToCache(uri);
+                        setUserPhoto(uri);
                     }
                     break;
             }
@@ -105,6 +105,7 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
         View v = inflater.inflate(R.layout.fragment_add_car_image, container, false);
         mUnbinder = ButterKnife.bind(this, v);
         presenter = new CarImagePresenter(this, getActivity());
+        presenter.init();
         return v;
     }
 
@@ -135,7 +136,6 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init();
         parentListener.onBind(binder);
         parentListener.onModeDisplayed(NewCarFormsContract.Mode.IMAGE);
     }

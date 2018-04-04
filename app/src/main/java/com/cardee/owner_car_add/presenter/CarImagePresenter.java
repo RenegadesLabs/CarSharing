@@ -8,6 +8,7 @@ import com.cardee.data_source.Error;
 import com.cardee.domain.UseCase;
 import com.cardee.domain.UseCaseExecutor;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.domain.owner.usecase.GetSavedCar;
 import com.cardee.domain.owner.usecase.SaveCarImage;
 import com.cardee.owner_car_add.NewCarFormsContract;
 
@@ -21,6 +22,7 @@ import static com.cardee.data_source.cache.LocalNewCarDataSource.CAR_PIC_FILE;
 public class CarImagePresenter implements NewCarFormsContract.Presenter {
 
     private final SaveCarImage saveImgCase;
+    private final GetSavedCar getSavedCarTask;
     private final UseCaseExecutor executor;
     private NewCarFormsContract.View view;
     private Context context;
@@ -30,6 +32,7 @@ public class CarImagePresenter implements NewCarFormsContract.Presenter {
         this.view = view;
         this.context = context;
         saveImgCase = new SaveCarImage();
+        getSavedCarTask = new GetSavedCar();
         executor = UseCaseExecutor.getInstance();
     }
 
@@ -70,7 +73,16 @@ public class CarImagePresenter implements NewCarFormsContract.Presenter {
 
     @Override
     public void init() {
+        executor.execute(getSavedCarTask, null, new UseCase.Callback<GetSavedCar.ResponseValues>() {
+            @Override
+            public void onSuccess(GetSavedCar.ResponseValues response) {
+                onCarDataResponse(response.getCarData());
+            }
 
+            @Override
+            public void onError(Error error) {
+            }
+        });
     }
 
     @Override
@@ -80,6 +92,6 @@ public class CarImagePresenter implements NewCarFormsContract.Presenter {
 
     @Override
     public void onCarDataResponse(CarData carData) {
-
+        view.setCarData(carData);
     }
 }
