@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
+import com.cardee.mvp.BaseView;
 import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_details.view.listener.DetailsChangedListener;
 
@@ -51,6 +57,16 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_car_payment, container, false);
         mUnbinder = ButterKnife.bind(this, v);
+
+        TextView learnMore = v.findViewById(R.id.learnMore);
+        if (learnMore != null) {
+            SpannableString spannableString = new SpannableString(learnMore.getText().toString());
+            spannableString.setSpan(new UnderlineSpan(), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            learnMore.setText(spannableString);
+        }
+
+        AppCompatButton btnStripe = v.findViewById(R.id.btnStripe);
+        btnStripe.setOnClickListener(view -> showMessage("Coming soon"));
         return v;
     }
 
@@ -67,7 +83,7 @@ public class CarPaymentFragment extends Fragment implements NewCarFormsContract.
 
     @Override
     public void showMessage(String message) {
-
+        ((BaseView) getActivity()).showMessage(message);
     }
 
     @Override

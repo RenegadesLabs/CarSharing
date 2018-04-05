@@ -2,9 +2,9 @@
 <resources>
     <string-array name="owner_more_tab_menu">
         <item>@string/more_tab_account</item>
-        <item>@string/more_tab_settings</item>
+        <!--<item>@string/more_tab_settings</item>-->
         <item>@string/more_tab_credit</item>
-        <item>@string/more_tab_chat</item>
+        <!--<item>@string/more_tab_chat</item>-->
         <item>@string/more_tab_friends</item>
         <item>@string/more_tab_cardee</item>
         <item>@string/more_tab_switch_to_renter</item>
@@ -33,9 +33,9 @@
 
     <integer-array name="owner_more_tab_icons">
         <item>@drawable/ic_account_icon</item>
-        <item>@drawable/ic_settings_icon</item>
+        <!--<item>@drawable/ic_settings_icon</item>-->
         <item>@drawable/ic_credit_balance</item>
-        <item>@drawable/ic_livechat_icon</item>
+        <!--<item>@drawable/ic_livechat_icon</item>-->
         <item>@drawable/ic_invite_icon</item>
         <item>@drawable/ic_cardee_icon</item>
         <item>@drawable/ic_switch_icon</item>

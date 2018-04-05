@@ -112,32 +112,31 @@ public class OwnerMoreTabAdapter extends RecyclerView.Adapter<OwnerMoreTabAdapte
         }
 
         private void setOnClickListener(final PublishSubject<OwnerProfileContract.Action> observable, final int position) {
-            rootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (position) {
-                        case 0:
-                            observable.onNext(OwnerProfileContract.Action.ACCOUNT_CLICKED);
-                            break;
-                        case 1:
-                            observable.onNext(OwnerProfileContract.Action.SETTINGS_CLICKED);
-                            break;
-                        case 2:
-                            observable.onNext(OwnerProfileContract.Action.CREDIT_CLICKED);
-                            break;
-                        case 3:
-                            observable.onNext(OwnerProfileContract.Action.CHAT_CLICKED);
-                            break;
-                        case 4:
-                            observable.onNext(OwnerProfileContract.Action.INVITE_CLICKED);
-                            break;
-                        case 5:
-                            observable.onNext(OwnerProfileContract.Action.CARDEE_CLICKED);
-                            break;
-                        case 6:
-                            observable.onNext(OwnerProfileContract.Action.SWITCH_CLICKED);
-                            break;
-                    }
+            rootView.setOnClickListener(view -> {
+                switch (position) {
+                    case 0:
+                        observable.onNext(OwnerProfileContract.Action.ACCOUNT_CLICKED);
+                        break;
+                    case 1:
+//                            observable.onNext(OwnerProfileContract.Action.SETTINGS_CLICKED);
+                        observable.onNext(OwnerProfileContract.Action.CREDIT_CLICKED);
+                        break;
+                    case 2:
+                        observable.onNext(OwnerProfileContract.Action.INVITE_CLICKED);
+                        break;
+                    case 3:
+//                            observable.onNext(OwnerProfileContract.Action.CHAT_CLICKED);
+                        observable.onNext(OwnerProfileContract.Action.CARDEE_CLICKED);
+                        break;
+                    case 4:
+                        observable.onNext(OwnerProfileContract.Action.SWITCH_CLICKED);
+                        break;
+//                        case 5:
+//
+//                            break;
+//                        case 6:
+//
+//                            break;
                 }
             });
         }
