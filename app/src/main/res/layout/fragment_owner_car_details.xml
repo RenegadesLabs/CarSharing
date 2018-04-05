@@ -69,18 +69,15 @@
                 app:layout_constraintEnd_toEndOf="@id/faded_line"
                 app:layout_constraintTop_toTopOf="@+id/faded_line" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/car_images_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="@dimen/widget_margin_small"
                 android:layout_marginTop="@dimen/widget_margin_small"
-                android:layout_marginEnd="@dimen/widget_margin_large"
-                android:padding="@dimen/widget_padding_xx_small"
-                android:text="@string/title_edit"
-                android:textColor="@color/text_picture_overlaid"
-                android:textSize="@dimen/text_regular"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_edit" />
 
         </android.support.constraint.ConstraintLayout>
 

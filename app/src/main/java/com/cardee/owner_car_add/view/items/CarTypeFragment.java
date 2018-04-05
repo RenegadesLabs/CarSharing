@@ -141,11 +141,11 @@ public class CarTypeFragment extends Fragment implements NewCarFormsContract.Vie
     public void onPrivateFocused(boolean isFocused) {
         if (isFocused) {
             value = 2;
-            vehiclePrivateIV.setImageResource(R.drawable.ic_grab);
+            vehiclePrivateIV.setImageResource(R.drawable.ic_grab_uber);
             vehiclePrivateTV.setTextColor(getResources().getColor(R.color.colorPrimary));
             return;
         }
-        vehiclePrivateIV.setImageResource(R.drawable.ic_private_hire_inactive);
+        vehiclePrivateIV.setImageResource(R.drawable.ic_grab);
         vehiclePrivateTV.setTextColor(getResources().getColor(R.color.add_car_item_vehicle_inactive));
     }
 

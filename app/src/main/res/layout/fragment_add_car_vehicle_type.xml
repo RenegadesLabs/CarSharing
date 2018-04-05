@@ -41,7 +41,7 @@
             android:layout_width="30dp"
             android:layout_height="23dp"
             android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginEnd="26dp"
             app:srcCompat="@drawable/ic_car_inactive" />
     </FrameLayout>
 
@@ -64,7 +64,10 @@
         android:layout_margin="@dimen/large_margin"
         android:background="@drawable/bg_item_vehicle_type"
         android:focusableInTouchMode="true"
-        android:padding="@dimen/medium_margin"
+        android:paddingStart="@dimen/medium_margin"
+        android:paddingEnd="@dimen/medium_margin"
+        android:paddingTop="@dimen/small_margin"
+        android:paddingBottom="@dimen/small_margin"
         app:layout_constraintTop_toBottomOf="@+id/personalExplTxt">
 
         <TextView
@@ -79,11 +82,11 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_vehiclePrivate"
-            android:layout_width="45dp"
-            android:layout_height="30dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="@dimen/small_margin"
-            app:srcCompat="@drawable/ic_private_hire_inactive" />
+            app:srcCompat="@drawable/ic_grab" />
 
     </FrameLayout>
 
@@ -124,7 +127,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginEnd="26dp"
             app:srcCompat="@drawable/ic_truck_inactive" />
 
     </FrameLayout>
