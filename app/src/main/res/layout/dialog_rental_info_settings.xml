@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:paddingBottom="10dp"
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
@@ -9,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/large_margin"
-        android:paddingEnd="@dimen/medium_margin"
-        android:paddingStart="@dimen/medium_margin"
+        android:paddingEnd="@dimen/large_margin"
+        android:paddingStart="@dimen/large_margin"
         android:paddingTop="@dimen/large_margin"
         app:layout_constraintBottom_toTopOf="@+id/div1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,11 +41,11 @@
             app:layout_constraintTop_toBottomOf="@id/instant_booking" />
 
         <TextView
-            android:id="@+id/curbside_delivery"
+            android:id="@+id/minimum_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="@string/car_rental_info_delivery"
+            android:text="@string/car_rental_info_minimum_booking"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             android:textStyle="bold"
@@ -52,15 +53,15 @@
             app:layout_constraintTop_toBottomOf="@id/instant_booking_text" />
 
         <TextView
-            android:id="@+id/curbside_delivery_text"
+            android:id="@+id/minimum_booking_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="@string/car_rental_info_delivery_text"
+            android:text="@string/car_rental_info_minimum_text"
             android:textColor="@color/text_regular"
             android:textSize="@dimen/text_regular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/curbside_delivery" />
+            app:layout_constraintTop_toBottomOf="@id/minimum_booking" />
 
         <TextView
             android:id="@+id/accept_cash"
@@ -72,7 +73,7 @@
             android:textSize="@dimen/text_regular"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/curbside_delivery_text" />
+            app:layout_constraintTop_toBottomOf="@id/minimum_booking_text" />
 
         <TextView
             android:id="@+id/accept_cash_text"
@@ -84,28 +85,21 @@
             android:textSize="@dimen/text_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/accept_cash" />
-
     </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:id="@id/div1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/text_container" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/button_ok"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="@string/car_added_ok"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_regular"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:background="@drawable/bg_button_blue"
+        android:text="@string/car_rental_info_close_help"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/div1" />
-
-
+        app:layout_constraintTop_toBottomOf="@id/text_container" />
 </android.support.constraint.ConstraintLayout>
