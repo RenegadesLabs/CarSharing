@@ -16,6 +16,7 @@ import com.cardee.R;
 import com.cardee.data_source.util.DialogHelper;
 import com.cardee.owner_car_details.view.OwnerCarRentalFragment;
 import com.cardee.owner_car_rental_info.RentalContract;
+import com.cardee.util.display.ActivityHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,28 +147,43 @@ public class RentalRatesActivity extends AppCompatActivity implements RentalCont
                 getString(R.string.loading), false);
         ratesValue1ET.setText(mRateFirst);
         ratesValue1ET.setSelection(ratesValue1ET.getText().length());
-        ratesValue1ET.setCursorVisible(false);
-        ratesValue1ET.setOnClickListener(view -> ratesValue1ET.setSelection(ratesValue1ET.getText().length()));
+        ratesValue1ET.setOnTouchListener((view, motionEvent) -> {
+            ActivityHelper.showSoftKeyboard(ratesValue1ET, this);
+            ratesValue1ET.setSelection(ratesValue1ET.getText().length());
+            return true;
+        });
 
         ratesValue2ET.setText(mRateSecond);
         ratesValue2ET.setSelection(ratesValue2ET.getText().length());
-        ratesValue2ET.setCursorVisible(false);
-        ratesValue2ET.setOnClickListener(view -> ratesValue2ET.setSelection(ratesValue2ET.getText().length()));
+        ratesValue2ET.setOnTouchListener((view, motionEvent) -> {
+            ActivityHelper.showSoftKeyboard(ratesValue2ET, this);
+            ratesValue2ET.setSelection(ratesValue2ET.getText().length());
+            return true;
+        });
 
         ratesValue3ET.setText(mDiscountFirst);
         ratesValue3ET.setSelection(ratesValue3ET.getText().length());
-        ratesValue3ET.setCursorVisible(false);
-        ratesValue3ET.setOnClickListener(view -> ratesValue3ET.setSelection(ratesValue3ET.getText().length()));
+        ratesValue3ET.setOnTouchListener((view, motionEvent) -> {
+            ActivityHelper.showSoftKeyboard(ratesValue3ET, this);
+            ratesValue3ET.setSelection(ratesValue3ET.getText().length());
+            return true;
+        });
 
         ratesValue4ET.setText(mDiscountSecond);
         ratesValue4ET.setSelection(ratesValue4ET.getText().length());
-        ratesValue4ET.setCursorVisible(false);
-        ratesValue4ET.setOnClickListener(view -> ratesValue4ET.setSelection(ratesValue4ET.getText().length()));
+        ratesValue4ET.setOnTouchListener((view, motionEvent) -> {
+            ActivityHelper.showSoftKeyboard(ratesValue4ET, this);
+            ratesValue4ET.setSelection(ratesValue4ET.getText().length());
+            return true;
+        });
 
         ratesValue5ET.setText(String.valueOf(mMinRental));
         ratesValue5ET.setSelection(ratesValue5ET.getText().length());
-        ratesValue5ET.setCursorVisible(false);
-        ratesValue5ET.setOnClickListener(view -> ratesValue5ET.setSelection(ratesValue5ET.getText().length()));
+        ratesValue5ET.setOnTouchListener((view, motionEvent) -> {
+            ActivityHelper.showSoftKeyboard(ratesValue5ET, this);
+            ratesValue5ET.setSelection(ratesValue5ET.getText().length());
+            return true;
+        });
 
         switch (mMode) {
             case OwnerCarRentalFragment.HOURLY:
