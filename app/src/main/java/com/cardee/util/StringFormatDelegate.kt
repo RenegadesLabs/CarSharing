@@ -102,10 +102,10 @@ class StringFormatDelegate(context: Context) {
     fun onSetHourlyTitle(view: TextView, daysCount: Int, beginTime: String?, endTime: String?) {
         val index = if (daysCount > 1) 2 else daysCount
         val prefix = if (index == 0) "" else "$daysCount "
-        var title = "$prefix ${valueSuffixes[index]}"
-        if (beginTime != null && endTime != null) {
-            title = "$title\n${dropStartZero(beginTime)} - ${dropStartZero(endTime)}"
-        }
+        val title = "$prefix ${valueSuffixes[index]}"
+//        if (beginTime != null && endTime != null) {
+//            title = "$title\n${dropStartZero(beginTime)} - ${dropStartZero(endTime)}"
+//        }
         view.text = title
     }
 
