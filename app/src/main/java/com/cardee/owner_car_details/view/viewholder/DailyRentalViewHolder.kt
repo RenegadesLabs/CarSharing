@@ -309,7 +309,11 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
             dateDeletage?.onSetReturnTime(timingReturn, rentalDetails.dailyTimeReturn, false)
         }
 
-        stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.dailyCount)
+        if (rentalDetails.isAvailableDaily) {
+            stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.dailyCount)
+        } else {
+            stringDelegate?.onNotAvailable(availabilityDays)
+        }
         stringDelegate?.onSetDailyRentalRateFirst(rentalRatesValueFirst, rentalDetails.dailyAmountRateFirst)
         stringDelegate?.onSetDailyRentalRateSecond(rentalRatesValueSecond, rentalDetails.dailyAmountRateSecond)
         stringDelegate?.onSetDailyRentalDiscount(rentalDiscount, rentalDetails.dailyAmountDiscountFirst)

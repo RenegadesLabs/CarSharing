@@ -77,6 +77,9 @@ public class RentalDetailsPresenter
                     @Override
                     public void onSuccess(SaveAvailability.ResponseValues response) {
                         rentalDetails.setAvailableDaily(available);
+                        if (view != null){
+                            view.onDailyAvailChanged(rentalDetails);
+                        }
                     }
 
                     @Override
@@ -99,6 +102,9 @@ public class RentalDetailsPresenter
                     @Override
                     public void onSuccess(SaveAvailability.ResponseValues response) {
                         rentalDetails.setAvailableHourly(available);
+                        if (view != null){
+                            view.onHourlyAvailChanged(rentalDetails);
+                        }
                     }
 
                     @Override

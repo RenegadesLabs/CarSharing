@@ -45,6 +45,8 @@ public class OwnerCarRentalFragment extends Fragment
     private Toast currentToast;
     private SwitchCompat dailySwitch;
     private SwitchCompat hourlySwitch;
+    private BaseViewHolder<RentalDetails> dailyViewHolder;
+    private BaseViewHolder<RentalDetails> hourlyViewHolder;
 
     public static Fragment newInstance(Integer carId) {
         OwnerCarRentalFragment fragment = new OwnerCarRentalFragment();
@@ -128,6 +130,20 @@ public class OwnerCarRentalFragment extends Fragment
     }
 
     @Override
+    public void onDailyAvailChanged(RentalDetails rentalDetails) {
+        if (dailyViewHolder != null) {
+            dailyViewHolder.bind(rentalDetails);
+        }
+    }
+
+    @Override
+    public void onHourlyAvailChanged(RentalDetails rentalDetails) {
+        if (hourlyViewHolder != null) {
+            hourlyViewHolder.bind(rentalDetails);
+        }
+    }
+
+    @Override
     public void onChildProgressShow(boolean show) {
         showProgress(show);
     }
@@ -159,6 +175,14 @@ public class OwnerCarRentalFragment extends Fragment
         presenter.onDestroy();
     }
 
+    public void setDailyAvailabilityListener(BaseViewHolder<RentalDetails> viewHolder) {
+        this.dailyViewHolder = viewHolder;
+    }
+
+    public void setHourlyAvailabilityListener(BaseViewHolder<RentalDetails> viewHolder) {
+        this.hourlyViewHolder = viewHolder;
+    }
+
     private class RentalPagerAdapter extends PagerAdapter {
 
         public RentalPagerAdapter() {
@@ -173,9 +197,12 @@ public class OwnerCarRentalFragment extends Fragment
             if (ContentPage.DAILY.equals(contentPage)) {
                 holder = new DailyRentalViewHolder(layout, (AppCompatActivity) getActivity());
                 ((DailyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
+                OwnerCarRentalFragment.this.setDailyAvailabilityListener(holder);
+
             } else {
                 holder = new HourlyRentalViewHolder(layout, (AppCompatActivity) getActivity());
                 ((HourlyRentalViewHolder) holder).setProgressListener(OwnerCarRentalFragment.this);
+                OwnerCarRentalFragment.this.setHourlyAvailabilityListener(holder);
             }
             views.put(contentPage, holder);
             container.addView(layout);

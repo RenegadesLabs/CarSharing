@@ -15,6 +15,9 @@ public interface RentalDetailsContract {
 
         void onHourlyChange(boolean available);
 
+        void onDailyAvailChanged(RentalDetails rentalDetails);
+
+        void onHourlyAvailChanged(RentalDetails rentalDetails);
     }
 
     interface ControlView extends BaseView {

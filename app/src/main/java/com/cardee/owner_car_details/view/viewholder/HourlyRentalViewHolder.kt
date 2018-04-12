@@ -316,7 +316,11 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
 
     override fun setData(rentalDetails: RentalDetails) {
         dateDelegate?.onSetTimeRangeString(timing, rentalDetails.hourlyBeginTime, rentalDetails.hourlyEndTime)
-        stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.hourlyCount)
+        if (rentalDetails.isAvailableHourly) {
+            stringDelegate?.onDateCountValueChange(availabilityDays, rentalDetails.hourlyCount)
+        } else {
+            stringDelegate?.onNotAvailable(availabilityDays)
+        }
         stringDelegate?.onSetHourlyRentalRateFirst(rentalRatesValueFirst, rentalDetails.hourlyAmountRateSecond)
         stringDelegate?.onSetHourlyRentalRateSecond(rentalRatesValueSecond, rentalDetails.hourlyAmountRateFirst)
 //        stringDelegate!!.onSetRentalMinimum(rentalMinimum, rentalDetails.hourlyMinRentalDuration)
