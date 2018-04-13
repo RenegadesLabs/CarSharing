@@ -138,7 +138,9 @@
     <string name="car_add_image">3. Car Image</string>
     <string name="car_add_location">4. Car Location</string>
     <string name="car_add_contact">4. Contact Info</string>
-    <string name="car_add_payment">5. Payment Account</string>
+    <string name="car_add_mobile">4. Mobile Number</string>
+    <string name="car_add_email">5. Verify Email</string>
+    <string name="car_add_payment">6. Payment Account</string>
     <string name="car_add_add">Add</string>
     <string name="car_add_next">Next</string>
     <string name="car_add_save">Save</string>
@@ -228,6 +230,12 @@
 
     <!--Car Add Item Payment-->
     <string name="car_add_payment_title">Payment Account</string>
+
+    <!--Car Add Item Mobile-->
+    <string name="car_add_mobile_title">Mobile Number</string>
+
+    <!--Car Add Item Email-->
+    <string name="car_add_email_title">Email Address</string>
 
     <!--Car Rental Info-->
     <string name="car_rental_info_hourly">Hourly</string>

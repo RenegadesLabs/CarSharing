@@ -57,6 +57,12 @@ public class CarAddActivity extends AppCompatActivity
     @BindView(R.id.tv_addCarItem6)
     public TextView paymentValueView;
 
+    @BindView(R.id.tv_addCarItem7)
+    public TextView mobileValueView;
+
+    @BindView(R.id.tv_addCarItem8)
+    public TextView emailValueView;
+
     @BindView(R.id.iv_addCarItem1)
     public AppCompatImageView typeCompletedIconView;
 
@@ -74,6 +80,12 @@ public class CarAddActivity extends AppCompatActivity
 
     @BindView(R.id.iv_addCarItem6)
     public AppCompatImageView paymentCompletedIconView;
+
+    @BindView(R.id.iv_addCarItem7)
+    public AppCompatImageView mobileCompletedIconView;
+
+    @BindView(R.id.iv_addCarItem8)
+    public AppCompatImageView emailCompletedIconView;
 
     private CarAddPresenter presenter;
     private Toast currentToast;
@@ -186,6 +198,18 @@ public class CarAddActivity extends AppCompatActivity
     }
 
     @Override
+    public void setMobileCompleted(boolean completed) {
+        setCompletedIconIfNeed(mobileCompletedIconView, completed);
+        mobileValueView.setText(completed ? "Edit" : "Add");
+    }
+
+    @Override
+    public void setEmailCompleted(boolean completed) {
+        setCompletedIconIfNeed(emailCompletedIconView, completed);
+        emailValueView.setText(completed ? "Edit" : "Add");
+    }
+
+    @Override
     public void setPaymentCompleted(boolean completed) {
         setCompletedIconIfNeed(paymentCompletedIconView, completed);
         paymentValueView.setText(completed ? "Edit" : "Add");
@@ -239,6 +263,20 @@ public class CarAddActivity extends AppCompatActivity
     public void onContactClicked() {
         Bundle args = new Bundle();
         args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.CONTACT);
+        openNewCarEditActivity(args);
+    }
+
+    @OnClick(R.id.add_mobile)
+    public void onMobileClicked() {
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.MOBILE);
+        openNewCarEditActivity(args);
+    }
+
+    @OnClick(R.id.add_email)
+    public void onEmailClicked() {
+        Bundle args = new Bundle();
+        args.putSerializable(NewCarFormsContract.VIEW_MODE, NewCarFormsContract.Mode.EMAIL);
         openNewCarEditActivity(args);
     }
 

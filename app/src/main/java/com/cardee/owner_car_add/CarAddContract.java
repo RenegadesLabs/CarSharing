@@ -1,8 +1,6 @@
 package com.cardee.owner_car_add;
 
 
-import com.cardee.owner_car_add.NewCarFormsContract;
-
 public interface CarAddContract {
 
     interface View extends NewCarFormsContract.View {
@@ -18,5 +16,9 @@ public interface CarAddContract {
         void setContactsCompleted(boolean completed);
 
         void setPaymentCompleted(boolean completed);
+
+        void setMobileCompleted(boolean completed);
+
+        void setEmailCompleted(boolean completed);
     }
 }

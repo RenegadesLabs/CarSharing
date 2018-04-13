@@ -133,6 +133,8 @@ public interface NewCarFormsContract {
         IMAGES(R.string.car_add_images_title),
         LOCATION(R.string.car_add_location_title),
         CONTACT(R.string.car_add_contact_title),
+        MOBILE(R.string.car_add_mobile_title),
+        EMAIL(R.string.car_add_email_title),
         PAYMENT(R.string.car_add_payment_title),
         DESCRIPTION(R.string.title_owner_car_description);
 
