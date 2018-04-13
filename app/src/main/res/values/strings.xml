@@ -233,9 +233,16 @@
 
     <!--Car Add Item Mobile-->
     <string name="car_add_mobile_title">Mobile Number</string>
+    <string name="car_add_mobile_header">Enter your mobile number</string>
+    <string name="car_add_mobile_subheader">(include country code)</string>
+    <string name="car_add_mobile_hint">E.g. +65 8765 4321</string>
+    <string name="car_add_mobile_text">A verification code will be sent to this number upon submit</string>
 
     <!--Car Add Item Email-->
     <string name="car_add_email_title">Email Address</string>
+    <string name="car_add_email_header">Enter your email address</string>
+    <string name="car_add_email_hint">Email</string>
+    <string name="car_add_email_text">A verification link will be sent to this email upon submit. Please check your email and click on the link to verify your email.</string>
 
     <!--Car Rental Info-->
     <string name="car_rental_info_hourly">Hourly</string>

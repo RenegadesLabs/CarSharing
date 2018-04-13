@@ -14,9 +14,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.cardee.R;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.NewCarFormsContract;
@@ -115,8 +112,12 @@ public class CarImageFragment extends Fragment implements NewCarFormsContract.Vi
     }
 
     private void setUserPhoto(Uri uri) {
+        Uri tempUri = uri;
+        if (uri.getScheme() == null) {
+            tempUri = Uri.fromFile(new File(uri.getPath()));
+        }
         Glide.with(getActivity())
-                .load(uri)
+                .load(tempUri)
                 .centerCrop()
                 .into(newImage);
         newImage.setVisibility(View.VISIBLE);

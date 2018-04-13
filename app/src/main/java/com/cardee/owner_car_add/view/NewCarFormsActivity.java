@@ -29,9 +29,11 @@ import com.cardee.custom.modal.SelectPictureFragment;
 import com.cardee.domain.owner.entity.CarData;
 import com.cardee.owner_car_add.NewCarFormsContract;
 import com.cardee.owner_car_add.view.items.CarContactsFragment;
+import com.cardee.owner_car_add.view.items.CarEmailFragment;
 import com.cardee.owner_car_add.view.items.CarImageFragment;
 import com.cardee.owner_car_add.view.items.CarInfoFragment;
 import com.cardee.owner_car_add.view.items.CarLocationFragment;
+import com.cardee.owner_car_add.view.items.CarMobileFragment;
 import com.cardee.owner_car_add.view.items.CarPaymentFragment;
 import com.cardee.owner_car_add.view.items.CarTypeFragment;
 import com.cardee.owner_car_add.view.items.UploadImageListener;
@@ -138,6 +140,12 @@ public class NewCarFormsActivity extends AppCompatActivity
             case CONTACT:
                 showFragment(CarContactsFragment.newInstance());
                 break;
+            case MOBILE:
+                showFragment(CarMobileFragment.Companion.newInstance());
+                break;
+            case EMAIL:
+                showFragment(CarEmailFragment.Companion.newInstance());
+                break;
             case PAYMENT:
                 showFragment(CarPaymentFragment.newInstance());
                 break;
@@ -166,9 +174,11 @@ public class NewCarFormsActivity extends AppCompatActivity
             case INFO:
                 return NewCarFormsContract.Mode.IMAGE;
             case IMAGE:
-                return NewCarFormsContract.Mode.CONTACT;
-            case CONTACT:
-                return NewCarFormsContract.Mode.PAYMENT;
+                return NewCarFormsContract.Mode.MOBILE;
+//            case MOBILE:
+//                return NewCarFormsContract.Mode.EMAIL;
+//            case EMAIL:
+//                return NewCarFormsContract.Mode.PAYMENT;
             default:
                 return null;
         }
@@ -211,7 +221,9 @@ public class NewCarFormsActivity extends AppCompatActivity
     }
 
     private boolean isLastStep(NewCarFormsContract.Mode mode) {
-        return mode == NewCarFormsContract.Mode.PAYMENT;
+        return mode == NewCarFormsContract.Mode.PAYMENT ||
+                mode == NewCarFormsContract.Mode.MOBILE ||
+                mode == NewCarFormsContract.Mode.EMAIL;
     }
 
     @Override
