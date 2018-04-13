@@ -165,13 +165,13 @@ public class CarInfoFragment extends Fragment implements NewCarFormsContract.Vie
         }
     }
 
-    @OnClick(R.id.et_addCarInfoYear)
-    public void onYearOfManufactureClicked() {
-        PickerMenuFragment menu = PickerMenuFragment.getInstance(yearInput.getText().toString(),
-                PickerMenuFragment.Mode.YEAR_OF_MANUFACTURE);
-        menu.show(getFragmentManager(), menu.getTag());
-        menu.setOnDoneClickListener(value -> yearInput.setText(value));
-    }
+//    @OnClick(R.id.et_addCarInfoYear)
+//    public void onYearOfManufactureClicked() {
+//        PickerMenuFragment menu = PickerMenuFragment.getInstance(yearInput.getText().toString(),
+//                PickerMenuFragment.Mode.YEAR_OF_MANUFACTURE);
+//        menu.show(getFragmentManager(), menu.getTag());
+//        menu.setOnDoneClickListener(value -> yearInput.setText(value));
+//    }
 
     @OnClick(R.id.et_addCarInfoSeating)
     public void onSeatingCapacityClicked() {
