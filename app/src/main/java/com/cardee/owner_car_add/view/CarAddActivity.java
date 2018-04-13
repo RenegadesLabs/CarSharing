@@ -78,6 +78,7 @@ public class CarAddActivity extends AppCompatActivity
     private CarAddPresenter presenter;
     private Toast currentToast;
     private ProgressBar progressBar;
+    private boolean firstShow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class CarAddActivity extends AppCompatActivity
         presenter = new CarAddPresenter(this);
         progressBar = (ProgressBar) findViewById(R.id.add_car_progress);
         initToolbar();
+        firstShow = true;
     }
 
     private void initToolbar() {
@@ -130,6 +132,10 @@ public class CarAddActivity extends AppCompatActivity
 
     @Override
     public void onNoSavedCar() {
+        if (!firstShow) {
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View rootView = inflater.inflate(R.layout.dialog_add_car, null);
@@ -145,6 +151,8 @@ public class CarAddActivity extends AppCompatActivity
         textView.setText(spannableString);
 
         dialog.show();
+
+        firstShow = false;
     }
 
     @Override
