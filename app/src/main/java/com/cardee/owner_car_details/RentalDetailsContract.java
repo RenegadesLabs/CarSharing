@@ -24,6 +24,7 @@ public interface RentalDetailsContract {
 
         void setData(RentalDetails rentalDetails);
 
+        void setMinBookingValue(int minimumDuration);
     }
 
     interface Presenter extends BasePresenter {

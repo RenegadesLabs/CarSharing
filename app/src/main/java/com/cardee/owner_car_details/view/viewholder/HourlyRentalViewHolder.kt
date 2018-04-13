@@ -35,7 +35,6 @@ import java.util.*
 
 class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseViewHolder<RentalDetails>(rootView, activity), View.OnClickListener, RentalDetailsContract.ControlView, HourlyTimingEventBus.Listener, CompoundButton.OnCheckedChangeListener {
 
-
     private val availabilityDays: TextView
     private val timing: TextView
     private val availabilityDaysEdit: View
@@ -349,6 +348,15 @@ class HourlyRentalViewHolder(rootView: View, activity: AppCompatActivity) : Base
         }
         rootView.minimumBookingValue.text = String.format(Locale.getDefault(), template, hours)
         setAcceptCashState(rentalDetails)
+    }
+
+    override fun setMinBookingValue(minimumDuration: Int) {
+        val template = if (minimumDuration == 1) {
+            "%d day"
+        } else {
+            "%d days"
+        }
+        rootView.minimumBookingValue.text = String.format(Locale.getDefault(), template, minimumDuration)
     }
 
     private fun setMinRentDurationState(rentalDetails: RentalDetails) {

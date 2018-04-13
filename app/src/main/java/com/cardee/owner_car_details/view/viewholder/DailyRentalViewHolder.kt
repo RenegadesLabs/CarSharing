@@ -338,6 +338,15 @@ class DailyRentalViewHolder(rootView: View, activity: AppCompatActivity) : BaseV
         setAcceptCashState(rentalDetails)
     }
 
+    override fun setMinBookingValue(minimumDuration: Int) {
+        val template = if (minimumDuration == 1) {
+            "%d day"
+        } else {
+            "%d days"
+        }
+        rootView.minimumBookingValue.text = String.format(Locale.getDefault(), template, minimumDuration)
+    }
+
     private fun setMinRentDurationState(rentalDetails: RentalDetails) {
         rootView.minimumBookingSwitch.setOnCheckedChangeListener(null)
         rootView.minimumBookingSwitch.isChecked = rentalDetails.dailyMinRentalDuration != 0

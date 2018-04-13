@@ -73,20 +73,30 @@ class StrategyRentalDetailPresenter(private var view: RentalDetailsContract.Cont
         when (strategy) {
             StrategyRentalDetailPresenter.Strategy.DAILY -> {
                 val duration =
-                        if (!minimumBookingEnabled) {
-                            0
+                        if (minimumBookingEnabled) {
+                            val dur = rentalDetails?.dailyMinRentalDuration
+                            if (dur == null || dur < 2) {
+                                2
+                            } else {
+                                dur
+                            }
                         } else {
-                            rentalDetails?.dailyMinRentalDuration ?: 0
+                            0
                         }
                 updateDailyMinimumBooking(duration)
             }
 
             StrategyRentalDetailPresenter.Strategy.HOURLY -> {
                 val duration =
-                        if (!minimumBookingEnabled) {
-                            0
+                        if (minimumBookingEnabled) {
+                            val dur = rentalDetails?.hourlyMinRentalDuration
+                            if (dur == null || dur < 2) {
+                                2
+                            } else {
+                                dur
+                            }
                         } else {
-                            rentalDetails?.dailyMinRentalDuration ?: 0
+                            0
                         }
                 updateHourlyMinimumBooking(duration)
             }
@@ -104,6 +114,7 @@ class StrategyRentalDetailPresenter(private var view: RentalDetailsContract.Cont
                             OwnerCarsRepository.getInstance().refreshCars()
                             view?.showMessage(R.string.saved_successfully)
                             rentalDetails?.dailyMinRentalDuration = minimumDuration
+                            view?.setMinBookingValue(minimumDuration)
                         }
                     }
 
@@ -125,6 +136,7 @@ class StrategyRentalDetailPresenter(private var view: RentalDetailsContract.Cont
                             OwnerCarsRepository.getInstance().refreshCars()
                             view?.showMessage(R.string.saved_successfully)
                             rentalDetails?.hourlyMinRentalDuration = minimumDuration
+                            view?.setMinBookingValue(minimumDuration)
                         }
                     }
 
