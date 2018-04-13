@@ -86,7 +86,7 @@ public class CarImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         RecyclerView.ViewHolder holder = null;
         switch (viewType) {
             case IMAGE_VIEW:
-                View imageView = inflater.inflate(R.layout.view_image, parent, false);
+                View imageView = inflater.inflate(R.layout.view_image_in_grid, parent, false);
                 holder = new ImageHolder(imageView);
                 break;
             case ADD_BUTTON:

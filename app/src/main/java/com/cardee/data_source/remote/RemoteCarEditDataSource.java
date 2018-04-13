@@ -456,7 +456,8 @@ public class RemoteCarEditDataSource implements CarEditDataSource {
         String[] split = uri.getPath().split("/");
         File imageFile = new File(CardeeApp.context.getCacheDir(), split[split.length - 1]);
         try {
-            InputStream in = CardeeApp.context.getContentResolver().openInputStream(uri);
+            InputStream in = CardeeApp.context.getContentResolver().openInputStream(
+                    Uri.fromFile(new File(uri.getPath())));
             boolean resized = imageProcessor.resize(in, imageFile);
             if (!resized) {
                 throw new Exception("Failed to resize image");

@@ -7,7 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -95,8 +98,9 @@
         <activity
             android:name=".owner_car_details.view.CarImagesActivity"
             android:theme="@style/BlackTheme" />
-        <activity android:name=".owner_car_add.view.NewCarFormsActivity"
-            android:theme="@style/ChatStyle"/>
+        <activity
+            android:name=".owner_car_add.view.NewCarFormsActivity"
+            android:theme="@style/ChatStyle" />
         <activity
             android:name=".renter_bookings.rate_rental_exp.view.RateRentalExpActivity"
             android:parentActivityName=".renter_home.view.RenterHomeActivity"
@@ -273,6 +277,16 @@
         <activity
             android:name=".owner_bookings.car_checklist.view.RenterChecklistActivity"
             android:parentActivityName=".renter_home.view.RenterHomeActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.cardee.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
